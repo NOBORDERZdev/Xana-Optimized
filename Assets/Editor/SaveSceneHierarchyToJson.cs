@@ -62,6 +62,8 @@ public class SaveParentObjectsToJson : EditorWindow
             data.objectBound = CalculateBoundsWithChildren(rootObject.transform);
             data.tagName = rootObject.tag;
             data.layerIndex = rootObject.gameObject.layer;
+            data.subWorldComponent = GetSubworldComponent(rootObject.gameObject);
+            data.subWorldIndex = GetSubworldIndex(rootObject.gameObject);
             data.priority = GetObjectPriority(rootObject.gameObject);
             data.isActive = rootObject.gameObject.activeSelf;
             data.lightmapData = GetLightmapData(rootObject.gameObject);
@@ -130,6 +132,27 @@ public class SaveParentObjectsToJson : EditorWindow
         summitDomeInfo.domeIndex = 0;
         return summitDomeInfo;
     }
+
+    public bool GetSubworldComponent(GameObject rootObject)
+    {
+        if (rootObject.GetComponent<SummitSubWorldIndex>() != null)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public int GetSubworldIndex(GameObject rootObject)
+    {
+        if (rootObject.GetComponent<SummitSubWorldIndex>() != null)
+        {
+            int subworldIndex = rootObject.GetComponent<SummitSubWorldIndex>().SubworldIndex;
+            return subworldIndex;
+        }
+        return -1;
+    }
+
+    
 }
 
 

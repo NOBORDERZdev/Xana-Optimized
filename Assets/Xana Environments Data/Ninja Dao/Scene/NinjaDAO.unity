@@ -122,103 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &49710726
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 49710727}
-  - component: {fileID: 49710730}
-  - component: {fileID: 49710729}
-  - component: {fileID: 49710728}
-  m_Layer: 0
-  m_Name: Cube (27)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!4 &49710727
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 49710726}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 10.7, y: 10.460001, z: 20.11}
-  m_LocalScale: {x: 47.513527, y: 12.868558, z: 4.1466}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 489066591}
-  m_RootOrder: 28
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!65 &49710728
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 49710726}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.03338495, y: 1, z: 6.1000934}
-  m_Center: {x: 0.007538157, y: 0, z: -1.3294812}
---- !u!23 &49710729
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 49710726}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &49710730
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 49710726}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &60067474
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1664,12 +1567,12 @@ Transform:
   - {fileID: 171508820}
   - {fileID: 948747106}
   - {fileID: 570572249}
+  - {fileID: 677341635}
+  - {fileID: 1502370362}
+  - {fileID: 940957696}
+  - {fileID: 1088283663}
+  - {fileID: 1978698305}
   - {fileID: 1917868768}
-  - {fileID: 918223043}
-  - {fileID: 49710727}
-  - {fileID: 811331054}
-  - {fileID: 1336792414}
-  - {fileID: 1397552781}
   m_Father: {fileID: 1269426078}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1804,6 +1707,103 @@ Transform:
   m_Father: {fileID: 1269426078}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &677341634
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 677341635}
+  - component: {fileID: 677341638}
+  - component: {fileID: 677341637}
+  - component: {fileID: 677341636}
+  m_Layer: 0
+  m_Name: Cube (26)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &677341635
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677341634}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 1.7399998, y: 10.460001, z: 15.369999}
+  m_LocalScale: {x: 47.513535, y: 12.86856, z: 4.1466}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 489066591}
+  m_RootOrder: 26
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!65 &677341636
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677341634}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.27508777, y: 1, z: 0.3702971}
+  m_Center: {x: -0.005836712, y: 0, z: 0.31485185}
+--- !u!23 &677341637
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677341634}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &677341638
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677341634}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &807474241
 GameObject:
   m_ObjectHideFlags: 0
@@ -1869,103 +1869,6 @@ Transform:
   m_Father: {fileID: 1269426078}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &811331053
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 811331054}
-  - component: {fileID: 811331057}
-  - component: {fileID: 811331056}
-  - component: {fileID: 811331055}
-  m_Layer: 0
-  m_Name: Cube (28)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!4 &811331054
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 811331053}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 10.7, y: 10.460001, z: -5.94}
-  m_LocalScale: {x: 47.513527, y: 12.868558, z: 4.1466}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 489066591}
-  m_RootOrder: 29
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!65 &811331055
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 811331053}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.03338495, y: 1, z: 4.7371683}
-  m_Center: {x: 0.0075381575, y: 0, z: -2.010944}
---- !u!23 &811331056
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 811331053}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &811331057
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 811331053}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &852970803
 GameObject:
   m_ObjectHideFlags: 0
@@ -2257,103 +2160,6 @@ Transform:
   m_Father: {fileID: 489066591}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 171.903, z: 0}
---- !u!1 &918223042
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 918223043}
-  - component: {fileID: 918223046}
-  - component: {fileID: 918223045}
-  - component: {fileID: 918223044}
-  m_Layer: 0
-  m_Name: Cube (26)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!4 &918223043
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 918223042}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 1.74, y: 10.460001, z: 15.37}
-  m_LocalScale: {x: 47.513527, y: 12.868558, z: 4.1466}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 489066591}
-  m_RootOrder: 27
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!65 &918223044
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 918223042}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.27508777, y: 1, z: 0.5263456}
-  m_Center: {x: -0.005836707, y: 0, z: 0.23682755}
---- !u!23 &918223045
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 918223042}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &918223046
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 918223042}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &928514013
 GameObject:
   m_ObjectHideFlags: 0
@@ -2513,6 +2319,103 @@ LightingSettings:
   m_PVRFilteringAtrousPositionSigmaIndirect: 2
   m_PVRFilteringAtrousPositionSigmaAO: 1
   m_PVRTiledBaking: 0
+--- !u!1 &940957695
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 940957696}
+  - component: {fileID: 940957699}
+  - component: {fileID: 940957698}
+  - component: {fileID: 940957697}
+  m_Layer: 0
+  m_Name: Cube (28)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &940957696
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940957695}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 10.700001, y: 10.460001, z: -5.9399986}
+  m_LocalScale: {x: 47.513535, y: 12.86856, z: 4.1466}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 489066591}
+  m_RootOrder: 28
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!65 &940957697
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940957695}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.019746764, y: 1, z: 4.7371683}
+  m_Center: {x: 0.0007190621, y: 0, z: -2.010944}
+--- !u!23 &940957698
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940957695}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &940957699
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940957695}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &948747105
 GameObject:
   m_ObjectHideFlags: 0
@@ -2848,8 +2751,105 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd617247844f1b447a0320228ca36a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldJson: '{"SceneObjects":[{"addressableKey":"NND_Bamboo","name":"NND_Bamboo","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":69.77873229980469,"y":19.39718246459961,"z":-31.21063232421875},"m_Extent":{"x":43.008670806884769,"y":9.288774490356446,"z":47.46424865722656}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_CenterBamboo","name":"NND_CenterBamboo","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":72.91162872314453,"y":18.038469314575197,"z":-55.19260025024414},"m_Extent":{"x":21.282127380371095,"y":14.612760543823243,"z":25.437358856201173}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_Gate","name":"NND_Gate","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":26.265125274658204,"y":20.618431091308595,"z":-31.449966430664064},"m_Extent":{"x":14.26147747039795,"y":4.205222129821777,"z":14.616828918457032}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_Ground","name":"NND_Ground","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":2.1855695919725805e-8,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":19.608219146728517,"y":17.544801712036134,"z":-33.0687255859375},"m_Extent":{"x":43.406375885009769,"y":6.755265235900879,"z":17.673242568969728}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_House","name":"NND_House","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":2.1855695919725805e-8,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":19.562740325927736,"y":31.19829559326172,"z":-34.454490661621097},"m_Extent":{"x":55.22357177734375,"y":14.797327995300293,"z":33.49152374267578}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_Stairs","name":"NND_Stairs","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":2.1855695919725805e-8,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":43.47994613647461,"y":14.619598388671875,"z":-35.00425720214844},"m_Extent":{"x":32.71017074584961,"y":6.249798774719238,"z":19.60884666442871}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_Walls","name":"NND_Walls","position":{"x":48.485595703125,"y":12.105049133300782,"z":-57.60542678833008},"rotation":{"x":-0.7071068286895752,"y":0.0,"z":0.0,"w":0.7071068286895752},"scale":{"x":0.9913600087165833,"y":0.9913604855537415,"z":0.9913604855537415},"objectBound":{"m_Center":{"x":23.477245330810548,"y":12.797672271728516,"z":-34.18324279785156},"m_Extent":{"x":53.118900299072269,"y":11.534180641174317,"z":34.15088653564453}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_01","position":{"x":37.52857971191406,"y":18.032943725585939,"z":-18.432289123535158},"rotation":{"x":-0.7071057558059692,"y":0.0,"z":0.0,"w":0.7071078419685364},"scale":{"x":2.3080999851226808,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":37.52857971191406,"y":18.032943725585939,"z":-18.555313110351564},"m_Extent":{"x":2.7734875679016115,"y":2.5444045066833498,"z":0.000007439856290147873}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_02","position":{"x":30.94757843017578,"y":18.032943725585939,"z":-18.432289123535158},"rotation":{"x":-0.7071057558059692,"y":0.0,"z":0.0,"w":0.7071078419685364},"scale":{"x":2.3080999851226808,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":30.94757843017578,"y":18.032943725585939,"z":-18.555313110351564},"m_Extent":{"x":2.7734875679016115,"y":2.5444045066833498,"z":0.000007439856290147873}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_03","position":{"x":23.948577880859376,"y":18.032943725585939,"z":-18.432289123535158},"rotation":{"x":-0.7071057558059692,"y":0.0,"z":0.0,"w":0.7071078419685364},"scale":{"x":2.3080999851226808,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":23.948577880859376,"y":18.032943725585939,"z":-18.555313110351564},"m_Extent":{"x":2.7734875679016115,"y":2.5444045066833498,"z":0.000007439856290147873}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_04","position":{"x":18.23857879638672,"y":18.032943725585939,"z":-18.432289123535158},"rotation":{"x":-0.7071057558059692,"y":0.0,"z":0.0,"w":0.7071078419685364},"scale":{"x":2.3080999851226808,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":18.23857879638672,"y":18.032943725585939,"z":-18.555313110351564},"m_Extent":{"x":2.7734875679016115,"y":2.5444045066833498,"z":0.000007439856290147873}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_05","position":{"x":13.283470153808594,"y":18.032943725585939,"z":-19.730636596679689},"rotation":{"x":-0.4999999701976776,"y":-0.5000000596046448,"z":-0.4999985098838806,"w":0.5000015497207642},"scale":{"x":2.3080999851226808,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":13.406493186950684,"y":18.032943725585939,"z":-19.730636596679689},"m_Extent":{"x":0.000015905672626104206,"y":2.5444047451019289,"z":2.7734880447387697}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_06","position":{"x":13.283470153808594,"y":18.032943725585939,"z":-26.85163116455078},"rotation":{"x":-0.4999999701976776,"y":-0.5000000596046448,"z":-0.4999985098838806,"w":0.5000015497207642},"scale":{"x":2.3080999851226808,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":13.406493186950684,"y":18.032943725585939,"z":-26.85163116455078},"m_Extent":{"x":0.000015905672626104206,"y":2.5444047451019289,"z":2.7734880447387697}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_07","position":{"x":12.352470397949219,"y":21.89094352722168,"z":-43.12163543701172},"rotation":{"x":-0.4999999701976776,"y":-0.5000000596046448,"z":-0.4999985098838806,"w":0.5000015497207642},"scale":{"x":2.3080999851226808,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":12.475493431091309,"y":21.89094352722168,"z":-43.12163543701172},"m_Extent":{"x":0.000015905672626104206,"y":2.5444047451019289,"z":2.7734880447387697}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_08","position":{"x":21.61347198486328,"y":18.032943725585939,"z":-39.17163848876953},"rotation":{"x":-0.4999999701976776,"y":-0.5000000596046448,"z":-0.4999985098838806,"w":0.5000015497207642},"scale":{"x":2.3080999851226808,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":21.736495971679689,"y":18.032943725585939,"z":-39.17163848876953},"m_Extent":{"x":0.000015905672626104206,"y":2.5444047451019289,"z":2.7734880447387697}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_09","position":{"x":23.991859436035158,"y":18.03296661376953,"z":-43.59632110595703},"rotation":{"x":-0.000002078711986541748,"y":-0.7071080207824707,"z":-0.7071056365966797,"w":0.000002130866050720215},"scale":{"x":2.3080995082855226,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":23.991859436035158,"y":18.03296661376953,"z":-43.473297119140628},"m_Extent":{"x":2.7734878063201906,"y":2.544404983520508,"z":0.000025316025130450726}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_10","position":{"x":30.541854858398439,"y":18.03296661376953,"z":-43.59632110595703},"rotation":{"x":-0.000002078711986541748,"y":-0.7071080207824707,"z":-0.7071056365966797,"w":0.000002130866050720215},"scale":{"x":2.3080995082855226,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":30.541854858398439,"y":18.03296661376953,"z":-43.473297119140628},"m_Extent":{"x":2.7734878063201906,"y":2.544404983520508,"z":0.000025316025130450726}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_11","position":{"x":37.621856689453128,"y":18.03296661376953,"z":-43.59632110595703},"rotation":{"x":-0.000002078711986541748,"y":-0.7071080207824707,"z":-0.7071056365966797,"w":0.000002130866050720215},"scale":{"x":2.3080995082855226,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":37.621856689453128,"y":18.03296661376953,"z":-43.473297119140628},"m_Extent":{"x":2.7734878063201906,"y":2.544404983520508,"z":0.000025316025130450726}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}}]}'
+  worldJson: '{"SceneObjects":[{"addressableKey":"NND_Bamboo","name":"NND_Bamboo","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":69.77873229980469,"y":19.39718246459961,"z":-31.21063232421875},"m_Extent":{"x":43.008670806884769,"y":9.288774490356446,"z":47.46424865722656}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_CenterBamboo","name":"NND_CenterBamboo","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":72.91162872314453,"y":18.038469314575197,"z":-55.19260025024414},"m_Extent":{"x":21.282127380371095,"y":14.612760543823243,"z":25.437358856201173}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_Gate","name":"NND_Gate","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":26.265125274658204,"y":20.618431091308595,"z":-31.449966430664064},"m_Extent":{"x":14.26147747039795,"y":4.205222129821777,"z":14.616828918457032}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_Ground","name":"NND_Ground","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":2.1855695919725805e-8,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":19.608219146728517,"y":17.544801712036134,"z":-33.0687255859375},"m_Extent":{"x":43.406375885009769,"y":6.755265235900879,"z":17.673242568969728}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_House","name":"NND_House","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":2.1855695919725805e-8,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":19.562740325927736,"y":31.19829559326172,"z":-34.454490661621097},"m_Extent":{"x":55.22357177734375,"y":14.797327995300293,"z":33.49152374267578}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_Stairs","name":"NND_Stairs","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":2.1855695919725805e-8,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":43.47994613647461,"y":14.619598388671875,"z":-35.00425720214844},"m_Extent":{"x":32.71017074584961,"y":6.249798774719238,"z":19.60884666442871}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_Walls","name":"NND_Walls","position":{"x":48.485595703125,"y":12.105049133300782,"z":-57.60542678833008},"rotation":{"x":-0.7071068286895752,"y":0.0,"z":0.0,"w":0.7071068286895752},"scale":{"x":0.9913600087165833,"y":0.9913604855537415,"z":0.9913604855537415},"objectBound":{"m_Center":{"x":23.477245330810548,"y":12.797672271728516,"z":-34.18324279785156},"m_Extent":{"x":53.118900299072269,"y":11.534180641174317,"z":34.15088653564453}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_01","position":{"x":37.52857971191406,"y":18.032943725585939,"z":-18.432289123535158},"rotation":{"x":-0.7071057558059692,"y":0.0,"z":0.0,"w":0.7071078419685364},"scale":{"x":2.3080999851226808,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":37.52857971191406,"y":18.032943725585939,"z":-18.555313110351564},"m_Extent":{"x":2.7734875679016115,"y":2.5444045066833498,"z":0.000007439856290147873}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"subWorldComponent":true,"subWorldIndex":0,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_02","position":{"x":30.94757843017578,"y":18.032943725585939,"z":-18.432289123535158},"rotation":{"x":-0.7071057558059692,"y":0.0,"z":0.0,"w":0.7071078419685364},"scale":{"x":2.3080999851226808,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":30.94757843017578,"y":18.032943725585939,"z":-18.555313110351564},"m_Extent":{"x":2.7734875679016115,"y":2.5444045066833498,"z":0.000007439856290147873}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"subWorldComponent":true,"subWorldIndex":1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_03","position":{"x":23.948577880859376,"y":18.032943725585939,"z":-18.432289123535158},"rotation":{"x":-0.7071057558059692,"y":0.0,"z":0.0,"w":0.7071078419685364},"scale":{"x":2.3080999851226808,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":23.948577880859376,"y":18.032943725585939,"z":-18.555313110351564},"m_Extent":{"x":2.7734875679016115,"y":2.5444045066833498,"z":0.000007439856290147873}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"subWorldComponent":true,"subWorldIndex":2,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_04","position":{"x":18.23857879638672,"y":18.032943725585939,"z":-18.432289123535158},"rotation":{"x":-0.7071057558059692,"y":0.0,"z":0.0,"w":0.7071078419685364},"scale":{"x":2.3080999851226808,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":18.23857879638672,"y":18.032943725585939,"z":-18.555313110351564},"m_Extent":{"x":2.7734875679016115,"y":2.5444045066833498,"z":0.000007439856290147873}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"subWorldComponent":true,"subWorldIndex":3,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_05","position":{"x":13.283470153808594,"y":18.032943725585939,"z":-19.730636596679689},"rotation":{"x":-0.4999999701976776,"y":-0.5000000596046448,"z":-0.4999985098838806,"w":0.5000015497207642},"scale":{"x":2.3080999851226808,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":13.406493186950684,"y":18.032943725585939,"z":-19.730636596679689},"m_Extent":{"x":0.000015905672626104206,"y":2.5444047451019289,"z":2.7734880447387697}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"subWorldComponent":true,"subWorldIndex":4,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_06","position":{"x":13.283470153808594,"y":18.032943725585939,"z":-26.85163116455078},"rotation":{"x":-0.4999999701976776,"y":-0.5000000596046448,"z":-0.4999985098838806,"w":0.5000015497207642},"scale":{"x":2.3080999851226808,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":13.406493186950684,"y":18.032943725585939,"z":-26.85163116455078},"m_Extent":{"x":0.000015905672626104206,"y":2.5444047451019289,"z":2.7734880447387697}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"subWorldComponent":true,"subWorldIndex":5,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_07","position":{"x":12.352470397949219,"y":21.89094352722168,"z":-43.12163543701172},"rotation":{"x":-0.4999999701976776,"y":-0.5000000596046448,"z":-0.4999985098838806,"w":0.5000015497207642},"scale":{"x":2.3080999851226808,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":12.475493431091309,"y":21.89094352722168,"z":-43.12163543701172},"m_Extent":{"x":0.000015905672626104206,"y":2.5444047451019289,"z":2.7734880447387697}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"subWorldComponent":true,"subWorldIndex":6,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_08","position":{"x":21.61347198486328,"y":18.032943725585939,"z":-39.17163848876953},"rotation":{"x":-0.4999999701976776,"y":-0.5000000596046448,"z":-0.4999985098838806,"w":0.5000015497207642},"scale":{"x":2.3080999851226808,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":21.736495971679689,"y":18.032943725585939,"z":-39.17163848876953},"m_Extent":{"x":0.000015905672626104206,"y":2.5444047451019289,"z":2.7734880447387697}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"subWorldComponent":true,"subWorldIndex":7,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_09","position":{"x":23.991859436035158,"y":18.03296661376953,"z":-43.59632110595703},"rotation":{"x":-0.000002078711986541748,"y":-0.7071080207824707,"z":-0.7071056365966797,"w":0.000002130866050720215},"scale":{"x":2.3080995082855226,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":23.991859436035158,"y":18.03296661376953,"z":-43.473297119140628},"m_Extent":{"x":2.7734878063201906,"y":2.544404983520508,"z":0.000025316025130450726}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"subWorldComponent":true,"subWorldIndex":8,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_10","position":{"x":30.541854858398439,"y":18.03296661376953,"z":-43.59632110595703},"rotation":{"x":-0.000002078711986541748,"y":-0.7071080207824707,"z":-0.7071056365966797,"w":0.000002130866050720215},"scale":{"x":2.3080995082855226,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":30.541854858398439,"y":18.03296661376953,"z":-43.473297119140628},"m_Extent":{"x":2.7734878063201906,"y":2.544404983520508,"z":0.000025316025130450726}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"subWorldComponent":true,"subWorldIndex":9,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"NND_TLP_01","name":"NND_TLP_11","position":{"x":37.621856689453128,"y":18.03296661376953,"z":-43.59632110595703},"rotation":{"x":-0.000002078711986541748,"y":-0.7071080207824707,"z":-0.7071056365966797,"w":0.000002130866050720215},"scale":{"x":2.3080995082855226,"y":2.3080999851226808,"z":2.3080999851226808},"objectBound":{"m_Center":{"x":37.621856689453128,"y":18.03296661376953,"z":-43.473297119140628},"m_Extent":{"x":2.7734878063201906,"y":2.544404983520508,"z":0.000025316025130450726}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"subWorldComponent":true,"subWorldIndex":10,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}}]}'
   assetsParent: {fileID: 1083683985}
+--- !u!1 &1088283662
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1088283663}
+  - component: {fileID: 1088283666}
+  - component: {fileID: 1088283665}
+  - component: {fileID: 1088283664}
+  m_Layer: 0
+  m_Name: Cube (29)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &1088283663
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088283662}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 10.700001, y: 10.460001, z: -1.5299988}
+  m_LocalScale: {x: 47.513535, y: 12.86856, z: 4.1466}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 489066591}
+  m_RootOrder: 29
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!65 &1088283664
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088283662}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.12638025, y: 1, z: 0.06735119}
+  m_Center: {x: 0.017803885, y: 0, z: 0.3239651}
+--- !u!23 &1088283665
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088283662}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1088283666
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088283662}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1103973207
 GameObject:
   m_ObjectHideFlags: 0
@@ -3388,103 +3388,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1336792413
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1336792414}
-  - component: {fileID: 1336792417}
-  - component: {fileID: 1336792416}
-  - component: {fileID: 1336792415}
-  m_Layer: 0
-  m_Name: Cube (29)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!4 &1336792414
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1336792413}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 10.7, y: 10.460001, z: -1.53}
-  m_LocalScale: {x: 47.513527, y: 12.868558, z: 4.1466}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 489066591}
-  m_RootOrder: 30
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!65 &1336792415
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1336792413}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.12638025, y: 1, z: 0.23429543}
-  m_Center: {x: 0.017803876, y: 0, z: 0.24049287}
---- !u!23 &1336792416
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1336792413}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1336792417
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1336792413}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1382207367
 GameObject:
   m_ObjectHideFlags: 0
@@ -3561,103 +3464,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.548381
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &1397552780
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1397552781}
-  - component: {fileID: 1397552784}
-  - component: {fileID: 1397552783}
-  - component: {fileID: 1397552782}
-  m_Layer: 0
-  m_Name: Cube (30)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!4 &1397552781
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1397552780}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 1.547, y: 10.460001, z: -5.458}
-  m_LocalScale: {x: 47.513527, y: 12.868558, z: 4.1466}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 489066591}
-  m_RootOrder: 31
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!65 &1397552782
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1397552780}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.12638025, y: 1, z: 0.23429543}
-  m_Center: {x: 0.017803876, y: 0, z: 0.24049287}
---- !u!23 &1397552783
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1397552780}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1397552784
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1397552780}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1452391581
 GameObject:
   m_ObjectHideFlags: 0
@@ -3754,6 +3560,103 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1452391581}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1502370361
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1502370362}
+  - component: {fileID: 1502370365}
+  - component: {fileID: 1502370364}
+  - component: {fileID: 1502370363}
+  m_Layer: 0
+  m_Name: Cube (27)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &1502370362
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1502370361}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 10.700001, y: 10.460001, z: 20.11}
+  m_LocalScale: {x: 47.513535, y: 12.86856, z: 4.1466}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 489066591}
+  m_RootOrder: 27
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!65 &1502370363
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1502370361}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.01976634, y: 1, z: 6.1000934}
+  m_Center: {x: 0.014347466, y: 0, z: -1.3294812}
+--- !u!23 &1502370364
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1502370361}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1502370365
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1502370361}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1601780432
 GameObject:
@@ -3884,7 +3787,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 489066591}
-  m_RootOrder: 26
+  m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 150, z: 0}
 --- !u!65 &1917868769
 BoxCollider:
@@ -4081,6 +3984,103 @@ Transform:
   m_Father: {fileID: 1269426078}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1978698304
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1978698305}
+  - component: {fileID: 1978698308}
+  - component: {fileID: 1978698307}
+  - component: {fileID: 1978698306}
+  m_Layer: 0
+  m_Name: Cube (30)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &1978698305
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978698304}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 1.5469999, y: 10.460001, z: -5.458}
+  m_LocalScale: {x: 47.513535, y: 12.86856, z: 4.1466}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 489066591}
+  m_RootOrder: 30
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!65 &1978698306
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978698304}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.12638025, y: 1, z: 0.09977619}
+  m_Center: {x: 0.017803885, y: 0, z: 0.30775255}
+--- !u!23 &1978698307
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978698304}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1978698308
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978698304}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &2010048045
 GameObject:
   m_ObjectHideFlags: 0
