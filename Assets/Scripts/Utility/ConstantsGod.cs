@@ -39,7 +39,7 @@ public class ConstantsGod
     public static string NFTCREATOR = "nft creator";
     public static string NFTDES = "nft des";
     public static string NFTLINK = "nft link";
-
+    public static string REFRESHXANATOKEN = "/auth/refresh-token";
 
     public static string API = "https://api.xana.net/";
     public static string SERVER = "ws://socket-lb-648131231.us-east-2.elb.amazonaws.com:3000";
