@@ -142,9 +142,10 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
         photonplayerObjects = Photon.Pun.Demo.PunBasics.MutiplayerController.instance.playerobjects.ToArray();
         for (int i = 0; i < photonplayerObjects.Length; i++)
         {
-            animator = photonplayerObjects[i].gameObject.GetComponent<Animator>();
+
             if (photonplayerObjects[i] != null)
             {
+                animator = photonplayerObjects[i].gameObject.GetComponent<Animator>();
                 if (photonplayerObjects[i].GetComponent<PhotonView>().ViewID == playerId)
                 {
                     if (!PlayerSelfieController.Instance.selfiePanel.activeInHierarchy)
