@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using UnityEngine.Video;
+using System.Threading.Tasks;
 
 public class LoadingHandler : MonoBehaviour
 {
@@ -278,7 +279,7 @@ public class LoadingHandler : MonoBehaviour
         JJLoadingPercentageText.text = "0%".ToString();
     }
 
-    public void HideLoading()
+    public async void HideLoading()
     {
         if (isFirstTime || teleportFeader.gameObject.activeInHierarchy)
         {
@@ -294,8 +295,10 @@ public class LoadingHandler : MonoBehaviour
         {
             Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
             blackScreen.DOKill();
-            blackScreen.DOFade(1f, 0.01f).OnComplete(() =>
+            blackScreen.DOFade(1f, 0.01f).OnComplete(async () =>
             {
+                await Task.Delay(1000);
+                loadingPanel.SetActive(false);
                 if (ConstantsHolder.xanaConstants.isBackFromWorld)
                     Screen.orientation = ScreenOrientation.Portrait;
 
