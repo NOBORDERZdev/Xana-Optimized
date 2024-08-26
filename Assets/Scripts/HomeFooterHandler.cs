@@ -164,8 +164,10 @@ public class HomeFooterHandler : MonoBehaviour
             allButtonIcon[2].transform.GetComponent<Image>().color = DisableButtonColor;
             allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = false;
             allButtonIcon[3].transform.GetComponent<Image>().color = DisableButtonColor;
-           // allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
-           // allButtonIcon[4].transform.GetComponent<Image>().color = DisableButtonColor;
+            if (postingBtn != null)
+            {
+                postingBtn.transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.295f);
+            }
         }
         else
         {
