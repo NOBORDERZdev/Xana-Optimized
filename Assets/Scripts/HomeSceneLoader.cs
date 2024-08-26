@@ -61,7 +61,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     public async void LoadMain(bool changeOritentationChange)
     {
         LoadingHandler.Instance.DisableVideoLoading();
-        GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
+        //GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
         disableSoundXanalobby();
         ConstantsHolder.xanaConstants.isBackFromWorld = true;
         if (exitOnce)
@@ -89,6 +89,8 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
                 }
                 LoadingHandler.Instance.ShowLoading();
                 StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(1f,true));
+
+                XanaWorldDownloader.ResetAll();
 
                 await HomeSceneLoader.ReleaseUnsedMemory();
 

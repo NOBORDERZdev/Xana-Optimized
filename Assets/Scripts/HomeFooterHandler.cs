@@ -294,6 +294,12 @@ public class HomeFooterHandler : MonoBehaviour
     }
     public void OnClickHomeWorldButton()
     {
+        if (ConstantsHolder.IsXSummitApp)
+        {
+            MainSceneEventHandler.OpenLandingScene?.Invoke();
+            return;
+        }
+
         gameManager.HomeCameraInputHandler(false);
 
         GlobalVeriableClass.callingScreen = "";

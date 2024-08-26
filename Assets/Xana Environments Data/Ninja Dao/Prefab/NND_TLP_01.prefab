@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 8042806538155696179}
   - component: {fileID: 8042806538155696176}
   - component: {fileID: 8042806538155696177}
+  - component: {fileID: 5511366822411555121}
   m_Layer: 9
   m_Name: NND_TLP_01
   m_TagString: Item
@@ -124,8 +125,21 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8042806538155696183}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.4032648, y: 0.22238672, z: 2.204761}
   m_Center: {x: 0, y: 0.11446977, z: 0}
+--- !u!114 &5511366822411555121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8042806538155696183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a66ea37272d06437683a8f8540ce7ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SubworldIndex: 0

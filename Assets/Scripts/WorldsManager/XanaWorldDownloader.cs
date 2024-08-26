@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -54,6 +55,8 @@ public class XanaWorldDownloader : MonoBehaviour
     private float unloadDistance = 50;
 
     private static XanaWorldDownloader xanaWorldDownloader;
+
+    private static CancellationTokenSource cts;
 
     private void Start()
     {
@@ -111,11 +114,11 @@ public class XanaWorldDownloader : MonoBehaviour
     {
         BuilderEventManager.XanaMapDataDownloaded -= PostLoadingBuilderAssets;
         ScreenOrientationManager.switchOrientation -= OnOrientationChange;
-        ResetAll();
     }
 
     async void PostLoadingBuilderAssets(string worldData)
     {
+        cts = new CancellationTokenSource();
         GetDataFromAPI(worldData, true);
         ArrangeData();
         while (!dataArranged)
@@ -132,7 +135,15 @@ public class XanaWorldDownloader : MonoBehaviour
         {
             EnableDownloadingText();
         }
-        StartDownloadingAssets();
+        try
+        {
+            await StartDownloadingAssets(cts.Token);
+        }
+        catch(OperationCanceledException)
+        {
+            Debug.LogError("task Canceled");
+        }
+        
     }
 
     void LoadAddressableSceneAfterDownload()
@@ -231,7 +242,7 @@ public class XanaWorldDownloader : MonoBehaviour
         }
     }
 
-    async Task StartDownloadingAssets()
+    async Task StartDownloadingAssets(CancellationToken token)
     {
         SortingQueueData(initialPlayerPos);
         while (!dataSorted)
@@ -239,17 +250,17 @@ public class XanaWorldDownloader : MonoBehaviour
             await Task.Yield();
         }
         StartCoroutine(DownloadAssetsFromSortedList());
-        while (!isDefaultPriorityObjectDownloaded)
+        while (!isDefaultPriorityObjectDownloaded && !token.IsCancellationRequested)
         {
             await Task.Yield();
         }
         StartCoroutine(DownloadObjects(postLoadObjects, Priority.Low));
-        while (!isLowPriorityDownloaded)
+        while (!isLowPriorityDownloaded && !token.IsCancellationRequested)
         {
             await Task.Yield();
         }
         StartCoroutine(DownloadFailedItem());
-        while (!isfailedObjectsDownloaded)
+        while (!isfailedObjectsDownloaded && !token.IsCancellationRequested)
         {
             await Task.Yield();
         }
@@ -507,17 +518,14 @@ public class XanaWorldDownloader : MonoBehaviour
         ApplyLightmapData(_itemData.lightmapData, newObj);
         //AddObjectInPool(downloadKey, newObj);
         AssignDomeId(newObj, _itemData);
-
-        if (ConstantsHolder.HaveSubWorlds)
-        {
-            if (downloadKey.Contains("TLP"))
-            {
-                Debug.LogError("Teleport object");
-                XANASummitDataContainer.SceneTeleportingObjects.Add(objectTobeInstantiate);
-            }
-        }
-
-
+        SetSubworldIndex(newObj, _itemData);
+        //if (ConstantsHolder.HaveSubWorlds)
+        //{
+        //    if (_itemData.addressableKey.Contains("TLP"))
+        //    {
+        //        XANASummitDataContainer.SceneTeleportingObjects.Add(objectTobeInstantiate);
+        //    }
+        //}
     }
 
     private static void InstantiateAsset(GameObject ObjectFromPool, ObjectsInfo _itemData, bool alreadyInstantiated)
@@ -578,6 +586,22 @@ public class XanaWorldDownloader : MonoBehaviour
         }
         #endregion
     }
+
+    static void SetSubworldIndex(GameObject objectTobeInstantiate, ObjectsInfo _itemData)
+    {
+        if(ConstantsHolder.HaveSubWorlds)
+        {
+            if (_itemData.subWorldComponent)
+            {
+                if (objectTobeInstantiate.GetComponent<SummitSubWorldIndex>())
+                {
+                    objectTobeInstantiate.GetComponent<SummitSubWorldIndex>().SubworldIndex = _itemData.subWorldIndex;
+                    XANASummitDataContainer.SceneTeleportingObjects.Add(objectTobeInstantiate);
+                }
+            }
+        }
+    }
+
 
     IEnumerator CheckForUnloading()
     {
@@ -697,7 +721,7 @@ public class XanaWorldDownloader : MonoBehaviour
         }
     }
 
-    public static void ResetAll()
+    public async static void ResetAll()
     {
         stopDownloading = true;
 
@@ -709,6 +733,8 @@ public class XanaWorldDownloader : MonoBehaviour
         xanaSceneData.SceneObjects.Clear();
         BuilderData.mapData = null;
         BuilderData.spawnPoint.Clear();
+        AllDomes.Clear();
+        XANASummitDataContainer.SceneTeleportingObjects.Clear();
         downloadedTillNow = 0;
         totalAssetCount = 0;
         dataArranged = false;
@@ -718,9 +744,10 @@ public class XanaWorldDownloader : MonoBehaviour
         isfailedObjectsDownloaded = false;
         isSpawnDownloaded = false;
 
+        cts.Cancel();
         xanaWorldDownloader.ResetDisplayDownloadText();
         xanaWorldDownloader.StopAllCoroutines();
-
+                
         //AssetBundle.UnloadAllAssetBundles(false);
         //Caching.ClearCache();
         //Addressables.CleanBundleCache();
@@ -748,6 +775,8 @@ public class ObjectsInfo
     public string tagName;
     public int layerIndex;
     public bool isActive;
+    public bool subWorldComponent;
+    public int subWorldIndex;
     public LightmapData[] lightmapData;
     public SummitDomeInfo summitDomeInfo;
 }

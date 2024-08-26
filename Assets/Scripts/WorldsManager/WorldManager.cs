@@ -132,6 +132,7 @@ public class WorldManager : MonoBehaviour
             ConstantsHolder.userLimit = int.Parse(singleWorldInfo.data.user_limit);
             ConstantsHolder.isPenguin = false;
             ConstantsHolder.xanaConstants.openLandingSceneDirectly = false;
+            ConstantsHolder.IsXSummitApp = true;
             ConstantsHolder.xanaConstants.isBuilderScene = false;
             ConstantsHolder.xanaConstants.isFromHomeTab = true;
             ConstantsHolder.xanaConstants.MuseumID = singleWorldInfo.data.id;
