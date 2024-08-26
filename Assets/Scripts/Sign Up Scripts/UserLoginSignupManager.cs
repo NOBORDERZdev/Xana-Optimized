@@ -52,6 +52,7 @@ public class UserLoginSignupManager : MonoBehaviour
     public GameObject EditProfilePanel;
     public AdvancedInputField displayrNameField;
     public AdvancedInputField userUsernameField;
+    public GameObject usernameFieldObj;
     public Image SelectedPresetImage;
     public Image SelectPresetImageforEditProfil;
     public RawImage AiPresetImage;
@@ -940,44 +941,68 @@ public class UserLoginSignupManager : MonoBehaviour
         string displayrname = displayrNameField.Text;
         string userUsername = userUsernameField.Text;
         string keytoLocalize;
-        if (displayrname == "" || userUsername == "")
+        if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
         {
-            keytoLocalize = TextLocalization.GetLocaliseTextByKey("Display name or username should not be empty.");
-            UserDisplayNameErrors(keytoLocalize);
-            return;
-        }
+            if (displayrname == "")
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("Display name or username should not be empty.");
+                UserDisplayNameErrors(keytoLocalize);
+                return;
+            }
 
-        else if (displayrname.StartsWith(" ") || userUsername.StartsWith(" "))
-        {
-            UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
-            return;
-        }
-        else if (userUsername.All(char.IsDigit))
-        {
-            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must include letters.");
-            UserDisplayNameErrors(keytoLocalize);
-            return;
-        }
-        else if (userUsername.Length < 5 || userUsername.Length > 15)
-        {
-            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must be between 5 and 15 characters.");
-            UserDisplayNameErrors(keytoLocalize);
-            return;
-        }
-        else if (!userUsername.Any(c => char.IsDigit(c) || c == '_'))
-        {
-            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must not include Space. Alphabet, Numbers, or Underscore allowed.");
-            UserDisplayNameErrors(keytoLocalize);
-            return;
+            else if (displayrname.StartsWith(" "))
+            {
+                UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
+                return;
+            }
+            else if (displayrname.EndsWith(" "))
+            {
+                displayrname = displayrname.TrimEnd(' ');
+            }
 
         }
-        else if (displayrname.EndsWith(" "))
+        else
         {
-            displayrname = displayrname.TrimEnd(' ');
-        }
-        else if (userUsername.EndsWith(" "))
-        {
-            userUsername = userUsername.TrimEnd(' ');
+
+            if (displayrname == "" || userUsername == "")
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("Display name or username should not be empty.");
+                UserDisplayNameErrors(keytoLocalize);
+                return;
+            }
+
+            else if (displayrname.StartsWith(" ") || userUsername.StartsWith(" "))
+            {
+                UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
+                return;
+            }
+            else if (userUsername.All(char.IsDigit))
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must include letters.");
+                UserDisplayNameErrors(keytoLocalize);
+                return;
+            }
+            else if (userUsername.Length < 5 || userUsername.Length > 15)
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must be between 5 and 15 characters.");
+                UserDisplayNameErrors(keytoLocalize);
+                return;
+            }
+            else if (!userUsername.Any(c => char.IsDigit(c) || c == '_'))
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must not include Space. Alphabet, Numbers, or Underscore allowed.");
+                UserDisplayNameErrors(keytoLocalize);
+                return;
+
+            }
+            else if (displayrname.EndsWith(" "))
+            {
+                displayrname = displayrname.TrimEnd(' ');
+            }
+            else if (userUsername.EndsWith(" "))
+            {
+                userUsername = userUsername.TrimEnd(' ');
+            }
         }
         if (PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetInt("IsProcessComplete") == 0 && PlayerPrefs.GetInt("iSignup") == 0)
         {
@@ -994,6 +1019,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 InventoryManager.instance.OnSaveBtnClicked();
             }
             ConstantsHolder.userName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
+
             PlayerPrefs.SetInt("IsProcessComplete", 1);// user is registered as guest/register.
             if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
                 LoadSummit();
@@ -1013,6 +1039,7 @@ public class UserLoginSignupManager : MonoBehaviour
         if (ConstantsHolder.isWalletLogin)
         {
 
+
             StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, displayrname, (isSucess) =>
             {
 
@@ -1024,22 +1051,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
             RequestSubmitUsername(userUsername);
         }
-        //else
-        //{
-        //    StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, displayrname, (isSucess) =>
-        //    {
-
-        //        NameScreenLoader.SetActive(false);
-        //        NameScreenNextButton.interactable = true;
-
-        //        Debug.Log("Email Signup");
-        //        GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Email_Completed.ToString());
-        //        UserPassManager.Instance.GetGroupDetails("freeuser");
-        //    }));
-        //}
-
-
-        //ProfilePictureManager.instance.MakeProfilePicture(Localusername);
+        
     }
     public void UserDisplayNameErrors(string errorMSg)
     {

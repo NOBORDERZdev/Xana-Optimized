@@ -86,7 +86,12 @@ public class CharacSelectScroll : MonoBehaviour
             //Debug.LogError("selected obj name :- "+SelectedOBJ.name);
             SelectedOBJ.GetComponent<PresetData_Jsons>().ChangecharacterFromPresetPanel();
             GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
-
+            if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
+            {
+                UserLoginSignupManager.instance.usernameFieldObj.SetActive(false);
+            } else {
+                UserLoginSignupManager.instance.usernameFieldObj.SetActive(true);
+            }
         }
     }
 
