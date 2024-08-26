@@ -31,9 +31,9 @@ public static class Utilss
         Application.OpenURL(url);
 
 #elif UNITY_ANDROID
-        if (WebViewManager.Instance.useWebview)
+        if (WebViewManager.Instance.WebViewBool)
         {
-            WebViewManager.Instance.useWebview = false;
+            WebViewManager.Instance.WebViewBool = false;
             WebViewManager.Instance.StartwebView(url);
         }
         else
