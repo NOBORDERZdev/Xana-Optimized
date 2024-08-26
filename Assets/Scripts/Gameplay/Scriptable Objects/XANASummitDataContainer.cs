@@ -97,11 +97,11 @@ public class XANASummitDataContainer : ScriptableObject
         {
             if (DomeId == summitData.domes[i].id)
             {
-                return new[] { summitData.domes[i].world360Image, summitData.domes[i].name };
+                return new[] { summitData.domes[i].world360Image, summitData.domes[i].name ,summitData.domes[i].companyLogo};
             }
         }
 
-        return new[] { string.Empty, string.Empty };
+        return new[] { string.Empty, string.Empty,string.Empty };
     }
 
     #region DomeInfo
@@ -131,6 +131,7 @@ public class XANASummitDataContainer : ScriptableObject
         public int AvatarIndex;
         public string Avatarjson;
         public string world360Image;
+        public string companyLogo;
         public int maxPlayer;
         public List<SubWorldInfo> SubWorlds;
         public bool isSubWorld;

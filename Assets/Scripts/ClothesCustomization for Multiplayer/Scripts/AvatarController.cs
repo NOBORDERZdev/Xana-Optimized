@@ -415,8 +415,9 @@ public class AvatarController : MonoBehaviour
     /// <summary>
     /// Initializing Avatar with json file from the server.
     /// </summary>
-    void Custom_InitializeAvatar(SavingCharacterDataClass _data = null)
+    async void Custom_InitializeAvatar(SavingCharacterDataClass _data = null)
     {
+        await Task.Delay(200);
         if (isLoadStaticClothFromJson)
         {
             BuildCharacterFromLocalJson();

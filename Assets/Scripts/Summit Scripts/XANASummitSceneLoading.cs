@@ -335,6 +335,7 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.name = dataContainer.summitData.domes[i].name;
                 domeGeneralData.isSubWorld = dataContainer.summitData.domes[i].isSubWorld;
                 domeGeneralData.world360Image = dataContainer.summitData.domes[i].world360Image;
+                domeGeneralData.companyLogo = dataContainer.summitData.domes[i].companyLogo;
                 //if (dataContainer.summitData1.domes[i].worldType)
                 //    return new Tuple<string[],string>(new[] { dataContainer.summitData1.domes[i].world, "1", dataContainer.summitData1.domes[i].builderWorldId }, dataContainer.summitData1.domes[i].experienceType);
                 //else

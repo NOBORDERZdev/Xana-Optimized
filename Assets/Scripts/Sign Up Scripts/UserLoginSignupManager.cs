@@ -577,6 +577,7 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
         SubmitSetDeviceToken();
+        WebViewManager.Instance.CloseWebView();
         if (signUpOrloginSelectionPanel.activeInHierarchy)
         {
             signUpOrloginSelectionPanel.SetActive(false);
