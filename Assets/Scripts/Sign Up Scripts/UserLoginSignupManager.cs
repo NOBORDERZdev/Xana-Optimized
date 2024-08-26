@@ -462,18 +462,18 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.Save();
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
-        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
-            return;
+        //if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        //    return;
         GetUserClothData();
         GetOwnedNFTsFromAPI();
         
         UserPassManager.Instance.GetGroupDetails("freeuser");
         UserPassManager.Instance.GetGroupDetailsForComingSoon();
         StartCoroutine(WaitForDeepLink());
-        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
-        {
+        //if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        //{
             StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
-        }
+        //}
         if (GameManager.Instance.UiManager != null)//rik
         {
             GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
