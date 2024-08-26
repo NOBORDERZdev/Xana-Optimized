@@ -88,9 +88,9 @@ public class CharacSelectScroll : MonoBehaviour
             GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
             if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
             {
-                UserLoginSignupManager.instance.usernameFieldObj.SetActive(false);
+                UserLoginSignupManager.instance.UserNameFieldObj.SetActive(false);
             } else {
-                UserLoginSignupManager.instance.usernameFieldObj.SetActive(true);
+                UserLoginSignupManager.instance.UserNameFieldObj.SetActive(true);
             }
         }
     }
