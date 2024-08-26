@@ -52,7 +52,7 @@ public class UserLoginSignupManager : MonoBehaviour
     public GameObject EditProfilePanel;
     public AdvancedInputField displayrNameField;
     public AdvancedInputField userUsernameField;
-    public GameObject usernameFieldObj;
+    public GameObject UserNameFieldObj;
     public Image SelectedPresetImage;
     public Image SelectPresetImageforEditProfil;
     public RawImage AiPresetImage;
@@ -1019,10 +1019,10 @@ public class UserLoginSignupManager : MonoBehaviour
                 InventoryManager.instance.OnSaveBtnClicked();
             }
             ConstantsHolder.userName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
-
             PlayerPrefs.SetInt("IsProcessComplete", 1);// user is registered as guest/register.
+            GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
             if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
-                LoadSummit();
+            LoadSummit();
             return;
         }
         ConstantsHolder.uniqueUserName = userUsername;
