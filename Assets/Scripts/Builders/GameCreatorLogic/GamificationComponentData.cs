@@ -523,10 +523,6 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     public void UpdateRaceStatusIfPlayerLeaveWithoutCompletiting(bool raceFinishStatus)
     {
         var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
-        //if (!raceFinishStatus)
-        //{
-        //    xanaPartyMulitplayer.RaceFinishCount++;
-        //}
 
         for (int i = 0; i < MutiplayerController.instance.playerobjects.Count; i++)
         {
@@ -540,13 +536,6 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
             XANAPartyManager.Instance.GameIndex++;
             StartCoroutine(XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PrintLeaderboard());
         }
-
-        //int currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-        //if (xanaPartyMulitplayer.RaceFinishCount >= XANAPartyManager.Instance.ActivePlayerInCurrentLevel)//XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().RaceStartWithPlayers)
-        //{
-        //    XANAPartyManager.Instance.GameIndex++;
-        //    StartCoroutine(XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PrintLeaderboard());
-        //}
     }
 
 
