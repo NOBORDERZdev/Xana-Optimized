@@ -499,6 +499,7 @@ public class WorldManager : MonoBehaviour
             _event.CreatedAt = _WorldInfo.data.rows[i].createdAt;
             //_event.WorldVisitCount = _WorldInfo.data.rows[i].totalVisits; // TotalVisit Variable Used for Web
             _event.WorldVisitCount = _WorldInfo.data.rows[i].xanaAppVisitCount;
+            _event.UserMicEnable = _WorldInfo.data.rows[i].userMicEnable;
             _event.isFavourite = _WorldInfo.data.rows[i].isFavourite;
             if (_WorldInfo.data.rows[i].tags != null)
                 _event.WorldTags = _WorldInfo.data.rows[i].tags;
@@ -636,6 +637,7 @@ public class WorldManager : MonoBehaviour
         _event.UpdatedAt = _worldInfo.updatedAt;
         _event.CreatedAt = _worldInfo.createdAt;
         _event.WorldVisitCount = _worldInfo.totalVisits;
+        _event.UserMicEnable = _worldInfo.userMicEnable;
         _event.isFavourite = _worldInfo.isFavourite;
         if (_worldInfo.tags != null)
             _event.WorldTags = _worldInfo.tags;
@@ -1154,7 +1156,7 @@ public class WorldItemDetail
     public string CreatorAvatarURL;
     public string CreatorDescription;
     public string WorldVisitCount;
-    public bool UserMicEnabled;
+    public bool UserMicEnable;
     public bool isFavourite;
 }
 

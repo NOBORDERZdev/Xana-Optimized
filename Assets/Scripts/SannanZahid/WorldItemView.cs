@@ -79,7 +79,7 @@ public class WorldItemView : EnhancedScrollerCellView
         CreatorAvatarURL = detail.CreatorAvatarURL;
         CreatorDescription = SNS_APIManager.DecodedString(detail.CreatorDescription);
         worldVisitCount = detail.WorldVisitCount;
-        UserMicEnable=detail.UserMicEnabled;
+        UserMicEnable=detail.UserMicEnable;
         isFavourite = detail.isFavourite;
         if (creatorNameText)
             creatorNameText.text = Creator_Name;

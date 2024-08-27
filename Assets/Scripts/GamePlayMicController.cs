@@ -9,19 +9,11 @@ using UnityEngine.UI;
 
 public class GamePlayMicController : MonoBehaviour
 {
-    public SocketManager Manager;
-    string address;
+    [SerializeField]
+    private Button _micOff, _micOffPotrait, _settingOnButton, _settingOffButton, _settingOnButtonPotrait, _settingOffButtonPotrait;
+    private string address;
+    private SocketManager Manager;
     public string socketId;
-    public GameObject micOn;
-    public GameObject micOff;
-    public GameObject micOnPotrait;
-    public GameObject micOffPotrait;
-    public GameObject SettingOnButton;
-    public GameObject SettingOffButton;
-    public GameObject SettingOnButtonPotrait;
-    public GameObject SettingOffButtonPotrait;
-
-    public Action<UserMicStatus> UserMicStatus;
     void Start()
     {
 
@@ -66,61 +58,53 @@ public class GamePlayMicController : MonoBehaviour
     {
         UserMicStatus micStatus = JsonConvert.DeserializeObject<UserMicStatus>(userMicStatus);
         //UserMicStatus?.Invoke(micStatus);
-        UserMicEnableDisable(micStatus.micEnable);
+        if(micStatus.world_id.ToString() == ConstantsHolder.xanaConstants.MuseumID)
+            UserMicEnableDisable(micStatus.micEnable);
     }
     void UserMicEnableDisable(bool isEnable)
     {
+        ConstantsHolder.xanaConstants.UserMicEnable = isEnable;
         if (isEnable)
         {
             if (PlayerPrefs.GetInt("micSound") == 0)
             {
-                //micOff.SetActive(true);
-                //micOffPotrait.SetActive(true);
-                ConstantsHolder.xanaConstants.StopMic();
+                //ConstantsHolder.xanaConstants.StopMic();
                 XanaVoiceChat.instance.StopRecorder();
                 XanaVoiceChat.instance.TurnOffMic();
-                micOff.GetComponent<Button>().interactable = true;
-                micOffPotrait.GetComponent<Button>().interactable = true;
-                SettingOffButton.GetComponent<Button>().interactable = true;
-                SettingOffButtonPotrait.GetComponent<Button>().interactable = true;
+                _micOff.interactable = true;
+                _micOffPotrait.interactable = true;
+                _settingOffButton.interactable = true;
+                _settingOffButtonPotrait.interactable = true;
             }
             else
             {
-                ConstantsHolder.xanaConstants.PlayMic();
+                //ConstantsHolder.xanaConstants.PlayMic();
                 XanaVoiceChat.instance.EnableRecoder();
                 XanaVoiceChat.instance.TurnOnMic();
-                micOn.GetComponent<Button>().interactable = true;
-                micOnPotrait.GetComponent<Button>().interactable = true;
-                SettingOnButton.GetComponent<Button>().interactable = true;
-                SettingOnButtonPotrait.GetComponent<Button>().interactable = true;
+                _settingOnButton.gameObject.SetActive(true);
+                _settingOnButtonPotrait.gameObject.SetActive(true);
+                _settingOffButton.gameObject.SetActive(false);
+                _settingOffButtonPotrait.gameObject.SetActive(false);
+                _micOff.interactable = true;
+                _micOffPotrait.interactable = true;
+                _settingOffButton.interactable = true;
+                _settingOffButtonPotrait.interactable = true;
             }
-            //micOn.SetActive(true);
-            //micOnPotrait.SetActive(true);
-            Debug.Log("Call MyBeachMute");
+            //Debug.Log("Call MyBeachMute");
         }
         else
         {
             //ConstantsHolder.xanaConstants.StopMic();
             XanaVoiceChat.instance.StopRecorder();
             XanaVoiceChat.instance.TurnOffMic();
-            if(PlayerPrefs.GetInt("micSound") == 0)
-            {
-                //micOn.SetActive(false);
-                //micOnPotrait.SetActive(false);
-                micOff.GetComponent<Button>().interactable = false;
-                micOffPotrait.GetComponent<Button>().interactable = false;
-                //Debug.Log("Call MyBeachMute");
-                SettingOffButton.GetComponent<Button>().interactable = false;
-                SettingOffButtonPotrait.GetComponent<Button>().interactable = false;
-            }
-            else
-            {
-                micOn.GetComponent<Button>().interactable = false;
-                micOnPotrait.GetComponent<Button>().interactable = false;
-                SettingOnButton.GetComponent<Button>().interactable = false;
-                SettingOnButtonPotrait.GetComponent<Button>().interactable = false;
-
-            }
+            _settingOnButton.gameObject.SetActive(false);
+            _settingOnButtonPotrait.gameObject.SetActive(false);
+            _settingOffButton.gameObject.SetActive(true);
+            _settingOffButtonPotrait.gameObject.SetActive(true);
+            _micOff.interactable = false;
+            _micOffPotrait.interactable = false;
+            _settingOffButton.interactable = false;
+            _settingOffButtonPotrait.interactable = false;
         }
     }
 }

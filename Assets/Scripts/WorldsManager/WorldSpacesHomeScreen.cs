@@ -516,7 +516,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             _event.UpdatedAt = _WorldInfo.data.rows[i].updatedAt;
             _event.CreatedAt = _WorldInfo.data.rows[i].createdAt;
             _event.WorldVisitCount = _WorldInfo.data.rows[i].totalVisits;
-            _event.UserMicEnabled = _WorldInfo.data.rows[i].userMicEnable;
+            _event.UserMicEnable = _WorldInfo.data.rows[i].userMicEnable;
             _event.isFavourite = _WorldInfo.data.rows[i].isFavourite;
             if (_WorldInfo.data.rows[i].tags != null)
                 _event.WorldTags = _WorldInfo.data.rows[i].tags;

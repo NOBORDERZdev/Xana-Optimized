@@ -28,7 +28,7 @@ public class MicControllerButtons : MonoBehaviour
     //    }
 
     //}
-    private void OnEnable()
+    private void HandleObjects()
     {
 
         if (ConstantsHolder.xanaConstants.mic == 1)
@@ -76,7 +76,7 @@ public class MicControllerButtons : MonoBehaviour
             micOnButtonGameplay.SetActive(true);
             micOffButtonGameplay.SetActive(false);
         }
-        OnEnable();
+        HandleObjects();
 
 
     }
