@@ -100,7 +100,8 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         StartCoroutine(WaitForArrowIntanstiate(this.transform, !this.GetComponent<PhotonView>().IsMine));
         try
         {
-            AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
+            if(AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer)
+                AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
         }
         catch (Exception e)
         {

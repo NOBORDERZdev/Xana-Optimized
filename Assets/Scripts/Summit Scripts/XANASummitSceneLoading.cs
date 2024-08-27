@@ -163,6 +163,8 @@ public class XANASummitSceneLoading : MonoBehaviour
             eventName = "TV_Dome_" + domeId + "_BW_" + domeGeneralData.builderWorldId;
         else
             eventName = "TV_Dome_" + domeId + "_XW_" + domeGeneralData.worldId;
+
+        GameplayEntityLoader.instance.AssignRaffleTickets(domeId);
         GlobalConstants.SendFirebaseEventForSummit(eventName);
     }
 
