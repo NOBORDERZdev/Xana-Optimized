@@ -376,6 +376,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         GameplayEntityLoader.instance.mainController.transform.position = playerPos;
         GameplayEntityLoader.instance.mainController.transform.rotation = playerRot.CTQuaternion();
         GameplayEntityLoader.instance.mainController.transform.localScale = playerScale;
+        XanaWorldDownloader.initialPlayerPos = playerPos;
         if (WorldItemView.m_EnvName == "XANA Summit")
         {
             ConstantsHolder.isFromXANASummit = false;
