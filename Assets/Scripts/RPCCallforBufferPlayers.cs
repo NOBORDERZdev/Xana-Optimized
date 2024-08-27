@@ -54,8 +54,8 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
             _mydatatosend[1] = GetJsonFolderData() as object;
             _mydatatosend[2] = XanaConstants.xanaConstants.isNFTEquiped;
-            Invoke(nameof(CallRpcInvoke), /*1.2f*/2);
-            //CallRpcInvoke();
+            //Invoke(nameof(CallRpcInvoke), /*1.2f*/2);
+            CallRpcInvoke();
         }
         if (!this.GetComponent<PhotonView>().IsMine && !this.gameObject.GetComponent<Speaker>())
         {

@@ -33,7 +33,7 @@ public class PMY_Metaverse : MonoBehaviour
         //if (XanaConstants.xanaConstants.isBackFromPMY)      // when user back from PMY
         //{
         //XanaConstants.xanaConstants.isBackFromPMY = false;
-        UnityEngine.Debug.LogError("LoggIn" + IsLoggedIn());
+        //UnityEngine.Debug.LogError("LoggIn" + IsLoggedIn());
         if (IsLoggedIn())
         {
             UserRegisterationManager.instance.deleteAccScreen.SetActive(true);
