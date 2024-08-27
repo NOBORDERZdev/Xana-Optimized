@@ -42,6 +42,7 @@ public class TrajectoryController : MonoBehaviour
                     if (hitInfo.collider.CompareTag("Item") || hitInfo.collider.CompareTag("Footsteps/grass") || hitInfo.collider.CompareTag("Footsteps/floor"))//"Ground"
                     {
                         colliderAim.transform.position = hitInfo.point;
+                        lineRenderer.positionCount = i;
                         hitDetected = true;
                         break;
                     }

@@ -58,12 +58,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (CharacterHandler.instance.activePlayerGender==AvatarGender.Male)//UGCARFacePoseTrackingManager.Instance.maleDFaceskinRenderer.gameObject.activeInHierarchy)
             {
-                skinnedMeshRenderer = UGCARFacePoseTrackingManager.Instance.maleDFaceskinRenderer;
+                skinnedMeshRenderer = UGCARFacePoseTrackingManager.Instance.MaleDFaceskinRenderer;
                 strPrefix = "Xana_male_Bsps.";
             }
             else
             {
-                skinnedMeshRenderer = UGCARFacePoseTrackingManager.Instance.feMaleDFaceskinRenderer;
+                skinnedMeshRenderer = UGCARFacePoseTrackingManager.Instance.FemaleDFaceskinRenderer;
                 strPrefix = "Xana_female_Bsps.";
             }
 

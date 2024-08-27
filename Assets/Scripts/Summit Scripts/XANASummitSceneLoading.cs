@@ -163,6 +163,8 @@ public class XANASummitSceneLoading : MonoBehaviour
             eventName = "TV_Dome_" + domeId + "_BW_" + domeGeneralData.builderWorldId;
         else
             eventName = "TV_Dome_" + domeId + "_XW_" + domeGeneralData.worldId;
+
+        GameplayEntityLoader.instance.AssignRaffleTickets(domeId);
         GlobalConstants.SendFirebaseEventForSummit(eventName);
     }
 
@@ -327,6 +329,7 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.worldType = dataContainer.summitData.domes[i].worldType;
                 domeGeneralData.experienceType = dataContainer.summitData.domes[i].experienceType;
                 domeGeneralData.builderWorldId = dataContainer.summitData.domes[i].builderWorldId;
+                domeGeneralData.worldId = dataContainer.summitData.domes[i].worldId;
                 domeGeneralData.maxPlayer = dataContainer.summitData.domes[i].maxPlayer;
                 domeGeneralData.IsPenguin = dataContainer.summitData.domes[i].IsPenguin;
                 domeGeneralData.Ishumanoid = dataContainer.summitData.domes[i].Ishumanoid;
@@ -335,6 +338,7 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.name = dataContainer.summitData.domes[i].name;
                 domeGeneralData.isSubWorld = dataContainer.summitData.domes[i].isSubWorld;
                 domeGeneralData.world360Image = dataContainer.summitData.domes[i].world360Image;
+                domeGeneralData.companyLogo = dataContainer.summitData.domes[i].companyLogo;
                 //if (dataContainer.summitData1.domes[i].worldType)
                 //    return new Tuple<string[],string>(new[] { dataContainer.summitData1.domes[i].world, "1", dataContainer.summitData1.domes[i].builderWorldId }, dataContainer.summitData1.domes[i].experienceType);
                 //else

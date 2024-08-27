@@ -132,6 +132,7 @@ public class WorldManager : MonoBehaviour
             ConstantsHolder.userLimit = int.Parse(singleWorldInfo.data.user_limit);
             ConstantsHolder.isPenguin = false;
             ConstantsHolder.xanaConstants.openLandingSceneDirectly = false;
+            ConstantsHolder.IsXSummitApp = true;
             ConstantsHolder.xanaConstants.isBuilderScene = false;
             ConstantsHolder.xanaConstants.isFromHomeTab = true;
             ConstantsHolder.xanaConstants.MuseumID = singleWorldInfo.data.id;
@@ -523,7 +524,7 @@ public class WorldManager : MonoBehaviour
                 _event.Creator_Name = _WorldInfo.data.rows[i].user.name;
                 _event.CreatorDescription = _WorldInfo.data.rows[i].user.userProfile.bio;
                 _event.UserAvatarURL = _WorldInfo.data.rows[i].user.avatar;
-                _event.UserLimit = "15";
+                _event.UserLimit = "10";
             }
             else
             {
@@ -651,7 +652,7 @@ public class WorldManager : MonoBehaviour
                 //_event.CreatorDescription = _WorldInfo.data.rows[i].creatorDetails.description; // due to wrong API response commited this
                 _event.CreatorDescription = _worldInfo.user.userProfile.bio;
                 _event.UserAvatarURL = _worldInfo.user.avatar;
-                _event.UserLimit = "15";
+                _event.UserLimit = "10";
             }
             else
             {
@@ -1028,7 +1029,7 @@ public class WorldManager : MonoBehaviour
             {
                 if (ConstantsHolder.xanaConstants.isBuilderScene)
                 {
-                    ConstantsHolder.userLimit = 15;
+                    ConstantsHolder.userLimit = 10;
                 }
                 else
                 {
