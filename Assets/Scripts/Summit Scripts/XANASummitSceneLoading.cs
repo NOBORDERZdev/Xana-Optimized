@@ -110,6 +110,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         ConstantsHolder.userLimit = domeGeneralData.maxPlayer;
         ConstantsHolder.isPenguin = domeGeneralData.IsPenguin;
         ConstantsHolder.isFixedHumanoid = domeGeneralData.Ishumanoid;
+        ConstantsHolder.AvatarIndex = domeGeneralData.AvatarIndex;
         if (domeGeneralData.worldType)
             ConstantsHolder.xanaConstants.MuseumID = domeGeneralData.builderWorldId.ToString();
         else

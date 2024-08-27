@@ -279,7 +279,7 @@ public class LoadingHandler : MonoBehaviour
         JJLoadingPercentageText.text = "0%".ToString();
     }
 
-    public async void HideLoading()
+    public void HideLoading()
     {
         if (isFirstTime || teleportFeader.gameObject.activeInHierarchy)
         {
@@ -297,8 +297,8 @@ public class LoadingHandler : MonoBehaviour
             blackScreen.DOKill();
             blackScreen.DOFade(1f, 0.01f).OnComplete(async () =>
             {
-                await Task.Delay(1000);
                 loadingPanel.SetActive(false);
+                await Task.Delay(1000);
                 if (ConstantsHolder.xanaConstants.isBackFromWorld)
                     Screen.orientation = ScreenOrientation.Portrait;
 
