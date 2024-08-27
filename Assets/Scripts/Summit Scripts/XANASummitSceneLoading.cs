@@ -327,6 +327,7 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.worldType = dataContainer.summitData.domes[i].worldType;
                 domeGeneralData.experienceType = dataContainer.summitData.domes[i].experienceType;
                 domeGeneralData.builderWorldId = dataContainer.summitData.domes[i].builderWorldId;
+                domeGeneralData.worldId = dataContainer.summitData.domes[i].worldId;
                 domeGeneralData.maxPlayer = dataContainer.summitData.domes[i].maxPlayer;
                 domeGeneralData.IsPenguin = dataContainer.summitData.domes[i].IsPenguin;
                 domeGeneralData.Ishumanoid = dataContainer.summitData.domes[i].Ishumanoid;
