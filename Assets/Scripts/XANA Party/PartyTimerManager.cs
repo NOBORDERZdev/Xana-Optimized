@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartyTimerManager : MonoBehaviour
+public class PartyTimerManager : MonoBehaviourPunCallbacks
 {
     public float timerDuration = 60f;
     [HideInInspector]
@@ -80,4 +80,17 @@ public class PartyTimerManager : MonoBehaviour
             ref_PartyTimerManager.isTimerRunning = true;
         }
     }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (startTime <= -1)
+            {
+                startTime = PhotonNetwork.Time;
+            }
+            GetComponent<PhotonView>().RPC(nameof(StartTimer), RpcTarget.AllBuffered, startTime);
+        }
+    }
+
 }

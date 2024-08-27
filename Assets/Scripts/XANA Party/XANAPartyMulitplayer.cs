@@ -1,11 +1,12 @@
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using PhysicsCharacterController;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 
-public class XANAPartyMulitplayer : MonoBehaviour
+public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
 {
     //[SerializeField] Animator animator;
     PhotonView photonView;
@@ -19,6 +20,10 @@ public class XANAPartyMulitplayer : MonoBehaviour
     {
         photonView = GetComponent<PhotonView>();
         Invoke(nameof(DisbleAnimatedController),0.1f);
+    }
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        MutiplayerController.instance.playerobjects.Add(info.photonView.gameObject);
     }
 
     void DisbleAnimatedController()
@@ -150,6 +155,12 @@ public class XANAPartyMulitplayer : MonoBehaviour
         {
             isRaceFinished = status;
         }
+    }
+
+    [PunRPC]
+    public void PlayerCountAtStartOfRace(int playerCount)
+    {
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().RaceStartWithPlayers = playerCount;
     }
     //public void JumpRPCTrigger(){
     //    print("Trigger JUMP RPC");

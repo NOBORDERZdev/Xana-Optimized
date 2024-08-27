@@ -14,6 +14,7 @@ using System.IO;
 using Photon.Pun.Demo.PunBasics;
 using Newtonsoft.Json;
 using SuperStar.Helpers;
+using Newtonsoft.Json.Linq;
 
 public class UserLoginSignupManager : MonoBehaviour
 {
@@ -193,34 +194,115 @@ public class UserLoginSignupManager : MonoBehaviour
         }
         Debug.Log("Auto Login");
 
+        //if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
+        //{
+        //    MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
+        //    LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
+        //    StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), (isSucess) =>
+        //    {
+        //        //write if you want something on sucessfull login
+        //    }));
+        //}
+        //else if (PlayerPrefs.GetInt("WalletLogin") == 1)
+        //{
+        //    ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
+        //    ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
+        //    ConstantsHolder.isWalletLogin = true;
+        //    if (!ConstantsHolder.xanaConstants.isXanaPartyWorld && InventoryManager.instance != null)
+        //    {
+        //      InventoryManager.instance.WalletLoggedinCall();
+        //    }
+
+        //    WalletAutoLogin();
+        //    if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        //    {
+        //        WorldManager.instance.StartCoroutine(WorldManager.instance.xanaParty());
+        //    }
+        //}
+        //else
+        //{
+        //    ShowWelcomeScreen();
+        //}
+
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 1 || PlayerPrefs.GetInt("WalletLogin") == 1)
+        {
+            StartCoroutine(RefreshXanaTokenAPI());
+        }
+        else
+        {
+            ShowWelcomeScreen();
+        }
+    }
+
+    IEnumerator RefreshXanaTokenAPI()
+    {
+        string _FinalUrl = ConstantsGod.API_BASEURL + ConstantsGod.REFRESHXANATOKEN;
+        UnityWebRequest www = UnityWebRequest.Post(_FinalUrl, new Dictionary<string, string>
+        {
+            { "token", PlayerPrefs.GetString("LoginToken") }
+        });
+
+        www.SendWebRequest();
+        while (!www.isDone)
+        {
+            yield return null;
+        }
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log($"Token Refresh Error: {www.error}");
+        }
+        else
+        {
+            try
+            {
+                JObject _JsonObj = JObject.Parse(www.downloadHandler.text);
+                bool _IsSuccess = _JsonObj["success"].ToObject<bool>();
+                if (_IsSuccess)
+                {
+                    string _Token = _JsonObj["data"]["token"].ToString();
+                    ConstantsGod.AUTH_TOKEN = _Token;
+                    ConstantsHolder.xanaToken = _Token;
+                    PlayerPrefs.SetString("LoginToken", _Token);
+                    PlayerPrefs.Save();
+
+                    AutoLogin();
+                }
+                else
+                {
+                    Debug.Log($"Token Refresh Error: {_JsonObj["msg"]}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Log($"Error parsing token refresh response: {ex.Message}");
+            }
+        }
+    }
+
+    void AutoLogin()
+    {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
         {
-            MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
-            LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
-            StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), (isSucess) =>
-            {
-                //write if you want something on sucessfull login
-            }));
+            //Debug.LogError("Email login .... ");
+            //MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
+            //LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
+            //StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), (isSucess) =>
+            //{
+            //    //write if you want something on sucessfull login
+            //}));
         }
         else if (PlayerPrefs.GetInt("WalletLogin") == 1)
         {
             ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
             ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
             ConstantsHolder.isWalletLogin = true;
-            if (!ConstantsHolder.xanaConstants.isXanaPartyWorld && InventoryManager.instance != null)
-            {
-              InventoryManager.instance.WalletLoggedinCall();
-            }
-           
             WalletAutoLogin();
             if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
             {
                 WorldManager.instance.StartCoroutine(WorldManager.instance.xanaParty());
             }
-        }
-        else
-        {
-            ShowWelcomeScreen();
+            //GetUserCoinsAfterLogin();
         }
     }
 
@@ -380,18 +462,13 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.Save();
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
-        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
-            return;
         GetUserClothData();
         GetOwnedNFTsFromAPI();
         
         UserPassManager.Instance.GetGroupDetails("freeuser");
         UserPassManager.Instance.GetGroupDetailsForComingSoon();
         StartCoroutine(WaitForDeepLink());
-        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
-        {
-            StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
-        }
+        StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
         if (GameManager.Instance.UiManager != null)//rik
         {
             GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();

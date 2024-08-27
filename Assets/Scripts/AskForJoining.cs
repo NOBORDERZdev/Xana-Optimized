@@ -97,7 +97,9 @@ public class AskForJoining : MonoBehaviour
             LoadingHandler.Instance.randCurrentValue = _rand;
             StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
 
+            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
             LoadingHandler.Instance.ShowLoading();
+
             if (ScreenOrientationManager._instance != null && ScreenOrientationManager._instance.isPotrait)
             {
                 ScreenOrientationManager._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
@@ -122,13 +124,27 @@ public class AskForJoining : MonoBehaviour
         }
         if (!string.IsNullOrEmpty(lastRoomName))
         {
-            PhotonNetwork.RejoinRoom(lastRoomName);
+            if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+            {
+                bool rejoinSuccessful = PhotonNetwork.RejoinRoom(lastRoomName);
+                if (!rejoinSuccessful)
+                {
+                    Debug.LogWarning("Rejoin failed, attempting to join a new room.");
+                    HandleFailedRejoin();
+                    yield break;
+                }
+            }
+            else if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            {
+                MutiplayerController.instance.Connect(MutiplayerController.CurrLobbyName);
+                AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
+            }
         }
         else
         {
+            // No last room, join a new room
             MutiplayerController.instance.Connect(MutiplayerController.CurrLobbyName);
         }
-        //AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
         BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none);
         TurnCameras(true);
         if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame
@@ -140,6 +156,13 @@ public class AskForJoining : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+    private void HandleFailedRejoin()
+    {
+        // Handle what happens if rejoining a room fails
+        MutiplayerController.instance.Connect(MutiplayerController.CurrLobbyName);
+        Debug.Log("Connected to a new room after rejoin failed.");
     }
 
     IEnumerator MovePlayerToNextGameOnReconnection()

@@ -63,7 +63,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "7A";
+        string gameVersion = "9";
         #endregion
 
         #region MonoBehaviour CallBacks
@@ -321,6 +321,7 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
+            bool raceFinishStatus = false;
             if (otherPlayer.NickName == "XANA_XANA")
             {
                 ConstantsHolder.xanaConstants.isCameraManInRoom = false;
@@ -329,6 +330,7 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 if (otherPlayer.ActorNumber == playerobjects[x].GetComponent<PhotonView>().OwnerActorNr)
                 {
+                    raceFinishStatus = playerobjects[x].GetComponent<XANAPartyMulitplayer>().isRaceFinished;
                     playerobjects.RemoveAt(x);
                 }
             }
@@ -346,7 +348,7 @@ namespace Photon.Pun.Demo.PunBasics
                     }
                     else
                     {
-                        GamificationComponentData.instance.UpdateRaceStatusIfPlayerLeaveWithoutCompletiting();
+                        GamificationComponentData.instance.UpdateRaceStatusIfPlayerLeaveWithoutCompletiting(raceFinishStatus);
                     }
 
                     if (GamificationComponentData.instance != null && !GamificationComponentData.instance.isRaceStarted && ReferencesForGamePlay.instance != null)
@@ -355,22 +357,6 @@ namespace Photon.Pun.Demo.PunBasics
                         ReferencesForGamePlay.instance.CheckActivePlayerInCurrentLevel();
                     }
                 }
-                if (!ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
-                {
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        PartyTimerManager ref_PartyTimerManager = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PartyTimerManager>();
-                        if (!ref_PartyTimerManager.isTimerRunning)
-                        {
-                            if (ref_PartyTimerManager.startTime <= -1)
-                            {
-                                ref_PartyTimerManager.startTime = PhotonNetwork.Time;
-                            }
-                            ref_PartyTimerManager.GetComponent<PhotonView>().RPC(nameof(ref_PartyTimerManager.StartTimer), RpcTarget.AllBuffered, ref_PartyTimerManager.startTime);
-                        }
-                    }
-                }
-
                 
             }
         }

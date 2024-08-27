@@ -33,6 +33,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         PlayerIDs.Clear();
         WinnerPlayerIds.Clear();
         RaceFinishTime.Clear();
+        RaceStartWithPlayers = 0;
         isLeaderboardShown = false;
         IsRoundDataUpdated = false;
         IsRoundDataFetched = false;
@@ -100,7 +101,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     #region Start Race
     public IEnumerator SendingUsersIdsAtStartOfRace()
     {
-        RaceStartWithPlayers = PlayerIDs.Count;
+        GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC("PlayerCountAtStartOfRace", RpcTarget.AllBuffered, PlayerIDs.Count);
         // Create a JSON object and add the user IDs
         JObject json = new JObject();
         json["user_ids"] = JArray.FromObject(PlayerIDs);
@@ -133,6 +134,8 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
             }
         }
     }
+
+    
     #endregion
 
     #region Print Leaderboard
@@ -353,7 +356,6 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         IsRoundDataUpdated = false;
         IsRoundDataFetched = false;
         roundDataResponse = null;
-        RaceStartWithPlayers = 0;
     }
     #endregion
 }

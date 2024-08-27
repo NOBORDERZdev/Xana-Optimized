@@ -164,6 +164,7 @@ public class XANAPartyManager : MonoBehaviour
         if (isJoiningLobby)
         {
             GameIndex = 0;
+            GetComponent<PenpenzLpManager>().RaceStartWithPlayers = 0;
             GetComponent<PenpenzLpManager>().PlayerIDs.Clear();
             GetComponent<PenpenzLpManager>().WinnerPlayerIds.Clear();
             GetComponent<PenpenzLpManager>().RaceFinishTime.Clear();

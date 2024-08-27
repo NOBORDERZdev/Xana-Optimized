@@ -6,6 +6,7 @@ using DG.Tweening;
 using ExitGames.Client.Photon.StructWrapping;
 using Models;
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -511,19 +512,26 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
 
        // print("RaceFinishCount : "+ GamificationComponentData.instance.RaceFinishCount + " ::: "+ currentPlayers);
-        if (xanaPartyMulitplayer.RaceFinishCount >= ref_PenpenzLpManager.RaceStartWithPlayers)//currentPlayers)
+        if (xanaPartyMulitplayer.RaceFinishCount >= XANAPartyManager.Instance.ActivePlayerInCurrentLevel)//ref_PenpenzLpManager.RaceStartWithPlayers)//currentPlayers)
         {
             XANAPartyManager.Instance.GameIndex++; 
             StartCoroutine(ref_PenpenzLpManager.PrintLeaderboard());
         }
     }
 
-    public void UpdateRaceStatusIfPlayerLeaveWithoutCompletiting()
+    bool IsAllPlayersRaceFinished = true;
+    public void UpdateRaceStatusIfPlayerLeaveWithoutCompletiting(bool raceFinishStatus)
     {
         var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
-        xanaPartyMulitplayer.RaceFinishCount++;
-        //int currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-        if (xanaPartyMulitplayer.RaceFinishCount >= XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().RaceStartWithPlayers)
+
+        for (int i = 0; i < MutiplayerController.instance.playerobjects.Count; i++)
+        {
+            if (!MutiplayerController.instance.playerobjects[i].GetComponent<XANAPartyMulitplayer>().isRaceFinished)
+            {
+                IsAllPlayersRaceFinished = false;
+            }
+        }
+        if (IsAllPlayersRaceFinished)
         {
             XANAPartyManager.Instance.GameIndex++;
             StartCoroutine(XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PrintLeaderboard());
