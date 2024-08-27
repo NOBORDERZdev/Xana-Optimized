@@ -106,6 +106,7 @@ public class StepsManager : MonoBehaviour
 
     public void DisableStepsSound(bool _mute)
     {
-        StepAudio.mute = _mute;
+        if(StepAudio)
+            StepAudio.mute = _mute;
     }
 }

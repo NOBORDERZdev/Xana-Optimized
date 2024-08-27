@@ -67,6 +67,9 @@ public class ServerSideUserDataHandler : MonoBehaviour
 
                     if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
                     {
+                        // assign gender to save character properties
+                        // This gander is use for character initialization 
+                        SaveCharacterProperties.instance.SaveItemList.gender = getdata.data.rows[0].json.gender;
                         MainSceneEventHandler.OpenLandingScene?.Invoke();
                         yield break;
                     }
