@@ -2,45 +2,67 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using TMPro;
-using Photon.Realtime;
+using System.Security.Policy;
 
 public class VideoPlayerFeatures : MonoBehaviour
 {
+    public GameObject VideoFeatures;
     public TextMeshProUGUI durationText;
     public Slider progressSlider;
+    [Space(5)]
+    public Button PauseUnpauseBtn;
+    public GameObject PauseSprite;
+    public GameObject ResumeSprite;
 
+    private AdvancedYoutubePlayer _advanceYP;
     private VideoPlayer _videoPlayer;
     private bool _isPauseVideo = false;
 
-    // Start is called before the first frame update
-    void Awake()
+    private void Start()
     {
-        progressSlider.gameObject.SetActive(false);
-        _videoPlayer = GetComponent<VideoPlayer>();
-        this.gameObject.AddComponent<Button>().onClick.AddListener(PauseUnpauseVideo);
-        this.gameObject.GetComponent<RawImage>().raycastTarget = true;
+        ResumeSprite.SetActive(false);
     }
 
-    private void OnEnable()
-    {
-        _videoPlayer.prepareCompleted += OnVideoPrepared;
-    }
     private void OnDisable()
     {
+        if (_videoPlayer == null) return;
+
         _videoPlayer.prepareCompleted -= OnVideoPrepared;
+        Destroy(_videoPlayer.gameObject.GetComponent<Button>());
+        _videoPlayer.gameObject.GetComponent<RawImage>().raycastTarget = false;
+        VideoFeatures.SetActive(false);
     }
 
-    private void PauseUnpauseVideo()
+    public void EnableVideoFeature()
+    {
+        VideoFeatures.SetActive(true);
+        if (_advanceYP == null)
+        {
+            _advanceYP = GetComponent<AdvancedYoutubePlayer>();
+            _videoPlayer = _advanceYP.VideoPlayer;
+        }
+
+        _videoPlayer.prepareCompleted += OnVideoPrepared;       
+        _videoPlayer.gameObject.GetComponent<RawImage>().raycastTarget = true;
+        _videoPlayer.gameObject.AddComponent<Button>().onClick.AddListener(PauseUnpauseVideo);
+        PauseUnpauseBtn.onClick.AddListener(PauseUnpauseVideo);
+    }
+
+    public void PauseUnpauseVideo()
     {
         if (_isPauseVideo)
         {
             _isPauseVideo = false;
             _videoPlayer.Play();
+            PauseSprite.SetActive(true);
+            ResumeSprite.SetActive(false);
         }
         else if (!_isPauseVideo)
         {
             _isPauseVideo = true;
             _videoPlayer.Pause();
+            PauseSprite.SetActive(false);
+            ResumeSprite.SetActive(true);
         }
     }
 
@@ -63,7 +85,8 @@ public class VideoPlayerFeatures : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_videoPlayer.isPlaying)
+
+        if (_videoPlayer != null && _videoPlayer.isPlaying)
         {
             UpdateVideoProgress();
         }

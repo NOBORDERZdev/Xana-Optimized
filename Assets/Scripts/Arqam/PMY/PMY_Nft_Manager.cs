@@ -465,7 +465,7 @@ namespace PMY
                             //ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<VideoPlayer>().enabled = true;
                             ratioReferences[ratioId].l_PrerecordedPlayer.url = videoLink;
                             ratioReferences[ratioId].l_PrerecordedPlayer.Play();
-
+                            ratioReferences[ratioId].l_obj.GetComponent<VideoPlayerFeatures>().EnableVideoFeature();
                         }
 
                         OnVideoEnlargeAction?.Invoke();
@@ -517,7 +517,7 @@ namespace PMY
                             //ratioReferences[ratioId].p_videoPlayer.enabled = true;
                             ratioReferences[ratioId].p_PrerecordedPlayer.url = videoLink;
                             ratioReferences[ratioId].p_PrerecordedPlayer.Play();
-
+                            ratioReferences[ratioId].p_obj.GetComponent<VideoPlayerFeatures>().EnableVideoFeature();
                         }
 
                         OnVideoEnlargeAction.Invoke();
