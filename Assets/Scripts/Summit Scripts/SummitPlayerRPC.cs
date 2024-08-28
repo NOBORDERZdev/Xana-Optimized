@@ -15,7 +15,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 {
     [SerializeField]
     public PhotonView view;
-    private PhotonVoiceNetwork voiceNetwork;
+    private PunVoiceClient voiceNetwork;
 
 
     public CharacterController charcontroller;
@@ -109,7 +109,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                      loader.mainController.transform.rotation = new Quaternion(0, 0, 0, 0);
 
 
-                    if (voiceNetwork == null) { voiceNetwork = PhotonVoiceNetwork.Instance; }
+                    if (voiceNetwork == null) { voiceNetwork = PunVoiceClient.Instance; }
                     Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { voiceNetwork.Client.GlobalInterestGroup }, new byte[] { car.PrivateRoomName }));
 
                     CarNavigationManager.CarNavigationInstance.OnExitpress += Exit;
@@ -172,7 +172,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                      loader.mainController.transform.rotation = new Quaternion(0, 0, 0, 0);
                     CarNavigationManager.CarNavigationInstance.OnExitpress += Exit;
                     CarNavigationManager.CarNavigationInstance.OnCancelPress += CancelExit;
-                    if (voiceNetwork == null ) { voiceNetwork = PhotonVoiceNetwork.Instance; }
+                    if (voiceNetwork == null ) { voiceNetwork = PunVoiceClient.Instance; }
                     Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { voiceNetwork.Client.GlobalInterestGroup }, new byte[] { car.PrivateRoomName }));
 
                 }
@@ -247,7 +247,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                charcontroller.enabled = true;
                arrowManager.enabled = true;
                 Transformview.enabled = true;
-                if (voiceNetwork == null) { voiceNetwork = PhotonVoiceNetwork.Instance; }
+                if (voiceNetwork == null) { voiceNetwork = PunVoiceClient.Instance; }
 
                 Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { car.PrivateRoomName }, new byte[] { voiceNetwork.Client.GlobalInterestGroup }));
 
@@ -284,7 +284,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                arrowManager.enabled = true;
                 Transformview.enabled = true;
                 PlayerCameraController.instance.DisableCameraRecenter();
-                if (voiceNetwork == null) { voiceNetwork = PhotonVoiceNetwork.Instance; }
+                if (voiceNetwork == null) { voiceNetwork = PunVoiceClient.Instance; }
              
 
             }
