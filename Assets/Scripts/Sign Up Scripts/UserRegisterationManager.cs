@@ -1840,6 +1840,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void OpenAvatarScreen()
     {
+        if(StoreManager.instance)
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
     }
 
@@ -3442,6 +3443,11 @@ public class UserRegisterationManager : MonoBehaviour
 
         UserNameSetter.text = UsernameFieldAdvance.Text;
 
+        if (Application.isEditor && Localusername == "")
+        {
+            string guid = System.Guid.NewGuid().ToString();
+            Localusername = "guest" + guid;
+        }
 
         if (Localusername == "")// || Localusername.Contains(" "))
         {

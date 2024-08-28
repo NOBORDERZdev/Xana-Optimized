@@ -258,7 +258,7 @@ public class SavaCharacterProperties : MonoBehaviour
         }
         else  // IF NOT EXISTS THEN WRITE THE NEW FILE
         {
-            SavingCharacterDataClass SubCatString = new SavingCharacterDataClass();
+            //SavingCharacterDataClass SubCatString = new SavingCharacterDataClass();
             string bodyJson = JsonUtility.ToJson(SaveItemList, true);
             File.WriteAllText(GameManager.Instance.GetStringFolderPath(), bodyJson);
         }

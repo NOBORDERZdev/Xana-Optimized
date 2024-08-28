@@ -61,7 +61,7 @@ public class ActionSelectionPanelHandler : MonoBehaviour
     {
         if (CanvasButtonsHandler.inst)                                                  // AH working
         {
-            CanvasButtonsHandler.inst.AnimationBtnClose.gameObject.SetActive(false);                                                
+            CanvasButtonsHandler.inst.AnimationBtnClose.gameObject.SetActive(false);
             CanvasButtonsHandler.inst.stopCurrentPlayingAnim = false;
         }
 
@@ -95,9 +95,12 @@ public class ActionSelectionPanelHandler : MonoBehaviour
         if (Reaction_EmotePanel.instance)
         {
             if (Reaction_EmotePanel.instance.m_EmotePanel.activeInHierarchy)
-                errorObj.GetComponent<TextMeshProUGUI>().text = "Duplicate Animation".ToString();
-            else
-                errorObj.GetComponent<TextMeshProUGUI>().text = "Duplicate Reaction".ToString();
+            {
+                if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese)
+                {
+                    errorObj.GetComponent<TextMeshProUGUI>().text = "Duplicate Animation".ToString();
+                }
+            }
         }
         for (int i = 0; i < animations.Count; i++)
         {

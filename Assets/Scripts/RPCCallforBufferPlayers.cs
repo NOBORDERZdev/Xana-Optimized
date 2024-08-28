@@ -47,15 +47,15 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             return File.ReadAllText(Application.persistentDataPath + "/loginAsGuestClass.json");
         }
     }
-    private void Start()
+    private void Awake()
     {
         if (this.GetComponent<PhotonView>().IsMine)
         {
             _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
             _mydatatosend[1] = GetJsonFolderData() as object;
             _mydatatosend[2] = XanaConstants.xanaConstants.isNFTEquiped;
-            Invoke(nameof(CallRpcInvoke), /*1.2f*/2);
-            //CallRpcInvoke();
+            //Invoke(nameof(CallRpcInvoke), /*1.2f*/2);
+            CallRpcInvoke();
         }
         if (!this.GetComponent<PhotonView>().IsMine && !this.gameObject.GetComponent<Speaker>())
         {
@@ -114,6 +114,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 {
                         if (!otherPlayer.GetComponent<PhotonView>().IsMine)
                         {
+                            otherPlayer.GetComponent<AvatarController>().SetAvatarClothDefault(otherPlayer.gameObject);
                             //Update Body fate
                             if (_CharacterData.myItemObj[i].ItemName != "")
                             {

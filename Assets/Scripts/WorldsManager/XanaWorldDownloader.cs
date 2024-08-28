@@ -457,7 +457,7 @@ public class XanaWorldDownloader : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError("Error while applying lightmap data :- " + e.Message);
+            Debug.Log("<color=red>Error while applying lightmap data :- " + e.Message + "</color>");
         }
 
     }

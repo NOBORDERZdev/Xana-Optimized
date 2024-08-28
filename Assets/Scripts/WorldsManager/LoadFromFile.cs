@@ -405,8 +405,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
             if (WorldItemView.m_EnvName.Contains("PMY ACADEMY"))
             {
-                if (XanaConstants.xanaConstants.isFromPMYLobby)  // Set spawn pos when ReEnter into PMY lobby
+                if (XanaConstants.xanaConstants.isFromPMYLobby)
+                {   // Set spawn pos when ReEnter into PMY lobby
                     spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y, spawnPoint.z - 25.05f);
+                    //Debug.LogError("Update spawnpoint for lobby::");
+                }
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                 //StartCoroutine(setPlayerCamAngle(0f, 0.5572f));
                 //StartCoroutine(setPlayerCamAngle(1f, 0.32f));
@@ -478,9 +481,13 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 StartCoroutine(setPlayerCamAngle(1.74f, 0.5f));
             }
         }
+
         mainPlayer.transform.position = new Vector3(0, 0, 0);
-        mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
-        player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
+
+        Vector3 newPos = spawnPoint + new Vector3(500, 500f, 500);
+        mainController.transform.position = newPos;
+
+        player = PhotonNetwork.Instantiate("34", newPos, Quaternion.identity, 0);
 
         ReferrencesForDynamicMuseum.instance.m_34player = player;
         SetAxis();
@@ -510,7 +517,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             if (!XanaConstants.xanaConstants.isCameraMan)
                 LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
         }
-        else
+        else //if(XanaConstants.xanaConstants.isFromPMYLobby)
         {
             if (JjMusuem.Instance)
                 JjMusuem.Instance.SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
@@ -599,6 +606,15 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         /// Load NPC fake chat system
         /// </summary>
         ActivateNpcChat();
+    }
+
+    public void SetPlayerPos()
+    {
+        if (mainController != null)
+        {
+            mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
+            //Debug.LogError("SetPlayerPos" + spawnPoint);
+        }
     }
 
     void ActivateNpcChat()

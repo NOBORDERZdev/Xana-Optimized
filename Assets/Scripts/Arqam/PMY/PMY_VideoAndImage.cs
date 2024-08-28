@@ -4,7 +4,6 @@ using UnityEngine.Networking;
 using UnityEngine.Video;
 using UnityEngine.UI;
 using UnityEngine.Events;
-using Unity.VisualScripting;
 using System;
 
 namespace PMY
@@ -22,8 +21,8 @@ namespace PMY
         public GameObject imgVideo1x1;
         public GameObject imgVideo4x3;
 
-        public GameObject liveVideoPlayer;
-        public GameObject preRecordedPlayer;
+        public GameObject videoParent;
+        //public GameObject liveVideoPlayer;
 
 
         public string videoLink;
@@ -47,7 +46,7 @@ namespace PMY
         public GameObject imgVideoFrame1x1;
         public GameObject imgVideoFrame4x3;
 
-        public bool isMultipleScreen = false;
+        //public bool isMultipleScreen = false;
         public bool isCreateFrame = true;
 
         public enum RoomType
@@ -63,7 +62,7 @@ namespace PMY
         [Space(5)]
         public UnityEvent nftStartAction;
 
-        private StreamYoutubeVideo streamYoutubeVideo;
+        //private StreamYoutubeVideo streamYoutubeVideo;
 
         private void Start()
         {
@@ -135,10 +134,8 @@ namespace PMY
                 imgVideo1x1.SetActive(false);
             if (imgVideo4x3)
                 imgVideo4x3.SetActive(false);
-            if (liveVideoPlayer)
-                liveVideoPlayer.SetActive(false);
-            if (preRecordedPlayer)
-                preRecordedPlayer.SetActive(false);
+            //if (liveVideoPlayer)
+            //    liveVideoPlayer.SetActive(false);
 
             SetThumbail(imageLink);
             if (isCreateFrame)
@@ -154,10 +151,8 @@ namespace PMY
                 imgVideo1x1.SetActive(false);
             if (imgVideo4x3)
                 imgVideo4x3.SetActive(false);
-            if (liveVideoPlayer)
-                liveVideoPlayer.SetActive(false);
-            if (preRecordedPlayer)
-                preRecordedPlayer.SetActive(false);
+            //if (liveVideoPlayer)
+            //    liveVideoPlayer.SetActive(false);
 
             SetThumbail(imageLink);
             if (isCreateFrame)
@@ -173,10 +168,8 @@ namespace PMY
                 imgVideo1x1.SetActive(false);
             if (imgVideo4x3)
                 imgVideo4x3.SetActive(false);
-            if (liveVideoPlayer)
-                liveVideoPlayer.SetActive(false);
-            if (preRecordedPlayer)
-                preRecordedPlayer.SetActive(false);
+            //if (liveVideoPlayer)
+            //    liveVideoPlayer.SetActive(false);
 
             SetThumbail(imageLink);
             if (isCreateFrame)
@@ -294,18 +287,20 @@ namespace PMY
 
         public void TurnOffAllImageAndVideo()
         {
-            imgVideo16x9.SetActive(false);
-            imgVideo9x16.SetActive(false);
-            imgVideo1x1.SetActive(false);
-            imgVideo4x3.SetActive(false);
-            liveVideoPlayer.SetActive(false);
-            preRecordedPlayer.SetActive(false);
-            imgVideo16x9.SetActive(false);
-            imgVideo9x16.SetActive(false);
-            imgVideo1x1.SetActive(false);
-            imgVideo4x3.SetActive(false);
-            liveVideoPlayer.SetActive(false);
-            preRecordedPlayer.SetActive(false);
+            if (imgVideo16x9)
+                imgVideo16x9.SetActive(false);
+            if (imgVideo9x16)
+                imgVideo9x16.SetActive(false);
+            if (imgVideo1x1)
+                imgVideo1x1.SetActive(false);
+            if (imgVideo4x3)
+                imgVideo4x3.SetActive(false);
+
+            if (imgVideo16x9.GetComponent<VideoPlayer>().targetTexture != null)
+            {
+                imgVideo16x9.GetComponent<VideoPlayer>().targetTexture.Release();
+                imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = null;
+            }
         }
 
         IEnumerator GetSprite(string path, System.Action<Texture> callback)
@@ -353,70 +348,58 @@ namespace PMY
                 imgVideo1x1.SetActive(false);
             if (imgVideo4x3)
                 imgVideo4x3.SetActive(false);
-            if (liveVideoPlayer)
-                liveVideoPlayer.SetActive(false);
-            if (preRecordedPlayer)
-                preRecordedPlayer.SetActive(false);
+            //if (liveVideoPlayer)
+            //    liveVideoPlayer.SetActive(false);
 
             if (NFT.Equals(NFT_Type.MainScreen))
             {
-                if (_videoType == PMY_VideoTypeRes.islive && liveVideoPlayer)
+                if (_videoType == PMY_VideoTypeRes.islive)  //&& liveVideoPlayer
                 {
-                    PMY_Nft_Manager.Instance.videoRenderObject = liveVideoPlayer;
-                    if (liveVideoPlayer)
-                        liveVideoPlayer.SetActive(true);
+                    //PMY_Nft_Manager.Instance.videoRenderObject = liveVideoPlayer;
+                    //if (liveVideoPlayer)
+                    //    liveVideoPlayer.SetActive(true);
 
-                    if (streamYoutubeVideo != null)
-                        streamYoutubeVideo.StreamYtVideo(videoLink, true);
-                    //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
-                    //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().GetLivestreamUrl(videoLink);
-                    //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
+                    videoParent.GetComponent<AdvancedYoutubePlayer>().StreamYtVideo(videoLink, true);
+
+                    //if (streamYoutubeVideo != null)
+                    //    streamYoutubeVideo.StreamYtVideo(videoLink, true);
                 }
-                else if (_videoType == PMY_VideoTypeRes.prerecorded && preRecordedPlayer)
+                else if (_videoType == PMY_VideoTypeRes.prerecorded)
                 {
                     RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager.Instance.renderTexture_16x9);
-                    PMY_Nft_Manager.Instance.videoRenderObject = imgVideo16x9;
+                    //PMY_Nft_Manager.Instance.videoRenderObject = imgVideo16x9;
                     //renderTexture_temp = renderTexture;
                     imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
                     imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = renderTexture;
-                    if (isMultipleScreen)
-                    {
-                        for (int i = 0; i < imgVideo16x9.transform.childCount; i++)
-                        {
-                            imgVideo16x9.transform.GetChild(i).GetComponent<RawImage>().texture = renderTexture;
-                            imgVideo16x9.transform.GetChild(i).GetComponent<VideoPlayer>().targetTexture = renderTexture;
-                        }
-                    }
-                    preRecordedPlayer.GetComponent<YoutubeSimplified>().player.showThumbnailBeforeVideoLoad = false;
-                    VideoPlayer tempVideoPlayer;
-                    if (applyVideoMesh)
-                    {
-                        tempVideoPlayer = videoMesh;
-                    }
-                    else
-                    {
-                        tempVideoPlayer = imgVideo16x9.GetComponent<VideoPlayer>();
-                    }
+                    //if (isMultipleScreen)
+                    //{
+                    //    for (int i = 0; i < imgVideo16x9.transform.childCount; i++)
+                    //    {
+                    //        imgVideo16x9.transform.GetChild(i).GetComponent<RawImage>().texture = renderTexture;
+                    //        imgVideo16x9.transform.GetChild(i).GetComponent<VideoPlayer>().targetTexture = renderTexture;
+                    //    }
+                    //}
 
-                    if (streamYoutubeVideo != null)
-                        streamYoutubeVideo.StreamYtVideo(videoLink, false);
+                    //if (streamYoutubeVideo != null)
+                    //    streamYoutubeVideo.StreamYtVideo(videoLink, false);
 
-                    //preRecordedPlayer.GetComponent<YoutubeSimplified>().videoPlayer = tempVideoPlayer;
-                    //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.videoPlayer = tempVideoPlayer;
-                    //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.audioPlayer = tempVideoPlayer;
-                    //preRecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
-                    //preRecordedPlayer.GetComponent<YoutubeSimplified>().Play();
-                    imgVideo16x9.GetComponent<VideoPlayer>().playOnAwake = true;
-                    preRecordedPlayer.SetActive(true);
-                    imgVideo16x9.SetActive(true);
-                    if (imgVideoFrame16x9)
-                    {
-                        EnableImageVideoFrame(imgVideoFrame16x9);
-                    }
+                    videoParent.GetComponent<AdvancedYoutubePlayer>().StreamYtVideo(videoLink, false);
+                    //imgVideo16x9.SetActive(true);
+                    //if (imgVideoFrame16x9)
+                    //{
+                    //    EnableImageVideoFrame(imgVideoFrame16x9);
+                    //}
                 }
                 else if (_videoType == PMY_VideoTypeRes.aws)
                 {
-                    SetThumbail(imageLink);
+                    videoParent.SetActive(false);
+                    imgVideo16x9.SetActive(true);
+                    RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager.Instance.renderTexture_16x9);
+                    imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
+                    imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = renderTexture;
+                    imgVideo16x9.GetComponent<VideoPlayer>().url = videoLink;
+                    imgVideo16x9.GetComponent<VideoPlayer>().isLooping = true;
+                    imgVideo16x9.GetComponent<VideoPlayer>().Play();
                 }
             }
             else if (NFT.Equals(NFT_Type.TwoD_View))

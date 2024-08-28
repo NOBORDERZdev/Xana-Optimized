@@ -58,8 +58,8 @@ public class AvatarController : MonoBehaviour
         string currScene = SceneManager.GetActiveScene().name;//Riken Add Condition for Set Default cloths on AR scene so.......
         if (!currScene.Contains("Main")) // call for worlds only
         {
-            Invoke(nameof(Custom_IntializeAvatar), 0.5f);
-
+            //Invoke(nameof(Custom_IntializeAvatar), 0.5f);
+            Custom_IntializeAvatar();
             if (XanaConstants.xanaConstants.isNFTEquiped)
             {
                 GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
@@ -398,8 +398,8 @@ public class AvatarController : MonoBehaviour
         if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "") //Check if data exist
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-            _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
-            _PCharacterData=_CharacterData;
+            _CharacterData = SavaCharacterProperties.instance.SaveItemList; // _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+            _PCharacterData =_CharacterData;
             clothJson = File.ReadAllText(GameManager.Instance.GetStringFolderPath());
             if (SceneManager.GetActiveScene().name.Contains("Main")) // for store/ main menu
             {
@@ -620,6 +620,8 @@ public class AvatarController : MonoBehaviour
             {
                 if (GetComponent<PhotonView>() && GetComponent<PhotonView>().IsMine || staticPlayer) // self
                 {
+                    SetAvatarClothDefault(this.gameObject);
+
                     if (_CharacterData.myItemObj.Count > 0)
                     {
                         for (int i = 0; i < _CharacterData.myItemObj.Count; i++)

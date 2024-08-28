@@ -766,6 +766,7 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.characterLoading.SetActive(false);
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
             LoadingHandler.Instance.loadingPanel.SetActive(false);
+            //Debug.LogError("Off Loading");
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
             XanaConstants.xanaConstants.EnviornmentName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;

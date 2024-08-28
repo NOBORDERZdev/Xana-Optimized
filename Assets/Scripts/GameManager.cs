@@ -259,7 +259,7 @@ public class GameManager : MonoBehaviour
         string token = ConstantsGod.AUTH_TOKEN;
 
         StringBuilder api = new StringBuilder();
-        api.Append(ConstantsGod.API_BASEURL + "/classCode/get-all-class-codes" + "/" +/* Page Size */ 1 + "/" +/* Record Size  */  150);
+        api.Append(ConstantsGod.API_BASEURL + "/classCode/get-all-class-codes" + "/" +/* Page Size */ 1 + "/" +/* Record Size  */  350);
         //string api = "https://api-test.xana.net/classCode/get-all-class-codes" + "/" +/* Page Size */ 1 + "/" +/* Record Size  */  50;
        
         Debug.Log("<color=red> ClassCode -- API : " + api + "</color>");
