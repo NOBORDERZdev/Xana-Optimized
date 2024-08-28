@@ -44,7 +44,7 @@ public class SummitDomeShaderApply : MonoBehaviour
     {
         return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
     }
-    public float targetWidth = 1f;
+    private float targetWidth = 2f;
     private void ScaleSpriteToTargetSize()
     {
         if (LogoSpriteRenderer == null || LogoSpriteRenderer.sprite == null) return;
@@ -80,35 +80,5 @@ public class SummitDomeShaderApply : MonoBehaviour
         }
         request.Dispose();
         return null;
-    }
-
-    private void AdjustUVs(Renderer domeRenderer, Texture2D logoTexture)
-    {
-        Mesh mesh = domeRenderer.GetComponent<MeshFilter>().mesh;
-        Vector2[] uvs = mesh.uv;
-
-        float logoAspectRatio = (float)logoTexture.width / logoTexture.height;
-
-        for (int i = 0; i < uvs.Length; i++)
-        {
-            // Adjust the UVs based on the logo's aspect ratio
-            if (logoAspectRatio > 1f)
-            {
-                // Logo is wider than tall (rectangular)
-                uvs[i] = new Vector2(uvs[i].x * logoAspectRatio, uvs[i].y);
-            }
-            else if (logoAspectRatio < 1f)
-            {
-                // Logo is taller than wide (rectangular)
-                uvs[i] = new Vector2(uvs[i].x, uvs[i].y / logoAspectRatio);
-            }
-            else
-            {
-                // Logo is square, no need to adjust UVs
-                uvs[i] = new Vector2(uvs[i].x, uvs[i].y);
-            }
-        }
-
-        mesh.uv = uvs;
     }
 }
