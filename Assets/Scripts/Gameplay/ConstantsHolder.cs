@@ -178,6 +178,7 @@ public class ConstantsHolder : MonoBehaviour
     public static int domeId;
     public static bool isPenguin;
     public static bool isFixedHumanoid;
+    public static int AvatarIndex;
     public static bool HaveSubWorlds;
 
     //Daily reward
