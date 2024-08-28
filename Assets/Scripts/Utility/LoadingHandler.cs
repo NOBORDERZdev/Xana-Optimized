@@ -182,8 +182,8 @@ public class LoadingHandler : MonoBehaviour
         //Debug.LogError("TeleportFeader: " + teleportFeader.gameObject.activeInHierarchy + " ~~~~~~~  Activated Loading ~~~~~~~ ");
         if (teleportFeader.gameObject.activeInHierarchy) // XanaConstants.xanaConstants.JjWorldSceneChange
         {
-            //Debug.LogError("Off Loading");
             loadingPanel.SetActive(false);
+            //Debug.LogError("Off Loading");
             return;
         }
         ResetLoadingValues();
@@ -363,9 +363,9 @@ public class LoadingHandler : MonoBehaviour
     }
     private void HideLoadingManually()
     {
-        UpdateLoadingStatusText("");
-        //Debug.LogError("Off Loading");
+        UpdateLoadingStatusText("");      
         loadingPanel.SetActive(false);
+        //Debug.LogError("Off Loading");
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         blackScreen.DOFade(0, 0.5f).SetDelay(0.5f);
     }
@@ -606,7 +606,7 @@ public class LoadingHandler : MonoBehaviour
     {
         if (action.Equals(FadeAction.Out) && XanaConstants.xanaConstants.isFromPMYLobby)
         {
-            yield return new WaitForSeconds(2f);
+            //yield return new WaitForSeconds(2f);
             LoadFromFile.instance.SetPlayerPos();
             JJLoadingSlider.fillAmount = 1f;
             JJLoadingPercentageText.text = "100%".ToString();
@@ -642,9 +642,9 @@ public class LoadingHandler : MonoBehaviour
                 //Debug.LogError("On Teleport Fader");
                 teleportFeader.gameObject.SetActive(true);
                 teleportFeader.DOFade(1, 0.5f);
-                yield return new WaitForSeconds(0.1f);
-                //Debug.LogError("loading false");
+                yield return new WaitForSecondsRealtime(0.1f);
                 loadingPanel.SetActive(false);
+                //Debug.LogError("loading false");
                 break;
             default:
                 break;

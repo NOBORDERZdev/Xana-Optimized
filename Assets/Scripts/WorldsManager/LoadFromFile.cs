@@ -612,8 +612,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         if (mainController != null)
         {
-            //Debug.LogError("SetPlayerPos" + spawnPoint);
             mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
+            //Debug.LogError("SetPlayerPos" + spawnPoint);
         }
     }
 
