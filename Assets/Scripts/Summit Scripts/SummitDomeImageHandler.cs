@@ -10,12 +10,12 @@ public class SummitDomeImageHandler : MonoBehaviour
     public Material DomeTextMaterial;
     void OnEnable()
     {
-        //BuilderEventManager.AfterWorldOffcialWorldsInatantiated += ApplyDomeShader;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated += ApplyDomeShader;
     }
 
     private void OnDisable()
     {
-        //BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= ApplyDomeShader;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= ApplyDomeShader;
     }
 
     void ApplyDomeShader()

@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using UnityEngine.Video;
+using System.Threading.Tasks;
 
 public class LoadingHandler : MonoBehaviour
 {
@@ -294,8 +295,10 @@ public class LoadingHandler : MonoBehaviour
         {
             Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
             blackScreen.DOKill();
-            blackScreen.DOFade(1f, 0.01f).OnComplete(() =>
+            blackScreen.DOFade(1f, 0.01f).OnComplete(async () =>
             {
+                loadingPanel.SetActive(false);
+                await Task.Delay(1000);
                 if (ConstantsHolder.xanaConstants.isBackFromWorld)
                     Screen.orientation = ScreenOrientation.Portrait;
 
