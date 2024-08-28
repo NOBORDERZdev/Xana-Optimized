@@ -35,6 +35,7 @@ public class FeedController : MonoBehaviour
     [SerializeField] AdvancedInputField searchInputField;
     [SerializeField] RectTransform feedTabsContainer;
     [SerializeField] GameObject FeedLoader;
+    public HeightMngrAccToDevice ParentHeightAdjuster;
 
     public FeedResponse feedResponseData;
 
@@ -220,7 +221,6 @@ public class FeedController : MonoBehaviour
         }
         gameObject.GetComponent<EnhancedScroller>().ReloadData();
         FeedLoader.SetActive(false);
-
     }
 
     /// <summary>
@@ -272,6 +272,7 @@ public class FeedController : MonoBehaviour
         gameObject.GetComponent<ScrollRect>().content.SetParent(feedContentParent);
         scrollerController.scroller.ReloadData();
         FeedLoader.SetActive(false);
+        ParentHeightAdjuster.AdjustParentHeight();
     }
     /// <summary>
     /// To Update Feed Like Count from Socket

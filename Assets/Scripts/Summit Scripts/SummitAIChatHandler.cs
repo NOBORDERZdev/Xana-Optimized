@@ -21,6 +21,7 @@ public class SummitAIChatHandler : MonoBehaviour
 
     private string npcName;
     private string npcURL;
+    private bool _NPCInstantiated;
 
     private void OnEnable()
     {
@@ -56,8 +57,11 @@ public class SummitAIChatHandler : MonoBehaviour
 
     void LoadNPC()
     {
-        if (ConstantsHolder.isFromXANASummit)
+        if (ConstantsHolder.isFromXANASummit && !_NPCInstantiated)
+        {
+            _NPCInstantiated = true;
             GetNPCDATA(ConstantsHolder.domeId);
+        }
     }
 
     async void GetNPCDATA(int domeId)
@@ -206,6 +210,7 @@ public class SummitAIChatHandler : MonoBehaviour
         }
 
         aiNPC.Clear();
+        _NPCInstantiated = false;
     }
 
 
