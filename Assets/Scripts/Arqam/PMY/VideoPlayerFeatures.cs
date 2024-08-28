@@ -31,6 +31,8 @@ public class VideoPlayerFeatures : MonoBehaviour
         Destroy(_videoPlayer.gameObject.GetComponent<Button>());
         _videoPlayer.gameObject.GetComponent<RawImage>().raycastTarget = false;
         VideoFeatures.SetActive(false);
+        progressSlider.value = 0f;
+        durationText.text = "";
     }
 
     public void EnableVideoFeature()
