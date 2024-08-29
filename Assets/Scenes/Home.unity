@@ -4365,6 +4365,7 @@ MonoBehaviour:
   clothJson: 
   defaultFightingName: 
   mic: 0
+  UserMicEnable: 0
   minimap: 0
   userNameVisibilty: 0
   profileImageModifedByUser: 0
@@ -7414,6 +7415,7 @@ MonoBehaviour:
   CreatorAvatarURL: 
   CreatorDescription: 
   worldVisitCount: 
+  UserMicEnable: 0
   isFavourite: 0
   worldItemPreview: {fileID: 0}
 --- !u!114 &752160008
@@ -10377,6 +10379,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1112594448 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1627283538075066671, guid: f1979d5431eb6564b81f5c9cf29f9779, type: 3}
+  m_PrefabInstance: {fileID: 1830622619}
+  m_PrefabAsset: {fileID: 0}
 --- !u!225 &1120266623 stripped
 CanvasGroup:
   m_CorrespondingSourceObject: {fileID: 1120266623, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
@@ -17666,12 +17673,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: New Splash
       objectReference: {fileID: 0}
-    - target: {fileID: 9095825339188872597, guid: f1979d5431eb6564b81f5c9cf29f9779, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1979d5431eb6564b81f5c9cf29f9779, type: 3}
+--- !u!1 &1830622620 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3243896789712311427, guid: f1979d5431eb6564b81f5c9cf29f9779, type: 3}
+  m_PrefabInstance: {fileID: 1830622619}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1840257033
 GameObject:
   m_ObjectHideFlags: 0
@@ -22407,6 +22415,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 254756204018997092, guid: 5df3082ed05fe0147bf614391397d1c1, type: 3}
+      propertyPath: SplashScreenXana
+      value: 
+      objectReference: {fileID: 1112594448}
+    - target: {fileID: 254756204018997092, guid: 5df3082ed05fe0147bf614391397d1c1, type: 3}
       propertyPath: SearchWorldHolder
       value: 
       objectReference: {fileID: 0}
@@ -22434,6 +22446,10 @@ PrefabInstance:
       propertyPath: AvatarWindowHolder
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 254756204018997092, guid: 5df3082ed05fe0147bf614391397d1c1, type: 3}
+      propertyPath: SplashScreenSummit
+      value: 
+      objectReference: {fileID: 1830622620}
     - target: {fileID: 254756204018997092, guid: 5df3082ed05fe0147bf614391397d1c1, type: 3}
       propertyPath: HomeWorldTabsHolder
       value: 

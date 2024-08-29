@@ -10,6 +10,8 @@ public class UIHandler : MonoBehaviour
     public GameObject LoginRegisterScreen, SignUpScreen, HomePage, Canvas,HomeWorldScreen;
      public CanvasGroup Loadinghandler_CanvasRef;
     public GameObject _SplashScreen;
+    public GameObject SplashScreenXana;
+    public GameObject SplashScreenSummit;
 
     public Transform _postScreen,_postCamera, _postScreenBG;
     public bool IsSplashActive = true;
@@ -116,6 +118,8 @@ public class UIHandler : MonoBehaviour
     {
         if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
         {
+            SplashScreenXana.SetActive(true);
+            SplashScreenSummit.SetActive(false);
             if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
             {
                 Screen.orientation = ScreenOrientation.Portrait;
@@ -124,6 +128,8 @@ public class UIHandler : MonoBehaviour
         }
         else 
         {
+            SplashScreenXana.SetActive(false);
+            SplashScreenSummit.SetActive(true);
             Screen.orientation = ScreenOrientation.LandscapeLeft;
         }
         if (SaveCharacterProperties.NeedToShowSplash == 1)
