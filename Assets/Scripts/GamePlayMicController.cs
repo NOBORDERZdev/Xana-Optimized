@@ -11,16 +11,26 @@ public class GamePlayMicController : MonoBehaviour
 {
     [SerializeField]
     private Button _micOff, _micOffPotrait, _settingOnButton, _settingOffButton, _settingOnButtonPotrait, _settingOffButtonPotrait;
+    [SerializeField]
+    private string socketId;
     private string address;
     private SocketManager Manager;
-    public string socketId;
-    void Start()
+    private void OnDisable()
+    {
+        if (Manager != null)
+        {
+            Manager.Socket.Off();
+            Manager.Close();
+        }
+    }
+    private void Start()
     {
 
         Manager = new SocketManager(new Uri(ConstantsGod.API_BASEURL));
         Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
         Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
         Manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
+        UserMicEnableDisable(ConstantsHolder.xanaConstants.UserMicEnable);
         //Disabling forcefully mute functionaility according to new requirement // Ahsan
         //if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("BreakingDown Arena") /*|| WorldItemView.m_EnvName.Contains("XANA Summit")*/)
         //{
@@ -40,28 +50,27 @@ public class GamePlayMicController : MonoBehaviour
         //        otherButtonPotrait.GetComponent<Button>().interactable = false;
         //    }
         //}
-        UserMicEnableDisable(ConstantsHolder.xanaConstants.UserMicEnable);
     }
-    void OnConnected(ConnectResponse resp)
+    private void OnConnected(ConnectResponse resp)
     {
         Manager.Socket.On<string>("userMicControl", UserMicControl);
     }
-    void OnError(CustomError args)
+    private void OnError(CustomError args)
     {
         Debug.Log("<color=blue> Mic Socket -- Connection Error  </color>" + args.message);
     }
-    void OnSocketDisconnect(CustomError args)
+    private void OnSocketDisconnect(CustomError args)
     {
         Debug.Log("<color=blue> Mic Socket -- Disconnect  </color>");
     }
-    void UserMicControl(string userMicStatus)
+    private void UserMicControl(string userMicStatus)
     {
         UserMicStatus micStatus = JsonConvert.DeserializeObject<UserMicStatus>(userMicStatus);
         //UserMicStatus?.Invoke(micStatus);
         if(micStatus.world_id.ToString() == ConstantsHolder.xanaConstants.MuseumID)
             UserMicEnableDisable(micStatus.micEnable);
     }
-    void UserMicEnableDisable(bool isEnable)
+    private void UserMicEnableDisable(bool isEnable)
     {
         ConstantsHolder.xanaConstants.UserMicEnable = isEnable;
         if (isEnable)
