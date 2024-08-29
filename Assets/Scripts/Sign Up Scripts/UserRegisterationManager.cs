@@ -1612,7 +1612,7 @@ public class UserRegisterationManager : MonoBehaviour
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-        yield return request.SendWebRequest();
+        //yield return request.SendWebRequest();
         ////Debug.Log("<color=red>" +request.downloadHandler.text + "</color>");
         //  //print(request.GetRequestHeader("Authorization"));
         //  //print(request.isDone);
