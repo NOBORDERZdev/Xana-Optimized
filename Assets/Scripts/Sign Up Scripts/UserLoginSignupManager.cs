@@ -936,8 +936,12 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void EnterUserName()
     {
-        NameScreenLoader.SetActive(true);
-        NameScreenNextButton.interactable = false;
+        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            NameScreenLoader.SetActive(true);
+            NameScreenNextButton.interactable = false;
+
+        }
         string displayrname = displayrNameField.Text;
         string userUsername = userUsernameField.Text;
         string keytoLocalize;
@@ -1009,8 +1013,11 @@ public class UserLoginSignupManager : MonoBehaviour
             Debug.LogError("Set Name for Guest User");
             //DynamicEventManager.deepLink?.Invoke("come from Guest Registration");
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, displayrname);
-            NameScreenNextButton.interactable = true;
-            NameScreenLoader.SetActive(false);
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                NameScreenNextButton.interactable = true;
+                NameScreenLoader.SetActive(false);
+            }
             enterNamePanel.SetActive(false);
             //checkbool_preser_start = true;
             PlayerPrefs.SetInt("shownWelcome", 1);
@@ -1892,10 +1899,20 @@ public class UserLoginSignupManager : MonoBehaviour
             }
             else if (APIResponse.success)
             {
-                OpenUIPanel(16);
-                EditProfilePanel.SetActive(true);
-                NameScreenLoader.SetActive(false);
-                NameScreenNextButton.interactable = true;
+                if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                {
+                    OpenUIPanel(16);
+                    EditProfilePanel.SetActive(true);
+                    NameScreenLoader.SetActive(false);
+                    NameScreenNextButton.interactable = true;
+                }
+                else {
+                    OpenUIPanel(16);
+                    NameScreenLoader.SetActive(false);
+                    NameScreenNextButton.interactable = true;
+                    if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+                        MainSceneEventHandler.OpenLandingScene?.Invoke();
+                }
 
 
             }
