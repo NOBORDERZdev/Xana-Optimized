@@ -115,6 +115,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                         if (!otherPlayer.GetComponent<PhotonView>().IsMine)
                         {
                             otherPlayer.GetComponent<AvatarController>().SetAvatarClothDefault(otherPlayer.gameObject);
+                            //return;
                             //Update Body fate
                             if (_CharacterData.myItemObj[i].ItemName != "")
                             {

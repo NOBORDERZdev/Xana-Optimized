@@ -355,11 +355,12 @@ public class LoadingHandler : MonoBehaviour
         }
         else
         {
-            yield return new WaitForSeconds(2f);
-            LoadFromFile.instance.SetPlayerPos();
-            yield return new WaitForSeconds(0.1f);
+            //yield return new WaitForSeconds(2f);
+            //LoadFromFile.instance.SetPlayerPos();
+            //yield return new WaitForSeconds(0.1f);
             HideLoadingManually();
         }
+        yield return null;
     }
     private void HideLoadingManually()
     {
@@ -642,12 +643,13 @@ public class LoadingHandler : MonoBehaviour
                 //Debug.LogError("On Teleport Fader");
                 teleportFeader.gameObject.SetActive(true);
                 teleportFeader.DOFade(1, 0.5f);
-                yield return new WaitForSecondsRealtime(0.1f);
-                loadingPanel.SetActive(false);
-                //Debug.LogError("loading false");
+                //yield return new WaitForSecondsRealtime(0.1f);
+                //loadingPanel.SetActive(false);
+                ////Debug.LogError("loading false");
                 break;
             default:
                 break;
+                yield return null;
         }
     }
 

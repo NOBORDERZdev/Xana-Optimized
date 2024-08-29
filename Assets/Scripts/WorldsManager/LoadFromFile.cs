@@ -483,11 +483,12 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
 
         mainPlayer.transform.position = new Vector3(0, 0, 0);
+        mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
+        //Vector3 newPos = spawnPoint + new Vector3(500, 500f, 500);
+        //mainController.transform.position = newPos;
 
-        Vector3 newPos = spawnPoint + new Vector3(500, 500f, 500);
-        mainController.transform.position = newPos;
-
-        player = PhotonNetwork.Instantiate("34", newPos, Quaternion.identity, 0);
+        player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
+        player.GetComponent<AvatarController>().SetAvatarClothDefault(player);
 
         ReferrencesForDynamicMuseum.instance.m_34player = player;
         SetAxis();
@@ -605,7 +606,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         /// <summary>
         /// Load NPC fake chat system
         /// </summary>
-        ActivateNpcChat();
+        //ActivateNpcChat();
     }
 
     public void SetPlayerPos()

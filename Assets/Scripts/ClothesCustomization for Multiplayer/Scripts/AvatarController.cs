@@ -50,10 +50,10 @@ public class AvatarController : MonoBehaviour
 
         itemDatabase = ItemDatabase.instance;
 
-        if (IsInit)
-        {
-            SetAvatarClothDefault(this.gameObject);
-        }
+        //if (IsInit)
+        //{
+        //    SetAvatarClothDefault(this.gameObject);
+        //}
 
         string currScene = SceneManager.GetActiveScene().name;//Riken Add Condition for Set Default cloths on AR scene so.......
         if (!currScene.Contains("Main")) // call for worlds only
@@ -620,7 +620,8 @@ public class AvatarController : MonoBehaviour
             {
                 if (GetComponent<PhotonView>() && GetComponent<PhotonView>().IsMine || staticPlayer) // self
                 {
-                    SetAvatarClothDefault(this.gameObject);
+                    //return;
+                    //SetAvatarClothDefault(this.gameObject);
 
                     if (_CharacterData.myItemObj.Count > 0)
                     {
