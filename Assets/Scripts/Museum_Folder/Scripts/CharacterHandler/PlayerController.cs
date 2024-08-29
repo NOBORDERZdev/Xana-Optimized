@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
     public bool sprint, _IsGrounded, jumpNow, sprint_Button, IsJumping,DebugColloision;
 
-    private CharacterController characterController = null;
+    internal CharacterController characterController = null;
 
     public Animator animator = null;
 
@@ -102,11 +102,11 @@ public class PlayerController : MonoBehaviour
     float jumpMultiplier = 1;
     #endregion
     [SerializeField]
-    CinemachineFreeLook cinemachineFreeLook;
+    internal CinemachineFreeLook cinemachineFreeLook;
     float topRigDefaultRadius;
 
     internal float animationBlendValue = 0;
-
+    internal Vector3 desiredMoveDirection;
     private void OnEnable()
     {
         BuilderEventManager.OnHideOpenSword += HideorOpenSword;
@@ -946,7 +946,8 @@ public class PlayerController : MonoBehaviour
         //    forward.Normalize();
         //    right.Normalize();
 
-        Vector3 desiredMoveDirection = (forward * movementInput.y + right * movementInput.x).normalized;
+        //Vector3 desiredMoveDirection = (forward * movementInput.y + right * movementInput.x).normalized;
+        desiredMoveDirection = (forward * movementInput.y + right * movementInput.x).normalized;
 
         //Debug.Log("call hua for===="+ jumpNow + characterController.isGrounded + allowJump + Input.GetKeyDown(KeyCode.Space));
         //Debug.Log("MovmentInput:" + movementInput + "  :DesiredMoveDirection:" + desiredMoveDirection);

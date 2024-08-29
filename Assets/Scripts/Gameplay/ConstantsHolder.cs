@@ -38,6 +38,7 @@ public class ConstantsHolder : MonoBehaviour
     public string defaultFightingName;
 
     public int mic;
+    public bool UserMicEnable;
     public int minimap;
     public int userNameVisibilty;
     public bool profileImageModifedByUser = false;
