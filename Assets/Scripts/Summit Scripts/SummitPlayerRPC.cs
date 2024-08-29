@@ -42,7 +42,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
     
     public bool isInsideWheel = false;
     int WheelSeat = -1;
-
+    byte defaultGroup;
     private void Awake()
     {
         isInsideCAr = false;
@@ -55,7 +55,10 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             parentPlayerController = loader.mainController.GetComponent<PlayerController>();
             camera = parentPlayerController.firstPersonCameraObj.GetComponent<Camera>();
         }
+        
     }
+    
+     
 
     // Start is called before the first frame update
     public void ExitCar()
@@ -108,10 +111,10 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                     transform.rotation = new Quaternion(0, 0, 0, 0);
                      loader.mainController.transform.rotation = new Quaternion(0, 0, 0, 0);
 
-                    /* ZEEL 
+                    
                     if (voiceNetwork == null) { voiceNetwork = PunVoiceClient.Instance; }
-                    Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { voiceNetwork.Client.GlobalInterestGroup }, new byte[] { car.PrivateRoomName }));
-                    */
+                    Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { defaultGroup }, new byte[] { car.PrivateRoomName }));
+                    
                     CarNavigationManager.CarNavigationInstance.OnExitpress += Exit;
                     CarNavigationManager.CarNavigationInstance.OnCancelPress += CancelExit;
 
@@ -172,10 +175,10 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                      loader.mainController.transform.rotation = new Quaternion(0, 0, 0, 0);
                     CarNavigationManager.CarNavigationInstance.OnExitpress += Exit;
                     CarNavigationManager.CarNavigationInstance.OnCancelPress += CancelExit;
-                    /* ZEEL 
-                    if (voiceNetwork == null ) { voiceNetwork = PunVoiceClient.Instance; }
-                    Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { voiceNetwork.Client.GlobalInterestGroup }, new byte[] { car.PrivateRoomName }));
-                    */
+                
+                    if (voiceNetwork == null) { voiceNetwork = PunVoiceClient.Instance; }
+                    Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { defaultGroup }, new byte[] { car.PrivateRoomName }));
+
                 }
                 else
                 {
@@ -248,12 +251,11 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                charcontroller.enabled = true;
                arrowManager.enabled = true;
                 Transformview.enabled = true;
-                /* ZEEL 
                 if (voiceNetwork == null) { voiceNetwork = PunVoiceClient.Instance; }
-                Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { car.PrivateRoomName }, new byte[] { voiceNetwork.Client.GlobalInterestGroup }));
-                */
-                }
-                else
+                Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { car.PrivateRoomName }, new byte[] { defaultGroup }));
+
+            }
+            else
             {
                 transform.parent = loader.mainPlayer.transform.transform.parent;
                 transform.position = car.DriverExitPosition.transform.position;
@@ -364,7 +366,8 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
   }
     private void Start()
     {
-         loader =  GameplayEntityLoader.instance;
+        defaultGroup = XanaVoiceChat.instance.recorder.InterestGroup;
+        loader =  GameplayEntityLoader.instance;
         if (ConstantsHolder.xanaConstants.EnviornmentName != "XANA Summit") { return; }
         string name = PhotonNetwork.CurrentRoom.CustomProperties["Sector"].ToString();
         if (name == "Wheel")
