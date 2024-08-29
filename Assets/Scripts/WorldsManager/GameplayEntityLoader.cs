@@ -310,7 +310,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     bool CheckVoid()
     {
-        if (mainController.transform.position.y < (updatedSpawnpoint.transform.position.y - fallOffset))
+        if ( mainController?.transform.position.y < (updatedSpawnpoint.transform.position.y - fallOffset))
         {
             RaycastHit hit;
             if (Physics.Raycast(mainController.transform.position, mainController.transform.TransformDirection(Vector3.down), out hit, 1000))

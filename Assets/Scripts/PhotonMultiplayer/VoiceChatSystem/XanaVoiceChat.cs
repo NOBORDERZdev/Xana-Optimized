@@ -11,7 +11,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.XR.WSA;
 using System.Threading.Tasks;
-public class XanaVoiceChat : MonoBehaviour
+using Photon.Realtime;
+public class XanaVoiceChat : MonoBehaviourPunCallbacks
 {
     [Header("UI Elements")]
     public GameObject micOnBtn;
@@ -21,7 +22,7 @@ public class XanaVoiceChat : MonoBehaviour
     public Sprite micOnSprite;
     public Sprite micOffSprite;
 
-    private VoiceConnection voiceConnection;
+    private PunVoiceClient _punVoiceCilent;
     public Recorder recorder;
     public Speaker speaker;
 
@@ -76,7 +77,7 @@ public class XanaVoiceChat : MonoBehaviour
 
         Debug.Log("Xana VoiceChat Start");
         recorder = GameObject.FindObjectOfType<Recorder>();
-        voiceConnection = GetComponent<VoiceConnection>();
+        _punVoiceCilent = GetComponent<PunVoiceClient>();
 
         if (!ScreenOrientationManager._instance.isPotrait)
         {
@@ -98,8 +99,8 @@ public class XanaVoiceChat : MonoBehaviour
         {
             if (recorder != null)
             {
-                recorder.AutoStart = true;
-                recorder.Init(voiceConnection);
+                //recorder.AutoStart = true;
+               // recorder.Init(_punVoiceCilent);
             }
 
             if (ConstantsHolder.xanaConstants.pushToTalk)
@@ -125,7 +126,7 @@ public class XanaVoiceChat : MonoBehaviour
                     micOnBtnPotrait.SetActive(false);
                     ConstantsHolder.xanaConstants.mic = 0;
                 }
-                StartCoroutine(CheckVoiceConnect());
+                //StartCoroutine(CheckVoiceConnect());
             }
         }
     }
@@ -200,9 +201,10 @@ public class XanaVoiceChat : MonoBehaviour
     {
         if (recorder != null)
         {
-            recorder.AutoStart = recorder.TransmitEnabled = false;
-            recorder.StopRecording();
-            recorder.Init(voiceConnection);
+            //recorder.AutoStart = recorder.TransmitEnabled = false;
+            //recorder.StopRecording();
+            //recorder.Init(_punVoiceCilent);
+            recorder.RecordingEnabled = false;
         }
     }
 
@@ -210,21 +212,17 @@ public class XanaVoiceChat : MonoBehaviour
     {
         if (recorder != null)
         {
-            recorder.AutoStart = recorder.TransmitEnabled = true;
-            recorder.StartRecording();
-            recorder.Init(voiceConnection);
+            //recorder.AutoStart = recorder.TransmitEnabled = true;
+            //recorder.StartRecording();
+            //recorder.Init(_punVoiceCilent);
+            recorder.RecordingEnabled = true;
+
         }
     }
 
-    
+    public override void OnDisconnected(DisconnectCause cause) {
 
-    IEnumerator CheckVoiceConnect()
-    {
-        while (!PhotonVoiceNetwork.Instance.Client.IsConnected)
-        {
-            yield return null;
-        }
-        recorder.DebugEchoMode = false;
+        base.OnDisconnected(cause);
         if (ConstantsHolder.xanaConstants.mic == 1 && !ConstantsHolder.xanaConstants.pushToTalk)
         {
             TurnOnMic();
@@ -235,6 +233,38 @@ public class XanaVoiceChat : MonoBehaviour
             TurnOffMic();
         }
     }
+
+    public override void OnConnected()
+    {
+        base.OnConnected();
+        if (ConstantsHolder.xanaConstants.mic == 1 && !ConstantsHolder.xanaConstants.pushToTalk)
+        {
+            TurnOnMic();
+            //TurnOffMic();  //by defult we will keep mic off in all env
+        }
+        else
+        {
+            TurnOffMic();
+        }
+    }
+
+    //IEnumerator CheckVoiceConnect()
+    //{
+    //    while (!PhotonVoiceNetwork.Instance.Client.IsConnected)
+    //    {
+    //        yield return null;
+    //    }
+    //    recorder.DebugEchoMode = false;
+    //    if (ConstantsHolder.xanaConstants.mic == 1 && !ConstantsHolder.xanaConstants.pushToTalk)
+    //    {
+    //        TurnOnMic();
+    //        //TurnOffMic();  //by defult we will keep mic off in all env
+    //    }
+    //    else
+    //    {
+    //        TurnOffMic();
+    //    }
+    //}
 
     void ShowVoiceChatDialogBox()
     {

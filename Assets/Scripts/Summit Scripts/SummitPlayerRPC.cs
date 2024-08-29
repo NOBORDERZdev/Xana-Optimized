@@ -108,10 +108,10 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                     transform.rotation = new Quaternion(0, 0, 0, 0);
                      loader.mainController.transform.rotation = new Quaternion(0, 0, 0, 0);
 
-
+                    /* ZEEL 
                     if (voiceNetwork == null) { voiceNetwork = PunVoiceClient.Instance; }
                     Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { voiceNetwork.Client.GlobalInterestGroup }, new byte[] { car.PrivateRoomName }));
-
+                    */
                     CarNavigationManager.CarNavigationInstance.OnExitpress += Exit;
                     CarNavigationManager.CarNavigationInstance.OnCancelPress += CancelExit;
 
@@ -172,9 +172,10 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                      loader.mainController.transform.rotation = new Quaternion(0, 0, 0, 0);
                     CarNavigationManager.CarNavigationInstance.OnExitpress += Exit;
                     CarNavigationManager.CarNavigationInstance.OnCancelPress += CancelExit;
+                    /* ZEEL 
                     if (voiceNetwork == null ) { voiceNetwork = PunVoiceClient.Instance; }
                     Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { voiceNetwork.Client.GlobalInterestGroup }, new byte[] { car.PrivateRoomName }));
-
+                    */
                 }
                 else
                 {
@@ -247,12 +248,12 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                charcontroller.enabled = true;
                arrowManager.enabled = true;
                 Transformview.enabled = true;
+                /* ZEEL 
                 if (voiceNetwork == null) { voiceNetwork = PunVoiceClient.Instance; }
-
                 Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { car.PrivateRoomName }, new byte[] { voiceNetwork.Client.GlobalInterestGroup }));
-
-            }
-            else
+                */
+                }
+                else
             {
                 transform.parent = loader.mainPlayer.transform.transform.parent;
                 transform.position = car.DriverExitPosition.transform.position;
