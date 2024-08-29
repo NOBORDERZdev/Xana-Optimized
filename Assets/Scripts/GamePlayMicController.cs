@@ -12,24 +12,23 @@ public class GamePlayMicController : MonoBehaviour
     [SerializeField]
     private Button _micOff, _micOffPotrait, _settingOnButton, _settingOffButton, _settingOnButtonPotrait, _settingOffButtonPotrait;
     [SerializeField]
-    private string socketId;
-    private string address;
-    private SocketManager Manager;
+    private string _socketId;
+    private SocketManager _manager;
     private void OnDisable()
     {
-        if (Manager != null)
+        if (_manager != null)
         {
-            Manager.Socket.Off();
-            Manager.Close();
+            _manager.Socket.Off();
+            _manager.Close();
         }
     }
     private void Start()
     {
 
-        Manager = new SocketManager(new Uri(ConstantsGod.API_BASEURL));
-        Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
-        Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
-        Manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
+        _manager = new SocketManager(new Uri(ConstantsGod.API_BASEURL));
+        _manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
+        _manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
+        _manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
         UserMicEnableDisable(ConstantsHolder.xanaConstants.UserMicEnable);
         //Disabling forcefully mute functionaility according to new requirement // Ahsan
         //if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("BreakingDown Arena") /*|| WorldItemView.m_EnvName.Contains("XANA Summit")*/)
@@ -53,7 +52,8 @@ public class GamePlayMicController : MonoBehaviour
     }
     private void OnConnected(ConnectResponse resp)
     {
-        Manager.Socket.On<string>("userMicControl", UserMicControl);
+        _socketId = resp.sid;
+        _manager.Socket.On<string>("userMicControl", UserMicControl);
     }
     private void OnError(CustomError args)
     {
