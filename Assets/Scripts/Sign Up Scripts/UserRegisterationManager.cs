@@ -1605,17 +1605,13 @@ public class UserRegisterationManager : MonoBehaviour
     public IEnumerator HitLogOutAPI(string url, string Jsondata, Action<bool> CallBack)
     {
         LoadingHandler.Instance.characterLoading.gameObject.SetActive(true);
-        //print("Body of Logout " + Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-        yield return request.SendWebRequest();
-        ////Debug.Log("<color=red>" +request.downloadHandler.text + "</color>");
-        //  //print(request.GetRequestHeader("Authorization"));
-        //  //print(request.isDone);
+        //yield return request.SendWebRequest();
         MyClassNewApi myObject1 = new MyClassNewApi();
         if (!request.isHttpError && !request.isNetworkError)
         {
@@ -1643,10 +1639,8 @@ public class UserRegisterationManager : MonoBehaviour
                 if (request.error != null)
                 {
                     myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
-                    //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                        //   //print("Hey success false " + myObject1.msg);
                         validationMessagePopUP.SetActive(true);
                         errorTextPassword.SetActive(true);
                         errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
@@ -1658,9 +1652,6 @@ public class UserRegisterationManager : MonoBehaviour
                 }
             }
             LoadingHandler.Instance.characterLoading.gameObject.SetActive(false);
-            //yield return new WaitForSeconds(.1f);
-            //LoadingHandler.Instance.UpdateLoadingSlider(0.90f);
-            //yield return new WaitForSeconds(.1f);
             LoadingHandler.Instance.HideLoading();
             StoreManager.instance.CheckWhenUserLogin();
         }
