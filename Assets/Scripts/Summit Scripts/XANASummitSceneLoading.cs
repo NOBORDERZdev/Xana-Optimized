@@ -110,6 +110,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         ConstantsHolder.userLimit = domeGeneralData.maxPlayer;
         ConstantsHolder.isPenguin = domeGeneralData.IsPenguin;
         ConstantsHolder.isFixedHumanoid = domeGeneralData.Ishumanoid;
+        ConstantsHolder.AvatarIndex = domeGeneralData.AvatarIndex;
         if (domeGeneralData.worldType)
             ConstantsHolder.xanaConstants.MuseumID = domeGeneralData.builderWorldId.ToString();
         else
@@ -163,6 +164,8 @@ public class XANASummitSceneLoading : MonoBehaviour
             eventName = "TV_Dome_" + domeId + "_BW_" + domeGeneralData.builderWorldId;
         else
             eventName = "TV_Dome_" + domeId + "_XW_" + domeGeneralData.worldId;
+
+        GameplayEntityLoader.instance.AssignRaffleTickets(domeId);
         GlobalConstants.SendFirebaseEventForSummit(eventName);
     }
 
@@ -327,6 +330,7 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.worldType = dataContainer.summitData.domes[i].worldType;
                 domeGeneralData.experienceType = dataContainer.summitData.domes[i].experienceType;
                 domeGeneralData.builderWorldId = dataContainer.summitData.domes[i].builderWorldId;
+                domeGeneralData.worldId = dataContainer.summitData.domes[i].worldId;
                 domeGeneralData.maxPlayer = dataContainer.summitData.domes[i].maxPlayer;
                 domeGeneralData.IsPenguin = dataContainer.summitData.domes[i].IsPenguin;
                 domeGeneralData.Ishumanoid = dataContainer.summitData.domes[i].Ishumanoid;
@@ -372,6 +376,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         GameplayEntityLoader.instance.mainController.transform.position = playerPos;
         GameplayEntityLoader.instance.mainController.transform.rotation = playerRot.CTQuaternion();
         GameplayEntityLoader.instance.mainController.transform.localScale = playerScale;
+        XanaWorldDownloader.initialPlayerPos = playerPos;
         if (WorldItemView.m_EnvName == "XANA Summit")
         {
             ConstantsHolder.isFromXANASummit = false;

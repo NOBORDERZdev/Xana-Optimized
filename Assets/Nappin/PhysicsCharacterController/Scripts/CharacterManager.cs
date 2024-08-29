@@ -296,6 +296,7 @@ namespace PhysicsCharacterController
         {
             prevGrounded = isGrounded;
             isGrounded = Physics.CheckSphere(transform.position - new Vector3(0, originalColliderHeight / 2f, 0), groundCheckerThrashold, groundMask);
+            canJumpNow = true;
             //if (GamificationComponentData.instance != null)
             //    GamificationComponentData.instance.IsGrounded = isGrounded;
         }
@@ -622,7 +623,7 @@ namespace PhysicsCharacterController
         {
            
             //jumped
-            if (jump && canJumpNow && isGrounded) // && ((isTouchingSlope && currentSurfaceAngle <= maxClimbableSlopeAngle) || !isTouchingSlope) && !isTouchingWall)
+            if (jump && canJumpNow && isGrounded)/* && ((isTouchingSlope && currentSurfaceAngle <= maxClimbableSlopeAngle) || !isTouchingSlope) && !isTouchingWall)*/
             {
               
                 rigidbody.velocity += Vector3.up * jumpVelocity;
