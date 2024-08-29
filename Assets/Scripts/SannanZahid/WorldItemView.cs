@@ -79,6 +79,7 @@ public class WorldItemView : EnhancedScrollerCellView
         CreatorAvatarURL = detail.CreatorAvatarURL;
         CreatorDescription = SNS_APIManager.DecodedString(detail.CreatorDescription);
         worldVisitCount = detail.WorldVisitCount;
+        UserMicEnable=detail.UserMicEnable;
         isFavourite = detail.isFavourite;
         if (creatorNameText)
             creatorNameText.text = Creator_Name;
@@ -122,6 +123,7 @@ public class WorldItemView : EnhancedScrollerCellView
     public string CreatorAvatarURL;
     public string CreatorDescription;
     public string worldVisitCount;
+    public bool UserMicEnable;
     public bool isFavourite;
     public WorldDescriptionPopupPreview worldItemPreview;
     UserAnalyticsHandler userAnalyticsHandler;
@@ -384,7 +386,7 @@ public class WorldItemView : EnhancedScrollerCellView
         //{
         worldItemPreview.Init(this.gameObject, worldIcon.sprite,
     m_EnvironmentName, m_WorldDescription, Creator_Name, createdAt, updatedAt, isBuilderScene, userAvatarURL, m_ThumbnailDownloadURL, worldTags,
-    entityType, Creator_Name, CreatorDescription, CreatorAvatarURL, isFavourite, idOfObject);
+    entityType, Creator_Name, CreatorDescription, CreatorAvatarURL, UserMicEnable, isFavourite, idOfObject);
         //}
 
         ConstantsHolder.xanaConstants.EnviornmentName = m_EnvironmentName;
