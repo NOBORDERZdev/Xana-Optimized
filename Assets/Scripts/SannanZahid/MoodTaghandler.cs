@@ -10,21 +10,34 @@ public class MoodTaghandler : MonoBehaviour
     public List<Transform> MoodButton = new List<Transform>();
     public Color SelectedTxtColor, UnSelectedTxtColor;
     public HorizontalLayoutGroup TagHodler;
+    public ContentSizeFitter ContentFitterRef;
     private void OnEnable()
     {
         if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
         {
-            TagHodler.spacing = -203;
+            TagHodler.spacing = 11f;
+            TagHodler.padding.left = -172;
         }
         else
         {
-            TagHodler.spacing = -340;
+            TagHodler.spacing = 10f;
+            TagHodler.padding.left = -337;
         }
+        Invoke(nameof(SetComponentState), 0.01f);
     }
     private void Start()
     {
         ActivateSelectedTag(0);
     }
+
+    public void SetComponentState()
+    {
+        if (!ContentFitterRef.enabled)
+        {
+            ContentFitterRef.enabled = true;
+        }
+    }
+
     public void ActivateSelectedTag(int index)
     {
         for (int i = 0; i < MoodText.Count; i++)
