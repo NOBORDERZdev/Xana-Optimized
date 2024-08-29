@@ -56,11 +56,12 @@ public class AdvancedYoutubePlayer : MonoBehaviour
     string m_StartedPlayingVideoId;
     string m_PlayingVideoId;
     Action<string> HLSurlLoaded;
-
+    
     private void OnEnable()
     {
         AvatarSpawnerOnDisconnect.OninternetDisconnect += OnInternetDisconnect;
         AvatarSpawnerOnDisconnect.OninternetConnected += OnInternetConnect;
+        VideoPlayer.errorReceived += (hand, message) => { Debug.Log("Error in video.... "); PrepareVideoUrls(default,true); };
         //if (IsLive)
         //{
         //    AVProVideoPlayer.gameObject.SetActive(true);
@@ -132,7 +133,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
              await VideoPlayer.PrepareAsync(cancellationToken);*/
     }
 
-    private async Task PrepareVideoUrls(CancellationToken cancellationToken = default)
+    private async Task PrepareVideoUrls(CancellationToken cancellationToken = default, bool skipPrevious = false)
     {
         if (!IsLive)
         {
@@ -142,7 +143,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
             }
 
             var instanceUrl = await YoutubeInstance.GetInstanceUrl(cancellationToken);
-            var videoInfo = await YoutubeApi.GetVideoInfo(instanceUrl, VideoId, cancellationToken, YoutubeInstance.YoutubeInstanceInfos);
+            var videoInfo = await YoutubeApi.GetVideoInfo(instanceUrl, VideoId, cancellationToken, YoutubeInstance.YoutubeInstanceInfos, skipPrevious);
             var videoformat = GetCompatibleFormat(videoInfo, ((int)PreferedQuality).ToString());
             var audioformat = GetCompatibleFormat(videoInfo, "18");
             Debug.LogError("instance url  " + instanceUrl + "our url " + videoformat.Url);
@@ -208,6 +209,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         // Play both video and audio
         VideoPlayer.Play();
         VideoPlayer1.Play();
+       
     }
 
     private string GetProxiedUrl(string url, string YoutubeUrl)
