@@ -620,7 +620,7 @@ public class AvatarController : MonoBehaviour
             {
                 if (GetComponent<PhotonView>() && GetComponent<PhotonView>().IsMine || staticPlayer) // self
                 {
-                    SetAvatarClothDefault(this.gameObject);
+                    //SetAvatarClothDefault(this.gameObject);
 
                     if (_CharacterData.myItemObj.Count > 0)
                     {

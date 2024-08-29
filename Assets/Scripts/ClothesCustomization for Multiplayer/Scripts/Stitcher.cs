@@ -17,6 +17,7 @@ public class Stitcher
 		TransformCatalog boneCatalog = new TransformCatalog (targetAvatar.transform);
 		SkinnedMeshRenderer[] skinnedMeshRenderers = sourceClothing.GetComponentsInChildren<SkinnedMeshRenderer> ();
 		GameObject targetClothing = AddChild (sourceClothing, targetAvatar.transform);
+
 		foreach (SkinnedMeshRenderer sourceRenderer in skinnedMeshRenderers) {
 			SkinnedMeshRenderer targetRenderer = AddSkinnedMeshRenderer (sourceRenderer, targetClothing);
 			targetRenderer.bones = TranslateTransforms (sourceRenderer.bones, boneCatalog);
