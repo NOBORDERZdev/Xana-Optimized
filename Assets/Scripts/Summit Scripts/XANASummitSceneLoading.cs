@@ -110,6 +110,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         ConstantsHolder.userLimit = domeGeneralData.maxPlayer;
         ConstantsHolder.isPenguin = domeGeneralData.IsPenguin;
         ConstantsHolder.isFixedHumanoid = domeGeneralData.Ishumanoid;
+        ConstantsHolder.AvatarIndex = domeGeneralData.AvatarIndex;
         if (domeGeneralData.worldType)
             ConstantsHolder.xanaConstants.MuseumID = domeGeneralData.builderWorldId.ToString();
         else
@@ -375,6 +376,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         GameplayEntityLoader.instance.mainController.transform.position = playerPos;
         GameplayEntityLoader.instance.mainController.transform.rotation = playerRot.CTQuaternion();
         GameplayEntityLoader.instance.mainController.transform.localScale = playerScale;
+        XanaWorldDownloader.initialPlayerPos = playerPos;
         if (WorldItemView.m_EnvName == "XANA Summit")
         {
             ConstantsHolder.isFromXANASummit = false;
