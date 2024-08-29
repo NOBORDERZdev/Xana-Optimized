@@ -503,7 +503,7 @@ namespace Photon.Pun.Demo.PunBasics
           
             foreach (var p in playerobjects)
             {
-                if (p == player) continue;
+                if (p == player||!p) continue;
                 summitplayer = p.GetComponent<SummitPlayerRPC>();
                 Destroy(summitplayer.AnimatorView);
                 Destroy(summitplayer.VoiceView);
