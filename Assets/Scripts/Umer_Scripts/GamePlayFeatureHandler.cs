@@ -38,11 +38,11 @@ public class GamePlayFeatureHandler : MonoBehaviour
             voiceChatOffBtn1.enabled = XanaEventDetails.eventDetails.voiceChat;
             voiceChatOffBtn2.enabled = XanaEventDetails.eventDetails.voiceChat;
             voiceChatSettingBtn.SetActive(XanaEventDetails.eventDetails.voiceChat);
-            if (!XanaEventDetails.eventDetails.voiceChat)
-            {
-                ConstantsHolder.xanaConstants.mic = 1;
-                ConstantsHolder.xanaConstants.StopMic();
-            }
+            //if (!XanaEventDetails.eventDetails.voiceChat)
+            //{
+            //    ConstantsHolder.xanaConstants.mic = 1;
+            //    ConstantsHolder.xanaConstants.StopMic();
+            //}
         }
         if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("DUNE"))
         {
