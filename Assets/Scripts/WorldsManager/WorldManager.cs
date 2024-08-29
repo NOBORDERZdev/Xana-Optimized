@@ -154,8 +154,8 @@ public class WorldManager : MonoBehaviour
 
     void AddingDeleyToLoadScene()
     {
-        // LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
-        PhotonNetwork.LoadLevel("GamePlayScene");
+         LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+        //PhotonNetwork.LoadLevel("GamePlayScene");
 
     }
 
@@ -856,8 +856,8 @@ public class WorldManager : MonoBehaviour
         await Task.Delay(500);
         //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
         //Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
-        // LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
-        PhotonNetwork.LoadLevel("GamePlayScene");
+         LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+        //PhotonNetwork.LoadLevel("GamePlayScene");
         // }
         if (WorldItemView.m_EnvName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());
@@ -923,8 +923,8 @@ public class WorldManager : MonoBehaviour
         await Task.Delay(500);
         //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
         //Photon.Pun.PhotonHandler.levelName = "Builder";
-        //LoadingHandler.Instance.LoadSceneByIndex("Builder");
-        PhotonNetwork.LoadLevel("Builder");
+        LoadingHandler.Instance.LoadSceneByIndex("Builder");
+        //PhotonNetwork.LoadLevel("Builder");
 
         // }
     }
@@ -997,8 +997,8 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
             // Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
-            // LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
-            PhotonNetwork.LoadLevel("GamePlayScene");
+             LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+           // PhotonNetwork.LoadLevel("GamePlayScene");
 
         }
     }
@@ -1007,8 +1007,8 @@ public class WorldManager : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         //Photon.Pun.PhotonHandler.levelName = "Builder";
-        // LoadingHandler.Instance.LoadSceneByIndex("Builder");
-        PhotonNetwork.LoadLevel("Builder");
+         LoadingHandler.Instance.LoadSceneByIndex("Builder");
+       // PhotonNetwork.LoadLevel("Builder");
 
     }
 

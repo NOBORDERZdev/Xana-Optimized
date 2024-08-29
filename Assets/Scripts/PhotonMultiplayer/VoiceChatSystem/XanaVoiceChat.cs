@@ -97,10 +97,13 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
         }
         else
         {
-            if (recorder != null)
+            if (recorder != null || ConstantsHolder.xanaConstants.openLandingSceneDirectly)
             {
+                StopRecorder();
+                TurnOffMic();
+                ConstantsHolder.xanaConstants.mic = 0;
                 //recorder.AutoStart = true;
-               // recorder.Init(_punVoiceCilent);
+                // recorder.Init(_punVoiceCilent);
             }
 
             if (ConstantsHolder.xanaConstants.pushToTalk)
