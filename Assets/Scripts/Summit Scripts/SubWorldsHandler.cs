@@ -1,8 +1,14 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class SubWorldsHandler : MonoBehaviour
 {
+    public GameObject SubworldListParent;
+    public Transform ContentParent;
+    public GameObject SubworldPrefab;
+
     public XANASummitDataContainer XANASummitDataContainer;
+    public XANASummitSceneLoading XANASummitSceneLoadingInstance;
     // Start is called before the first frame update
     void OnEnable()
     {
@@ -50,4 +56,43 @@ public class SubWorldsHandler : MonoBehaviour
         }
     }
 
+
+
+    public Task<bool> CreateSubWorldList(XANASummitDataContainer.DomeGeneralData domeGeneralData, Vector3 PlayerReturnPosition)
+    {
+        SubworldListParent.SetActive(true);
+        for (int i = 0; i < domeGeneralData.SubWorlds.Count; i++)
+        {
+            GameObject temp = Instantiate(SubworldPrefab,ContentParent);
+            SubWorldPrefab _SubWorldPrefab = temp.GetComponent<SubWorldPrefab>();
+            if (domeGeneralData.SubWorlds[i].officialWorld)
+            {
+                _SubWorldPrefab.WorldId = domeGeneralData.SubWorlds[i].selectWorld.id;
+                _SubWorldPrefab.ThumbnailUrl = domeGeneralData.SubWorlds[i].selectWorld.icon;
+                _SubWorldPrefab.WorldName.text = domeGeneralData.SubWorlds[i].selectWorld.label;
+            }
+            else
+            {
+                _SubWorldPrefab.WorldId = int.Parse(domeGeneralData.SubWorlds[i].builderSubWorldId);
+            }
+
+            _SubWorldPrefab.PlayerReturnPosition = PlayerReturnPosition;
+            _SubWorldPrefab.SubWorldPrefabButton.onClick.AddListener(OnSubworldOpen);
+            _SubWorldPrefab.Init();
+        }
+        if (domeGeneralData.SubWorlds.Count > 0)
+            return new Task<bool>(() =>true);
+        else
+            return new Task<bool>(() => false);
+    }
+
+
+    void OnSubworldOpen()
+    {
+        foreach (Transform t in ContentParent)
+            Destroy(t.gameObject);
+
+        SubworldListParent.SetActive(false);
+    }
+   
 }

@@ -19,6 +19,8 @@ public class XANASummitSceneLoading : MonoBehaviour
 
     public GameplayEntityLoader gameplayEntityLoader;
 
+    public SubWorldsHandler SubWorldsHandlerInstance;
+
     public XANASummitDataContainer dataContainer;
 
     [SerializeField]
@@ -76,14 +78,22 @@ public class XANASummitSceneLoading : MonoBehaviour
             ReferencesForGamePlay.instance.minimap.SetActive(false);
         }
     }
-
+ 
     async void LoadingFromDome(int domeId, Vector3 playerPos)
     {
-        XANASummitDataContainer.DomeGeneralData domeGeneralData = new XANASummitDataContainer.DomeGeneralData();
+        XANASummitDataContainer.DomeGeneralData domeGeneralData=new XANASummitDataContainer.DomeGeneralData();
         domeGeneralData = GetDomeData(domeId);
 
         if (string.IsNullOrEmpty(domeGeneralData.world))
             return;
+
+        if (domeGeneralData.isSubWorld)
+        {
+            ConstantsHolder.isFromXANASummit = true;
+            bool Success = await SubWorldsHandlerInstance.CreateSubWorldList(domeGeneralData, playerPos);
+            if (Success)
+                return;
+        }
 
         SummitMiniMapStatusOnSceneChange(false);
         //StartCoroutine(LoadingHandler.Instance.FadeIn());
@@ -168,6 +178,8 @@ public class XANASummitSceneLoading : MonoBehaviour
         GameplayEntityLoader.instance.AssignRaffleTickets(domeId);
         GlobalConstants.SendFirebaseEventForSummit(eventName);
     }
+
+
 
     public async void LoadingSceneByIDOrName(string worldId, Vector3 playerPos)
     {
@@ -340,6 +352,7 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.isSubWorld = dataContainer.summitData.domes[i].isSubWorld;
                 domeGeneralData.world360Image = dataContainer.summitData.domes[i].world360Image;
                 domeGeneralData.companyLogo = dataContainer.summitData.domes[i].companyLogo;
+                domeGeneralData.SubWorlds = dataContainer.summitData.domes[i].SubWorlds;
                 //if (dataContainer.summitData1.domes[i].worldType)
                 //    return new Tuple<string[],string>(new[] { dataContainer.summitData1.domes[i].world, "1", dataContainer.summitData1.domes[i].builderWorldId }, dataContainer.summitData1.domes[i].experienceType);
                 //else
