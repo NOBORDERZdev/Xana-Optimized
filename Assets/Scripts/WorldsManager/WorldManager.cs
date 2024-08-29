@@ -139,6 +139,7 @@ public class WorldManager : MonoBehaviour
             ConstantsHolder.xanaConstants.MuseumID = singleWorldInfo.data.id;
             WorldItemView.m_EnvName = singleWorldInfo.data.name;
             ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+            ConstantsHolder.xanaConstants.UserMicEnable = singleWorldInfo.data.userMicEnable;
             LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
             LoadingHandler.Instance.ShowLoading();
@@ -501,6 +502,7 @@ public class WorldManager : MonoBehaviour
             _event.CreatedAt = _WorldInfo.data.rows[i].createdAt;
             //_event.WorldVisitCount = _WorldInfo.data.rows[i].totalVisits; // TotalVisit Variable Used for Web
             _event.WorldVisitCount = _WorldInfo.data.rows[i].xanaAppVisitCount;
+            _event.UserMicEnable = _WorldInfo.data.rows[i].userMicEnable;
             _event.isFavourite = _WorldInfo.data.rows[i].isFavourite;
             if (_WorldInfo.data.rows[i].tags != null)
                 _event.WorldTags = _WorldInfo.data.rows[i].tags;
@@ -638,6 +640,7 @@ public class WorldManager : MonoBehaviour
         _event.UpdatedAt = _worldInfo.updatedAt;
         _event.CreatedAt = _worldInfo.createdAt;
         _event.WorldVisitCount = _worldInfo.totalVisits;
+        _event.UserMicEnable = _worldInfo.userMicEnable;
         _event.isFavourite = _worldInfo.isFavourite;
         if (_worldInfo.tags != null)
             _event.WorldTags = _worldInfo.tags;
@@ -1111,6 +1114,7 @@ public class RowList
     public string[] tags;
     public string totalVisits;
     public string xanaAppVisitCount;
+    public bool userMicEnable;
 
     public bool isFavourite;
     public UserInfo user;
@@ -1162,6 +1166,7 @@ public class WorldItemDetail
     public string CreatorAvatarURL;
     public string CreatorDescription;
     public string WorldVisitCount;
+    public bool UserMicEnable;
     public bool isFavourite;
 }
 
