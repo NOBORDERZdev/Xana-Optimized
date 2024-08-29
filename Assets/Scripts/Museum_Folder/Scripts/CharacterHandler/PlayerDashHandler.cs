@@ -51,7 +51,9 @@ public class PlayerDashHandler : MonoBehaviour
 
     public void DashButton()
     {
-        if (_playerController == null || _playerController.characterController.velocity.y != 0f || !_canDash)
+        if (_playerController == null /*|| _playerController.characterController.velocity.y != 0f*/ || !_canDash)
+            return;
+        if (_playerController.animator.GetCurrentAnimatorStateInfo(0).IsName("JumpMove") || _playerController.animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") || _playerController.animator.GetCurrentAnimatorStateInfo(0).IsName("Falling") || _playerController.animator.GetCurrentAnimatorStateInfo(0).IsName("LandSoft"))
             return;
         StartCoroutine(DashRoutine());
     }
