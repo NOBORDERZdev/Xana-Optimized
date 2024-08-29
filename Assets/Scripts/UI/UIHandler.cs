@@ -114,15 +114,35 @@ public class UIHandler : MonoBehaviour
     }
     private void Start()
     {
+        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+            {
+                Screen.orientation = ScreenOrientation.Portrait;
+            }
+
+        }
+        else 
+        {
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+        }
         if (SaveCharacterProperties.NeedToShowSplash == 1)
         {
             if (PlayerPrefs.HasKey("TermsConditionAgreement"))
             {
                 IsSplashActive = false;
                 StartCoroutine(IsSplashEnable(false, 3f));
-                if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
                 {
-                    Screen.orientation = ScreenOrientation.Portrait;
+                    if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                    {
+                        Screen.orientation = ScreenOrientation.Portrait;
+                    }
+
+                }
+                else
+                {
+                    Screen.orientation = ScreenOrientation.LandscapeLeft;
                 }
             }
          }

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class AdditiveScenesLoader : MonoBehaviour
 {
-    public bool SwitchXanaToXSummit=false;
+    //public bool SwitchXanaToXSummit=false;
     public float sceneDelay;
     string sceneTest= "LoginSignupScene";
     string sceneTest1= "XSummitLoginSignupScene";
@@ -54,13 +54,15 @@ public class AdditiveScenesLoader : MonoBehaviour
     IEnumerator AddDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        if (!SwitchXanaToXSummit)
+        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
         {
+           
             SceneManager.LoadSceneAsync(sceneTest, LoadSceneMode.Additive);
 
         }
         else
         {
+           
             SceneManager.LoadSceneAsync(sceneTest1, LoadSceneMode.Additive);
         }
     }
