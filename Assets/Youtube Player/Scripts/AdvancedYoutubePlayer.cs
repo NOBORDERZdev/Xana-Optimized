@@ -146,7 +146,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
             var videoInfo = await YoutubeApi.GetVideoInfo(instanceUrl, VideoId, cancellationToken, YoutubeInstance.YoutubeInstanceInfos, skipPrevious);
             var videoformat = GetCompatibleFormat(videoInfo, ((int)PreferedQuality).ToString());
             var audioformat = GetCompatibleFormat(videoInfo, "18");
-            Debug.LogError("instance url  " + instanceUrl + "our url " + videoformat.Url);
+            Debug.Log("<color=red>instance url " + instanceUrl + " our url " + videoformat.Url + "</color>");
 
             string url = GetProxiedUrl(videoformat.Url, instanceUrl);
             string audio = GetProxiedUrl(audioformat.Url, instanceUrl);
