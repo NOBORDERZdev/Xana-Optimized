@@ -26015,65 +26015,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1947161062, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
-      propertyPath: speakerPrefab
-      value: 
-      objectReference: {fileID: 5947097724825286896, guid: 74d3f5789ce48c041b35b67b9f1e8064, type: 3}
-    - target: {fileID: 1947161062, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
-      propertyPath: KeepAliveInBackground
-      value: 5000
-      objectReference: {fileID: 0}
     - target: {fileID: 4245204776719318624, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
       propertyPath: m_Name
       value: VoiceChat
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
-      propertyPath: reliableMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
-      propertyPath: samplingRate
-      value: 16000
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
-      propertyPath: debugEchoMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
-      propertyPath: frameDuration
-      value: 10000
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
-      propertyPath: loopAudioClip
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
-      propertyPath: microphoneType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
-      propertyPath: voiceDetection
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
-      propertyPath: recordWhenJoined
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
-      propertyPath: recordingEnabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
-      propertyPath: voiceDetectionThreshold
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
-      propertyPath: photonMicrophoneDeviceId
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
-      propertyPath: audioSessionParameters.Mode
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4245204776719318628, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
       propertyPath: m_RootOrder
@@ -26119,20 +26063,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6627258828445391548, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
-      propertyPath: highPass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6627258828445391548, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
-      propertyPath: aecHighPass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8587086797815298581, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
-      propertyPath: HandleDeviceChangeIOS
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6627258828445391548, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
 --- !u!114 &1969981178 stripped
 MonoBehaviour:
@@ -29904,7 +29835,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.06806946, y: -0.00089046254, z: 0.000060756105, w: 0.9976802}
+  m_LocalRotation: {x: 0.06806946, y: -0.0008904649, z: 0.000060756265, w: 0.9976802}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -30355,7 +30286,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010641862, y: -0.00089250796, z: 0.00000950035, w: 0.999943}
+  m_LocalRotation: {x: 0.010641732, y: -0.00089250103, z: 0.00000950016, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
