@@ -137,8 +137,20 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
             }
 
         //}
-
+#if UNITY_IOS
+      //  while (_punVoiceCilent.ClientState != ClientState.Joined)
+       // {
+          //  yield return null;
+       // }
+       yield return new WaitForSeconds(3);
+        if ((Device.generation.ToString()).IndexOf("iPhone") > -1)
+        { //for iphones only
+            iPhoneSpeaker.ForceToSpeaker();
+        }
+#endif
     }
+
+   
 
     private IEnumerator GetMicPermission()
     {

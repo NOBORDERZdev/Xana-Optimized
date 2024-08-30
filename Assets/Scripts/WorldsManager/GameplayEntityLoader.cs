@@ -681,6 +681,17 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             player.transform.localRotation = Quaternion.identity;
             player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Female");      // Set Default Cloth to avoid naked avatar
         }
+#if UNITY_IOS
+        //  while (_punVoiceCilent.ClientState != ClientState.Joined)
+        // {
+        //  yield return null;
+        // }
+        yield return new WaitForSeconds(3);
+        if ((Device.generation.ToString()).IndexOf("iPhone") > -1)
+        { //for iphones only
+            iPhoneSpeaker.ForceToSpeaker();
+        }
+#endif
     }
 
     void ActivateNpcChat()
