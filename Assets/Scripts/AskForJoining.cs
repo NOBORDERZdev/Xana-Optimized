@@ -93,6 +93,20 @@ public class AskForJoining : MonoBehaviour
             if (ReferencesForGamePlay.instance != null)
                 ReferencesForGamePlay.instance.workingCanvas.SetActive(false);
 
+            if (!GameplayEntityLoader.instance.mainController)
+            {
+                XanaWorldDownloader.ResetAll();
+                BuilderEventManager.ResetSummit?.Invoke();
+                ConstantsHolder.IsXSummitApp = true;
+                ConstantsHolder.xanaConstants.isBuilderScene = false;
+                ConstantsHolder.xanaConstants.isFromHomeTab = true;
+                LoadingHandler.Instance.ShowLoading();
+                LoadingHandler.Instance.UpdateLoadingSlider(0);
+                LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+                LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+                return;
+            }
+
             LoadingHandler.Instance.ShowLoading();
             float _rand = UnityEngine.Random.Range(6f, 10f);
             LoadingHandler.Instance.randCurrentValue = _rand;
