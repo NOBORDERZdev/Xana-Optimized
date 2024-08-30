@@ -1,4 +1,5 @@
 using Photon.Pun.Demo.PunBasics;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -67,4 +68,18 @@ public class SectorManager : MonoBehaviour
         MutiplayerController.instance.Ontriggered(Name);
     }
 
+
+    public void UpdateMultisector()
+    {
+        if (ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit")
+        {
+            ConstantsHolder.MultiSectionPhoton = true;
+        }
+        else
+        {
+            ConstantsHolder.MultiSectionPhoton = false;
+            ConstantsHolder.DiasableMultiPartPhoton = false;
+            ConstantsHolder.TempDiasableMultiPartPhoton = false;
+        }
+    }
 }
