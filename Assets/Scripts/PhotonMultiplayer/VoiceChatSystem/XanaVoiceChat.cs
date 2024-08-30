@@ -88,14 +88,14 @@ public class XanaVoiceChat : MonoBehaviour
                 Permission.RequestUserPermission(Permission.Microphone);
             }
         }
-        if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("BreakingDown Arena"))
-        {
-            StopRecorder();
-            TurnOffMic();
-            ConstantsHolder.xanaConstants.mic = 0;
-        }
-        else
-        {
+        //if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("BreakingDown Arena"))
+        //{
+        //    StopRecorder();
+        //    TurnOffMic();
+        //    ConstantsHolder.xanaConstants.mic = 0;
+        //}
+        //else
+        //{
             if (recorder != null)
             {
                 recorder.AutoStart = true;
@@ -117,17 +117,17 @@ public class XanaVoiceChat : MonoBehaviour
                 micOffBtnPotrait.GetComponent<Button>().onClick.AddListener(MicToggleOff);
                 micOnBtn.GetComponent<Button>().onClick.AddListener(MicToggleOn);
                 micOnBtnPotrait.GetComponent<Button>().onClick.AddListener(MicToggleOn);
-                if (ConstantsHolder.xanaConstants.EnviornmentName == "DJ Event")
-                {
-                    micOffBtn.SetActive(false);
-                    micOffBtnPotrait.SetActive(false);
-                    micOnBtn.SetActive(false);
-                    micOnBtnPotrait.SetActive(false);
-                    ConstantsHolder.xanaConstants.mic = 0;
-                }
+                //if (ConstantsHolder.xanaConstants.EnviornmentName == "DJ Event")
+                //{
+                //    micOffBtn.SetActive(false);
+                //    micOffBtnPotrait.SetActive(false);
+                //    micOnBtn.SetActive(false);
+                //    micOnBtnPotrait.SetActive(false);
+                //    ConstantsHolder.xanaConstants.mic = 0;
+                //}
                 StartCoroutine(CheckVoiceConnect());
             }
-        }
+        //}
     }
 
     private IEnumerator GetMicPermission()
@@ -225,15 +225,15 @@ public class XanaVoiceChat : MonoBehaviour
             yield return null;
         }
         recorder.DebugEchoMode = false;
-        if (ConstantsHolder.xanaConstants.mic == 1 && !ConstantsHolder.xanaConstants.pushToTalk)
-        {
-            TurnOnMic();
-            //TurnOffMic();  //by defult we will keep mic off in all env
-        }
-        else
-        {
-            TurnOffMic();
-        }
+        //if (ConstantsHolder.xanaConstants.mic == 1 && !ConstantsHolder.xanaConstants.pushToTalk)
+        //{
+        //    TurnOnMic();
+        //    //TurnOffMic();  //by defult we will keep mic off in all env
+        //}
+        //else
+        //{
+        //    TurnOffMic();
+        //}
     }
 
     void ShowVoiceChatDialogBox()
