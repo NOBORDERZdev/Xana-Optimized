@@ -25,7 +25,7 @@ namespace ZeelKheni.YoutubePlayer.Api
             else
             {
                 string htmlContent = webRequest.downloadHandler.text;
-                Debug.Log("HTML Content: " + htmlContent);
+               
 
 
                 hlsurl = ParseHLSManifestUrl(htmlContent);

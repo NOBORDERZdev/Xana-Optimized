@@ -193,7 +193,10 @@ public class YoutubeStreamController : MonoBehaviour
             //{
             //    gameObject.GetComponent<AvProDirectionalSound>().ActivateDirectionalSoundIfNotYet();
             //}
-            if (gameObject.GetComponent<AvProLiveVideoSoundEnabler>() && 
+
+
+            
+            if (gameObject.GetComponent<AvProLiveVideoSoundEnabler>() && gameObject.GetComponent<AvProDirectionalSound>().PlayerTriggerCheck !=null&&
                 gameObject.GetComponent<AvProDirectionalSound>().PlayerTriggerCheck.IsPlayerTriggered)
             {
                 gameObject.GetComponent<AvProLiveVideoSoundEnabler>().EnableLiveVideoSound(true);
