@@ -687,7 +687,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         // {
         //  yield return null;
         // }
-        yield return new WaitForSeconds(3);
         if ((Device.generation.ToString()).IndexOf("iPhone") > -1)
         { //for iphones only
             iPhoneSpeaker.ForceToSpeaker();
