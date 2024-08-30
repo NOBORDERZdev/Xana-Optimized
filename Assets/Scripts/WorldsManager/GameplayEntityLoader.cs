@@ -661,6 +661,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             player.transform.localRotation = Quaternion.identity;
             player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Female");      // Set Default Cloth to avoid naked avatar
         }
+        ActionAnimationApplyToPlayer.PlayerAnimatorInitializer?.Invoke(player.GetComponent<Animator>().runtimeAnimatorController);
     }
 
     void InstantiatePlayerForFixedHumanoid()
