@@ -89,6 +89,9 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
                 Permission.RequestUserPermission(Permission.Microphone);
             }
         }
+#if UNITY_IOS
+        iPhoneSpeaker.ForceToSpeaker();
+#else
         //if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("BreakingDown Arena"))
         //{
         //    StopRecorder();
@@ -97,7 +100,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
         //}
         //else
         //{
-            if (recorder != null || ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+        if (recorder != null || ConstantsHolder.xanaConstants.openLandingSceneDirectly)
             {
                 StopRecorder();
                 TurnOffMic();
