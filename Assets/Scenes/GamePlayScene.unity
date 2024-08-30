@@ -26019,13 +26019,29 @@ PrefabInstance:
       propertyPath: speakerPrefab
       value: 
       objectReference: {fileID: 5947097724825286896, guid: 74d3f5789ce48c041b35b67b9f1e8064, type: 3}
+    - target: {fileID: 1947161062, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
+      propertyPath: KeepAliveInBackground
+      value: 5000
+      objectReference: {fileID: 0}
     - target: {fileID: 4245204776719318624, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
       propertyPath: m_Name
       value: VoiceChat
       objectReference: {fileID: 0}
     - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
+      propertyPath: samplingRate
+      value: 48000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
       propertyPath: debugEchoMode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
+      propertyPath: frameDuration
+      value: 20000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
+      propertyPath: microphoneType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
       propertyPath: voiceDetectionThreshold
@@ -29600,7 +29616,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153501369240}
-  m_LocalRotation: {x: 0.03927654, y: -0.0008918487, z: 0.000035055793, w: 0.999228}
+  m_LocalRotation: {x: 0.03927655, y: -0.00089185603, z: 0.00003505609, w: 0.999228}
   m_LocalPosition: {x: 0, y: 1.555, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -29851,7 +29867,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.06806946, y: -0.0008904676, z: 0.00006075645, w: 0.99768025}
+  m_LocalRotation: {x: 0.06806946, y: -0.0008904643, z: 0.000060756225, w: 0.9976802}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -30224,7 +30240,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154157259590}
-  m_LocalRotation: {x: 0.039276537, y: -0.0008918486, z: 0.000035057652, w: 0.999228}
+  m_LocalRotation: {x: 0.039276537, y: -0.00089184864, z: 0.000035057656, w: 0.999228}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -30302,7 +30318,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010641556, y: -0.0008924906, z: 0.000009499892, w: 0.999943}
+  m_LocalRotation: {x: 0.010641766, y: -0.00089250243, z: 0.000009500205, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
