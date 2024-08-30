@@ -55,7 +55,7 @@ public class LoadingHandler : MonoBehaviour
 
     [Header("Loader While NFT Loading in BG")]
     public GameObject nftLoadingScreen;
-
+    public GameObject LoadingScreenSummit;
     [Header("fader For Villa")]
     public Image fader;
 
