@@ -112,7 +112,7 @@ public class SelfieController : MonoBehaviour
 
     RenderTexture newRenderTexture;
 
-    private void Awake()
+    private void CustomeAwake()
     {
         if(Instance != null && Instance != this)
         {
@@ -138,7 +138,8 @@ public class SelfieController : MonoBehaviour
 
     public void OnEnable()
     {
-        if(Instance != this)
+        CustomeAwake();
+        if (Instance != this)
             Instance = this;
 
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OnSelfieButton += EnbaleSelfieFeature;

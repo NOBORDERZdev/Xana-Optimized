@@ -39,7 +39,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
     public int moveWhileDanceCheck;
 
     // Start is called before the first frame update
-    void Awake()
+    private void CustomAwake()
     {
 
         if (instance != null && instance != this)
@@ -92,7 +92,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
     IEnumerator counterCoroutine;
     private void OnEnable()
     {
-       
+        CustomAwake();
         if (WorldItemView.m_EnvName.Contains("Xana Festival")) // for Xana Festival
         {
             RoomMaxPlayerCount = Convert.ToInt32(XanaConstants.xanaConstants.userLimit)-1 ;
