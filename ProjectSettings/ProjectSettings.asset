@@ -12,13 +12,13 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: noborders
-  productName: XANA
+  companyName: Beijing Wujie Longyin Technology Co., Ltd.
+  productName: X SUMMIT
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
-  m_ShowUnitySplashLogo: 1
+  m_ShowUnitySplashLogo: 0
   m_SplashScreenOverlayOpacity: 0
   m_SplashScreenAnimation: 0
   m_SplashScreenLogoStyle: 0
@@ -137,7 +137,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 24.06.11
+  bundleVersion: 24.08.21
   preloadedAssets:
   - {fileID: 0}
   - {fileID: 0}
@@ -165,7 +165,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.nbi.xana
-    iPhone: com.nbmetaverse.xana
+    iPhone: com.wujie.xsummit
   buildNumber:
     Standalone: 0
     iPhone: 1
@@ -284,7 +284,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 91c5c994837ae45caa9ce6c256ca27b5, type: 3}
+      m_Icon: {fileID: 2800000, guid: b2245fac51958422ba5f9fcfa14c2361, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -522,6 +522,10 @@ PlayerSettings:
     m_DynamicBatching: 0
   m_BuildTargetShaderSettings:
   - m_BuildTarget: Android
+    m_ChunkSizeInMB: 1
+    m_MaxChunks: 1
+    m_OverrideDefaultSettings: 1
+  - m_BuildTarget: iPhone
     m_ChunkSizeInMB: 1
     m_MaxChunks: 1
     m_OverrideDefaultSettings: 1
@@ -852,7 +856,7 @@ PlayerSettings:
     WebGL: TextMeshPro;UNITY_POST_PROCESSING_STACK_V2;PHOTON_UNITY_NETWORKING;PUN_2_0_OR_NEWER;PUN_2_OR_NEWER;PUN_2_19_OR_NEWER;CT_BWF
     Windows Store Apps: TextMeshPro;UNITY_POST_PROCESSING_STACK_V2;PHOTON_UNITY_NETWORKING;PUN_2_0_OR_NEWER;PUN_2_OR_NEWER;PUN_2_19_OR_NEWER;MOBILE_INPUT;CT_BWF
     XboxOne: TextMeshPro;UNITY_POST_PROCESSING_STACK_V2;PHOTON_UNITY_NETWORKING;PUN_2_0_OR_NEWER;PUN_2_OR_NEWER;PUN_2_19_OR_NEWER;CT_BWF
-    iPhone: TextMeshPro;UNITY_POST_PROCESSING_STACK_V2;PHOTON_UNITY_NETWORKING;PUN_2_0_OR_NEWER;PUN_2_OR_NEWER;PUN_2_19_OR_NEWER;CROSS_PLATFORM_INPUT;MOBILE_INPUT;CT_BWF
+    iPhone: TextMeshPro;UNITY_POST_PROCESSING_STACK_V2;PHOTON_UNITY_NETWORKING;PUN_2_0_OR_NEWER;PUN_2_OR_NEWER;PUN_2_19_OR_NEWER;CROSS_PLATFORM_INPUT;MOBILE_INPUT;CT_BWF;UNITY_XR_ARKIT_LOADER_ENABLED;UNITY_XR_ARKIT_FACE_TRACKING_ENABLED
     tvOS: TextMeshPro;UNITY_POST_PROCESSING_STACK_V2;PHOTON_UNITY_NETWORKING;PUN_2_0_OR_NEWER;PUN_2_OR_NEWER;PUN_2_19_OR_NEWER;CT_BWF
   additionalCompilerArguments: {}
   platformArchitecture:
