@@ -91,7 +91,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
         }
 #if UNITY_IOS
         iPhoneSpeaker.ForceToSpeaker();
-#else
+#endif
         //if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("BreakingDown Arena"))
         //{
         //    StopRecorder();
