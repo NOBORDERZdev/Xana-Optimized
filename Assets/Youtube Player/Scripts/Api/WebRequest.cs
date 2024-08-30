@@ -12,7 +12,8 @@ namespace ZeelKheni.YoutubePlayer
 {
     public class WebRequest
     {
-        public static async Task<T> GetAsync<T>(string requestUrl, CancellationToken cancellationToken = default, List<Models.YoutubeVideoInfo> urlslist = null, string videoid = null)
+        static string previousBase;
+        public static async Task<T> GetAsync<T>(string requestUrl, CancellationToken cancellationToken = default, List<Models.YoutubeVideoInfo> urlslist = null, string videoid = null, bool skipPrevious = false)
         {
             var request = UnityWebRequest.Get(requestUrl);
             request.timeout = 10;
@@ -22,7 +23,9 @@ namespace ZeelKheni.YoutubePlayer
                 Debug.Log("<color=red>Response .... " + request.result.ToString() + "  \n " + request.downloadHandler.text + "    \n    </color>");
                 var text = request.downloadHandler.text;
                 if (string.IsNullOrEmpty(text)) { throw new NullReferenceException(); }
+               if(skipPrevious && previousBase == requestUrl) { throw new NullReferenceException(); }
                 GameObject.FindObjectOfType<YoutubeInstance>().VideoJson = text;
+                previousBase = requestUrl;
                 return JsonConvert.DeserializeObject<T>(text, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
             }
             catch (Exception exception)
