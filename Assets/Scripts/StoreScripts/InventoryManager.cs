@@ -153,6 +153,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject Defaultreset, LastSavedreset, PanelResetDefault;
     // public GameObject ButtonFor_Preset;
     public GameObject StartPanel_PresetParentPanel, PresetArrayContent, selfiePanel, loaderPanel;
+    public GameObject StartPanel_PresetParentPanelSummit;
     // public GameObject backbutton_preset;
     public Transform contentList;
 
