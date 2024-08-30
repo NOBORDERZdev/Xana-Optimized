@@ -52,7 +52,14 @@ public class ServerSideUserDataHandler : MonoBehaviour
                     File.WriteAllText(GameManager.Instance.GetStringFolderPath(), jbody);
                     //if user does not have data then open preset panel
                     ConstantsHolder.xanaConstants.isFirstPanel = true;
-                    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                    if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                    {
+                        LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                    }
+                    else
+                    {
+                        LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+                    }
                     MainSceneEventHandler.OpenPresetPanel?.Invoke();
                 }
                 else

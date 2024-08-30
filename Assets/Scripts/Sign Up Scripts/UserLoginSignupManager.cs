@@ -158,12 +158,26 @@ public class UserLoginSignupManager : MonoBehaviour
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1 || PlayerPrefs.GetInt("WalletLogin") == 1)
         {
             LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+            }
             StartCoroutine(RefreshXanaTokenAPI());
         }
         else
         {
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+            }
             ShowWelcomeScreen();
         }
     }
@@ -251,7 +265,16 @@ public class UserLoginSignupManager : MonoBehaviour
 
             if (!PlayerPrefs.HasKey("shownWelcome"))
             {
-                InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                {
+                    InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                }
+                else
+                {
+                    InventoryManager.instance.StartPanel_PresetParentPanelSummit.SetActive(true);
+                }
+               
+               
             }
         }
 
@@ -550,7 +573,14 @@ public class UserLoginSignupManager : MonoBehaviour
             }
             else
             {
-                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                {
+                    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                }
+                else
+                {
+                    LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+                }
             }
         }
         else
@@ -1025,6 +1055,14 @@ public class UserLoginSignupManager : MonoBehaviour
             {
                 InventoryManager.instance.OnSaveBtnClicked();
             }
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+            }
             ConstantsHolder.userName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
             PlayerPrefs.SetInt("IsProcessComplete", 1);// user is registered as guest/register.
             GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
@@ -1055,7 +1093,14 @@ public class UserLoginSignupManager : MonoBehaviour
                 GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
 
             }));
-
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+            }
             RequestSubmitUsername(userUsername);
         }
         
@@ -1899,6 +1944,7 @@ public class UserLoginSignupManager : MonoBehaviour
             }
             else if (APIResponse.success)
             {
+               
                 if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
                 {
                     OpenUIPanel(16);
@@ -1912,6 +1958,7 @@ public class UserLoginSignupManager : MonoBehaviour
                     NameScreenNextButton.interactable = true;
                     if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
                         MainSceneEventHandler.OpenLandingScene?.Invoke();
+                    
                 }
 
 

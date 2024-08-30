@@ -9,6 +9,7 @@ using System.Security.Principal;
 using static WalletLogin;
 using static System.Net.WebRequestMethods;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class Web3AuthCustom : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class Web3AuthCustom : MonoBehaviour
     public float cooldownTime;
     public static Web3AuthCustom Instance;
     public Action<string> onLoginAction;
+   
 
     private void Awake()
     {
@@ -234,7 +236,18 @@ public class Web3AuthCustom : MonoBehaviour
         UserLoginSignupManager.instance.StartCoroutine(UserLoginSignupManager.instance.LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
         ConstantsHolder.xanaConstants.LoggedInAsGuest = false;
         Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
-        LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+        if(ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+        {
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+            }
+        }
+       
         userInfo = response.userInfo;
         privateKey = response.privKey;
         PlayerPrefs.SetString("LoggedInMail", response.userInfo.email);
@@ -284,7 +297,14 @@ public class Web3AuthCustom : MonoBehaviour
         }
         catch (Exception ex)
         {
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+            }
             UserLoginSignupManager.instance.emailOrWalletLoginPanel.SetActive(true);
 
         }

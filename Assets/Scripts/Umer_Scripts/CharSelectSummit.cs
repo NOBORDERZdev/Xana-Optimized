@@ -9,10 +9,10 @@ public class CharSelectSummit : MonoBehaviour
 {
     public Transform contentParent;
     public GameObject backBtnstore;
-    private GameObject selectedObj;
+    private GameObject SelectedOBJ;
+    HorizontalScrollSnap hssRef;
     public List<GameObject> items;
     public static CharSelectSummit instance;
-    private int currentCharacterIndex = 0;
 
     private void Awake()
     {
@@ -20,7 +20,7 @@ public class CharSelectSummit : MonoBehaviour
         {
             instance = this;
         }
-        
+        hssRef = this.GetComponent<HorizontalScrollSnap>();
         foreach (GameObject item in items)
         {
             GameObject itemGameObject = Instantiate(item, contentParent);
@@ -29,6 +29,10 @@ public class CharSelectSummit : MonoBehaviour
 
     private void OnEnable()
     {
+        if (!hssRef.enabled)
+        {
+            hssRef.enabled = true;
+        }
         if (GameManager.Instance.UiManager.isAvatarSelectionBtnClicked)
         {
             backBtnstore.SetActive(true);
@@ -44,17 +48,21 @@ public class CharSelectSummit : MonoBehaviour
     {
         for (int i = 0; i < contentParent.childCount; i++)
         {
-            if (i == currentCharacterIndex)
+            if (hssRef.CurrentPage == i)
             {
-                contentParent.GetChild(i).GetChild(0).DOScale(new Vector3(1.06f, 0.985f, 0.1f), 0.1f);
+
+                //contentParent.GetChild(i).GetChild(0).localScale = Vector2.Lerp(contentParent.GetChild(i).GetChild(0).localScale, new Vector2(1.06f, 0.985f), 0.1f);
+                contentParent.GetChild(i).GetChild(0).DOScale(new Vector3(1.7f, 1.4f, 0.1f), 0.1f);
+
                 contentParent.GetChild(i).GetChild(0).GetComponent<Image>().enabled = true;
-                selectedObj = contentParent.GetChild(i).GetChild(0).gameObject;
+                SelectedOBJ = contentParent.GetChild(i).GetChild(0).gameObject;
 
                 for (int a = 0; a < contentParent.childCount; a++)
                 {
                     if (a != i)
                     {
-                        contentParent.GetChild(a).GetChild(0).DOScale(new Vector3(0.91f, 0.91f, 0.1f), 0.1f);
+                        //contentParent.GetChild(a).GetChild(0).localScale = Vector2.Lerp(contentParent.GetChild(a).GetChild(0).localScale, new Vector2(0.91f, 0.91f), 0.1f);
+                        contentParent.GetChild(a).GetChild(0).DOScale(new Vector3(0.98f, 0.98f, 0.1f), 0.1f);
                     }
                 }
             }
@@ -67,33 +75,30 @@ public class CharSelectSummit : MonoBehaviour
 
     public void OnClickNext()
     {
-        //if (selectedObj != null)
-        //{
-        //    GameManager.Instance.HomeCameraInputHandler(true);
-        //    UserLoginSignupManager.instance.SelectedPresetImage.sprite = selectedObj.transform.GetChild(0).GetComponent<Image>().sprite;
-        //    UserLoginSignupManager.instance.SelectPresetImageforEditProfil.sprite = selectedObj.transform.GetChild(0).GetComponent<Image>().sprite;
-        //    selectedObj.GetComponent<PresetData_Jsons>().ChangecharacterFromPresetPanel();
-        //    GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
-        //    if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
-        //    {
-        //        UserLoginSignupManager.instance.UserNameFieldObj.SetActive(false);
-        //    }
-        //    else
-        //    {
-        //        UserLoginSignupManager.instance.UserNameFieldObj.SetActive(true);
-        //    }
-        //}
+        if (SelectedOBJ != null)
+        {
+            GameManager.Instance.HomeCameraInputHandler(true);
+            //if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            //{
+            //    UserLoginSignupManager.instance.SelectedPresetImage.sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
+            //    UserLoginSignupManager.instance.SelectPresetImageforEditProfil.sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
+
+            //}
+            //UserRegisterationManager.instance.LogoImage.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
+            //UserRegisterationManager.instance.LogoImage2.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
+            //UserRegisterationManager.instance.LogoImage3.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
+            //Debug.LogError("selected obj name :- "+SelectedOBJ.name);
+            SelectedOBJ.GetComponent<PresetData_Jsons>().ChangecharacterFromPresetPanel();
+            GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+            if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
+            {
+                UserLoginSignupManager.instance.UserNameFieldObj.SetActive(false);
+            }
+            else
+            {
+                UserLoginSignupManager.instance.UserNameFieldObj.SetActive(true);
+            }
+        }
     }
 
-    public void OnClickLeft()
-    {
-        currentCharacterIndex = (currentCharacterIndex - 1 + contentParent.childCount) % contentParent.childCount;
-        CharacterSelectionChange();
-    }
-
-    public void OnClickRight()
-    {
-        currentCharacterIndex = (currentCharacterIndex + 1) % contentParent.childCount;
-        CharacterSelectionChange();
-    }
 }
