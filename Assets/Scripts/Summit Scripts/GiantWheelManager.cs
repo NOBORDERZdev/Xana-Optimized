@@ -119,7 +119,7 @@ public class GiantWheelManager : MonoBehaviour, IInRoomCallbacks
     public void StopWheel( SummitPlayerRPC player)
     {
         stopWheel = true;
-       SummitRPCs.Add(player);
+          SummitRPCs.Add(player);
 
     }
 
