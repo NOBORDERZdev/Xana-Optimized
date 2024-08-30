@@ -101,7 +101,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
         //}
         //else
         //{
-           if (recorder != null )
+        if (recorder != null )
             {
                 StopRecorder();
                 TurnOffMic();
@@ -151,6 +151,9 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
 
     public void TurnOnMic()
     {
+        if(ConstantsHolder.xanaConstants.mic ==0 ) // to confrim is correct value or not 
+        ConstantsHolder.xanaConstants.mic = PlayerPrefs.GetInt("micSound");
+
         if (ConstantsHolder.xanaConstants.mic == 0)
         {
             GameObject go = Instantiate(mictoast, placetoload);
