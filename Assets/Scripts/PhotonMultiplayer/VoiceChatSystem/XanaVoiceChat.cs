@@ -12,6 +12,9 @@ using UnityEngine.UI;
 using UnityEngine.XR.WSA;
 using System.Threading.Tasks;
 using Photon.Realtime;
+#if UNITY_IOS
+using UnityEngine.iOS;
+#endif
 public class XanaVoiceChat : MonoBehaviourPunCallbacks
 {
     [Header("UI Elements")]
@@ -89,9 +92,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
                 Permission.RequestUserPermission(Permission.Microphone);
             }
         }
-#if UNITY_IOS
-        iPhoneSpeaker.ForceToSpeaker();
-#endif
+
         //if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("BreakingDown Arena"))
         //{
         //    StopRecorder();
@@ -100,7 +101,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
         //}
         //else
         //{
-        if (recorder != null || ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+           if (recorder != null )
             {
                 StopRecorder();
                 TurnOffMic();
@@ -134,7 +135,9 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
                 //}
                // StartCoroutine(CheckVoiceConnect());
             }
+
         //}
+
     }
 
     private IEnumerator GetMicPermission()
@@ -160,7 +163,12 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
         micOnBtnPotrait.SetActive(true);
         if (recorder != null)
             recorder.TransmitEnabled = true;
-
+#if UNITY_IOS
+        if ((Device.generation.ToString()).IndexOf("iPhone") > -1)
+        { //for iphones only
+            iPhoneSpeaker.ForceToSpeaker();
+        }
+#endif
         EnableRecoder();
     }
 
@@ -210,7 +218,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
             //recorder.AutoStart = recorder.TransmitEnabled = false;
             //recorder.StopRecording();
             //recorder.Init(_punVoiceCilent);
-            recorder.RecordingEnabled = false;
+            //recorder.RecordingEnabled = false;
         }
     }
 
@@ -221,7 +229,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
             //recorder.AutoStart = recorder.TransmitEnabled = true;
             //recorder.StartRecording();
             //recorder.Init(_punVoiceCilent);
-            recorder.RecordingEnabled = true;
+            //recorder.RecordingEnabled = true;
 
         }
     }
@@ -243,6 +251,12 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
     public override void OnConnected()
     {
         base.OnConnected();
+#if UNITY_IOS
+        if ((Device.generation.ToString()).IndexOf("iPhone") > -1)
+        { //for iphones only
+            iPhoneSpeaker.ForceToSpeaker();
+        }
+#endif
         if (ConstantsHolder.xanaConstants.mic == 1 && !ConstantsHolder.xanaConstants.pushToTalk)
         {
             TurnOnMic();

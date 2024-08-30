@@ -26033,7 +26033,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
       propertyPath: samplingRate
-      value: 48000
+      value: 16000
       objectReference: {fileID: 0}
     - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
       propertyPath: debugEchoMode
@@ -26041,19 +26041,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
       propertyPath: frameDuration
-      value: 20000
+      value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
+      propertyPath: loopAudioClip
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
       propertyPath: microphoneType
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
+      propertyPath: voiceDetection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
       propertyPath: recordWhenJoined
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
       propertyPath: recordingEnabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
       propertyPath: voiceDetectionThreshold
@@ -26062,6 +26070,10 @@ PrefabInstance:
     - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
       propertyPath: photonMicrophoneDeviceId
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
+      propertyPath: audioSessionParameters.Mode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4245204776719318628, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
       propertyPath: m_RootOrder
@@ -26107,7 +26119,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6627258828445391548, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
+      propertyPath: highPass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6627258828445391548, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
+      propertyPath: aecHighPass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8587086797815298581, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
+      propertyPath: HandleDeviceChangeIOS
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6627258828445391548, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
 --- !u!114 &1969981178 stripped
 MonoBehaviour:
@@ -29879,7 +29904,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.06806946, y: -0.00089046644, z: 0.000060756378, w: 0.9976802}
+  m_LocalRotation: {x: 0.06806946, y: -0.00089046254, z: 0.000060756105, w: 0.9976802}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -30330,7 +30355,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.01064157, y: -0.00089249155, z: 0.000009499914, w: 0.999943}
+  m_LocalRotation: {x: 0.010641862, y: -0.00089250796, z: 0.00000950035, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
