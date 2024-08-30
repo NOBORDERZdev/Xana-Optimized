@@ -29,7 +29,13 @@ public class menuAvatarFlowButton : MonoBehaviour
 
         if (ConstantsHolder.xanaConstants.isFirstPanel)
         {
-            InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+            }
+            else {
+                InventoryManager.instance.StartPanel_PresetParentPanelSummit.SetActive(true);
+            }
             ConstantsHolder.xanaConstants.isFirstPanel = false;
         }
         else

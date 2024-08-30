@@ -10,6 +10,8 @@ public class UIHandler : MonoBehaviour
     public GameObject LoginRegisterScreen, SignUpScreen, HomePage, Canvas,HomeWorldScreen;
      public CanvasGroup Loadinghandler_CanvasRef;
     public GameObject _SplashScreen;
+    public GameObject SplashScreenXana;
+    public GameObject SplashScreenSummit;
 
     public Transform _postScreen,_postCamera, _postScreenBG;
     public bool IsSplashActive = true;
@@ -114,15 +116,39 @@ public class UIHandler : MonoBehaviour
     }
     private void Start()
     {
+        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            SplashScreenXana.SetActive(true);
+            SplashScreenSummit.SetActive(false);
+            if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+            {
+                Screen.orientation = ScreenOrientation.Portrait;
+            }
+
+        }
+        else 
+        {
+            SplashScreenXana.SetActive(false);
+            SplashScreenSummit.SetActive(true);
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+        }
         if (SaveCharacterProperties.NeedToShowSplash == 1)
         {
             if (PlayerPrefs.HasKey("TermsConditionAgreement"))
             {
                 IsSplashActive = false;
                 StartCoroutine(IsSplashEnable(false, 3f));
-                if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
                 {
-                    Screen.orientation = ScreenOrientation.Portrait;
+                    if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                    {
+                        Screen.orientation = ScreenOrientation.Portrait;
+                    }
+
+                }
+                else
+                {
+                    Screen.orientation = ScreenOrientation.LandscapeLeft;
                 }
             }
          }

@@ -13,16 +13,23 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
 {
     public RuntimeAnimatorController controller;
     public static bool AnimationPlaying = false;
+    public static Action<RuntimeAnimatorController> PlayerAnimatorInitializer;
 
     private GameObject[] photonplayerObjects;
 
     private void OnEnable()
     {
+        PlayerAnimatorInitializer += SetPlayerAnimator;
         PhotonNetwork.NetworkingClient.EventReceived += NetworkingClient_EventReceived;
+    }
+    public void SetPlayerAnimator(RuntimeAnimatorController playerAnimator)
+    {
+        controller = playerAnimator;
     }
     private void OnDisable()
     {
         PhotonNetwork.NetworkingClient.EventReceived -= NetworkingClient_EventReceived;
+        PlayerAnimatorInitializer -= SetPlayerAnimator;
     }
 
     public void LoadAnimationAccrossInstance(string label)//, Action downloadCompleteCallBack
