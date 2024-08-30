@@ -194,7 +194,7 @@ public class AvatarController : MonoBehaviour
     public async void IntializeAvatar(bool canWriteFile = false)
     {
         Debug.Log("AVATAR Initializeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-        while(!XanaConstants.isAddressableCatalogDownload)
+        while (!XanaConstants.isAddressableCatalogDownload)
         {
             await Task.Yield();
         }
@@ -207,7 +207,6 @@ public class AvatarController : MonoBehaviour
             CreateOrUpdateBoxerFile(nftAttributes);
         }
         Custom_IntializeAvatar();
-
     }
     public SavingCharacterDataClass _PCharacterData = new SavingCharacterDataClass();
     void Custom_IntializeAvatar()
@@ -217,7 +216,7 @@ public class AvatarController : MonoBehaviour
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
             _CharacterData = new SavingCharacterDataClass();
             _CharacterData = _CharacterData.CreateFromJSON(staticClothJson);
-            _PCharacterData=_CharacterData;
+            _PCharacterData = _CharacterData;
             clothJson = staticClothJson;
             if (_CharacterData.myItemObj.Count > 0)
             {
@@ -399,10 +398,13 @@ public class AvatarController : MonoBehaviour
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
             _CharacterData = SavaCharacterProperties.instance.SaveItemList; // _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
-            _PCharacterData =_CharacterData;
+            _PCharacterData = _CharacterData;
             clothJson = File.ReadAllText(GameManager.Instance.GetStringFolderPath());
             if (SceneManager.GetActiveScene().name.Contains("Main")) // for store/ main menu
             {
+                if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY)
+                    return;
+
                 if (_CharacterData.myItemObj.Count > 0)
                 {
                     for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
@@ -1139,8 +1141,8 @@ public class AvatarController : MonoBehaviour
         //Equipment equipment = applyOn.GetComponent<Equipment>();
         CharcterBodyParts bodyparts = applyOn.GetComponent<CharcterBodyParts>();
 
-        float _size3 = 1f + ((float)bodyFat / 100f );
-        
+        float _size3 = 1f + ((float)bodyFat / 100f);
+
         Debug.Log("Resizing Body Parts & Cloths : " + bodyFat + "  :  " + _size3);
 
         if (bodyparts._scaleBodyParts.Count > 0)
@@ -1221,7 +1223,6 @@ public class AvatarController : MonoBehaviour
     public void StichItem(int itemId, GameObject item, string type, GameObject applyOn, bool applyHairColor = true)
     {
         CharcterBodyParts tempBodyParts = applyOn.gameObject.GetComponent<CharcterBodyParts>();
-
         UnStichItem(type);
         if (item.GetComponent<EffectedParts>() && item.GetComponent<EffectedParts>().texture != null)
         {

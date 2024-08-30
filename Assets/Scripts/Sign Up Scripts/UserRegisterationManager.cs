@@ -696,15 +696,21 @@ public class UserRegisterationManager : MonoBehaviour
             //{
             //    GameManager.Instance.mainCharacter.GetComponent<Equipment>().Start();
             //}
+
+            //if (XanaConstants.xanaConstants.metaverseType != XanaConstants.MetaverseType.PMY)
+            //{
             GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
-
-
             SavaCharacterProperties.instance.LoadMorphsfromFile();
+            //}
+
             StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI));
         }
 
-        EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
-        StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
+        if (XanaConstants.xanaConstants.metaverseType != XanaConstants.MetaverseType.PMY)
+        {
+            EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+            StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
+        }
         //   StartCoroutine(LoginUserPresetOnly());
         if (PlayerPrefs.GetInt("IsProcessComplete") == 0 && PlayerPrefs.GetInt("IsLoggedIn") == 0)
             welcomeScreen.SetActive(true);
@@ -1831,8 +1837,8 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void OpenAvatarScreen()
     {
-        if(StoreManager.instance)
-        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        if (StoreManager.instance)
+            StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
     }
 
     public void DeleteAccount(Action callback)
@@ -3393,7 +3399,8 @@ public class UserRegisterationManager : MonoBehaviour
         BlackScreen.SetActive(true);
         BlackScreen.GetComponent<Image>().color = new Color(0, 0, 0, 1);
         StartCoroutine(LerpFunction(new Color(0, 0, 0, 0), 2));
-        TutorialsManager.instance.ShowTutorials();
+        if (TutorialsManager.instance)
+            TutorialsManager.instance.ShowTutorials();
         ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
     }
     IEnumerator LerpFunction(Color endValue, float duration)
