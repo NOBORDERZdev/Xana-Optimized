@@ -82,7 +82,11 @@ public class TermsConditionsManager : MonoBehaviour
             //allAgreeToggle.SetIsOnWithoutNotify(true);
             //agreeButton.interactable = true;
         }
-        termsAndConditionText.color = Color.black;
+        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            termsAndConditionText.color = Color.black;
+        }
+        
         Invoke("OnAgreeButtonClick", 1f);
     }
 
