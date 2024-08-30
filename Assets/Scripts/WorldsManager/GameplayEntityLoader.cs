@@ -17,8 +17,9 @@ using UnityEngine.Rendering.Universal;
 using Photon.Pun.Demo.PunBasics;
 using Photon.Voice.PUN;
 using PhysicsCharacterController;
+#if UNITY_IOS
 using UnityEngine.iOS;
-
+#endif
 public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
     public StayTimeTrackerForSummit StayTimeTrackerForSummit;
