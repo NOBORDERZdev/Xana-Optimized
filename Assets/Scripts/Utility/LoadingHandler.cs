@@ -325,8 +325,6 @@ public class LoadingHandler : MonoBehaviour
                 //Debug.LogError(" ~~~~~~~  Oriantation Change Called ~~~~~~~ ");
             });
         }
-
-        //StartCoroutine(CustomHideLoading());
         CustomHideLoading();
     }
     void CustomHideLoading()
@@ -336,39 +334,43 @@ public class LoadingHandler : MonoBehaviour
         //    Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         //    blackScreen.DOFade(0, 0.5f).SetDelay(0.5f);
         //}
-        StartCoroutine(ApplyDelay());
+        UpdateLoadingStatusText("");
+        loadingPanel.SetActive(false);
+        //Debug.LogError("Off Loading");
+        Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
+        blackScreen.DOFade(0, 0.5f).SetDelay(0.5f);
 
         if (ReferrencesForDynamicMuseum.instance != null)
             ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(true);
-        //loadingPanel.SetActive(false);
 
         if (gameplayLoadingUIRefreshCo != null)//rik stop refreshing screen coroutine.......
         {
             StopCoroutine(gameplayLoadingUIRefreshCo);
         }
     }
-    private IEnumerator ApplyDelay()
-    {
-        if (XanaConstants.xanaConstants.isBackFromWorld)
-        {
-            HideLoadingManually();
-        }
-        else
-        {
-            yield return new WaitForSeconds(2f);
-            LoadFromFile.instance.SetPlayerPos();
-            yield return new WaitForSeconds(0.1f);
-            HideLoadingManually();
-        }
-    }
-    private void HideLoadingManually()
-    {
-        UpdateLoadingStatusText("");      
-        loadingPanel.SetActive(false);
-        //Debug.LogError("Off Loading");
-        Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
-        blackScreen.DOFade(0, 0.5f).SetDelay(0.5f);
-    }
+
+    //private IEnumerator ApplyDelay()
+    //{
+    //    if (XanaConstants.xanaConstants.isBackFromWorld)
+    //    {
+    //        HideLoadingManually();
+    //    }
+    //    else
+    //    {
+    //        yield return new WaitForSeconds(2f);
+    //        LoadFromFile.instance.SetPlayerPos();
+    //        yield return new WaitForSeconds(0.1f);
+    //        HideLoadingManually();
+    //    }
+    //}
+    //private void HideLoadingManually()
+    //{
+    //    UpdateLoadingStatusText("");      
+    //    loadingPanel.SetActive(false);
+    //    //Debug.LogError("Off Loading");
+    //    Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
+    //    blackScreen.DOFade(0, 0.5f).SetDelay(0.5f);
+    //}
 
 
     bool orientationchanged = false;
@@ -606,8 +608,6 @@ public class LoadingHandler : MonoBehaviour
     {
         if (action.Equals(FadeAction.Out) && XanaConstants.xanaConstants.isFromPMYLobby)
         {
-            //yield return new WaitForSeconds(2f);
-            LoadFromFile.instance.SetPlayerPos();
             JJLoadingSlider.fillAmount = 1f;
             JJLoadingPercentageText.text = "100%".ToString();
         }

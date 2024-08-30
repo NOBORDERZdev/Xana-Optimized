@@ -317,8 +317,10 @@ public class SavaCharacterProperties : MonoBehaviour
             }
 
             SaveItemList.FaceBlendsShapes = blendValues;
-            CharacterCustomizationManager.Instance.UpdateChBodyShape(_CharacterData.BodyFat);
-
+            if (CharacterCustomizationManager.Instance)
+            {
+                CharacterCustomizationManager.Instance.UpdateChBodyShape(_CharacterData.BodyFat);
+            }
             for (int i = 0; i < GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount; i++)
             {
                 if (_sliderindexes.ContainsIndex(i))

@@ -91,7 +91,10 @@ public class PresetData_Jsons : MonoBehaviour
             else
                 return;
         }
-        charcterBodyParts.DefaultTexture(false);
+        if (CharcterBodyParts.instance)
+        {
+            charcterBodyParts.DefaultTexture(false);
+        }
 
         if (!IsStartUp_Canvas && !PremiumUsersDetails.Instance.CheckSpecificItem(PresetNameinServer))
         {
@@ -188,7 +191,7 @@ public class PresetData_Jsons : MonoBehaviour
             if (_CharacterData.HairColor != null)
                 XanaConstants.xanaConstants.isPresetHairColor = true;
 
-            avatarController.ApplyPreset(_CharacterData);
+                avatarController.ApplyPreset(_CharacterData);
 
             GetSavedPreset();
             if (!presetAlreadySaved)

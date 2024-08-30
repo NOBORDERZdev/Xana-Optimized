@@ -33,7 +33,10 @@ public class AdditiveScenesManager : MonoBehaviour
         {
             yield return null;
         }
-        BodyCustomizer.Instance.BodyCustomCallFromStore();
+        if (BodyCustomizer.Instance)
+        {
+            BodyCustomizer.Instance.BodyCustomCallFromStore();
+        }
     }
     IEnumerator AddDelay(float delay)
     {
@@ -55,7 +58,12 @@ public class AdditiveScenesManager : MonoBehaviour
         {
             yield return null;
         }
-        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+
+        //if (XanaConstants.xanaConstants.metaverseType != XanaConstants.MetaverseType.PMY)
+        //{
+            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+        //}
+
         if (XanaConstants.xanaConstants.isBackfromSns)
         {
             homeBottomTab.OnClickFeedButton();

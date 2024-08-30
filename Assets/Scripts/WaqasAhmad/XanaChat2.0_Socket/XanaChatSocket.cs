@@ -115,16 +115,14 @@ public class XanaChatSocket : MonoBehaviour
         Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
         Manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
 
-
-        if (XanaEventDetails.eventDetails.DataIsInitialized)
-        {
-            eventId = XanaEventDetails.eventDetails.id;
-        }
-        else if (XanaConstants.xanaConstants.EnviornmentName.Contains("PMY"))
+        if (XanaConstants.xanaConstants.EnviornmentName.Contains("PMY"))
         {
             eventId = XanaConstants.xanaConstants.pmySchooldDataID;
         }
-
+        else if (XanaEventDetails.eventDetails.DataIsInitialized)
+        {
+            eventId = XanaEventDetails.eventDetails.id;
+        }
 
         // Custom Method
         Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);

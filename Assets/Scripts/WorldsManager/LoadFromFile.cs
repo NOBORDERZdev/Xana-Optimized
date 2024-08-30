@@ -202,108 +202,89 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
     }
 
-    void InstantiateYoutubePlayer()
-    {
-        if (YoutubeStreamPlayer == null)
-        {
-            //Debug.Log("DJ Beach====" + WorldItemView.m_EnvName);
-            if (WorldItemView.m_EnvName.Contains("DJ Event"))
-            {
-                YoutubeStreamPlayer = Instantiate(Resources.Load("DJEventData/YoutubeVideoPlayer") as GameObject);
+    //void InstantiateYoutubePlayer()
+    //{
+    //    if (YoutubeStreamPlayer == null)
+    //    {
+    //        //Debug.Log("DJ Beach====" + WorldItemView.m_EnvName);
+    //        if (WorldItemView.m_EnvName.Contains("DJ Event"))
+    //        {
+    //            YoutubeStreamPlayer = Instantiate(Resources.Load("DJEventData/YoutubeVideoPlayer") as GameObject);
 
-                //#if UNITY_ANDROID || UNITY_EDITOR
-                //                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //                //YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
+    //            //#if UNITY_ANDROID || UNITY_EDITOR
+    //            //                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
+    //            //                //YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
 
-                //#else
-                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-                //#endif
+    //            //#else
+    //            //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
+    //            //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
+    //            //#endif
 
-                YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
-                YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
+    //            YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
+    //            YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
 
-                YoutubeStreamPlayer.SetActive(false);
-                if (YoutubeStreamPlayer)
-                {
-                    YoutubeStreamPlayer.SetActive(true);
-                }
-            }
-            if (WorldItemView.m_EnvName.Contains("XANA Festival Stage") && !WorldItemView.m_EnvName.Contains("Dubai"))
-            {
-                YoutubeStreamPlayer = Instantiate(Resources.Load("XANAFestivalStageData/YoutubeVideoPlayer1") as GameObject);
+    //            YoutubeStreamPlayer.SetActive(false);
+    //            if (YoutubeStreamPlayer)
+    //            {
+    //                YoutubeStreamPlayer.SetActive(true);
+    //            }
+    //        }
+    //        if (WorldItemView.m_EnvName.Contains("XANA Festival Stage") && !WorldItemView.m_EnvName.Contains("Dubai"))
+    //        {
+    //            YoutubeStreamPlayer = Instantiate(Resources.Load("XANAFestivalStageData/YoutubeVideoPlayer1") as GameObject);
 
-                //#if UNITY_ANDROID || UNITY_EDITOR
-                //                YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //                YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-                //#else
-                //  YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-                //#endif
-
-
-                YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
-                YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
-
-                YoutubeStreamPlayer.SetActive(false);
-                if (YoutubeStreamPlayer)
-                {
-                    YoutubeStreamPlayer.SetActive(true);
-                }
-            }
-
-            if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
-            {
-                YoutubeStreamPlayer = Instantiate(Resources.Load("MyBeach/XanaFestivalPlayer") as GameObject);
-
-                //#if UNITY_ANDROID || UNITY_EDITOR
-                //                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //                //YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-
-                //#else
-                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-                //#endif
-
-                YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
-                YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
-
-                YoutubeStreamPlayer.SetActive(false);
-                if (YoutubeStreamPlayer)
-                {
-                    YoutubeStreamPlayer.SetActive(true);
-                }
-            }
-            if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
-            {
-                YoutubeStreamPlayer = Instantiate(Resources.Load("XanaLobby/XanaLobbyPlayer") as GameObject);
-
-                //#if UNITY_ANDROID || UNITY_EDITOR
-                //                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //                //YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-
-                //#else
-                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-                //#endif
-
-                //YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
-                //YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
-                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-65.8f, 24.45f, -83.45f);
-                //YoutubeStreamPlayer.transform.localScale = new Vector3(-0.54f, 0.53f, 0.53f);
-                //YoutubeStreamPlayer.transform.localRotation = Quaternion.Euler(0f, -90f, 0f);
+    //            //#if UNITY_ANDROID || UNITY_EDITOR
+    //            //                YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
+    //            //                YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
+    //            //#else
+    //            //  YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
+    //            //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
+    //            //#endif
 
 
+    //            YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
+    //            YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
 
+    //            YoutubeStreamPlayer.SetActive(false);
+    //            if (YoutubeStreamPlayer)
+    //            {
+    //                YoutubeStreamPlayer.SetActive(true);
+    //            }
+    //        }
 
-                YoutubeStreamPlayer.SetActive(false);
-                if (YoutubeStreamPlayer)
-                {
-                    YoutubeStreamPlayer.SetActive(true);
-                }
-            }
-        }
-    }
+    //        if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
+    //        {
+    //            YoutubeStreamPlayer = Instantiate(Resources.Load("MyBeach/XanaFestivalPlayer") as GameObject);
+
+    //            //#if UNITY_ANDROID || UNITY_EDITOR
+    //            //                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
+    //            //                //YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
+
+    //            //#else
+    //            //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
+    //            //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
+    //            //#endif
+
+    //            YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
+    //            YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
+
+    //            YoutubeStreamPlayer.SetActive(false);
+    //            if (YoutubeStreamPlayer)
+    //            {
+    //                YoutubeStreamPlayer.SetActive(true);
+    //            }
+    //        }
+    //        if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
+    //        {
+    //            YoutubeStreamPlayer = Instantiate(Resources.Load("XanaLobby/XanaLobbyPlayer") as GameObject);
+    //            YoutubeStreamPlayer.SetActive(false);
+    //            if (YoutubeStreamPlayer)
+    //            {
+    //                YoutubeStreamPlayer.SetActive(true);
+    //            }
+    //        }
+    //    }
+    //}
     void CharacterLightCulling()
     {
         if ((!WorldItemView.m_EnvName.Contains("Xana Festival") || !WorldItemView.m_EnvName.Contains("NFTDuel Tournament")) && !XanaConstants.xanaConstants.isBuilderScene)
@@ -375,46 +356,33 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         yield return new WaitForSeconds(.2f);
         if (!(SceneManager.GetActiveScene().name.Contains("Museum")))
         {
-            if (WorldItemView.m_EnvName.Contains("AfterParty"))
-            {
-                if (XanaConstants.xanaConstants.setIdolVillaPosition)
-                {
-                    spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
-                    XanaConstants.xanaConstants.setIdolVillaPosition = false;
-                }
-                else
-                {
-                    for (int i = 0; i < IdolVillaRooms.instance.villaRooms.Length; i++)
-                    {
-                        if (IdolVillaRooms.instance.villaRooms[i].name == ChracterPosition.currSpwanPos)
-                        {
-                            spawnPoint = IdolVillaRooms.instance.villaRooms[i].gameObject.GetComponent<ChracterPosition>().spawnPos;
-                            break;
-                        }
-                        else
-                        {
-                            spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
-            }
-
-            if (WorldItemView.m_EnvName.Contains("PMY ACADEMY"))
-            {
-                if (XanaConstants.xanaConstants.isFromPMYLobby)
-                {   // Set spawn pos when ReEnter into PMY lobby
-                    spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y, spawnPoint.z - 25.05f);
-                    //Debug.LogError("Update spawnpoint for lobby::");
-                }
-                mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                //StartCoroutine(setPlayerCamAngle(0f, 0.5572f));
-                //StartCoroutine(setPlayerCamAngle(1f, 0.32f));
-                StartCoroutine(setPlayerCamAngle(0.38f, 0.8f)); // 0.38  //0.2275
-            }
+            //if (WorldItemView.m_EnvName.Contains("AfterParty"))
+            //{
+            //    if (XanaConstants.xanaConstants.setIdolVillaPosition)
+            //    {
+            //        spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
+            //        XanaConstants.xanaConstants.setIdolVillaPosition = false;
+            //    }
+            //    else
+            //    {
+            //        for (int i = 0; i < IdolVillaRooms.instance.villaRooms.Length; i++)
+            //        {
+            //            if (IdolVillaRooms.instance.villaRooms[i].name == ChracterPosition.currSpwanPos)
+            //            {
+            //                spawnPoint = IdolVillaRooms.instance.villaRooms[i].gameObject.GetComponent<ChracterPosition>().spawnPos;
+            //                break;
+            //            }
+            //            else
+            //            {
+            //                spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
+            //            }
+            //        }
+            //    }
+            //}
+            //else
+            //{
+                  spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
+            //}
 
             RaycastHit hit;
         CheckAgain:
@@ -435,40 +403,54 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
                 spawnPoint = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
             }
-            if (WorldItemView.m_EnvName.Contains("XANALIA NFTART AWARD 2021"))
-            {
-                mainPlayer.transform.rotation = Quaternion.Euler(0f, 230f, 0f);
-            }
-            else if (WorldItemView.m_EnvName.Contains("DJ Event") || WorldItemView.m_EnvName.Contains("XANA Festival Stage"))
-            {
-                mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-            }
-            else if (WorldItemView.m_EnvName.Contains("Koto") || WorldItemView.m_EnvName.Contains("Tottori") || WorldItemView.m_EnvName.Contains("DEEMO") || WorldItemView.m_EnvName.Contains("XANA Lobby"))
-            {
-                mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0);
-                //Invoke(nameof(SetKotoAngle), 0.5f);
-                if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
-                {
-                    StartCoroutine(setPlayerCamAngle(-0.830f, 0.5572f));
-                }
-                else
-                {
-                    StartCoroutine(setPlayerCamAngle(0, 0.75f));
+            //if (WorldItemView.m_EnvName.Contains("XANALIA NFTART AWARD 2021"))
+            //{
+            //    mainPlayer.transform.rotation = Quaternion.Euler(0f, 230f, 0f);
+            //}
+            //else if (WorldItemView.m_EnvName.Contains("DJ Event") || WorldItemView.m_EnvName.Contains("XANA Festival Stage"))
+            //{
+            //    mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            //}
+            //else if (WorldItemView.m_EnvName.Contains("Koto") || WorldItemView.m_EnvName.Contains("Tottori") || WorldItemView.m_EnvName.Contains("DEEMO") || WorldItemView.m_EnvName.Contains("XANA Lobby"))
+            //{
+            //    mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0);
+            //    //Invoke(nameof(SetKotoAngle), 0.5f);
+            //    if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
+            //    {
+            //        StartCoroutine(setPlayerCamAngle(-0.830f, 0.5572f));
+            //    }
+            //    else
+            //    {
+            //        StartCoroutine(setPlayerCamAngle(0, 0.75f));
 
+            //    }
+            //}
+            //else if (WorldItemView.m_EnvName.Contains("Genesis"))
+            //{
+            //    // No Need TO Rotate Player
+            //    StartCoroutine(setPlayerCamAngle(0, 0.75f));
+            //}
+            //else if (WorldItemView.m_EnvName.Contains("ZONE X Musuem") || WorldItemView.m_EnvName.Contains("FIVE ELEMENTS"))
+            //{
+            //    StartCoroutine(setPlayerCamAngle(-30.0f, 0.5f));
+            //}
+            //else if (WorldItemView.m_EnvName.Contains("ZONE-X"))
+            //{
+            //    StartCoroutine(setPlayerCamAngle(0f, 00.5f));
+            //}
+            if (WorldItemView.m_EnvName.Contains("PMY ACADEMY"))
+            {
+                if (XanaConstants.xanaConstants.isFromPMYLobby)
+                {
+                    XanaConstants.xanaConstants.isFromPMYLobby = false;
+                    // Set spawn pos when ReEnter into PMY lobby
+                    spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y, spawnPoint.z - 25.05f);
+                    //Debug.LogError("Update spawnpoint for lobby::");
                 }
-            }
-            else if (WorldItemView.m_EnvName.Contains("Genesis"))
-            {
-                // No Need TO Rotate Player
-                StartCoroutine(setPlayerCamAngle(0, 0.75f));
-            }
-            else if (WorldItemView.m_EnvName.Contains("ZONE X Musuem") || WorldItemView.m_EnvName.Contains("FIVE ELEMENTS"))
-            {
-                StartCoroutine(setPlayerCamAngle(-30.0f, 0.5f));
-            }
-            else if (WorldItemView.m_EnvName.Contains("ZONE-X"))
-            {
-                StartCoroutine(setPlayerCamAngle(0f, 00.5f));
+                mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                //StartCoroutine(setPlayerCamAngle(0f, 0.5572f));
+                //StartCoroutine(setPlayerCamAngle(1f, 0.32f));
+                StartCoroutine(setPlayerCamAngle(0.38f, 0.8f)); // 0.38  //0.2275
             }
             else if (WorldItemView.m_EnvName.Contains("PMYRoomA"))
             {
@@ -483,11 +465,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
 
         mainPlayer.transform.position = new Vector3(0, 0, 0);
+        mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
+        //Vector3 newPos = spawnPoint + new Vector3(500, 500f, 500);
+        //mainController.transform.position = newPos;
 
-        Vector3 newPos = spawnPoint + new Vector3(500, 500f, 500);
-        mainController.transform.position = newPos;
-
-        player = PhotonNetwork.Instantiate("34", newPos, Quaternion.identity, 0);
+        player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
 
         ReferrencesForDynamicMuseum.instance.m_34player = player;
         SetAxis();
@@ -502,7 +484,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         // LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
 
         //change youtube player instantiation code because while env is in loading and youtube started playing video
-        InstantiateYoutubePlayer();
+        //InstantiateYoutubePlayer();
 
         SetAddressableSceneActive();
         CharacterLightCulling();
@@ -530,14 +512,14 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         XanaConstants.xanaConstants.JjWorldSceneChange = false;
 
         updatedSpawnpoint.transform.localPosition = spawnPoint;
-        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
-        {
-            XanaConstants.xanaConstants.isFromXanaLobby = false;
-        }
-        else if (XanaConstants.xanaConstants.EnviornmentName.Contains("PMY ACADEMY"))
-        {
-            XanaConstants.xanaConstants.isFromPMYLobby = false;
-        }
+        //if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+        //{
+        //    XanaConstants.xanaConstants.isFromXanaLobby = false;
+        //}
+        //else if (XanaConstants.xanaConstants.EnviornmentName.Contains("PMY ACADEMY"))
+        //{
+        //    XanaConstants.xanaConstants.isFromPMYLobby = false;
+        //}
         StartCoroutine(VoidCalculation());
         LightCullingScene();
         yield return new WaitForSeconds(.5f);
@@ -605,17 +587,17 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         /// <summary>
         /// Load NPC fake chat system
         /// </summary>
-        ActivateNpcChat();
+        //ActivateNpcChat();
     }
 
-    public void SetPlayerPos()
-    {
-        if (mainController != null)
-        {
-            mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
-            //Debug.LogError("SetPlayerPos" + spawnPoint);
-        }
-    }
+    //public void SetPlayerPos()
+    //{
+    //    if (mainController != null)
+    //    {
+    //        mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
+    //        //Debug.LogError("SetPlayerPos" + spawnPoint);
+    //    }
+    //}
 
     void ActivateNpcChat()
     {
