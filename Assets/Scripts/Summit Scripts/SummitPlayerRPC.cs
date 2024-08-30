@@ -257,7 +257,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                arrowManager.enabled = true;
                 Transformview.enabled = true;
               
-                if (voiceNetwork == null) { voiceNetwork = PhotonVoiceNetwork.Instance; }
+                if (voiceNetwork == null) { voiceNetwork = PunVoiceClient.Instance; }
 
                 Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { car.PrivateRoomName }, new byte[] { defaultGroup }));
 
