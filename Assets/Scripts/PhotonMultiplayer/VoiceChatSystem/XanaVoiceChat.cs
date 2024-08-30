@@ -129,7 +129,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
                 //    micOnBtnPotrait.SetActive(false);
                 //    ConstantsHolder.xanaConstants.mic = 0;
                 //}
-                StartCoroutine(CheckVoiceConnect());
+               // StartCoroutine(CheckVoiceConnect());
             }
         //}
     }
