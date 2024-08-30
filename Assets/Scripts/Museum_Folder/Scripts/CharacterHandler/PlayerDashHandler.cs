@@ -39,6 +39,7 @@ public class PlayerDashHandler : MonoBehaviour
         {
             Debug.LogError("PlayerController not found");
         }
+        _canDash = true;
     }
 
     //private void Update()
@@ -68,14 +69,18 @@ public class PlayerDashHandler : MonoBehaviour
         if (_dashEffect)
             _dashEffect.SetActive(true);  // Enable speed lines effect on Camera
 
-        _playerController.animator.SetBool("IsDashing", true);
+        if (_playerController.animator)
+           _playerController.animator.SetBool("IsDashing", true);
+
         while (Time.time < endTime)
         {
             _playerController.cinemachineFreeLook.m_Lens.FieldOfView += _fovIncreasingSpeed;
             _playerController.characterController.Move(_dashSpeed * Time.deltaTime * transform.forward);
             yield return null;
         }
-        _playerController.animator.SetBool("IsDashing", false);
+
+        if (_playerController.animator)
+            _playerController.animator.SetBool("IsDashing", false);
 
         if (_playerController.desiredMoveDirection != Vector3.zero)
         {
