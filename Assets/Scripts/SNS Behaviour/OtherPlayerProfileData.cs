@@ -21,7 +21,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     public AllUserWithFeedRow FeedRawData;
 
     public List<AllFeedByUserIdRow> allMyFeedImageRootDataList = new List<AllFeedByUserIdRow>();//image feed list
-    public List<FeedResponseRow> allMyTextPostRootDataList = new List<FeedResponseRow>();//image feed list
+    //public List<FeedResponseRow> allMyTextPostRootDataList = new List<FeedResponseRow>();//image feed list
     //For Temp use needs to be deleted later 
     public List<AllFeedByUserIdRow> allMyFeedVideoRootDataList = new List<AllFeedByUserIdRow>();//video feed list
 
@@ -471,7 +471,7 @@ public class OtherPlayerProfileData : MonoBehaviour
                     userPostItem.SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
                     userPostItem.isProfileScene = true;
                     loadedMyPostAndVideoId.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
-                    allMyTextPostRootDataList.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i]);
+                    //allMyTextPostRootDataList.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i]);
                 }
             }
             else//Case added to instantiate empty object at end of posts so last one wont get hidden behide bottom UI
