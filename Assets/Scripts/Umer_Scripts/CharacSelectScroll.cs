@@ -78,13 +78,17 @@ public class CharacSelectScroll : MonoBehaviour
         if (SelectedOBJ != null)
         {
             GameManager.Instance.HomeCameraInputHandler(true);
-            UserLoginSignupManager.instance.SelectedPresetImage.sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
-            UserLoginSignupManager.instance.SelectPresetImageforEditProfil.sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                UserLoginSignupManager.instance.SelectedPresetImage.sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
+                UserLoginSignupManager.instance.SelectPresetImageforEditProfil.sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
+
+            }
             //UserRegisterationManager.instance.LogoImage.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
-            //UserRegisterationManager.instance.LogoImage2.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
-            //UserRegisterationManager.instance.LogoImage3.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
-            //Debug.LogError("selected obj name :- "+SelectedOBJ.name);
-            SelectedOBJ.GetComponent<PresetData_Jsons>().ChangecharacterFromPresetPanel();
+                //UserRegisterationManager.instance.LogoImage2.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
+                //UserRegisterationManager.instance.LogoImage3.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
+                //Debug.LogError("selected obj name :- "+SelectedOBJ.name);
+                SelectedOBJ.GetComponent<PresetData_Jsons>().ChangecharacterFromPresetPanel();
             GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
             if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
             {
