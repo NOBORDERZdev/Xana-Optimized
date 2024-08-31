@@ -158,12 +158,26 @@ public class UserLoginSignupManager : MonoBehaviour
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1 || PlayerPrefs.GetInt("WalletLogin") == 1)
         {
             LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+            }
             StartCoroutine(RefreshXanaTokenAPI());
         }
         else
         {
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+            }
             ShowWelcomeScreen();
         }
     }
@@ -251,7 +265,16 @@ public class UserLoginSignupManager : MonoBehaviour
 
             if (!PlayerPrefs.HasKey("shownWelcome"))
             {
-                InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                {
+                    InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                }
+                else
+                {
+                    InventoryManager.instance.StartPanel_PresetParentPanelSummit.SetActive(true);
+                }
+               
+               
             }
         }
 
@@ -550,7 +573,14 @@ public class UserLoginSignupManager : MonoBehaviour
             }
             else
             {
-                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                {
+                    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                }
+                else
+                {
+                    LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+                }
             }
         }
         else
@@ -936,8 +966,12 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void EnterUserName()
     {
-        NameScreenLoader.SetActive(true);
-        NameScreenNextButton.interactable = false;
+        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            NameScreenLoader.SetActive(true);
+            NameScreenNextButton.interactable = false;
+
+        }
         string displayrname = displayrNameField.Text;
         string userUsername = userUsernameField.Text;
         string keytoLocalize;
@@ -1009,14 +1043,25 @@ public class UserLoginSignupManager : MonoBehaviour
             Debug.LogError("Set Name for Guest User");
             //DynamicEventManager.deepLink?.Invoke("come from Guest Registration");
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, displayrname);
-            NameScreenNextButton.interactable = true;
-            NameScreenLoader.SetActive(false);
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                NameScreenNextButton.interactable = true;
+                NameScreenLoader.SetActive(false);
+            }
             enterNamePanel.SetActive(false);
             //checkbool_preser_start = true;
             PlayerPrefs.SetInt("shownWelcome", 1);
             if (PlayerPrefs.GetInt("shownWelcome") == 1)
             {
                 InventoryManager.instance.OnSaveBtnClicked();
+            }
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
             }
             ConstantsHolder.userName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
             PlayerPrefs.SetInt("IsProcessComplete", 1);// user is registered as guest/register.
@@ -1048,7 +1093,14 @@ public class UserLoginSignupManager : MonoBehaviour
                 GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
 
             }));
-
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+            }
             RequestSubmitUsername(userUsername);
         }
         
@@ -1892,10 +1944,22 @@ public class UserLoginSignupManager : MonoBehaviour
             }
             else if (APIResponse.success)
             {
-                OpenUIPanel(16);
-                EditProfilePanel.SetActive(true);
-                NameScreenLoader.SetActive(false);
-                NameScreenNextButton.interactable = true;
+               
+                if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                {
+                    OpenUIPanel(16);
+                    EditProfilePanel.SetActive(true);
+                    NameScreenLoader.SetActive(false);
+                    NameScreenNextButton.interactable = true;
+                }
+                else {
+                    OpenUIPanel(16);
+                    NameScreenLoader.SetActive(false);
+                    NameScreenNextButton.interactable = true;
+                    if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+                        MainSceneEventHandler.OpenLandingScene?.Invoke();
+                    
+                }
 
 
             }

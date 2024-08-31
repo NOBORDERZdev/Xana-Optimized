@@ -339,7 +339,15 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void BacktoAvatarSelectionPanel()
     {
-        InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        }
+        else
+        {
+            InventoryManager.instance.StartPanel_PresetParentPanelSummit.SetActive(true);
+        }
+       
     }
 
     public void LoginScreenClicked(int btn)
