@@ -78,13 +78,9 @@ public class QualityManager : MonoBehaviour
         {
             SetQualitySettings(1); // Medium
         }
-        else if (systemMemory <= 6144)
+        else if (systemMemory <= 6144) //High
         {
             SetQualitySettings(2);
-        }
-        else
-        {
-            SetQualitySettings(3);
         }
     }
 
