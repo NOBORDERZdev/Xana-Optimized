@@ -132,7 +132,7 @@ public class ReferencesForGamePlay : MonoBehaviour
         {
             if (instance.totalCounter != null)
             {
-                totalCounter.text = totalCounter.text = PlayerCount + "/" + ConstantsHolder.userLimit /*ConstantsHolder.xanaConstants.userLimit*/;
+                totalCounter.text = totalCounter.text = PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers /*ConstantsHolder.xanaConstants.userLimit*/;
             }
         }
       
@@ -347,7 +347,7 @@ public class ReferencesForGamePlay : MonoBehaviour
                     {
                         PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
                     }
-                    totalCounter.text = PlayerCount + "/" + ConstantsHolder.userLimit /*ConstantsHolder.xanaConstants.userLimit*/;
+                    totalCounter.text = PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers /*ConstantsHolder.xanaConstants.userLimit*/;
 
                     //if (ConstantsHolder.xanaConstants.isCameraMan)
                     //{
@@ -371,7 +371,7 @@ public class ReferencesForGamePlay : MonoBehaviour
                 if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
                 {
                     PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + NpcSpawner.npcSpawner.npcCounter;
-                    totalCounter.text = PlayerCount + "/" + ConstantsHolder.userLimit + 5;
+                    totalCounter.text = PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers + 5;
                 }
                 //else
                 //{

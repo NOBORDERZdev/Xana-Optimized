@@ -179,10 +179,12 @@ public class PresetData_Jsons : MonoBehaviour
             //GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>().SetAvatarByGender(_CharacterData.gender);
 
 
-            if (InventoryManager.instance.StartPanel_PresetParentPanel.activeSelf || InventoryManager.instance.selfiePanel.activeSelf)
+            if (InventoryManager.instance.StartPanel_PresetParentPanel.activeSelf || InventoryManager.instance.selfiePanel.activeSelf|| 
+                InventoryManager.instance.StartPanel_PresetParentPanelSummit.activeSelf)
             {
                 /*Invoke("abcd", 5f);*/
                 InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(false);
+                InventoryManager.instance.StartPanel_PresetParentPanelSummit.SetActive(false);
                 InventoryManager.instance.selfiePanel.SetActive(false);
                 if (!GameManager.Instance.UiManager.isAvatarSelectionBtnClicked)
                 {

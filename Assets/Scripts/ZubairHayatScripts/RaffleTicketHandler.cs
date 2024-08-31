@@ -168,19 +168,24 @@ public class RaffleTicketHandler : MonoBehaviour
     }
     private void CheckForAnyRaffleticketGifts(int RaffleTickets)
     {
-        if (RaffleTickets % 5 == 0)
-        {
-            _earnTicketsInOneCycle += 4;
-            _totalNumberOfTickets += _earnTicketsInOneCycle;
-            _earnTicketsInOneCycle = 0;
-            StartCoroutine(RewardPopUp("You have received your gift!", "05", true, 5f));
-        }
+
         if (_totalNumberOfDomes == _allVisitedDomeIds.Count)
         {
             _earnTicketsInOneCycle += 50;
             _totalNumberOfTickets += _earnTicketsInOneCycle;
             StartCoroutine(RewardPopUp("You have received your gift!", "50", false, 8f));
             _earnTicketsInOneCycle = 0;
+        }
+        else if (RaffleTickets % 5 == 0)
+        {
+            _earnTicketsInOneCycle += 4;
+            _totalNumberOfTickets += _earnTicketsInOneCycle;
+            _earnTicketsInOneCycle = 0;
+            StartCoroutine(RewardPopUp("You have received your gift!", "05", true, 5f));
+        }
+        else
+        {
+            StartCoroutine(RewardPopUp("You have received your gift!", "01", true, 5f));
         }
         UpdateUI();
     }
