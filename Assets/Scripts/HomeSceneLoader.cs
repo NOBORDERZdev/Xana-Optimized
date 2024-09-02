@@ -60,9 +60,12 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     }
     public async void LoadMain(bool changeOritentationChange)
     {
+        BuilderEventManager.StopBGM?.Invoke();
         LoadingHandler.Instance.DisableVideoLoading();
         //GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
         disableSoundXanalobby();
+        await Task.Delay(1000);
+
         ConstantsHolder.xanaConstants.isBackFromWorld = true;
         if (exitOnce)
         {
@@ -101,6 +104,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
 
                 LeaveRoom();
             }
+
         }
     }
     private IEnumerator LobbySceneSwitch()
