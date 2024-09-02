@@ -1950,6 +1950,7 @@ public class UserLoginSignupManager : MonoBehaviour
         else
         {
             NativeGallery.Permission permission = NativeGallery.CheckPermission(NativeGallery.PermissionType.Read, NativeGallery.MediaType.Image);
+#if UNITY_ANDROID
             if (permission == NativeGallery.Permission.ShouldAsk) //||permission == NativeCamera.Permission.ShouldAsk
             {
                 permissionPopup.SetActive(true);
@@ -1958,12 +1959,24 @@ public class UserLoginSignupManager : MonoBehaviour
             {
                 OnPickImageFromGellery(maxSize);
             }
+#elif UNITY_IOS
+                if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
+                     permissionPopup.SetActive(true);
+                }
+                else
+                {
+                    OnPickImageFromGellery(maxSize);
+                }
+#endif
+
         }
     }
 
     public void OnPickImageFromGellery(int maxSize)
     {
 #if UNITY_IOS
+        PlayerPrefs.SetInt("PicPermission", 1);
+
         if (PermissionCheck == "false")
         {
             string url = MyNativeBindings.GetSettingsURL();
