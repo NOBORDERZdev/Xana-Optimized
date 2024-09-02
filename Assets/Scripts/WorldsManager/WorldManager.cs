@@ -137,6 +137,7 @@ public class WorldManager : MonoBehaviour
             ConstantsHolder.xanaConstants.isFromHomeTab = true;
             ConstantsHolder.xanaConstants.MuseumID = singleWorldInfo.data.id;
             WorldItemView.m_EnvName = singleWorldInfo.data.name;
+            ConstantsHolder.Thumbnail = singleWorldInfo.data.thumbnail;
             ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             ConstantsHolder.xanaConstants.UserMicEnable = singleWorldInfo.data.userMicEnable;
             LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;

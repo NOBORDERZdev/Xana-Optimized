@@ -181,6 +181,7 @@ public class ConstantsHolder : MonoBehaviour
     public static bool isFixedHumanoid;
     public static int AvatarIndex;
     public static bool HaveSubWorlds;
+    public static string Thumbnail;
 
     //Daily reward
     public bool isGoingForHomeScene = false;

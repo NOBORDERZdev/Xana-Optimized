@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using DG.Tweening;
 using UnityEngine.Video;
 using System.Threading.Tasks;
+using SuperStar.Helpers;
 
 public class LoadingHandler : MonoBehaviour
 {
@@ -30,7 +31,7 @@ public class LoadingHandler : MonoBehaviour
 
     public float fadeTimer;
     bool isFirstTime = true;
-
+    
     /// <summary>
     /// Help Screen Arrays for 2 scenarios.
     /// If loading percentage is less than 50 only display helpScreenOne items
@@ -75,9 +76,19 @@ public class LoadingHandler : MonoBehaviour
     public RenderTexture Texture16x9;
     public RenderTexture Texture9x16;
 
+    public GameObject DomeLoading;
+    public GameObject DomeLodingUI;
+    public GameObject ApprovalUI;
+    public Image DomeThumbnail;
+    public TextMeshProUGUI DomeName;
+    public TextMeshProUGUI DomeDescription;
+    public TextMeshProUGUI DomeProgress;
+    public TextMeshProUGUI LoadingStatus;
+
     public ManualRoomController manualRoomController;
     public StreamingLoadingText streamingLoading;
 
+    public bool enter = false, WaitForInput = false;
     public float currentValue = 0;
     private float timer = 0;
     public bool isLoadingComplete = false;
@@ -523,7 +534,7 @@ public class LoadingHandler : MonoBehaviour
 
     public IEnumerator IncrementSliderValue(float speed, bool loadMainScene = false)
     {
-        while (currentValue < sliderCompleteValue)
+        while (currentValue < sliderCompleteValue)  
         {
             timer += Time.deltaTime;
             currentValue = Mathf.Lerp(0, sliderFinalValue, timer / speed);
@@ -537,6 +548,8 @@ public class LoadingHandler : MonoBehaviour
             {
                 loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                 loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+                DomeProgress.text = ((int)(currentValue)).ToString();
+               
             }
 
 
@@ -574,6 +587,7 @@ public class LoadingHandler : MonoBehaviour
                     loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                     loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
                     //yield return new WaitForSeconds(1f);
+                    DomeProgress.text = ((int)(currentValue)).ToString();
                     //HideLoading(ScreenOrientation.Portrait);
                 }
             }
@@ -637,11 +651,127 @@ public class LoadingHandler : MonoBehaviour
         VideoLoading.SetActive(true);
     }
 
+    public void showDomeLoading(XANASummitDataContainer.StackInfoWorld info)
+    {
+        if (!string.IsNullOrEmpty(info.thumbnail))
+        {
+            DomeThumbnail.gameObject.SetActive(true);
+            if (AssetCache.Instance.HasFile(info.thumbnail))
+            {
+                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.thumbnail);
+
+            }
+            else
+            {
+                AssetCache.Instance.EnqueueOneResAndWait(info.thumbnail, info.thumbnail, (success) =>
+                {
+                    if (success)
+                    {
+                        AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.thumbnail, changeAspectRatio: true);
+
+                    }
+                });
+            }
+        }
+        else { DomeThumbnail.gameObject.SetActive(false); }
+        ResetLoadingValues();
+        DomeLoading.SetActive(true);
+        DomeName.text = info.name;
+        DomeDescription.text = info.description;
+        ApprovalUI.SetActive(false);
+        DomeLodingUI.SetActive(true);
+    }
+
+    public void showApprovaldomeloading(XANASummitDataContainer.DomeGeneralData info)
+    {
+        WaitForInput = true;
+        if (!string.IsNullOrEmpty(info.world360Image))
+        {
+            DomeThumbnail.gameObject.SetActive(true);
+            if (AssetCache.Instance.HasFile(info.world360Image))
+            {
+                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.world360Image);
+
+            }
+            else
+            {
+                AssetCache.Instance.EnqueueOneResAndWait(info.world360Image, info.world360Image, (success) =>
+                {
+                    if (success)
+                    {
+                        AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.world360Image, changeAspectRatio: true);
+
+                    }
+                });
+            }
+        }else { DomeThumbnail.gameObject.SetActive(false);}
+        ResetLoadingValues();
+        DomeLoading.SetActive(true);
+        DomeName.text = info.name;
+        DomeDescription.text = info.description;
+        ApprovalUI.SetActive(true);
+        DomeLodingUI.SetActive(false);
+    }
+    public void showApprovaldomeloading(XANASummitSceneLoading.SingleWorldInfo info)
+    {
+        WaitForInput = true;
+        if (!string.IsNullOrEmpty(info.data.thumbnail))
+        {
+            DomeThumbnail.gameObject.SetActive(true);
+            if (AssetCache.Instance.HasFile(info.data.thumbnail))
+            {
+                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.data.thumbnail);
+
+            }
+            else
+            {
+                AssetCache.Instance.EnqueueOneResAndWait(info.data.thumbnail, info.data.thumbnail, (success) =>
+                {
+                    if (success)
+                    {
+                        AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.data.thumbnail, changeAspectRatio: true);
+
+                    }
+                });
+            }
+        }
+        else { DomeThumbnail.gameObject.SetActive(false); }
+        ResetLoadingValues();
+        DomeLoading.SetActive(true);
+        DomeName.text = info.data.name;
+        DomeDescription.text = info.data.description;
+        ApprovalUI.SetActive(true);
+        DomeLodingUI.SetActive(false);
+    }
+    public void EnterDome()
+    {
+        enter = true;
+        WaitForInput = false;
+        ApprovalUI.SetActive(false);
+        DomeLodingUI.SetActive(true);
+       
+    }
+    public void ReturnDome()
+    {
+        enter = false;
+        WaitForInput = false;
+        DomeLoading.SetActive(false);
+    }
+
     public void DisableVideoLoading()
     {
         VideoLoading.SetActive(false);
     }
 
+    internal void DisableDomeLoading()
+    {
+        DomeLoading.SetActive(false);
+    }
+
+    internal void DomeLoadingProgess(float progress)
+    {
+       DomeProgress.text = progress.ToString("D2");
+    }
 }
 
 
