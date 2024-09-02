@@ -14,6 +14,7 @@ public class SubWorldPrefab : MonoBehaviour
     public string WorldType;
     public string WorldCategory;
     public string WorldTimeEstimate;
+    public string WorldDomeId;
     public string ThumbnailUrl;
     public Sprite WorldImage;
     public TMPro.TextMeshProUGUI WorldName;
@@ -24,9 +25,9 @@ public class SubWorldPrefab : MonoBehaviour
         StartCoroutine(DownloadTexture());
     }
 
-    public void OnSubWorldPrefabClicked()
+    public void OnPrefabClicked()
     {
-        BuilderEventManager.LoadSceneByName?.Invoke(WorldId.ToString(), PlayerReturnPosition);
+        SubWorldsHandler.OpenSubWorldDescriptionPanel?.Invoke(WorldImage,WorldId.ToString(),SubWorldName,WorldDescription,CreatorName,WorldType,WorldCategory,WorldDomeId,PlayerReturnPosition);
     }
 
     IEnumerator DownloadTexture()
@@ -39,6 +40,7 @@ public class SubWorldPrefab : MonoBehaviour
         }
         Texture2D texture2D = DownloadHandlerTexture.GetContent(request);
         WorldImage=SubWorldPrefabButton.GetComponent<Image>().sprite = ConvertToSprite(texture2D);
+        SubWorldPrefabButton.interactable = true;
     }
 
     private Sprite ConvertToSprite(Texture2D texture)

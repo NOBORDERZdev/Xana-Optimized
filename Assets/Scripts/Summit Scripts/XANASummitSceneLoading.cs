@@ -27,7 +27,7 @@ public class XANASummitSceneLoading : MonoBehaviour
     private DomeMinimapDataHolder _domeMiniMap;
 
     public delegate void SetPlayerOnSubworldBack();
-    public event SetPlayerOnSubworldBack setPlayerPositionDelegate;
+    public static event SetPlayerOnSubworldBack setPlayerPositionDelegate;
 
 
     private void OnEnable()
@@ -90,6 +90,7 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         if (domeGeneralData.isSubWorld)
         {
+            ConstantsHolder.domeId = domeId;
             ConstantsHolder.isFromXANASummit = true;
             bool Success = await SubWorldsHandlerInstance.CreateSubWorldList(domeGeneralData, playerPos);
             if (Success)
@@ -151,7 +152,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (domeGeneralData.worldType)
             LoadBuilderSceneLoading(domeGeneralData.builderWorldId);
         else
-            multiplayerController.Connect("XANA Summit-" + domeGeneralData.world);
+            multiplayerController.Connect("XANA Summit-" + ConstantsHolder.domeId+"-"+domeGeneralData.world);
 
         // Summit Analytics Part
         if (_stayTimeTrackerForSummit != null)
@@ -236,7 +237,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (ConstantsHolder.xanaConstants.isBuilderScene)
             LoadBuilderSceneLoading(int.Parse(worldInfo.data.id));
         else
-            multiplayerController.Connect("XANA Summit-" + worldInfo.data.name);
+            multiplayerController.Connect("XANA Summit-" + ConstantsHolder.domeId + "-" + worldInfo.data.name);
 
 
 
@@ -281,7 +282,7 @@ public class XANASummitSceneLoading : MonoBehaviour
                 _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = true;
             }
         }
-        setPlayerPositionDelegate = SetPlayerOnback;
+        setPlayerPositionDelegate += SetPlayerOnback;
 
         //StartCoroutine(LoadingHandler.Instance.FadeIn());
         LoadingHandler.Instance.ShowVideoLoading();

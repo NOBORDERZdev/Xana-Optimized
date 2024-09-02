@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class SubWorldsHandler : MonoBehaviour
 {
@@ -19,21 +20,36 @@ public class SubWorldsHandler : MonoBehaviour
     public TMPro.TextMeshProUGUI WorldEstTime;
     public TMPro.TextMeshProUGUI DomeId;
     public Button EnterButton;
+    public GameObject EnterButtonAnimation;
     public Button BackButton;
     
     public XANASummitDataContainer XANASummitDataContainer;
     public XANASummitSceneLoading XANASummitSceneLoadingInstance;
+
+    public static Action<Sprite,string, string,string, string, string, string, string,Vector3> OpenSubWorldDescriptionPanel;
+
+    private string worldId;
+    private Vector3 playerReturnPosition;
     // Start is called before the first frame update
     void OnEnable()
     {
         //BuilderEventManager.AfterWorldInstantiated += AddSubWorld;
         BuilderEventManager.AfterWorldOffcialWorldsInatantiated += AddSubWorld;
+        OpenSubWorldDescriptionPanel += OpenDescirptionPanel;
+
+        EnterButton.onClick.AddListener(EnterWorld);
+        BackButton.onClick.AddListener(OnBack);
+
     }
 
     private void OnDisable()
     {
         //BuilderEventManager.AfterWorldInstantiated -= AddSubWorld;
         BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= AddSubWorld;
+        OpenSubWorldDescriptionPanel -= OpenDescirptionPanel;
+
+        EnterButton.onClick.RemoveListener(EnterWorld);
+        BackButton.onClick.RemoveListener(OnBack);
     }
 
 
@@ -74,6 +90,11 @@ public class SubWorldsHandler : MonoBehaviour
 
     public Task<bool> CreateSubWorldList(XANASummitDataContainer.DomeGeneralData domeGeneralData, Vector3 PlayerReturnPosition)
     {
+        if(ConstantsHolder.domeId!=domeGeneralData.id)
+        {
+            ClearOldData();
+        }
+
         SubworldListParent.SetActive(true);
         for (int i = 0; i < domeGeneralData.SubWorlds.Count; i++)
         {
@@ -84,11 +105,17 @@ public class SubWorldsHandler : MonoBehaviour
             else
                 _SubWorldPrefab.WorldId = int.Parse(domeGeneralData.SubWorlds[i].builderSubWorldId);
             
+            _SubWorldPrefab.SubWorldName = domeGeneralData.SubWorlds[i].selectWorld.label;
+            _SubWorldPrefab.WorldDescription = domeGeneralData.SubWorlds[i].selectWorld.label;
+            _SubWorldPrefab.CreatorName = domeGeneralData.SubWorlds[i].selectWorld.label;
+            _SubWorldPrefab.WorldType = domeGeneralData.SubWorlds[i].selectWorld.label;
+            _SubWorldPrefab.WorldCategory = domeGeneralData.SubWorlds[i].selectWorld.label;
+            _SubWorldPrefab.WorldTimeEstimate = domeGeneralData.SubWorlds[i].selectWorld.label;
+            _SubWorldPrefab.WorldDomeId = domeGeneralData.id.ToString();
             _SubWorldPrefab.ThumbnailUrl = domeGeneralData.SubWorlds[i].selectWorld.icon;
             _SubWorldPrefab.WorldName.text = domeGeneralData.SubWorlds[i].selectWorld.label;
 
             _SubWorldPrefab.PlayerReturnPosition = PlayerReturnPosition;
-            _SubWorldPrefab.SubWorldPrefabButton.onClick.AddListener(OnSubworldOpen);
             _SubWorldPrefab.Init();
         }
         if (domeGeneralData.SubWorlds.Count > 0)
@@ -97,13 +124,52 @@ public class SubWorldsHandler : MonoBehaviour
             return new Task<bool>(() => false);
     }
 
-    void OpenDescirptionPanel()
+    void OpenDescirptionPanel(Sprite thumbnailImage,string _worldId,string worldName,string worldDesCription,string creatorName,string worldType,string worldCategory,string worldDomeId,Vector3 _playerReturnPosition)
     {
-        
+        ThumbnailImage.sprite = thumbnailImage;
+        WorldName.text = worldName;
+        WorldDescription.text = worldDesCription;
+        WorldCreatorName.text = worldName;
+        WorldType.text = worldType;
+        WorldCategory.text = worldCategory;
+        DomeId.text = worldDomeId;
+
+        worldId = _worldId;
+        playerReturnPosition = _playerReturnPosition;
+
+        DescriptionPanelParent.SetActive(true);
     }
 
+    public void CloseSubWorldList()
+    {
+        SubworldListParent.SetActive(false);
+    }
 
-    void OnSubworldOpen()
+    public void EnterWorld()
+    {
+        Debug.LogError("Entered in world");
+        BuilderEventManager.LoadSceneByName?.Invoke(worldId, playerReturnPosition);
+        XANASummitSceneLoading.setPlayerPositionDelegate+=OnEnteredIntoWorld;
+        EnterButton.interactable = false;
+        BackButton.interactable = false;
+        EnterButtonAnimation.SetActive(true);
+    }
+
+    void OnEnteredIntoWorld()
+    {
+        SubworldListParent.SetActive(false);
+        DescriptionPanelParent.SetActive(false);
+        EnterButton.interactable = true;
+        BackButton.interactable = true;
+        EnterButtonAnimation.SetActive(false);
+    }
+
+    public void OnBack()
+    {
+        DescriptionPanelParent.SetActive(false);
+    }
+
+    void ClearOldData()
     {
         foreach (Transform t in ContentParent)
             Destroy(t.gameObject);
