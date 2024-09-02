@@ -87,7 +87,8 @@ public class XanaVoiceChat : MonoBehaviour
             }
             else
             {
-                if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+#if !UNITY_EDITOR && UNITY_ANDROID
+                 if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
                 {
                     PermissionAlertPopup.SetActive(true);
                 }
@@ -95,13 +96,24 @@ public class XanaVoiceChat : MonoBehaviour
                 {
                     SetMic();
                 }
+#elif !UNITY_EDITOR && UNITY_IOS
+                if(PlayerPrefs.GetInt("MicPermission", 0) == 0){
+                      PermissionAlertPopup.SetActive(true);
+                }
+                else
+                {
+                    SetMic();
+                }
+#endif
             }
         }
     }
 
     public void SetMic()      //Start()
     {
-        Debug.Log("Xana VoiceChat Start");
+#if !UNITY_EDITOR && UNITY_IOS
+        PlayerPrefs.SetInt("MicPermission", 1);
+#endif
         recorder = GameObject.FindObjectOfType<Recorder>();
         voiceConnection = GetComponent<VoiceConnection>();
 
@@ -187,7 +199,7 @@ public class XanaVoiceChat : MonoBehaviour
     //Overriding methods for push to talk 
     public async void PushToTalk(bool canTalk)
     {
-        if(canTalk)
+        if (canTalk)
         {
             micOffBtn.transform.GetChild(0).gameObject.SetActive(false);
             micOffBtnPotrait.transform.GetChild(0).gameObject.SetActive(false);
@@ -199,11 +211,11 @@ public class XanaVoiceChat : MonoBehaviour
         {
             micOffBtn.transform.GetChild(0).gameObject.SetActive(true);
             micOffBtnPotrait.transform.GetChild(0).gameObject.SetActive(true);
-            while(recorder.IsCurrentlyTransmitting)
+            while (recorder.IsCurrentlyTransmitting)
             {
                 await Task.Delay(1000);
             }
-            if (recorder != null )
+            if (recorder != null)
                 recorder.TransmitEnabled = false;
 
         }
@@ -219,7 +231,7 @@ public class XanaVoiceChat : MonoBehaviour
         }
     }
 
-    
+
 
     IEnumerator CheckVoiceConnect()
     {
