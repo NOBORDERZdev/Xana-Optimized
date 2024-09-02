@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class MoveMaptoCenter : MonoBehaviour
@@ -20,6 +21,8 @@ public class MoveMaptoCenter : MonoBehaviour
 
     public Image selectedWorldBannerImage;
     public GameObject goBtn;
+
+    public XANASummitDataContainer dataManager; 
 
     void Start()
     {
@@ -55,6 +58,28 @@ public class MoveMaptoCenter : MonoBehaviour
         grandChildPing = MapHighlightObjs[ind];
         StartCoroutine(MoveChildToCenterOfMainScreen());
         EnableSelectedImage(ind);
+
+
+        // Get the Thumbnail URL
+        string ThumbnailUrl ="";
+        for (int i = 0; i < dataManager.summitData.domes.Count; i++)
+        {
+            if (dataManager.summitData.domes[0].id == ind)
+            {
+                if (dataManager.summitData.domes[0].world360Image != null)
+                {
+                    ThumbnailUrl = dataManager.summitData.domes[0].thumbnail;
+                    StartCoroutine(DownloadTexture(ThumbnailUrl));
+                    selectedWorldBannerImage.transform.parent.gameObject.SetActive(true);
+                }
+                else
+                {
+                    selectedWorldBannerImage.transform.parent.gameObject.SetActive(false);
+                }
+                break;
+            }
+        }
+        goBtn.SetActive(true);
     }
     IEnumerator MoveChildToCenterOfMainScreen()
     {
@@ -113,6 +138,24 @@ public class MoveMaptoCenter : MonoBehaviour
         {
             CetegoryObjects[ind].GetChild(i).gameObject.SetActive(status);
         }
+    }
+
+
+    IEnumerator DownloadTexture(string ThumbnailUrl)
+    {
+        UnityWebRequest request = UnityWebRequestTexture.GetTexture(ThumbnailUrl);
+        request.SendWebRequest();
+        while (!request.isDone)
+        {
+            yield return null;
+        }
+        Texture2D texture2D = DownloadHandlerTexture.GetContent(request);
+        selectedWorldBannerImage.sprite = ConvertToSprite(texture2D);
+    }
+
+    private Sprite ConvertToSprite(Texture2D texture)
+    {
+        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
     }
 }
 
