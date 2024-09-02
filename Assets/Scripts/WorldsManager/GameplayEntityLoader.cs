@@ -134,6 +134,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
         ConstantsHolder.xanaConstants.isGoingForHomeScene = false;
 
+        ForcedMapOpenForSummitScene();
     }
 
     void OnEnable()
@@ -149,7 +150,18 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         GamePlayButtonEvents.OnExitButtonXANASummit -= ResetOnBackFromSummit;
     }
 
+    void ForcedMapOpenForSummitScene()
+    {
+        if(ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit")
+        {
+            ReferencesForGamePlay.instance.minimap.SetActive(true);
+            PlayerPrefs.SetInt("minimap", 1);
+            ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
+            ReferencesForGamePlay.instance.SumitMapStatus(true);
 
+            XanaChatSystem.instance.chatDialogBox.SetActive(false);
+        }
+    }
 
     public void StartEventTimer()
     {
@@ -627,6 +639,12 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         XanaPartyController.SetActive(false);
         XanaWorldController.SetActive(true);
         mainController = mainControllerRefHolder;
+        if(ConstantsHolder.isFixedHumanoid)
+        {
+            InstantiatePlayerForFixedHumanoid();
+            return;
+        }
+
         if (SaveCharacterProperties.instance?.SaveItemList.gender == AvatarGender.Male.ToString())
         {
             player = PhotonNetwork.Instantiate("XanaAvatar2.0_Male", spawnPoint, Quaternion.identity, 0);    // Instantiate Male Avatar
@@ -643,6 +661,28 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             player.transform.localRotation = Quaternion.identity;
             player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Female");      // Set Default Cloth to avoid naked avatar
         }
+        ActionAnimationApplyToPlayer.PlayerAnimatorInitializer?.Invoke(player.GetComponent<Animator>().runtimeAnimatorController);
+    }
+
+    void InstantiatePlayerForFixedHumanoid()
+    {
+        if (ConstantsHolder.AvatarIndex<10)
+        {
+            player = PhotonNetwork.Instantiate("XanaAvatar2.0_Male", spawnPoint, Quaternion.identity, 0);    // Instantiate Male Avatar
+            player.transform.parent = mainController.transform;
+            player.transform.localPosition = Vector3.zero;
+            player.transform.localRotation = Quaternion.identity;
+            player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Male");        // Set Default Cloth to avoid naked avatar
+        }
+        else
+        {
+            player = PhotonNetwork.Instantiate("XanaAvatar2.0_Female", spawnPoint, Quaternion.identity, 0);  // Instantiate Female Avatar
+            player.transform.parent = mainController.transform;
+            player.transform.localPosition = Vector3.zero;
+            player.transform.localRotation = Quaternion.identity;
+            player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Female");      // Set Default Cloth to avoid naked avatar
+        }
+        ActionAnimationApplyToPlayer.PlayerAnimatorInitializer?.Invoke(player.GetComponent<Animator>().runtimeAnimatorController);
     }
 
     void ActivateNpcChat()

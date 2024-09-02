@@ -12,8 +12,10 @@ public class ConstantsHolder : MonoBehaviour
 
     public bool pushToTalk;
     public bool openLandingSceneDirectly;
+    public bool SwitchXanaToXSummit = false;
     public static bool IsXSummitApp;
     public bool OpenSpaceScreen_fromSummit = false;
+   
 
     //Login Info
     public static bool isAdmin;
@@ -38,6 +40,7 @@ public class ConstantsHolder : MonoBehaviour
     public string defaultFightingName;
 
     public int mic;
+    public bool UserMicEnable;
     public int minimap;
     public int userNameVisibilty;
     public bool profileImageModifedByUser = false;
@@ -178,6 +181,7 @@ public class ConstantsHolder : MonoBehaviour
     public static int domeId;
     public static bool isPenguin;
     public static bool isFixedHumanoid;
+    public static int AvatarIndex;
     public static bool HaveSubWorlds;
 
     //Daily reward

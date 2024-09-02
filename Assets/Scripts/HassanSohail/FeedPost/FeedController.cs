@@ -68,8 +68,8 @@ public class FeedController : MonoBehaviour
          feedUIController.feedUiScreen.SetActive(true);
          noFeedsScreen.gameObject.SetActive(false);
          feedContentParent.gameObject.SetActive(true);
-        //FeedUIController.Instance.ShowLoader(true);
-        FeedLoader.SetActive(true);
+        FeedUIController.Instance.ShowLoader(true);
+        //FeedLoader.SetActive(true);
         scrollerController.IntFeedScroller();
         if (SNS_APIManager.Instance.userId == 0)
         {
@@ -88,7 +88,8 @@ public class FeedController : MonoBehaviour
             if (response.isNetworkError)
             {
                 Debug.Log(response.error);
-                FeedLoader.SetActive(false);
+                FeedUIController.Instance.ShowLoader(false);
+                //FeedLoader.SetActive(false);
                 noFeedText.text = "";
                 noFeedsScreen.gameObject.SetActive(true);
             }
@@ -119,7 +120,8 @@ public class FeedController : MonoBehaviour
                 else
                 {
                     FeedDataFromAPICountCheck();
-                    FeedLoader.SetActive(false);
+                    FeedUIController.Instance.ShowLoader(false);
+                    //FeedLoader.SetActive(false);
                     feedContentParent.gameObject.SetActive(false);
                 }
                
@@ -271,7 +273,8 @@ public class FeedController : MonoBehaviour
     {
         gameObject.GetComponent<ScrollRect>().content.SetParent(feedContentParent);
         scrollerController.scroller.ReloadData();
-        FeedLoader.SetActive(false);
+        FeedUIController.Instance.ShowLoader(false);
+        //FeedLoader.SetActive(false);
         ParentHeightAdjuster.AdjustParentHeight();
     }
     /// <summary>

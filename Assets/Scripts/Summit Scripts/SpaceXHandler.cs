@@ -34,6 +34,7 @@ public class SpaceXHandler : MonoBehaviour
         await ShowCounter();
         _ReturnPlayerPos = ReturnPlayerPos;
         VideoPlayer.gameObject.SetActive(true);
+        VideoPlayer.targetTexture.Release();
         VideoPlayer.clip=VideoClip; 
         VideoPlayer.Play();
         VideoPlayer.loopPointReached += VideoPlayer_loopPointReached;
