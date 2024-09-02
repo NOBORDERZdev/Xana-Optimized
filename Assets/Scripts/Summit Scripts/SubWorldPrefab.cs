@@ -7,10 +7,17 @@ using UnityEngine.Networking;
 public class SubWorldPrefab : MonoBehaviour
 {
     public Button SubWorldPrefabButton;
-    public TMPro.TextMeshProUGUI WorldName;
     public int WorldId;
-    public Vector3 PlayerReturnPosition;
+    public string SubWorldName;
+    public string WorldDescription;
+    public string CreatorName;
+    public string WorldType;
+    public string WorldCategory;
+    public string WorldTimeEstimate;
     public string ThumbnailUrl;
+    public Sprite WorldImage;
+    public TMPro.TextMeshProUGUI WorldName;
+    public Vector3 PlayerReturnPosition;
 
     public void Init()
     {
@@ -31,7 +38,7 @@ public class SubWorldPrefab : MonoBehaviour
             yield return null;
         }
         Texture2D texture2D = DownloadHandlerTexture.GetContent(request);
-        SubWorldPrefabButton.GetComponent<Image>().sprite = ConvertToSprite(texture2D);
+        WorldImage=SubWorldPrefabButton.GetComponent<Image>().sprite = ConvertToSprite(texture2D);
     }
 
     private Sprite ConvertToSprite(Texture2D texture)

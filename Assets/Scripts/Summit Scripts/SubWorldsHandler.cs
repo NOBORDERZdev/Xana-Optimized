@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SubWorldsHandler : MonoBehaviour
 {
@@ -7,6 +8,19 @@ public class SubWorldsHandler : MonoBehaviour
     public Transform ContentParent;
     public GameObject SubworldPrefab;
 
+    [Header("Description Panel Objects")]
+    public GameObject DescriptionPanelParent;
+    public Image ThumbnailImage;
+    public TMPro.TextMeshProUGUI WorldName;
+    public TMPro.TextMeshProUGUI WorldDescription;
+    public TMPro.TextMeshProUGUI WorldCreatorName;
+    public TMPro.TextMeshProUGUI WorldType;
+    public TMPro.TextMeshProUGUI WorldCategory;
+    public TMPro.TextMeshProUGUI WorldEstTime;
+    public TMPro.TextMeshProUGUI DomeId;
+    public Button EnterButton;
+    public Button BackButton;
+    
     public XANASummitDataContainer XANASummitDataContainer;
     public XANASummitSceneLoading XANASummitSceneLoadingInstance;
     // Start is called before the first frame update
@@ -66,15 +80,12 @@ public class SubWorldsHandler : MonoBehaviour
             GameObject temp = Instantiate(SubworldPrefab,ContentParent);
             SubWorldPrefab _SubWorldPrefab = temp.GetComponent<SubWorldPrefab>();
             if (domeGeneralData.SubWorlds[i].officialWorld)
-            {
                 _SubWorldPrefab.WorldId = domeGeneralData.SubWorlds[i].selectWorld.id;
-                _SubWorldPrefab.ThumbnailUrl = domeGeneralData.SubWorlds[i].selectWorld.icon;
-                _SubWorldPrefab.WorldName.text = domeGeneralData.SubWorlds[i].selectWorld.label;
-            }
             else
-            {
                 _SubWorldPrefab.WorldId = int.Parse(domeGeneralData.SubWorlds[i].builderSubWorldId);
-            }
+            
+            _SubWorldPrefab.ThumbnailUrl = domeGeneralData.SubWorlds[i].selectWorld.icon;
+            _SubWorldPrefab.WorldName.text = domeGeneralData.SubWorlds[i].selectWorld.label;
 
             _SubWorldPrefab.PlayerReturnPosition = PlayerReturnPosition;
             _SubWorldPrefab.SubWorldPrefabButton.onClick.AddListener(OnSubworldOpen);
@@ -84,6 +95,11 @@ public class SubWorldsHandler : MonoBehaviour
             return new Task<bool>(() =>true);
         else
             return new Task<bool>(() => false);
+    }
+
+    void OpenDescirptionPanel()
+    {
+        
     }
 
 
