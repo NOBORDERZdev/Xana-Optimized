@@ -690,7 +690,8 @@ public class PlayerSelfieController : MonoBehaviour
         else
         {
             NativeGallery.Permission permission = NativeGallery.CheckPermission(NativeGallery.PermissionType.Read, NativeGallery.MediaType.Image);
-            if (permission == NativeGallery.Permission.ShouldAsk)
+#if !UNITY_EDITOR && UNITY_ANDROID
+             if (permission == NativeGallery.Permission.ShouldAsk)
             {
                 if (!ScreenOrientationManager._instance.isPotrait)
                     permissionPopupLandscape.SetActive(true);
@@ -701,11 +702,28 @@ public class PlayerSelfieController : MonoBehaviour
             {
                 SaveImageLocally();
             }
+#elif !UNITY_EDITOR && UNITY_IOS
+                if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
+                     if (!ScreenOrientationManager._instance.isPotrait)
+                    permissionPopupLandscape.SetActive(true);
+                else
+                    permissionPopupPotrait.SetActive(true);
+                }
+                else
+                {
+                    SaveImageLocally();
+                }
+#endif
+
         }
     }
 
     public void SaveImageLocally()
     {
+#if !UNITY_EDITOR && UNITY_IOS
+        PlayerPrefs.SetInt("PicPermission", 1);
+#endif
+
         byte[] l_Bytes = m_Texture2D.EncodeToPNG();
 
 #if UNITY_EDITOR

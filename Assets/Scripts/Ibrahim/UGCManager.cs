@@ -57,7 +57,8 @@ public class UGCManager : MonoBehaviour
         else
         {
             NativeCamera.Permission permission = NativeCamera.CheckPermission(true);
-            if (permission == NativeCamera.Permission.ShouldAsk) //||permission == NativeCamera.Permission.Denied
+#if !UNITY_EDITOR && UNITY_ANDROID
+             if (permission == NativeCamera.Permission.ShouldAsk) //||permission == NativeCamera.Permission.Denied
             {
                 permissionPopup.SetActive(true);
             }
@@ -65,12 +66,23 @@ public class UGCManager : MonoBehaviour
             {
                 OnClickSelfieButton();
             }
+#elif !UNITY_EDITOR && UNITY_IOS
+                if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
+                     permissionPopup.SetActive(true);
+                }
+                else
+                {
+                    OnClickSelfieButton();
+                }
+#endif
         }
     }
 
     public void OnClickSelfieButton()
     {
 #if UNITY_IOS
+            PlayerPrefs.SetInt("PicPermission", 1);
+
             if (permissionCheck == "false")
             {
                 string url = MyNativeBindings.GetSettingsURL();
