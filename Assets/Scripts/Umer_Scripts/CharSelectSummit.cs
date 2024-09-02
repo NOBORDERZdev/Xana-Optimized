@@ -90,7 +90,7 @@ public class CharSelectSummit : MonoBehaviour
             //Debug.LogError("selected obj name :- "+SelectedOBJ.name);
             SelectedOBJ.GetComponent<PresetData_Jsons>().ChangecharacterFromPresetPanel();
             GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
-            if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
+            if (ConstantsHolder.xanaConstants.LoggedInAsGuest||ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
             {
                 UserLoginSignupManager.instance.UserNameFieldObj.SetActive(false);
             }

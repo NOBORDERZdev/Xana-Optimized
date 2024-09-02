@@ -10,7 +10,7 @@ public class EmoteReactionUIHandlerLandscape : EmoteReactionUIHandler
     public Transform EmotesSeeAllHolder;
     public Transform ReactionSeeAllHolder;
     public static Action<EmoteReactionItemBtnHandler.ItemType> DisplayActionDuplicateMessage;
-    public static Action CloseDisplayDialogScrollView;
+    public static Action CloseDisplayDialogScrollView, ResetActionFavouritBtn;
     public Transform DuplicateMessage;
     public Transform ActionFavouritDialogObj;
     public List<Transform> SeeAllEmoteTabBtn = new List<Transform>();
@@ -22,6 +22,7 @@ public class EmoteReactionUIHandlerLandscape : EmoteReactionUIHandler
         base.Awake();
         DisplayActionDuplicateMessage += DuplicateActionMessage;
         CloseDisplayDialogScrollView += CloseActionDisplayDialogScroll;
+        ResetActionFavouritBtn += ResetActionFavouriteBtnState;
     }
 
     protected override void OnDestroy()
@@ -29,6 +30,8 @@ public class EmoteReactionUIHandlerLandscape : EmoteReactionUIHandler
         base.OnDestroy();
         DisplayActionDuplicateMessage -= DuplicateActionMessage;
         CloseDisplayDialogScrollView -= CloseActionDisplayDialogScroll;
+        ResetActionFavouritBtn -= ResetActionFavouriteBtnState;
+
     }
 
     public void DuplicateActionMessage(EmoteReactionItemBtnHandler.ItemType type)
@@ -49,7 +52,13 @@ public class EmoteReactionUIHandlerLandscape : EmoteReactionUIHandler
             ReactionSeeAllHolder.gameObject.SetActive(true);
         }
     }
-
+    public void ResetActionFavouriteBtnState()
+    {
+        foreach (Transform item in ActionFavouritCircleBtn)
+        {
+            item.GetComponent<ActionFavouriteCircleBtn>().ClearActionButtonData();
+        }
+    }
     public override void CloseActionDisplayDialogScroll()
     {
         base.CloseActionDisplayDialogScroll();
