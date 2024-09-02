@@ -258,11 +258,13 @@ public class UserLoginSignupManager : MonoBehaviour
             {
                 JObject _JsonObj = JObject.Parse(www.downloadHandler.text);
                 bool _IsSuccess = _JsonObj["success"].ToObject<bool>();
+                Debug.Log("logss :" + www.downloadHandler.text);
                 if (_IsSuccess)
                 {
                     string _Token = _JsonObj["data"]["token"].ToString();
                     ConstantsGod.AUTH_TOKEN = _Token;
                     ConstantsHolder.xanaToken = _Token;
+                    ConstantsHolder.userId = _JsonObj["data"]["user"]["id"].ToString();
                     PlayerPrefs.SetString("LoginToken", _Token);
                     PlayerPrefs.Save();
 
@@ -1099,7 +1101,7 @@ public class UserLoginSignupManager : MonoBehaviour
                     Debug.Log("Email Signup");
                     GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Email_Completed.ToString());
                     UserPassManager.Instance.GetGroupDetails("freeuser");
-                }));
+                })); 
             }
         }
      
