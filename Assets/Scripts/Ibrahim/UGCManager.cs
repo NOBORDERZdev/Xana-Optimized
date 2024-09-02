@@ -57,7 +57,7 @@ public class UGCManager : MonoBehaviour
         else
         {
             NativeCamera.Permission permission = NativeCamera.CheckPermission(true);
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if UNITY_ANDROID
              if (permission == NativeCamera.Permission.ShouldAsk) //||permission == NativeCamera.Permission.Denied
             {
                 permissionPopup.SetActive(true);
@@ -66,8 +66,8 @@ public class UGCManager : MonoBehaviour
             {
                 OnClickSelfieButton();
             }
-#elif !UNITY_EDITOR && UNITY_IOS
-                if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
+#elif UNITY_IOS
+                if(PlayerPrefs.GetInt("CamPermission", 0) == 0){
                      permissionPopup.SetActive(true);
                 }
                 else
@@ -81,7 +81,7 @@ public class UGCManager : MonoBehaviour
     public void OnClickSelfieButton()
     {
 #if UNITY_IOS
-            PlayerPrefs.SetInt("PicPermission", 1);
+            PlayerPrefs.SetInt("CamPermission", 1);
 
             if (permissionCheck == "false")
             {
