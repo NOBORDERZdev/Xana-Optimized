@@ -69,23 +69,11 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
 
             instance = this;
             StartCoroutine(instance.Start());
-            _punVoiceCilent.Client.StateChanged += this.VoiceClientStateChanged;
+           
 
         }
     }
 
-    private void VoiceClientStateChanged(Photon.Realtime.ClientState fromState, Photon.Realtime.ClientState toState)
-    {
-#if UNITY_IOS
-        if (fromState== ClientState.Joined)
-        {
-            if ((Device.generation.ToString()).IndexOf("iPhone") > -1)//for iphones only
-            { 
-                iPhoneSpeaker.ForceToSpeaker();
-            }
-        }
-#endif
-    }
 
     private IEnumerator Start()
     {
@@ -151,20 +139,39 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
             }
 
         //}
-//#if UNITY_IOS
-//      //  while (_punVoiceCilent.ClientState != ClientState.Joined)
-//       // {
-//          //  yield return null;
-//       // }
-//       yield return new WaitForSeconds(3);
-//        if ((Device.generation.ToString()).IndexOf("iPhone") > -1)
-//        { //for iphones only
-//            iPhoneSpeaker.ForceToSpeaker();
-//        }
-//#endif
+
+#if UNITY_IOS
+        StartCoroutine(WaitForVoiceClientReady());
+#endif
+    }
+#if UNITY_IOS
+    private IEnumerator WaitForVoiceClientReady()
+    {
+        Debug.Log("Photon Voice client joined. Checking microphone...");
+        yield return new WaitForSeconds(5f); // Additional wait to ensure microphone is set
+
+        if (recorder != null)
+        {
+            Debug.Log("Microphone is active. Forcing to speaker...");
+            ForceToSpeakerIfNeeded();
+        }
+        else
+        {
+            Debug.LogWarning("Microphone is not active.");
+        }
     }
 
-   
+    private void ForceToSpeakerIfNeeded()
+    {
+        if ((Device.generation.ToString()).IndexOf("iPhone") > -1)
+        {
+            // For iPhones only
+            Debug.Log("Forcing audio to speaker...");
+            iPhoneSpeaker.ForceToSpeaker();
+        }
+    }
+#endif
+
 
     private IEnumerator GetMicPermission()
     {
