@@ -7,25 +7,29 @@ using TMPro;
 
 public class MapItemName : MonoBehaviour
 {
-    int ItemIndex;
-    public string ItemName = "Pavilion: ";
     public TMP_Text ItemNameText;
     public GameObject highlighter;
-    
+
     [HideInInspector]
     public MoveMaptoCenter manager;
 
-
+    int ItemIndex;
+    string ItemName = "";
 
     void Start()
     {
         gameObject.AddComponent<Button>().onClick.AddListener(BtnClicked);
     }
 
-    public void SetItemName(int ind)
+    public void SetItemName(string namePrefix, int ind, bool canUsePrefix = true)
     {
         ItemIndex = ind;
-        ItemNameText.text = ItemName + ItemIndex;
+        if (canUsePrefix)
+            ItemName = namePrefix + ItemIndex;
+        else
+            ItemName = namePrefix ;
+
+        ItemNameText.text = ItemName;
     }
 
     void BtnClicked()

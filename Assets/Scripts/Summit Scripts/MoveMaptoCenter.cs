@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -34,19 +35,26 @@ public class MoveMaptoCenter : MonoBehaviour
 
         InitializeSubBtns();
     }
-
-
     void InitializeSubBtns()
     {
-        Transform parentObj = CetegoryObjects[0];
+        var domesDictionary = new Dictionary<int, string>();
+        foreach (var dome in dataManager.summitData.domes)
+        {
+            domesDictionary[dome.id] = dome.name;
+        }
         for (int i = 0; i < CategoriesDomeInfos.Count; i++)
         {
-            parentObj = CetegoryObjects[i];
+            Transform parentObj = CetegoryObjects[i];
             for (int j = 0; j < CategoriesDomeInfos[i].MyDomes.Count; j++)
             {
                 GameObject newObj = Instantiate(NameItemPrefab, parentObj);
-                newObj.GetComponent<MapItemName>().SetItemName(CategoriesDomeInfos[i].MyDomes[j]);
                 newObj.GetComponent<MapItemName>().manager = this;
+
+                int domeIdToCheck = CategoriesDomeInfos[i].MyDomes[j];
+                if (domesDictionary.TryGetValue(domeIdToCheck, out string domeName))
+                    newObj.GetComponent<MapItemName>().SetItemName(domeName, domeIdToCheck, false);
+                else
+                    newObj.GetComponent<MapItemName>().SetItemName(CategoriesDomeInfos[i].DomeNamePrefix[j], domeIdToCheck, true);
             }
         }
     }
@@ -59,27 +67,28 @@ public class MoveMaptoCenter : MonoBehaviour
         StartCoroutine(MoveChildToCenterOfMainScreen());
         EnableSelectedImage(ind);
 
-
         // Get the Thumbnail URL
-        string ThumbnailUrl ="";
-        for (int i = 0; i < dataManager.summitData.domes.Count; i++)
+        var dome = dataManager.summitData.domes.FirstOrDefault(d => d.id == ind);
+        if (dome != null)
         {
-            if (dataManager.summitData.domes[0].id == ind)
+            if (!string.IsNullOrEmpty(dome.world360Image))
             {
-                if (dataManager.summitData.domes[0].world360Image != null)
-                {
-                    ThumbnailUrl = dataManager.summitData.domes[0].thumbnail;
-                    StartCoroutine(DownloadTexture(ThumbnailUrl));
-                    selectedWorldBannerImage.transform.parent.gameObject.SetActive(true);
-                }
-                else
-                {
-                    selectedWorldBannerImage.transform.parent.gameObject.SetActive(false);
-                }
-                break;
+                string ThumbnailUrl = dome.world360Image;
+                StartCoroutine(DownloadTexture(ThumbnailUrl));
+                selectedWorldBannerImage.transform.parent.gameObject.SetActive(true);
+            }
+            else
+            {
+                selectedWorldBannerImage.transform.parent.gameObject.SetActive(false);
             }
         }
+        else
+        {
+            selectedWorldBannerImage.transform.parent.gameObject.SetActive(false);
+        }
+
         goBtn.SetActive(true);
+        DomeMinimapDataHolder.OnSetDomeId?.Invoke(ind);
     }
     IEnumerator MoveChildToCenterOfMainScreen()
     {
@@ -108,6 +117,22 @@ public class MoveMaptoCenter : MonoBehaviour
 
         MapHighlightObjs[_SelectedImage].GetComponent<Image>().color = new Color(1, 1, 1, 1f);
     }
+    IEnumerator DownloadTexture(string ThumbnailUrl)
+    {
+        UnityWebRequest request = UnityWebRequestTexture.GetTexture(ThumbnailUrl);
+        request.SendWebRequest();
+        while (!request.isDone)
+        {
+            yield return null;
+        }
+        Texture2D texture2D = DownloadHandlerTexture.GetContent(request);
+        selectedWorldBannerImage.sprite = ConvertToSprite(texture2D);
+    }
+    Sprite ConvertToSprite(Texture2D texture)
+    {
+        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+    }
+
 
     public void ExpandChild(int _Index)
     {
@@ -131,7 +156,6 @@ public class MoveMaptoCenter : MonoBehaviour
         // Move the ScrollRect to the top
         scrollRect.verticalNormalizedPosition = 1f;
     }
-
     void CategoriesController(int ind, bool status)
     {
         for (int i = 1; i < CetegoryObjects[ind].childCount; i++)
@@ -140,23 +164,6 @@ public class MoveMaptoCenter : MonoBehaviour
         }
     }
 
-
-    IEnumerator DownloadTexture(string ThumbnailUrl)
-    {
-        UnityWebRequest request = UnityWebRequestTexture.GetTexture(ThumbnailUrl);
-        request.SendWebRequest();
-        while (!request.isDone)
-        {
-            yield return null;
-        }
-        Texture2D texture2D = DownloadHandlerTexture.GetContent(request);
-        selectedWorldBannerImage.sprite = ConvertToSprite(texture2D);
-    }
-
-    private Sprite ConvertToSprite(Texture2D texture)
-    {
-        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-    }
 }
 
 [System.Serializable]
@@ -165,4 +172,5 @@ public class CategoriesDomeInfo
     public string categoryName;
     public int categoryIndex;
     public List<int> MyDomes;
+    public List<string> DomeNamePrefix;
 }

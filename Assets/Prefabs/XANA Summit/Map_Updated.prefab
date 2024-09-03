@@ -3603,6 +3603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1ae0ca4c3cb4f4bb7fc4820361b8e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scrollRect: {fileID: 0}
   moveDuration: 1
   MapHighlightObjs:
   - {fileID: 5122241241406266277}
@@ -3784,21 +3785,194 @@ MonoBehaviour:
   - categoryName: Center Area
     categoryIndex: 0
     MyDomes: 01000000020000000300000004000000050000000600000007000000080000009f000000a0000000a1000000a2000000a3000000a4000000a5000000a6000000
+    DomeNamePrefix:
+    - CA-
+    - CA-
+    - CA-
+    - CA-
+    - CA-
+    - CA-
+    - CA-
+    - CA-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
   - categoryName: Business Area
     categoryIndex: 1
     MyDomes: 090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f00000020000000210000002200000023000000240000002500000026000000810000008200000083000000840000008500000086000000
+    DomeNamePrefix:
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - BA-
+    - MD
+    - MD
+    - MD
+    - MD
+    - MD
+    - MD
   - categoryName: Web 3
     categoryIndex: 2
     MyDomes: 2700000028000000290000002a0000002b0000002c0000002d0000002e0000002f000000300000003100000032000000330000003400000035000000360000003700000038000000390000003a0000003b0000003c0000003d0000003e0000003f0000004000000041000000420000004300000044000000
+    DomeNamePrefix:
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
+    - WA-
   - categoryName: Game Area
     categoryIndex: 3
     MyDomes: 45000000460000004700000048000000490000004a0000004b0000004c0000004d0000004e0000004f000000500000005100000052000000530000005400000055000000560000005700000058000000590000005a0000005b0000005c0000005d0000005e0000005f0000006000000061000000620000009700000098000000990000009a0000009b0000009c0000009d0000009e000000a7000000
+    DomeNamePrefix:
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - GA-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
   - categoryName: Entertainment Area
     categoryIndex: 4
     MyDomes: 630000006400000065000000660000006700000068000000690000006a0000006b0000006c0000006d0000006e0000006f000000700000007100000072000000730000007400000075000000760000007700000078000000790000007a0000007b0000007c0000007d0000007e0000007f000000800000008700000088000000890000008a0000008b0000008c0000008d0000008e0000008f00000090000000910000009200000093000000940000009500000096000000
+    DomeNamePrefix:
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - EA-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
+    - MD-
   NameItemPrefab: {fileID: 4657082320627116650, guid: 4e92d944a577d614ab8692f304f797ee, type: 3}
   selectedWorldBannerImage: {fileID: 3095655819865870501}
   goBtn: {fileID: 4897712430832177445}
+  dataManager: {fileID: 0}
 --- !u!1 &1098629677075284525
 GameObject:
   m_ObjectHideFlags: 0
@@ -21510,7 +21684,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
