@@ -995,6 +995,24 @@ public class UserLoginSignupManager : MonoBehaviour
             }
 
         }
+        else if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit) {
+            if (displayrname == "")
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("Display name or username should not be empty.");
+                UserDisplayNameErrors(keytoLocalize);
+                return;
+            }
+
+            else if (displayrname.StartsWith(" "))
+            {
+                UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
+                return;
+            }
+            else if (displayrname.EndsWith(" "))
+            {
+                displayrname = displayrname.TrimEnd(' ');
+            }
+        }
         else
         {
 
@@ -1095,13 +1113,19 @@ public class UserLoginSignupManager : MonoBehaviour
             }));
             if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
             {
-                LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+               // LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+                RequestSubmitUsername(userUsername);
             }
             else
             {
                 LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+                if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+                {
+                    MainSceneEventHandler.OpenLandingScene?.Invoke();
+                    return;
+                }
             }
-            RequestSubmitUsername(userUsername);
+           
         }
         
     }
@@ -1658,7 +1682,7 @@ public class UserLoginSignupManager : MonoBehaviour
         if (!string.IsNullOrEmpty(deviceToken))
             StartCoroutine(HitLogOutAPI(ConstantsGod.API_BASEURL + ConstantsGod.LogOutAPI, deviceToken, (onSucess) =>
             {
-                if (onSucess)
+                //if (onSucess)
                     StartCoroutine(DeleteAccountApi((deleteSucess) =>
                     {
                         if (deleteSucess)
