@@ -12,6 +12,7 @@ public class MapItemName : MonoBehaviour
 
     [HideInInspector]
     public MoveMaptoCenter manager;
+    static GameObject _HighlightObj;
 
     int ItemIndex;
     string ItemName = "";
@@ -34,12 +35,16 @@ public class MapItemName : MonoBehaviour
 
     void BtnClicked()
     {
+        if (_HighlightObj != null)
+            _HighlightObj.SetActive(false);
+
         manager.ItemClicked(ItemIndex);
         highlighter.SetActive(true);
+        _HighlightObj = highlighter;
     }
 
-    private void OnDisable()
-    {
-        highlighter.SetActive(false);
-    }
+    //private void OnDisable()
+    //{
+    //    highlighter.SetActive(false);
+    //}
 }

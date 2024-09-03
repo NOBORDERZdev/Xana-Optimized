@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
+
 public class MoveMaptoCenter : MonoBehaviour
 {
     public ScrollRect scrollRect;
@@ -23,7 +24,8 @@ public class MoveMaptoCenter : MonoBehaviour
     public Image selectedWorldBannerImage;
     public GameObject goBtn;
 
-    public XANASummitDataContainer dataManager; 
+    public XANASummitDataContainer dataManager;
+
 
     void Start()
     {
@@ -35,6 +37,7 @@ public class MoveMaptoCenter : MonoBehaviour
 
         InitializeSubBtns();
     }
+    
     void InitializeSubBtns()
     {
         var domesDictionary = new Dictionary<int, string>();
@@ -60,12 +63,16 @@ public class MoveMaptoCenter : MonoBehaviour
     }
 
 
+
+
     public void ItemClicked(int ind)
     {
         Debug.Log("Item Clicked: " + ind);
-        grandChildPing = MapHighlightObjs[ind];
+
+        int arratInd = ind - 1;
+        grandChildPing = MapHighlightObjs[arratInd];
         StartCoroutine(MoveChildToCenterOfMainScreen());
-        EnableSelectedImage(ind);
+        EnableSelectedImage(arratInd);
 
         // Get the Thumbnail URL
         var dome = dataManager.summitData.domes.FirstOrDefault(d => d.id == ind);
@@ -153,8 +160,7 @@ public class MoveMaptoCenter : MonoBehaviour
 
         CategoriesController(_Index, childStatus);
 
-        // Move the ScrollRect to the top
-        scrollRect.verticalNormalizedPosition = 1f;
+        Invoke(nameof(AddDelay), timeDelay);
     }
     void CategoriesController(int ind, bool status)
     {
@@ -163,7 +169,14 @@ public class MoveMaptoCenter : MonoBehaviour
             CetegoryObjects[ind].GetChild(i).gameObject.SetActive(status);
         }
     }
+    void AddDelay()
+    {
+        // Move the ScrollRect to the top
+        scrollRect.verticalNormalizedPosition = 1;
+        //scrollRect.DOVerticalNormalizedPos(1, timeDelay).SetEase(Ease.InOutQuad);
+    }
 
+    public float timeDelay = 0.02f;
 }
 
 [System.Serializable]
