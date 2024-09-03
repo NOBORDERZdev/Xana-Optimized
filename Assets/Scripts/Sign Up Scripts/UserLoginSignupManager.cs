@@ -1126,6 +1126,11 @@ public class UserLoginSignupManager : MonoBehaviour
                     MainSceneEventHandler.OpenLandingScene?.Invoke();
                     return;
                 }
+                else {
+                    Screen.orientation = ScreenOrientation.Portrait;
+                    LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+                    enterNamePanel.SetActive(false);
+                }
             }
            
         }
