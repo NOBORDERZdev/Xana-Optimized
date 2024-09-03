@@ -57,6 +57,7 @@ public class ActionFavouritSelectionHandler : MonoBehaviour
         {
             item.GetComponent<ActionFavouriteDialogBtn>().CancelSelectedAction();
         }
+        EmoteReactionUIHandlerLandscape.ResetActionFavouritBtn?.Invoke();
     }
 
     public void SaveActionBtnCall()
