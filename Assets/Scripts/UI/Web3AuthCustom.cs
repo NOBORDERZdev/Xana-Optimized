@@ -236,7 +236,7 @@ public class Web3AuthCustom : MonoBehaviour
         UserLoginSignupManager.instance.StartCoroutine(UserLoginSignupManager.instance.LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
         ConstantsHolder.xanaConstants.LoggedInAsGuest = false;
         Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
-        if(ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
         {
             if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
             {
@@ -247,8 +247,17 @@ public class Web3AuthCustom : MonoBehaviour
                 LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
             }
         }
-       
-        userInfo = response.userInfo;
+        else if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            if (!ConstantsHolder.xanaConstants.isBackFromWorld)
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+
+            }
+        }
+
+
+            userInfo = response.userInfo;
         privateKey = response.privKey;
         PlayerPrefs.SetString("LoggedInMail", response.userInfo.email);
         onLoginAction?.Invoke(userInfo.email);
