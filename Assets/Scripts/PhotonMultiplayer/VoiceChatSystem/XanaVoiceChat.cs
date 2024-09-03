@@ -25,7 +25,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
     public Sprite micOnSprite;
     public Sprite micOffSprite;
 
-    private PunVoiceClient _punVoiceCilent;
+    private PunVoiceClient _punVoiceClient;
     public Recorder recorder;
     public Speaker speaker;
 
@@ -69,11 +69,35 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
 
             instance = this;
             StartCoroutine(instance.Start());
-           
+
 
         }
     }
 
+    private void OnDisable()
+    {
+        _punVoiceClient.Client.StateChanged -= this.VoiceClientStateChanged;
+
+    }
+
+    private void VoiceClientStateChanged(ClientState fromState, ClientState toState)
+    {
+        print("!! fromState" + fromState);
+        print("!! toState" + toState);
+        if (toState == ClientState.Joined)
+        {
+            
+            // Handle state changes if needed
+#if UNITY_IOS
+        if ((Device.generation.ToString()).IndexOf("iPhone") > -1)
+        {
+            // For iPhones only
+            Debug.Log("Forcing audio to speaker...");
+            iPhoneSpeaker.ForceToSpeaker();
+        }
+#endif
+        }
+    }
 
     private IEnumerator Start()
     {
@@ -82,7 +106,8 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
 
         Debug.Log("Xana VoiceChat Start");
         recorder = GameObject.FindObjectOfType<Recorder>();
-        _punVoiceCilent = GetComponent<PunVoiceClient>();
+        _punVoiceClient = recorder.GetComponent<PunVoiceClient>();
+        _punVoiceClient.Client.StateChanged += this.VoiceClientStateChanged;
 
         if (!ScreenOrientationManager._instance.isPotrait)
         {
@@ -95,21 +120,11 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
             }
         }
 
-        //if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("BreakingDown Arena"))
-        //{
-        //    StopRecorder();
-        //    TurnOffMic();
-        //    ConstantsHolder.xanaConstants.mic = 0;
-        //}
-        //else
-        //{
+       
         if (recorder != null )
             {
-                StopRecorder();
                 TurnOffMic();
                 ConstantsHolder.xanaConstants.mic = 0;
-                //recorder.AutoStart = true;
-                // recorder.Init(_punVoiceCilent);
             }
 
             if (ConstantsHolder.xanaConstants.pushToTalk)
@@ -127,60 +142,13 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
                 micOffBtnPotrait.GetComponent<Button>().onClick.AddListener(MicToggleOff);
                 micOnBtn.GetComponent<Button>().onClick.AddListener(MicToggleOn);
                 micOnBtnPotrait.GetComponent<Button>().onClick.AddListener(MicToggleOn);
-                //if (ConstantsHolder.xanaConstants.EnviornmentName == "DJ Event")
-                //{
-                //    micOffBtn.SetActive(false);
-                //    micOffBtnPotrait.SetActive(false);
-                //    micOnBtn.SetActive(false);
-                //    micOnBtnPotrait.SetActive(false);
-                //    ConstantsHolder.xanaConstants.mic = 0;
-                //}
-               // StartCoroutine(CheckVoiceConnect());
+              
             }
 
-        //}
-
-#if UNITY_IOS
-        StartCoroutine(WaitForVoiceClientReady());
-#endif
-    }
-#if UNITY_IOS
-    private IEnumerator WaitForVoiceClientReady()
-    {
-        Debug.Log("Photon Voice client joined. Checking microphone...");
-        yield return new WaitForSeconds(5f); // Additional wait to ensure microphone is set
-
-        if (recorder != null)
-        {
-            Debug.Log("Microphone is active. Forcing to speaker...");
-            ForceToSpeakerIfNeeded();
-        }
-        else
-        {
-            Debug.LogWarning("Microphone is not active.");
-        }
     }
 
-    private void ForceToSpeakerIfNeeded()
-    {
-        if ((Device.generation.ToString()).IndexOf("iPhone") > -1)
-        {
-            // For iPhones only
-            Debug.Log("Forcing audio to speaker...");
-            iPhoneSpeaker.ForceToSpeaker();
-        }
-    }
-#endif
 
 
-    private IEnumerator GetMicPermission()
-    {
-        yield return new WaitForSeconds(1f);
-        if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
-        {
-            Permission.RequestUserPermission(Permission.Microphone);
-        }
-    }
 
     public void TurnOnMic()
     {
@@ -209,7 +177,6 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
             iPhoneSpeaker.ForceToSpeaker();
         }
 #endif
-        EnableRecoder();
     }
 
     public void TurnOffMic()
@@ -223,8 +190,6 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
             recorder.TransmitEnabled = false;
             recorder.RecordingEnabled = false;
         }
-        StopRecorder();
-
     }
 
 
@@ -253,36 +218,12 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
         }
     }
 
-    public void StopRecorder()
-    {
-        if (recorder != null)
-        {
-            //recorder.AutoStart = recorder.TransmitEnabled = false;
-            //recorder.StopRecording();
-            //recorder.Init(_punVoiceCilent);
-            //recorder.RecordingEnabled = false;
-        }
-    }
-
-    public void EnableRecoder()
-    {
-        if (recorder != null)
-        {
-            //recorder.AutoStart = recorder.TransmitEnabled = true;
-            //recorder.StartRecording();
-            //recorder.Init(_punVoiceCilent);
-            //recorder.RecordingEnabled = true;
-
-        }
-    }
-
     public override void OnDisconnected(DisconnectCause cause) {
 
         base.OnDisconnected(cause);
         if (ConstantsHolder.xanaConstants.mic == 1 && !ConstantsHolder.xanaConstants.pushToTalk)
         {
             TurnOnMic();
-            //TurnOffMic();  //by defult we will keep mic off in all env
         }
         else
         {
@@ -302,7 +243,6 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
         if (ConstantsHolder.xanaConstants.mic == 1 && !ConstantsHolder.xanaConstants.pushToTalk)
         {
             TurnOnMic();
-            //TurnOffMic();  //by defult we will keep mic off in all env
         }
         else
         {
@@ -310,23 +250,6 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
         }
     }
 
-    //IEnumerator CheckVoiceConnect()
-    //{
-    //    while (!PhotonVoiceNetwork.Instance.Client.IsConnected)
-    //    {
-    //        yield return null;
-    //    }
-    //    recorder.DebugEchoMode = false;
-    //    if (ConstantsHolder.xanaConstants.mic == 1 && !ConstantsHolder.xanaConstants.pushToTalk)
-    //    {
-    //        TurnOnMic();
-    //        //TurnOffMic();  //by defult we will keep mic off in all env
-    //    }
-    //    else
-    //    {
-    //        TurnOffMic();
-    //    }
-    //}
 
     void ShowVoiceChatDialogBox()
     {
