@@ -18,7 +18,7 @@ public class LoadingHandler : MonoBehaviour
     public GameObject loadingPanel;
 
     public Image loadingSlider;
-    public Text loadingText;
+    public TextMeshProUGUI loadingText;
     public TextMeshProUGUI loadingPercentageText;
 
     public Image JJLoadingSlider;
@@ -56,7 +56,7 @@ public class LoadingHandler : MonoBehaviour
 
     [Header("Loader While NFT Loading in BG")]
     public GameObject nftLoadingScreen;
-
+    public GameObject LoadingScreenSummit;
     [Header("fader For Villa")]
     public Image fader;
 
@@ -256,7 +256,7 @@ public class LoadingHandler : MonoBehaviour
         //    loadingPanel.SetActive(true);
         //}
 
-
+       
         loadingPanel.SetActive(true);
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         blackScreen.DOFade(0, 0.2f).SetDelay(0f);
@@ -304,6 +304,7 @@ public class LoadingHandler : MonoBehaviour
 
         if (!ConstantsHolder.xanaConstants.isFromXanaLobby && ConstantsHolder.xanaConstants.isBackFromWorld)
         {
+            
             Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
             blackScreen.DOKill();
             blackScreen.DOFade(1f, 0.01f).OnComplete(async () =>

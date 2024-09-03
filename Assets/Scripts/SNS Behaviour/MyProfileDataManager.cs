@@ -357,6 +357,7 @@ public class MyProfileDataManager : MonoBehaviour
             }
             else
             {
+                textUserBio.text = "";
                 seeMoreBioButton.SetActive(false);
                 _alignment_space.SetActive(false);
             }

@@ -16,12 +16,12 @@ public class MoodTaghandler : MonoBehaviour
         if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
         {
             TagHodler.spacing = 11f;
-            TagHodler.padding.left = -172;
+            TagHodler.padding.left = -112;
         }
         else
         {
             TagHodler.spacing = 10f;
-            TagHodler.padding.left = -337;
+            TagHodler.padding.left = -277;
         }
         Invoke(nameof(SetComponentState), 0.01f);
     }

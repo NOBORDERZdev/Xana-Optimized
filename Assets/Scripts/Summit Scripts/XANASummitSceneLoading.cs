@@ -42,9 +42,10 @@ public class XANASummitSceneLoading : MonoBehaviour
         OnJoinSubItem += SummitMiniMapStatusOnSceneChange;
 
 
-        if (LoadingHandler.Instance.nftLoadingScreen.activeInHierarchy)
+        if (LoadingHandler.Instance.nftLoadingScreen.activeInHierarchy|| LoadingHandler.Instance.LoadingScreenSummit.activeInHierarchy)
         {
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
         }
     }
 

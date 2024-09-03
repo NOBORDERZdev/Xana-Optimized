@@ -134,6 +134,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
         ConstantsHolder.xanaConstants.isGoingForHomeScene = false;
 
+        ForcedMapOpenForSummitScene();
     }
 
     void OnEnable()
@@ -149,7 +150,18 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         GamePlayButtonEvents.OnExitButtonXANASummit -= ResetOnBackFromSummit;
     }
 
+    void ForcedMapOpenForSummitScene()
+    {
+        if(ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit")
+        {
+            ReferencesForGamePlay.instance.minimap.SetActive(true);
+            PlayerPrefs.SetInt("minimap", 1);
+            ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
+            ReferencesForGamePlay.instance.SumitMapStatus(true);
 
+            XanaChatSystem.instance.chatDialogBox.SetActive(false);
+        }
+    }
 
     public void StartEventTimer()
     {
@@ -649,6 +661,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             player.transform.localRotation = Quaternion.identity;
             player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Female");      // Set Default Cloth to avoid naked avatar
         }
+        ActionAnimationApplyToPlayer.PlayerAnimatorInitializer?.Invoke(player.GetComponent<Animator>().runtimeAnimatorController);
     }
 
     void InstantiatePlayerForFixedHumanoid()
@@ -669,6 +682,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             player.transform.localRotation = Quaternion.identity;
             player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Female");      // Set Default Cloth to avoid naked avatar
         }
+        ActionAnimationApplyToPlayer.PlayerAnimatorInitializer?.Invoke(player.GetComponent<Animator>().runtimeAnimatorController);
     }
 
     void ActivateNpcChat()

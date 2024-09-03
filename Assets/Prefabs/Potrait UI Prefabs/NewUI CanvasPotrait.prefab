@@ -32,7 +32,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2600284081859219342}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.8838061, y: 0.8153708}
   m_AnchorMax: {x: 0.9699362, y: 0.96592396}
@@ -244,6 +244,126 @@ MonoBehaviour:
         - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: PlayerControllerNew, Assembly-CSharp
           m_MethodName: Jump
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!1 &1896762683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1896762684}
+  - component: {fileID: 1896762688}
+  - component: {fileID: 1896762687}
+  - component: {fileID: 1896762686}
+  - component: {fileID: 1896762685}
+  m_Layer: 23
+  m_Name: DashBtn (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1896762684
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896762683}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2772780197713134005}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -28.8, y: 429}
+  m_SizeDelta: {x: 96.841, y: 96.841}
+  m_Pivot: {x: 1, y: 0}
+--- !u!222 &1896762688
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896762683}
+  m_CullTransparentMesh: 0
+--- !u!114 &1896762687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896762683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: b73dc0e4d27650244b2b3a76ec1b2b32, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1896762686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896762683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ControlPath: <Keyboard>/tab
+--- !u!114 &1896762685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896762683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: PlayerDashHandler, Assembly-CSharp
+          m_MethodName: DashButton
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -678,7 +798,7 @@ GameObject:
   - component: {fileID: 5230955045204160847}
   - component: {fileID: 9004034808983218014}
   m_Layer: 23
-  m_Name: Dome_Map_128 (9)
+  m_Name: Dome_Map_167
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5418,7 +5538,7 @@ GameObject:
   - component: {fileID: 8440004173512388594}
   - component: {fileID: 8625403266269250227}
   m_Layer: 23
-  m_Name: Dome_Map_127
+  m_Name: Dome_Map_157
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5858,7 +5978,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2481158026038932492
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7915,6 +8035,7 @@ RectTransform:
   - {fileID: 6554844523510215002}
   - {fileID: 1679023572946810816}
   - {fileID: 1464946118503343660}
+  - {fileID: 4451745840593694827}
   - {fileID: 737081213}
   m_Father: {fileID: 5058840031776376642}
   m_RootOrder: 4
@@ -9352,7 +9473,7 @@ GameObject:
   - component: {fileID: 791587236053581793}
   - component: {fileID: 6890503851724740116}
   m_Layer: 23
-  m_Name: Dome_Map_121
+  m_Name: Dome_Map_151
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9731,7 +9852,7 @@ GameObject:
   - component: {fileID: 2087776463051924400}
   - component: {fileID: 8462987473133327852}
   m_Layer: 23
-  m_Name: Dome_Map_122
+  m_Name: Dome_Map_152
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15643,7 +15764,7 @@ GameObject:
   - component: {fileID: 4142234207017855283}
   - component: {fileID: 1834379439802314503}
   m_Layer: 23
-  m_Name: Dome_Map_128 (3)
+  m_Name: Dome_Map_161
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18180,7 +18301,7 @@ GameObject:
   - component: {fileID: 8005822201434652371}
   - component: {fileID: 6685517417454636686}
   m_Layer: 23
-  m_Name: Dome_Map_109
+  m_Name: Dome_Map_139
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18393,7 +18514,7 @@ GameObject:
   - component: {fileID: 7017506477901350774}
   - component: {fileID: 1375811562517764043}
   m_Layer: 23
-  m_Name: Dome_Map_104
+  m_Name: Dome_Map_134
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19056,7 +19177,7 @@ GameObject:
   - component: {fileID: 2184535856139594508}
   - component: {fileID: 655112963019167765}
   m_Layer: 23
-  m_Name: Dome_Map_128 (7)
+  m_Name: Dome_Map_165
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21515,7 +21636,7 @@ GameObject:
   - component: {fileID: 6141159288021115407}
   - component: {fileID: 4314483229652239936}
   m_Layer: 23
-  m_Name: Dome_Map_117
+  m_Name: Dome_Map_147
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23653,7 +23774,7 @@ GameObject:
   - component: {fileID: 1196683278853589783}
   - component: {fileID: 68510744353976456}
   m_Layer: 23
-  m_Name: Dome_Map_111
+  m_Name: Dome_Map_141
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23917,7 +24038,7 @@ GameObject:
   - component: {fileID: 7180370607240922827}
   - component: {fileID: 96430141682529156}
   m_Layer: 23
-  m_Name: Dome_Map_114
+  m_Name: Dome_Map_144
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25060,7 +25181,7 @@ GameObject:
   - component: {fileID: 1272588583503186749}
   - component: {fileID: 5072621724665233953}
   m_Layer: 23
-  m_Name: Dome_Map_100
+  m_Name: Dome_Map_130
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25245,7 +25366,7 @@ GameObject:
   - component: {fileID: 8826404661143748043}
   - component: {fileID: 5601736056175022279}
   m_Layer: 23
-  m_Name: Dome_Map_128 (6)
+  m_Name: Dome_Map_164
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27617,7 +27738,7 @@ GameObject:
   - component: {fileID: 7111121108334810994}
   - component: {fileID: 1932365287791019297}
   m_Layer: 23
-  m_Name: Dome_Map_99
+  m_Name: Dome_Map_129
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28681,7 +28802,7 @@ GameObject:
   - component: {fileID: 7333794291740419397}
   - component: {fileID: 4564843931417580173}
   m_Layer: 23
-  m_Name: Dome_Map_106
+  m_Name: Dome_Map_136
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29874,7 +29995,7 @@ GameObject:
   - component: {fileID: 7413139744890806394}
   - component: {fileID: 4639439007677652202}
   m_Layer: 23
-  m_Name: Dome_Map_128
+  m_Name: Dome_Map_158
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32652,7 +32773,7 @@ GameObject:
   - component: {fileID: 7243939641133060264}
   - component: {fileID: 5639254758951934706}
   m_Layer: 23
-  m_Name: Dome_Map_128 (2)
+  m_Name: Dome_Map_160
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34572,7 +34693,7 @@ GameObject:
   - component: {fileID: 1050177520712584143}
   - component: {fileID: 1025090899008882056}
   m_Layer: 23
-  m_Name: Dome_Map_125
+  m_Name: Dome_Map_155
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36594,7 +36715,7 @@ GameObject:
   - component: {fileID: 5036860996043889544}
   - component: {fileID: 2549269004664104829}
   m_Layer: 23
-  m_Name: Dome_Map_115
+  m_Name: Dome_Map_145
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36731,7 +36852,7 @@ GameObject:
   - component: {fileID: 7668075652183601593}
   - component: {fileID: 1733187527240954437}
   m_Layer: 23
-  m_Name: Dome_Map_128 (1)
+  m_Name: Dome_Map_159
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37174,7 +37295,7 @@ GameObject:
   - component: {fileID: 7810561095425260205}
   - component: {fileID: 3850976971332544683}
   m_Layer: 23
-  m_Name: Dome_Map_128 (5)
+  m_Name: Dome_Map_163
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41553,6 +41674,7 @@ RectTransform:
   - {fileID: 1198029191356432945}
   - {fileID: 1070080906446793199}
   - {fileID: 4720357893585869368}
+  - {fileID: 1896762684}
   m_Father: {fileID: 6181471327205592373}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -42228,7 +42350,7 @@ GameObject:
   - component: {fileID: 6528218497016255734}
   - component: {fileID: 1627235186021441363}
   m_Layer: 23
-  m_Name: Dome_Map_116
+  m_Name: Dome_Map_146
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45939,7 +46061,7 @@ GameObject:
   - component: {fileID: 7308219598716673686}
   - component: {fileID: 3047648607900232730}
   m_Layer: 23
-  m_Name: Dome_Map_126
+  m_Name: Dome_Map_156
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48369,7 +48491,7 @@ GameObject:
   - component: {fileID: 7767054286213979669}
   - component: {fileID: 8224032015593843220}
   m_Layer: 23
-  m_Name: Dome_Map_110
+  m_Name: Dome_Map_140
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60223,7 +60345,7 @@ GameObject:
   - component: {fileID: 8076831316342750271}
   - component: {fileID: 7940917551786917146}
   m_Layer: 23
-  m_Name: Dome_Map_120
+  m_Name: Dome_Map_150
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60779,7 +60901,7 @@ GameObject:
   - component: {fileID: 3750878450616051645}
   - component: {fileID: 147966930374431139}
   m_Layer: 23
-  m_Name: Dome_Map_123
+  m_Name: Dome_Map_153
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61890,7 +62012,7 @@ GameObject:
   - component: {fileID: 8791199265407187033}
   - component: {fileID: 367965103939927992}
   m_Layer: 23
-  m_Name: Dome_Map_128 (8)
+  m_Name: Dome_Map_166
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62027,7 +62149,7 @@ GameObject:
   - component: {fileID: 6072101219962934367}
   - component: {fileID: 3173218951854463437}
   m_Layer: 23
-  m_Name: Dome_Map_102
+  m_Name: Dome_Map_132
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66352,9 +66474,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameObjs:
   - {fileID: 3364521776502512880}
-  makeChanges: 0
-  domes: []
-  indCount: 0
 --- !u!222 &8881120533236114240
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -70104,7 +70223,7 @@ GameObject:
   - component: {fileID: 8420163199148023040}
   - component: {fileID: 7811795036939567985}
   m_Layer: 23
-  m_Name: Dome_Map_105
+  m_Name: Dome_Map_135
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73528,6 +73647,139 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &7166746623123371817
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4451745840593694827}
+  - component: {fileID: 4207899089451637623}
+  - component: {fileID: 7929260422443874901}
+  - component: {fileID: 5336614717126292250}
+  m_Layer: 23
+  m_Name: CrossBtn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4451745840593694827
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7166746623123371817}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2600284081859219342}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.8838061, y: 0.8153708}
+  m_AnchorMax: {x: 0.9699362, y: 0.96592396}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &4207899089451637623
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7166746623123371817}
+  m_CullTransparentMesh: 1
+--- !u!114 &7929260422443874901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7166746623123371817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 13cfc406eee79bd4b8e99513758967dd, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5336614717126292250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7166746623123371817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 7929260422443874901}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: DomeMinimapDataHolder, Assembly-CSharp
+        m_MethodName: ConfirmationPanelHandling
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7185279780412827404
 GameObject:
   m_ObjectHideFlags: 0
@@ -77606,7 +77858,7 @@ GameObject:
   - component: {fileID: 1855314622145974637}
   - component: {fileID: 3652273846944374263}
   m_Layer: 23
-  m_Name: Dome_Map_107
+  m_Name: Dome_Map_137
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82702,7 +82954,7 @@ GameObject:
   - component: {fileID: 8491700682165789258}
   - component: {fileID: 2298491805459909389}
   m_Layer: 23
-  m_Name: Dome_Map_101
+  m_Name: Dome_Map_131
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83373,7 +83625,7 @@ GameObject:
   - component: {fileID: 6642342183896710499}
   - component: {fileID: 6075897019813412881}
   m_Layer: 23
-  m_Name: Dome_Map_119
+  m_Name: Dome_Map_149
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83661,7 +83913,7 @@ GameObject:
   - component: {fileID: 5256660168739844242}
   - component: {fileID: 7460011577726024590}
   m_Layer: 23
-  m_Name: Dome_Map_103
+  m_Name: Dome_Map_133
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84311,7 +84563,7 @@ GameObject:
   - component: {fileID: 7184731362363579983}
   - component: {fileID: 3084087606216877121}
   m_Layer: 23
-  m_Name: Dome_Map_128 (4)
+  m_Name: Dome_Map_162
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86223,7 +86475,7 @@ GameObject:
   - component: {fileID: 1625545481262072224}
   - component: {fileID: 4246784769962451228}
   m_Layer: 23
-  m_Name: Dome_Map_108
+  m_Name: Dome_Map_138
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87598,7 +87850,7 @@ GameObject:
   - component: {fileID: 3169982179384663611}
   - component: {fileID: 5607769196240766173}
   m_Layer: 23
-  m_Name: Dome_Map_124
+  m_Name: Dome_Map_154
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90314,7 +90566,7 @@ GameObject:
   - component: {fileID: 8100004671593730169}
   - component: {fileID: 8450575556521271515}
   m_Layer: 23
-  m_Name: Dome_Map_113
+  m_Name: Dome_Map_143
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92112,7 +92364,7 @@ GameObject:
   - component: {fileID: 630791605418897939}
   - component: {fileID: 8972340140475652908}
   m_Layer: 23
-  m_Name: Dome_Map_112
+  m_Name: Dome_Map_142
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92340,7 +92592,7 @@ GameObject:
   - component: {fileID: 1919262248028436801}
   - component: {fileID: 6629280676951151252}
   m_Layer: 23
-  m_Name: Dome_Map_118
+  m_Name: Dome_Map_148
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

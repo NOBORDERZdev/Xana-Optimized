@@ -142,6 +142,7 @@ public class WorldManager : MonoBehaviour
             ConstantsHolder.xanaConstants.UserMicEnable = singleWorldInfo.data.userMicEnable;
             LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
