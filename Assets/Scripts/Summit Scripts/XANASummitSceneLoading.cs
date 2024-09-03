@@ -340,6 +340,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         {
             if (dataContainer.summitData.domes[i].id == domeId)
             {
+                domeGeneralData.id = dataContainer.summitData.domes[i].id;
                 domeGeneralData.world = dataContainer.summitData.domes[i].world;
                 domeGeneralData.worldType = dataContainer.summitData.domes[i].worldType;
                 domeGeneralData.experienceType = dataContainer.summitData.domes[i].experienceType;

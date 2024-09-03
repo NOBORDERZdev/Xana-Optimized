@@ -153,6 +153,10 @@ public class XANASummitDataContainer : ScriptableObject
         public string label;
         public string icon;
         public int userLimit;
+        public string subWorldType;
+        public string subWorldCategory;
+        public string creatorName;
+        public string description;
     }
 
 

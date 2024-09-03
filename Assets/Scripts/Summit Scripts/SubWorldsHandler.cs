@@ -106,10 +106,10 @@ public class SubWorldsHandler : MonoBehaviour
                 _SubWorldPrefab.WorldId = int.Parse(domeGeneralData.SubWorlds[i].builderSubWorldId);
             
             _SubWorldPrefab.SubWorldName = domeGeneralData.SubWorlds[i].selectWorld.label;
-            _SubWorldPrefab.WorldDescription = domeGeneralData.SubWorlds[i].selectWorld.label;
-            _SubWorldPrefab.CreatorName = domeGeneralData.SubWorlds[i].selectWorld.label;
-            _SubWorldPrefab.WorldType = domeGeneralData.SubWorlds[i].selectWorld.label;
-            _SubWorldPrefab.WorldCategory = domeGeneralData.SubWorlds[i].selectWorld.label;
+            _SubWorldPrefab.WorldDescription = domeGeneralData.SubWorlds[i].selectWorld.description;
+            _SubWorldPrefab.CreatorName = domeGeneralData.SubWorlds[i].selectWorld.creatorName;
+            _SubWorldPrefab.WorldType = domeGeneralData.SubWorlds[i].selectWorld.subWorldType;
+            _SubWorldPrefab.WorldCategory = domeGeneralData.SubWorlds[i].selectWorld.subWorldCategory;
             _SubWorldPrefab.WorldTimeEstimate = domeGeneralData.SubWorlds[i].selectWorld.label;
             _SubWorldPrefab.WorldDomeId = domeGeneralData.id.ToString();
             _SubWorldPrefab.ThumbnailUrl = domeGeneralData.SubWorlds[i].selectWorld.icon;
