@@ -851,8 +851,17 @@ public class HomeFooterHandler : MonoBehaviour
             OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Othertabs);
             QuestDataHandler.Instance.OpenAndCloseQuestPanel(false);
         }
-        else { 
-        UserLoginSignupManager.instance.LoginRegisterScreen.SetActive(true);
+        else {
+            if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                    Screen.orientation = ScreenOrientation.LandscapeLeft;
+                    UserLoginSignupManager.instance.LoginRegisterScreen.SetActive(true);
+            }
+            else
+            {
+                UserLoginSignupManager.instance.LoginRegisterScreen.SetActive(true);
+            }
+            
         }
     }
     public void InitProfileData()
