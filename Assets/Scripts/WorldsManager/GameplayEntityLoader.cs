@@ -610,7 +610,16 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         if (WorldItemView.m_EnvName.Contains("XANA_KANZAKI"))
         {
             mainPlayer.transform.rotation = _spawnTransform.rotation;
-            StartCoroutine(setPlayerCamAngle(0f, 0.5f));
+            if (ConstantsHolder.xanaConstants.comingFrom == ConstantsHolder.ComingFrom.Daisen)
+            {
+                StartCoroutine(setPlayerCamAngle(0f, 0.5f));
+
+            }
+            else
+            {
+                StartCoroutine(setPlayerCamAngle(180f, 0.5f));
+            }
+            //StartCoroutine(setPlayerCamAngle(180f, 0.5f));
         }
         if (WorldItemView.m_EnvName.Contains("JJTest"))
         {
