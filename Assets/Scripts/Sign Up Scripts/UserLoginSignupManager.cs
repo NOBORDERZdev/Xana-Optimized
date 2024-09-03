@@ -1682,7 +1682,7 @@ public class UserLoginSignupManager : MonoBehaviour
         if (!string.IsNullOrEmpty(deviceToken))
             StartCoroutine(HitLogOutAPI(ConstantsGod.API_BASEURL + ConstantsGod.LogOutAPI, deviceToken, (onSucess) =>
             {
-                if (onSucess)
+                //if (onSucess)
                     StartCoroutine(DeleteAccountApi((deleteSucess) =>
                     {
                         if (deleteSucess)
