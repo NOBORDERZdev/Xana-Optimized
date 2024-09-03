@@ -69,9 +69,23 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
 
             instance = this;
             StartCoroutine(instance.Start());
+            _punVoiceCilent.Client.StateChanged += this.VoiceClientStateChanged;
+
         }
     }
 
+    private void VoiceClientStateChanged(Photon.Realtime.ClientState fromState, Photon.Realtime.ClientState toState)
+    {
+#if UNITY_IOS
+        if (fromState== ClientState.Joined)
+        {
+            if ((Device.generation.ToString()).IndexOf("iPhone") > -1)//for iphones only
+            { 
+                iPhoneSpeaker.ForceToSpeaker();
+            }
+        }
+#endif
+    }
 
     private IEnumerator Start()
     {
@@ -137,17 +151,17 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
             }
 
         //}
-#if UNITY_IOS
-      //  while (_punVoiceCilent.ClientState != ClientState.Joined)
-       // {
-          //  yield return null;
-       // }
-       yield return new WaitForSeconds(3);
-        if ((Device.generation.ToString()).IndexOf("iPhone") > -1)
-        { //for iphones only
-            iPhoneSpeaker.ForceToSpeaker();
-        }
-#endif
+//#if UNITY_IOS
+//      //  while (_punVoiceCilent.ClientState != ClientState.Joined)
+//       // {
+//          //  yield return null;
+//       // }
+//       yield return new WaitForSeconds(3);
+//        if ((Device.generation.ToString()).IndexOf("iPhone") > -1)
+//        { //for iphones only
+//            iPhoneSpeaker.ForceToSpeaker();
+//        }
+//#endif
     }
 
    
@@ -177,10 +191,14 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
         micOnBtn.SetActive(true);
         micOnBtnPotrait.SetActive(true);
         if (recorder != null)
+        {
             recorder.TransmitEnabled = true;
+            recorder.RecordingEnabled = true;
+
+        }
 #if UNITY_IOS
-        if ((Device.generation.ToString()).IndexOf("iPhone") > -1)
-        { //for iphones only
+        if ((Device.generation.ToString()).IndexOf("iPhone") > -1)//for iphones only
+        { 
             iPhoneSpeaker.ForceToSpeaker();
         }
 #endif
@@ -194,8 +212,10 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
         micOnBtn.SetActive(false);
         micOnBtnPotrait.SetActive(false);
         if (recorder != null)
+        {
             recorder.TransmitEnabled = false;
-
+            recorder.RecordingEnabled = false;
+        }
         StopRecorder();
 
     }
@@ -267,8 +287,8 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
     {
         base.OnConnected();
 #if UNITY_IOS
-        if ((Device.generation.ToString()).IndexOf("iPhone") > -1)
-        { //for iphones only
+        if ((Device.generation.ToString()).IndexOf("iPhone") > -1)//for iphones only
+        { 
             iPhoneSpeaker.ForceToSpeaker();
         }
 #endif
