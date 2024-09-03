@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using TMPro;
-using System.Security.Policy;
 
 public class VideoPlayerFeatures : MonoBehaviour
 {
