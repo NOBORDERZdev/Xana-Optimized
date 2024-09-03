@@ -770,6 +770,7 @@ public class WorldManager : MonoBehaviour
 
     public async void JoinEvent()
     {
+        LoadingHandler.Instance.ShowLoading();
         MainSceneEventHandler.MakeScreenSpaceAdditive?.Invoke();
 
         //MainSceneEventHandler.MemoryRelaseAfterLoading?.Invoke();
@@ -851,7 +852,7 @@ public class WorldManager : MonoBehaviour
         //GC.Collect();
         ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
         //LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
-        LoadingHandler.Instance.ShowLoading();
+        
         LoadingHandler.Instance.UpdateLoadingSlider(0);
         LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
         await Task.Delay(500);
