@@ -318,6 +318,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         // Map Working
         _domeMiniMap.SummitSceneReloaded();
         SummitMiniMapStatusOnSceneChange(true);
+        ConstantsHolder.xanaConstants.comingFrom = ConstantsHolder.ComingFrom.None;
         //
     }
     XANASummitDataContainer.DomeGeneralData GetDomeData(int domeId)
