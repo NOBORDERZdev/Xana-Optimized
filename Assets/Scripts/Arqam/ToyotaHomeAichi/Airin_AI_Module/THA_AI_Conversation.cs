@@ -68,17 +68,18 @@ public class THA_AI_Conversation : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         string id = ConstantsHolder.userId;
-        string worldId = ConstantsHolder.xanaConstants.MuseumID;
         if (ConstantsHolder.xanaConstants.MuseumID == "2871")
         {
+            string worldId = ConstantsHolder.xanaConstants.MuseumID;
             _ip = "http://182.70.242.10:8042/npc-chat?input_string=";
             _url = _ip + _msg + "&npc_id=" + worldId + "&personality_id=" + worldId + "&usr_id=" + id + "&personality_name=karen";
            // Debug.Log("jjtest " + ConstantsHolder.xanaConstants.MuseumID);
         }
         else
         {
+            string worldId = "41424_srz5bkcbnk";
             _ip = "https://avatarchat-ai.xana.net/tha_chat?input_string=";
-            _url = _ip + _msg + "&usr_id=" + id + "&owner_id =" + worldId;
+            _url = _ip + _msg + "&usr_id=" + id + "&owner_id=" + worldId;
         }
         //if (!APIBasepointManager.instance.IsXanaLive)
         //    ip = "http://182.70.242.10:8034/";

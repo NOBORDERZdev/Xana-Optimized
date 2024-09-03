@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using UnityEngine.Video;
-using UnityEngine.XR.ARFoundation;
+
 
 public class UGCUIManager : MonoBehaviour
 {
