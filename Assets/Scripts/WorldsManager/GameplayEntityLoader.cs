@@ -479,6 +479,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             ConstantsHolder.xanaConstants.isFromXanaLobby = false;
         }
+
+        ConstantsHolder.xanaConstants.isFromTottoriWorld = false;
+
         StartCoroutine(VoidCalculation());
         LightCullingScene();
 
