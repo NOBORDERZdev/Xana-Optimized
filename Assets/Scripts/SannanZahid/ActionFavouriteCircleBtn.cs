@@ -57,6 +57,8 @@ public class ActionFavouriteCircleBtn : MonoBehaviour
     }
     public void PointerClicked()
     {
+        if (PlayerController.isJoystickDragging)
+            return;
         PlayerActionInteraction();
     }
     public void ClearActionButtonData()
