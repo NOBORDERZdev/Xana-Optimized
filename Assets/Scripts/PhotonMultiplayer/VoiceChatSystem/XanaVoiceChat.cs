@@ -144,6 +144,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
             recorder.RecordingEnabled = true;
 
         }
+        _punVoiceClient.enabled = true;
         VoiceClientStateChanged(ClientState.Joining, ClientState.Joined); // manually calling this method to force audio to speaker
     }
 
@@ -158,6 +159,8 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
             recorder.TransmitEnabled = false;
             recorder.RecordingEnabled = false;
         }
+        _punVoiceClient.enabled = false;
+
     }
 
     //Overriding methods for push to talk 
