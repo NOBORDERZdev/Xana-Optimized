@@ -14955,15 +14955,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 042aff744d4373741b59bf4a483ff577, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.072315216
+      value: -0.03
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 042aff744d4373741b59bf4a483ff577, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.050720632
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 042aff744d4373741b59bf4a483ff577, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.48814
+      value: -3.53
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 042aff744d4373741b59bf4a483ff577, type: 3}
       propertyPath: m_LocalRotation.w
@@ -15003,6 +15003,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 042aff744d4373741b59bf4a483ff577, type: 3}
+--- !u!23 &856417524304101942 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 042aff744d4373741b59bf4a483ff577, type: 3}
+  m_PrefabInstance: {fileID: 2027480280581955250}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1216648388368360419 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 042aff744d4373741b59bf4a483ff577, type: 3}
+  m_PrefabInstance: {fileID: 2027480280581955250}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1821005391344607240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216648388368360419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  isMeshRendrer: 1
+  shaderName: Sprites/Default
+  isTerrain: 0
+--- !u!33 &3172342260943566588 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: -5754084199372789682, guid: 042aff744d4373741b59bf4a483ff577, type: 3}
+  m_PrefabInstance: {fileID: 2027480280581955250}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2944431575280609425
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15912,11 +15943,11 @@ PrefabInstance:
     - target: {fileID: 3141503287995704522, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: AndroidLiveVideoMesh
       value: 
-      objectReference: {fileID: 3941715523697911101, guid: 21e9cb7cf15aec04183b2a8f91112f81, type: 3}
+      objectReference: {fileID: -9148963184695921697, guid: 042aff744d4373741b59bf4a483ff577, type: 3}
     - target: {fileID: 3141503287995704522, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: LiveVideoPlayerScreen
       value: 
-      objectReference: {fileID: 6473915143395362864}
+      objectReference: {fileID: 3172342260943566588}
     - target: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -15968,7 +15999,7 @@ PrefabInstance:
     - target: {fileID: 5226123731516465620, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: _renderer
       value: 
-      objectReference: {fileID: 3612438506652031764}
+      objectReference: {fileID: 856417524304101942}
     - target: {fileID: 5226123731516465621, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: _audioMuted
       value: 1
