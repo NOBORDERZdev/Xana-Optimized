@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7701689062133525485
+--- !u!1 &4286426164309468642
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7037496505464959319}
-  - component: {fileID: 6198622542430060274}
-  - component: {fileID: 8205867577123359288}
-  - component: {fileID: 2548785388529221204}
-  - component: {fileID: 6598470723680426387}
+  - component: {fileID: 3474422995348062040}
+  - component: {fileID: 547322436063097085}
+  - component: {fileID: 2340901568711525431}
+  - component: {fileID: 2696332261682859048}
+  - component: {fileID: 5949751343761574458}
   m_Layer: 0
-  m_Name: 9Is to 16 Extra
+  m_Name: BeachAreaNFT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7037496505464959319
+--- !u!4 &3474422995348062040
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7701689062133525485}
+  m_GameObject: {fileID: 4286426164309468642}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -26.594282, y: 2.9434996, z: -57.776985}
+  m_LocalPosition: {x: 175.4953, y: 2.1199996, z: -55.22994}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6198622542430060274
+--- !u!33 &547322436063097085
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7701689062133525485}
-  m_Mesh: {fileID: -8628953413412440055, guid: 4a36542c899e43b428beea023265b9bf, type: 3}
---- !u!23 &8205867577123359288
+  m_GameObject: {fileID: 4286426164309468642}
+  m_Mesh: {fileID: -6818524190073581709, guid: cb2cd7287cc3f724eb756d0073b53c9d, type: 3}
+--- !u!23 &2340901568711525431
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7701689062133525485}
+  m_GameObject: {fileID: 4286426164309468642}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3622114235694381049, guid: 4a36542c899e43b428beea023265b9bf, type: 3}
+  - {fileID: 2100000, guid: cae01412123bf0945b23ce888307c623, type: 2}
   - {fileID: 2100000, guid: 318106ad416f7bf49868048cdbe65068, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -86,30 +86,30 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2548785388529221204
+--- !u!114 &2696332261682859048
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7701689062133525485}
+  m_GameObject: {fileID: 4286426164309468642}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  downloadKey: 9Is to 16 Extra
+  downloadKey: 16 Is to 9
   objectPriority: 0
---- !u!205 &6598470723680426387
+--- !u!205 &5949751343761574458
 LODGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7701689062133525485}
+  m_GameObject: {fileID: 4286426164309468642}
   serializedVersion: 2
   m_LocalReferencePoint: {x: 0, y: 0, z: 0}
-  m_Size: 3625.817
+  m_Size: 3677.1165
   m_FadeMode: 0
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
@@ -117,5 +117,5 @@ LODGroup:
   - screenRelativeHeight: 0.34988645
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: 8205867577123359288}
+    - renderer: {fileID: 2340901568711525431}
   m_Enabled: 1
