@@ -661,6 +661,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             player.transform.localRotation = Quaternion.identity;
             player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Female");      // Set Default Cloth to avoid naked avatar
         }
+        ActionAnimationApplyToPlayer.PlayerAnimatorInitializer?.Invoke(player.GetComponent<Animator>().runtimeAnimatorController);
     }
 
     void InstantiatePlayerForFixedHumanoid()
@@ -783,10 +784,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             if (GamificationComponentData.instance.isBuilderWorldPlayerSetup)
             {
                 ReferencesForGamePlay.instance.playerControllerNew.StopBuilderComponent();
-                SituationChangerSkyboxScript.instance.builderMapDownload.PlayerSetup();
                 SituationChangerSkyboxScript.instance.builderMapDownload.UpdateScene();
                 BuilderEventManager.ChangeCameraHeight?.Invoke(false);
             }
+                
+            SituationChangerSkyboxScript.instance.builderMapDownload.PlayerSetup();
         }
         if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {

@@ -23,7 +23,14 @@ public class WalletLogin: MonoBehaviour
         {
             if (PlayerPrefs.GetInt("RememberMe") == 1 && PlayerPrefs.GetString("publicID") != "")
             {
-                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                {
+                    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                }
+                else
+                {
+                    LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+                }
                 // move to next scene
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
@@ -113,7 +120,14 @@ public class WalletLogin: MonoBehaviour
         }
         catch (Exception e)
         {
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+            }
             UserLoginSignupManager.instance.emailOrWalletLoginPanel.SetActive(true);
             throw new System.Exception("Unbale to Connect wallet on wallet connect btn at "+type+" state  with exception : "+e );
         }

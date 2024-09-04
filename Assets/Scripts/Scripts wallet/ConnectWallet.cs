@@ -503,7 +503,14 @@ public class ConnectWallet : MonoBehaviour
             //UserRegisterationManager.instance.OpenUIPanal(5);
         }
         //SuccessfulPopUp.SetActive(true);
-        LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+        }
+        else
+        {
+            LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+        }
         // print(new JsonObject(JsonUtility.ToJson(dataObj)).ToString());
         ///Wallet Connect 
         //// websocket.Send(jsonObj);    

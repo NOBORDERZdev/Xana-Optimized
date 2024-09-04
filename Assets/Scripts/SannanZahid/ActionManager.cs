@@ -101,6 +101,9 @@ public class ActionManager : MonoBehaviour
     {
         IsAnimRunning = false;
         this.transform.GetComponent<ActionAnimationApplyToPlayer>().StopAnimation();
+
+        //Remove emote highlighter when animation stop
+        EmoteReactionUIHandler.ActivateHeighlightOfPanelBtn?.Invoke("");
     }
 }
 
