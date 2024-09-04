@@ -19,7 +19,7 @@ public class DataPickerFromStorage : MonoBehaviour
     public void OnPickImageFromGellery(int maxSize)
     {
 #if UNITY_IOS
-        if (PermissionCheck == "false")
+        if (permissionCheck == "false")
         {
             string url = MyNativeBindings.GetSettingsURL();
             Debug.Log("the settings url is:" + url);
@@ -88,7 +88,7 @@ public class DataPickerFromStorage : MonoBehaviour
     public void OnPickVideoFromGellery(int maxSize)
     {
 #if UNITY_IOS
-        if (PermissionCheck == "false")
+        if (permissionCheck == "false")
         {
             string url = MyNativeBindings.GetSettingsURL();
             Debug.Log("the settings url is:" + url);
