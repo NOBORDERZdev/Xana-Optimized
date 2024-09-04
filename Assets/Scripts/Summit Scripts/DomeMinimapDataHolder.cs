@@ -18,7 +18,8 @@ public class DomeMinimapDataHolder : MonoBehaviour
     public GameObject ConfirmationPopup_Portrait;
 
     public static Action<OnTriggerSceneSwitch> OnInitDome;
-    
+    public static Action<int> OnSetDomeId;
+
     private Dictionary<int, Transform> _allInitDomes = new Dictionary<int, Transform>();
     private Transform _playerTransform;
     private int _clickedDomeID;
@@ -28,11 +29,14 @@ public class DomeMinimapDataHolder : MonoBehaviour
     private void OnEnable()
     {
         OnInitDome += UpdateDomeList;
+        OnSetDomeId += SetDomeID;
+
         SummitSceneReloaded();
     }
     private void OnDisable()
     {
         OnInitDome -= UpdateDomeList;
+        OnSetDomeId -= SetDomeID;
     }
 
     public void SummitSceneReloaded()
@@ -132,5 +136,12 @@ public class DomeMinimapDataHolder : MonoBehaviour
         ReferencesForGamePlay.instance.FullScreenMapStatus(false);
 
         TeleportPlayerToSelectedDome(_clickedDomeID, _playerTransform);
+    }
+
+    public void SetDomeID(int DomeId)
+    {
+        _clickedDomeID = DomeId;
+        if (_playerTransform == null)
+            _playerTransform = GameplayEntityLoader.instance.mainController.transform;
     }
 }
