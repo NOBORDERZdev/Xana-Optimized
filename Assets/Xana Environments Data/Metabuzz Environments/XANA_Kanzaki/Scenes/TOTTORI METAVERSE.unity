@@ -4634,7 +4634,7 @@ MonoBehaviour:
   mussuemEntry: 0
   isMusuem: 0
   testNet: 2253
-  MainNet: 0
+  MainNet: 6697
   isBuilderWorld: 0
   isEnteringPopup: 1
 --- !u!65 &687263211
@@ -13651,7 +13651,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6426013974310717496, guid: b3d3275b23350e64194ea8fcb7e42b1b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10.5999975
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 6426013974310717496, guid: b3d3275b23350e64194ea8fcb7e42b1b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14215,7 +14215,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1662007556
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15105,8 +15105,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1791121840}
+  - component: {fileID: 1791121841}
   m_Layer: 0
-  m_Name: Teleport
+  m_Name: TeleportHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15129,6 +15130,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1791121841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791121839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21c0cf6656ab834594deaa91686d436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnPoint: {fileID: 2060912940}
+  _daisenPortals: {fileID: 687263209}
+  _dunePortals: {fileID: 406477879}
+  _portalTriggerHandler: {fileID: 1662007555}
 --- !u!1 &1804708397
 GameObject:
   m_ObjectHideFlags: 0
@@ -16987,7 +17004,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2060912939}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -64.4, y: 12.77, z: -6.8}
+  m_LocalPosition: {x: -64.4, y: 11.96, z: -7.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20444,7 +20461,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -27567,13 +27584,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 20e4bed98a2bf5145a6847dbf6fdbede, type: 3}
   - {fileID: 21300000, guid: 9fc95a721b2b0094a8be92aeefb00518, type: 3}
   worshipImages:
-  - {fileID: 21300000, guid: 5e4c6f9986fcdcd48a915ded21a13d5a, type: 3}
+  - {fileID: 21300000, guid: eb5f3b2d2ca37e84a8f0a69f0c86780d, type: 3}
   - {fileID: 21300000, guid: 5e99ffb439e9bf9409cebce7d5b065e1, type: 3}
   - {fileID: 21300000, guid: 356fd4fe508e45d449a14e323f9c6012, type: 3}
   - {fileID: 21300000, guid: d876774703d679340a2e126363f63ef4, type: 3}
   worshipRejectImages:
-  - {fileID: 21300000, guid: 93544a4a2cc118743835b0417ee864d6, type: 3}
-  - {fileID: 21300000, guid: 7bb7760af378dcd4b9f01138db14d8dc, type: 3}
+  - {fileID: 21300000, guid: 836deebf3dcc70445a12d10344f7168d, type: 3}
+  - {fileID: 21300000, guid: 587b29c9c87e7c2438ce7e09c8055c5b, type: 3}
   - {fileID: 21300000, guid: 9ef12e1e558f90d48bbc5a0b6a1d6225, type: 3}
   worshipAnimIconImages:
   - {fileID: 21300000, guid: ac1f7705257ded64ea3318aafd3b4086, type: 3}
@@ -28295,7 +28312,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!224 &7769502340166209974
 RectTransform:
