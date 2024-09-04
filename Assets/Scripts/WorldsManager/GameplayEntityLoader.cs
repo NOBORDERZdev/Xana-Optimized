@@ -791,10 +791,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             if (GamificationComponentData.instance.isBuilderWorldPlayerSetup)
             {
                 ReferencesForGamePlay.instance.playerControllerNew.StopBuilderComponent();
-                SituationChangerSkyboxScript.instance.builderMapDownload.PlayerSetup();
                 SituationChangerSkyboxScript.instance.builderMapDownload.UpdateScene();
                 BuilderEventManager.ChangeCameraHeight?.Invoke(false);
             }
+                
+            SituationChangerSkyboxScript.instance.builderMapDownload.PlayerSetup();
         }
         if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {

@@ -17,7 +17,7 @@ public class LoadingHandler : MonoBehaviour
     public GameObject loadingPanel;
 
     public Image loadingSlider;
-    public Text loadingText;
+    public TextMeshProUGUI loadingText;
     public TextMeshProUGUI loadingPercentageText;
 
     public Image JJLoadingSlider;

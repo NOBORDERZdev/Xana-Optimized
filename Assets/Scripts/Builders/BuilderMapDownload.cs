@@ -692,7 +692,7 @@ public class BuilderMapDownload : MonoBehaviour
             BuilderEventManager.CombineMeshes?.Invoke();
         }
 
-        PlayerSetup();
+        //PlayerSetup();
 
         //call for Execute all rpcs of this room
         BuilderEventManager.RPCcallwhenPlayerJoin?.Invoke();

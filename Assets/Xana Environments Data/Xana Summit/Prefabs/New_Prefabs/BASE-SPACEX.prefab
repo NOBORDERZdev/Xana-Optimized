@@ -631,6 +631,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1468537923886740134}
   - component: {fileID: 2158407225001478075}
+  - component: {fileID: 9046889728072750484}
   m_Layer: 0
   m_Name: BASE-SPACEX
   m_TagString: Untagged
@@ -663,6 +664,20 @@ Transform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -226.06, z: 0}
 --- !u!114 &2158407225001478075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2245778727332292636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: BASE-SPACEX
+  objectPriority: 0
+--- !u!114 &9046889728072750484
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1531,7 +1546,7 @@ MeshCollider:
   m_GameObject: {fileID: 5438175489578697129}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -1857,7 +1872,7 @@ MeshCollider:
   m_GameObject: {fileID: 5438175489956705212}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -2457,7 +2472,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2763000046845668029}
   - component: {fileID: 6871532998489409513}
-  - component: {fileID: 1100022037072063342}
   m_Layer: 0
   m_Name: Rocket
   m_TagString: Untagged
@@ -2506,19 +2520,6 @@ LODGroup:
     - renderer: {fileID: 5438175489956705194}
     - renderer: {fileID: 5438175489956705198}
   m_Enabled: 1
---- !u!65 &1100022037072063342
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6871532998489409512}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 13.348395, y: 160.89717, z: 14.651769}
-  m_Center: {x: -0.19267932, y: 41.31, z: 0.0018903222}
 --- !u!1 &6995203394989446827
 GameObject:
   m_ObjectHideFlags: 0
