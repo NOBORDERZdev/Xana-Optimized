@@ -142,15 +142,15 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
         {
             recorder.TransmitEnabled = true;
             recorder.RecordingEnabled = true;
+           // recorder.enabled = true;
 
         }
         //_punVoiceClient.enabled = true;
-        recorder.enabled = true;
-        if (_punVoiceClient.ClientState == Photon.Realtime.ClientState.PeerCreated
-                     || _punVoiceClient.ClientState == Photon.Realtime.ClientState.Disconnected)
-        {
-            _punVoiceClient.ConnectAndJoinRoom();
-        }
+        //if (_punVoiceClient.ClientState == Photon.Realtime.ClientState.PeerCreated
+        //             || _punVoiceClient.ClientState == Photon.Realtime.ClientState.Disconnected)
+        //{
+        //    _punVoiceClient.ConnectAndJoinRoom();
+        //}
 
         VoiceClientStateChanged(ClientState.Joining, ClientState.Joined); // manually calling this method to force audio to speaker
     }
@@ -166,12 +166,12 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
             recorder.TransmitEnabled = false;
             recorder.RecordingEnabled = false;
         }
-        if (_punVoiceClient.ClientState == Photon.Realtime.ClientState.Joined)
-        {
-            _punVoiceClient.Disconnect();
-        }
+        //if (_punVoiceClient.ClientState == Photon.Realtime.ClientState.Joined)
+        //{
+        //    _punVoiceClient.Disconnect();
+        //}
        // _punVoiceClient.enabled = false;
-        recorder.enabled = false;
+       //  recorder.enabled = false;
     }
 
     //Overriding methods for push to talk 
