@@ -39,6 +39,9 @@ public class XANASummitDataContainer : ScriptableObject
         string url = ConstantsGod.API_BASEURL + ConstantsGod.GETALLDOMES;
         string result = await GetAsyncRequest(url);
         summitData=JsonUtility.FromJson<DomeData>(result);
+
+        // Activate Map
+        ReferencesForGamePlay.instance.FullScreenMapStatus(true);
     }
 
     public async Task<bool> GetAIData(int domeId)
