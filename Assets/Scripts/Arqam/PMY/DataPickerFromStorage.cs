@@ -9,6 +9,7 @@ public class DataPickerFromStorage : MonoBehaviour
     public RawImage screenImg;
     public VideoPlayer player;
 
+    public string permissionCheck = "";
 
     void Start()
     {
@@ -141,5 +142,25 @@ public class DataPickerFromStorage : MonoBehaviour
 
     }
 
+    public void SampleCallback(string permissionWasGranted)
+    {
+        Debug.Log("Callback.permissionWasGranted = " + permissionWasGranted);
+
+        if (permissionWasGranted == "true")
+        {
+            // You can now use the device camera.
+        }
+        else
+        {
+            permissionCheck = permissionWasGranted;
+
+            // permission denied, no access should be visible, when activated when requested permission
+            return;
+
+            // You cannot use the device camera.  You may want to display a message to the user
+            // about changing the camera permission in the Settings app.
+            // You may want to re-enable the button to display the Settings message again.
+        }
+    }
 
 }
