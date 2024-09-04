@@ -51,6 +51,14 @@ public class XANASummitSceneLoading : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (handle != null && !handle.isDone)
+        {
+            LoadingHandler.Instance.DomeLoadingProgess(handle.progress);
+        } 
+    }
+
     private void OnDisable()
     {
         BuilderEventManager.LoadNewScene -= LoadingFromDome;
@@ -89,7 +97,7 @@ public class XANASummitSceneLoading : MonoBehaviour
     {
         XANASummitDataContainer.DomeGeneralData domeGeneralData=new XANASummitDataContainer.DomeGeneralData();
         domeGeneralData = GetDomeData(domeId);
-
+        Debug.Log("triggerDome " + domeGeneralData.world);
         if (string.IsNullOrEmpty(domeGeneralData.world))
             return;
 
@@ -301,8 +309,9 @@ public class XANASummitSceneLoading : MonoBehaviour
         ConstantsHolder.xanaConstants.builderMapID = builderMapId;
         ConstantsHolder.xanaConstants.isBuilderScene = true;
         gameplayEntityLoader.addressableSceneName = null;
-        handle = await SceneManager.LoadSceneAsync("Builder", LoadSceneMode.Additive);
-      
+       
+        handle = SceneManager.LoadSceneAsync("Builder", LoadSceneMode.Additive);
+          await handle;
         handle.completed += Handle_completed;
     }
 

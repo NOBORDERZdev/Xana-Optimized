@@ -1031,17 +1031,23 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 string name = environmentLabel.Replace(" : ", string.Empty);
                 environmentLabel = name;
             }
-            while (!ConstantsHolder.isAddressableCatalogDownload)
-            {
-                yield return new WaitForSeconds(1f);
-            }
+            /*  while (!ConstantsHolder.isAddressableCatalogDownload) //Zeel Replaced loop with waituntil
+              {
+                  yield return new WaitForSeconds(1f);
+              }*/
+
+            yield return new WaitUntil(() => ConstantsHolder.isAddressableCatalogDownload);
+
             AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(environmentLabel, LoadSceneMode.Additive, false);
             if (!ConstantsHolder.xanaConstants.isFromXanaLobby)
             {
                 LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             }
             while (!handle.IsDone)
+            {
+                LoadingHandler.Instance.DomeLoadingProgess(handle.PercentComplete);
                 yield return null;
+            }
             addressableSceneName = environmentLabel;
 
             //One way to handle manual scene activation.

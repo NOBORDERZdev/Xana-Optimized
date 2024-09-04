@@ -83,7 +83,12 @@ public class LoadingHandler : MonoBehaviour
     public TextMeshProUGUI DomeName;
     public TextMeshProUGUI DomeDescription;
     public TextMeshProUGUI DomeProgress;
-    public TextMeshProUGUI LoadingStatus;
+    public TextMeshProUGUI DomeCreator;
+    public TextMeshProUGUI DomeType;
+    public TextMeshProUGUI DomeCategory;
+    public TextMeshProUGUI DomeEstimateTime;
+    public TextMeshProUGUI DomeID;
+    public RectTransform LoadingStatus;
 
     public ManualRoomController manualRoomController;
     public StreamingLoadingText streamingLoading;
@@ -95,6 +100,7 @@ public class LoadingHandler : MonoBehaviour
     public float randCurrentValue = 0f;
     private float sliderFinalValue = 0;
     private float sliderCompleteValue = 0f;
+    private float originalWidth;
 
     public GameObject SearchLoadingCanvas;
     private CanvasGroup canvasGroup;
@@ -116,6 +122,12 @@ public class LoadingHandler : MonoBehaviour
 #else
                         Debug.unityLogger.filterLogType = LogType.Error;
 #endif
+
+        if (LoadingStatus != null)
+        {
+            originalWidth = LoadingStatus.sizeDelta.x;
+           
+        }
     }
 
     private void Start()
@@ -288,6 +300,7 @@ public class LoadingHandler : MonoBehaviour
         loadingPercentageText.text = "0%".ToString();
         JJLoadingSlider.fillAmount = 0f;
         JJLoadingPercentageText.text = "0%".ToString();
+        LoadingStatus.anchorMax = new Vector2(0, LoadingStatus.anchorMax.y);
     }
 
     public void HideLoading()
@@ -535,6 +548,8 @@ public class LoadingHandler : MonoBehaviour
 
     public IEnumerator IncrementSliderValue(float speed, bool loadMainScene = false)
     {
+      
+        Debug.Log("Sizedelta " + LoadingStatus.anchorMax.x + LoadingStatus.anchorMax.y + "  " + ConstantsHolder.isFromXANASummit);
         while (currentValue < sliderCompleteValue)  
         {
             timer += Time.deltaTime;
@@ -545,11 +560,15 @@ public class LoadingHandler : MonoBehaviour
                 JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                 JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
             }
+            else if (ConstantsHolder.isFromXANASummit) {
+                LoadingStatus.anchorMax = Vector2.Lerp(LoadingStatus.anchorMax, new Vector2(currentValue / 100, LoadingStatus.anchorMax.y), 0.15f); ;
+                DomeProgress.text = ((int)(currentValue)).ToString();
+            }
             else
             {
                 loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                 loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
-                DomeProgress.text = ((int)(currentValue)).ToString();
+               
                
             }
 
@@ -583,12 +602,17 @@ public class LoadingHandler : MonoBehaviour
                    // yield return new WaitForSeconds(1f);
                     //HideLoading(ScreenOrientation.Portrait);
                 }
+                if (ConstantsHolder.isFromXANASummit)
+                {
+                      LoadingStatus.anchorMax = Vector2.Lerp(LoadingStatus.anchorMax, new Vector2(currentValue / 100, LoadingStatus.anchorMax.y), 0.15f); ;
+                    DomeProgress.text = ((int)(currentValue)).ToString();
+                }
                 else
                 {
                     loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                     loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
                     //yield return new WaitForSeconds(1f);
-                    DomeProgress.text = ((int)(currentValue)).ToString();
+                 
                     //HideLoading(ScreenOrientation.Portrait);
                 }
             }
@@ -710,6 +734,43 @@ public class LoadingHandler : MonoBehaviour
         DomeLoading.SetActive(true);
         DomeName.text = info.name;
         DomeDescription.text = info.description;
+        DomeCreator.text = info.creatorName;
+        DomeType.text = info.experienceType;
+        Debug.Log("Dome id " + info.id);
+        if(info.id>0 && info.id < 9)
+        {
+            DomeCategory.text = "Center";
+            DomeID.text = "CA-"+ info.id;
+        }
+
+        if (info.id > 8 && info.id < 39)
+        {
+            DomeCategory.text = "Business";
+            DomeID.text = "BA-" + info.id;
+        }
+
+        if (info.id > 38 && info.id < 69)
+        {
+            DomeCategory.text = "Web 3";
+            DomeID.text = "WA-" + info.id;
+        }
+
+        if (info.id > 68 && info.id < 99)
+        {
+            DomeCategory.text = "Game";
+            DomeID.text = "GA-" + info.id;
+        }
+        if (info.id > 98 && info.id < 129)
+        {
+            DomeCategory.text = "Entertainmnent";
+            DomeID.text = "EA-" + info.id;
+        }
+        if (info.id > 128 && info.id < 161)
+        {
+            DomeCategory.text = "Entertainmnent";
+            DomeID.text = "MD   -" + info.id;
+        }
+        DomeEstimateTime.text = "1 min.";
         ApprovalUI.SetActive(true);
         DomeLodingUI.SetActive(false);
     }
@@ -741,16 +802,19 @@ public class LoadingHandler : MonoBehaviour
         DomeLoading.SetActive(true);
         DomeName.text = info.data.name;
         DomeDescription.text = info.data.description;
+
         ApprovalUI.SetActive(true);
         DomeLodingUI.SetActive(false);
     }
-    public void EnterDome()
+    public async  void EnterDome()
     {
         enter = true;
         WaitForInput = false;
         ApprovalUI.SetActive(false);
         DomeLodingUI.SetActive(true);
-       
+        await Task.Delay(1000);
+        StartCoroutine(IncrementSliderValue(Random.Range(0f, 5f)));
+
     }
     public void ReturnDome()
     {
@@ -769,9 +833,11 @@ public class LoadingHandler : MonoBehaviour
         DomeLoading.SetActive(false);
     }
 
-    internal void DomeLoadingProgess(float progress)
+    public void DomeLoadingProgess(float progress)
     {
-       DomeProgress.text = progress.ToString("D2");
+        Debug.Log("Loading progress...");
+        LoadingStatus.anchorMax = Vector2.Lerp(LoadingStatus.anchorMax, new Vector2(progress / 100, LoadingStatus.anchorMax.y), 0.15f); ;
+        DomeProgress.text = ((int)progress).ToString("D2");
     }
 }
 
