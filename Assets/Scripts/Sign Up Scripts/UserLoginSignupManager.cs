@@ -282,7 +282,9 @@ public class UserLoginSignupManager : MonoBehaviour
     }
     public void ContinueAsGuest()
     {
-         GameManager.Instance.NotNowOfSignManager();
+        //GameManager.Instance.NotNowOfSignManager();
+        LoginRegisterScreen.SetActive(false);
+        Screen.orientation = ScreenOrientation.Portrait;
     }
     public void OnClickSignUpSelection()
     {
@@ -1124,6 +1126,11 @@ public class UserLoginSignupManager : MonoBehaviour
                     MainSceneEventHandler.OpenLandingScene?.Invoke();
                     return;
                 }
+                else {
+                    Screen.orientation = ScreenOrientation.Portrait;
+                    LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+                    enterNamePanel.SetActive(false);
+                }
             }
            
         }
@@ -1682,7 +1689,7 @@ public class UserLoginSignupManager : MonoBehaviour
         if (!string.IsNullOrEmpty(deviceToken))
             StartCoroutine(HitLogOutAPI(ConstantsGod.API_BASEURL + ConstantsGod.LogOutAPI, deviceToken, (onSucess) =>
             {
-                if (onSucess)
+                //if (onSucess)
                     StartCoroutine(DeleteAccountApi((deleteSucess) =>
                     {
                         if (deleteSucess)
@@ -1901,7 +1908,17 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.xanaConstants.isCameraMan = false;
         ConstantsHolder.xanaConstants.IsDeemoNFT = false;
         InventoryManager.instance.CheckWhenUserLogin();
-        signUpOrloginSelectionPanel.SetActive(true);
+        if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            LoginRegisterScreen.SetActive(true);
+           // signUpOrloginSelectionPanel.SetActive(true);
+        }
+        else
+        {
+            signUpOrloginSelectionPanel.SetActive(true);
+        }
+        //signUpOrloginSelectionPanel.SetActive(true);
         if (_web3APIforWeb2._OwnedNFTDataObj != null)
         {
             _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
