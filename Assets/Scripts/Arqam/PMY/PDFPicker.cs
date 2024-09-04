@@ -12,7 +12,7 @@ public class PDFPicker : MonoBehaviour
 
     public void PickPDF()
     {
-//#if UNITY_ANDROID
+#if UNITY_ANDROID
         NativeFilePicker.Permission permission = NativeFilePicker.PickFile((path) =>
         {
             if (path != null)
@@ -22,21 +22,23 @@ public class PDFPicker : MonoBehaviour
             }
         }, new string[] { "application/pdf" });
 
-//#elif UNITY_IOS
-//        //if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead))
-//        //{
-//        //    // Request permission to read external storage
-//        //    Permission.RequestUserPermission(Permission.ExternalStorageRead);
-//        //}
-//        NativeFilePicker.Permission permission = NativeFilePicker.PickFile((path) =>
-//        {
-//            if (path != null)
-//            {
-//                OpenDocumentPicker(path);
-//                // Load your file here
-//            }
-//        }, new string[] { "application/pdf" });
-//#endif
+#elif UNITY_IOS
+NativeFilePicker.PickFile((string path) =>
+{
+    if (path == null)
+    {
+        Debug.LogError("File picking was cancelled or failed on iOS.");
+        return;
+    }
+
+    Debug.Log("Picked PDF file path: " + path);
+
+    // Attempt to open the file using the iOS file system
+    OpenDocumentPicker(path);
+
+}, new string[] { "public.pdf" });
+
+#endif
     }
 
     private void OpenDocumentPicker(string path)
