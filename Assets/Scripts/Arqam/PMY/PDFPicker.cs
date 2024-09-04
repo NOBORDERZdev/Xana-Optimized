@@ -1,7 +1,9 @@
 using UnityEngine;
 using Paroxe.PdfRenderer;
 using UnityEngine.Android;
+#if UNITY_IOS
 using UnityEngine.iOS;
+#endif
 
 public class PDFPicker : MonoBehaviour
 {
