@@ -43,7 +43,6 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
     public string MicroPhoneDevice;
     public int index;
 
-
     public void Awake()
     {
         if (instance == null)
@@ -78,25 +77,6 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
     {
         _punVoiceClient.Client.StateChanged -= this.VoiceClientStateChanged;
 
-    }
-
-    private void VoiceClientStateChanged(ClientState fromState, ClientState toState)
-    {
-        print("!! fromState" + fromState);
-        print("!! toState" + toState);
-        if (toState == ClientState.Joined)
-        {
-            
-            // Handle state changes if needed
-#if UNITY_IOS
-        if ((Device.generation.ToString()).IndexOf("iPhone") > -1)
-        {
-            // For iPhones only
-            Debug.Log("Forcing audio to speaker...");
-            iPhoneSpeaker.ForceToSpeaker();
-        }
-#endif
-        }
     }
 
     private IEnumerator Start()
@@ -147,9 +127,6 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
 
     }
 
-
-
-
     public void TurnOnMic()
     {
         if(ConstantsHolder.xanaConstants.mic ==0 ) // to confrim is correct value or not 
@@ -191,7 +168,6 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
             recorder.RecordingEnabled = false;
         }
     }
-
 
     //Overriding methods for push to talk 
     public async void PushToTalk(bool canTalk)
@@ -250,7 +226,6 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
         }
     }
 
-
     void ShowVoiceChatDialogBox()
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -269,4 +244,23 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
 #endif
     }
 
+    private async void VoiceClientStateChanged(ClientState fromState, ClientState toState)
+    {
+        print("!! fromState" + fromState);
+        print("!! toState" + toState);
+        if (fromState== ClientState.Joining && toState == ClientState.Joined)
+        {
+            print("!!!!!!!!  FROCE CALL");
+            await Task.Delay(20000);
+            // Handle state changes if needed
+#if UNITY_IOS
+        if ((Device.generation.ToString()).IndexOf("iPhone") > -1)
+        {
+            // For iPhones only
+            Debug.Log("Forcing audio to speaker...");
+            iPhoneSpeaker.ForceToSpeaker();
+        }
+#endif
+        }
+    }
 }
