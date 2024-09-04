@@ -335,15 +335,16 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void BackFromLoginSelection()
     {
-        if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
+       
+        if (!ConstantsHolder.xanaConstants.openLandingSceneDirectly && ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
         {
-            emailOrWalletLoginPanel.SetActive(false);
-            
+           
+            LoginRegisterScreen.SetActive(true);
         }
         else {
-            emailOrWalletLoginPanel.SetActive(false);
+            
             signUpOrloginSelectionPanel.SetActive(true);
-             }
+        }
     }
 
     public void OnClickLoginWithEmail()
@@ -382,10 +383,19 @@ public class UserLoginSignupManager : MonoBehaviour
     }
     public void BackFromUserNamePanel()
     {
-        enterNamePanel.SetActive(false);
-        displayrNameField.Clear();
-        userUsernameField.Clear();
-        InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            enterNamePanel.SetActive(false);
+            displayrNameField.Clear();
+            userUsernameField.Clear();
+            InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        }
+        else {
+            enterNamePanel.SetActive(false);
+            displayrNameField.Clear();
+            userUsernameField.Clear();
+            InventoryManager.instance.StartPanel_PresetParentPanelSummit.SetActive(true);
+        }
     }
 
 
