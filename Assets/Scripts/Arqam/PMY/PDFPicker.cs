@@ -26,29 +26,20 @@ public class PDFPicker : MonoBehaviour
             }
         }, new string[] { "application/pdf" });
 
-#elif UNITY_IOS                
-        if (PHPhotoLibrary.AuthorizationStatus() != PHAuthorizationStatus.Authorized)
+#elif UNITY_IOS
+        if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead))
         {
-            // Request access to the photo library
-            PHPhotoLibrary.RequestAuthorization(status =>
+            // Request permission to read external storage
+            Permission.RequestUserPermission(Permission.ExternalStorageRead);
+        }
+        NativeFilePicker.Permission permission = NativeFilePicker.PickFile((path) =>
+        {
+            if (path != null)
             {
-                if (status == PHAuthorizationStatus.Authorized)
-                {
-                    // Access granted, open the file picker
-                    OpenDocumentPicker();
-                }
-                else
-                {
-                    // Access denied, handle accordingly
-                    Debug.LogError("User denied access to the photo library.");
-                    // Show a message or handle denial as needed
-                    return;
-                }
-            });
-        }
-        else{
-        OpenDocumentPicker(path);
-        }
+                OpenDocumentPicker(path);
+                // Load your file here
+            }
+        }, new string[] { "application/pdf" });
 #endif
     }
 
