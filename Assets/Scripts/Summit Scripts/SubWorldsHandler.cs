@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Collections.Generic;
 
 public class SubWorldsHandler : MonoBehaviour
 {
@@ -27,9 +28,11 @@ public class SubWorldsHandler : MonoBehaviour
     public XANASummitSceneLoading XANASummitSceneLoadingInstance;
 
     public static Action<Sprite,string, string,string, string, string, string, string,Vector3> OpenSubWorldDescriptionPanel;
+    //public static int CurrentlyLoadedDomes;
 
     private string worldId;
     private Vector3 playerReturnPosition;
+    private List<GameObject> subworldsList = new List<GameObject>();
     // Start is called before the first frame update
     void OnEnable()
     {
@@ -90,11 +93,17 @@ public class SubWorldsHandler : MonoBehaviour
 
     public Task<bool> CreateSubWorldList(XANASummitDataContainer.DomeGeneralData domeGeneralData, Vector3 PlayerReturnPosition)
     {
-        if(ConstantsHolder.domeId!=domeGeneralData.id)
-        {
-            ClearOldData();
-        }
-
+        //if (ConstantsHolder.domeId != domeGeneralData.id)
+        //{
+        //    ClearOldData();
+        //}
+        //else if(ContentParent.transform.childCount>0)
+        //{
+        //    SubworldListParent.SetActive(true);
+        //    return new Task<bool>(() => true);
+        //}
+        //CurrentlyLoadedDomes = ConstantsHolder.domeId;
+        ClearOldData();
         SubworldListParent.SetActive(true);
         for (int i = 0; i < domeGeneralData.SubWorlds.Count; i++)
         {
@@ -117,6 +126,7 @@ public class SubWorldsHandler : MonoBehaviour
 
             _SubWorldPrefab.PlayerReturnPosition = PlayerReturnPosition;
             _SubWorldPrefab.Init();
+            subworldsList.Add(temp);
         }
         if (domeGeneralData.SubWorlds.Count > 0)
             return new Task<bool>(() =>true);
@@ -147,7 +157,6 @@ public class SubWorldsHandler : MonoBehaviour
 
     public void EnterWorld()
     {
-        Debug.LogError("Entered in world");
         BuilderEventManager.LoadSceneByName?.Invoke(worldId, playerReturnPosition);
         XANASummitSceneLoading.setPlayerPositionDelegate+=OnEnteredIntoWorld;
         EnterButton.interactable = false;
@@ -171,9 +180,11 @@ public class SubWorldsHandler : MonoBehaviour
 
     void ClearOldData()
     {
-        foreach (Transform t in ContentParent)
-            Destroy(t.gameObject);
+        int x = subworldsList.Count;
+        for (int i=0;i<x; i++)
+            Destroy(subworldsList[i]);
 
+        subworldsList.Clear();
         SubworldListParent.SetActive(false);
     }
    

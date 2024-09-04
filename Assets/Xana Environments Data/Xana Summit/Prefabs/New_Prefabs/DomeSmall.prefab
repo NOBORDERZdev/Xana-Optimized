@@ -201,7 +201,6 @@ MonoBehaviour:
   DomeMeshRenderer: {fileID: 4490889105663942515}
   LogoMeshRenderer: {fileID: 2303720807037979001}
   LogoSpriteRenderer: {fileID: 3875443325405535319}
-  targetWidth: 5
 --- !u!1 &5005054697580370172
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,6 +212,7 @@ GameObject:
   - component: {fileID: 2314185068216567382}
   - component: {fileID: 6657031708344222097}
   - component: {fileID: 2245930522577482624}
+  - component: {fileID: 2294709349987411335}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -245,10 +245,10 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5005054697580370172}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.51
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2245930522577482624
 MonoBehaviour:
@@ -267,6 +267,19 @@ MonoBehaviour:
   WorldIdMainnet: 
   textMeshPro: {fileID: 7804898107131508429}
   WorldId: 
+--- !u!135 &2294709349987411335
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5005054697580370172}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5071613416927561627
 GameObject:
   m_ObjectHideFlags: 0
