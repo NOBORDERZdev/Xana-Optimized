@@ -1,9 +1,9 @@
 using UnityEngine;
 using Paroxe.PdfRenderer;
-using UnityEngine.Android;
-#if UNITY_IOS
-using UnityEngine.iOS;
-#endif
+//using UnityEngine.Android;
+//#if UNITY_IOS
+//using UnityEngine.iOS;
+//#endif
 
 public class PDFPicker : MonoBehaviour
 {
@@ -12,13 +12,7 @@ public class PDFPicker : MonoBehaviour
 
     public void PickPDF()
     {
-#if UNITY_ANDROID
-        // Check if the permission is already granted
-        if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead))
-        {
-            // Request permission to read external storage
-            Permission.RequestUserPermission(Permission.ExternalStorageRead);
-        }
+//#if UNITY_ANDROID
         NativeFilePicker.Permission permission = NativeFilePicker.PickFile((path) =>
         {
             if (path != null)
@@ -28,21 +22,21 @@ public class PDFPicker : MonoBehaviour
             }
         }, new string[] { "application/pdf" });
 
-#elif UNITY_IOS
-        if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead))
-        {
-            // Request permission to read external storage
-            Permission.RequestUserPermission(Permission.ExternalStorageRead);
-        }
-        NativeFilePicker.Permission permission = NativeFilePicker.PickFile((path) =>
-        {
-            if (path != null)
-            {
-                OpenDocumentPicker(path);
-                // Load your file here
-            }
-        }, new string[] { "application/pdf" });
-#endif
+//#elif UNITY_IOS
+//        //if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead))
+//        //{
+//        //    // Request permission to read external storage
+//        //    Permission.RequestUserPermission(Permission.ExternalStorageRead);
+//        //}
+//        NativeFilePicker.Permission permission = NativeFilePicker.PickFile((path) =>
+//        {
+//            if (path != null)
+//            {
+//                OpenDocumentPicker(path);
+//                // Load your file here
+//            }
+//        }, new string[] { "application/pdf" });
+//#endif
     }
 
     private void OpenDocumentPicker(string path)
