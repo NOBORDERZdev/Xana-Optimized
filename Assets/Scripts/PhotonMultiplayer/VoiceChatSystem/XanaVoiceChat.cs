@@ -257,7 +257,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
         if (fromState == ClientState.Joining && toState == ClientState.Joined)
         {
          //   print("!!!!!!!!  FROCE CALL");
-            await Task.Delay(1000);
+            await Task.Delay(2000);
             // Handle state changes if needed
 #if UNITY_IOS
         if ((Device.generation.ToString()).IndexOf("iPhone") > -1)
