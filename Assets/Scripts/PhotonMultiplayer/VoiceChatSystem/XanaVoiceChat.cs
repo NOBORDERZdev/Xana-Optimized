@@ -1,17 +1,13 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using Photon.Voice.PUN;
 using Photon.Voice.Unity;
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.XR.WSA;
-using System.Threading.Tasks;
-using Photon.Realtime;
 #if UNITY_IOS
 using UnityEngine.iOS;
 #endif
@@ -100,37 +96,37 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
             }
         }
 
-       
-        if (recorder != null )
-            {
-                TurnOffMic();
-                ConstantsHolder.xanaConstants.mic = 0;
-            }
 
-            if (ConstantsHolder.xanaConstants.pushToTalk)
-            {
-                micOffBtn.AddComponent<PushToTalk>();
-                micOffBtnPotrait.AddComponent<PushToTalk>();
-                TurnOffMic();
-            }
-            else
-            {
-                MicToggleOff = TurnOnMic;
-                MicToggleOn = TurnOffMic;
+        if (recorder != null)
+        {
+            TurnOffMic();
+            ConstantsHolder.xanaConstants.mic = 0;
+        }
 
-                micOffBtn.GetComponent<Button>().onClick.AddListener(MicToggleOff);
-                micOffBtnPotrait.GetComponent<Button>().onClick.AddListener(MicToggleOff);
-                micOnBtn.GetComponent<Button>().onClick.AddListener(MicToggleOn);
-                micOnBtnPotrait.GetComponent<Button>().onClick.AddListener(MicToggleOn);
-              
-            }
+        if (ConstantsHolder.xanaConstants.pushToTalk)
+        {
+            micOffBtn.AddComponent<PushToTalk>();
+            micOffBtnPotrait.AddComponent<PushToTalk>();
+            TurnOffMic();
+        }
+        else
+        {
+            MicToggleOff = TurnOnMic;
+            MicToggleOn = TurnOffMic;
+
+            micOffBtn.GetComponent<Button>().onClick.AddListener(MicToggleOff);
+            micOffBtnPotrait.GetComponent<Button>().onClick.AddListener(MicToggleOff);
+            micOnBtn.GetComponent<Button>().onClick.AddListener(MicToggleOn);
+            micOnBtnPotrait.GetComponent<Button>().onClick.AddListener(MicToggleOn);
+
+        }
 
     }
 
     public void TurnOnMic()
     {
-        if(ConstantsHolder.xanaConstants.mic ==0 ) // to confrim is correct value or not 
-        ConstantsHolder.xanaConstants.mic = PlayerPrefs.GetInt("micSound");
+        if (ConstantsHolder.xanaConstants.mic == 0) // to confrim is correct value or not 
+            ConstantsHolder.xanaConstants.mic = PlayerPrefs.GetInt("micSound");
 
         if (ConstantsHolder.xanaConstants.mic == 0)
         {
@@ -148,12 +144,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
             recorder.RecordingEnabled = true;
 
         }
-#if UNITY_IOS
-        if ((Device.generation.ToString()).IndexOf("iPhone") > -1)//for iphones only
-        { 
-            iPhoneSpeaker.ForceToSpeaker();
-        }
-#endif
+        VoiceClientStateChanged(ClientState.Joining, ClientState.Joined); // manually calling this method to force audio to speaker
     }
 
     public void TurnOffMic()
@@ -172,7 +163,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
     //Overriding methods for push to talk 
     public async void PushToTalk(bool canTalk)
     {
-        if(canTalk)
+        if (canTalk)
         {
             micOffBtn.transform.GetChild(0).gameObject.SetActive(false);
             micOffBtnPotrait.transform.GetChild(0).gameObject.SetActive(false);
@@ -184,17 +175,18 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
         {
             micOffBtn.transform.GetChild(0).gameObject.SetActive(true);
             micOffBtnPotrait.transform.GetChild(0).gameObject.SetActive(true);
-            while(recorder.IsCurrentlyTransmitting)
+            while (recorder.IsCurrentlyTransmitting)
             {
                 await Task.Delay(1000);
             }
-            if (recorder != null )
+            if (recorder != null)
                 recorder.TransmitEnabled = false;
 
         }
     }
 
-    public override void OnDisconnected(DisconnectCause cause) {
+    public override void OnDisconnected(DisconnectCause cause)
+    {
 
         base.OnDisconnected(cause);
         if (ConstantsHolder.xanaConstants.mic == 1 && !ConstantsHolder.xanaConstants.pushToTalk)
@@ -246,11 +238,11 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
 
     private async void VoiceClientStateChanged(ClientState fromState, ClientState toState)
     {
-        print("!! fromState" + fromState);
-        print("!! toState" + toState);
-        if (fromState== ClientState.Joining && toState == ClientState.Joined)
+       // print("!! fromState" + fromState);
+       // print("!! toState" + toState);
+        if (fromState == ClientState.Joining && toState == ClientState.Joined)
         {
-            print("!!!!!!!!  FROCE CALL");
+         //   print("!!!!!!!!  FROCE CALL");
             await Task.Delay(20000);
             // Handle state changes if needed
 #if UNITY_IOS
