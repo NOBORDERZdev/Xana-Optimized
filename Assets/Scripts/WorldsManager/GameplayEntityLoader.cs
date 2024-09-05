@@ -482,6 +482,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             ConstantsHolder.xanaConstants.isFromXanaLobby = false;
         }
+
+        ConstantsHolder.xanaConstants.isFromTottoriWorld = false;
+
         StartCoroutine(VoidCalculation());
         LightCullingScene();
 
@@ -575,6 +578,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             {
                 StartCoroutine(setPlayerCamAngle(-0.830f, 0.5572f));
             }
+            else if (WorldItemView.m_EnvName.Contains("Daisen"))
+            {
+                StartCoroutine(setPlayerCamAngle(0, 0.5f));
+            }
             else
             {
                 StartCoroutine(setPlayerCamAngle(0, 0.75f));
@@ -607,10 +614,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             StartCoroutine(setPlayerCamAngle(0f, 0.5f));
         }
 
-        if (WorldItemView.m_EnvName.Contains("XANA_KANZAKI"))
+        if (WorldItemView.m_EnvName == "TOTTORI METAVERSE")
         {
             mainPlayer.transform.rotation = _spawnTransform.rotation;
-            StartCoroutine(setPlayerCamAngle(0f, 0.5f));
+            StartCoroutine(setPlayerCamAngle(180f, 0.5f));
         }
         if (WorldItemView.m_EnvName.Contains("JJTest"))
         {
@@ -787,10 +794,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             if (GamificationComponentData.instance.isBuilderWorldPlayerSetup)
             {
                 ReferencesForGamePlay.instance.playerControllerNew.StopBuilderComponent();
-                SituationChangerSkyboxScript.instance.builderMapDownload.PlayerSetup();
                 SituationChangerSkyboxScript.instance.builderMapDownload.UpdateScene();
                 BuilderEventManager.ChangeCameraHeight?.Invoke(false);
             }
+                
+            SituationChangerSkyboxScript.instance.builderMapDownload.PlayerSetup();
         }
         if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
@@ -1082,49 +1090,16 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         Resources.UnloadUnusedAssets();
         CheckAgain:
         Transform temp = null;
-        if (WorldItemView.m_EnvName.Contains("XANA_KANZAKI") && (ConstantsHolder.xanaConstants.comingFrom == ConstantsHolder.ComingFrom.Dune || ConstantsHolder.xanaConstants.comingFrom == ConstantsHolder.ComingFrom.Daisen))
-        {
-            JjWorldChanger[] portals = FindObjectsOfType<JjWorldChanger>();
-            if (portals.Length > 0)
-            {
-                if (ConstantsHolder.xanaConstants.comingFrom == ConstantsHolder.ComingFrom.Daisen)
-                {
-                    foreach (JjWorldChanger portal in portals)
-                    {
-                        if (portal.WorldName.Contains("Daisen"))
-                        {
-                            temp = portal.transform;
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (JjWorldChanger portal in portals)
-                    {
-                        if (portal.WorldName.Contains("DUNE"))
-                        {
-                            temp = portal.transform;
-                            break;
-                        }
-                    }
-                }
 
-            }
+        Debug.Log("not coming from else");
+        if (GameObject.FindGameObjectWithTag("SpawnPoint"))
+        {
+            Debug.Log("not coming from else2");
+
+            temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
         }
         else
-        {
-            Debug.Log("not coming from else");
-            if (GameObject.FindGameObjectWithTag("SpawnPoint"))
-            {
-                Debug.Log("not coming from else2");
-
-                temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
-            }
-            else
-                temp = new GameObject("SpawnPoint").transform;
-        }
-
+            temp = new GameObject("SpawnPoint").transform;
         if (temp)
         {
             _spawnTransform = temp;

@@ -15,6 +15,7 @@ public class SandUIManager : MonoBehaviour
     [SerializeField] List<Sprite> startInformImagesEn;
     [SerializeField] List<Sprite> sandGameImagesEn;
     [SerializeField] List<Sprite> timerImages;
+    [SerializeField] List<Sprite> btnImages;
 
     [SerializeField] Sprite gameResultJp;
     [SerializeField] Sprite gameResultEn;
@@ -95,6 +96,7 @@ public class SandUIManager : MonoBehaviour
             currentIndex = 0;
             description.sprite = null;
             currentDes = null;
+            nxtBtn.GetComponent<Image>().sprite = btnImages[1];
 
             if (desCallback.ContainsKey(currentKey))
             {
@@ -106,6 +108,13 @@ public class SandUIManager : MonoBehaviour
             currentIndex++;
 
             description.sprite = currentDes[currentIndex];
+            if (currentIndex == currentDes.Count - 1)
+            {
+                if (currentDes == desImgs[Des.StartInform])
+                    nxtBtn.GetComponent<Image>().sprite = btnImages[0];
+                else if (currentDes == desImgs[Des.SandInform])
+                    nxtBtn.GetComponent<Image>().sprite = btnImages[2];
+            }
         }
     }
 

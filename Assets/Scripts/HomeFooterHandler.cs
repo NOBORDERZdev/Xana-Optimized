@@ -298,6 +298,8 @@ public class HomeFooterHandler : MonoBehaviour
     {
         if (ConstantsHolder.IsXSummitApp)
         {
+            if (ConstantsHolder.xanaConstants.isFromTottoriWorld)
+                return;
             MainSceneEventHandler.OpenLandingScene?.Invoke();
             return;
         }

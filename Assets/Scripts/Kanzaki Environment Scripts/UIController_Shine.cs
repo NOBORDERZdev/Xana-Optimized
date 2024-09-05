@@ -278,6 +278,7 @@ public class UIController_Shine : MonoBehaviour
             SetWorshipFailUI(false);
             ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
             PlayerController.PlayerIsIdle?.Invoke();
+            Enable_DisableObjects.Instance.DisableDashButton(true);
             worshipFailUI.GetChild(0).GetComponent<Image>().sprite = buttonImages[_lang == "Eng" ? 1 : 0];
         }
         else if (worshipFailNum == worshipFails.Count - 1)
@@ -310,9 +311,10 @@ public class UIController_Shine : MonoBehaviour
             //Disabling gameplay UI intereactions
             PlayerController.PlayerIsWalking?.Invoke();
             ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
+            Enable_DisableObjects.Instance.DisableDashButton(false);
 
             _playerAnimator.SetTrigger("KanzakiWorld");
-            _playerAnimator.SetTrigger("Washing");
+            _playerAnimator.SetTrigger("Washing"); //animation ending funchionality is in IKMuseum.cs from animation end events
 
             Transform player = ReferencesForGamePlay.instance.MainPlayerParent.transform;
             Vector3 directionToMizuya = (mizuya.position - player.transform.position).normalized;
@@ -335,6 +337,7 @@ public class UIController_Shine : MonoBehaviour
                     //Disabling gameplay UI intereactions
                     PlayerController.PlayerIsWalking?.Invoke();
                     ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
+                    Enable_DisableObjects.Instance.DisableDashButton(false);
                     break;
                 case PointerUIChild.DuneGuide:
                     gamespaceIdx = (int)GameSpaceUIChild.DuneGuide;
@@ -344,6 +347,7 @@ public class UIController_Shine : MonoBehaviour
                     break;
                 case PointerUIChild.Emikage1:
                     gamespaceIdx = (int)GameSpaceUIChild.Emikage;
+                    Enable_DisableObjects.Instance.EnableDisableUIObjects(false);
                     GamePlayUIHandler.inst.gamePlayUIParent.SetActive(false);
                     PlayerController.PlayerIsWalking?.Invoke();
                     ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
@@ -387,12 +391,9 @@ public class UIController_Shine : MonoBehaviour
         {
             _playerAnimator = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().animator;
             _playerAnimator.gameObject.GetComponent<IKMuseum>().uIController_Shine = this;
+            Enable_DisableObjects.Instance.DisableDashButton(false);
         }
-        _playerAnimator.SetTrigger("KanzakiWorld");
-
-        //Disabling gameplay UI intereactions
-        //PlayerController.PlayerIsWalking?.Invoke();
-        //ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
+        _playerAnimator.SetTrigger("KanzakiWorld"); //animation ending funchionality is in IKMuseum.cs from animation end events
 
         if (worshipAnimNum == 0)
         {
@@ -440,5 +441,6 @@ public class UIController_Shine : MonoBehaviour
         ohudouUI.gameObject.SetActive(false);
         ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
         PlayerController.PlayerIsIdle?.Invoke();
+        Enable_DisableObjects.Instance.DisableDashButton(true);
     }
 }

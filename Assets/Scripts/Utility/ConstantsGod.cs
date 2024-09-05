@@ -282,6 +282,10 @@ public class ConstantsGod
     public static string GetPostSentToServer = "/item/get-latest-text-post/";///"/item/get-user-text-post/1/100";
     public static string GetUserAllTextPosts = "/item/get-user-text-post/";
     #endregion
+    #region Get App Features List Api's
+    public static string FeaturesListApi = "/admin/get-features-list";
+    #endregion
+
 
     #region Jj World Api's
     public static string JJWORLDASSET = "/item/jjWorld/get-museum-all-assets/";
