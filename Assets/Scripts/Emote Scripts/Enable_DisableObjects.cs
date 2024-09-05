@@ -105,6 +105,11 @@ public class Enable_DisableObjects : MonoBehaviour
         EnableDisableMicButton(setActive);
     }
 
+    public void DisableDashButton(bool isActive)
+    {
+        _dash.SetActive(isActive);
+    }
+
     private void EnableDisableMicButton(bool setActive)
     {
         if (!_once)

@@ -114,7 +114,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool IsMetabuzzEnvironment{
         get
         {
-            if (EnviornmentName.Contains("DUNE") || EnviornmentName.Contains("KANZAKI") || EnviornmentName.Contains("Daisen"))
+            if (EnviornmentName.Contains("DUNE") || EnviornmentName == "TOTTORI METAVERSE" || EnviornmentName.Contains("Daisen"))
             {
                 return true;
             }
