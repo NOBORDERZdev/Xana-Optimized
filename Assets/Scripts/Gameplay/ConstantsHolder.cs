@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
@@ -286,6 +288,32 @@ public class ConstantsHolder : MonoBehaviour
         //  StartCoroutine(LoadAddressableDependenceies());
     }
 
+    public void SetPlayerProperties()
+    {
+        PhotonNetwork.LocalPlayer.CustomProperties.Clear();
+        ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
+        playerProperties.Add("ClothJson", ConstantsHolder.xanaConstants.GetJsonFolderData());
+        playerProperties.Add("NFTEquiped", ConstantsHolder.xanaConstants.isNFTEquiped);
+        PhotonNetwork.LocalPlayer.CustomProperties = playerProperties;
+    }
+    public string GetJsonFolderData()
+    {
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 1)  // loged from account)
+        {
+            if (ConstantsHolder.xanaConstants.isNFTEquiped)
+            {
+                return File.ReadAllText(Application.persistentDataPath + ConstantsHolder.xanaConstants.NFTBoxerJson);
+            }
+            else
+            {
+                return File.ReadAllText(Application.persistentDataPath + "/logIn.json");
+            }
+        }
+        else
+        {
+            return File.ReadAllText(Application.persistentDataPath + "/loginAsGuestClass.json");
+        }
+    }
     public void StopMic()
     {
         PlayerPrefs.SetInt("micSound", 0);

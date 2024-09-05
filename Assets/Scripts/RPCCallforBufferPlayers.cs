@@ -13,6 +13,7 @@ using System.IO;
 using Photon.Pun.Demo.PunBasics;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using System.Data;
 
 public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallback
 {
@@ -68,6 +69,8 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             return;
         }
 
+        GetPlayerInfo();
+        return;
         if (this.GetComponent<PhotonView>().IsMine)
         {
             _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
@@ -80,10 +83,14 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
 
     void CallRpcInvoke()
     {
+        GetPlayerInfo();
+        return;
         this.GetComponent<PhotonView>().RPC(nameof(CheckRpc), RpcTarget.AllBuffered, _mydatatosend as object);
-
     }
-
+    public void GetPlayerInfo()
+    {
+        SyncPlayer();
+    }
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         MutiplayerController.instance.playerobjects.Add(info.photonView.gameObject);
@@ -91,6 +98,128 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
 
     //Equipment otherEquip;
 
+    public void SyncPlayer()
+    {
+        ExitGames.Client.Photon.Hashtable properties = this.GetComponent<PhotonView>().Owner.CustomProperties;
+        string ClothJson="";
+        bool NFTEquiped = false;
+        // Get specific properties
+        if (properties.ContainsKey("ClothJson"))
+        {
+            ClothJson = (string)properties["ClothJson"];
+            Debug.Log("ClothJson: " + ClothJson);
+        }
+
+        if (properties.ContainsKey("NFTEquiped"))
+        {
+            NFTEquiped = (bool)properties["NFTEquiped"];
+            Debug.Log("NFTEquiped: " + NFTEquiped);
+        }
+        AvatarController otherPlayer;
+        SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
+        _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(ClothJson.ToString());
+
+        otherPlayer = gameObject.GetComponent<AvatarController>();
+        CharacterBodyParts bodyparts = otherPlayer.GetComponent<CharacterBodyParts>();
+
+        //otherPlayer._CharData = _CharacterData;
+        if (IsNFTCharacter)
+        {
+            bodyparts.head.materials[2].SetInt("_Active", 0);
+            bodyparts.body.materials[0].SetInt("_Active", 0);
+
+            //extra blendshape added to character to build muscles on Character
+            bodyparts.head.SetBlendShapeWeight(54, 100);
+            bodyparts.body.SetBlendShapeWeight(0, 100);
+
+            bodyparts.GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
+
+        }
+
+        if (_CharacterData.myItemObj.Count != 0)
+        {
+            for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
+            {
+
+                if (!otherPlayer.GetComponent<PhotonView>().IsMine)
+                {
+                    otherPlayer.GetComponent<AvatarController>().SetAvatarClothDefault(otherPlayer.gameObject, _CharacterData.gender);
+                    //CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);
+                    //bodyparts.SetAvatarByGender(_CharacterData.gender);
+
+
+                    if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
+                    {
+                        float _rand = UnityEngine.Random.Range(0.1f, 2f);
+                        string _gen = _rand <= 1 ? "Male" : "Female";
+                        otherPlayer.SetAvatarClothDefault(otherPlayer.gameObject, _gen);
+                    }
+                    else
+                    {
+                        //Update Body fate
+                        if (_CharacterData.myItemObj[i].ItemName != "")
+                        {
+                            string type = _CharacterData.myItemObj[i].ItemType;
+                            if (type.Contains("Legs") || type.Contains("Chest") || type.Contains("Feet") || type.Contains("Hair") || type.Contains("EyeWearable") || type.Contains("Chain") || type.Contains("Glove"))
+                            {
+                                if (type.Contains("Hair") && _CharacterData.hairItemData.Contains("No hair"))
+                                {
+                                    if (otherPlayer.GetComponent<AvatarController>().wornHair)
+                                        UnStichItem("Hair");
+                                }
+                                else
+                                    WearAddreesable(_CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName, otherPlayer.gameObject, _CharacterData.HairColor, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                            }
+                        }
+                        else
+                        {
+                            if (otherPlayer)
+                            {
+                                switch (_CharacterData.myItemObj[i].ItemType)
+                                {
+                                    case "Legs":
+                                        otherPlayer.WearDefaultItem("Legs", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                                        break;
+                                    case "Chest":
+                                        otherPlayer.WearDefaultItem("Chest", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                                        break;
+                                    case "Feet":
+                                        otherPlayer.WearDefaultItem("Feet", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                                        break;
+                                    case "Hair":
+                                        otherPlayer.WearDefaultItem("Hair", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else // if player is all default cloths
+        {
+            _CharacterData.gender = GetComponent<CharacterBodyParts>().AvatarGender.ToString();
+            otherPlayer.WearDefaultItem("Legs", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+            otherPlayer.WearDefaultItem("Chest", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+            otherPlayer.WearDefaultItem("Feet", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+            otherPlayer.WearDefaultItem("Hair", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+        }
+        if (_CharacterData.charactertypeAi == true)
+        {
+            ApplyAIData(_CharacterData, bodyparts);
+        }
+        bodyparts.LoadBlendShapes(_CharacterData, otherPlayer.gameObject);
+
+        StartCoroutine(otherPlayer.RPCMaskApply(otherPlayer.gameObject));
+
+        if (otherPlayer.GetComponent<EyesBlinking>())                      // Added by Ali Hamza
+        {
+            otherPlayer.GetComponent<EyesBlinking>().StoreBlendShapeValues();
+            StartCoroutine(otherPlayer.GetComponent<EyesBlinking>().BlinkingStartRoutine());
+        }
+    }
     [PunRPC]
     void CheckRpc(object[] Datasend)
     {
