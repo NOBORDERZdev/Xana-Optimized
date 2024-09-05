@@ -173,7 +173,7 @@ public class RaffleTicketHandler : MonoBehaviour
         {
             _earnTicketsInOneCycle += 50;
             _totalNumberOfTickets += _earnTicketsInOneCycle;
-            StartCoroutine(RewardPopUp("You have received your gift!", "50", false, 8f));
+            StartCoroutine(RewardPopUp("You have received your gift!", "50", 8f));
             _earnTicketsInOneCycle = 0;
         }
         else if (RaffleTickets % 5 == 0)
@@ -181,25 +181,29 @@ public class RaffleTicketHandler : MonoBehaviour
             _earnTicketsInOneCycle += 4;
             _totalNumberOfTickets += _earnTicketsInOneCycle;
             _earnTicketsInOneCycle = 0;
-            StartCoroutine(RewardPopUp("You have received your gift!", "05", true, 5f));
+            StartCoroutine(RewardPopUp("You have received your gift!", "05", 5f));
         }
         else
         {
-            StartCoroutine(RewardPopUp("You have received your gift!", "01", true, 5f));
+            StartCoroutine(RewardPopUp("You have received your gift!", "01", 5f));
         }
         UpdateUI();
     }
-    IEnumerator RewardPopUp(string value, string number, bool _val, float time)
+    IEnumerator RewardPopUp(string value, string number,float time)
     {
         yield return new WaitForSeconds(time);
 
-        if (_val)
+        switch (number)
         {
-            StartCoroutine(SaveUpdatedTicketsCount(5));
-        }
-        else
-        {
-            StartCoroutine(SaveUpdatedTicketsCount(50));
+            case "01":
+                StartCoroutine(SaveUpdatedTicketsCount(1));
+                break;
+            case "05":
+                StartCoroutine(SaveUpdatedTicketsCount(5));
+                break;
+            case "50":
+                StartCoroutine(SaveUpdatedTicketsCount(50));
+                break;
         }
         _giftTicketsPopUpDescriptionTextPotrait.text = value;
         _giftTicketsPopUpDescriptionTextLandScape.text = value;

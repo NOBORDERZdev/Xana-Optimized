@@ -26,17 +26,17 @@ public class UploadPropertyBehaviour : MonoBehaviour
     private void OnEnable()
     {
         BuilderEventManager.YoutubeVideoLoadedCallback += TurnOffLoading;
-        BuilderEventManager.BGMVolume += BGMVolume;
+        //BuilderEventManager.BGMVolume += BGMVolume;
         feedMediaPlayer.Events.AddListener(HandleEvent);
         videoAudioSource = videoPlayer.GetComponent<AudioSource>();
-        mediaPlayer.AudioVolume = SoundSettings.soundManagerSettings.totalVolumeSlider.value;
-        videoAudioSource.volume = SoundSettings.soundManagerSettings.totalVolumeSlider.value;
+        //mediaPlayer.AudioVolume = SoundSettings.soundManagerSettings.totalVolumeSlider.value;
+        //videoAudioSource.volume = SoundSettings.soundManagerSettings.totalVolumeSlider.value;
     }
 
     private void OnDisable()
     {
         BuilderEventManager.YoutubeVideoLoadedCallback -= TurnOffLoading;
-        BuilderEventManager.BGMVolume -= BGMVolume;
+        //BuilderEventManager.BGMVolume -= BGMVolume;
         feedMediaPlayer.Events.RemoveAllListeners();
     }
 

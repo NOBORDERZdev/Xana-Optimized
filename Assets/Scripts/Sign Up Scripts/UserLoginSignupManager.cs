@@ -66,6 +66,8 @@ public class UserLoginSignupManager : MonoBehaviour
     public string SetProfileAvatarTempFilename = "";
     public string PermissionCheck = "";
     public GameObject PickImageOptionScreen;
+    [Space(5)]
+    public GameObject permissionPopup;
 
     [Header("Validation Popup Panel")]
     public ErrorHandler errorHandler;
@@ -282,7 +284,9 @@ public class UserLoginSignupManager : MonoBehaviour
     }
     public void ContinueAsGuest()
     {
-         GameManager.Instance.NotNowOfSignManager();
+        //GameManager.Instance.NotNowOfSignManager();
+        LoginRegisterScreen.SetActive(false);
+        Screen.orientation = ScreenOrientation.Portrait;
     }
     public void OnClickSignUpSelection()
     {
@@ -333,15 +337,16 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void BackFromLoginSelection()
     {
-        if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
+       
+        if (!ConstantsHolder.xanaConstants.openLandingSceneDirectly && ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
         {
-            emailOrWalletLoginPanel.SetActive(false);
-            
+           
+            LoginRegisterScreen.SetActive(true);
         }
         else {
-            emailOrWalletLoginPanel.SetActive(false);
+            
             signUpOrloginSelectionPanel.SetActive(true);
-             }
+        }
     }
 
     public void OnClickLoginWithEmail()
@@ -380,10 +385,19 @@ public class UserLoginSignupManager : MonoBehaviour
     }
     public void BackFromUserNamePanel()
     {
-        enterNamePanel.SetActive(false);
-        displayrNameField.Clear();
-        userUsernameField.Clear();
-        InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            enterNamePanel.SetActive(false);
+            displayrNameField.Clear();
+            userUsernameField.Clear();
+            InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        }
+        else {
+            enterNamePanel.SetActive(false);
+            displayrNameField.Clear();
+            userUsernameField.Clear();
+            InventoryManager.instance.StartPanel_PresetParentPanelSummit.SetActive(true);
+        }
     }
 
 
@@ -1124,6 +1138,11 @@ public class UserLoginSignupManager : MonoBehaviour
                     MainSceneEventHandler.OpenLandingScene?.Invoke();
                     return;
                 }
+                else {
+                    Screen.orientation = ScreenOrientation.Portrait;
+                    LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+                    enterNamePanel.SetActive(false);
+                }
             }
            
         }
@@ -1682,7 +1701,7 @@ public class UserLoginSignupManager : MonoBehaviour
         if (!string.IsNullOrEmpty(deviceToken))
             StartCoroutine(HitLogOutAPI(ConstantsGod.API_BASEURL + ConstantsGod.LogOutAPI, deviceToken, (onSucess) =>
             {
-                if (onSucess)
+                //if (onSucess)
                     StartCoroutine(DeleteAccountApi((deleteSucess) =>
                     {
                         if (deleteSucess)
@@ -1901,7 +1920,17 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.xanaConstants.isCameraMan = false;
         ConstantsHolder.xanaConstants.IsDeemoNFT = false;
         InventoryManager.instance.CheckWhenUserLogin();
-        signUpOrloginSelectionPanel.SetActive(true);
+        if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            LoginRegisterScreen.SetActive(true);
+           // signUpOrloginSelectionPanel.SetActive(true);
+        }
+        else
+        {
+            signUpOrloginSelectionPanel.SetActive(true);
+        }
+        //signUpOrloginSelectionPanel.SetActive(true);
         if (_web3APIforWeb2._OwnedNFTDataObj != null)
         {
             _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
@@ -2182,10 +2211,42 @@ public class UserLoginSignupManager : MonoBehaviour
         PickImageOptionScreen.SetActive(true);
     }
 
+    public void CheckPermissionStatus(int maxSize)
+    {
+        if (Application.isEditor)
+        {
+            permissionPopup.SetActive(true);
+        }
+        else
+        {
+            NativeGallery.Permission permission = NativeGallery.CheckPermission(NativeGallery.PermissionType.Read, NativeGallery.MediaType.Image);
+#if UNITY_ANDROID
+            if (permission == NativeGallery.Permission.ShouldAsk) //||permission == NativeCamera.Permission.ShouldAsk
+            {
+                permissionPopup.SetActive(true);
+            }
+            else
+            {
+                OnPickImageFromGellery(maxSize);
+            }
+#elif UNITY_IOS
+                if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
+                     permissionPopup.SetActive(true);
+                }
+                else
+                {
+                    OnPickImageFromGellery(maxSize);
+                }
+#endif
+
+        }
+    }
 
     public void OnPickImageFromGellery(int maxSize)
     {
 #if UNITY_IOS
+        PlayerPrefs.SetInt("PicPermission", 1);
+
         if (PermissionCheck == "false")
         {
             string url = MyNativeBindings.GetSettingsURL();

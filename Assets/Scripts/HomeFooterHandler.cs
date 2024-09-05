@@ -298,6 +298,8 @@ public class HomeFooterHandler : MonoBehaviour
     {
         if (ConstantsHolder.IsXSummitApp)
         {
+            if (ConstantsHolder.xanaConstants.isFromTottoriWorld)
+                return;
             MainSceneEventHandler.OpenLandingScene?.Invoke();
             return;
         }
@@ -851,8 +853,17 @@ public class HomeFooterHandler : MonoBehaviour
             OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Othertabs);
             QuestDataHandler.Instance.OpenAndCloseQuestPanel(false);
         }
-        else { 
-        UserLoginSignupManager.instance.LoginRegisterScreen.SetActive(true);
+        else {
+            if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                    Screen.orientation = ScreenOrientation.LandscapeLeft;
+                    UserLoginSignupManager.instance.LoginRegisterScreen.SetActive(true);
+            }
+            else
+            {
+                UserLoginSignupManager.instance.LoginRegisterScreen.SetActive(true);
+            }
+            
         }
     }
     public void InitProfileData()
@@ -880,7 +891,7 @@ public class HomeFooterHandler : MonoBehaviour
             additiveScenesManager.SNSmodule.SetActive(true);
             // additiveScenesManager.SNSMessage.SetActive(false);
             gameManager.defaultSelection = 4;
-            FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnSelectedClick(4);
+            FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnSelectedClick(3);
         }
         else
         {
