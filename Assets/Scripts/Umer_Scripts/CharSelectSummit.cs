@@ -52,8 +52,9 @@ public class CharSelectSummit : MonoBehaviour
             {
 
                 //contentParent.GetChild(i).GetChild(0).localScale = Vector2.Lerp(contentParent.GetChild(i).GetChild(0).localScale, new Vector2(1.06f, 0.985f), 0.1f);
-                contentParent.GetChild(i).GetChild(0).DOScale(new Vector3(1.7f, 1.4f, 0.1f), 0.1f);
-
+                contentParent.GetChild(i).GetChild(0).DOScale(new Vector3(1.75f, 1.45f, 0.1f), 0.1f);
+                contentParent.GetChild(i).GetChild(0).localPosition = new Vector3(contentParent.GetChild(i).GetChild(0).localPosition.x, -6, contentParent.GetChild(i).GetChild(0).localPosition.z);
+                
                 contentParent.GetChild(i).GetChild(0).GetComponent<Image>().enabled = true;
                 SelectedOBJ = contentParent.GetChild(i).GetChild(0).gameObject;
 
@@ -62,8 +63,22 @@ public class CharSelectSummit : MonoBehaviour
                     if (a != i)
                     {
                         //contentParent.GetChild(a).GetChild(0).localScale = Vector2.Lerp(contentParent.GetChild(a).GetChild(0).localScale, new Vector2(0.91f, 0.91f), 0.1f);
-                        contentParent.GetChild(a).GetChild(0).DOScale(new Vector3(0.98f, 0.98f, 0.1f), 0.1f);
+                        
+                        
+                        contentParent.GetChild(a).GetChild(0).DOScale(new Vector3(1.2f, 1.2f, 0.1f), 0.1f);
+                        contentParent.GetChild(a).GetChild(0).localPosition = new Vector3(contentParent.GetChild(a).GetChild(0).localPosition.x, -60, contentParent.GetChild(a).GetChild(0).localPosition.z);
                     }
+                    
+                }
+                if (i != 0 || i != 19)
+                {
+                    if (i == 0)
+                    {
+                        contentParent.GetChild(1).GetChild(0).GetComponent<Image>().enabled = false;
+                    }
+                    contentParent.GetChild(i - 1).GetChild(0).DOScale(new Vector3(1.3f, 1.3f, 0.1f), 0.1f);
+                    contentParent.GetChild(i + 1).GetChild(0).DOScale(new Vector3(1.3f, 1.3f, 0.1f), 0.1f);
+                   
                 }
             }
             else
@@ -90,7 +105,7 @@ public class CharSelectSummit : MonoBehaviour
             //Debug.LogError("selected obj name :- "+SelectedOBJ.name);
             SelectedOBJ.GetComponent<PresetData_Jsons>().ChangecharacterFromPresetPanel();
             GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
-            if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
+            if (ConstantsHolder.xanaConstants.LoggedInAsGuest||ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
             {
                 UserLoginSignupManager.instance.UserNameFieldObj.SetActive(false);
             }

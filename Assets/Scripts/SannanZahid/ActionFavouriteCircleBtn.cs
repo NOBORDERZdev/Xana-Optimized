@@ -57,27 +57,41 @@ public class ActionFavouriteCircleBtn : MonoBehaviour
     }
     public void PointerClicked()
     {
+        if (PlayerController.isJoystickDragging)
+            return;
         PlayerActionInteraction();
     }
-
+    public void ClearActionButtonData()
+    {
+        ClearSelectedActionData();
+        AnimationName = default;
+        ThumbnailURL = default;
+        _actionImg.sprite = default;
+        _actionImg.gameObject.SetActive(false);
+        _actionSelected = false;
+    }
     public void InitializeBtn()
     {
-        if(PlayerPrefsUtility.GetEncryptedString(ConstantsGod.ANIMATION_DATA + IndexOfBtn) != "")
+        if (PlayerPrefsUtility.GetEncryptedString(ConstantsGod.ANIMATION_DATA + IndexOfBtn) != "")
         {
             ActionData actionData = JsonUtility.FromJson<ActionData>(PlayerPrefsUtility.GetEncryptedString(ConstantsGod.ANIMATION_DATA + IndexOfBtn));
-            AnimationName = actionData.AnimationName;
-            TypeOfAction = actionData.TypeOfAction;
-            ThumbnailURL = actionData.ThumbnailURL;
-            _actionSelected = true;
-            LoadImageFromURL();
+            if(actionData.AnimationName != "")
+            {
+                AnimationName = actionData.AnimationName;
+                TypeOfAction = actionData.TypeOfAction;
+                ThumbnailURL = actionData.ThumbnailURL;
+                _actionSelected = true;
+                LoadImageFromURL();
+            }
+            else
+            {
+                ClearActionButtonData();
+            }
+
         }
         else
         {
-            AnimationName = default;
-            ThumbnailURL = default;
-            _actionImg.sprite = default;
-            _actionImg.gameObject.SetActive(false);
-            _actionSelected = false;
+            ClearActionButtonData();
         }
     }
     public void SelectedAction(ActionData dataObj)
