@@ -4,6 +4,10 @@ using System.Numerics;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using UnityEngine.Networking;
+using SimpleJSON;
 
 public class UIHandler : MonoBehaviour
 {
@@ -43,6 +47,7 @@ public class UIHandler : MonoBehaviour
 
     private void Awake()
     {
+        StartCoroutine(FetchFeatures()); 
         Canvas.GetComponent<CanvasGroup>().alpha = 0;
         Canvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
         Canvas.GetComponent<CanvasGroup>().interactable = false;
@@ -259,4 +264,43 @@ public class UIHandler : MonoBehaviour
                 }
         }
     }
+    IEnumerator FetchFeatures()
+    {
+        UnityWebRequest request = UnityWebRequest.Get(ConstantsGod.API_BASEURL+ConstantsGod.FeaturesListApi);
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+        {
+            Debug.LogError("Error fetching features: " + request.error);
+        }
+        else
+        {
+            string jsonResponse = request.downloadHandler.text;
+            //JSONNode jsonNode = JSON.Parse(jsonResponse);
+            ApiFeatureListResponse apiResponse = JsonConvert.DeserializeObject<ApiFeatureListResponse>(jsonResponse);
+            for (int i = 0; i < apiResponse.data.Count; i++) 
+            {
+                if (apiResponse.data[i].feature_name == "SummitApp")
+                    ConstantsHolder.xanaConstants.SwitchXanaToXSummit = apiResponse.data[i].feature_status;
+            }
+            Debug.Log("Features List: " + apiResponse.data.Count);
+        }
+    }
+
+}
+public class ApiFeatureListResponse
+{
+    public bool success { get; set; }
+    public List<Feature> data { get; set; }
+    public string msg { get; set; }
+}
+
+public class Feature
+{
+    public int id { get; set; }
+    public string feature_name { get; set; }
+    public bool feature_status { get; set; }
 }
