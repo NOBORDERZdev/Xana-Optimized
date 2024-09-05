@@ -31,7 +31,7 @@ namespace Photon.Pun.Demo.PunBasics
     /// <summary>
     /// Launch manager. Connect, join a random room or create one if none or all full.
     /// </summary>
-    public class MutiplayerController : MonoBehaviourPunCallbacks
+    public class MutiplayerController : MonoBehaviourPunCallbacks // TODO Muneeb: wtf is a "Mutiplayer"?
     {
         public ServerConnectionStates connectionState = ServerConnectionStates.NotConnectedToServer;
         public MatchMakingStates matchMakingState = MatchMakingStates.NoState;
@@ -304,6 +304,8 @@ namespace Photon.Pun.Demo.PunBasics
         {
             CurrRoomName = PhotonNetwork.CurrentRoom.Name;
             LFF.LoadFile();
+
+            PenPenz.PenPenzEvents.OnJoinedRoom?.Invoke();
         }
         public override void OnLeftRoom()
         {

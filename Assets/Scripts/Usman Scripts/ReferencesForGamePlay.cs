@@ -109,10 +109,13 @@ public class ReferencesForGamePlay : MonoBehaviour
         playerControllerNew = MainPlayerParent.GetComponent<PlayerController>();
     }
 
-    IEnumerator counterCoroutine;
+    private Coroutine counterCoroutine;
     private void OnEnable()
     {
         instance = this;
+
+        PenPenz.PenPenzEvents.OnJoinedRoom += JoinedRoom;
+
         if (WorldItemView.m_EnvName.Contains("Xana Festival")) // for Xana Festival
         {
             RoomMaxPlayerCount = Convert.ToInt32(ConstantsHolder.xanaConstants.userLimit) - 1;
@@ -166,18 +169,6 @@ public class ReferencesForGamePlay : MonoBehaviour
                 m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat.SetActive(true);
         }
 
-
-        if (counterCoroutine == null)
-        {
-            counterCoroutine = SetPlayerCounter();
-            StartCoroutine(counterCoroutine);
-        }
-        else
-        {
-            StopCoroutine(counterCoroutine);
-            StartCoroutine(counterCoroutine);
-        }
-
         if (WorldItemView.m_EnvName.Contains("AfterParty") || ConstantsHolder.xanaConstants.IsMuseum)
         {
             if (WorldItemView.m_EnvName.Contains("J&J WORLD_5"))
@@ -207,6 +198,36 @@ public class ReferencesForGamePlay : MonoBehaviour
             landscapeMoveWhileDancingButton.SetActive(true);
             instance.portraitMoveWhileDancingButton.SetActive(true);
         }
+    }
+
+    private void OnDisable()
+    {
+        PenPenz.PenPenzEvents.OnJoinedRoom -= JoinedRoom;
+    }
+
+    private void JoinedRoom()
+    {
+        if (counterCoroutine != null)
+        {
+            StopCoroutine(counterCoroutine);
+            counterCoroutine = null;
+        }
+
+        counterCoroutine = StartCoroutine(SetPlayerCounter());
+
+        //Debug.Log("<color=red>Check()InternetConnected1</color> " + instance.gameObject.name);
+        //if (counterCoroutine == null)
+        //{
+        //    counterCoroutine = SetPlayerCounter();
+        //    StartCoroutine(counterCoroutine);
+        //    Debug.Log("<color=red>Check()InternetConnected2</color> " + instance.gameObject.name);
+        //}
+        //else
+        //{
+        //    StopCoroutine(counterCoroutine);
+        //    StartCoroutine(counterCoroutine);
+        //    Debug.Log("<color=red>Check()InternetConnected3</color> " + instance.gameObject.name);
+        //}
     }
 
 
