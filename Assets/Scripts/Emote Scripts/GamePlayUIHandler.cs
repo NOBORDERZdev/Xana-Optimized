@@ -44,6 +44,17 @@ public class GamePlayUIHandler : MonoBehaviour
     public GameObject currentPortalObject;
     public TextMeshProUGUI JJPortalPopupText;
     public string[] JJPortalPopupTextData;
+
+    #region XANA PARTY WORLD
+    [Header("Penpenz Leaderboard")]
+    public Text MyRankText;
+    public Text MyPointsText;
+    public GameObject LeaderboardPanel;
+    public GameObject PlayerLeaderboardStatsContainer;
+    public GameObject PlayerLeaderboardStatsPrefab;
+    public GameObject MoveToLobbyBtn;
+    #endregion
+
     private void Start()
     {
         if (rotateOrientationLand)

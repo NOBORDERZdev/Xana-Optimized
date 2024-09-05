@@ -3,8 +3,10 @@ using Photon.Pun.Demo.PunBasics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class ReferencesForGamePlay : MonoBehaviour
 {
@@ -43,6 +45,21 @@ public class ReferencesForGamePlay : MonoBehaviour
     public int moveWhileDanceCheck;
     public QualityManager QualityManager;
     public XanaChatSystem ChatSystemRef;
+
+
+    #region XANA PARTY WORLD
+    public GameObject XANAPartyWaitingText;
+    public GameObject XANAPartyCounterPanel;
+    public TMP_Text XANAPartyCounterText;
+    public bool isCounterStarted = false;
+    public bool isMatchingTimerFinished = false;
+
+
+    private const string InLevelProperty = "InLevel";
+    public bool IsLevelPropertyUpdatedOnlevelLoad = false;
+    #endregion
+
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -409,6 +426,41 @@ public class ReferencesForGamePlay : MonoBehaviour
     public void FullScreenMapStatus (bool _enable)
     {
         FullscreenMapSummit.SetActive(_enable);
+    }
+
+    public IEnumerator ShowLobbyCounterAndMovePlayer()
+    {
+        XANAPartyWaitingText.SetActive(false);
+        XANAPartyCounterPanel.SetActive(true);
+        for (int i = 3; i >= 1; i--)
+        {
+            XANAPartyCounterText.text = i.ToString();
+            yield return new WaitForSeconds(1);
+        }
+        XANAPartyCounterPanel.SetActive(false);
+
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+        yield return new WaitForSeconds(2);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
+            xanaPartyMulitplayer.StartCoroutine(xanaPartyMulitplayer.MovePlayersToRandomGame());
+        }
+    }
+
+    public void LoadLevel(string levelName)
+    {
+        XANAPartyManager.Instance.ActivePlayerInCurrentLevel = 0;
+        IsLevelPropertyUpdatedOnlevelLoad = false;
+        Hashtable props = new Hashtable()
+        {
+            { InLevelProperty, (levelName+XANAPartyManager.Instance.GameIndex) }
+        };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+        // Load the new level
+        PhotonNetwork.LoadLevel(levelName);
     }
 }
 

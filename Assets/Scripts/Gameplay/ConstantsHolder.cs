@@ -188,6 +188,17 @@ public class ConstantsHolder : MonoBehaviour
     public bool isGoingForHomeScene = false;
     public bool hasToShowDailyPopup = false;
 
+
+    #region XANA PARTY WORLD
+    public bool isXanaPartyWorld = false;
+    public bool isJoinigXanaPartyGame = false;
+    public int XanaPartyGameId;
+    public string XanaPartyGameName;
+    public bool isMasterOfGame = false;
+    public static int XanaPartyMaxPlayers = 25;
+    #endregion
+
+
     public string r_EmoteStoragePersistentPath
     {
         get

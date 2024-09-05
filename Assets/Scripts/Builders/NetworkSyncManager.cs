@@ -17,6 +17,10 @@ public class NetworkSyncManager : MonoBehaviour, IPunObservable
 
     public Action OnDeserilized;
 
+    #region XANA PARTY WORLD
+    public Action startGame;
+    #endregion
+
     private void Awake()
     {
         Instance = this;

@@ -46,6 +46,13 @@ public class BuilderMapDownload : MonoBehaviour
     internal LevelData levelData;
     private AISkyboxItem aiSkyboxItem;
     #endregion
+
+    #region XANA PARTY WORLD
+    [Header("Dynamic Object Prefab")]
+    public GameObject MultiplayerComponent;
+
+    public GameObject XANAPartyLoading;
+    #endregion
     //internal string response;
 
     #region UNITY_METHOD
@@ -905,6 +912,7 @@ public class Data
     public string map_json_link;
     public User user;
 
+    public int worldType;
     // Count Variable Added by WaqasAhmad
     // Same Class used in Analytics Script
     public string count;

@@ -101,6 +101,15 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     public MultiplayerComponent MultiplayerComponent;
 
     bool isPotrait = false;
+
+    #region XANA PARTY WORLD
+    public StartPoint StartPoint;
+    public bool isRaceStarted = false;
+    public bool SinglePlayer = false;
+    public List<XanaItem> MultiplayerComponentstoSet = new List<XanaItem>();
+    internal Rigidbody PlayerRigidBody;
+    internal bool IsGrounded;
+    #endregion
     private void Awake()
     {
         instance = this;
@@ -387,6 +396,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
     }
 
+    
     public void MasterClientSwitched(Player newMasterClient)
     {
         //if (!withMultiplayer)
@@ -401,6 +411,40 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         //    }
         //}
     }
+
+
+    public void TriggerRaceStatusUpdate()
+    {
+        this.GetComponent<PhotonView>().RPC(nameof(UpdateRaceStatus), RpcTarget.All);
+    }
+
+    [PunRPC]
+    void UpdateRaceStatus()
+    {
+        var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
+        xanaPartyMulitplayer.RaceFinishCount++;
+        //int currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+        PenpenzLpManager ref_PenpenzLpManager = XANAPartyManager.Instance.GetComponent<PenpenzLpManager>();
+        ref_PenpenzLpManager.RaceFinishTime.Add(DateTimeOffset.Now.ToUnixTimeMilliseconds());
+
+
+
+        // print("RaceFinishCount : "+ GamificationComponentData.instance.RaceFinishCount + " ::: "+ currentPlayers);
+        if (xanaPartyMulitplayer.RaceFinishCount >= XANAPartyManager.Instance.ActivePlayerInCurrentLevel)//ref_PenpenzLpManager.RaceStartWithPlayers)//currentPlayers)
+        {
+            XANAPartyManager.Instance.GameIndex++;
+            StartCoroutine(ref_PenpenzLpManager.PrintLeaderboard());
+        }
+    }
+
+    public IEnumerator MovePlayersToNextGame()
+    {
+        yield return new WaitForSeconds(10f);
+        var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
+        xanaPartyMulitplayer.ResetValuesOnCompleteRace();
+        xanaPartyMulitplayer.StartCoroutine(xanaPartyMulitplayer.MovePlayersToRandomGame());
+    }
+
     #endregion
 }
 

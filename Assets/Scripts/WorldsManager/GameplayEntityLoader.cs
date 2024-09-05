@@ -75,7 +75,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     //Bool for BuilderSpawn point available or not
     bool BuilderSpawnPoint = false;
 
+    #region XANA PARTY WORLD
     [Header("XANA Party")]
+    public GameObject PositionResetButton;
     [SerializeField] GameObject XanaWorldController;
     [SerializeField] GameObject XanaPartyController;
     [SerializeField] public CameraManager XanaPartyCamera;
@@ -83,6 +85,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     [SerializeField] PenguinLookPointTracker penguinLook;
     [SerializeField] ReferenceForPenguinAvatar referenceForPenguin;
     [SerializeField] RaffleTicketHandler _raffleTickets;
+    #endregion
 
     [Header("XANA Summit Performer AI")]
     public GameObject[] AIAvatarPrefab;

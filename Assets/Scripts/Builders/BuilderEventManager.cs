@@ -143,4 +143,12 @@ public static class BuilderEventManager
     public static Action StopBGM;
     public static Action ResetSummit;
 
+
+    #region XANA PARTY WORLD
+    public static Action XANAPartyRaceStart;
+    public static Action XANAPartyRaceFinish;
+    public static Action XANAPartyWiatingForPlayer;
+    public static Action XANAPartyRaceResult;
+    #endregion
+
 }
