@@ -33,6 +33,8 @@ public class XanaWorldDownloader : MonoBehaviour
     public static Transform assetParentStatic;
     private static int totalAssetCount;
     public static int downloadedTillNow = 0;
+    private static HashSet<string> uniqueDownloadKeys = new HashSet<string>();
+    public static long downloadSize;
 
     [Header("Short Interval sorting element count")]
     public static int shortSortingCount = 100;
@@ -55,6 +57,7 @@ public class XanaWorldDownloader : MonoBehaviour
     private float unloadDistance = 50;
 
     private static XanaWorldDownloader xanaWorldDownloader;
+    public DownloadPopupHandler DownloadPopupHandlerInstance;
 
     private static CancellationTokenSource cts;
 
@@ -125,8 +128,10 @@ public class XanaWorldDownloader : MonoBehaviour
         {
             await Task.Yield();
         }
+        bool permission=await DownloadPopupHandlerInstance.ShowDialogAsync();
+        if (!permission)
+            return;
         StartCoroutine(DownloadObjects(preLoadObjects, Priority.High));
-
         while (!isSpawnDownloaded)
         {
             await Task.Yield();
@@ -151,7 +156,7 @@ public class XanaWorldDownloader : MonoBehaviour
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
     }
 
-    static long downloadSize;
+    
     public static void ArrangeData()
     {
         try
@@ -160,7 +165,11 @@ public class XanaWorldDownloader : MonoBehaviour
             {
                 DownloadQueueData temp = new DownloadQueueData();
                 temp.ItemID = xanaSceneData.SceneObjects[i].addressableKey;
-                downloadSize += Addressables.GetDownloadSizeAsync(xanaSceneData.SceneObjects[i].addressableKey).WaitForCompletion();
+                if(!uniqueDownloadKeys.Contains(xanaSceneData.SceneObjects[i].addressableKey))
+                {
+                    uniqueDownloadKeys.Add(xanaSceneData.SceneObjects[i].addressableKey);
+                    downloadSize += Addressables.GetDownloadSizeAsync(xanaSceneData.SceneObjects[i].addressableKey).WaitForCompletion();
+                }
                 temp.DcitionaryKey = i.ToString();
                 temp.Position = xanaSceneData.SceneObjects[i].position;
                 temp.Rotation = xanaSceneData.SceneObjects[i].rotation;
@@ -190,13 +199,7 @@ public class XanaWorldDownloader : MonoBehaviour
         {
             Debug.LogError("An error occurred: " + e.Message);
         }
-        Debug.LogError("Total Download Size"+downloadSize);
-    }
-
-    private static void XanaWorldDownloader_Completed(AsyncOperationHandle<long> obj)
-    {
-        downloadSize += obj.Result;
-        Debug.LogError("Total Download Size" + downloadSize);
+        Debug.LogError("Total Download Size"+downloadSize/ (1024f * 1024f));
     }
 
     //Sorting data on start and after long Interval
@@ -691,8 +694,6 @@ public class XanaWorldDownloader : MonoBehaviour
         }
 
     }
-
-
 
 
     //bool posChecking = true;
