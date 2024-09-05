@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using static SummitAIChatHandler;
 using UnityEngine.Networking;
 using SimpleJSON;
 
