@@ -151,6 +151,7 @@ public class XanaWorldDownloader : MonoBehaviour
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
     }
 
+    static long downloadSize;
     public static void ArrangeData()
     {
         try
@@ -159,6 +160,7 @@ public class XanaWorldDownloader : MonoBehaviour
             {
                 DownloadQueueData temp = new DownloadQueueData();
                 temp.ItemID = xanaSceneData.SceneObjects[i].addressableKey;
+                downloadSize += Addressables.GetDownloadSizeAsync(xanaSceneData.SceneObjects[i].addressableKey).WaitForCompletion();
                 temp.DcitionaryKey = i.ToString();
                 temp.Position = xanaSceneData.SceneObjects[i].position;
                 temp.Rotation = xanaSceneData.SceneObjects[i].rotation;
@@ -188,7 +190,13 @@ public class XanaWorldDownloader : MonoBehaviour
         {
             Debug.LogError("An error occurred: " + e.Message);
         }
+        Debug.LogError("Total Download Size"+downloadSize);
+    }
 
+    private static void XanaWorldDownloader_Completed(AsyncOperationHandle<long> obj)
+    {
+        downloadSize += obj.Result;
+        Debug.LogError("Total Download Size" + downloadSize);
     }
 
     //Sorting data on start and after long Interval
