@@ -47,13 +47,11 @@ public class DownloadPopupHandler : MonoBehaviour
     {
         if(AlwaysAllow.isOn)
         {
-            Debug.LogError("Toggle on");
             PlayerPrefs.SetFloat("AlwaysAllow",1);
             AlwaysAllowDownload = true;
         }
         else
         {
-            Debug.LogError("Toggle off");
             PlayerPrefs.DeleteKey("AlwaysAllow");
             AlwaysAllowDownload = false;
         }
@@ -61,6 +59,7 @@ public class DownloadPopupHandler : MonoBehaviour
 
     public async Task<bool> ShowDialogAsync()
     {
+        AlwaysAllow.isOn = true;
         DownloadPopup.SetActive(true);
 
         userResponseTCS = new TaskCompletionSource<bool>();

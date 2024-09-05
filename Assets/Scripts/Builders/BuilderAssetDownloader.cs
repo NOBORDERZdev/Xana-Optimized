@@ -36,6 +36,7 @@ public class BuilderAssetDownloader : MonoBehaviour
     private static int totalAssetCount;
     public static int downloadedTillNow = 0;
     private static HashSet<string> uniqueDownloadKeys = new HashSet<string>();
+    
 
     [Header("Short Interval sorting element count")]
     public static int shortSortingCount = 100;
@@ -186,8 +187,10 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     async void StartDownloadingAssets()
     {
-        if(DownloadPopupHandler.DownloadPopupHandlerInstance!=null)
+        if(DownloadPopupHandler.DownloadPopupHandlerInstance!=null && !DownloadPopupHandler.AlwaysAllowDownload && !XanaWorldDownloader.CheckForVisitedWorlds(ConstantsHolder.xanaConstants.builderMapID.ToString()))
         {
+            if (!XanaWorldDownloader.DownloadedWorldNames.Contains(ConstantsHolder.xanaConstants.builderMapID.ToString()))
+                XanaWorldDownloader.DownloadedWorldNames.Add(ConstantsHolder.xanaConstants.builderMapID.ToString());
             bool permission = await DownloadPopupHandler.DownloadPopupHandlerInstance.ShowDialogAsync();
             if (!permission)
                 return;
