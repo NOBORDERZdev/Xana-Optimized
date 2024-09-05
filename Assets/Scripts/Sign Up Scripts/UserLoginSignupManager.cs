@@ -282,7 +282,9 @@ public class UserLoginSignupManager : MonoBehaviour
     }
     public void ContinueAsGuest()
     {
-         GameManager.Instance.NotNowOfSignManager();
+        //GameManager.Instance.NotNowOfSignManager();
+        LoginRegisterScreen.SetActive(false);
+        Screen.orientation = ScreenOrientation.Portrait;
     }
     public void OnClickSignUpSelection()
     {
@@ -333,15 +335,16 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void BackFromLoginSelection()
     {
-        if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
+       
+        if (!ConstantsHolder.xanaConstants.openLandingSceneDirectly && ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
         {
-            emailOrWalletLoginPanel.SetActive(false);
-            
+           
+            LoginRegisterScreen.SetActive(true);
         }
         else {
-            emailOrWalletLoginPanel.SetActive(false);
+            
             signUpOrloginSelectionPanel.SetActive(true);
-             }
+        }
     }
 
     public void OnClickLoginWithEmail()
@@ -380,10 +383,19 @@ public class UserLoginSignupManager : MonoBehaviour
     }
     public void BackFromUserNamePanel()
     {
-        enterNamePanel.SetActive(false);
-        displayrNameField.Clear();
-        userUsernameField.Clear();
-        InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            enterNamePanel.SetActive(false);
+            displayrNameField.Clear();
+            userUsernameField.Clear();
+            InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        }
+        else {
+            enterNamePanel.SetActive(false);
+            displayrNameField.Clear();
+            userUsernameField.Clear();
+            InventoryManager.instance.StartPanel_PresetParentPanelSummit.SetActive(true);
+        }
     }
 
 
@@ -1124,6 +1136,11 @@ public class UserLoginSignupManager : MonoBehaviour
                     MainSceneEventHandler.OpenLandingScene?.Invoke();
                     return;
                 }
+                else {
+                    Screen.orientation = ScreenOrientation.Portrait;
+                    LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+                    enterNamePanel.SetActive(false);
+                }
             }
            
         }
@@ -1682,7 +1699,7 @@ public class UserLoginSignupManager : MonoBehaviour
         if (!string.IsNullOrEmpty(deviceToken))
             StartCoroutine(HitLogOutAPI(ConstantsGod.API_BASEURL + ConstantsGod.LogOutAPI, deviceToken, (onSucess) =>
             {
-                if (onSucess)
+                //if (onSucess)
                     StartCoroutine(DeleteAccountApi((deleteSucess) =>
                     {
                         if (deleteSucess)
@@ -1901,7 +1918,17 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.xanaConstants.isCameraMan = false;
         ConstantsHolder.xanaConstants.IsDeemoNFT = false;
         InventoryManager.instance.CheckWhenUserLogin();
-        signUpOrloginSelectionPanel.SetActive(true);
+        if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            LoginRegisterScreen.SetActive(true);
+           // signUpOrloginSelectionPanel.SetActive(true);
+        }
+        else
+        {
+            signUpOrloginSelectionPanel.SetActive(true);
+        }
+        //signUpOrloginSelectionPanel.SetActive(true);
         if (_web3APIforWeb2._OwnedNFTDataObj != null)
         {
             _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();

@@ -171,7 +171,6 @@ public class YoutubeStreamController : MonoBehaviour
         }
         else
         {
-            //Debug.Log("Extra video play call for random video stop issue");
             if (APIHandler.Data.IsLive && LiveStreamPlayer.activeInHierarchy)
             {
                 if (streamYoutubeVideo.AVProVideoPlayer.Control != null && !streamYoutubeVideo.AVProVideoPlayer.Control.IsPlaying())
@@ -183,7 +182,6 @@ public class YoutubeStreamController : MonoBehaviour
                     }
                 }
             }
-
             //LiveStreamPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = new Color32(255, 255, 255, 255);
             //if (NormalPlayer.GetComponent<YoutubeSimplified>().videoPlayer != null)
             //    NormalPlayer.GetComponent<YoutubeSimplified>().videoPlayer.targetMaterialRenderer.material.color = new Color32(255, 255, 255, 255);

@@ -58,7 +58,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
     Action<string> HLSurlLoaded;
 
     public bool IsInternetDisconnected = false;
-    
+
     private void OnEnable()
     {
         AvatarSpawnerOnDisconnect.OninternetDisconnect += OnInternetDisconnect;

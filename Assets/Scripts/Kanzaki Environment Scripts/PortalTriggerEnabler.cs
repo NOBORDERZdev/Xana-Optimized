@@ -17,7 +17,6 @@ public class PortalTriggerEnabler : MonoBehaviour
                 daisenTrigger.enabled = true;
             }
             _once = true;
-
         }
     }
 }

@@ -17,7 +17,7 @@ public class LoadingHandler : MonoBehaviour
     public GameObject loadingPanel;
 
     public Image loadingSlider;
-    public Text loadingText;
+    public TextMeshProUGUI loadingText;
     public TextMeshProUGUI loadingPercentageText;
 
     public Image JJLoadingSlider;
@@ -580,7 +580,6 @@ public class LoadingHandler : MonoBehaviour
             }
             yield return null;
         }
-        ConstantsHolder.xanaConstants.isFromTottoriWorld = false;
     }
 
     public IEnumerator TeleportFader(FadeAction action)
