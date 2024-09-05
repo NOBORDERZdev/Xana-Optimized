@@ -1123,6 +1123,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
 
             }));
+            GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
             if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
             {
                // LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
