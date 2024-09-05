@@ -38,6 +38,8 @@ public class PartyTimerManager : MonoBehaviourPunCallbacks
             }
             GetComponent<PhotonView>().RPC(nameof(StartTimer), RpcTarget.AllBuffered, startTime);
         }
+
+        ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(false);
     }
 
     void Update()
