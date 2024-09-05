@@ -304,6 +304,4 @@ public class Feature
     public int id { get; set; }
     public string feature_name { get; set; }
     public bool feature_status { get; set; }
-    public DateTime created_at { get; set; }
-    public DateTime updated_at { get; set; }
 }
