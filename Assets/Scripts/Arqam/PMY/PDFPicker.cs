@@ -23,6 +23,8 @@ public class PDFPicker : MonoBehaviour
         }, new string[] { "application/pdf" });
 
 #elif UNITY_IOS
+string[] fileTypes = new string[] { "public.pdf" };
+
 NativeFilePicker.PickFile((string path) =>
 {
     if (path == null)
@@ -33,10 +35,25 @@ NativeFilePicker.PickFile((string path) =>
 
     Debug.Log("Picked PDF file path: " + path);
 
-    // Attempt to open the file using the iOS file system
-    OpenDocumentPicker(path);
+    // Do something with the PDF file, e.g., open it
+     OpenDocumentPicker(path);
 
-}, new string[] { "public.pdf" });
+}, fileTypes);
+
+//NativeFilePicker.PickFile((string path) =>
+//{
+//    if (path == null)
+//    {
+//        Debug.LogError("File picking was cancelled or failed on iOS.");
+//        return;
+//    }
+
+//    Debug.Log("Picked PDF file path: " + path);
+
+//    // Attempt to open the file using the iOS file system
+//    OpenDocumentPicker(path);
+
+//}, new string[] { "public.pdf" });
 
 #endif
     }
