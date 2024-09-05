@@ -156,6 +156,10 @@ public class MyProfileDataManager : MonoBehaviour
     bool profileMakedFlag = false;
     public string permissionCheck = "";
     public string TestingJasonForTags;
+    [Space(5)]
+    public GameObject permissionPopup;
+    public GameObject permissionPopup_Camera;
+
     UserLoginSignupManager userLoginSignupManager;
     SNS_APIManager apiManager;
     ProfileUIHandler profileUIHandler;
@@ -1145,11 +1149,43 @@ public class MyProfileDataManager : MonoBehaviour
         }
     }
 
+    public void CheckPermissionStatus(int maxSize)
+    {
+        if (Application.isEditor)
+        {
+            permissionPopup.SetActive(true);
+        }
+        else
+        {
+            NativeGallery.Permission permission = NativeGallery.CheckPermission(NativeGallery.PermissionType.Read, NativeGallery.MediaType.Image);
+#if UNITY_ANDROID
+            if (permission == NativeGallery.Permission.ShouldAsk) //||permission == NativeCamera.Permission.ShouldAsk
+            {
+                permissionPopup.SetActive(true);
+            }
+            else
+            {
+                OnPickImageFromGellery(maxSize);
+            }
+#elif UNITY_IOS
+                if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
+                     permissionPopup.SetActive(true);
+                }
+                else
+                {
+                    OnPickImageFromGellery(maxSize);
+                }
+#endif
+
+        }
+    }
 
     //this method is used to pick group avatar from gellery for group avatar.
     public void OnPickImageFromGellery(int maxSize)
     {
 #if UNITY_IOS
+         PlayerPrefs.SetInt("PicPermission", 1);
+
         if (permissionCheck == "false")
         {
             string url = MyNativeBindings.GetSettingsURL();
@@ -1273,10 +1309,42 @@ public class MyProfileDataManager : MonoBehaviour
 #endif
     }
 
+    public void CheckPermissionStatus_Camera(int maxSize)
+    {
+        if (Application.isEditor)
+        {
+            permissionPopup_Camera.SetActive(true);
+        }
+        else
+        {
+            NativeCamera.Permission permission = NativeCamera.CheckPermission(true);
+#if UNITY_ANDROID
+            if (permission == NativeCamera.Permission.ShouldAsk) //||permission == NativeCamera.Permission.Denied
+            {
+                permissionPopup_Camera.SetActive(true);
+            }
+            else
+            {
+                OnPickImageFromCamera(maxSize);
+            }
+#elif UNITY_IOS
+                if(PlayerPrefs.GetInt("CamPermission", 0) == 0){
+                     permissionPopup_Camera.SetActive(true);
+                }
+                else
+                {
+                    OnPickImageFromCamera(maxSize);
+                }
+#endif
+
+        }
+    }
+
     //this method is used to take picture from camera for group avatar.
     public void OnPickImageFromCamera(int maxSize)
     {
 #if UNITY_IOS
+        PlayerPrefs.SetInt("CamPermission", 1);
         if (permissionCheck == "false")
         {
             string url = MyNativeBindings.GetSettingsURL();
