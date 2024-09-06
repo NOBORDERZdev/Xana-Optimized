@@ -479,6 +479,10 @@ public class YoutubeAPIHandler : MonoBehaviour
                             }
                             else//For AWS Video playing
                             {
+                                if (OldAWSURL != _apiResponse.videoData.url)
+                                {
+                                    _response = null;
+                                }
                                 if (_response == null)
                                 {
                                     _response = new StreamResponse();
