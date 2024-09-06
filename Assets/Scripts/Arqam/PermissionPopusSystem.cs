@@ -80,6 +80,8 @@ public class PermissionPopusSystem : MonoBehaviour
         popupsScreen.potraitData.permissionPopupPort.SetActive(false);
         popupsScreen.landScapeData.permissionPopupLand.SetActive(false);
         textType = TextType.none;
+        onCloseAction = null;
+        onCloseActionWithParam = null;
     }
 
     private void ShowPermissionScreen()
