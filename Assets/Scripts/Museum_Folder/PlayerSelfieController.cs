@@ -681,10 +681,9 @@ public class PlayerSelfieController : MonoBehaviour
     {
         if (Application.isEditor)
         {
-            if (!ScreenOrientationManager._instance.isPotrait)
-                permissionPopupLandscape.SetActive(true);
-            else
-                permissionPopupPotrait.SetActive(true);
+            PermissionPopusSystem.Instance.onCloseAction += SaveImageLocally;
+            PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+            PermissionPopusSystem.Instance.OpenPermissionScreen();
         }
         else
         {
@@ -692,10 +691,9 @@ public class PlayerSelfieController : MonoBehaviour
 #if UNITY_ANDROID
             if (permission == NativeGallery.Permission.ShouldAsk)
             {
-                if (!ScreenOrientationManager._instance.isPotrait)
-                    permissionPopupLandscape.SetActive(true);
-                else
-                    permissionPopupPotrait.SetActive(true);
+                PermissionPopusSystem.Instance.onCloseAction += SaveImageLocally;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+                PermissionPopusSystem.Instance.OpenPermissionScreen();
             }
             else
             {
@@ -703,10 +701,9 @@ public class PlayerSelfieController : MonoBehaviour
             }
 #elif UNITY_IOS
                 if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
-                     if (!ScreenOrientationManager._instance.isPotrait)
-                    permissionPopupLandscape.SetActive(true);
-                else
-                    permissionPopupPotrait.SetActive(true);
+                     PermissionPopusSystem.Instance.onCloseAction += SaveImageLocally;
+            PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+            PermissionPopusSystem.Instance.OpenPermissionScreen();
                 }
                 else
                 {
@@ -718,7 +715,8 @@ public class PlayerSelfieController : MonoBehaviour
 
     public void SaveImageLocally()
     {
-#if !UNITY_EDITOR && UNITY_IOS
+        PermissionPopusSystem.Instance.onCloseAction -= SaveImageLocally;
+#if UNITY_IOS
         PlayerPrefs.SetInt("PicPermission", 1);
 #endif
 
