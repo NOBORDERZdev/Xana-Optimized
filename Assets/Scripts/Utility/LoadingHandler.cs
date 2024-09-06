@@ -9,6 +9,7 @@ using DG.Tweening;
 using UnityEngine.Video;
 using System.Threading.Tasks;
 using SuperStar.Helpers;
+using Unity.VisualScripting;
 
 public class LoadingHandler : MonoBehaviour
 {
@@ -104,6 +105,7 @@ public class LoadingHandler : MonoBehaviour
 
     public GameObject SearchLoadingCanvas;
     private CanvasGroup canvasGroup;
+    bool Autostartslider = false;
     private void Awake()
     {
         if (Instance == null)
@@ -301,6 +303,7 @@ public class LoadingHandler : MonoBehaviour
         JJLoadingSlider.fillAmount = 0f;
         JJLoadingPercentageText.text = "0%".ToString();
         LoadingStatus.anchorMax = new Vector2(0, LoadingStatus.anchorMax.y);
+        DomeProgress.text = "00";
     }
 
     public void HideLoading()
@@ -702,8 +705,46 @@ public class LoadingHandler : MonoBehaviour
         DomeLoading.SetActive(true);
         DomeName.text = info.name;
         DomeDescription.text = info.description;
+        DomeCreator.text = info.creator;
+      
+        Debug.Log("Dome id " + info.domeId);
+        if (info.domeId > 0 && info.domeId < 9)
+        {
+            DomeCategory.text = "Center";
+            DomeID.text = "CA-" + info.domeId;
+        }
+
+        if (info.domeId > 8 && info.domeId < 39)
+        {
+            DomeCategory.text = "Business";
+            DomeID.text = "BA-" + info.domeId;
+        }
+
+        if (info.domeId > 38 && info.domeId < 69)
+        {
+            DomeCategory.text = "Web 3";
+            DomeID.text = "WA-" + info.domeId;
+        }
+
+        if (info.domeId > 68 && info.domeId < 99)
+        {
+            DomeCategory.text = "Game";
+            DomeID.text = "GA-" + info.domeId;
+        }
+        if (info.domeId > 98 && info.domeId < 129)
+        {
+            DomeCategory.text = "Entertainmnent";
+            DomeID.text = "EA-" + info.domeId;
+        }
+        if (info.domeId > 128 && info.domeId < 161)
+        {
+            DomeCategory.text = "Entertainmnent";
+            DomeID.text = "MD   -" + info.domeId;
+        }
+        DomeEstimateTime.text = "1 min.";
         ApprovalUI.SetActive(false);
         DomeLodingUI.SetActive(true);
+        StartCoroutine(IncrementSliderValue(Random.Range(0f, 5f)));
     }
 
     public void showApprovaldomeloading(XANASummitDataContainer.DomeGeneralData info)
@@ -772,25 +813,26 @@ public class LoadingHandler : MonoBehaviour
         DomeEstimateTime.text = "1 min.";
         ApprovalUI.SetActive(true);
         DomeLodingUI.SetActive(false);
+        if (info.worldType) { Autostartslider = false; } else { Autostartslider = true; }
     }
-    public void showApprovaldomeloading(XANASummitSceneLoading.SingleWorldInfo info)
+    public void showApprovaldomeloading(XANASummitSceneLoading.SingleWorldInfo info, XANASummitDataContainer.OfficialWorldDetails selectedWold)
     {
         WaitForInput = true;
-        if (!string.IsNullOrEmpty(info.data.thumbnail))
+        if (!string.IsNullOrEmpty(selectedWold.icon))
         {
             DomeThumbnail.gameObject.SetActive(true);
-            if (AssetCache.Instance.HasFile(info.data.thumbnail))
+            if (AssetCache.Instance.HasFile(selectedWold.icon))
             {
-                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.data.thumbnail);
+                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, selectedWold.icon);
 
             }
             else
             {
-                AssetCache.Instance.EnqueueOneResAndWait(info.data.thumbnail, info.data.thumbnail, (success) =>
+                AssetCache.Instance.EnqueueOneResAndWait(selectedWold.icon, selectedWold.icon, (success) =>
                 {
                     if (success)
                     {
-                        AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.data.thumbnail, changeAspectRatio: true);
+                        AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, selectedWold.icon, changeAspectRatio: true);
 
                     }
                 });
@@ -800,10 +842,13 @@ public class LoadingHandler : MonoBehaviour
         ResetLoadingValues();
         DomeLoading.SetActive(true);
         DomeName.text = info.data.name;
-        DomeDescription.text = info.data.description;
-
+        DomeDescription.text = selectedWold.description;
+        DomeCreator.text = selectedWold.creatorName;
+        DomeType.text = selectedWold.subWorldType;
+        DomeCategory.text = selectedWold.subWorldCategory;
         ApprovalUI.SetActive(true);
         DomeLodingUI.SetActive(false);
+        if (info.data.entityType == "USER_WORLD") { Autostartslider = false; } else { Autostartslider = true; }
     }
     public async  void EnterDome()
     {

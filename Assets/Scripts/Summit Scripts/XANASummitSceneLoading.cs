@@ -118,6 +118,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         {
             ConstantsHolder.domeId = domeId;
             ConstantsHolder.isFromXANASummit = true;
+            LoadingHandler.Instance.DisableDomeLoading();
             bool Success = await SubWorldsHandlerInstance.CreateSubWorldList(domeGeneralData, playerPos);
             if (Success)
                 return;
@@ -221,7 +222,10 @@ public class XANASummitSceneLoading : MonoBehaviour
     public async void LoadingSceneByIDOrName(string worldId, Vector3 playerPos)
     {
         if (string.IsNullOrEmpty(worldId))
+        {
+            Debug.LogError("null World");
             return;
+        }
 
         //StartCoroutine(LoadingHandler.Instance.FadeIn());
        // LoadingHandler.Instance.ShowVideoLoading();
@@ -233,8 +237,8 @@ public class XANASummitSceneLoading : MonoBehaviour
         SingleWorldInfo worldInfo = await GetSingleWorldData(worldId);
 
         #region WaitingForPLayerApproval
-        LoadingHandler.Instance.showApprovaldomeloading(worldInfo);
-
+        LoadingHandler.Instance.showApprovaldomeloading( worldInfo,SubWorldsHandlerInstance.selectedWold);
+        SubWorldsHandlerInstance.OnEnteredIntoWorld();
         while (LoadingHandler.Instance.WaitForInput)
         {
             await Task.Delay(1000);

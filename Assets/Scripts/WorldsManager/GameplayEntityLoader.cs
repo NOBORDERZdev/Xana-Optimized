@@ -1052,7 +1052,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             }
             while (!handle.IsDone)
             {
-                LoadingHandler.Instance.DomeLoadingProgess(handle.PercentComplete);
+              
                 yield return null;
             }
             addressableSceneName = environmentLabel;
