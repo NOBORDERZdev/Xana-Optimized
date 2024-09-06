@@ -80,6 +80,7 @@ public class AddressableDownloader : MonoBehaviour
     public IEnumerator DownloadAddressableObj(int itemId, string key, string type, string _gender, AvatarController applyOn, Color hairColor, bool applyHairColor = true, bool callFromMultiplayer = false)
     {
         int _counter = 0;
+        Debug.Log("Downloading Cloths");
         while (!ConstantsHolder.isAddressableCatalogDownload)
         {
             Debug.Log("<color=red> Waiting for Addressable Catalog to download </color>");
@@ -184,6 +185,8 @@ public class AddressableDownloader : MonoBehaviour
                                 }
                             }
                         }
+                        yield  return new WaitForSeconds(1);
+                        applyOn.LoadedCloths++;
                         yield break;
                     }
                 }

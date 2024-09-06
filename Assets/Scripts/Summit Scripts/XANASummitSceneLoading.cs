@@ -242,7 +242,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (!LoadingHandler.Instance.enter) { return; }
 
         LoadingHandler.Instance.enter = false;
-
+        
         #endregion
         XANASummitDataContainer.StackInfoWorld subWorldInfo = new XANASummitDataContainer.StackInfoWorld();
         subWorldInfo.id = ConstantsHolder.xanaConstants.MuseumID;

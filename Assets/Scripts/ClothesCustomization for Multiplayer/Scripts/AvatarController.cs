@@ -34,6 +34,15 @@ public class AvatarController : MonoBehaviour
     public CharacterBodyParts characterBodyParts;
     public SavingCharacterDataClass _PCharacterData = new SavingCharacterDataClass();
     [SerializeField] RuntimeAnimatorController ArAnimator;
+    public Transform root;
+    public int clothstoload;
+    public int LoadedCloths
+    {
+        get { return clothsLoaded; }
+        set { clothsLoaded = value; Debug.Log("clothLoaded  " + gameObject.name); if (value == clothstoload) { Debug.Log("Combiuning Meshes"); SkinnedMeshCombiner.CombineAndStitchMeshes(gameObject, root); foreach (var obj in SkinnedMeshCombiner.objecttodestroy) { Destroy(obj); } SkinnedMeshCombiner.objecttodestroy.Clear(); } }
+
+    }
+
     #endregion
 
     #region var Hide Inspector
@@ -52,6 +61,8 @@ public class AvatarController : MonoBehaviour
     private Color presetHairColor;
     AddressableDownloader addressableDownloader;
     ConstantsHolder xanaConstants;
+   
+    private int clothsLoaded;
     //FriendAvatarController friendController;
     #endregion
 
@@ -300,6 +311,8 @@ public class AvatarController : MonoBehaviour
 
         if (_CharacterData.myItemObj.Count > 0)
         {
+            clothstoload = _CharacterData.myItemObj.Count;
+            LoadedCloths = 0;
             for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
             {
                 if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName))
@@ -312,7 +325,7 @@ public class AvatarController : MonoBehaviour
                         {
                             var item = _CharacterData.myItemObj[i];
                             var gender = _CharacterData.gender ?? "Male";
-                            var avatarController = this.gameObject.GetComponent<AvatarController>();
+                            var avatarController = this;
                             StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, item.ItemType, gender, avatarController, Color.clear));
                         }
                         else
@@ -447,7 +460,7 @@ public class AvatarController : MonoBehaviour
             _PCharacterData = _CharacterData;
             
             var gender = _CharacterData.gender ?? "Male";
-            var avatarController = this.gameObject.GetComponent<AvatarController>();
+            var avatarController = this;
             sceneName = SceneManager.GetActiveScene().name; // updating scene name if scene changed.
             if (sceneName.Equals("Home") || sceneName.Equals("UGC")) // for store/ main menu
             {
@@ -689,7 +702,8 @@ public class AvatarController : MonoBehaviour
                 if (this.GetComponent<PhotonView>() && this.GetComponent<PhotonView>().IsMine || staticPlayer) // self
                 {
                     SetAvatarClothDefault(gameObject, gender);
-
+                    clothstoload = _CharacterData.myItemObj.Count;
+                    LoadedCloths = 0;
                     if (_CharacterData.myItemObj.Count > 0)
                     {
                         for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
@@ -712,7 +726,7 @@ public class AvatarController : MonoBehaviour
                                                 StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, avatarController, _CharacterData.HairColor));
                                         }
                                         else
-                                            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, _CharacterData.gender != null ? _CharacterData.gender : "Male", this.gameObject.GetComponent<AvatarController>(), Color.clear));
+                                            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, _CharacterData.gender != null ? _CharacterData.gender : "Male", this, Color.clear));
                                     }
                                     else
                                     {
@@ -771,17 +785,20 @@ public class AvatarController : MonoBehaviour
                                         }
                                         else
                                         {
+                                            avatarController.LoadedCloths++;
                                             WearDefaultItem(type, this.gameObject, gender);
                                         }
                                     }
                                 }
                                 else
                                 {
+                                    avatarController.LoadedCloths++;
                                     WearDefaultItem(type, this.gameObject,gender);
                                 }
                             }
                             else // wear the default item of that specific part.
                             {
+                                avatarController.LoadedCloths++;
                                 if (xanaConstants.isNFTEquiped && type.Contains("Chest"))
                                 {
                                     if (wornShirt)
@@ -911,6 +928,8 @@ public class AvatarController : MonoBehaviour
             else
             {
                 SetAvatarClothDefault(this.gameObject, _CharacterData.gender);
+                clothstoload = _CharacterData.myItemObj.Count;
+                LoadedCloths = 0;
                 for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
                 {
                      var item= _CharacterData.myItemObj[i];
@@ -1454,7 +1473,7 @@ public class AvatarController : MonoBehaviour
                     break;
             }
         }
-       
+      //  LoadedCloths++;
         //else
         //{
         //    switch (type)
@@ -2065,8 +2084,9 @@ public class AvatarController : MonoBehaviour
         else
         {
             SetAvatarClothDefault(applyOn.gameObject,_CharacterData.gender);
-                    
 
+            clothstoload = _CharacterData.myItemObj.Count;
+            LoadedCloths = 0;
             if (_CharacterData.myItemObj.Count > 0)
             {
                 for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
@@ -2090,8 +2110,8 @@ public class AvatarController : MonoBehaviour
                                 }
                                 else
                                 {
-                                    //StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, this.gameObject.GetComponent<AvatarController>(), Color.clear));
-                                    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, this.gameObject.GetComponent<AvatarController>(), _CharacterData.HairColor));
+                                    //StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, this, Color.clear));
+                                    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, this, _CharacterData.HairColor));
                                 }
                             }
                             else
@@ -2337,6 +2357,8 @@ public class AvatarController : MonoBehaviour
 
        if (_CharacterData.myItemObj.Count > 0)
         {
+            clothstoload = _CharacterData.myItemObj.Count;
+            LoadedCloths = 0;
             for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
             {
                 if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName))
@@ -2349,7 +2371,7 @@ public class AvatarController : MonoBehaviour
                         {
                             var item = _CharacterData.myItemObj[i];
                             var gender = _CharacterData.gender ?? characterBodyParts.randomPresetData[_rand].GenderType;
-                            var avatarController = this.gameObject.GetComponent<AvatarController>();
+                            var avatarController = this;
                             if (addressableDownloader== null)
                             {
                                 addressableDownloader = AddressableDownloader.Instance;
@@ -2513,7 +2535,7 @@ public class AvatarController : MonoBehaviour
     //                {
     //                    if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
     //                    {
-    //                        StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, _CharacterData.gender != null ? _CharacterData.gender : "Male", this.gameObject.GetComponent<AvatarController>(), Color.clear));
+    //                        StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, _CharacterData.gender != null ? _CharacterData.gender : "Male", this, Color.clear));
     //                    }
     //                    else
     //                    {

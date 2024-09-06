@@ -4296,6 +4296,9 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 2
     Name: Pray
+  - Type: 4
+    SynchronizeType: 0
+    Name: IsDashing
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -4365,6 +4368,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bundle: {fileID: 0}
+  view: {fileID: 2531018362930106320}
+  avatarController: {fileID: 7335902341501648491}
 --- !u!114 &3150524130530545092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4534,6 +4539,8 @@ MonoBehaviour:
     punch: 0
     kick: 0
   ArAnimator: {fileID: 0}
+  root: {fileID: 9110695054749802406}
+  clothstoload: 0
   wornHairId: 0
   hairColorPaletteId: 0
   wornPantId: 0
@@ -11775,6 +11782,11 @@ Transform:
 --- !u!4 &9085820162320193711 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
+  m_PrefabInstance: {fileID: 8763415751287652164}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &9110695054749802406 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 572617754110402786, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
   m_PrefabInstance: {fileID: 8763415751287652164}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8848015830521891532

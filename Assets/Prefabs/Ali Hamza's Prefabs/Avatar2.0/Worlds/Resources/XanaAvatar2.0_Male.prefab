@@ -8613,6 +8613,9 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 2
     Name: BowTwice
+  - Type: 4
+    SynchronizeType: 0
+    Name: IsDashing
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -8682,6 +8685,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bundle: {fileID: 0}
+  view: {fileID: 7674919917323688784}
+  avatarController: {fileID: 225023918646229811}
 --- !u!114 &484898240135114821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8839,6 +8844,8 @@ MonoBehaviour:
     punch: 0
     kick: 0
   ArAnimator: {fileID: 0}
+  root: {fileID: 6989831170010816029}
+  clothstoload: 0
   wornHairId: 0
   hairColorPaletteId: 0
   wornPantId: 0
@@ -11808,6 +11815,11 @@ GameObject:
 --- !u!1 &4012293780636678229 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5862562281140520618, guid: f82fea8f6eb9d7b4582300af2a4f9f9e, type: 3}
+  m_PrefabInstance: {fileID: 7418139670085091071}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6989831170010816029 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 572617754110402786, guid: f82fea8f6eb9d7b4582300af2a4f9f9e, type: 3}
   m_PrefabInstance: {fileID: 7418139670085091071}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &7023433744545143060 stripped

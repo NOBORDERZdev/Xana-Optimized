@@ -29,6 +29,8 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
     public static Dictionary<object, object> allPlayerIdData = new Dictionary<object, object>();
     object[] _mydatatosend = new object[3];
     private bool IsNFTCharacter;
+    public PhotonView view;
+    public AvatarController avatarController;
     public string GetJsonFolderData()
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)  // loged from account)
@@ -49,7 +51,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
     }
     private void Start()
     {
-        if (!this.GetComponent<PhotonView>().IsMine && !this.gameObject.GetComponent<Speaker>())
+        if (!view.IsMine && !this.gameObject.GetComponent<Speaker>())
         {
             this.gameObject.AddComponent<Speaker>();
         }
@@ -59,7 +61,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
 
         if (ConstantsHolder.isFixedHumanoid)
         {
-            _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
+            _mydatatosend[0] = view.ViewID as object;
             _mydatatosend[1] = XANASummitDataContainer.FixedAvatarJson as object;
             _mydatatosend[2] = ConstantsHolder.xanaConstants.isNFTEquiped;
 
@@ -68,9 +70,9 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             return;
         }
 
-        if (this.GetComponent<PhotonView>().IsMine)
+        if (view.IsMine)
         {
-            _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
+            _mydatatosend[0] = view.ViewID as object;
             _mydatatosend[1] = GetJsonFolderData() as object;
             _mydatatosend[2] = ConstantsHolder.xanaConstants.isNFTEquiped;
             Invoke(nameof(CallRpcInvoke), /*1.2f*/0f);
@@ -80,7 +82,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
 
     void CallRpcInvoke()
     {
-        this.GetComponent<PhotonView>().RPC(nameof(CheckRpc), RpcTarget.AllBuffered, _mydatatosend as object);
+        view.RPC(nameof(CheckRpc), RpcTarget.AllBuffered, _mydatatosend as object);
 
     }
 
@@ -97,20 +99,22 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         AvatarController otherPlayer;
         string SendingPlayerID = Datasend[0].ToString();
         OtherPlayerId = Datasend[0].ToString();
+
+       
         if (Datasend.Length > 2)
             IsNFTCharacter = (bool)Datasend[2];
 
         //for (int j = 0; j < MutiplayerController.instance.playerobjects.Count; j++)
         //{
-        //if (MutiplayerController.instance.playerobjects[j] != null && MutiplayerController.instance.playerobjects[j].GetComponent<PhotonView>())
+        //if (MutiplayerController.instance.playerobjects[j] != null && MutiplayerController.instance.playerobjects[j].view)
         //{
-        if (GetComponent<PhotonView>().ViewID.ToString() == OtherPlayerId)
+        if (view.ViewID.ToString() == OtherPlayerId)
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
             _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(Datasend[1].ToString());
 
-            otherPlayer = gameObject.GetComponent<AvatarController>();
-            CharacterBodyParts bodyparts = otherPlayer.GetComponent<CharacterBodyParts>();
+            otherPlayer = avatarController;
+            CharacterBodyParts bodyparts = avatarController.characterBodyParts; //otherPlayer.GetComponent<CharacterBodyParts>();
 
             //otherPlayer._CharData = _CharacterData;
             if (IsNFTCharacter)
@@ -128,12 +132,14 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
 
             if (_CharacterData.myItemObj.Count != 0)
             {
+                avatarController.clothstoload = _CharacterData.myItemObj.Count;
+                avatarController.LoadedCloths = 0;
                 for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
                 {
 
-                    if (!otherPlayer.GetComponent<PhotonView>().IsMine)
+                    if (!view.IsMine)
                     {
-                        otherPlayer.GetComponent<AvatarController>().SetAvatarClothDefault(otherPlayer.gameObject, _CharacterData.gender);
+                        otherPlayer.SetAvatarClothDefault(otherPlayer.gameObject, _CharacterData.gender);
                         //CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);
                         //bodyparts.SetAvatarByGender(_CharacterData.gender);
 
@@ -154,7 +160,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                                 {
                                     if (type.Contains("Hair") && _CharacterData.hairItemData.Contains("No hair"))
                                     {
-                                        if (otherPlayer.GetComponent<AvatarController>().wornHair)
+                                        if (otherPlayer.wornHair)
                                             UnStichItem("Hair");
                                     }
                                     else
@@ -165,6 +171,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                             {
                                 if (otherPlayer)
                                 {
+                                    avatarController.LoadedCloths ++;
                                     switch (_CharacterData.myItemObj[i].ItemType)
                                     {
                                         case "Legs":
@@ -190,7 +197,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             }
             else // if player is all default cloths
             {
-                _CharacterData.gender = GetComponent<CharacterBodyParts>().AvatarGender.ToString();
+                _CharacterData.gender = bodyparts.AvatarGender.ToString();
                 otherPlayer.WearDefaultItem("Legs", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                 otherPlayer.WearDefaultItem("Chest", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                 otherPlayer.WearDefaultItem("Feet", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
@@ -393,11 +400,11 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
 
             #endregion
             StartCoroutine(otherPlayer.RPCMaskApply(otherPlayer.gameObject));
-
-            if (otherPlayer.GetComponent<EyesBlinking>())                      // Added by Ali Hamza
+            EyesBlinking blk = otherPlayer.GetComponent<EyesBlinking>();
+            if (blk)                      // Added by Ali Hamza Updated Zeel Kheni
             {
-                otherPlayer.GetComponent<EyesBlinking>().StoreBlendShapeValues();
-                StartCoroutine(otherPlayer.GetComponent<EyesBlinking>().BlinkingStartRoutine());
+               blk.StoreBlendShapeValues();
+                StartCoroutine(blk.BlinkingStartRoutine());
             }
         }
         //}
@@ -420,7 +427,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                     if (AddressableDownloader.Instance != null)
                     {
                         //  print("AddressableDownloader.Instance found for hair");
-                        AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, _gender, applyOn.GetComponent<AvatarController>(), hairColor, true, true));
+                        AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, _gender, avatarController, hairColor, true, true));
                     }
                     else
                     {
@@ -432,7 +439,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                     if (AddressableDownloader.Instance != null)
                     {
                         //  print("AddressableDownloader.Instance found for other objects");
-                        AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, _gender, applyOn.GetComponent<AvatarController>(), Color.clear));
+                        AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, _gender, avatarController, Color.clear));
                     }
                     else
                     {
@@ -444,7 +451,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             {
                 // If Error occur in Downloading 
                 // Then wear Default
-                applyOn.GetComponent<AvatarController>().WearDefaultItem(itemtype, applyOn, _gender);
+               avatarController.WearDefaultItem(itemtype, applyOn, _gender);
                 // print("Exception : " + e);
             }
         }
@@ -454,63 +461,64 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             {
                 if (itemtype.Contains("Chest"))
                 {
-                    if (applyOn.GetComponent<AvatarController>().wornShirt)
+                    if (avatarController.wornShirt)
                     {
                         UnStichItem("Chest");
-                        applyOn.GetComponent<CharacterBodyParts>().TextureForShirt(null);
+                        avatarController.characterBodyParts.TextureForShirt(null);
                     }
                 }
                 else if (itemtype.Contains("Hair"))
                 {
-                    if (applyOn.GetComponent<AvatarController>().wornHair)
+                    if (avatarController.wornHair)
                         UnStichItem("Hair");
                 }
                 else if (itemtype.Contains("Legs"))
                 {
-                    if (applyOn.GetComponent<AvatarController>().wornPant)
+                    if (avatarController.wornPant)
                     {
                         UnStichItem("Legs");
-                        applyOn.GetComponent<CharacterBodyParts>().TextureForPant(null);
+                        avatarController.characterBodyParts.TextureForPant(null);
                     }
                 }
                 else if (itemtype.Contains("Feet"))
                 {
-                    if (applyOn.GetComponent<AvatarController>().wornShoes)
+                    if (avatarController.wornShoes)
                     {
                         UnStichItem("Feet");
-                        applyOn.GetComponent<CharacterBodyParts>().TextureForShoes(null);
+                        avatarController.characterBodyParts.TextureForShoes(null);
                     }
 
                 }
                 else if (itemtype.Contains("EyeWearable"))
                 {
-                    if (applyOn.GetComponent<AvatarController>().wornEyeWearable)
+                    if (avatarController.wornEyeWearable)
                         UnStichItem("EyeWearable");
                 }
                 else if (itemtype.Contains("Glove"))
                 {
-                    if (applyOn.GetComponent<AvatarController>().wornGloves)
+                    if (avatarController.wornGloves)
                     {
                         UnStichItem("Glove");
-                        applyOn.GetComponent<CharacterBodyParts>().TextureForGlove(null);
+                        avatarController.characterBodyParts.TextureForGlove(null);
                     }
 
                 }
                 else if (itemtype.Contains("Chain"))
                 {
-                    if (applyOn.GetComponent<AvatarController>().wornChain)
+                    if (avatarController.wornChain)
                         UnStichItem("Chain");
                 }
 
             }
             else
             {
+                avatarController.LoadedCloths++;
                 if (itemtype.Contains("Hair"))
                 {
-                    applyOn.GetComponent<AvatarController>().WearDefaultHair(applyOn, hairColor);
+                    avatarController.WearDefaultHair(applyOn, hairColor);
                 }
                 else
-                    applyOn.GetComponent<AvatarController>().WearDefaultItem(itemtype, applyOn, _gender);
+                    avatarController.WearDefaultItem(itemtype, applyOn, _gender);
             }
         }
     }
@@ -555,11 +563,11 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         {
             if (_CharacterData.hairItemData.Equals("No hair"))
             {
-                if (applyon.GetComponent<AvatarController>().wornHair)
+                if (avatarController.wornHair)
                     UnStichItem("Hair");
             }
             else
-                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", _CharacterData.gender != null ? _CharacterData.gender : "Male", applyon.GetComponent<AvatarController>(), _CharacterData.hair_color, true, true));
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", _CharacterData.gender != null ? _CharacterData.gender : "Male", avatarController, _CharacterData.hair_color, true, true));
         }
     }
     public void UnStichItem(string type)
@@ -567,25 +575,25 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         switch (type)
         {
             case "Chest":
-                Destroy(GetComponent<AvatarController>().wornShirt);
+                Destroy(avatarController.wornShirt);
                 break;
             case "Legs":
-                Destroy(GetComponent<AvatarController>().wornPant);
+                Destroy(avatarController.wornPant);
                 break;
             case "Hair":
-                Destroy(GetComponent<AvatarController>().wornHair);
+                Destroy(avatarController.wornHair);
                 break;
             case "Feet":
-                Destroy(GetComponent<AvatarController>().wornShoes);
+                Destroy(avatarController.wornShoes);
                 break;
             case "EyeWearable":
-                Destroy(GetComponent<AvatarController>().wornEyeWearable);
+                Destroy(avatarController.wornEyeWearable);
                 break;
             case "Chain":
-                Destroy(GetComponent<AvatarController>().wornChain);
+                Destroy(avatarController.wornChain);
                 break;
             case "Glove":
-                Destroy(GetComponent<AvatarController>().wornGloves);
+                Destroy(avatarController.wornGloves);
                 break;
 
         }

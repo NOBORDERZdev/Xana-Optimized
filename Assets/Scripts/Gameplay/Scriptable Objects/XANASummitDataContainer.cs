@@ -138,6 +138,7 @@ public class XANASummitDataContainer : ScriptableObject
         public int maxPlayer;
         public List<SubWorldInfo> SubWorlds;
         public bool isSubWorld;
+       
     }
 
     [System.Serializable]

@@ -428,6 +428,8 @@ namespace Photon.Pun.Demo.PunBasics
                     playerobjects.RemoveAt(x);
                 }
             }
+            Resources.UnloadUnusedAssets();
+            GC.Collect();
         }
 
         public override void OnJoinRoomFailed(short returnCode, string message)
