@@ -56,7 +56,9 @@ public class AdvancedYoutubePlayer : MonoBehaviour
     string m_StartedPlayingVideoId;
     string m_PlayingVideoId;
     Action<string> HLSurlLoaded;
-    
+
+    public bool IsInternetDisconnected = false;
+
     private void OnEnable()
     {
         AvatarSpawnerOnDisconnect.OninternetDisconnect += OnInternetDisconnect;
@@ -289,6 +291,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
 
     public void OnInternetDisconnect()
     {
+        IsInternetDisconnected = true;
         //print("Internet Disconnected");
         if (VideoPlayer != null)
         {
@@ -302,6 +305,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
 
     public void OnInternetConnect()
     {
+        IsInternetDisconnected = false;
         //print("Internet connected again");
         if (VideoPlayer != null)
         {

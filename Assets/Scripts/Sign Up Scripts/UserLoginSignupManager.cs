@@ -66,6 +66,8 @@ public class UserLoginSignupManager : MonoBehaviour
     public string SetProfileAvatarTempFilename = "";
     public string PermissionCheck = "";
     public GameObject PickImageOptionScreen;
+    [Space(5)]
+    public GameObject permissionPopup;
 
     [Header("Validation Popup Panel")]
     public ErrorHandler errorHandler;
@@ -335,15 +337,16 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void BackFromLoginSelection()
     {
-        if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
+       
+        if (!ConstantsHolder.xanaConstants.openLandingSceneDirectly && ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
         {
-            emailOrWalletLoginPanel.SetActive(false);
-            
+           
+            LoginRegisterScreen.SetActive(true);
         }
         else {
-            emailOrWalletLoginPanel.SetActive(false);
+            
             signUpOrloginSelectionPanel.SetActive(true);
-             }
+        }
     }
 
     public void OnClickLoginWithEmail()
@@ -382,10 +385,19 @@ public class UserLoginSignupManager : MonoBehaviour
     }
     public void BackFromUserNamePanel()
     {
-        enterNamePanel.SetActive(false);
-        displayrNameField.Clear();
-        userUsernameField.Clear();
-        InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            enterNamePanel.SetActive(false);
+            displayrNameField.Clear();
+            userUsernameField.Clear();
+            InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        }
+        else {
+            enterNamePanel.SetActive(false);
+            displayrNameField.Clear();
+            userUsernameField.Clear();
+            InventoryManager.instance.StartPanel_PresetParentPanelSummit.SetActive(true);
+        }
     }
 
 
@@ -2199,10 +2211,42 @@ public class UserLoginSignupManager : MonoBehaviour
         PickImageOptionScreen.SetActive(true);
     }
 
+    public void CheckPermissionStatus(int maxSize)
+    {
+        if (Application.isEditor)
+        {
+            permissionPopup.SetActive(true);
+        }
+        else
+        {
+            NativeGallery.Permission permission = NativeGallery.CheckPermission(NativeGallery.PermissionType.Read, NativeGallery.MediaType.Image);
+#if UNITY_ANDROID
+            if (permission == NativeGallery.Permission.ShouldAsk) //||permission == NativeCamera.Permission.ShouldAsk
+            {
+                permissionPopup.SetActive(true);
+            }
+            else
+            {
+                OnPickImageFromGellery(maxSize);
+            }
+#elif UNITY_IOS
+                if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
+                     permissionPopup.SetActive(true);
+                }
+                else
+                {
+                    OnPickImageFromGellery(maxSize);
+                }
+#endif
+
+        }
+    }
 
     public void OnPickImageFromGellery(int maxSize)
     {
 #if UNITY_IOS
+        PlayerPrefs.SetInt("PicPermission", 1);
+
         if (PermissionCheck == "false")
         {
             string url = MyNativeBindings.GetSettingsURL();
