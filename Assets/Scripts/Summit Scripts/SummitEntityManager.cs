@@ -46,7 +46,7 @@ public class SummitEntityManager : MonoBehaviour, IMatchmakingCallbacks
         
         for (int i = 0; i < 12; i++) {
 
-        var obje =   PhotonNetwork.InstantiateRoomObject("Historic_Mickey_Car", CarSpawnpoint.position, Quaternion.identity);
+        var obje =   PhotonNetwork.InstantiateRoomObject("Historic_Mickey_Car", CarSpawnpoint.position + new Vector3(0f, 2f, 0f), Quaternion.identity);
             var splineFollow = obje.GetComponent<SplineFollower>();
             
             splineFollow.MoveAmount = firstSpawn;
