@@ -1,3 +1,4 @@
+using Models;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ public class NetworkSyncManager : MonoBehaviour, IPunObservable
     public Action OnDeserilized;
 
     #region XANA PARTY WORLD
+    public Action<string, int, int, int> OnRandomNumberSet;
+    public List<RandomNumberComponentsData> RandomNumberHist = new List<RandomNumberComponentsData>();
     public Action startGame;
     #endregion
 
@@ -35,6 +38,20 @@ public class NetworkSyncManager : MonoBehaviour, IPunObservable
     {
         // PhotonNetwork.RemoveCallbackTarget(this);
     }
+
+    [PunRPC]
+    public void SetRandomNumberComponent(string itemID, int minNumber, int maxnumber, int generatedNumber)
+    {
+        OnRandomNumberSet?.Invoke(itemID, minNumber, maxnumber, generatedNumber);
+        RandomNumberHist.Add(new RandomNumberComponentsData() { GeneratedNumber = generatedNumber, ItemID = itemID, MinNumber = minNumber, MaxNumber = maxnumber });
+    }
+
+    [PunRPC]
+    public void StartGameMainRPC()
+    {
+        startGame?.Invoke();
+    }
+
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -59,4 +76,13 @@ public class NetworkSyncManager : MonoBehaviour, IPunObservable
             OnDeserilized?.Invoke();
         }
     }
+}
+
+public class RandomNumberComponentsData
+{
+    public string ItemID;
+    public int MinNumber;
+    public int MaxNumber;
+    public int GeneratedNumber;
+
 }

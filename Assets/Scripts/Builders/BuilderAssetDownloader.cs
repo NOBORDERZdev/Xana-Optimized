@@ -112,7 +112,11 @@ public class BuilderAssetDownloader : MonoBehaviour
             temp.Scale = BuilderData.mapData.data.json.otherItems[i].Scale;
 
             builderDataDictionary.Add(i.ToString(), BuilderData.mapData.data.json.otherItems[i]);
-            if (BuilderData.mapData.data.json.otherItems[i].ItemID.Contains("SPW") || BuilderData.mapData.data.json.otherItems[i].spawnComponent)
+            if (BuilderData.mapData.data.json.otherItems[i].ItemID.Contains("SFP") && BuilderData.mapData.data.worldType == 1)
+            {
+                BuilderData.preLoadStartFinishPoints.Add(temp);
+            }
+            else if (BuilderData.mapData.data.json.otherItems[i].ItemID.Contains("SPW") || BuilderData.mapData.data.json.otherItems[i].spawnComponent)
             {
                 //Debug.LogError(BuilderData.mapData.data.json.otherItems[i].Position);
                 temp.IsActive = BuilderData.mapData.data.json.otherItems[i].spawnerComponentData.IsActive;
@@ -191,7 +195,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         StartCoroutine(CheckShortIntervalSorting());
 
         //Remove spw count from Item count
-        int objCount = BuilderData.mapData.data.json.otherItems.Count - BuilderData.preLoadspawnPoint.Count;
+        int objCount = BuilderData.mapData.data.json.otherItems.Count - (BuilderData.preLoadStartFinishPoints.Count + BuilderData.preLoadspawnPoint.Count);//BuilderData.preLoadspawnPoint.Count;
 
         if (objCount == 0)
         {
@@ -293,10 +297,13 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     public IEnumerator DownloadSpawnPointsPreload()
     {
-        for (int i = 0; i < BuilderData.preLoadspawnPoint.Count; i++)
+        for (int i = 0; i < BuilderData.preLoadStartFinishPoints.Count; i++)
         {
-            string downloadKey = prefabPrefix + BuilderData.preLoadspawnPoint[i].ItemID + prefabSuffix;
-            string dicKey = BuilderData.preLoadspawnPoint[i].DcitionaryKey;
+            string downloadKey = prefabPrefix + BuilderData.preLoadStartFinishPoints[i].ItemID + prefabSuffix;
+            string dicKey = BuilderData.preLoadStartFinishPoints[i].DcitionaryKey;
+
+
+
             //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             //bool flag = false;
             //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
@@ -308,9 +315,38 @@ public class BuilderAssetDownloader : MonoBehaviour
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
-                AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
-                //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
+                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
+            }
+            else
+            {
+                Debug.LogError(_async.Status);
+            }
+            yield return new WaitForEndOfFrame();
+        }
+
+
+        for (int i = 0; i < BuilderData.preLoadspawnPoint.Count; i++)
+        {
+            string downloadKey = prefabPrefix + BuilderData.preLoadspawnPoint[i].ItemID + prefabSuffix;
+            string dicKey = BuilderData.preLoadspawnPoint[i].DcitionaryKey;
+
+
+
+            //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            //bool flag = false;
+            //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
+            //if (!flag)
+
+            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            while (!_async.IsDone)
+            {
+                yield return null;
+            }
+            if (_async.Status == AsyncOperationStatus.Succeeded)
+            {
+                InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
+                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
             else
             {
@@ -385,7 +421,18 @@ public class BuilderAssetDownloader : MonoBehaviour
         XanaItem xanaItem = newObj.GetComponent<XanaItem>();
         xanaItem.itemData = _itemData;
         newObj.transform.localScale = _itemData.Scale;
-        if (_itemData.ItemID.Contains("SPW") || _itemData.spawnComponent)
+
+        if (_itemData.ItemID.Contains("SFP") && BuilderData.mapData.data.worldType == 1)
+        {
+
+            StartFinishPointData startFinishPlatform = new StartFinishPointData();
+            startFinishPlatform.ItemID = _itemData.ItemID;
+            startFinishPlatform.SpawnObject = newObj;
+            startFinishPlatform.IsStartPoint = startFinishPlatform.SpawnObject.GetComponent<StartPoint>() != null ? true : false;
+            GamificationComponentData.instance.StartPoint = startFinishPlatform.SpawnObject.GetComponent<StartPoint>();
+            BuilderData.StartFinishPoints.Add(startFinishPlatform);
+        }
+        else if (_itemData.ItemID.Contains("SPW") || _itemData.spawnComponent)
         {
             SpawnPointData spawnPointData = new SpawnPointData();
             spawnPointData.spawnObject = newObj;
@@ -401,6 +448,21 @@ public class BuilderAssetDownloader : MonoBehaviour
             }
         }
 
+
+        if (IsMultiplayerComponent(_itemData) && GamificationComponentData.instance.withMultiplayer)
+        {
+            newObj.SetActive(false);
+
+            GamificationComponentData.instance.MultiplayerComponentData.Add(_itemData);
+            var multiplayerObject = Instantiate(GamificationComponentData.instance.MultiplayerComponente, _itemData.Position, _itemData.Rotation);
+            MultiplayerComponentData multiplayerComponentData = new();
+            multiplayerObject.GetComponent<MultiplayerComponent>().RunTimeItemID = _itemData.RuntimeItemID;
+            multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
+            //  multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
+            GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
+
+            return;
+        }
         //meshCombinerRef.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
         //foreach (Transform childTransform in newObj.GetComponentsInChildren<Transform>())
         //{
@@ -550,6 +612,8 @@ public class BuilderAssetDownloader : MonoBehaviour
         BuilderData.mapData = null;
         BuilderData.spawnPoint.Clear();
         BuilderData.preLoadspawnPoint.Clear();
+        BuilderData.StartFinishPoints.Clear();
+        BuilderData.preLoadStartFinishPoints.Clear();
         XANASummitDataContainer.SceneTeleportingObjects.Clear();
         downloadedTillNow = 0;
         totalAssetCount = 0;

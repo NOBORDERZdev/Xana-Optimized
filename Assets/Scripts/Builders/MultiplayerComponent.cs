@@ -65,6 +65,11 @@ public class MultiplayerComponent : MonoBehaviour
                 GamificationComponentData.instance.multiplayerComponentsxanaItems.Add(xanaItem);
             if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
                 GamificationComponentData.instance.xanaItems.Add(xanaItem);
+
+            if (!GamificationComponentData.instance.MultiplayerComponentstoSet.Contains(xanaItem))
+            {
+                GamificationComponentData.instance.MultiplayerComponentstoSet.Add(xanaItem);
+            }
         }
     }
 }

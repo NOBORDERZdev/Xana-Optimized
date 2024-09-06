@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -390,6 +391,15 @@ public class ReferencesForGamePlay : MonoBehaviour
                     PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + NpcSpawner.npcSpawner.npcCounter;
                     totalCounter.text = PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers + 5;
                 }
+
+                if (((PlayerCount == ConstantsHolder.XanaPartyMaxPlayers && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame) || isMatchingTimerFinished) && !isCounterStarted)
+                {  // to check if the room count is full then move all the player randomly form the list of XANA Party Rooms
+                    MakeRoomPrivate();
+                    if (isMatchingTimerFinished)
+                        StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().ShowLobbyCounter(0f));
+                    else
+                        StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().ShowLobbyCounter(10f));
+                }
                 //else
                 //{
                 //    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
@@ -461,6 +471,44 @@ public class ReferencesForGamePlay : MonoBehaviour
 
         // Load the new level
         PhotonNetwork.LoadLevel(levelName);
+    }
+
+    public void CheckActivePlayerInCurrentLevel()
+    {
+        if (GameplayEntityLoader.instance.PenguinPlayer != null && GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().IsMine && !IsLevelPropertyUpdatedOnlevelLoad)
+        {
+            XANAPartyManager.Instance.ActivePlayerInCurrentLevel = 0;
+            foreach (Player player in PhotonNetwork.PlayerList)
+            {
+                if (player.CustomProperties.TryGetValue(InLevelProperty, out object isInLevel))
+                {
+                    if (isInLevel != null)
+                    {
+                        XANAPartyManager.Instance.ActivePlayerInCurrentLevel++;
+                    }
+                }
+            }
+            IsLevelPropertyUpdatedOnlevelLoad = true;
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && !GamificationComponentData.instance.isRaceStarted)
+                GamificationComponentData.instance.StartXANAPartyRace();
+        }
+    }
+
+    public void ResetActivePlayerStatusInCurrentLevel()
+    {
+        Hashtable props = new Hashtable();
+        props.Add("IsInLevel", false);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+    }
+
+    public void ReduceActivePlayerCountInCurrentLevel()
+    {
+        XANAPartyManager.Instance.ActivePlayerInCurrentLevel--;
+    }
+
+    public void MakeRoomPrivate()
+    {
+        PhotonNetwork.CurrentRoom.IsVisible = false;
     }
 }
 

@@ -91,6 +91,10 @@ public class UserLoginSignupManager : MonoBehaviour
     private bool _isUserClothDataFetched = false;
     //public bool LoggedInAsGuest = false;
 
+    #region XANA PARTY WORLD
+    public GameObject DownloadPermissionPopup;
+    #endregion
+
     private void OnEnable()
     {
         instance = this;
@@ -130,6 +134,10 @@ public class UserLoginSignupManager : MonoBehaviour
         if (ConstantsHolder.loggedIn)
         {
             InventoryManager.instance.SetDefaultValues();
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            {
+                WorldManager.instance.StartCoroutine(WorldManager.instance.xanaParty());
+            }
             return;
         }
 
@@ -232,7 +240,37 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
         ConstantsHolder.isWalletLogin = true;
         WalletAutoLogin();
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            WorldManager.instance.StartCoroutine(WorldManager.instance.xanaParty());
+        }
     }
+
+    #region XANA PARTY WORLD
+
+    public IEnumerator CreateUserForPenpenzLeaderboard(string userId, string userName)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("user_id", userId);
+        form.AddField("user_name", userName);
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Post(ConstantsGod.API_BASEURL_Penpenz + ConstantsGod.CreateUser_Penpenz, form))
+        {
+            webRequest.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.Log("Error: " + webRequest.error);
+            }
+            else
+            {
+                Debug.Log("Response: " + webRequest.downloadHandler.text);
+            }
+        }
+    }
+
+    #endregion
     #region SignUp Functions 
 
     public void ShowWelcomeScreen()
@@ -413,7 +451,7 @@ public class UserLoginSignupManager : MonoBehaviour
     //wallet login functions 
     public void WalletAutoLogin()
     {
-        if (!ConstantsHolder.loggedIn)
+        if (!ConstantsHolder.loggedIn && !ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
             //Debug.Log("Firebase: Wallet Login Event");
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Login_Wallet_Success.ToString());
@@ -639,7 +677,10 @@ public class UserLoginSignupManager : MonoBehaviour
         GetOwnedNFTsFromAPI();
         UserPassManager.Instance.GetGroupDetails("freeuser");
         UserPassManager.Instance.GetGroupDetailsForComingSoon();
-        StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
+        }
         CharacterHandler.instance.playerPostCanvas.GetComponent<LookAtCamera>().GetLatestPost();
         if (GameManager.Instance.UiManager != null)//rik
         {
@@ -1109,42 +1150,62 @@ public class UserLoginSignupManager : MonoBehaviour
         MyClassOfRegisterWithEmail myobjectOfEmail = new MyClassOfRegisterWithEmail();
         string _bodyJson = JsonUtility.ToJson(myobjectOfEmail.GetdataFromClass(emailForSignup, passwordForSignup));
 
-
-
-        if (ConstantsHolder.isWalletLogin)
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
-
-
-            StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, displayrname, (isSucess) =>
+            StartCoroutine(CreateUserForPenpenzLeaderboard(ConstantsHolder.userId, userUsername));
+            if (PlayerPrefs.GetString("DownloadPermission", "false") == "false")
             {
-
-                Debug.Log("Wallet Signup");
-
-                GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
-
-            }));
-            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
-            {
-               // LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
-                RequestSubmitUsername(userUsername);
+                DownloadPermissionPopup.SetActive(true);
             }
-            else
-            {
-                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
-                if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
-                {
-                    MainSceneEventHandler.OpenLandingScene?.Invoke();
-                    return;
-                }
-                else {
-                    Screen.orientation = ScreenOrientation.Portrait;
-                    LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
-                    enterNamePanel.SetActive(false);
-                }
-            }
-           
+
+            PlayerPrefs.SetInt("IsLoggedIn", 1);
+            PlayerPrefs.SetString("PlayerName", userUsername);
+            ConstantsHolder.userName = userUsername;
+            GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(userUsername);
+            OpenUIPanel(16);
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
         }
-        
+        if (XANAPartyManager.Instance.EnableXANAPartyGuest)
+        {
+            return;
+        }
+        else
+        {
+            if (ConstantsHolder.isWalletLogin)
+            {
+
+
+                StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, displayrname, (isSucess) =>
+                {
+
+                    Debug.Log("Wallet Signup");
+
+                    GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
+
+                }));
+                if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                {
+                    // LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+                    RequestSubmitUsername(userUsername);
+                }
+                else
+                {
+                    LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+                    if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+                    {
+                        MainSceneEventHandler.OpenLandingScene?.Invoke();
+                        return;
+                    }
+                    else
+                    {
+                        Screen.orientation = ScreenOrientation.Portrait;
+                        LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+                        enterNamePanel.SetActive(false);
+                    }
+                }
+
+            }
+        }
     }
     public void UserDisplayNameErrors(string errorMSg)
     {

@@ -23,9 +23,23 @@ public class RandomNumberComponent : ItemComponent
 
         isActivated = true;
         RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
-        _minNumber = this.randomNumberComponentData.minNumber;
-        _maxNumber = this.randomNumberComponentData.maxNumber;
-        GenerateNumber();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            _minNumber = this.randomNumberComponentData.minNumber;
+            _maxNumber = this.randomNumberComponentData.maxNumber;
+            GenerateNumber();
+            NetworkSyncManager.Instance.SyncPhotonView.RPC("SetRandomNumberComponent", RpcTarget.AllBufferedViaServer, RuntimeItemID, _minNumber, _maxNumber, GeneratedNumber);
+        }
+        else
+        {
+            var data = NetworkSyncManager.Instance.RandomNumberHist.Find(x => x.ItemID == RuntimeItemID);
+            if (data != null)
+            {
+                _minNumber = data.MinNumber;
+                _maxNumber = data.MaxNumber;
+                GeneratedNumber = data.GeneratedNumber;
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision _other)
