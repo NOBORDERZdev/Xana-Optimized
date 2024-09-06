@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 
 public class SkinnedMeshCombiner
 {
@@ -221,8 +222,8 @@ public class SkinnedMeshCombiner
 
         foreach (var smr in skinnedMeshes)
         {
-            Mesh mesh = smr.sharedMesh;
-
+            Mesh mesh = MakeReadableCopy( smr.sharedMesh);
+            Debug.LogError($"MeshName '{mesh.name}' mesh is redable '{mesh.isReadable}'");
             if (mesh == null)
                 continue;
 
@@ -339,5 +340,19 @@ public class SkinnedMeshCombiner
         stitcher.Stitch(combinedObject, parentObject);
         objecttodestroy.Add(combinedObject);
         Debug.Log("Meshes combined and stitched successfully with correct bone weights, material assignment, and skeleton binding!");
+    }
+
+    public static Mesh MakeReadableCopy(Mesh nonReadableMesh)
+    {
+        nonReadableMesh.UploadMeshData(false);
+        var so = new SerializedObject(nonReadableMesh);
+        so.Update();
+        var sp = so.FindProperty("m_IsReadable");
+        sp.boolValue = true;
+        so.ApplyModifiedProperties();
+        nonReadableMesh.RecalculateBounds();
+        nonReadableMesh.RecalculateNormals();
+        nonReadableMesh.RecalculateTangents();
+        return nonReadableMesh;
     }
 }
