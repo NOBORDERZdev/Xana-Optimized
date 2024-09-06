@@ -60,7 +60,14 @@ public class WalletLogin: MonoBehaviour
         WalletConnectCallType type = WalletConnectCallType.None;
         try
         {
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+            }
             if (isNewReg)
             {
                 type = WalletConnectCallType.NewRegistration;
