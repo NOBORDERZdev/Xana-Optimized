@@ -1125,6 +1125,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
 
             }));
+           
             if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
             {
                // LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
@@ -1132,6 +1133,7 @@ public class UserLoginSignupManager : MonoBehaviour
             }
             else
             {
+                GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
                 LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
                 if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
                 {
