@@ -252,6 +252,7 @@ public class IKMuseum : MonoBehaviour
     {
         ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
         PlayerController.PlayerIsIdle?.Invoke();
+        Enable_DisableObjects.Instance.DisableDashButton(true);
         RPCForKanzakiGourdDisable();
 
     }

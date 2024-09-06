@@ -14,11 +14,13 @@ namespace UnityEngine.UI.Extensions
     {
         void Start()
         {
+
             _isVertical = false;
             _childAnchorPoint = new Vector2(0, 0.5f);
             _currentPage = StartingScreen;
             panelDimensions = gameObject.GetComponent<RectTransform>().rect;
             UpdateLayout();
+            SetScrollContainerPositionOnStaet();
         }
 
         void Update()
@@ -199,6 +201,13 @@ namespace UnityEngine.UI.Extensions
             _scrollStartPosition = _screensContainer.anchoredPosition.x;
             _scroll_rect.horizontalNormalizedPosition = (float)(_currentPage) / (_screens - 1);
             OnCurrentScreenChange(_currentPage);
+        }
+        public void SetScrollContainerPositionOnStaet()
+        {
+           
+            _scrollStartPosition = _screensContainer.anchoredPosition.x;
+            _scroll_rect.horizontalNormalizedPosition = (float)(10) / (_screens - 1);
+            OnCurrentScreenChange(10);
         }
 
         /// <summary>

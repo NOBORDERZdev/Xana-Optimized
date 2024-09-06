@@ -36,7 +36,14 @@ public class PatchForProfileWallet : MonoBehaviour
     {
         if (!ConstantsHolder.loggedIn)
             UserLoginSignupManager.instance.ShowWelcomeScreen();
-        LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+        }
+        else
+        {
+            LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+        }
     }
 
 }
