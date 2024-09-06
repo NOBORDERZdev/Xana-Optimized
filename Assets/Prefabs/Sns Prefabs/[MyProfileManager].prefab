@@ -1,0 +1,210 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2922296259976616564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2922296259976616565}
+  - component: {fileID: 2922296259976616566}
+  m_Layer: 0
+  m_Name: '[MyProfileManager]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2922296259976616565
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2922296259976616564}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2922296259976616566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2922296259976616564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d16c5f87f2117144bd0f78bc48d971f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultUrl: https://
+  myProfileData:
+    id: 0
+    name: 
+    dob: 
+    phoneNumber: 
+    email: 
+    avatar: 
+    role: 0
+    coins: 
+    isVerified: 0
+    isRegister: 0
+    isDeleted: 0
+    tags: []
+    userProfile:
+      id: 0
+      userId: 0
+      gender: 
+      job: 
+      country: 
+      website: 
+      bio: 
+      username: 
+      isDeleted: 0
+    followerCount: 0
+    followingCount: 0
+    feedCount: 0
+  allMyFeedImageRootDataList: []
+  allMyTextPostFeedImageRootDataList: []
+  allMyFeedVideoRootDataList: []
+  allMyFeedInFeedPageRootDataList: []
+  allMyTextPostFeedInFeedPageRootDataList: []
+  currentPageAllFeedWithUserIdRoot:
+    Success: 0
+    Data:
+      Count: 0
+      Rows: []
+    Msg: 
+  currentPageAllTextPostFeedWithUserIdRoot:
+    success: 0
+    data:
+      count: 0
+      rows: []
+    msg: 
+  currentPageAllTextPostWithUserIdRoot:
+    success: 0
+    data:
+      Count: 0
+      rows: []
+    msg: 
+  myProfileScreen: {fileID: 0}
+  editProfileScreen: {fileID: 0}
+  pickImageOptionScreen: {fileID: 0}
+  OtherPlayerdataObj: {fileID: 0}
+  mainFullScreenContainer: {fileID: 0}
+  mainProfileDetailPart: {fileID: 0}
+  userPostPart: {fileID: 0}
+  bioDetailPart: {fileID: 0}
+  bioTxtParent: {fileID: 0}
+  topHaderUserNameText: {fileID: 0}
+  profileImage: {fileID: 0}
+  totalPostText: {fileID: 0}
+  totalFollowerText: {fileID: 0}
+  totalFollowingText: {fileID: 0}
+  playerNameText: {fileID: 0}
+  jobText: {fileID: 0}
+  textUserBio: {fileID: 0}
+  websiteText: {fileID: 0}
+  seeMoreBioButton: {fileID: 0}
+  seeMoreButtonTextObj: {fileID: 0}
+  seeLessButtonTextObj: {fileID: 0}
+  CurrentSection: 
+  tabScrollRectGiftScreen: {fileID: 0}
+  parentHeightResetScript: {fileID: 0}
+  selectionItemScript1: {fileID: 0}
+  selectionItemScript2: {fileID: 0}
+  followButtonImage: {fileID: 0}
+  followSprite: {fileID: 0}
+  followingSprite: {fileID: 0}
+  followFollowingText: {fileID: 0}
+  followTextColor: {r: 1, g: 1, b: 1, a: 1}
+  FollowingTextColor: {r: 1, g: 1, b: 1, a: 1}
+  mainPostContainer: {fileID: 0}
+  allPhotoContainer: {fileID: 0}
+  allTagContainer: {fileID: 0}
+  allMovieContainer: {fileID: 0}
+  allOwnedNFTContainer: {fileID: 0}
+  photoPrefab: {fileID: 9094557258527362675, guid: 8e0a5b9aef86c8e44a587e5470163c73, type: 3}
+  EmptyFeedPrefab: {fileID: 9094557258527362675, guid: 6195e10d38674224b8d4b2979c361e21, type: 3}
+  photoPrefabInMyPostFeed: {fileID: 2064129161553524108, guid: 8ae45173fcb0aae43a354d77cbd01def, type: 3}
+  NFTImagePrefab: {fileID: 2064129161553524108, guid: 31d695b4d223e5e43a8bcbf08fe3ca77, type: 3}
+  createYourFirstPostMsgObj: {fileID: 0}
+  emptyPhotoPostMsgObj: {fileID: 0}
+  emptyMoviePostMsgObj: {fileID: 0}
+  FooterCreateIcon: {fileID: 0}
+  tabPrivateObject: {fileID: 0}
+  tabPublicObject: {fileID: 0}
+  defultProfileImage: {fileID: 21300000, guid: 0f8949ec8e03f9b40a621746cbba2b94, type: 3}
+  editProfileImage: {fileID: 0}
+  editProfileNameAdvanceInputfield: {fileID: 0}
+  editProfileUniqueNameAdvanceInputfield: {fileID: 0}
+  editProfileJobAdvanceInputfield: {fileID: 0}
+  editProfileWebsiteAdvanceInputfield: {fileID: 0}
+  editProfileBioInputfield: {fileID: 0}
+  editProfileGenderInputfield: {fileID: 0}
+  editProfilemainInfoPart: {fileID: 0}
+  websiteErrorObj: {fileID: 0}
+  nameErrorMessageObj: {fileID: 0}
+  uniqueNameErrorMessageObj: {fileID: 0}
+  editProfileDoneButton: {fileID: 0}
+  editProfileBioScreen: {fileID: 0}
+  bioEditAdvanceInputField: {fileID: 0}
+  tags_row: {fileID: 0}
+  tags_row_obj: {fileID: 0}
+  tags_row_parent: {fileID: 0}
+  availableTagsAtServer: []
+  userSelectedTags: []
+  dropDownBtn: {fileID: 0}
+  profileMainScrollRectFasterEx: {fileID: 0}
+  isFeedLoaded: 0
+  profileFeedAPiCurrentPageIndex: 1
+  VerticalPosition: 0
+  userRolesView: {fileID: 0}
+  loadedMyPostAndVideoId: 
+  loadedMyPostAndVideoIdInFeedPage: 
+  NFTDataLoaded: 0
+  TestingJasonForTags: 
+  checkEditNameUpdated: 0
+  checkEditInfoUpdated: 0
+  setImageAvatarTempPath: 
+  setImageAvatarTempFilename: 
+  fit: {fileID: 0}
+  webcamScreen: {fileID: 0}
+  webcamRawImage: {fileID: 0}
+  tempMyProfileDataRoot:
+    success: 0
+    data:
+      id: 0
+      name: 
+      dob: 
+      phoneNumber: 
+      email: 
+      avatar: 
+      role: 0
+      coins: 
+      isVerified: 0
+      isRegister: 0
+      isDeleted: 0
+      tags: []
+      userProfile:
+        id: 0
+        userId: 0
+        gender: 
+        job: 
+        country: 
+        website: 
+        bio: 
+        username: 
+        isDeleted: 0
+      followerCount: 0
+      followingCount: 0
+      feedCount: 0
+    msg: 
+  permissionCheck: 

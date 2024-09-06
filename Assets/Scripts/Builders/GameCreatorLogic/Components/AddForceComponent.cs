@@ -6,64 +6,147 @@ using UnityEngine;
 //[RequireComponent(typeof(Rigidbody))]
 public class AddForceComponent : ItemComponent
 {
-    private AddForceComponentData addForceComponentData;
-    Rigidbody rigidBody;
+    private AddForceComponentData _addForceComponentData;
+    Rigidbody _rigidBody;
+    Rigidbody _rigidBodyPlayer;
+    ContactPoint[] _contactPoints;
+    CharacterController _characterControllerNew;
 
-    string RuntimeItemID = "";
+    string _runtimeItemID = "";
 
     //Checks if the force be applied or not
-    bool isActivated = false;
+    bool _isActivated = false;
 
-    int forceMultiplier = 20;
+    [Range(0, 2)] float _drag = 0.3f;
+    [Range(0, 1)] float _angDrag = 0.2f;
+    float _forceMultiplier = .4f;
+    float _playerEndVelocity = 40;
+
+    bool collideWithComponent;
 
     public void Init(AddForceComponentData addForceComponentData)
     {
-        rigidBody = GetComponent<Rigidbody>();
-        rigidBody.isKinematic = true;
-        this.addForceComponentData = addForceComponentData;
-        isActivated = addForceComponentData.isActive;
+        _rigidBody = GetComponent<Rigidbody>();
+        _rigidBody.isKinematic = true;
+        _rigidBody.useGravity = true;
+        _rigidBody.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        this._addForceComponentData = addForceComponentData;
+        _isActivated = addForceComponentData.isActive;
 
-        RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
+        _runtimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
     public void ApplyAddForce()
     {
-        rigidBody.isKinematic = false;
-        rigidBody.AddForce(addForceComponentData.forceDirection * addForceComponentData.forceAmountValue * forceMultiplier * Time.deltaTime, ForceMode.VelocityChange);
-        StartCoroutine(SetIsKinematiceTrue());
+
+        if (!_addForceComponentData.forceApplyOnAvatar)
+        {
+            if (_addForceComponentData.forceApplyOnFixedDirection)
+            {
+                _rigidBody.isKinematic = false;
+                _rigidBody.drag = _drag;
+                _rigidBody.angularDrag = _angDrag;
+                _rigidBody.AddForce(_addForceComponentData.forceDirection * _addForceComponentData.forceAmountValue * _forceMultiplier, ForceMode.Impulse);
+                StartCoroutine(SetIsKinematiceTrue());
+            }
+            else
+            {
+                //AddRigidBody();
+                _rigidBody.isKinematic = false;
+                _rigidBody.drag = _drag;
+                _rigidBody.angularDrag = _angDrag;
+                var addForce = GamificationComponentData.instance.MapValue(_addForceComponentData.forceAmountValue, 0, 100, 1, 10) * (Vector3.up * _addForceComponentData.fixedForceonYAxisValue + _rigidBodyPlayer.velocity);
+                if (_contactPoints != null && _contactPoints.Length > 0)
+                {
+                    foreach (ContactPoint contact in _contactPoints)
+                    {
+                        _rigidBody.AddForceAtPosition(addForce, contact.point, ForceMode.Impulse);
+                    }
+                }
+                //RemoveRigidBody();
+            }
+        }
+        else
+        {
+            Debug.Log("Coming soon");
+            //AddRigidBody();
+            //_rigidBodyPlayer.isKinematic = false;
+            //_characterControllerNew.enabled = false;
+            //var addForce = GamificationComponentData.instance.MapValue(_addForceComponentData.forceAmountValue, 0, 100, 500, 1200);
+            //var direction = Quaternion.AngleAxis(_rigidBodyPlayer.gameObject.transform.rotation.y, Vector3.up) * _addForceComponentData.forceDirection;
+            //if (direction.y == 0) direction.y = 0.5f;
+            //_rigidBodyPlayer.AddForce(addForce * direction, ForceMode.Impulse);
+            //StartCoroutine(SetIsKinematiceTrue());
+        }
+
     }
 
     IEnumerator SetIsKinematiceTrue()
     {
-        yield return new WaitForSeconds(1);
-        while (rigidBody.velocity.magnitude > 0.0001f)
+        //wait so the applied force takes effect
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+
+        while ((!_addForceComponentData.forceApplyOnAvatar && _rigidBody.velocity.magnitude > 0.0001f) || (_addForceComponentData.forceApplyOnAvatar && ((_rigidBodyPlayer != null && (_rigidBodyPlayer.velocity.sqrMagnitude > _playerEndVelocity)) || !GamificationComponentData.instance.playerControllerNew._IsGrounded)))
         {
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
-        rigidBody.isKinematic = true;
+        _rigidBody.isKinematic = true;
+        if (_rigidBodyPlayer)
+            _rigidBodyPlayer.isKinematic = true;
+        if (_characterControllerNew)
+            _characterControllerNew.enabled = true;
+        //RemoveRigidBody();
     }
+
+    //void AddRigidBody()
+    //{
+    //    _rigidBodyPlayer = GamificationComponentData.instance.playerControllerNew.gameObject.AddComponent<Rigidbody>();
+    //    _rigidBodyPlayer.mass = 60;
+    //    _rigidBodyPlayer.isKinematic = true;
+    //    _rigidBodyPlayer.useGravity = true;
+    //    _rigidBodyPlayer.constraints = RigidbodyConstraints.FreezeRotation;
+    //}
+
+    //void RemoveRigidBody()
+    //{
+    //    if (_rigidBodyPlayer)
+    //        Destroy(_rigidBodyPlayer);
+    //}
 
 
     private void OnCollisionEnter(Collision _other)
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            if (GamificationComponentData.instance.withMultiplayer)
-                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
-            else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, _componentType);
+            _rigidBodyPlayer = _other.gameObject.GetComponent<Rigidbody>();
+            _characterControllerNew = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<CharacterController>();
+            ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.AddForce);
+            if (GamificationComponentData.instance.withMultiplayer && !_addForceComponentData.forceApplyOnAvatar)
+                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, _runtimeItemID, _componentType);
+            else
+                GamificationComponentData.instance.GetObjectwithoutRPC(_runtimeItemID, _componentType);
         }
     }
 
     #region BehaviourControl
     private void StartComponent()
     {
+        //if (collideWithComponent)
+        //    return;
+        //collideWithComponent = true;
+        //Invoke(nameof(CollideWithComponet), 0.5f);
         ApplyAddForce();
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.AddForce);
-
     }
+
+    void CollideWithComponet()
+    {
+        collideWithComponent = false;
+    }
+
     private void StopComponent()
     {
-        rigidBody.isKinematic = false;
+        //rigidBody.isKinematic = false;
     }
 
     public override void StopBehaviour()
@@ -95,6 +178,16 @@ public class AddForceComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.AddForceComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
     }
 
     #endregion

@@ -33,7 +33,7 @@ public class XLDynamicText : MonoBehaviour
             else
             {
                 XanaLobbyDynamicText json = JsonConvert.DeserializeObject<XanaLobbyDynamicText>(request.downloadHandler.text);
-                if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese)
+                if (GameManager.currentLanguage == "ja" || LocalizationManager.forceJapanese)
                 {
                     XLDynamicTextBanner.text = json.data.descriptionText[0];
                     XLDynamicTextThumbnail.text = json.data.descriptionText[0];

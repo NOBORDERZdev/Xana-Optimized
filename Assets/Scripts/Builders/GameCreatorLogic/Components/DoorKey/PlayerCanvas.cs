@@ -6,24 +6,21 @@ using UnityEngine;
 
 public class PlayerCanvas : MonoBehaviour
 {
-    public static PlayerCanvas Instance;
-
     [SerializeField] GameObject keyImage;
     [SerializeField] GameObject wrongKey;
-    public TextMeshPro keyCounter;
+    public TextMeshProUGUI keyCounter;
 
     [SerializeField] GameObject blindLight;
     [SerializeField] GameObject[] blindAdditionalLights;
-    [SerializeField] GameObject sceneDirectionalLightBind;
-    [SerializeField] Color ambientColorBlind;
-    [SerializeField] Color oldAmbientColorBlind;
+    internal GameObject sceneDirectionalLightBind;
+    [SerializeField] internal Color ambientColorBlind;
+    [SerializeField] internal Color oldAmbientColorBlind;
 
     internal Transform cameraMain;
     bool isKeyEnabled;
 
     private void Start()
     {
-        if (Instance != this || Instance == null) Instance = this;
         isKeyEnabled = false;
     }
 
@@ -34,6 +31,7 @@ public class PlayerCanvas : MonoBehaviour
     }
 
     public void ToggleWrongKey() => StartCoroutine(WrongKeyRoutine());
+
     IEnumerator WrongKeyRoutine()
     {
         wrongKey.SetActive(true);
@@ -54,7 +52,8 @@ public class PlayerCanvas : MonoBehaviour
         {
             item.SetActive(_value);
         }
-
+        if (sceneDirectionalLightBind == null)
+            sceneDirectionalLightBind = SituationChangerSkyboxScript.instance.directionLight.gameObject;
         sceneDirectionalLightBind.SetActive(!_value);
 
         RenderSettings.ambientLight = (_value) ? ambientColorBlind : oldAmbientColorBlind;
@@ -68,8 +67,8 @@ public class PlayerCanvas : MonoBehaviour
             {
                 cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
             }
-            Quaternion targetRotation = Quaternion.Euler(0, cameraMain.eulerAngles.y, 180);
-            keyImage.transform.rotation = targetRotation;
+            Quaternion targetRotation = Quaternion.Euler(0, cameraMain.eulerAngles.y, 0);
+            this.transform.rotation = targetRotation;
         }
     }
 

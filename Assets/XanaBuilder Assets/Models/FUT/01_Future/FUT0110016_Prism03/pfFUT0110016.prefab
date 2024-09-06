@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 3208500343874532102}
   - component: {fileID: 6046844614702408689}
   - component: {fileID: 3197486921320236007}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: pfFUT0110016
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2242538494075223743}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -124,9 +124,11 @@ MonoBehaviour:
   itemType: 0
   itemCategory: 0
   itemThemes: 
+  componentsAttachedToItem: 
   bottomTransform: 0
   isValid: 0
   isPlaced: 0
+  isCurrentSpawnPoint: 0
   IsItemLocked: 0
   IsItemVisible: 0
   hasParent: 0
@@ -170,7 +172,7 @@ GameObject:
   - component: {fileID: 3421471344357916636}
   - component: {fileID: 2392215247479953110}
   - component: {fileID: 2866644145194359251}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,7 +233,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8316570186871125754}
   - component: {fileID: 2906206330082379026}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -276,7 +278,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3185308847356446916}
   - component: {fileID: 8966709491880440398}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -324,7 +326,7 @@ GameObject:
   - component: {fileID: 5214413441005964393}
   - component: {fileID: 2961826305791088160}
   - component: {fileID: 711986962497909903}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -374,7 +376,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 993889f1b8384d64f86d216a71064dc3, type: 2}
+  - {fileID: 2100000, guid: a784ae25a75efc54bafc20a116c860bf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -475,7 +477,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1407105087155695843}
   - component: {fileID: 2377599133800365760}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 03 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

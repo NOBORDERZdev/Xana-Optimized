@@ -1,87 +1,124 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class EyesBlinking : MonoBehaviour
 {
-    public static EyesBlinking instance;
     public SkinnedMeshRenderer blendHolder;
-    public List<float> EyeBlendShapeValues = new List<float>();
+    public List<EyeBlendShape> AllEyeBlendShapes = new List<EyeBlendShape>();
 
+    [HideInInspector]
     public float blinkingRate;
-
-    public bool isEyeClose = false;
-
+    [HideInInspector]
+    public bool AreEyesClosed = false;
+    [Range(2f, 3f)]
     public float waitTime;
-    private float counter = 0;
-
-
+    [Range(0.1f, 0.2f)]
     public float blinkingSpeed;
+    [HideInInspector]
     public bool isBlinking = true;
 
     public bool isCoroutineRunning = true;
+    private float currentBlendWeight = 0f;
+
+
+    [Serializable]
+    public class EyeBlendShape
+    {
+        public int index;
+        public float value;
+    }
 
     private void Awake()
     {
-        instance = this;
+        for (int i = 0; i < blendHolder.sharedMesh.blendShapeCount; i++)   // Get all the blend shapes that are related to eyes
+        {
+            string blendShapeName = blendHolder.sharedMesh.GetBlendShapeName(i);
+            if (blendShapeName.Contains("eye"))
+            {
+                AllEyeBlendShapes.Add(new EyeBlendShape { index = i });
+            }
+        }
+
+        waitTime = UnityEngine.Random.Range(2f, 3f);            // Randomize the wait time
+        blinkingSpeed = UnityEngine.Random.Range(0.1f, 0.2f);   // Randomize the blinking speed
     }
     public void StoreBlendShapeValues()
     {
-        EyeBlendShapeValues.Clear();
-        isBlinking = false;
-        blendHolder.SetBlendShapeWeight(26, 0);
-        blendHolder.SetBlendShapeWeight(32, 0);
-
-        EyeBlendShapeValues.Clear();
-        for (int i = 23; i <= 35; i++)
+        if (blendHolder != null)
         {
-            EyeBlendShapeValues.Add(blendHolder.GetBlendShapeWeight(i));
+            isBlinking = false;
+            blendHolder.SetBlendShapeWeight(8, 0);
+            blendHolder.SetBlendShapeWeight(9, 0);
+
+            for (int i = 0; i < AllEyeBlendShapes.Count; i++)
+            {
+                AllEyeBlendShapes[i].value = blendHolder.GetBlendShapeWeight(AllEyeBlendShapes[i].index);
+            }
+            isBlinking = true;
         }
-        isBlinking = true;
     }
 
     public IEnumerator BlinkingStartRoutine()
     {
-        if (isBlinking && EyeBlendShapeValues.Count != 0)
+
+        if (isBlinking && AllEyeBlendShapes.Count != 0)
         {
-            while (isEyeClose)
+            while (!AreEyesClosed)
             {
-                for (int i = 23; i <= 35 && i != 26 && i != 32; i++)
+                UpdateBlendShapes(0);
+                currentBlendWeight += Time.deltaTime * blinkingRate;
+                if (currentBlendWeight >= 100f)
                 {
-                    blendHolder.SetBlendShapeWeight(i, Mathf.MoveTowards(blendHolder.GetBlendShapeWeight(i), 0, Time.deltaTime * blinkingRate));
+                    currentBlendWeight = 100f;
+                    AreEyesClosed = true;
                 }
-                blendHolder.SetBlendShapeWeight(26, Mathf.MoveTowards(blendHolder.GetBlendShapeWeight(26), 100, Time.deltaTime * blinkingRate));
-                blendHolder.SetBlendShapeWeight(32, Mathf.MoveTowards(blendHolder.GetBlendShapeWeight(32), 100, Time.deltaTime * blinkingRate));
 
-                if (counter < blinkingSpeed)
-                    counter += Time.deltaTime;
-
-                if (blendHolder.GetBlendShapeWeight(26) == 100)
-                {
-                    isEyeClose = false;
-                    counter = 0;
-                }
+                blendHolder.SetBlendShapeWeight(8, currentBlendWeight);  // Set the blend shape weight for the left eye
+                blendHolder.SetBlendShapeWeight(9, currentBlendWeight);  // Set the blend shape weight for the right eye
             }
             yield return new WaitForSeconds(blinkingSpeed);
-            while (!isEyeClose)
+            while (AreEyesClosed)
             {
-                for (int i = 23; i <= 35; i++)
+                currentBlendWeight -= Time.deltaTime * blinkingRate;
+                if (currentBlendWeight <= 0f)
                 {
-                    blendHolder.SetBlendShapeWeight(i, Mathf.MoveTowards(blendHolder.GetBlendShapeWeight(i), EyeBlendShapeValues[i - 23], Time.deltaTime * blinkingRate));
+                    currentBlendWeight = 0f;
+                    AreEyesClosed = false;
                 }
-                if (counter < blinkingSpeed)
-                    counter += Time.deltaTime;
-
-                if (blendHolder.GetBlendShapeWeight(26) == 0)
-                {
-                    isEyeClose = true;
-                    counter = 0;
-                }
+                UpdateBlendShapesToOriginal();
+                blendHolder.SetBlendShapeWeight(8, currentBlendWeight);
+                blendHolder.SetBlendShapeWeight(9, currentBlendWeight);
             }
             isCoroutineRunning = true;
             yield return new WaitForSeconds(waitTime);
-            StartCoroutine(BlinkingStartRoutine());
+            if (gameObject.activeInHierarchy)
+                StartCoroutine(BlinkingStartRoutine());
         }
+        isCoroutineRunning = false;
+    }
+
+    private void UpdateBlendShapes(float targetWeight)
+    {
+        foreach (var blendShape in AllEyeBlendShapes)
+        {
+            if (blendShape.index == 8 || blendShape.index == 9) continue;
+            float currentWeight = blendHolder.GetBlendShapeWeight(blendShape.index);
+            blendHolder.SetBlendShapeWeight(blendShape.index, Mathf.Lerp(currentWeight, targetWeight, Time.deltaTime * blinkingRate));
+        }
+    }
+    private void UpdateBlendShapesToOriginal()
+    {
+        foreach (var blendShape in AllEyeBlendShapes)
+        {
+            if (blendShape.index == 8 || blendShape.index == 9) continue;
+            float currentWeight = blendHolder.GetBlendShapeWeight(blendShape.index);
+            blendHolder.SetBlendShapeWeight(blendShape.index, Mathf.Lerp(currentWeight, blendShape.value, Time.deltaTime * blinkingRate));
+        }
+    }
+    private void OnDisable()
+    {
         isCoroutineRunning = false;
     }
 }

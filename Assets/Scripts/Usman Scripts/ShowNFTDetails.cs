@@ -108,7 +108,7 @@ public class ShowNFTDetails : MonoBehaviour
 
         nftlinkText = data.nftLink;
         ownerlinkText = data.creatorLink;
-        if (CustomLocalization.forceJapanese)
+        if (LocalizationManager.forceJapanese)
         {
             titleText.text = "" + data.metaData.name;
             descriptionText.text = "" + data.tokenDetails.ja_nft_description;
@@ -177,7 +177,7 @@ public class ShowNFTDetails : MonoBehaviour
             //imageObjectWithStats_Potrait.GetComponent<Image>().sprite = data.thunbNailImage;
             Debug.Log("Showing with stats ");
 
-            if (CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
+            if (LocalizationManager.forceJapanese || GameManager.currentLanguage.Equals("ja"))
             {
                 nftWithDes[type].ownerTextLandscape.text = "" + data.detail.authorName[1];
                 nftWithDes[type].titleTxtLandscape.text = "" + data.detail.title[1];
@@ -208,7 +208,7 @@ public class ShowNFTDetails : MonoBehaviour
                 nftWithDes[i].landscapeObj.SetActive(false);
             }
 
-            if (ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance.isPotrait)
             {
                 displayImagePanel.SetActive(false);
                 displayImagePanelPortrait.SetActive(true);
@@ -254,7 +254,7 @@ public class ShowNFTDetails : MonoBehaviour
             if (displayPanelOnlyImage != null)
                 displayPanelOnlyImage.SetActive(true);
 
-            if (ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance.isPotrait)
             {
                 displayImagePanel.SetActive(false);
                 displayImagePanelPortrait.SetActive(false);
@@ -449,14 +449,14 @@ public class ShowNFTDetails : MonoBehaviour
             }
             //displayVideoPanel.SetActive(false);
             loadingImage.SetActive(true);
-            SetLoader(ChangeOrientation_waqas._instance.isPotrait);
+            SetLoader(ScreenOrientationManager._instance.isPotrait);
             //displayVideoPanel.GetComponent<Image>().enabled = false;
             
             VideoObjectWithDes.GetComponent<VideoPlayer>().url = data.detail.asset_link;
             VideoObjectWithDes.gameObject.SetActive(true);
             VideoObjectWithDes.GetComponent<RawImage>().enabled = false;
             
-            if (CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
+            if (LocalizationManager.forceJapanese || GameManager.currentLanguage.Equals("ja"))
             {
                 nftWithDes[type].videoDescriptionTxtLandscape.text = "" + data.detail.description[1];
                 nftWithDes[type].videoTitleLandscape.text = "" + data.detail.title[1];
@@ -485,7 +485,7 @@ public class ShowNFTDetails : MonoBehaviour
             //videoDescriptionText_Potrait.text = videoDescriptionText.text;
 
 
-            if (ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance.isPotrait)
             {
                 displayVideoPanelPortrait.SetActive(true);
                 displayVideoPanelWithStats.SetActive(false);
@@ -543,7 +543,7 @@ public class ShowNFTDetails : MonoBehaviour
         else
         {
             loadingImage.SetActive(true);
-            SetLoader(ChangeOrientation_waqas._instance.isPotrait);
+            SetLoader(ScreenOrientationManager._instance.isPotrait);
             VideoObject.GetComponent<VideoPlayer>().url = data.detail.asset_link;
             VideoObject.gameObject.SetActive(true);
             VideoObject.GetComponent<RawImage>().enabled = false;
@@ -553,7 +553,7 @@ public class ShowNFTDetails : MonoBehaviour
             displayVideoPanel.SetActive(true);
             displayVideoPanelWithStats.SetActive(false);
             displayVideoPanelPortrait.SetActive(false);
-            if (ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance.isPotrait)
             {
                 //VideoObject.transform.localScale = new Vector3(2, 2, 2);
                 //VideoObject.transform.localPosition = new Vector3(0f, 300f, 0f);
@@ -672,11 +672,19 @@ public class ShowNFTDetails : MonoBehaviour
         if (displayImageWithoutDesPortrait)
             displayImageWithoutDesPortrait.GetComponent<Image>().sprite = currFrame;
     }
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            Debug.Log("---Astroboy Nft Close due to Application minimized");
+            ClosePanel();
+        }
 
+    }
     public void ClosePanel()
     {
         ShowNFTDetails.instance.loadingImage.SetActive(false);
-        SetLoader(ChangeOrientation_waqas._instance.isPotrait);
+        SetLoader(ScreenOrientationManager._instance.isPotrait);
         potraiteLoaderIcon.SetActive(false);
         landscapeLoaderIcon.SetActive(false);
         VideoObject.gameObject.SetActive(false);
@@ -700,7 +708,7 @@ public class ShowNFTDetails : MonoBehaviour
         ownerimageObject.GetComponent<Image>().sprite = null;
         if (nFTFromServer != null && nFTFromServer.isDynamicMuseum)
         {
-            CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
+            GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
         }
 
         Resources.UnloadUnusedAssets();
@@ -734,14 +742,14 @@ public class ShowNFTDetails : MonoBehaviour
     {
         VideoObject.GetComponent<RawImage>().enabled = true;
         loadingImage.SetActive(false);
-        SetLoader(ChangeOrientation_waqas._instance.isPotrait);
+        SetLoader(ScreenOrientationManager._instance.isPotrait);
         VideoObject.GetComponent<VideoPlayer>().Play();
     }
     private void M_VideoPlayerOnprepareCompletedWithStats(VideoPlayer source)
     {
         VideoObjectWithDes.GetComponent<RawImage>().enabled = true;
         loadingImage.SetActive(false);
-        SetLoader(ChangeOrientation_waqas._instance.isPotrait);
+        SetLoader(ScreenOrientationManager._instance.isPotrait);
         VideoObjectWithDes.GetComponent<VideoPlayer>().Play();
     }
 

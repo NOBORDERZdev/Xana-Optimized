@@ -12,20 +12,26 @@ public class ItemGFXHandler : ItemComponent
 
     private void OnEnable()
     {
-        if (gameObject.name.Contains("pfEFT02"))
-            UpdateMaterialShaders();
+        //if (gameObject.name.Contains("pfEFT02"))
+        //    UpdateMaterialShaders();
     }
 
     public void SetMaterialColorFromItemData(Color color)
     {
+        if (!this.gameObject.activeInHierarchy)
+            return;
         if (color.Equals(Color.white)) return;
 
         for (int i = 0; i < _renderers.Length; i++)
         {
             for (int j = 0; j < _renderers[i].materials.Length; j++)
             {
-                color.a = _renderers[i].materials[j].color.a;
-                _renderers[i].materials[j].SetColor(Constants.BaseColor, color);
+                if (_renderers[i].materials[j].HasProperty("_Color"))
+                {
+                    color.a = _renderers[i].materials[j].color.a;
+                    _renderers[i].materials[j].SetColor(Constants.BaseColor, color);
+
+                }
             }
         }
     }
@@ -72,5 +78,15 @@ public class ItemGFXHandler : ItemComponent
 
     public override void AssignItemComponentType()
     {
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //throw new System.NotImplementedException();
     }
 }

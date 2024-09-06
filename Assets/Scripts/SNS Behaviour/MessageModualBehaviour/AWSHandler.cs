@@ -30,7 +30,7 @@ public class AWSHandler : MonoBehaviour
     }
 
     //this method is used to check internet....... 
-    private void CheckInternet(Action<bool> action)
+    private void InternetChecker(Action<bool> action)
     {
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
@@ -45,7 +45,7 @@ public class AWSHandler : MonoBehaviour
     //this method is used to upload file useing upload api.......
     public void PostObjectMethod(Byte[] imageData, string fileName, Action<UploadFileRoot> response)
     {
-        CheckInternet(status =>
+        InternetChecker(status =>
         {
             if (status)
                 StartCoroutine(PostObjectIEnum(imageData, fileName, response));
@@ -113,7 +113,7 @@ public class AWSHandler : MonoBehaviour
     //this method is used to upload avatar image.......
     public void PostObjectMethodAvatar(Byte[] imageData, string fileName, Action<UploadFileRoot> response)
     {
-        CheckInternet(status =>
+        InternetChecker(status =>
         {
             if (status)
                 StartCoroutine(PostObjectIEnumAvatar(imageData, fileName, response));
@@ -166,114 +166,37 @@ public class AWSHandler : MonoBehaviour
         response.Invoke(callback);
     }
 
-    //this method is used to upload Message items.......
-    public void PostObject(string fileName, string key, string compress = "")
-    {
-        Debug.Log("Retrieving the file from message");
-        isCompress = compress;
-        MessageController.Instance.LoaderShow(true);//rik loader active.......
 
-        currentSNSApiLoaderController = MessageController.Instance.apiLoaderController;
-        if (currentSNSApiLoaderController != null)
-        {
-            currentSNSApiLoaderController.ShowUploadStatusImage(true);
-        }
-
-        string fileNam1 = Path.GetFileName(fileName);
-        byte[] myData = File.ReadAllBytes(fileName);
-        Debug.Log("Retrieving ThenFile From Message FileName =>" + fileNam1 + " :Data:" + myData.Length);
-
-        PostObjectMethod(myData, fileNam1, callback =>
-        {
-            if (callback.success)
-            {
-                if (currentSNSApiLoaderController != null)
-                {
-                    currentSNSApiLoaderController.ShowUploadStatusImage(false);
-                }
-
-                string attechmentstr = "[" + MessageController.Instance.attechmentArraystr + callback.cdn_link + MessageController.Instance.attechmentArraystr + "]";
-                //   string attechmentstr = "[" + MessageController.Instance.attechmentArraystr + key + MessageController.Instance.attechmentArraystr + "]";
-
-                //Debug.Log($"<color=red> attechmentStr {attechmentstr}</color>");
-                //Debug.Log($"<color=red> attechmentStr {MessageController.Instance.attechmentstr}</color>");
-
-                string fileUrl = callback.cdn_link;
-               Debug.Log("attachment str:" + fileUrl + "  :Message:" + callback.msg);
-
-                if (!string.IsNullOrEmpty(fileUrl))
-                {
-                    if (MessageController.Instance.allChatGetConversationDatum.receivedGroupId != 0)
-                    {
-                        APIManager.Instance.RequestChatCreateMessage(0, MessageController.Instance.allChatGetConversationDatum.receivedGroupId, "", "", attechmentstr);
-                    }
-                    else if (MessageController.Instance.allChatGetConversationDatum.receiverId != 0)
-                    {
-                        if (MessageController.Instance.allChatGetConversationDatum.receiverId == APIManager.Instance.userId)
-                        {
-                            APIManager.Instance.RequestChatCreateMessage(MessageController.Instance.allChatGetConversationDatum.senderId, 0, "", "", attechmentstr);
-                        }
-                        else
-                        {
-                            APIManager.Instance.RequestChatCreateMessage(MessageController.Instance.allChatGetConversationDatum.receiverId, 0, "", "", attechmentstr);
-                        }
-                    }
-                    else
-                    {
-                        if (MessageController.Instance.isDirectMessage)
-                        {
-                            if (MessageController.Instance.CreateNewMessageUserList.Count > 0)
-                            {
-                                MessageController.Instance.isDirectMessageFirstTimeRecivedID += MessageController.Instance.CreateNewMessageUserList[0];
-                               Debug.Log("Direct One To One Image Share:" + MessageController.Instance.isDirectMessageFirstTimeRecivedID);
-                                APIManager.Instance.RequestChatCreateMessage(int.Parse(MessageController.Instance.CreateNewMessageUserList[0]), 0, "", "", attechmentstr);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    MessageController.Instance.LoaderShow(false);//rik loader false.......
-                   Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", callback.msg));
-                }
-            }
-            else
-            {
-                MessageController.Instance.LoaderShow(false);//rik loader false.......
-               Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", callback.msg));
-            }
-        });
-    }
-
-    //this method is used to upload avatar.......
+    ////this method is used to upload avatar.......
     public void PostAvatarObject(string fileName, string key, string CallingFrom)
     {
         string fileName1 = Path.GetFileName(fileName);
         byte[] myData = File.ReadAllBytes(fileName);
-       Debug.Log("PostAvatarObject calling FileName:" + fileName1 + "    :Data:" + myData.Length);
+        Debug.Log("PostAvatarObject calling FileName:" + fileName1 + "    :Data:" + myData.Length);
 
         PostObjectMethodAvatar(myData, fileName1, callback =>
         {
             //Debug.Log("callback.success:" + callback.success);
             if (callback.success)
             {
-                //  string attechmentstr = "[" + MessageController.Instance.attechmentArraystr + key + MessageController.Instance.attechmentArraystr + "]";
                 //  Debug.Log($"<color=red> attechmentStr {attechmentstr}</color>");
                 string fileUrl = callback.cdn_link;
-               Debug.Log("Attachment url:" + fileUrl + "  :Message:" + callback.msg + "   :CallingFrom:" + CallingFrom);
+                Debug.Log("Attachment url:" + fileUrl + "  :Message:" + callback.msg + "   :CallingFrom:" + CallingFrom);
 
                 if (!string.IsNullOrEmpty(fileUrl))
                 {
                     switch (CallingFrom)
                     {
                         case "CreateGroupAvatar":
-                            MessageController.Instance.CreateNewGroup(fileUrl);
                             break;
                         case "UpdateUserAvatar":
-                            APIController.Instance.UpdateAvatarOnServer(fileUrl, CallingFrom);
+                            SNS_APIController.Instance.UpdateAvatarOnServer(fileUrl, CallingFrom);
                             break;
                         case "EditProfileAvatar":
-                            APIController.Instance.UpdateAvatarOnServer(fileUrl, CallingFrom);
+                            SNS_APIController.Instance.UpdateAvatarOnServer(fileUrl, CallingFrom);
+                            break;
+                        case "SignupProfilePicUpload":
+                            UserLoginSignupManager.instance.RequestUpdateUserProfilePic(fileUrl, CallingFrom);
                             break;
                         default:
                             break;
@@ -284,16 +207,13 @@ public class AWSHandler : MonoBehaviour
                 {
                     switch (CallingFrom)
                     {
-                        case "CreateGroupAvatar":
-                            MessageController.Instance.CreateNewGroup("");
-                            break;
                         case "EditProfileAvatar":
-                            APIManager.Instance.RequestGetUserDetails(CallingFrom);
+                            SNS_APIManager.Instance.RequestGetUserDetails(CallingFrom);
                             break;
                         default:
                             break;
                     }
-                   Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", fileUrl));
+                    Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", fileUrl));
                 }
             }
         });
@@ -301,126 +221,6 @@ public class AWSHandler : MonoBehaviour
 
     [HideInInspector]
     public SNSAPILoaderController currentSNSApiLoaderController;
-    //this method is used to post object in feed.
-    public void PostObjectFeed(string fileName, string key, string callingFrom, string compress = "")
-    {
-        isCompress = compress;
-        switch (callingFrom)
-        {
-            case "CreateFeed":
-                currentSNSApiLoaderController = FeedUIController.Instance.apiLoaderController;
-                break;
-            case "CreateFeedRoom":
-                currentSNSApiLoaderController = ARFaceModuleManager.Instance.apiLoaderController;
-                break;
-            default:
-               Debug.Log("Default case");
-                currentSNSApiLoaderController = FeedUIController.Instance.apiLoaderController;
-                break;
-        }
-
-        if (currentSNSApiLoaderController != null)
-        {
-            currentSNSApiLoaderController.ShowUploadStatusImage(true);
-        }
-
-        string fileName1 = Path.GetFileName(fileName);
-        byte[] myData = File.ReadAllBytes(fileName);
-       Debug.Log("Retrieving The file From Feed FileName:" + fileName1 + " :Data:" + myData.Length);
-
-        PostObjectMethod(myData, fileName1, callback =>
-        {
-            if (callback.success)
-            {
-                string feedUrl = callback.cdn_link;
-               Debug.Log("Attachment url:" + feedUrl + "  :Message:" + callback.msg + "   :CallingFrom:" + callingFrom);
-
-                if (!string.IsNullOrEmpty(feedUrl))
-                {
-                    if (string.IsNullOrEmpty(callback.thumbnail))
-                    {
-                        callback.thumbnail = "";
-                    }
-                    switch (callingFrom)
-                    {
-                        case "CreateFeed":
-                            FeedUIController.Instance.CreateFeedAPICall(feedUrl, callback.thumbnail);
-                            break;
-                        case "CreateFeedRoom":
-                            ARFaceModuleManager.Instance.CreateFeedAPICall(feedUrl, callback.thumbnail);
-                            break;
-                        default:
-                            if (currentSNSApiLoaderController != null)
-                            {
-                                currentSNSApiLoaderController.ShowUploadStatusImage(false);
-                            }
-                            FeedUIController.Instance.ShowLoader(false);//active Loader false.......
-                            break;
-                    }
-                    //Debug.Log(string.Format("\nobject {0} posted to bucket {1}", feedUrl, callback.msg));
-                }
-                else
-                {
-                    if (currentSNSApiLoaderController != null)
-                    {
-                        currentSNSApiLoaderController.ShowUploadStatusImage(false);
-                    }
-
-                    switch (callingFrom)
-                    {
-                        case "CreateFeed":
-                            if (FeedUIController.Instance.imageOrVideo == "Video")
-                            {
-                                FeedUIController.Instance.createFeedMediaPlayer.Play();
-                            }
-                            FeedUIController.Instance.ShowLoader(false);//active Loader false.......
-                            break;
-                        case "CreateFeedRoom":
-                            if(ARFaceModuleManager.Instance.imageOrVideo == "Video")
-                            {
-                                ARFaceModuleManager.Instance.feedMediaPlayer.Play();
-                            }
-                            ARFaceModuleManager.Instance.ShowLoader(false);
-                            break;
-                        default:
-                            FeedUIController.Instance.ShowLoader(false);//active Loader false.......
-                            break;
-                    }
-                   Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", feedUrl));
-                }
-            }
-            else
-            {               
-                if (currentSNSApiLoaderController != null)
-                {
-                    currentSNSApiLoaderController.ShowUploadStatusImage(false);
-                }
-
-                switch (callingFrom)
-                {
-                    case "CreateFeed":
-                        if (FeedUIController.Instance.imageOrVideo == "Video")
-                        {
-                            FeedUIController.Instance.createFeedMediaPlayer.Play();
-                        }
-                        FeedUIController.Instance.ShowLoader(false);//active Loader false.......
-                        break;
-                    case "CreateFeedRoom":
-                        if (ARFaceModuleManager.Instance.imageOrVideo == "Video")
-                        {
-                            ARFaceModuleManager.Instance.feedMediaPlayer.Play();
-                        }
-                        ARFaceModuleManager.Instance.ShowLoader(false);
-                        break;
-                    default:
-                        FeedUIController.Instance.ShowLoader(false);//active Loader false.......
-                        break;
-                }
-
-               Debug.Log("\nException while posting the callback:" + callback.success);                
-            }
-        });
-    }
 }
 
 //this class for File upload with converting.......

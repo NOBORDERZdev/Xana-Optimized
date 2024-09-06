@@ -61,7 +61,7 @@ public class XanaItem : MonoBehaviour
         if (rotatorComponentData.IsActive)
         {
             RotatorComponent itemComponent = gameObject.AddComponent<RotatorComponent>();
-            itemComponent.Init(rotatorComponentData);
+            itemComponent.Init(rotatorComponentData, itemData.RuntimeItemID);
             BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
         TimerCountdownComponentData timerCountdownComponentData = itemData.timerCountdownComponentData;
@@ -132,7 +132,7 @@ public class XanaItem : MonoBehaviour
         if (toFroComponentData.IsActive)
         {
             TransformComponent itemComponent = gameObject.AddComponent<TransformComponent>();
-            itemComponent.InitToFro(toFroComponentData);
+            itemComponent.InitToFro(toFroComponentData, itemData.RuntimeItemID);
             BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
 
@@ -148,7 +148,7 @@ public class XanaItem : MonoBehaviour
         if (scalerComponentData.IsActive)
         {
             TransformComponent itemComponent = gameObject.AddComponent<TransformComponent>();
-            itemComponent.InitScale(scalerComponentData);
+            itemComponent.InitScale(scalerComponentData, itemData.RuntimeItemID);
             BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
 
@@ -156,7 +156,7 @@ public class XanaItem : MonoBehaviour
         if (rotateComponentData.IsActive)
         {
             TransformComponent itemComponent = gameObject.AddComponent<TransformComponent>();
-            itemComponent.InitRotate(rotateComponentData);
+            itemComponent.InitRotate(rotateComponentData, itemData.RuntimeItemID);
             BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
 
@@ -262,6 +262,21 @@ public class XanaItem : MonoBehaviour
         {
             BlindComponent itemComponent = gameObject.AddComponent<BlindComponent>();
             itemComponent.Init(blindComponentData);
+            BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+        }
+        PhysicsComponentData physicsComponentData = itemData.physicsComponentData;
+        if (physicsComponentData.PhysicsComponentIsActive)
+        {
+            PhysicsComponent itemComponent = gameObject.AddComponent<PhysicsComponent>();
+            itemComponent.Init(physicsComponentData);
+            BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+        }
+
+        TeleportComponentData teleportComponentData = itemData.teleportComponentData;
+        if (teleportComponentData.IsActive)
+        {
+            TeleportComponent itemComponent = gameObject.AddComponent<TeleportComponent>();
+            itemComponent.Init(teleportComponentData);
             BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
 

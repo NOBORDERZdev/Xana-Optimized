@@ -81,12 +81,12 @@ public class JjInfoManager : MonoBehaviour
             Instance = this;
         }
 
-        if (SoundManager.Instance)
+        if (SoundController.Instance)
         {
-            SoundManager.Instance.videoPlayerSource = videoPlayerSource;
-            SoundManager.Instance.livePlayerSource = livePlayerSource;
-            SoundManagerSettings.soundManagerSettings.videoSource = videoPlayerSource;
-            SoundManagerSettings.soundManagerSettings.setNewSliderValues();
+            SoundController.Instance.videoPlayerSource = videoPlayerSource;
+            SoundController.Instance.livePlayerSource = livePlayerSource;
+            SoundSettings.soundManagerSettings.videoSource = videoPlayerSource;
+            SoundSettings.soundManagerSettings.setNewSliderValues();
         }
     }
 
@@ -106,7 +106,7 @@ public class JjInfoManager : MonoBehaviour
     {
         if (IsJjWorld)
         {
-            if (APIBaseUrlChange.instance.IsXanaLive)
+            if (APIBasepointManager.instance.IsXanaLive)
                 JJMusuemId = JJMusuemId_main;
             else
                 JJMusuemId = JJMusuemId_test;
@@ -135,14 +135,14 @@ public class JjInfoManager : MonoBehaviour
             await request.SendWebRequest();
             if (request.isNetworkError || request.isHttpError)
             {
-                Debug.Log("<color=red>" + request.error + " </color>");
+                //Debug.Log("<color=red>" + request.error + " </color>");
             }
             else
             {
-                //Debug.Log("Get UnReadMessagesCount Success!");
+                ////Debug.Log("Get UnReadMessagesCount Success!");
                 StringBuilder data = new StringBuilder();
                 data.Append(request.downloadHandler.text);
-                //Debug.Log("JJ World Req" + data.ToString());
+                ////Debug.Log("JJ World Req" + data.ToString());
                 JjJson json = JsonConvert.DeserializeObject<JjJson>(data.ToString());
                 StartCoroutine(InitData(json, NftPlaceholder));
 
@@ -152,7 +152,7 @@ public class JjInfoManager : MonoBehaviour
         //}
         //catch
         //{
-        //    Debug.Log("<color=red>jj APi not call in " + XanaConstants.xanaConstants.EnviornmentName + "</color>");
+        //    //Debug.Log("<color=red>jj APi not call in " + ConstantsHolder.xanaConstants.EnviornmentName + "</color>");
         //}
         //finally
         //{
@@ -176,10 +176,10 @@ public class JjInfoManager : MonoBehaviour
                 if (i == worldData[j].index - 1)
                 {
                     isNFTUploaded = true;
-                    //Debug.Log("<color=red> INDEX IS : " + i + " </color>");
+                    ////Debug.Log("<color=red> INDEX IS : " + i + " </color>");
                     bool isWithDes = false;
                     string compersionPrfex = "";
-                    //Debug.LogError(i + "-----" + nftPlaceHolder + "----"+worldData.Count);
+                    ////Debug.LogError(i + "-----" + nftPlaceHolder + "----"+worldData.Count);
                     switch (worldData[j].ratio)
                     {
                         case "1:1":
@@ -214,7 +214,7 @@ public class JjInfoManager : MonoBehaviour
                             break;
                     }
                     NftPlaceholderList[i].SetActive(true);
-                    //Debug.LogError("-----" + worldData[i].media_type);
+                    ////Debug.LogError("-----" + worldData[i].media_type);
                     if (worldData[j].media_type == "IMAGE")
                     {
 
@@ -306,7 +306,7 @@ public class JjInfoManager : MonoBehaviour
                     {
                         NftPlaceholderList[i].gameObject.SetActive(false);
                         NftPlaceholderList[i].GetComponent<JJVideoAndImage>().TurnOffAllImageAndVideo();
-                        Debug.Log("INDEX is off!");
+                        //Debug.Log("INDEX is off!");
                     }
                 }
             }
@@ -353,7 +353,7 @@ public class JjInfoManager : MonoBehaviour
 
             if (www.result != UnityWebRequest.Result.Success)
             {
-                Debug.Log("ERror in loading sprite" + www.error);
+                //Debug.Log("ERror in loading sprite" + www.error);
             }
             else
             {
@@ -432,7 +432,7 @@ public class JjInfoManager : MonoBehaviour
             ratioReferences[ratioId].p_image.gameObject.SetActive(false);
             ratioReferences[ratioId].p_videoPlayer.url = videoLink;
         }
-        if (!ChangeOrientation_waqas._instance.isPotrait) // for Landscape
+        if (!ScreenOrientationManager._instance.isPotrait) // for Landscape
         {
             LandscapeObj.SetActive(true);
             PotraiteObj.SetActive(false);
@@ -523,9 +523,9 @@ public class JjInfoManager : MonoBehaviour
             }
 
         }
-        if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+        if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
         {
-            CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
+            GamePlayUIHandler.inst.gamePlayUIParent.SetActive(false);
         }
 
         #region For firebase analytics
@@ -579,7 +579,7 @@ public class JjInfoManager : MonoBehaviour
             ratioReferences[ratioId].p_image.gameObject.SetActive(false);
             //ratioReferences[ratioId].p_videoPlayer.url = videoLink;
         }
-        if (!ChangeOrientation_waqas._instance.isPotrait) // for Landscape
+        if (!ScreenOrientationManager._instance.isPotrait) // for Landscape
         {
             LandscapeObj.SetActive(true);
             PotraiteObj.SetActive(false);
@@ -593,18 +593,18 @@ public class JjInfoManager : MonoBehaviour
             ratioReferences[ratioId].l_obj.SetActive(false);
             ratioReferences[ratioId].p_obj.SetActive(true);
         }
-        if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+        if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
         {
-            CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
+            GamePlayUIHandler.inst.gamePlayUIParent.SetActive(false);
         }
     }
     public void SendCallAnalytics(DataType type, string title, int id = -1, JJVideoAndImage.MuseumType museumType = JJVideoAndImage.MuseumType.AtomMuseum, int roomNum = 1)
     {
-        string worldName = XanaConstants.xanaConstants.EnviornmentName;
+        string worldName = ConstantsHolder.xanaConstants.EnviornmentName;
         //if (!string.IsNullOrEmpty(firebaseEventName))
         //{
         //    Firebase.Analytics.FirebaseAnalytics.LogEvent(firebaseEventName +"NFT_" + id);
-        //    Debug.Log("<color=red>" + firebaseEventName + "NFT_" + id + " </color>");
+        //    //Debug.Log("<color=red>" + firebaseEventName + "NFT_" + id + " </color>");
         //    return;
         //}
         if (worldName.Contains("ZONE-X"))
@@ -665,9 +665,9 @@ public class JjInfoManager : MonoBehaviour
         ratioReferences[ratioId].l_Loader.SetActive(false);
         LandscapeObj.SetActive(false);
         PotraiteObj.SetActive(false);
-        if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+        if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
         {
-            CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
+            GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
         }
 
     }
@@ -808,6 +808,7 @@ public class JjAsset
     public string event_id;
     public string category;
     public bool youtubeUrlCheck;
+    public string PrercrdOrLiveURL;
     public string youtubeUrl;
     public DateTime createdAt;
     public DateTime updatedAt;

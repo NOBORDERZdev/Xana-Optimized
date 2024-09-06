@@ -39,8 +39,8 @@ public class AudioComponent : ItemComponent
 
         using (UnityWebRequest www = UnityWebRequest.Get(file_name))
         {
-            yield return www.Send();
-            if (www.isNetworkError || www.isHttpError)
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
             {
                 Debug.Log(www.error);
             }
@@ -51,6 +51,7 @@ public class AudioComponent : ItemComponent
                 AudioClip clip = ByteArrayToAudioClip(data, channels, frequency);
                 audioClip = clip;
             }
+            www.Dispose();
         }
     }
 
@@ -79,10 +80,10 @@ public class AudioComponent : ItemComponent
 
     public override void StopBehaviour()
     {
-        if(isPlaying)
+        if (isPlaying)
         {
-        isPlaying = false;
-        StopComponent();
+            isPlaying = false;
+            StopComponent();
         }
     }
 
@@ -109,6 +110,16 @@ public class AudioComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.AudioComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
     }
 
     #endregion

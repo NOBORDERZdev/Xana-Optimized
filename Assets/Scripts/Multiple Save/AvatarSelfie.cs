@@ -35,9 +35,9 @@ public class AvatarSelfie : MonoBehaviour
     /// </summary>
     public void TakeScreenShootAndSaveData(Action<bool> CallBack)
     {
-        //if (!PremiumUsersDetails.Instance.CheckSpecificItem("Selfie Button"))
+        //if (!UserPassManager.Instance.CheckSpecificItem("Selfie Button"))
         //{
-        //    //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+        //    //UserPassManager.Instance.PremiumUserUI.SetActive(true);
         //    //print("Please Upgrade to Premium account");
         //    return;
         //}
@@ -45,6 +45,8 @@ public class AvatarSelfie : MonoBehaviour
         //{
         //    //print("Horayyy you have Access");
         //}
+
+        m_CharacterAnimator = GameManager.Instance.m_CharacterAnimator;
         lastAnimatorState = m_CharacterAnimator.GetBool("Idle");
         m_CharacterAnimator.SetBool("Idle", true);
         m_CharacterAnimator.transform.eulerAngles = new Vector3(0, 180, 0);
@@ -133,7 +135,7 @@ public class AvatarSelfie : MonoBehaviour
         //}
         //else
         //{
-        //    StoreManager.instance.OnSaveBtnClicked();
+        //    InventoryManager.instance.OnSaveBtnClicked();
         //}
 
         LoadPlayerAvatar.instance_loadplayer.CloseAvatarPanel();
@@ -235,7 +237,15 @@ public class AvatarSelfie : MonoBehaviour
    public class data
     {
         public string file;
+    // New Parameters added for 'TagDetails' Call Response 
+        public string count;
+        public RowDataTags[] rows;
     }
 
 
-
+[Serializable]
+public class RowDataTags
+{
+    public string id;
+    public string tagName;
+}

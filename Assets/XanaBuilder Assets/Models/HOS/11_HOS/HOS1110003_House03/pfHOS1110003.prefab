@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 4328039207901591045}
   - component: {fileID: 5667646240039101412}
   - component: {fileID: 3202108288491104464}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: pfHOS1110003
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 638053746074105254}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -124,9 +124,11 @@ MonoBehaviour:
   itemType: 0
   itemCategory: 0
   itemThemes: 
+  componentsAttachedToItem: 
   bottomTransform: 0
   isValid: 0
   isPlaced: 0
+  isCurrentSpawnPoint: 0
   IsItemLocked: 0
   IsItemVisible: 0
   hasParent: 0
@@ -176,7 +178,7 @@ GameObject:
   - component: {fileID: 590477261732763583}
   - component: {fileID: 4115399885971994900}
   - component: {fileID: 6801305900524439794}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -317,7 +319,7 @@ GameObject:
   - component: {fileID: 8653883501716917473}
   - component: {fileID: 8170228953602348024}
   - component: {fileID: 3394356937194371296}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -367,7 +369,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 60db6cccfae005144baccaeb34898ea9, type: 2}
+  - {fileID: 2100000, guid: 62e0c8daa0994564d9696885b07ed723, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -468,7 +470,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7940727320662483189}
   - component: {fileID: 6740803417322074834}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -513,7 +515,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1814284535304874339}
   - component: {fileID: 4921680094244599034}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 02
   m_TagString: Untagged
   m_Icon: {fileID: 0}

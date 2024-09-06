@@ -9,25 +9,26 @@ public class ButtonsOnOff : MonoBehaviour
     public GameObject otherButton;
     public void ClickHidebtnOn()
     {
-       otherButton.SetActive(true);
-       this.gameObject.SetActive(false);
-        ReferrencesForDynamicMuseum.instance.hiddenButtonDisable();
+        otherButton.SetActive(true);
+        this.gameObject.SetActive(false);
+        ReferencesForGamePlay.instance.hiddenButtonDisable();
         BuilderEventManager.UIToggle?.Invoke(true);
     }
     public void ClickHidebtnOff()
     {
         this.gameObject.SetActive(true);
         otherButton.SetActive(false);
-        ReferrencesForDynamicMuseum.instance.hiddenButtonEnable();
+        ReferencesForGamePlay.instance.hiddenButtonEnable();
         BuilderEventManager.UIToggle?.Invoke(false);
+
     }
 
-    
+
 
     public void HideButtonsForFreeCam(bool b)
     {
         otherButton.GetComponent<Button>().interactable = !b;
-        if(GetComponent<Button>())
+        if (GetComponent<Button>())
             GetComponent<Button>().interactable = !b;
 
         BuilderEventManager.UIToggle?.Invoke(b);
@@ -35,24 +36,33 @@ public class ButtonsOnOff : MonoBehaviour
         if (b)
         {
             // Getting Btn status
-            if (ReferrencesForDynamicMuseum.instance.JoyStick.GetComponent<CanvasGroup>().alpha > 0)
-                ReferrencesForDynamicMuseum.instance.isHidebtn = true;
+            if (ReferencesForGamePlay.instance.JoyStick.GetComponent<CanvasGroup>().alpha > 0)
+                ReferencesForGamePlay.instance.isHidebtn = true;
             else
-                ReferrencesForDynamicMuseum.instance.isHidebtn = false;
+                ReferencesForGamePlay.instance.isHidebtn = false;
 
-           
+
             //ClickHidebtnOn();
-            ReferrencesForDynamicMuseum.instance.hiddenButtonDisable();
-            ReferrencesForDynamicMuseum.instance.JoyStick.SetActive(true);
-            ReferrencesForDynamicMuseum.instance.JoyStick.GetComponent<CanvasGroup>().alpha = 0;
+            ReferencesForGamePlay.instance.hiddenButtonDisable();
+            ReferencesForGamePlay.instance.JoyStick.SetActive(true);
+            ReferencesForGamePlay.instance.JoyStick.GetComponent<CanvasGroup>().alpha = 0;
         }
         else
         {
-            if (ReferrencesForDynamicMuseum.instance.isHidebtn) {
+            if (ReferencesForGamePlay.instance.isHidebtn)
+            {
                 //ClickHidebtnOff();
-                ReferrencesForDynamicMuseum.instance.hiddenButtonEnable();
-                ReferrencesForDynamicMuseum.instance.JoyStick.GetComponent<CanvasGroup>().alpha = 1f;
+                ReferencesForGamePlay.instance.hiddenButtonEnable();
+                ReferencesForGamePlay.instance.JoyStick.GetComponent<CanvasGroup>().alpha = 1f;
             }
         }
+    }
+    public void EnableSelfieButton()
+    {
+        ReferencesForGamePlay.instance.hiddenBtnObjects[3].SetActive(false);
+    }
+    public void DisableSelfieButton()
+    {
+        ReferencesForGamePlay.instance.hiddenBtnObjects[3].SetActive(true);
     }
 }

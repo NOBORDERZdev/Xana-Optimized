@@ -22,41 +22,36 @@ public class LoaderController : MonoBehaviour
 
     private void Start()
     {
-        // Register callback
-        // This registration is possible even from Inspector.       
-        //m_UIRefreshControl.OnRefresh.AddListener(RefreshItems);
+        
     }
 
     public void RefreshItems()
     {
         if (m_UIRefreshControl.loaderObj.activeSelf)
         {
-           Debug.Log("RefreshItems Name:" + this.gameObject.name);
+            Debug.Log("RefreshItems Name:" + this.gameObject.name);
             loaderBGImage.SetActive(true);
             m_UIRefreshControl.loaderObj.transform.GetChild(0).GetComponent<CustomLoader>().isRotate = true;
 
-            //FeedUIController.Instance.allFeedCurrentpage = 1;
-            //FeedUIController.Instance.followingUserCurrentpage = 1;
-
-            if (FeedUIController.Instance.feedUiScreen.activeSelf)
-            {
-                for (int i = 0; i < FeedUIController.Instance.allFeedPanel.Length; i++)
-                {
-                    if (i == 1 && FeedUIController.Instance.allFeedPanel[1].gameObject.activeSelf)
-                    {
-                        APIManager.Instance.RequestGetFeedsByFollowingUser(1, 10, "PullRefresh");
-
-                    }
-                    else if (FeedUIController.Instance.allFeedPanel[i].gameObject.activeSelf)
-                    {
-                        //Riken
-                        //APIManager.Instance.RequestGetAllUsersWithFeeds(1, 10, "PullRefresh");
-                        APIManager.Instance.RequestGetAllUsersWithFeeds(/*FeedUIController.Instance.allFeedCurrentpage +*/ 1, 10, "PullRefresh");
-                        //Debug.Log("Refresh GetAllUsersWithFeeds Api");
-                    }
-                }
-            }
-           Debug.Log("Refresh Current Screen Api");
+            //if (FeedUIController.Instance.feedUiScreen.activeSelf)
+            //{
+            //    var allFeedPanel = FeedUIController.Instance.allFeedPanel;
+            //    for (int i = 0; i < allFeedPanel.Length; i++)
+            //    {
+            //        if (allFeedPanel[i].gameObject.activeSelf)
+            //        {
+            //            if (i == 1)
+            //            {
+            //                //SNS_APIManager.Instance.RequestGetFeedsByFollowingUser(1, 10, "PullRefresh");
+            //            }
+            //            else
+            //            {
+            //                SNS_APIManager.Instance.RequestGetAllUsersWithFeeds(1, 10, "PullRefresh");
+            //            }
+            //        }
+            //    }
+            //}
+            Debug.Log("Refresh Current Screen Api");
 
             StartCoroutine(FetchDataDemo());
         }

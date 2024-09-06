@@ -10,58 +10,57 @@ public class SubBottons : MonoBehaviour
     public bool ClothBool;
     public bool AvatarBool;
 
-    private CharacterCustomizationUIManager customizationUIManager;
+    private AvatarCustomizationUIHandler customizationUIManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        customizationUIManager = FindObjectOfType<CharacterCustomizationUIManager>();
+        customizationUIManager = FindObjectOfType<AvatarCustomizationUIHandler>();
     }
 
     private int currentSelectedCategoryIndex;
 
     public void ClickBtnFtn(int m_Index)
     {
+        //if(customizationUIManager == null)
+        //    customizationUIManager = CharacterCustomizationUIManager.Instance;
 
         for (int i = 0; i < TotalBtns.Length; i++)
         {
             TotalBtns[i].GetComponentInChildren<ButtonScript>().BtnTxt.color = NormalColor;
             TotalBtns[i].transform.GetChild(0).GetComponent<Text>().fontStyle = FontStyle.Normal;
         }
+
         TotalBtns[m_Index].GetComponentInChildren<ButtonScript>().BtnTxt.color = HighlightedColor;
         TotalBtns[m_Index].transform.GetChild(0).GetComponent<Text>().fontStyle = FontStyle.Bold;
 
 
         if (ClothBool)
         {
-            StoreManager.instance.OpenClothContainerPanel(m_Index);
-            
-            print("~~~~~~~~~~~~");
+            InventoryManager.instance.OpenClothContainerPanel(m_Index);
             if (m_Index == 2)
             {
-                CharacterCustomizationUIManager.Instance.LoadMyFaceCustomizationPanel();
+                AvatarCustomizationUIHandler.Instance.LoadMyFaceCustomizationPanel();
                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
             }
             else
             {
-                CharacterCustomizationUIManager.Instance.LoadMyClothCustomizationPanel();
+                AvatarCustomizationUIHandler.Instance.LoadMyClothCustomizationPanel();
                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(2);
             }
         }
         else if (AvatarBool)
         {
-            StoreManager.instance.OpenAvatarContainerPanel(m_Index);
+            InventoryManager.instance.OpenAvatarContainerPanel(m_Index);
             currentSelectedCategoryIndex = m_Index;
-
-            //       print(m_Index);
 
             if (m_Index == 10 || m_Index == 6)
             {
-                CharacterCustomizationUIManager.Instance.LoadMyClothCustomizationPanel();
+                AvatarCustomizationUIHandler.Instance.LoadMyClothCustomizationPanel();
             }
             else
             {
-                CharacterCustomizationUIManager.Instance.LoadMyFaceCustomizationPanel();
+                AvatarCustomizationUIHandler.Instance.LoadMyFaceCustomizationPanel();
             }
         }
         // print(m_Index);

@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
 
-public class LoadPlayerAvatar : ServerSIdeCharacterHandling
+public class LoadPlayerAvatar : ServerSideUserDataHandler
 {
     public GameObject mainPanel;
     public ScrollRect avatarScrollRect;
@@ -50,16 +50,16 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
     // Start is called before the first frame update
     void Start()
     {
-        avatarButton = StoreManager.instance.myAvatarButton;
+        avatarButton = InventoryManager.instance.myAvatarButton;
         loader.SetActive(false);
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            if (StoreManager.instance.MultipleSave)
+            if (InventoryManager.instance.MultipleSave)
                 avatarButton.gameObject.SetActive(false);
         }
         else
         {
-            if (StoreManager.instance.MultipleSave)
+            if (InventoryManager.instance.MultipleSave)
                 avatarButton.gameObject.SetActive(true);
         }
 
@@ -71,7 +71,7 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
 
     void waitCall()
     {
-        if (StoreManager.instance.MultipleSave)
+        if (InventoryManager.instance.MultipleSave)
             loadAllAvatar += (pageNo, NoOfRecords) => { LoadPlayerAvatar_onAvatarSaved(pageNo, NoOfRecords); };
     }
     //Event will be called when user loged In and new Avatar is saved by user.
@@ -81,11 +81,11 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
         //disable the button for current release enable this feature later.
         if (avatarButton == null)
         {
-            avatarButton = StoreManager.instance.myAvatarButton;
+            avatarButton = InventoryManager.instance.myAvatarButton;
         }
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
         {
-            if (StoreManager.instance.MultipleSave)
+            if (InventoryManager.instance.MultipleSave)
             {
                 avatarButton.gameObject.SetActive(true);
             }
@@ -109,7 +109,7 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
 
     public void OpenAvatarPanel()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("MyAvatar"))
+        if (!UserPassManager.Instance.CheckSpecificItem("MyAvatar"))
         {
             print("Please Upgrade to Premium account");
             return;
@@ -129,6 +129,7 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
     public void CloseAvatarPanel()
     {
         mainPanel.SetActive(false);
+        callAPIOneMoreTime = true;
     }
 
     public void OpenPlayerNamePanel()
@@ -146,7 +147,7 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
     public void ClosePlayerNamePanel()
     {
         playerNamePanel.SetActive(false);
-        StoreManager.instance.isSaveFromreturnHomePopUp = false;
+        InventoryManager.instance.isSaveFromreturnHomePopUp = false;
     }
 
     public void CloseDeleteAvatarPanel()
@@ -182,7 +183,7 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
         clickObject.transform.GetChild(1).gameObject.SetActive(true);
     }
 
-
+    bool callAPIOneMoreTime = true;
 
     IEnumerator GetAvatarData_Server(int pageNo, int noOfRecords)   // check if  data Exist
     {
@@ -195,7 +196,7 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
         {
             yield return null;
         }
-        //Debug.Log("Get all Avatar :- " + www.downloadHandler.text);
+        Debug.Log("Get all Avatar :- " + www.downloadHandler.text);
         string str = www.downloadHandler.text;
         Root getdata = new Root();
         getdata = JsonUtility.FromJson<Root>(str);
@@ -214,57 +215,69 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
                 }
                 else
                 {
-                    // write latest json data to file
-                    for (int c = 0; c < getdata.data.rows.Count; c++)
+                    if(getdata.data.rows.Count > 0)
                     {
-                        //Debug.Log(getdata.data.rows[c].id.ToString()+"-------"+ getdata.data.rows[c].thumbnail);
-                        if (!string.IsNullOrEmpty(getdata.data.rows[c].id.ToString()) && !string.IsNullOrEmpty(getdata.data.rows[c].thumbnail))
+                        // write latest json data to file
+                        for (int c = 0; c < getdata.data.rows.Count; c++)
                         {
-                            GameObject avatarInstance = Instantiate(avatarPrefab);
-                            avatarInstance.transform.SetParent(contentParent.transform);
-                            avatarInstance.transform.localPosition = Vector3.zero;
-                            avatarInstance.transform.localScale = Vector3.one;
-                            avatarInstance.transform.localRotation = Quaternion.identity;
-
-                            if (pageNo == 1 && noOfRecords == 1)
+                            //Debug.Log(getdata.data.rows[c].id.ToString()+"-------"+ getdata.data.rows[c].thumbnail);
+                            if (!string.IsNullOrEmpty(getdata.data.rows[c].id.ToString()) && !string.IsNullOrEmpty(getdata.data.rows[c].thumbnail))
                             {
-                                avatarInstance.transform.SetAsFirstSibling();
-                                avatarId = getdata.data.rows[c].id.ToString();
+                                GameObject avatarInstance = Instantiate(avatarPrefab);
+                                avatarInstance.transform.SetParent(contentParent.transform);
+                                avatarInstance.transform.localPosition = Vector3.zero;
+                                avatarInstance.transform.localScale = Vector3.one;
+                                avatarInstance.transform.localRotation = Quaternion.identity;
+
+                                if (pageNo == 1 && noOfRecords == 1)
+                                {
+                                    avatarInstance.transform.SetAsFirstSibling();
+                                    avatarId = getdata.data.rows[c].id.ToString();
+                                }
+
+                                avatarInstance.GetComponent<SavedPlayerDataJson>().id = getdata.data.rows[c].id.ToString();
+                                avatarInstance.GetComponent<SavedPlayerDataJson>().name = getdata.data.rows[c].name;
+                                avatarInstance.GetComponent<SavedPlayerDataJson>().playerName.text = getdata.data.rows[c].name;
+                                avatarInstance.GetComponent<SavedPlayerDataJson>().avatarJson = JsonUtility.ToJson(getdata.data.rows[c].json, true);
+                                string thumbnailLink = getdata.data.rows[c].thumbnail;
+                                avatarInstance.GetComponent<SavedPlayerDataJson>().avatarThumbnailLink = thumbnailLink;
+
+                                GameObject imageObject = avatarInstance.GetComponent<SavedPlayerDataJson>().ImageObject;
+                                GameObject loader = avatarInstance.GetComponent<SavedPlayerDataJson>().ImageDownloadingLoader;
+                                loader.SetActive(true);
+                                if (!string.IsNullOrEmpty(thumbnailLink) && thumbnailLink.Contains("http"))
+                                    StartCoroutine(DownloadThumbnail(thumbnailLink, imageObject, loader));
+
+                                avatarInstance.GetComponent<Button>().onClick.AddListener(() => HighLightSelected(avatarInstance));
+                                if (pageNo == 1 && noOfRecords == 1)
+                                {
+                                    HighLightSelected(avatarInstance);
+                                }
+                                avatarInstance.gameObject.name = getdata.data.rows[c].id.ToString();
                             }
+                        }
 
-                            avatarInstance.GetComponent<SavedPlayerDataJson>().id = getdata.data.rows[c].id.ToString();
-                            avatarInstance.GetComponent<SavedPlayerDataJson>().name = getdata.data.rows[c].name;
-                            avatarInstance.GetComponent<SavedPlayerDataJson>().playerName.text = getdata.data.rows[c].name;
-                            avatarInstance.GetComponent<SavedPlayerDataJson>().avatarJson = JsonUtility.ToJson(getdata.data.rows[c].json, true);
-                            string thumbnailLink = getdata.data.rows[c].thumbnail;
-                            avatarInstance.GetComponent<SavedPlayerDataJson>().avatarThumbnailLink = thumbnailLink;
-
-                            GameObject imageObject = avatarInstance.GetComponent<SavedPlayerDataJson>().ImageObject;
-                            GameObject loader = avatarInstance.GetComponent<SavedPlayerDataJson>().ImageDownloadingLoader;
-                            loader.SetActive(true);
-                            if (!string.IsNullOrEmpty(thumbnailLink) && thumbnailLink.Contains("http"))
-                                StartCoroutine(DownloadThumbnail(thumbnailLink, imageObject, loader));
-
-                            avatarInstance.GetComponent<Button>().onClick.AddListener(() => HighLightSelected(avatarInstance));
-                            if (pageNo == 1 && noOfRecords == 1)
-                            {
-                                HighLightSelected(avatarInstance);
-                            }
-                            avatarInstance.gameObject.name = getdata.data.rows[c].id.ToString();
+                        //File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(getdata.data.rows[0].json));
+                        yield return new WaitForSeconds(0.1f);
+                        currentpageNum++;
+                        loadNewPage = true;
+                    }else
+                    {
+                        if (callAPIOneMoreTime)
+                        {
+                            callAPIOneMoreTime = false;
+                            loadNewPage = true;
+                            currentpageNum = 1; pageSize = 50;
+                            print("Waqas Here And API is called");
                         }
                     }
-
-
-                    //File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(getdata.data.rows[0].json));
-                    yield return new WaitForSeconds(0.1f);
-                    currentpageNum++;
-                    loadNewPage = true;
+                    
                     yield return StartCoroutine(offLoader());
                     www.Dispose();
                     NewAvatarBtn.transform.SetSiblingIndex(0);// to set new avatar button always on top
-                    //if (StoreManager.instance.isSaveFromreturnHomePopUp)
+                    //if (InventoryManager.instance.isSaveFromreturnHomePopUp)
                     //{
-                    //    StoreManager.instance.OnClickHomeButton();
+                    //    InventoryManager.instance.OnClickHomeButton();
                     //}
                 }
             }
@@ -430,17 +443,17 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
             //DefaultEnteriesforManican.instance.ResetForPresets();
             //DownloadPlayerAssets();
             //GameManager.Instance.mainCharacter.GetComponent<Equipment>().Start();
-            SavaCharacterProperties.instance.LoadMorphsfromFile();
+            SaveCharacterProperties.instance.LoadMorphsfromFile();
             loadprevious();
-            StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
-            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
-            //StoreManager.instance.UndoSelection();
+            StartCoroutine(DefaultClothDatabase.instance.WaitAndDownloadFromRevert(0));
+            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();
+            //InventoryManager.instance.UndoSelection();
 
             isAlreadyRunning = true;
             OnUpdateExistingRemoveOld(avatarId);
-            ServerSIdeCharacterHandling.Instance.UpdateUserOccupiedAsset(avatarId);
+            ServerSideUserDataHandler.Instance.UpdateUserOccupiedAsset(avatarId);
             //Enable save button
-            //if (StoreManager.instance.StartPanel_PresetParentPanel.activeSelf)
+            //if (InventoryManager.instance.StartPanel_PresetParentPanel.activeSelf)
             //{
 
             //    if (PlayerPrefs.GetInt("iSignup") == 1)
@@ -448,13 +461,13 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
 
             //        Invoke("abcd", 2.0f);
 
-            //        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
+            //        InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(false);
             //    }
             //    else                // as a guest
             //    {
 
 
-            //        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
+            //        InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(false);
             //        UserRegisterationManager.instance.usernamePanal.SetActive(true);
             //        // enable check so that it will know that index is comming from start of the game
             //        UserRegisterationManager.instance.checkbool_preser_start = false;
@@ -462,9 +475,9 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
             //}
             //else
             //{
-            //    StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
-            //    StoreManager.instance.GreyRibbonImage.SetActive(false);
-            //    StoreManager.instance.WhiteRibbonImage.SetActive(true);
+            //    InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
+            //    InventoryManager.instance.GreyRibbonImage.SetActive(false);
+            //    InventoryManager.instance.WhiteRibbonImage.SetActive(true);
             //}
         }
         //        }
@@ -505,7 +518,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
 
                 if (_CharacterData.myItemObj[i].ItemID == 0)
                 {
-                    ItemDatabase.instance.BindDefaultItems(_CharacterData.myItemObj[i]);
+                    DefaultClothDatabase.instance.BindDefaultItems(_CharacterData.myItemObj[i]);
                 }
                 else
                 {
@@ -513,6 +526,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
                     {
                         if (!string.IsNullOrEmpty(currentlink))   // if link is empty thn dont call it
                         {
+                            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().WearDefaultItem(_CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.gameObject, _CharacterData.gender);
                             //  Debug.Log("Downloading --- " + _CharacterData.myItemObj[i].ItemLink + " Link " + _CharacterData.myItemObj[i].ItemType);
                             string _temptype = _CharacterData.myItemObj[i].Slug;
 
@@ -522,16 +536,17 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
                             itemobj.assetLinkIos = _CharacterData.myItemObj[i].ItemLinkIOS;
                             itemobj.assetLinkAndroid = _CharacterData.myItemObj[i].ItemLinkAndroid;
 
-                            if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
+                            if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase) &&
+                                !_CharacterData.myItemObj[i].ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
                             {
-                                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), Color.clear));
+                                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType, _CharacterData.gender != null ? _CharacterData.gender : "Male", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), Color.clear));
                             }
                             else
                             {
-                                GameManager.Instance.mainCharacter.GetComponent<AvatarController>().WearDefaultItem(_CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.gameObject);
+                                GameManager.Instance.mainCharacter.GetComponent<AvatarController>().WearDefaultItem(_CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                             }
 
-                            //StoreManager.instance._DownloadRigClothes.NeedToDownloadOrNot(itemobj, _CharacterData.myItemObj[i].ItemLinkAndroid, _CharacterData.myItemObj[i].ItemLinkIOS, _CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName.ToLower(), _CharacterData.myItemObj[i].ItemID);
+                            //InventoryManager.instance._DownloadRigClothes.NeedToDownloadOrNot(itemobj, _CharacterData.myItemObj[i].ItemLinkAndroid, _CharacterData.myItemObj[i].ItemLinkIOS, _CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName.ToLower(), _CharacterData.myItemObj[i].ItemID);
                         }
                     }
                     catch (Exception e)
@@ -551,9 +566,9 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
         if (avatarId != null)
         {
             PlayerPrefs.SetInt("presetPanel", 0);
-            SavaCharacterProperties.instance.SavePlayerPropertiesInClassObj();
+            SaveCharacterProperties.instance.SavePlayerPropertiesInClassObj();
             OnUpdateExistingRemoveOld(avatarId);
-            ServerSIdeCharacterHandling.Instance.UpdateUserOccupiedAsset(avatarId);
+            ServerSideUserDataHandler.Instance.UpdateUserOccupiedAsset(avatarId);
         }
     }
 
@@ -614,7 +629,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
                 File.WriteAllText((Application.persistentDataPath + "/SavingCharacterDataClass.json"), JsonUtility.ToJson(_CharacterData));
                 DownloadPlayerAssets();
                 //GameManager.Instance.mainCharacter.GetComponent<Equipment>().Start();
-                SavaCharacterProperties.instance.LoadMorphsfromFile();
+                SaveCharacterProperties.instance.LoadMorphsfromFile();
 
                 isAlreadyRunning = true;
             }
@@ -626,11 +641,12 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
 
     }
 
-    bool loadNewPage = true;
+    public bool loadNewPage = true;
     public void CheckForPagination()
     {
         if (loadNewPage && avatarScrollRect.verticalNormalizedPosition < -0f)
         {
+            Debug.Log("Load New Page....." +loadNewPage);
             loadNewPage = false;
             StartCoroutine(GetAvatarData_Server(currentpageNum, pageSize));
         }

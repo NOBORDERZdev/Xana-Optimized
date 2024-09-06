@@ -1,5 +1,4 @@
-﻿using Metaverse;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,11 +9,11 @@ public class LookAtScript : MonoBehaviour
     public float x;
     public float y;
     public float z;
-    PlayerControllerNew player; // Player script
+    PlayerController player; // Player script
     private void Awake()
     {
-        player = AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>();
-        //cameraObject = ReferrencesForDynamicMuseum.instance.randerCamera.gameObject;
+        player = AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>();
+        //cameraObject = ReferencesForGamePlay.instance.randerCamera.gameObject;
         //SetCam();
     }
 

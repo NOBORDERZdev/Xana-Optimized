@@ -23,23 +23,25 @@ public class DoorKeyComponent : ItemComponent
         {
             if (isCollisionHandled)
                 return;
-            if (PlayerCanvas.Instance.transform.parent != GamificationComponentData.instance.nameCanvas.transform)
-            {
-                PlayerCanvas.Instance.transform.SetParent(GamificationComponentData.instance.nameCanvas.transform);
-                PlayerCanvas.Instance.transform.localPosition = Vector3.up * 18.5f;
+            if (TimeStats.playerCanvas == null)
+                TimeStats.playerCanvas = Instantiate(GamificationComponentData.instance.playerCanvas);
 
+            if (TimeStats.playerCanvas.transform.parent != GamificationComponentData.instance.nameCanvas.transform)
+            {
+                TimeStats.playerCanvas.transform.SetParent(GamificationComponentData.instance.nameCanvas.transform);
+                TimeStats.playerCanvas.transform.localPosition = Vector3.up * 18.5f;
             }
 
-            PlayerCanvas.Instance.cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
+            TimeStats.playerCanvas.cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
             if (this.doorKeyComponentData.isKey && !this.doorKeyComponentData.isDoor)
             {
                 if (!KeyValidation()) return;
 
                 _other.gameObject.GetComponent<KeyValues>()._dooKeyValues.Add(this.doorKeyComponentData.selectedKey);
-                PlayerCanvas.Instance.ToggleKey(true);
+                TimeStats.playerCanvas.ToggleKey(true);
                 //this.gameObject.SetActive(false);
                 GamificationComponentData.instance.doorKeyCount++;
-                PlayerCanvas.Instance.keyCounter.text = "x" + GamificationComponentData.instance.doorKeyCount;
+                TimeStats.playerCanvas.keyCounter.text = "x" + GamificationComponentData.instance.doorKeyCount;
                 if (GamificationComponentData.instance.DoorKeyObject == null)
                     GamificationComponentData.instance.DoorKeyObject = PhotonNetwork.Instantiate("DoorKey", Vector3.zero, Quaternion.identity);
                 var hash = new ExitGames.Client.Photon.Hashtable();
@@ -70,12 +72,12 @@ public class DoorKeyComponent : ItemComponent
                         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
                         if (values._dooKeyValues.Count <= 0)
                         {
-                            PlayerCanvas.Instance.ToggleKey(false);
+                            TimeStats.playerCanvas.ToggleKey(false);
                             if (GamificationComponentData.instance.DoorKeyObject != null)
                                 PhotonNetwork.Destroy(GamificationComponentData.instance.DoorKeyObject.GetPhotonView());
                         }
                         isDoorFind = true;
-                        PlayerCanvas.Instance.keyCounter.text = "x" + values._dooKeyValues.Count.ToString();
+                        TimeStats.playerCanvas.keyCounter.text = "x" + values._dooKeyValues.Count.ToString();
                         break;
                     }
                 }
@@ -90,17 +92,18 @@ public class DoorKeyComponent : ItemComponent
                     //Toast.Show("The keys match!");
                     BuilderEventManager.OnDoorKeyCollisionEnter?.Invoke("The keys match!");
 
-                    ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.DoorOpen);
+                    ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.DoorOpen);
 
                     return;
                 }
                 if (values._dooKeyValues.Count > 0)
-                    PlayerCanvas.Instance.ToggleWrongKey();
+                    TimeStats.playerCanvas.ToggleWrongKey();
                 return;
             }
             isCollisionHandled = true;
         }
     }
+
     private bool KeyValidation()
     {
         if (this.doorKeyComponentData.selectedKey.Equals("Select Key")) return false;
@@ -157,6 +160,16 @@ public class DoorKeyComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.DoorKeyComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
     }
 
     #endregion

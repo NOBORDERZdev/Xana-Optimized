@@ -7,23 +7,19 @@ public class DragDectector : EventTrigger
 {
     public bool isDragging = false;
     PutObjectsOnPath putObjectsOnPath;
-    
 
     public override void OnDrag(PointerEventData eventData)
     {
-        //transform.parent.parent.GetComponent<PutObjectsOnPath>().OnDrag(eventData);
-        //print("IN ON DRAG");
         isDragging = true;
     }
 
     public override void OnEndDrag(PointerEventData eventData)
     {
-        //print("IN END DRAG");
         Invoke(nameof(enableClick), 1f);
     }
 
-    void enableClick() {
+    void enableClick() 
+    {
         isDragging = false;
     }
-
 }

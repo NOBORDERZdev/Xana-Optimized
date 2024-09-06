@@ -26,12 +26,12 @@ public class AnimationBtn : MonoBehaviour
         btn.onClick.AddListener(OnAnimationClick);
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.AllAnimsPanelUpdate += AllAnimsPanelUpdate;
 
-        if (GamePlayButtonEvents.inst != null) EmoteAnimationPlay.AnimationStarted += OnAnimationPlay;
-        if (GamePlayButtonEvents.inst != null) EmoteAnimationPlay.AnimationStopped += OnAnimationStoped;
+        if (GamePlayButtonEvents.inst != null) EmoteAnimationHandler.AnimationStarted += OnAnimationPlay;
+        if (GamePlayButtonEvents.inst != null) EmoteAnimationHandler.AnimationStopped += OnAnimationStoped;
 
-        if (EmoteAnimationPlay.Instance.clearAnimation == null)
+        if (EmoteAnimationHandler.Instance.clearAnimation == null)
         {
-            EmoteAnimationPlay.Instance.clearAnimation += ClearAnimations;
+            EmoteAnimationHandler.Instance.clearAnimation += ClearAnimations;
         }
 
     }
@@ -42,9 +42,9 @@ public class AnimationBtn : MonoBehaviour
         btn.onClick.RemoveListener(OnAnimationClick);
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.AllAnimsPanelUpdate -= AllAnimsPanelUpdate;
 
-        if (GamePlayButtonEvents.inst != null) EmoteAnimationPlay.AnimationStarted -= OnAnimationPlay;
-        if (GamePlayButtonEvents.inst != null) EmoteAnimationPlay.AnimationStopped -= OnAnimationStoped;
-        EmoteAnimationPlay.Instance.clearAnimation -= ClearAnimations;
+        if (GamePlayButtonEvents.inst != null) EmoteAnimationHandler.AnimationStarted -= OnAnimationPlay;
+        if (GamePlayButtonEvents.inst != null) EmoteAnimationHandler.AnimationStopped -= OnAnimationStoped;
+        EmoteAnimationHandler.Instance.clearAnimation -= ClearAnimations;
     }
 
     private void AllAnimsPanelUpdate(bool value)
@@ -52,7 +52,7 @@ public class AnimationBtn : MonoBehaviour
         if (isClose)
         {
             gameObject.SetActive(value);
-            if (!EmoteAnimationPlay.Instance.isAnimRunning && !EmoteAnimationPlay.Instance.isFetchingAnim)
+            if (!EmoteAnimationHandler.Instance.isAnimRunning && !EmoteAnimationHandler.Instance.isFetchingAnim)
             {
                 gameObject.SetActive(false);
             }
@@ -61,9 +61,9 @@ public class AnimationBtn : MonoBehaviour
 
     private void OnAnimationClick()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("gesture button"))
+        if (!UserPassManager.Instance.CheckSpecificItem("gesture button"))
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
             return;
         }
@@ -71,6 +71,13 @@ public class AnimationBtn : MonoBehaviour
         {
             print("Horayyy you have Access");
         }
+
+        if (ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().animator)
+        {
+            RuntimeAnimatorController animator = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().animator.runtimeAnimatorController;
+            EmoteAnimationHandler.Instance.controller = animator;
+        }
+
 
         if (!isClose)
         {
@@ -81,12 +88,12 @@ public class AnimationBtn : MonoBehaviour
             if (ReactScreen.Instance.reactionScreenParent.activeInHierarchy)
                 ReactScreen.Instance.HideReactionScreen();
 
-            if (ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance.isPotrait)
             {
-                ChangeOrientation_waqas._instance.joystickInitPosY = JyosticksObject.transform.localPosition.y;
-                //if (ChangeOrientation_waqas._instance.isPotrait)
-                //    ChangeOrientation_waqas._instance.joystickInitPosY = JyosticksObject.transform.localPosition.y;
-                // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
+                ScreenOrientationManager._instance.joystickInitPosY = JyosticksObject.transform.localPosition.y;
+                //if (ScreenOrientationManager._instance.isPotrait)
+                //    ScreenOrientationManager._instance.joystickInitPosY = JyosticksObject.transform.localPosition.y;
+                // ReferencesForGamePlay.instance.RotateBtn.interactable = false;
                 BottomObject.SetActive(false);
               
                 m_EmotePanel.SetActive(true);
@@ -98,7 +105,7 @@ public class AnimationBtn : MonoBehaviour
 
                 JumpObject.transform.DOKill();
                 JumpObject.transform.DOLocalMoveY(-30f, 0.1f);
-                //  ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
+                //  ReferencesForGamePlay.instance.RotateBtn.interactable = true;
                 BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(-225,true);
             }
             else
@@ -110,28 +117,28 @@ public class AnimationBtn : MonoBehaviour
         {
             if (ReactScreen.Instance.reactionScreenParent.activeInHierarchy)
                 ReactScreen.Instance.HideReactionScreen();
-            //ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
+            //ReferencesForGamePlay.instance.RotateBtn.interactable = false;
             Debug.Log("this is else close  :----");
             ReactScreen.Instance.ClosePanel();
             ReactScreen.Instance.HideEmoteScreen();
 
-            EmoteAnimationPlay.Instance.isEmoteActive = false;         // AH working
-            EmoteAnimationPlay.Instance.lastAnimClickButton = null; // WaqasAhmad
+            EmoteAnimationHandler.Instance.isEmoteActive = false;         // AH working
+            EmoteAnimationHandler.Instance.lastAnimClickButton = null; // WaqasAhmad
             highlightButton.SetActive(false);
             GamePlayButtonEvents.inst.CloseEmoteSelectionPanel();
-            EmoteAnimationPlay.Instance.StopAnimation(); // stoping animation is any action is performing.
+            EmoteAnimationHandler.Instance.StopAnimation(); // stoping animation is any action is performing.
 
-            if (ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance.isPotrait)
             {
-                JyosticksObject.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
-                JumpObject.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
+                JyosticksObject.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
+                JumpObject.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
                 //BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(-475);
             }
             else
             {
                 BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(165,false);
             }
-            //  ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
+            //  ReferencesForGamePlay.instance.RotateBtn.interactable = true;
         }
 
         //StartCoroutine(DelayToOnInteractable());
@@ -147,7 +154,7 @@ public class AnimationBtn : MonoBehaviour
     {
         if (highlightButton == null)
         {
-            highlightButton = CanvasButtonsHandler.inst.AnimationBtnClose;
+            highlightButton = GamePlayUIHandler.inst.AnimationBtnClose;
         }
         // Debug.Log("Animation start hua ");
         highlightButton.SetActive(true);
@@ -155,7 +162,7 @@ public class AnimationBtn : MonoBehaviour
 
     public void OnAnimationStoped(string s)
     {
-        if (!EmoteAnimationPlay.Instance.isEmoteActive)
+        if (!EmoteAnimationHandler.Instance.isEmoteActive)
         {
             if (highlightButton != null && highlightButton.activeInHierarchy)
             {
@@ -169,7 +176,7 @@ public class AnimationBtn : MonoBehaviour
     void ClearAnimations()
     {
         //isClose = true;
-        EmoteAnimationPlay.Instance.StopAnimation();
+        EmoteAnimationHandler.Instance.StopAnimation();
 
         highlightButton.SetActive(false);
         GamePlayButtonEvents.inst.CloseEmoteSelectionPanel();

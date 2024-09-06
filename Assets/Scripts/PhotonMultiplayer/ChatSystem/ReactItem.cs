@@ -1,5 +1,4 @@
-﻿using Metaverse;
-using SuperStar.Helpers;
+﻿using SuperStar.Helpers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +10,6 @@ using WebSocketSharp;
 
 public class ReactItem : MonoBehaviour
 {
-    #region PUBLIC_VAR
     public Image icon;
     public string iconUrl;
     public string _mainImage;
@@ -22,16 +20,7 @@ public class ReactItem : MonoBehaviour
     public TextMeshProUGUI reactionText;
     public int index;
     public Button button;
-    #endregion
 
-    #region PRIVATE_VAR
-    #endregion
-
-    #region UNITY_METHOD
-    //IEnumerator Start()
-    //{
-
-    //}
     public void Start()
     {
         for (int i = 0; i < 10; i++)
@@ -44,34 +33,30 @@ public class ReactItem : MonoBehaviour
                 {
                     if (d.animationURL == _mainImage)
                     {
-                        StarImg.sprite = AvatarManager.Instance.FavouriteAnimationSprite;
+                        StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.FavouriteAnimationSprite;
                         return;
                     }
                     else
                     {
-                        StarImg.sprite = AvatarManager.Instance.NormalAnimationSprite;
+                        StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.NormalAnimationSprite;
                     }
                 }
             }
             else
-                StarImg.sprite = AvatarManager.Instance.NormalAnimationSprite;
+                StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.NormalAnimationSprite;
         }
     }
 
     void OnEnable()
     {
-        //Debug.Log("onenable call hua" + iconUrl);
         ContentPanel = transform.parent.gameObject;
         if (iconUrl != "" && icon.sprite.name == "buttonLoading")
         {
-           // StartCoroutine(GetTexture());
             AssetCache.Instance.EnqueueOneResAndWait(iconUrl, iconUrl, (success) =>
             {
                 if (success)
                 {
                     AssetCache.Instance.LoadSpriteIntoImage(icon, iconUrl, changeAspectRatio: true);
-                    // CheckAndSetResolutionOfImage(imgFeed.sprite);
-                    //  isImageSuccessDownloadAndSave = true;
                 }
                 else
                 {
@@ -84,7 +69,6 @@ public class ReactItem : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             string data = PlayerPrefsUtility.GetEncryptedString(ConstantsGod.ANIMATION_DATA + i);
-            //Debug.Log("URL:" + ConstantsGod.ANIMATION_DATA + i);
             if (!data.IsNullOrEmpty())
             {
                 AnimationData d = JsonUtility.FromJson<AnimationData>(data);
@@ -92,29 +76,26 @@ public class ReactItem : MonoBehaviour
                 {
                     if (d.animationURL == _mainImage)
                     {
-                        StarImg.sprite = AvatarManager.Instance.FavouriteAnimationSprite;
+                        StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.FavouriteAnimationSprite;
                         return;
                     }
                     else
                     {
-                        StarImg.sprite = AvatarManager.Instance.NormalAnimationSprite;
+                        StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.NormalAnimationSprite;
                     }
                 }
             }
             else
-                StarImg.sprite = AvatarManager.Instance.NormalAnimationSprite;
+                StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.NormalAnimationSprite;
         }
     }
-    #endregion
 
-    #region PUBLIC_METHODS
     public void SetData(string url, string mainImage, int _index,string imageName)
     {
         index = _index;
         iconUrl = url;
         ReactName = imageName;
         _mainImage = mainImage;
-        //reactionText.text = ReactName;    Riken
         if (this.isActiveAndEnabled)
         {
             AssetCache.Instance.EnqueueOneResAndWait(iconUrl, iconUrl, (success) =>
@@ -122,21 +103,14 @@ public class ReactItem : MonoBehaviour
                 if (success)
                 {
                     AssetCache.Instance.LoadSpriteIntoImage(icon, iconUrl, changeAspectRatio: true);
-                    // CheckAndSetResolutionOfImage(imgFeed.sprite);
-                    //  isImageSuccessDownloadAndSave = true;
                 }
                 else
                 {
                     Debug.Log("Download Failed");
                 }
             });
-
-          //  StartCoroutine(GetTexture());
         }
     }
-    #endregion
-
-    #region PRIVATE_METHODS
     private void ButtonClick()
     {
         AssetBundle.UnloadAllAssetBundles(false);
@@ -167,9 +141,6 @@ public class ReactItem : MonoBehaviour
         animData.isEmote = true;
         GamePlayButtonEvents.inst.OnAnimationSelect(animData);
     }
-    #endregion
-
-    #region COROUTINE
 
     IEnumerator GetTexture()
     {
@@ -191,10 +162,4 @@ public class ReactItem : MonoBehaviour
             icon.sprite = sprite;
         }
     }
-
-    #endregion
-
-    #region DATA
-    #endregion
-
 }

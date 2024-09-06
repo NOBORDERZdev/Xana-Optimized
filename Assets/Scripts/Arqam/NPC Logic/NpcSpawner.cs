@@ -18,36 +18,36 @@ public class NpcSpawner : MonoBehaviour
 
     private void Awake()
     {
-        if (npcSpawner is null)
-            npcSpawner = this;
-        else if(npcSpawner != null && npcSpawner != this)
-            Destroy(this.gameObject);
+        //if (npcSpawner is null)
+        //    npcSpawner = this;
+        //else if(npcSpawner != null && npcSpawner != this)
+        //    Destroy(this.gameObject);
     }
     private void OnEnable()
     {
-        NpcChatSystem.npcNameAction += UpdateNpcName;
+        //NpcChatSystem.npcNameAction += UpdateNpcName;
     }
     private void OnDisable()
     {
-        NpcChatSystem.npcNameAction -= UpdateNpcName;
+        //NpcChatSystem.npcNameAction -= UpdateNpcName;
     }
 
     void Start()
     {
-        npcModel = new List<GameObject>();
+        //npcModel = new List<GameObject>();
 
-        aiPrefabs = Resources.Load("NPC") as GameObject;
-        for (int i = 0; i < aiStrength; i++)
-        {
-            GameObject npc = Instantiate(aiPrefabs);
-            Vector3 temp = RandomNavMeshPoint();
-            npc.transform.position = temp;
-            npc.transform.rotation = Quaternion.identity;
+        //aiPrefabs = Resources.Load("NPC") as GameObject;
+        //for (int i = 0; i < aiStrength; i++)
+        //{
+        //    GameObject npc = Instantiate(aiPrefabs);
+        //    Vector3 temp = RandomNavMeshPoint();
+        //    npc.transform.position = temp;
+        //    npc.transform.rotation = Quaternion.identity;
             
-            npcCounter++;
-            npcModel.Add(npc);
-        }
-        StartCoroutine(ReactScreen.Instance.getAllReactions());
+        //    npcCounter++;
+        //    npcModel.Add(npc);
+        //}
+        //StartCoroutine(ReactScreen.Instance.getAllReactions());
     }
 
     private void UpdateNpcName(NpcChatSystem npcChatSystem)

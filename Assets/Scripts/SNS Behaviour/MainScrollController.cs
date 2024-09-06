@@ -13,7 +13,7 @@ public class MainScrollController : MonoBehaviour
 
     public GameObject headerTitleObject;
 
-    [SerializeField] private ScrollRectFasterEx m_ScrollRect;
+    public ScrollRectFasterEx m_ScrollRect;
     public float m_InitialPosition;
 
     public ScrollRectFasterEx subScrollRectFasterEx;
@@ -24,10 +24,7 @@ public class MainScrollController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        /*screenSizeVector = new Vector2(Screen.width, Screen.height);
-        screenSizeVector = Camera.main.ViewportToWorldPoint(screenSizeVector);*/
         Invoke("CheckHeight", 0.01f);
-
         m_InitialPosition = GetContentAnchoredPosition();
     }
 
@@ -39,8 +36,6 @@ public class MainScrollController : MonoBehaviour
     void CheckHeight()
     {
         float sizeff = containerobj.rect.height - Screen.height;
-        //Debug.Log("targetpos:" + containerobj.rect.height);
-        //Debug.Log("targetpos1:" + containerobj.sizeDelta.y);
     }
     public float EndPose = -700;
 
@@ -48,14 +43,14 @@ public class MainScrollController : MonoBehaviour
     {
         if (isProfileScreen)
         {
-            if ((headerObj.transform.position.y + 2) >= TopFixedObj.transform.position.y)
-            {
-                TopFixedObj.SetActive(true);
-            }
-            else
-            {
-                TopFixedObj.SetActive(false);
-            }
+            //if ((headerObj.transform.position.y + 2) >= TopFixedObj.transform.position.y)
+            //{
+            //    TopFixedObj.SetActive(true);
+            //}
+            //else
+            //{
+            //    TopFixedObj.SetActive(false);
+            //}
         }
         else
         {
@@ -88,15 +83,5 @@ public class MainScrollController : MonoBehaviour
     private float GetContentAnchoredPosition()
     {
         return m_ScrollRect.content.anchoredPosition.y;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-       Debug.Log("Collide:" + collision.gameObject.name);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-       Debug.Log("Triggerd:" + collision);
     }
 }

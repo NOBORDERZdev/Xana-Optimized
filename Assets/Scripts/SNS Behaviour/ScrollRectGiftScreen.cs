@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class ScrollRectGiftScreen : MonoBehaviour
 {
@@ -76,7 +77,8 @@ public class ScrollRectGiftScreen : MonoBehaviour
     void Start()
     {
         // SetHeightWidth();
-        StartScrollSnap();
+        //Coomented for now as profile scroll not working properly---------UMER
+        //StartScrollSnap();
 
     }
     //public void SetHeightWidth()
@@ -131,7 +133,8 @@ public class ScrollRectGiftScreen : MonoBehaviour
     void Update()
     {
         // if moving to target position
-        if (_lerp)
+        //Falsed for now as profile scroll not working properly---------UMER
+        if (/*_lerp*/false)
         {
             // prevent overshooting with values greater than 1
             float decelerate = Mathf.Min(decelerationRate * Time.deltaTime, 1f);
@@ -195,9 +198,9 @@ public class ScrollRectGiftScreen : MonoBehaviour
         //Vector2 newPosition = new Vector2(containerWidth / 2, containerHeight / 2);
         _container.anchoredPosition = tabRectTransform[_currentPage].anchoredPosition; //newPosition;
 
-        //if (XanaConstants.xanaConstants.screenType.Equals(XanaConstants.ScreenType.MobileScreen))
+        //if (ConstantsHolder.xanaConstants.screenType.Equals(ConstantsHolder.ScreenType.MobileScreen))
         //    gridGroup[_currentPage].cellSize = new Vector2(345, 350);
-        //else if (XanaConstants.xanaConstants.screenType.Equals(XanaConstants.ScreenType.TabScreen))
+        //else if (ConstantsHolder.xanaConstants.screenType.Equals(ConstantsHolder.ScreenType.TabScreen))
         //gridGroup[_currentPage].cellSize = new Vector2(370, 400);
         //Debug.Log("<color=red>Set Grid Layout Cell size</color>");
 
@@ -237,15 +240,16 @@ public class ScrollRectGiftScreen : MonoBehaviour
     //------------------------------------------------------------------------
     public void LerpToPage(int aPageIndex)
     {
-        //if (XanaConstants.xanaConstants.screenType.Equals(XanaConstants.ScreenType.MobileScreen))
+       
+        //if (ConstantsHolder.xanaConstants.screenType.Equals(ConstantsHolder.ScreenType.MobileScreen))
         //    gridGroup[aPageIndex].cellSize = new Vector2(345, 350);
-        //else if (XanaConstants.xanaConstants.screenType.Equals(XanaConstants.ScreenType.TabScreen))
+        //else if (ConstantsHolder.xanaConstants.screenType.Equals(ConstantsHolder.ScreenType.TabScreen))
         //gridGroup[aPageIndex].cellSize = new Vector2(370, 400);
         //Debug.Log("<color=red>Set Grid Layout Cell size</color>");
 
         aPageIndex = Mathf.Clamp(aPageIndex, 0, _pageCount - 1);
         //_lerpTo = tabRectTransform[aPageIndex].anchoredPosition;  // _pagePositions[aPageIndex];
-        if(aPageIndex < tabRectTransform.Length)
+        if(aPageIndex> 0 && aPageIndex < tabRectTransform.Length)
             _lerpTo = tabRectTransform[aPageIndex].localPosition;
         //Debug.Log("<color=blue>_lerpTo: " + tabRectTransform[aPageIndex].localPosition + "</color>");
         //Debug.Log("<color=blue>_lerpFrom: " + _container.localPosition + "</color>");

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using Photon.Realtime;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
     SkinnedMeshRenderer playerPants;
     SkinnedMeshRenderer playerShoes;
     SkinnedMeshRenderer playerHead;
+    SkinnedMeshRenderer[] playerEyebrow;
     MeshRenderer playerFreeCamConsole;
     MeshRenderer playerFreeCamConsoleOther;
 
@@ -22,7 +24,8 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
     {
         if (photonView.IsMine)
             return;
-        StartCoroutine(SyncingCoroutin());
+        if (GamificationComponentData.instance.withMultiplayer)
+            StartCoroutine(SyncingCoroutin());
     }
 
     private IEnumerator SyncingCoroutin()
@@ -32,15 +35,29 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
         if (playerObj != null)
         {
             yield return new WaitForSeconds(0.5f);
-            AvatarController avatarController = playerObj.GetComponent<AvatarController>();
-            CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
+            AvatarController ac = playerObj.GetComponent<AvatarController>();
+            CharacterBodyParts charcterBodyParts = playerObj.GetComponent<CharacterBodyParts>();
             IKMuseum iKMuseum = playerObj.GetComponent<IKMuseum>();
-            playerHair = avatarController.wornHair.GetComponent<SkinnedMeshRenderer>();
-            playerPants = avatarController.wornPant.GetComponent<SkinnedMeshRenderer>();
-            playerShirt = avatarController.wornShirt.GetComponent<SkinnedMeshRenderer>();
-            playerShoes = avatarController.wornShose.GetComponent<SkinnedMeshRenderer>();
-            playerBody = charcterBodyParts.Body;
-            playerHead = charcterBodyParts.Head.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornHair)
+                playerHair = ac.wornHair.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornPant)
+                playerPants = ac.wornPant.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornShirt)
+                playerShirt = ac.wornShirt.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornShoes)
+                playerShoes = ac.wornShoes.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornEyebrow.Length > 0)
+            {
+                int index = 0;
+                playerEyebrow = new SkinnedMeshRenderer[ac.wornEyebrow.Length];
+                foreach (var eyeBrow in ac.wornEyebrow)
+                {
+                    playerEyebrow[index] = eyeBrow.GetComponent<SkinnedMeshRenderer>();
+                    index++;
+                }
+            }
+            playerBody = charcterBodyParts.body;
+            playerHead = charcterBodyParts.head;
             playerFreeCamConsole = iKMuseum.ConsoleObj.GetComponent<MeshRenderer>();
             playerFreeCamConsoleOther = iKMuseum.m_ConsoleObjOther.GetComponent<MeshRenderer>();
 
@@ -61,19 +78,22 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
     {
         if (photonView.IsMine)
             return;
-        if (isInitialise)
-            AvatarFootPrintVisible(true);
+        if (GamificationComponentData.instance.withMultiplayer)
+        {
+            if (isInitialise)
+                AvatarFootPrintVisible(true);
+        }
     }
 
     GameObject FindPlayerusingPhotonView(PhotonView pv)
     {
         Player player = pv.Owner;
-        PhotonView[] photonViews = GameObject.FindObjectsOfType<PhotonView>();
-        foreach (PhotonView photonView in photonViews)
+        foreach (GameObject playerObject in MutiplayerController.instance.playerobjects)
         {
-            if (photonView.Owner == player && photonView.GetComponent<AvatarController>())
+            PhotonView _photonView = playerObject.GetComponent<PhotonView>();
+            if (_photonView.Owner == player && _photonView.GetComponent<AvatarController>())
             {
-                return photonView.gameObject;
+                return playerObject;
             }
         }
         return null;
@@ -81,11 +101,23 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
 
     void AvatarFootPrintVisible(bool state)
     {
-        playerHair.enabled = state;
-        playerBody.enabled = state;
-        playerShirt.enabled = state;
-        playerPants.enabled = state;
-        playerShoes.enabled = state;
+        if (playerHair)
+            playerHair.enabled = state;
+        if (playerBody)
+            playerBody.enabled = state;
+        if (playerShirt)
+            playerShirt.enabled = state;
+        if (playerPants)
+            playerPants.enabled = state;
+        if (playerShoes)
+            playerShoes.enabled = state;
+        if (playerEyebrow.Length > 0)
+        {
+            foreach (var eyeBrow in playerEyebrow)
+            {
+                eyeBrow.enabled = state;
+            }
+        }
         playerHead.enabled = state;
         playerFreeCamConsole.enabled = state;
         playerFreeCamConsoleOther.enabled = state;

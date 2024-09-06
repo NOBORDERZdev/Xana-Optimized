@@ -13,7 +13,7 @@ public class FeedEventTextClipper : MonoBehaviour
   
     void Start()
     {
-        if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese)
+        if (GameManager.currentLanguage == "ja" || LocalizationManager.forceJapanese)
             PreferredLength = 12;
         else
             PreferredLength = 16;

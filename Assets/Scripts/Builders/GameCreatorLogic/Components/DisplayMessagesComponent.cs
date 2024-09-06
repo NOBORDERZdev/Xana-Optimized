@@ -34,7 +34,7 @@ public class DisplayMessagesComponent : ItemComponent
 
     private void StartComponent()
     {
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.DisplayMessage);
+        ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.DisplayMessage);
 
         if (displayMessageComponentData.isStart)
         {
@@ -53,10 +53,10 @@ public class DisplayMessagesComponent : ItemComponent
 
     public override void StopBehaviour()
     {
-        if(isPlaying)
+        if (isPlaying)
         {
-        isPlaying = false;
-        StopComponent();
+            isPlaying = false;
+            StopComponent();
         }
     }
 
@@ -83,6 +83,16 @@ public class DisplayMessagesComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.DisplayMessagesComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
     }
 
     #endregion

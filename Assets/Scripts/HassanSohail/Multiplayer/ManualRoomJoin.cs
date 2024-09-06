@@ -25,6 +25,6 @@ public class ManualRoomJoin : MonoBehaviour
     public void JoinRoom()
     {
         // PhotonNetwork.JoinRoom();
-        Launcher.instance.JoinRoomManually(RoomName.text);
+        MutiplayerController.instance.JoinRoomManually(RoomName.text);
     }
 }

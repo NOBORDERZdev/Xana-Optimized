@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Models;
 using UnityEngine;
+using UnityEngine.Video;
 
 public static class BuilderEventManager
 {
     public static Action<int, string> OnBuilderDataFetch;
 
-    public static Action<APIURL, Action<bool>> OnBuilderWorldLoad;
+    public static Action<APIURL, Action<bool>, bool> OnBuilderWorldLoad;
     public static Action<APIURL, bool> OnWorldTabChange;
 
     public static Action ApplySkyoxSettings;
@@ -44,9 +45,11 @@ public static class BuilderEventManager
 
     //Timer Component
     public static Action<string, float> OnTimerTriggerEnter;
+    public static Action OnTimerLimitEnd;
 
     //Elapse Time Component
     public static Action<float, bool> OnElapseTimeCounterTriggerEnter;
+    public static Action elapsedEndTime;
 
     //CountDown Component
     public static Action<int, bool> OnTimerCountDownTriggerEnter;
@@ -63,6 +66,7 @@ public static class BuilderEventManager
 
     //Situation Changer Component
     public static Action<float> OnSituationChangerTriggerEnter;
+    public static Action DisableSituationLight;
 
     //Quiz Component
     public static Action<QuizComponent, QuizComponentData> OnQuizComponentCollisionEnter;
@@ -99,6 +103,7 @@ public static class BuilderEventManager
     //Avatar change Component
     public static Action<float> OnAvatarChangeComponentTriggerEnter;
     public static Action<bool> StopAvatarChangeComponent;
+    public static Action<bool> ChangeCameraHeight;
 
     //ChangeNinja_ThrowUIPosition
     public static Action<float, bool> ChangeNinja_ThrowUIPosition;
@@ -106,7 +111,7 @@ public static class BuilderEventManager
 
     //UI toggle
     public static Action<bool> UIToggle;
-    public static Action<Constants.ItemComponentType> ResetComponentUI;
+    public static Action<Constants.ItemComponentType, bool> ResetComponentUI;
     public static Action EnableWorldCanvasCamera;
     public static Action<bool> DisableAnimationsButtons;
 
@@ -119,4 +124,23 @@ public static class BuilderEventManager
     public static Action<AudioPropertiesBGM> BGMDownloader;
     public static Action BGMStart;
     public static Action<float> BGMVolume;
+
+    //UploadPropertyLoad
+    public static Action<UploadProperties> UploadPropertiesData;
+    public static Action UploadPropertiesInit;
+    public static Action<string> YoutubeVideoLoadedCallback;
+
+
+    //XANA Summit Specific Events 
+    public static Action LoadSummitScene;
+    public static Action<int, Vector3> LoadNewScene;
+    public static Action<string, Vector3> LoadSceneByName;
+    public static Action<int, string[]> AINPCActivated;
+    public static Action<int> AINPCDeactivated;
+
+    public static Action<VideoClip, Vector3> spaceXActivated;
+    public static Action<string> loadBGMDirectly;
+    public static Action StopBGM;
+    public static Action ResetSummit;
+
 }

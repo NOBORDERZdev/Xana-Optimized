@@ -7,27 +7,28 @@ using Photon.Pun;
 public class TranslateComponent : ItemComponent
 {
     #region Translate Module
-    TranslateComponentData translateComponentData;
-    float nextRadius = .5f;
-    List<Vector3> translatePositions;
-    int counter;
-    bool moveForward, moveBackward;
-    bool activateTranslateComponent = false;
-    public Vector3 lookAtVector;
-    string RuntimeItemID = "";
-    private bool IsAgainTouchable;
+    public Vector3 LookAtVector;
+    TranslateComponentData _translateComponentData;
+    float _nextRadius = .5f;
+    List<Vector3> _translatePositions;
+    int _counter;
+    bool _moveForward, _moveBackward;
+    bool _activateTranslateComponent = false;
+    string _runtimeItemID = "";
+    bool _isAgainTouchable;
 
     public void InitTranslate(TranslateComponentData translateComponentData)
     {
-        this.translateComponentData = translateComponentData;
-        RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
-        translatePositions = new List<Vector3>();
-        translatePositions = translateComponentData.translatePoints;
-        moveForward = true;
-        moveBackward = false;
-        activateTranslateComponent = true;
-        counter = 0;
-        if (!this.translateComponentData.avatarTriggerToggle)
+        this._translateComponentData = translateComponentData;
+        _runtimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
+        _translatePositions = new List<Vector3>();
+        _translatePositions = translateComponentData.translatePoints;
+        _moveForward = true;
+        _moveBackward = false;
+        _activateTranslateComponent = true;
+        _counter = 0;
+        NetworkSyncManager.Instance.TranslateComponentpos.TryAdd(_runtimeItemID, transform.position);
+        if (!this._translateComponentData.avatarTriggerToggle)
         {
             PlayBehaviour();
         }
@@ -37,45 +38,46 @@ public class TranslateComponent : ItemComponent
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            if (translateComponentData.avatarTriggerToggle && !IsAgainTouchable)
+            if (_translateComponentData.avatarTriggerToggle && !_isAgainTouchable)
             {
                 if (GamificationComponentData.instance.withMultiplayer)
-                    GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
-                else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, _componentType);
+                    GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, _runtimeItemID, _componentType);
+                else
+                    GamificationComponentData.instance.GetObjectwithoutRPC(_runtimeItemID, _componentType);
             }
         }
     }
 
     private bool CheckDistance()
     {
-        if ((Vector3.Distance(this.transform.position, translatePositions[counter])) < nextRadius)
+        if (_translatePositions.Count > 0 && (Vector3.Distance(this.transform.position, _translatePositions[_counter])) < _nextRadius)
         {
             //counter = (counter == 0) ? 1 : 0;
-            if (moveForward == true && counter < translatePositions.Count - 1)
+            if (_moveForward == true && _counter < _translatePositions.Count - 1)
             {
-                counter++;
+                _counter++;
             }
             else
             {
-                if (translateComponentData.isLoop)
+                if (_translateComponentData.isLoop)
                 {
-                    counter = 0;
+                    _counter = 0;
                 }
                 else
                 {
-                    moveForward = false;
-                    moveBackward = true;
+                    _moveForward = false;
+                    _moveBackward = true;
                 }
 
             }
-            if (moveBackward == true && counter > 0)
+            if (_moveBackward == true && _counter > 0)
             {
-                counter--;
+                _counter--;
             }
             else
             {
-                moveBackward = false;
-                moveForward = true;
+                _moveBackward = false;
+                _moveForward = true;
             }
 
             return false;
@@ -83,20 +85,41 @@ public class TranslateComponent : ItemComponent
         else return true;
     }
 
+    private void FixedUpdate()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (_activateTranslateComponent)
+            {
+                NetworkSyncManager.Instance.TranslateComponentpos[_runtimeItemID] = transform.position;
+            }
+        }
+        else
+        {
+            object obj;
+            if (NetworkSyncManager.Instance.TranslateComponentpos.TryGetValue(_runtimeItemID, out obj))
+            {
+                transform.position = (Vector3)obj;
+            }
+        }
+
+
+    }
+
     IEnumerator translateModule()
     {
-        while (activateTranslateComponent)
+        while (_activateTranslateComponent)
         {
             yield return new WaitForSeconds(0f);
             if (CheckDistance())
             {
                 this.transform.position = Vector3.MoveTowards(
-                   this.transform.position, translatePositions[counter],
-                   translateComponentData.translateSpeed * Time.deltaTime
+                   this.transform.position, _translatePositions[_counter],
+                   _translateComponentData.translateSpeed * Time.deltaTime
                    );
-                if (this.translateComponentData.IsFacing)
+                if (this._translateComponentData.IsFacing)
                 {
-                    this.transform.LookAt(translatePositions[counter]);
+                    this.transform.LookAt(_translatePositions[_counter]);
                     this.transform.Rotate(new Vector3(0, 1, 0), 180f);
                 }
             }
@@ -108,18 +131,19 @@ public class TranslateComponent : ItemComponent
     #region BehaviourControl
     private void StartComponent()
     {
-        activateTranslateComponent = true;
-        IsAgainTouchable = true;
-        StartCoroutine(translateModule());
+        _activateTranslateComponent = true;
+        _isAgainTouchable = true;
+        if (PhotonNetwork.IsMasterClient)
+            StartCoroutine(translateModule());
     }
     private void StopComponent()
     {
-        activateTranslateComponent = false;
+        _activateTranslateComponent = false;
     }
 
     public override void StopBehaviour()
     {
-                isPlaying = false;
+        isPlaying = false;
         StopComponent();
         StopComponent();
     }
@@ -147,6 +171,16 @@ public class TranslateComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.TranslateComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
     }
 
     #endregion

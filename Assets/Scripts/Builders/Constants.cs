@@ -6,6 +6,18 @@ public static class Constants
     public static int cursorLayer = 8;
     public static int defaultLayer = 0;
     public static int itemLayer = 9;
+    public const string ItemTag = "Item";
+    public const string GroundTag = "Footsteps/grass";
+    public const string WaterTag = "Footsteps/water";
+
+    public const float minPlayerUISpeed = 1f;
+    public const float maxPlayerUISpeed = 20f;
+    public const float minPlayerSprintSpeed = 4.5f;
+    public const float maxPlayerSprintSpeed = 15f;
+    public const float minPlayerUIJump = 1f;
+    public const float maxPlayerUIJump = 20f;
+    public const float minPlayerJumpHeight = 5f;
+    public const float maxPlayerJumpHeight = 15f;
 
     public const string HomeScene = "Home";
     public const string BuilderScene = "XanaBuilder";
@@ -183,7 +195,9 @@ public static class Constants
         BlindfoldedDisplayComponent = 28,
         HyperLinkPopComponent = 29,
         BlindComponent = 30,
-        none=31
+        PhysicsComponent = 31,
+        TeleportComponent = 32,
+        none = 33
     }
     #endregion
 

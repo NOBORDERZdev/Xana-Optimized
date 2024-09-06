@@ -72,5 +72,15 @@ public class TimeLimitComponent : ItemComponent
         _componentType = Constants.ItemComponentType.TimeLimitComponent;
     }
 
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
+    }
+
     #endregion
 }

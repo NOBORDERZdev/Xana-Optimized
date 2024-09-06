@@ -2862,6 +2862,7 @@ MonoBehaviour:
   testnetMussuemId: 28
   mainnetMussuemId: 13
   eventid: 
+  XanaSummitNFTHandler: {fileID: 8141283418276172437, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
   AllS3Nfts: []
 --- !u!1 &2350962249401192023
 GameObject:
@@ -9419,14 +9420,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c992597c5d7725e48bde3023d37efc2b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 52592b58f9db593408a4dfceb924d934, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9742,12 +9743,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 919342d273e42d44ab4f6058e8067b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimHighlight: {fileID: 0}
-  popupPenal: {fileID: 0}
-  spawnCharacterObject: {fileID: 0}
-  spawnCharacterObjectRemote: {fileID: 0}
   EventEndedPanel: {fileID: 0}
-  mainScene: 
 --- !u!1 &6277646475908692969
 GameObject:
   m_ObjectHideFlags: 0
@@ -9908,6 +9904,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   picturePanel: []
+  NFTSpawnPoints: []
+  StaticNFTSpawnPoints: []
   museumRaycaster: {fileID: 5471274371316830299}
   m_MuseumCanvas: {fileID: 0}
   m_PictureBannerCanvas: {fileID: 1105756690640656326}
@@ -10079,12 +10077,14 @@ MonoBehaviour:
   m_IsDescriptionPanelActive: 0
   m_VideoPanel: {fileID: 5872036574716705955}
   m_VideoPlayer: {fileID: 2161718242658174679}
+  XanaSummitNFTHandler: {fileID: 0}
   m_RenderTexture: {fileID: 8400000, guid: 950b5772ac6d29a4a9ef1ab983460511, type: 2}
   m_IsVideo: 0
   scenec_cheker: 0
   errorPanel: {fileID: 1849994630193404425}
   isGOz: 0
   changeAlphaValue_descPanel: 0
+  IsStaticMuseum: 0
 --- !u!114 &5471274371316830299
 MonoBehaviour:
   m_ObjectHideFlags: 0

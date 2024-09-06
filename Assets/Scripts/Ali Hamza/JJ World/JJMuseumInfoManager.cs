@@ -14,7 +14,7 @@ public class JJMuseumInfoManager : MonoBehaviour
 
     private void Start()
     {
-        if (APIBaseUrlChange.instance.IsXanaLive)
+        if (APIBasepointManager.instance.IsXanaLive)
             JJMusuemId = JJMusuemId_main;
         else
             JJMusuemId = JJMusuemId_test;
@@ -31,7 +31,7 @@ public class JJMuseumInfoManager : MonoBehaviour
             await request.SendWebRequest();
             if (request.isNetworkError || request.isHttpError)
             {
-                Debug.Log("<color=red>" + request.error + " </color>");
+                //Debug.Log("<color=red>" + request.error + " </color>");
             }
             else
             {

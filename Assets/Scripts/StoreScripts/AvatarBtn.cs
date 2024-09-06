@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
-using static StoreManager;
+using static InventoryManager;
 
 public class AvatarBtn : MonoBehaviour
 {
@@ -26,11 +26,11 @@ public class AvatarBtn : MonoBehaviour
     //bool isAddedInUndoRedo = false;       
     SavingCharacterDataClass _CharacterData;
     AddressableDownloader downloader;
+    BlendShapeManager shapeImporter;
     private void Awake()
     {
         if (instance == null)
             instance = this;
-        downloader = AddressableDownloader.Instance;
     }
 
     private void OnEnable()
@@ -43,14 +43,14 @@ public class AvatarBtn : MonoBehaviour
         {
             case "Face":
                 {
-                    if (ActivePanelCallStack.obj.IsCallByBtn() && XanaConstants.xanaConstants.faceIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
+                    if (StoreStackHandler.obj.IsCallByBtn() && ConstantsHolder.xanaConstants.faceIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
                     {
 
-                        if (!AR_UndoRedo.obj.addToList)
-                            AR_UndoRedo.obj.addToList = true;
+                        if (!StoreUndoRedo.obj.addToList)
+                            StoreUndoRedo.obj.addToList = true;
                         else
                         {
-                            AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Face);
+                            StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Face);
                             Debug.Log("<color=red> Set Default Face morph</color>");
                         }
                     }
@@ -58,44 +58,44 @@ public class AvatarBtn : MonoBehaviour
                 break;
             case "EyeBrow":
                 {
-                    if (ActivePanelCallStack.obj.IsCallByBtn() && XanaConstants.xanaConstants.eyeBrowIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
+                    if (StoreStackHandler.obj.IsCallByBtn() && ConstantsHolder.xanaConstants.eyeBrowIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
                     {
 
-                        if (!AR_UndoRedo.obj.addToList)
-                            AR_UndoRedo.obj.addToList = true;
+                        if (!StoreUndoRedo.obj.addToList)
+                            StoreUndoRedo.obj.addToList = true;
                         else
                         {
-                            AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeBrowAvatar);
+                            StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeBrowAvatar);
                             Debug.Log("<color=red> Set Default Eyebrow morph </color>");
                         }
                     }
                 }
                 break;
-            case "EyeLashes":
+            case "EyeBrowPoints":
                 {
-                    if (ActivePanelCallStack.obj.IsCallByBtn() && XanaConstants.xanaConstants.eyeLashesIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
+                    if (StoreStackHandler.obj.IsCallByBtn() && ConstantsHolder.xanaConstants.eyeLashesIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
                     {
 
-                        if (!AR_UndoRedo.obj.addToList)
-                            AR_UndoRedo.obj.addToList = true;
+                        if (!StoreUndoRedo.obj.addToList)
+                            StoreUndoRedo.obj.addToList = true;
                         else
                         {
-                            AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeLashesAvatar);
-                            Debug.Log("<color=red> Set Default EyeLashes morph </color>");
+                            StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeLashesAvatar);
+                            Debug.Log("<color=red> Set Default EyeBrowPoints morph </color>");
                         }
                     }
                 }
                 break;
             case "Makeup":
                 {
-                    if (ActivePanelCallStack.obj.IsCallByBtn() && XanaConstants.xanaConstants.makeupIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
+                    if (StoreStackHandler.obj.IsCallByBtn() && ConstantsHolder.xanaConstants.makeupIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
                     {
 
-                        if (!AR_UndoRedo.obj.addToList)
-                            AR_UndoRedo.obj.addToList = true;
+                        if (!StoreUndoRedo.obj.addToList)
+                            StoreUndoRedo.obj.addToList = true;
                         else
                         {
-                            AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Makeup);
+                            StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Makeup);
                             Debug.Log("<color=red> Set Default Makeup </color>");
                         }
                     }
@@ -103,14 +103,14 @@ public class AvatarBtn : MonoBehaviour
                 break;
             case "Eyes":
                 {
-                    if (ActivePanelCallStack.obj.IsCallByBtn() && XanaConstants.xanaConstants.eyeIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
+                    if (StoreStackHandler.obj.IsCallByBtn() && ConstantsHolder.xanaConstants.eyeIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
                     {
 
-                        if (!AR_UndoRedo.obj.addToList)
-                            AR_UndoRedo.obj.addToList = true;
+                        if (!StoreUndoRedo.obj.addToList)
+                            StoreUndoRedo.obj.addToList = true;
                         else
                         {
-                            AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyesAvatar);
+                            StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyesAvatar);
                             Debug.Log("<color=red> Set Default Eye </color>");
                         }
                     }
@@ -118,14 +118,14 @@ public class AvatarBtn : MonoBehaviour
                 break;
             case "Nose":
                 {
-                    if (ActivePanelCallStack.obj.IsCallByBtn() && XanaConstants.xanaConstants.noseIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
+                    if (StoreStackHandler.obj.IsCallByBtn() && ConstantsHolder.xanaConstants.noseIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
                     {
 
-                        if (!AR_UndoRedo.obj.addToList)
-                            AR_UndoRedo.obj.addToList = true;
+                        if (!StoreUndoRedo.obj.addToList)
+                            StoreUndoRedo.obj.addToList = true;
                         else
                         {
-                            AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Nose);
+                            StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Nose);
                             Debug.Log("<color=red> Set Default Nose </color>");
                         }
                     }
@@ -133,14 +133,14 @@ public class AvatarBtn : MonoBehaviour
                 break;
             case "Lips":
                 {
-                    if (ActivePanelCallStack.obj.IsCallByBtn() && XanaConstants.xanaConstants.lipIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
+                    if (StoreStackHandler.obj.IsCallByBtn() && ConstantsHolder.xanaConstants.lipIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
                     {
 
-                        if (!AR_UndoRedo.obj.addToList)
-                            AR_UndoRedo.obj.addToList = true;
+                        if (!StoreUndoRedo.obj.addToList)
+                            StoreUndoRedo.obj.addToList = true;
                         else
                         {
-                            AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.LipsAvatar);
+                            StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.LipsAvatar);
                             Debug.Log("<color=red> Set Default Lips </color>");
                         }
                     }
@@ -148,14 +148,14 @@ public class AvatarBtn : MonoBehaviour
                 break;
             case "Body":
                 {
-                    if (ActivePanelCallStack.obj.IsCallByBtn() && XanaConstants.xanaConstants.bodyNumber == _Bodyint)   //!isAddedInUndoRedo && // check if image is selected
+                    if (StoreStackHandler.obj.IsCallByBtn() && ConstantsHolder.xanaConstants.bodyNumber == _Bodyint)   //!isAddedInUndoRedo && // check if image is selected
                     {
 
-                        if (!AR_UndoRedo.obj.addToList)
-                            AR_UndoRedo.obj.addToList = true;
+                        if (!StoreUndoRedo.obj.addToList)
+                            StoreUndoRedo.obj.addToList = true;
                         else
                         {
-                            AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Body);
+                            StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Body);
                             Debug.Log("<color=red> Set Default Body </color>");
                         }
                     }
@@ -175,6 +175,8 @@ public class AvatarBtn : MonoBehaviour
         PriceTxt.enabled = false;
 
         _CharacterData = new SavingCharacterDataClass();
+        downloader = AddressableDownloader.Instance;
+        shapeImporter = GameManager.Instance.BlendShapeManager;
     }
 
     private void OnAvatarBtnClick()
@@ -200,11 +202,11 @@ public class AvatarBtn : MonoBehaviour
                 {
                     CurrentString = "Face";
                     // Undo Redo Functionailty
-                    if (!AR_UndoRedo.obj.addToList)
-                        AR_UndoRedo.obj.addToList = true;
+                    if (!StoreUndoRedo.obj.addToList)
+                        StoreUndoRedo.obj.addToList = true;
                     else
                     {
-                        AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Face);
+                        StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Face);
                         Debug.Log("<color=red> Set Face morph btn into list </color>");
                     }
                     break;
@@ -219,25 +221,25 @@ public class AvatarBtn : MonoBehaviour
                 {
                     CurrentString = "Eye Brow";
 
-                    if (!AR_UndoRedo.obj.addToList)
-                        AR_UndoRedo.obj.addToList = true;
+                    if (!StoreUndoRedo.obj.addToList)
+                        StoreUndoRedo.obj.addToList = true;
                     else
                     {
-                        AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeBrowAvatar);
+                        StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeBrowAvatar);
                         Debug.Log("<color=red> Set Eyebrow morph btn into list </color>");
                     }
                     break;
                 }
-            case "EyeLashes":
+            case "EyeBrowPoints":
                 {
-                    CurrentString = "EyeLashes";
+                    CurrentString = "EyeBrowPoints";
 
-                    if (!AR_UndoRedo.obj.addToList)
-                        AR_UndoRedo.obj.addToList = true;
+                    if (!StoreUndoRedo.obj.addToList)
+                        StoreUndoRedo.obj.addToList = true;
                     else
                     {
-                        AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeLashesAvatar);
-                        Debug.Log("<color=red> Set EyeLashes morph btn into list </color>");
+                        StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeLashesAvatar);
+                        Debug.Log("<color=red> Set EyeBrowPoints morph btn into list </color>");
                     }
                     break;
                 }
@@ -245,11 +247,11 @@ public class AvatarBtn : MonoBehaviour
                 {
                     CurrentString = "Makeup";
 
-                    if (!AR_UndoRedo.obj.addToList)
-                        AR_UndoRedo.obj.addToList = true;
+                    if (!StoreUndoRedo.obj.addToList)
+                        StoreUndoRedo.obj.addToList = true;
                     else
                     {
-                        AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Makeup);
+                        StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Makeup);
                         Debug.Log("<color=red> Set Makeup morph btn into list </color>");
                     }
                     break;
@@ -258,11 +260,11 @@ public class AvatarBtn : MonoBehaviour
                 {
                     CurrentString = "Eyes";
 
-                    if (!AR_UndoRedo.obj.addToList)
-                        AR_UndoRedo.obj.addToList = true;
+                    if (!StoreUndoRedo.obj.addToList)
+                        StoreUndoRedo.obj.addToList = true;
                     else
                     {
-                        AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyesAvatar);
+                        StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyesAvatar);
                         Debug.Log("<color=red> Set Eye morph btn into list </color>");
                     }
                     break;
@@ -270,11 +272,11 @@ public class AvatarBtn : MonoBehaviour
             case "Nose":
                 {
                     CurrentString = "Nose";
-                    if (!AR_UndoRedo.obj.addToList)
-                        AR_UndoRedo.obj.addToList = true;
+                    if (!StoreUndoRedo.obj.addToList)
+                        StoreUndoRedo.obj.addToList = true;
                     else
                     {
-                        AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Nose);
+                        StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Nose);
                         Debug.Log("<color=red> Set Nose morph btn into list </color>");
                     }
                     break;
@@ -282,11 +284,11 @@ public class AvatarBtn : MonoBehaviour
             case "Lips":
                 {
                     CurrentString = "Lip";
-                    if (!AR_UndoRedo.obj.addToList)
-                        AR_UndoRedo.obj.addToList = true;
+                    if (!StoreUndoRedo.obj.addToList)
+                        StoreUndoRedo.obj.addToList = true;
                     else
                     {
-                        AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.LipsAvatar);
+                        StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.LipsAvatar);
                         Debug.Log("<color=red> Set lips morph btn into list </color>");
                     }
                     break;
@@ -300,11 +302,11 @@ public class AvatarBtn : MonoBehaviour
                 {
                     CurrentString = "Body";
 
-                    if (!AR_UndoRedo.obj.addToList)
-                        AR_UndoRedo.obj.addToList = true;
+                    if (!StoreUndoRedo.obj.addToList)
+                        StoreUndoRedo.obj.addToList = true;
                     else
                     {
-                        AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Body);
+                        StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Body);
                         Debug.Log("<color=red> Set body morph btn into list </color>");
                     }
                     break;
@@ -337,9 +339,9 @@ public class AvatarBtn : MonoBehaviour
         }
 
 
-        if ((!PremiumUsersDetails.Instance.CheckSpecificItem(CurrentString) && (CurrentString != "Makeup" && CurrentString != "EyeLashes")) && CurrentString != "")
+        if ((!UserPassManager.Instance.CheckSpecificItem(CurrentString) && (CurrentString != "Makeup" && CurrentString != "EyeBrowPoints")) && CurrentString != "")
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
             //print("Please Upgrade to Premium account");
             return;
         }
@@ -351,12 +353,12 @@ public class AvatarBtn : MonoBehaviour
             {
                 case "Face":
                     {
-                        XanaConstants.xanaConstants.faceIndex = AvatarBtnId;
-                        XanaConstants.xanaConstants.isFaceMorphed = false;
+                        ConstantsHolder.xanaConstants.faceIndex = AvatarBtnId;
+                        ConstantsHolder.xanaConstants.isFaceMorphed = false;
 
                         if (isExist)
                         {
-                            if (_CharacterData.FaceValue == XanaConstants.xanaConstants.faceIndex && !_CharacterData.faceMorphed)
+                            if (_CharacterData.FaceValue == ConstantsHolder.xanaConstants.faceIndex && !_CharacterData.faceMorphed)
                             {
                                 itemAlreadySaved = true;
                             }
@@ -366,12 +368,12 @@ public class AvatarBtn : MonoBehaviour
                     }
                 case "EyeBrow":
                     {
-                        XanaConstants.xanaConstants.eyeBrowIndex = AvatarBtnId;
-                        XanaConstants.xanaConstants.isEyebrowMorphed = false;
+                        ConstantsHolder.xanaConstants.eyeBrowIndex = AvatarBtnId;
+                        ConstantsHolder.xanaConstants.isEyebrowMorphed = false;
 
                         if (isExist)
                         {
-                            if (_CharacterData.EyeBrowValue == XanaConstants.xanaConstants.eyeBrowIndex && !_CharacterData.eyeBrowMorphed)
+                            if (_CharacterData.EyeBrowValue == ConstantsHolder.xanaConstants.eyeBrowIndex && !_CharacterData.eyeBrowMorphed)
                             {
                                 itemAlreadySaved = true;
                             }
@@ -379,13 +381,13 @@ public class AvatarBtn : MonoBehaviour
 
                         break;
                     }
-                case "EyeLashes":
+                case "EyeBrowPoints":
                     {
-                        XanaConstants.xanaConstants.eyeLashesIndex = AvatarBtnId;
+                        ConstantsHolder.xanaConstants.eyeLashesIndex = AvatarBtnId;
 
                         if (isExist)
                         {
-                            if (_CharacterData.EyeLashesValue == XanaConstants.xanaConstants.eyeLashesIndex /*&& !_CharacterData.EyeLashesValue*/)
+                            if (_CharacterData.EyeLashesValue == ConstantsHolder.xanaConstants.eyeLashesIndex /*&& !_CharacterData.EyeLashesValue*/)
                             {
                                 itemAlreadySaved = true;
                             }
@@ -395,10 +397,10 @@ public class AvatarBtn : MonoBehaviour
                 case "Makeup":
                     {
                         print("makeup");
-                        XanaConstants.xanaConstants.makeupIndex = AvatarBtnId;
+                        ConstantsHolder.xanaConstants.makeupIndex = AvatarBtnId;
                         if (isExist)
                         {
-                            if (_CharacterData.MakeupValue == XanaConstants.xanaConstants.makeupIndex /*&& !_CharacterData.EyeLashesValue*/)
+                            if (_CharacterData.MakeupValue == ConstantsHolder.xanaConstants.makeupIndex /*&& !_CharacterData.EyeLashesValue*/)
                             {
                                 itemAlreadySaved = true;
                             }
@@ -407,12 +409,12 @@ public class AvatarBtn : MonoBehaviour
                     }
                 case "Eyes":
                     {
-                        XanaConstants.xanaConstants.eyeIndex = AvatarBtnId;
-                        XanaConstants.xanaConstants.isEyeMorphed = false;
+                        ConstantsHolder.xanaConstants.eyeIndex = AvatarBtnId;
+                        ConstantsHolder.xanaConstants.isEyeMorphed = false;
 
                         if (isExist)
                         {
-                            if (_CharacterData.EyeValue == XanaConstants.xanaConstants.eyeIndex && !_CharacterData.eyeMorphed)
+                            if (_CharacterData.EyeValue == ConstantsHolder.xanaConstants.eyeIndex && !_CharacterData.eyeMorphed)
                             {
                                 itemAlreadySaved = true;
                             }
@@ -422,12 +424,12 @@ public class AvatarBtn : MonoBehaviour
                     }
                 case "Nose":
                     {
-                        XanaConstants.xanaConstants.noseIndex = AvatarBtnId;
-                        XanaConstants.xanaConstants.isNoseMorphed = false;
+                        ConstantsHolder.xanaConstants.noseIndex = AvatarBtnId;
+                        ConstantsHolder.xanaConstants.isNoseMorphed = false;
 
                         if (isExist)
                         {
-                            if (_CharacterData.NoseValue == XanaConstants.xanaConstants.noseIndex && !_CharacterData.noseMorphed)
+                            if (_CharacterData.NoseValue == ConstantsHolder.xanaConstants.noseIndex && !_CharacterData.noseMorphed)
                             {
                                 itemAlreadySaved = true;
                             }
@@ -437,12 +439,12 @@ public class AvatarBtn : MonoBehaviour
                     }
                 case "Lips":
                     {
-                        XanaConstants.xanaConstants.lipIndex = AvatarBtnId;
-                        XanaConstants.xanaConstants.isLipMorphed = false;
+                        ConstantsHolder.xanaConstants.lipIndex = AvatarBtnId;
+                        ConstantsHolder.xanaConstants.isLipMorphed = false;
 
                         if (isExist)
                         {
-                            if (_CharacterData.LipsValue == XanaConstants.xanaConstants.lipIndex && !_CharacterData.lipMorphed)
+                            if (_CharacterData.LipsValue == ConstantsHolder.xanaConstants.lipIndex && !_CharacterData.lipMorphed)
                             {
                                 itemAlreadySaved = true;
                             }
@@ -452,13 +454,13 @@ public class AvatarBtn : MonoBehaviour
                     }
                 case "Body":
                     {
-                        XanaConstants.xanaConstants.bodyNumber = _Bodyint;
+                        ConstantsHolder.xanaConstants.bodyNumber = _Bodyint;
 
                         if (isExist)
                         {
-                            if (_CharacterData.BodyFat == XanaConstants.xanaConstants.bodyNumber)
+                            if (_CharacterData.BodyFat == ConstantsHolder.xanaConstants.bodyNumber)
                             {
-                                if (XanaConstants.xanaConstants.PresetValueString == PlayerPrefs.GetString("PresetValue"))
+                                if (ConstantsHolder.xanaConstants.PresetValueString == PlayerPrefs.GetString("PresetValue"))
                                     itemAlreadySaved = true;
                             }
                         }
@@ -467,27 +469,27 @@ public class AvatarBtn : MonoBehaviour
                     }
                 case "FaceMorph":
                     {
-                        XanaConstants.xanaConstants.isFaceMorphed = true;
+                        ConstantsHolder.xanaConstants.isFaceMorphed = true;
                         break;
                     }
                 case "EyesMorph":
                     {
-                        XanaConstants.xanaConstants.isEyeMorphed = true;
+                        ConstantsHolder.xanaConstants.isEyeMorphed = true;
                         break;
                     }
                 case "EyeBrowMorph":
                     {
-                        XanaConstants.xanaConstants.isEyebrowMorphed = true;
+                        ConstantsHolder.xanaConstants.isEyebrowMorphed = true;
                         break;
                     }
                 case "NoseMorph":
                     {
-                        XanaConstants.xanaConstants.isNoseMorphed = true;
+                        ConstantsHolder.xanaConstants.isNoseMorphed = true;
                         break;
                     }
                 case "LipsMorph":
                     {
-                        XanaConstants.xanaConstants.isLipMorphed = true;
+                        ConstantsHolder.xanaConstants.isLipMorphed = true;
                         break;
                     }
                 case "HeadMorph":
@@ -498,53 +500,58 @@ public class AvatarBtn : MonoBehaviour
 
             if (CurrentString != "Morphs")
             {
-                XanaConstants.xanaConstants._curretClickedBtn = this.gameObject;
-                XanaConstants.xanaConstants.avatarStoreSelection[XanaConstants.xanaConstants.currentButtonIndex] = gameObject;
+                PatchForStore.isCustomizationPanelOpen = false;
+                ConstantsHolder.xanaConstants._curretClickedBtn = this.gameObject;
+                ConstantsHolder.xanaConstants.avatarStoreSelection[ConstantsHolder.xanaConstants.currentButtonIndex] = gameObject;
 
-                if (XanaConstants.xanaConstants._lastAvatarClickedBtn && XanaConstants.xanaConstants._curretClickedBtn == XanaConstants.xanaConstants._lastAvatarClickedBtn)
+                if (ConstantsHolder.xanaConstants._lastAvatarClickedBtn && ConstantsHolder.xanaConstants._curretClickedBtn == ConstantsHolder.xanaConstants._lastAvatarClickedBtn)
                     return;
 
-                XanaConstants.xanaConstants._curretClickedBtn.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+                ConstantsHolder.xanaConstants._curretClickedBtn.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
 
-                if (XanaConstants.xanaConstants._lastAvatarClickedBtn)
+                if (ConstantsHolder.xanaConstants._lastAvatarClickedBtn)
                 {
-                    if (XanaConstants.xanaConstants._lastAvatarClickedBtn.GetComponent<AvatarBtn>())
-                        XanaConstants.xanaConstants._lastAvatarClickedBtn.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
+                    if (ConstantsHolder.xanaConstants._lastAvatarClickedBtn.GetComponent<AvatarBtn>())
+                        ConstantsHolder.xanaConstants._lastAvatarClickedBtn.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
                 }
             }
+            else
+            {
+                PatchForStore.isCustomizationPanelOpen = true;
+            }
             //Debug.Log("<color=red>AvatarBtn AssignLastClickedBtnHere</color>");
-            XanaConstants.xanaConstants._lastAvatarClickedBtn = this.gameObject;
+            ConstantsHolder.xanaConstants._lastAvatarClickedBtn = this.gameObject;
 
             switch (isBtnString)
             {
                 case "Face":
                     {
                         _BDCTrigger.CustomizationTriggerTwo();
-                        SavaCharacterProperties.instance.characterController.faceId = AvatarBtnId;
+                        SaveCharacterProperties.instance.characterController.faceId = AvatarBtnId;
                         break;
                     }
                 case "EyeBrow":
                     {
                         _BDCTrigger.CustomizationTriggerTwo();
-                        SavaCharacterProperties.instance.characterController.eyeBrowId = AvatarBtnId;
+                        SaveCharacterProperties.instance.characterController.eyeBrowId = AvatarBtnId;
 
-                        if (StoreManager.instance.UndoBtn)
-                            StoreManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
+                        if (InventoryManager.instance.UndoBtn)
+                            InventoryManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
 
                         break;
                     }
-                case "EyeLashes":
+                case "EyeBrowPoints":
                     {
                         string lashesName = GetComponent<EyeLashBtn>().LashesName;
                         downloader.StartCoroutine(downloader.DownloadAddressableTexture(lashesName, GameManager.Instance.mainCharacter, CurrentTextureType.EyeLashes));
-                        SavaCharacterProperties.instance.characterController.eyeLashesId = AvatarBtnId;
+                        SaveCharacterProperties.instance.characterController.eyeLashesId = AvatarBtnId;
                         break;
                     }
                 case "Makup":
                     {
                         string makeupName = GetComponent<EyeLashBtn>().LashesName;
                         downloader.StartCoroutine(downloader.DownloadAddressableTexture(makeupName, GameManager.Instance.mainCharacter, CurrentTextureType.Makeup));
-                        SavaCharacterProperties.instance.characterController.makeupId = AvatarBtnId;
+                        SaveCharacterProperties.instance.characterController.makeupId = AvatarBtnId;
                         break;
                     }
                 case "Makeup":
@@ -552,51 +559,55 @@ public class AvatarBtn : MonoBehaviour
                         //print("~~~~~~~~~ makeup call ");
                         string lashesName = GetComponent<EyeLashBtn>().LashesName;
                         downloader.StartCoroutine(downloader.DownloadAddressableTexture(lashesName, GameManager.Instance.mainCharacter, CurrentTextureType.Makeup));
-                        SavaCharacterProperties.instance.characterController.makeupId = AvatarBtnId;
+                        SaveCharacterProperties.instance.characterController.makeupId = AvatarBtnId;
                         break;
                     }
                 case "Eyes":
                     {
                         _BDCTrigger.CustomizationTriggerTwo();
-                        SavaCharacterProperties.instance.characterController.eyesId = AvatarBtnId;
+                        SaveCharacterProperties.instance.characterController.eyesId = AvatarBtnId;
 
-                        if (StoreManager.instance.UndoBtn)
-                            StoreManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
+                        if (InventoryManager.instance.UndoBtn)
+                            InventoryManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
+
+                        if (GameManager.Instance.eyesBlinking != null)
+                            GameManager.Instance.eyesBlinking.StoreBlendShapeValues();
+
                         break;
                     }
                 case "Nose":
                     {
                         _BDCTrigger.CustomizationTriggerTwo();
-                        SavaCharacterProperties.instance.characterController.noseId = AvatarBtnId;
+                        SaveCharacterProperties.instance.characterController.noseId = AvatarBtnId;
 
-                        if (StoreManager.instance.UndoBtn)
-                            StoreManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
+                        if (InventoryManager.instance.UndoBtn)
+                            InventoryManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
                         break;
                     }
                 case "Lips":
                     {
                         _BDCTrigger.CustomizationTriggerTwo();
-                        SavaCharacterProperties.instance.characterController.lipsId = AvatarBtnId;
+                        SaveCharacterProperties.instance.characterController.lipsId = AvatarBtnId;
 
-                        if (StoreManager.instance.UndoBtn)
-                            StoreManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
+                        if (InventoryManager.instance.UndoBtn)
+                            InventoryManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
                         break;
                     }
                 case "Body":
                     {
-                        StoreManager.instance.SaveStoreBtn.SetActive(true);
-                        StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
-                        StoreManager.instance.GreyRibbonImage.SetActive(false);
-                        StoreManager.instance.WhiteRibbonImage.SetActive(true);
-                        StoreManager.instance.ClearBuyItems();
+                        InventoryManager.instance.SaveStoreBtn.SetActive(true);
+                        InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
+                        InventoryManager.instance.GreyRibbonImage.SetActive(false);
+                        InventoryManager.instance.WhiteRibbonImage.SetActive(true);
+                        InventoryManager.instance.ClearBuyItems();
 
-                        SavaCharacterProperties.instance.characterController.bodyFat = _Bodyint;
+                        SaveCharacterProperties.instance.characterController.bodyFat = _Bodyint;
 
-                        if (StoreManager.instance.UndoBtn)
-                            StoreManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
+                        if (InventoryManager.instance.UndoBtn)
+                            InventoryManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
                         if (GameManager.Instance)
                         {
-                            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().ResizeClothToBodyFat(GameManager.Instance.mainCharacter.gameObject, XanaConstants.xanaConstants.bodyNumber);
+                            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().ResizeClothToBodyFat(GameManager.Instance.mainCharacter.gameObject, ConstantsHolder.xanaConstants.bodyNumber);
                         }
                         break;
                     }
@@ -606,92 +617,93 @@ public class AvatarBtn : MonoBehaviour
                     }
                 case "FaceMorph":
                     {
-                        CharacterCustomizationManager.Instance.OnFrontSide();
-                        UIManager.Instance._footerCan.SetActive(false);
+                        AvatarCustomizationManager.Instance.OnFrontSide();
+                        GameManager.Instance.UiManager._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
-                        ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
+                        SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
 
-                        //BlendShapeImporter.Instance.MorphTypeSelected("Head");
-                        BlendShapeImporter.Instance.MorphTypeSelected("FaceMorph");
+                        //shapeImporter.MorphTypeSelected("Head");
+                        shapeImporter.MorphTypeSelected("FaceMorph");
 
-                        CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Face");
-                        BlendShapeImporter.Instance.TurnOnPoints("FaceMorph");
+                        AvatarCustomizationUIHandler.Instance.LoadCustomBlendShapePanel("Face");
+                        shapeImporter.TurnOnPoints("FaceMorph");
                         break;
                     }
                 case "EyeBrowMorph":
                     {
-                        CharacterCustomizationManager.Instance.OnFrontSide();
-                        UIManager.Instance._footerCan.SetActive(false);
+                        AvatarCustomizationManager.Instance.OnFrontSide();
+                        GameManager.Instance.UiManager._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
-                        ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
-                        BlendShapeImporter.Instance.MorphTypeSelected("EyeBrow");
-                        CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Eyebrow");
-                        BlendShapeImporter.Instance.TurnOnPoints("EyeBrowMorph");
+                        SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
+                        shapeImporter.MorphTypeSelected("EyeBrow");
+                        AvatarCustomizationUIHandler.Instance.LoadCustomBlendShapePanel("Eyebrow");
+                        shapeImporter.TurnOnPoints("EyeBrowMorph");
                         break;
                     }
                 case "EyesMorph":
                     {
-                        EyesBlinking.instance.isBlinking = false;       // Added by Ali Hamza
+                        if (GameManager.Instance.eyesBlinking != null)          // Added by Ali Hamza 
+                            GameManager.Instance.eyesBlinking.isBlinking = false;
 
-                        CharacterCustomizationManager.Instance.OnFrontSide();
-                        UIManager.Instance._footerCan.SetActive(false);
+                        AvatarCustomizationManager.Instance.OnFrontSide();
+                        GameManager.Instance.UiManager._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
-                        ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
-                        BlendShapeImporter.Instance.MorphTypeSelected("eye");
-                        CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Eyes");
-                        BlendShapeImporter.Instance.TurnOnPoints("EyesMorph");
+                        SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
+                        shapeImporter.MorphTypeSelected("eye");
+                        AvatarCustomizationUIHandler.Instance.LoadCustomBlendShapePanel("Eyes");
+                        shapeImporter.TurnOnPoints("EyesMorph");
                         break;
                     }
                 case "NoseMorph":
                     {
-                        CharacterCustomizationManager.Instance.OnFrontSide();
-                        UIManager.Instance._footerCan.SetActive(false);
+                        AvatarCustomizationManager.Instance.OnFrontSide();
+                        GameManager.Instance.UiManager._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
-                        ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
-                        BlendShapeImporter.Instance.MorphTypeSelected("Nose");
-                        CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Nose");
-                        BlendShapeImporter.Instance.TurnOnPoints("NoseMorph");
+                        SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
+                        shapeImporter.MorphTypeSelected("Nose");
+                        AvatarCustomizationUIHandler.Instance.LoadCustomBlendShapePanel("Nose");
+                        shapeImporter.TurnOnPoints("NoseMorph");
                         break;
                     }
                 case "LipsMorph":
                     {
-                        CharacterCustomizationManager.Instance.OnFrontSide();
-                        UIManager.Instance._footerCan.SetActive(false);
+                        AvatarCustomizationManager.Instance.OnFrontSide();
+                        GameManager.Instance.UiManager._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
-                        ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
-                        BlendShapeImporter.Instance.MorphTypeSelected("Lips");
-                        CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Lips");
-                        BlendShapeImporter.Instance.TurnOnPoints("LipsMorph");
+                        SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
+                        shapeImporter.MorphTypeSelected("Lips");
+                        AvatarCustomizationUIHandler.Instance.LoadCustomBlendShapePanel("Lips");
+                        shapeImporter.TurnOnPoints("LipsMorph");
                         break;
                     }
                 case "HeadMorph":
                     {
-                        CharacterCustomizationManager.Instance.OnFrontSide();
-                        UIManager.Instance._footerCan.SetActive(false);
+                        AvatarCustomizationManager.Instance.OnFrontSide();
+                        GameManager.Instance.UiManager._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
-                        ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
-                        BlendShapeImporter.Instance.MorphTypeSelected("Head");
-                        CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Head");
-                        BlendShapeImporter.Instance.TurnOnPoints("HeadMorph");
+                        SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
+                        shapeImporter.MorphTypeSelected("Head");
+                        AvatarCustomizationUIHandler.Instance.LoadCustomBlendShapePanel("Head");
+                        shapeImporter.TurnOnPoints("HeadMorph");
                     }
                     break;
             }
 
             if (!itemAlreadySaved)
             {
-                StoreManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = true;
-                StoreManager.instance.SaveStoreBtn.SetActive(true);
-                StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
-                StoreManager.instance.GreyRibbonImage.SetActive(false);
-                StoreManager.instance.WhiteRibbonImage.SetActive(true);
+                InventoryManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = true;
+                InventoryManager.instance.SaveStoreBtn.SetActive(true);
+                InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
+                InventoryManager.instance.GreyRibbonImage.SetActive(false);
+                InventoryManager.instance.WhiteRibbonImage.SetActive(true);
             }
             else
             {
-                StoreManager.instance.SaveStoreBtn.SetActive(true);
-                StoreManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = false;
-                StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
-                StoreManager.instance.GreyRibbonImage.SetActive(true);
-                StoreManager.instance.WhiteRibbonImage.SetActive(false);
+                InventoryManager.instance.SaveStoreBtn.SetActive(true);
+                InventoryManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = false;
+                InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
+                InventoryManager.instance.GreyRibbonImage.SetActive(true);
+                InventoryManager.instance.WhiteRibbonImage.SetActive(false);
             }
 
         }

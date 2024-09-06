@@ -1,11 +1,12 @@
 using UnityEngine;
 using Models;
 using Photon.Pun;
+using System.Collections;
 
 public class TimerComponent : ItemComponent
 {
-
     private bool isActivated = false;
+    private bool IsAgainTouchable = true;
     private TimerComponentData timerComponentData;
 
     public void Init(TimerComponentData timerComponentData)
@@ -20,9 +21,28 @@ public class TimerComponent : ItemComponent
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
-            PlayBehaviour();
+            if (isActivated && timerComponentData.IsStart)
+            {
+                if (!IsAgainTouchable) return;
+
+                IsAgainTouchable = false;
+                BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+                PlayBehaviour();
+            }
+            if (isActivated && timerComponentData.IsEnd)
+            {
+                BuilderEventManager.OnTimerLimitEnd?.Invoke();
+            }
         }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        IsAgainTouchable = false;
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        IsAgainTouchable = true;
     }
 
     #region BehaviourControl
@@ -32,21 +52,28 @@ public class TimerComponent : ItemComponent
         if (isActivated && timerComponentData.IsStart)
         {
             BuilderEventManager.OnTimerTriggerEnter?.Invoke("", timerComponentData.Timer + 1);
-        }
-        else if (isActivated && timerComponentData.IsEnd)
-        {
-            BuilderEventManager.OnTimerTriggerEnter?.Invoke("", 0);
+            CancelInvoke("StopBehaviour");
+            BuilderEventManager.OnTimerLimitEnd += OnSubscribe;
         }
     }
     private void StopComponent()
     {
         BuilderEventManager.OnTimerTriggerEnter?.Invoke("", 0);
+        BuilderEventManager.OnTimerLimitEnd -= OnSubscribe;
+    }
+
+    public void OnSubscribe()
+    {
+        Invoke("StopBehaviour", 5f);
     }
 
     public override void StopBehaviour()
     {
-        isPlaying = false;
-        StopComponent();
+        if (isPlaying)
+        {
+            isPlaying = false;
+            StopComponent();
+        }
     }
 
     public override void PlayBehaviour()
@@ -72,6 +99,16 @@ public class TimerComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.TimerComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
     }
 
     #endregion

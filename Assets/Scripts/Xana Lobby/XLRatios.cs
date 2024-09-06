@@ -29,12 +29,22 @@ public class XLRatios : MonoBehaviour
     {
         LandscapeObj.SetActive(false);
         PotraiteObj.SetActive(false);
-        if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+        if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
         {
-            CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
+            GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
         }
     }
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            Debug.Log("---Nft Close due to Application minimized");
+            CloseInfoPop();
+        }
+       
+    }
 }
+
 [Serializable]
 public class XLRatioReferences
 {

@@ -15,7 +15,7 @@ public class DemoUIContent : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 30;
 
         //_itemCount = rect.avatarData.Count;
 
@@ -26,6 +26,6 @@ public class DemoUIContent : MonoBehaviour
             contentDatas.Add(new ScrollItemData(i));
         }
         
-        _content.InitScrollContent(contentDatas);
+       // _content.InitScrollContent(contentDatas);
     }
 }

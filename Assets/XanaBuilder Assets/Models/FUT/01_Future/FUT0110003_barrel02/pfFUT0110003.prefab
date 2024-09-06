@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 2629706072425167736}
   - component: {fileID: 301066327331366981}
   - component: {fileID: 1655438220213954774}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: pfFUT0110003
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1663171153538790458}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.00000013735813, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -124,9 +124,11 @@ MonoBehaviour:
   itemType: 0
   itemCategory: 0
   itemThemes: 
+  componentsAttachedToItem: 
   bottomTransform: 0
   isValid: 0
   isPlaced: 0
+  isCurrentSpawnPoint: 0
   IsItemLocked: 0
   IsItemVisible: 0
   hasParent: 0
@@ -172,7 +174,7 @@ GameObject:
   - component: {fileID: 6850519281843078778}
   - component: {fileID: 7522729952223134514}
   - component: {fileID: 2289511031447987443}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +224,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a21d7989cb52eae4983ac55d88b37aa7, type: 2}
+  - {fileID: 2100000, guid: 662939d4f7c3fa544b40f673ddc124d6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -323,7 +325,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2427694576746308515}
   - component: {fileID: 5623042186153149716}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}

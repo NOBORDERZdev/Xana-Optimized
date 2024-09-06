@@ -2,7 +2,7 @@
 
 public class RingbufferFootSteps : MonoBehaviour
 {
-    //PlayerControllerNew playerControllerNew;
+    //PlayerController playerControllerNew;
     Animator anim;
     public ParticleSystem system;
     Vector3 lastEmit;

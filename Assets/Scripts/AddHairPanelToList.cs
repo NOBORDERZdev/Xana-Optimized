@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static StoreManager;
+using static InventoryManager;
 
 public class AddHairPanelToList : MonoBehaviour
 {
@@ -11,11 +11,11 @@ public class AddHairPanelToList : MonoBehaviour
 
     private void OnEnable()
     {
-        StoreManager.instance.storeOpen += AddToList;
+        InventoryManager.instance.storeOpen += AddToList;
     }
     private void OnDisable()
     {
-        StoreManager.instance.storeOpen -= AddToList;
+        InventoryManager.instance.storeOpen -= AddToList;
     }
 
     private void AddToList()
@@ -25,7 +25,7 @@ public class AddHairPanelToList : MonoBehaviour
     void Delay()
     {
         //Debug.Log("<color=red> Add selected hair btn into list </color>");
-        AR_UndoRedo.obj.ActionWithParametersAdd(hairAvatarBtn, -1, "BtnClicked", AR_UndoRedo.ActionType.ChangePanel, Color.white, categoryEnum);
+        StoreUndoRedo.obj.ActionWithParametersAdd(hairAvatarBtn, -1, "BtnClicked", StoreUndoRedo.ActionType.ChangePanel, Color.white, categoryEnum);
     }
 
 }

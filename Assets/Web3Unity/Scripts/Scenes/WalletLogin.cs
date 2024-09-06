@@ -10,9 +10,9 @@ using UnityEngine.UI;
 public class WalletLogin: MonoBehaviour
 {
     ProjectConfigScriptableObject projectConfigSO = null;
-    public Toggle rememberMe;
+    //public Toggle rememberMe;
     //UserRegisterationManager registerationManager;
-    [SerializeField] ConnectingWallet connectingWallet;
+    [SerializeField] ConnectWallet connectingWallet;
     //[SerializeField] GameObject SuccessfulPopUp;
     
     void Start() {
@@ -23,7 +23,14 @@ public class WalletLogin: MonoBehaviour
         {
             if (PlayerPrefs.GetInt("RememberMe") == 1 && PlayerPrefs.GetString("publicID") != "")
             {
-                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                {
+                    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                }
+                else
+                {
+                    LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+                }
                 // move to next scene
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
@@ -32,7 +39,7 @@ public class WalletLogin: MonoBehaviour
 
 
     void SetChainSafeInfo() {
-        if (APIBaseUrlChange.instance.IsXanaLive)
+        if (APIBasepointManager.instance.IsXanaLive)
         {
             projectConfigSO = (ProjectConfigScriptableObject)Resources.Load("ProjectConfigDataMainNet", typeof(ScriptableObject));
         }
@@ -48,6 +55,7 @@ public class WalletLogin: MonoBehaviour
     }
     async public void OnLogin(bool isNewReg)
     {
+        ConstantsHolder.xanaConstants.isWalletLoadingbool = true;
         SetChainSafeInfo();
         WalletConnectCallType type = WalletConnectCallType.None;
         try
@@ -68,7 +76,6 @@ public class WalletLogin: MonoBehaviour
             int expirationTime = timestamp + 60;
             // set message
             string message = expirationTime.ToString();
-            print("message is "+ message);
              string signature;
             string account;
             // sign message
@@ -83,11 +90,10 @@ public class WalletLogin: MonoBehaviour
             if (account.Length == 42 && expirationTime >= now) {
                 // save account
                 PlayerPrefs.SetString("publicID", account);
-                if (rememberMe.isOn)
                     PlayerPrefs.SetInt("RememberMe", 1);
-                else
-                    PlayerPrefs.SetInt("RememberMe", 0);
-                print("Account: " + account);
+                //if (rememberMe.isOn)
+                //else
+                //    PlayerPrefs.SetInt("RememberMe", 0);
                 // load next scene
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 switch (type)
@@ -112,9 +118,17 @@ public class WalletLogin: MonoBehaviour
                 PlayerPrefs.Save();
             }
         }
-        catch (Exception e )
+        catch (Exception e)
         {
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+            }
+            UserLoginSignupManager.instance.emailOrWalletLoginPanel.SetActive(true);
             throw new System.Exception("Unbale to Connect wallet on wallet connect btn at "+type+" state  with exception : "+e );
         }
 
@@ -167,11 +181,11 @@ public class WalletLogin: MonoBehaviour
     // //               print("Success in name  field ");
     // //               PlayerPrefs.SetInt("IsLoggedIn", 1);
     // //               PlayerPrefs.SetInt("FristPresetSet", 1);
-    // //               ServerSIdeCharacterHandling.Instance.GetDataFromServer();  
+    // //               ServerSideUserDataHandler.Instance.GetDataFromServer();  
     // //               PlayerPrefs.SetString("PlayerName", localUsername);
-    // //               if (UIManager.Instance != null)//rik  
+    // //               if (GameManager.Instance.UiManager != null)//rik  
     // //               {
-    // //                   UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+    // //                   GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
     // //               }
     // //            }
     // //       }

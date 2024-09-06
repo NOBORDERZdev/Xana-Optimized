@@ -1,4 +1,3 @@
-using Metaverse;
 using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 using System.Collections;
@@ -44,7 +43,7 @@ public class StreamingCamera : MonoBehaviour
     }
 
     public void TriggerStreamCam(){ 
-        if (XanaConstants.xanaConstants.isCameraMan)
+        if (ConstantsHolder.xanaConstants.isCameraMan)
         {
            
             if (Cameras.Count>0)
@@ -53,7 +52,7 @@ public class StreamingCamera : MonoBehaviour
             }
             else // there is no any streaming camera in scene so back to main menu
             {
-                  LoadFromFile.instance._uiReferences.LoadMain(false);
+                  GameplayEntityLoader.instance._uiReferences.LoadMain(false);
             }
         }    
     }
@@ -70,12 +69,12 @@ public class StreamingCamera : MonoBehaviour
             visibleCount=0;
             cam.gameObject.SetActive(true);
             yield return new WaitForSeconds(2f);
-            foreach (var avatar in Launcher.instance.playerobjects)
+            foreach (var avatar in MutiplayerController.instance.playerobjects)
             {
                 if (!avatar.GetComponent<PhotonView>().IsMine)
                 {
                    // print("!! DETECTING AVATAR "+avatar.name +"in cam "+cam.name );
-                    if (avatar.GetComponent<CharcterBodyParts>().Body.GetComponent<SkinnedMeshRenderer>().isVisible)
+                    if (avatar.GetComponent<CharacterBodyParts>().body.isVisible)
                     {
                        // print("~~~~~~ AVATAR "+avatar.name +"is visible in cam "+cam.name );
                         visibleCount++;
@@ -88,10 +87,10 @@ public class StreamingCamera : MonoBehaviour
        int crowdedCamIndex=  avatarCount.IndexOf(avatarCount.Max());
        Cameras[crowdedCamIndex].gameObject.SetActive(true);
       // LoadingHandler.Instance.HideLoading();
-       ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
-       ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();
+       ReferencesForGamePlay.instance.workingCanvas.SetActive(false);
+       ReferencesForGamePlay.instance.m_34player.GetComponent<CharacterBodyParts>().HidePlayer();
        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
-       LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.BackToMainmenuforAutoSwtiching());
+       GameplayEntityLoader.instance.StartCoroutine(GameplayEntityLoader.instance.BackToMainmenuforAutoSwtiching());
     }
 
    

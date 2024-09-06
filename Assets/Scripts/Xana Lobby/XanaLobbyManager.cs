@@ -15,7 +15,7 @@ public class XanaLobbyManager : MonoBehaviour
     public List<XanaLobbyWorldInfo> worldsInfo;
     public List<XanaLobbyData> worldsData;
     public List<GameObject> placedWorlds;
-    public List<Texture> WorldsLoadedSprites = new List<Texture>();
+
    
     int ratioId;
     JjRatio _Ratio;
@@ -94,7 +94,7 @@ public class XanaLobbyManager : MonoBehaviour
                         xlWorldInfo.InitData(placedWorldsCount, worldsData[j].thumbnail, JjRatio.OneXOneWithDes, MediaType.Image);
                         placedWorldsCount++;
                         xlWorldInfo.worldChanger.WorldName = worldsData[j].world_name;
-                        if(APIBaseUrlChange.instance.IsXanaLive)
+                        if(APIBasepointManager.instance.IsXanaLive)
                             xlWorldInfo.worldChanger.MainNet = worldsData[j].world_id;
                         else
                             xlWorldInfo.worldChanger.testNet = worldsData[j].world_id;
@@ -134,6 +134,11 @@ public class XanaLobbyManager : MonoBehaviour
         _image = image;
         _Type = type;
         ratioId = ((int)ratio);
+
+        title = title.IsNullOrEmpty() ? "" : title;
+        aurthur = aurthur.IsNullOrEmpty() ? "" : aurthur;
+        des = des.IsNullOrEmpty() ? "" : des;
+
         XLRatios.instance.renderTexture.Release();
         // Setting Landscape 
         XLRatios.instance.ratioReferences[ratioId].l_image.gameObject.SetActive(true);
@@ -168,7 +173,7 @@ public class XanaLobbyManager : MonoBehaviour
             XLRatios.instance.ratioReferences[ratioId].p_image.gameObject.SetActive(false);
             //ratioReferences[ratioId].p_videoPlayer.url = videoLink;
         }
-        if (!ChangeOrientation_waqas._instance.isPotrait) // for Landscape
+        if (!ScreenOrientationManager._instance.isPotrait) // for Landscape
         {
             XLRatios.instance.LandscapeObj.SetActive(true);
             XLRatios.instance.PotraiteObj.SetActive(false);
@@ -185,9 +190,9 @@ public class XanaLobbyManager : MonoBehaviour
             XLRatios.instance.ratioReferences[ratioId].p_obj.SetActive(true);
             
         }
-        if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+        if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
         {
-            CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
+            GamePlayUIHandler.inst.gamePlayUIParent.SetActive(false);
         }
     }
 }

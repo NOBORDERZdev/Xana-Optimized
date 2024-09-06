@@ -6,23 +6,26 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Main.unity
+    path: Assets/Scenes/Home.unity
     guid: b8aaab0ed4713d74ab2686bc79452ded
   - enabled: 1
-    path: Assets/Scenes/AddressableScene.unity
+    path: Assets/Scenes/GamePlayScene.unity
     guid: 9618ce646047878418edc2279192dc97
   - enabled: 1
     path: Assets/Scenes/SNSFeedModuleScene.unity
-    guid: 20439165ab148a841b26b3334e7d6fbf
+    guid: 7f44a232c257ce64db2c7fe5abeb3ab5
   - enabled: 1
-    path: Assets/Scenes/SNSMessageModuleScene.unity
-    guid: 55e48715aae5a8c43be60d218be340b0
-  - enabled: 1
-    path: Assets/Scenes/UserRegistration.unity
+    path: Assets/Scenes/LoginSignupScene.unity
     guid: 5ff5ed6c00a1769479babab79cc2df87
   - enabled: 1
-    path: Assets/Scenes/StoreScene.unity
+    path: Assets/Scenes/XSummitLoginSignupScene.unity
+    guid: 5013ac6deb09c47449540002beb00c48
+  - enabled: 1
+    path: Assets/Scenes/InventoryScene.unity
     guid: 37de954ed9cc13d47938295094fc116e
+  - enabled: 1
+    path: Assets/Scenes/UGC.unity
+    guid: 2cb6059857d51d4449d43f316a100cb7
   - enabled: 1
     path: Assets/ARModule/Scene/ARModuleRoomScene.unity
     guid: 424b7ce2ec6b0ab499299f686f01bc64
@@ -38,8 +41,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/XanaBuilder Assets/BuilderData/Scenes/Builder.unity
     guid: 910142a53d65c408b95089c25d1dd14c
+  - enabled: 1
+    path: Assets/3rd Party Assets/UFE/Demos/_3DFighter/Demo_Fighter3D - Type 2.unity
+    guid: c9868bd024a5cfc45a00f980547f92ee
+  - enabled: 1
+    path: Assets/3rd Party Assets/UFE/Demos/Shared_Assets/Stages/TrainingRoom3D/Fighting
+      BreakingDown Arena.unity
+    guid: 5083d6b28ee2f8e4fa2e58db39bf2e21
   m_configObjects:
-    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: b70f1d2570af8cb4d9cae805f64fe340, type: 2}
-    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 2ec0c3f471b11964e9f96a2958a09d29, type: 2}
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: d3b3b4b0df8731b4d900aacc1d6fd5ee, type: 2}
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 848ac93ef2424234ebf457bac09b9230, type: 2}
+    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 9c1f409fb54c444d6b88f2d83817e35c, type: 2}
     com.unity.addressableassets: {fileID: 11400000, guid: 5de0995f779254248bd11d6596cff219, type: 2}
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 8a98f40bf9aeabc40bb07fd646ce0f1a, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a3bc01741a0eb094b8283c36c0e6372b, type: 2}

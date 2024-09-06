@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public sealed class CharacterControls : MonoBehaviour
 {
-    internal PlayerControllerNew playerControler;
+    internal PlayerController playerControler;
 
     private Coroutine routine;
 
@@ -23,27 +24,34 @@ public sealed class CharacterControls : MonoBehaviour
 
     IEnumerator Start()
     {
-        yield return new WaitForSeconds(0.5f);
-        AddListners();
+        if (GetComponent<PhotonView>().IsMine)
+        {
+            yield return new WaitForEndOfFrame();
+            AddListners();
+        }
     }
 
     private void OnDestroy()
     {
-        RemoveListners();
+        if (GetComponent<PhotonView>().IsMine)
+            RemoveListners();
     }
 
 
     private void AddListners()
     {
         StoreCurretValues();
+        GamificationComponentData.instance.ZoomControl = false;
+        BuilderEventManager.ChangeCameraHeight?.Invoke(true);
         routine = StartCoroutine(OvverideCurrentValues());
 
     }
     private void RemoveListners()
     {
-        RestoreOldValues();
         if (routine != null)
             StopCoroutine(routine);
+        RestoreOldValues();
+
     }
 
     private void StoreCurretValues()
@@ -58,14 +66,11 @@ public sealed class CharacterControls : MonoBehaviour
     {
         CharacterController cc = playerControler.GetComponent<CharacterController>();
         //vThirdPersonCamera vtc = playerControler.controllerCamera.GetComponent<vThirdPersonCamera>();
-
-
-
-
         while (true)
         {
             yield return new WaitForEndOfFrame();
             cc.stepOffset = stepOffset;
+
             //vtc.height = cameraHeight;
             //playerControler.finalWalkSpeed = walkSpeed;
             //playerControler.walkSpeed = walkSpeed;
@@ -81,6 +86,8 @@ public sealed class CharacterControls : MonoBehaviour
         playerControler.sprintSpeed = old_sprintSpeed;
         playerControler.jumpHeight = old_jumpHeight;
         playerControler.GetComponent<CharacterController>().stepOffset = old_stepOffset;
+        BuilderEventManager.ChangeCameraHeight?.Invoke(false);
+        GamificationComponentData.instance.ZoomControl = true;
         //playerControler.controllerCamera.GetComponent<vThirdPersonCamera>().height = old_cameraHeight;
     }
 }

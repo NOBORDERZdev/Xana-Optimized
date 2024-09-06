@@ -13,17 +13,16 @@ public class LoadEmoteAnimations : MonoBehaviour
     public static bool animClick = false;
 
     public static LoadEmoteAnimations instance;
-    // Start is called before the first frame update
     void Awake()
     {
         instance = this;
-        EmoteAnimationPlay.Instance.AnimHighlight = highlightAnim;
-        EmoteAnimationPlay.Instance.popupPenal = animationPanel;
+        EmoteAnimationHandler.Instance.AnimHighlight = highlightAnim;
+        EmoteAnimationHandler.Instance.popupPenal = animationPanel;
     }
 
     private void Start()
     {
-        StartCoroutine(EmoteAnimationPlay.Instance.getAllAnimations());
+        StartCoroutine(EmoteAnimationHandler.Instance.getAllAnimations());
     }
 
     public void OnEnable()
@@ -36,21 +35,18 @@ public class LoadEmoteAnimations : MonoBehaviour
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OpenAllAnimsPanel -= AnimClick;
     }
 
-
-
     public void AnimClick()
     {
         animClick = true;
-
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
 #if UNITY_EDITOR
-        EmoteAnimationPlay.Instance.animationClick();
+        EmoteAnimationHandler.Instance.animationClick();
 #endif
 #if UNITY_ANDROID || UNITY_IOS
         if (Input.touchCount > 0)
         {
-            EmoteAnimationPlay.Instance.animationClick();
+            EmoteAnimationHandler.Instance.animationClick();
         }
 #endif
     }
@@ -58,7 +54,7 @@ public class LoadEmoteAnimations : MonoBehaviour
 
     public void OpenAnimationSelectionPanel()
     {
-        if (ChangeOrientation_waqas._instance.isPotrait)
+        if (ScreenOrientationManager._instance.isPotrait)
         {
             animationSelectionPanelPotrait.SetActive(true);
         }
@@ -66,15 +62,12 @@ public class LoadEmoteAnimations : MonoBehaviour
         {
             animationSelectionPanel.SetActive(true);
         }
-       
-       
-        //Reaction_EmotePanel.instance.ReactionOff();
     }
     
     
     public void CloseAnimationSelectionPanel()
     {
-        if (ChangeOrientation_waqas._instance.isPotrait)
+        if (ScreenOrientationManager._instance.isPotrait)
         {
             animationSelectionPanelPotrait.SetActive(false);
         }
@@ -82,7 +75,6 @@ public class LoadEmoteAnimations : MonoBehaviour
         {
             animationSelectionPanel.SetActive(false);
         }
-        //Reaction_EmotePanel.instance.ReactionOff();
     }
 
 }

@@ -108,14 +108,14 @@ namespace UnityEngine.UI.Extensions
         public ScrollDirection direction = ScrollDirection.Horizontal;
 
 
-        public static int avatarCounter = 0;
+        /*public static int avatarCounter = 0;
         public List<GameObject> avatarData = new List<GameObject>();
         //[HideInInspector]
         public String nameData;
         public String charName;
 
         public Button ASNextButton;//, skipButton; // AS for AvatarSelected
-        public Button shuffleButton;
+        public Button shuffleButton;*/
 
 
 
@@ -140,10 +140,10 @@ namespace UnityEngine.UI.Extensions
 
             PageChanged(CurrentPage());
 
-            if (shuffleButton) 
+            /*if (shuffleButton) 
             {
                 shuffleButton.onClick.AddListener(OnClickShuffleButton);
-            }
+            }*/
             
 
             if (NextButton)
@@ -175,20 +175,21 @@ namespace UnityEngine.UI.Extensions
                 vscroll.ss = this;
             }
 
+            Debug.LogError(this.gameObject.name);
 
-            Transform obj = StoreManager.instance.contentList;
+            //Transform obj = InventoryManager.instance.contentList;
 
-            avatarData.Clear();
+            /*avatarData.Clear();
 
             foreach (Transform avatars in obj)
             {
                 avatarData.Add(avatars.gameObject);
             }
 
-            Invoke("firstCharacter", 0.5f);
+            Invoke("firstCharacter", 0.5f);*/
         }
 
-        void firstCharacter() 
+        /*void firstCharacter() 
         {
             if (avatarData != null)
             {
@@ -199,7 +200,7 @@ namespace UnityEngine.UI.Extensions
                 }
                 // charName = avatarData[0].gameObject.name;
             }
-        }
+        }*/
 
         
 
@@ -440,12 +441,12 @@ namespace UnityEngine.UI.Extensions
             //    }
             //}
 
-            if (startShuffling) 
+            /*if (startShuffling) 
             {
                 startShuffling = false;
                 StartCoroutine(ShuffleUIElements());
                 
-            }
+            }*/
         }
 
         private bool fastSwipe = false; //to determine if a fast swipe was performed
@@ -464,7 +465,7 @@ namespace UnityEngine.UI.Extensions
                 //Debug.Log("Lerp Target "+_lerpTarget);
                 PageChanged(CurrentPage() + 1);
 
-                avatarCounter++;
+                /*avatarCounter++;*/
                 
                 //nameData = avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().JsonDataPreset;
 
@@ -476,10 +477,10 @@ namespace UnityEngine.UI.Extensions
                 
 
                 // Debug.Log("Value is "+ nameData);
-                if (avatarCounter == avatarData.Count - 1)
+                /*if (avatarCounter == avatarData.Count - 1)
                 {
                     nextPage = false;
-                }
+                }*/
 
 
             }
@@ -496,7 +497,7 @@ namespace UnityEngine.UI.Extensions
                 _lerpTarget = _pageAnchorPositions[CurrentPage() - 1];
 
                 PageChanged(CurrentPage() - 1);
-                avatarCounter--;
+               /* avatarCounter--;*/
                 //Debug.Log("Value is " + avatarCounter);
                 //nameData = avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().JsonDataPreset;
 
@@ -504,10 +505,10 @@ namespace UnityEngine.UI.Extensions
 
                 //ASNextButton.onClick.AddListener(avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver);
                 // Debug.Log("Value is " + nameData);
-                if (avatarCounter == 0)
+                /*if (avatarCounter == 0)
                 {
                     nextPage = true;
-                }
+                }*/
             }
         }
 
@@ -619,16 +620,16 @@ namespace UnityEngine.UI.Extensions
             //StartCoroutine(ShuffleUIElements());
         }
 
-        private IEnumerator ShuffleUIElements()
+        /*private IEnumerator ShuffleUIElements()
         {
-            float startTime = Time.time;
+            /*float startTime = Time.time;*/
             //float endTime = startTime + shuffleDuration;
-            int avatarRange = Random.Range(0, avatarData.Count - 1);
-            Debug.Log("Avatar Range is "+ avatarRange);
+            /*int avatarRange = Random.Range(0, avatarData.Count - 1);*/
+            /*Debug.Log("Avatar Range is "+ avatarRange);*/
             //while (Time.time - startTime < shuffleDuration)
             //{
             
-                for (int i = 0; i < avatarRange; i++)
+                /*for (int i = 0; i < avatarRange; i++)
                 {
                     if (i != avatarRange)
                     {
@@ -647,7 +648,7 @@ namespace UnityEngine.UI.Extensions
                 yield return null;
                 
             } 
-        }
+        }*/
 
                 #region Interfaces
                 public void OnBeginDrag(PointerEventData eventData)

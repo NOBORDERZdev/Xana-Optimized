@@ -13,6 +13,7 @@ namespace NPC
         [SerializeField] private NavMeshAgent agent;
         [SerializeField] Animator animator;
         [SerializeField] NpcBehaviourSelector npcBehaviour;
+        [SerializeField] SPAAIBehvrController spaAIBhvrController;
         [SerializeField] float walkRotateSpeed;
 
         public bool isMoving = false;
@@ -26,7 +27,7 @@ namespace NPC
         {
             timer = wanderTimer;
             agent.enabled = false;
-            //animator.runtimeAnimatorController = EmoteAnimationPlay.Instance.controller;
+            //animator.runtimeAnimatorController = EmoteAnimationHandler.Instance.controller;
             animator.SetBool("IsGrounded", true);
         }
 
@@ -46,10 +47,20 @@ namespace NPC
                             animator.SetFloat("Blend", 0.0f);
                             animator.SetFloat("BlendY", 0.0f);
 
-                            npcBehaviour.isPerformingAction = false;
-                            if (npcBehaviour.ActionCoroutine != null)
-                                StopCoroutine(npcBehaviour.ActionCoroutine);
-                            npcBehaviour.ActionCoroutine = StartCoroutine(npcBehaviour.PerformAction());
+                            if (npcBehaviour)
+                            {
+                                npcBehaviour.isPerformingAction = false;
+                                if (npcBehaviour.ActionCoroutine != null)
+                                    StopCoroutine(npcBehaviour.ActionCoroutine);
+                                npcBehaviour.ActionCoroutine = StartCoroutine(npcBehaviour.PerformAction());
+                            }
+                            else
+                            {
+                                spaAIBhvrController.isPerformingAction = false;
+                                if (spaAIBhvrController.ActionCoroutine != null)
+                                    StopCoroutine(spaAIBhvrController.ActionCoroutine);
+                                spaAIBhvrController.ActionCoroutine = StartCoroutine(spaAIBhvrController.PerformAction());
+                            }
                         }
                         else
                         {

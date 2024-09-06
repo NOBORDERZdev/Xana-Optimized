@@ -10,22 +10,46 @@ public class menuAvatarFlowButton : MonoBehaviour
     {
         _instance = this;
     }
-    void Start()
+    void OnEnable()
     {
-        this.gameObject.GetComponent<Button>().onClick.AddListener(OnClickMenuAvatarBtn);
+        MainSceneEventHandler.OpenPresetPanel += OnClickMenuAvatarBtn;
+        gameObject.GetComponent<Button>().onClick.AddListener(OnClickMenuAvatarBtn);
+    }
+
+    void OnDisable()
+    {
+        MainSceneEventHandler.OpenPresetPanel -= OnClickMenuAvatarBtn;
+        gameObject.GetComponent<Button>().onClick.RemoveListener(OnClickMenuAvatarBtn);
     }
  
     void OnClickMenuAvatarBtn()
     {
-        GameManager.Instance.AvatarMenuBtnPressed();
-        StoreManager.instance.SubmitUserDetailAPI();
+        if (!GameManager.Instance.isAllSceneLoaded)
+            return;
+
+        if (ConstantsHolder.xanaConstants.isFirstPanel)
+        {
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+            }
+            else {
+                InventoryManager.instance.StartPanel_PresetParentPanelSummit.SetActive(true);
+            }
+            ConstantsHolder.xanaConstants.isFirstPanel = false;
+        }
+        else
+        {
+            GameManager.Instance.AvatarMenuBtnPressed();
+            InventoryManager.instance.SubmitUserDetailAPI();
+        }
     }
 
     public void StoreBtnController()
     {
-        if (XanaConstants.xanaConstants != null)
+        if (ConstantsHolder.xanaConstants != null)
         {
-            if (XanaConstants.xanaConstants.isNFTEquiped)
+            if (ConstantsHolder.xanaConstants.isNFTEquiped)
                 OnNFTAvatarDisableStore();
             else
                 OnNFTAvatarEnableStore();

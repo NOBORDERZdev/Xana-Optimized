@@ -76,8 +76,8 @@ public class NPC_DialogueTrigger : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
 
-        SoundManager.Instance.EffectsSource.Stop();
-        SoundManager.Instance.StopNPCAudio();
+        SoundController.Instance.EffectsSource.Stop();
+        SoundController.Instance.StopNPCAudio();
 
 
         if (other.CompareTag("Player") && this.gameObject.tag == "Reseption")
@@ -190,7 +190,7 @@ public class NPC_DialogueTrigger : MonoBehaviour
 
     void Test()
     {
-        Gamemanager._InstanceGM.mainPlayer.GetComponent<PlayerControllerNew>().enabled = true;
+        Gamemanager._InstanceGM.mainPlayer.GetComponent<PlayerController>().enabled = true;
     }
 }
 

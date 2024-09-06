@@ -14,74 +14,69 @@ public class JjVideo : MonoBehaviour
     public bool isLiveVideo;
     public bool isPrerecoreded;
     public bool isFromAws;
-    // Start is called before the first frame update
+
+    MeshRenderer screenMesh;
     void OnEnable()
     {
-        //videoplayer.playOnAwake = false;
-        //videoplayer.errorReceived += ErrorOnVideo;
-        //videoplayer.frameReady += SetSound;
-        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+        screenMesh = GetComponent<MeshRenderer>();
+        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
         {
             Invoke(nameof(WaitPlay), 5);
         }
+        else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
+        {
+            if (screenMesh)
+                screenMesh.enabled = false;
+        }
     }
-
 
     public void CheckForPlayValidPlayer()
     {
         if (isLiveVideo && liveVideoPlayer != null)
         {
-            if (liveVideoPlayer)
-                liveVideoPlayer.SetActive(true);
-            if (preRecordedPlayer)
-                preRecordedPlayer.SetActive(false);
+            liveVideoPlayer?.SetActive(true);
+            preRecordedPlayer?.SetActive(false);
             liveVideoPlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
             liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().GetLivestreamUrl(videoLink);
             liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
             awsVideoplayer.gameObject.SetActive(false);
-
-
         }
         else if (isPrerecoreded && preRecordedPlayer != null)
         {
-            if (liveVideoPlayer)
-                liveVideoPlayer.SetActive(false);
-            if (preRecordedPlayer)
-                preRecordedPlayer.SetActive(true);
+            liveVideoPlayer?.SetActive(false);
+            preRecordedPlayer?.SetActive(true);
             awsVideoplayer.gameObject.SetActive(false);
             liveVideoPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
             liveVideoPlayer.GetComponent<YoutubeSimplified>().Play();
         }
-        else if (isFromAws && awsVideoplayer.gameObject != null)
+        else if (isFromAws && awsVideoplayer != null)
         {
-           // Debug.LogError(videoLink);
-            if (liveVideoPlayer)
-                liveVideoPlayer.SetActive(false);
-            if (preRecordedPlayer)
-                preRecordedPlayer.SetActive(false);
+            liveVideoPlayer?.SetActive(false);
+            preRecordedPlayer?.SetActive(false);
             awsVideoplayer.SetActive(true);
-            awsVideoplayer.GetComponent<VideoPlayer>().playOnAwake = true;
-            awsVideoplayer.GetComponent<VideoPlayer>().isLooping = true;
-            awsVideoplayer.GetComponent<VideoPlayer>().url = videoLink;
-            awsVideoplayer.GetComponent<VideoPlayer>().Play();
+            VideoPlayer videoPlayer = awsVideoplayer.GetComponent<VideoPlayer>();
+            videoPlayer.playOnAwake = true;
+            videoPlayer.isLooping = true;
+            videoPlayer.url = videoLink;
+            videoPlayer.Play();
         }
     }
-
 
     void WaitPlay()
     {
         SetPlayer(videoLink);
     }
 
-    public void SetPlayer(string link)
+    void SetPlayer(string link)
     {
-        awsVideoplayer.GetComponent<VideoPlayer>().url = link;
-        awsVideoplayer.GetComponent<VideoPlayer>().Play();
+        VideoPlayer videoPlayer = awsVideoplayer.GetComponent<VideoPlayer>();
+        videoPlayer.url = link;
+        videoPlayer.Play();
     }
 
     void SetSound(VideoPlayer source, string message)
     {
-
+        // Handle sound settings if needed
     }
 
     private void ErrorOnVideo(VideoPlayer source, string message)
@@ -91,6 +86,7 @@ public class JjVideo : MonoBehaviour
 
     private void OnDisable()
     {
-        awsVideoplayer.GetComponent<VideoPlayer>().errorReceived -= ErrorOnVideo;
+        if (awsVideoplayer)
+            awsVideoplayer.GetComponent<VideoPlayer>().errorReceived -= ErrorOnVideo;
     }
 }

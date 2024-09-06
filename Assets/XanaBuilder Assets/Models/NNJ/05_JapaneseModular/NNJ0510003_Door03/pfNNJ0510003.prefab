@@ -278,9 +278,11 @@ MonoBehaviour:
   itemType: 0
   itemCategory: 0
   itemThemes: 
+  componentsAttachedToItem: 
   bottomTransform: 0
   isValid: 0
   isPlaced: 0
+  isCurrentSpawnPoint: 0
   IsItemLocked: 0
   IsItemVisible: 0
   hasParent: 0
@@ -323,6 +325,9 @@ GameObject:
   m_Component:
   - component: {fileID: 730762565184541323}
   - component: {fileID: 626901153345184995}
+  - component: {fileID: 3084250247431251625}
+  - component: {fileID: 6556421514884069860}
+  - component: {fileID: 436753649921931309}
   m_Layer: 9
   m_Name: Colliders
   m_TagString: Item
@@ -356,5 +361,44 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.2154632, y: 2.9076552, z: 0.18029186}
-  m_Center: {x: -1.1077316, y: 1.4538276, z: 0.09014483}
+  m_Size: {x: 2.2154632, y: 1.3588464, z: 0.18029186}
+  m_Center: {x: -1.1077316, y: 0.6794232, z: 0.09014483}
+--- !u!65 &3084250247431251625
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7710572776846922729}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6178274, y: 1.6747022, z: 0.18029186}
+  m_Center: {x: -1.9065495, y: 2.0913167, z: 0.09014483}
+--- !u!65 &6556421514884069860
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7710572776846922729}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6178274, y: 1.6747022, z: 0.18029186}
+  m_Center: {x: -0.29287654, y: 2.0913167, z: 0.09014483}
+--- !u!65 &436753649921931309
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7710572776846922729}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.3037684, y: 0.51122284, z: 0.18029186}
+  m_Center: {x: -1.0948771, y: 2.6730561, z: 0.09014483}

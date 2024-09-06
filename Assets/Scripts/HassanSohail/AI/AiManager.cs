@@ -29,7 +29,7 @@ namespace XanaAi
         [SerializeField] AiAppearance apperance;
         [SerializeField] List<string> aiNames;
         //[SerializeField] List<int> aiIds;
-        private CharcterBodyParts charcterBody;
+        private CharacterBodyParts charcterBody;
         [SerializeField]
         private GameObject[] aiPrefabs;
         //private List<GameObject> spawnedNpc;
@@ -172,16 +172,16 @@ namespace XanaAi
             switch (type)
             {
                 case "Chest":
-                    ai.StichItem(-1, ItemDatabase.instance.DefaultShirt, "Chest", ai.gameObject, false);
+                    ai.StichItem(-1, DefaultClothDatabase.instance.DefaultShirt, "Chest", ai.gameObject, false);
                     break;
                 case "Legs":
-                    ai.StichItem(-1, ItemDatabase.instance.DefaultPent, "Legs", ai.gameObject, false);
+                    ai.StichItem(-1, DefaultClothDatabase.instance.DefaultPent, "Legs", ai.gameObject, false);
                     break;
                 case "Feet":
-                    ai.StichItem(-1, ItemDatabase.instance.DefaultShoes, "Feet", ai.gameObject, false);
+                    ai.StichItem(-1, DefaultClothDatabase.instance.DefaultShoes, "Feet", ai.gameObject, false);
                     break;
                 case "Hair":
-                    ai.StichItem(-1, ItemDatabase.instance.DefaultHair, "Hair", ai.gameObject, false);
+                    ai.StichItem(-1, DefaultClothDatabase.instance.DefaultHair, "Hair", ai.gameObject, false);
                     break;
                 default:
                     break;
@@ -195,7 +195,7 @@ namespace XanaAi
         public IEnumerator DownloadAddressableTexture(string key, string ObjectType, AiController ai)
         {
             //Resources.UnloadUnusedAssets();
-            CharcterBodyParts charcterBody = ai.GetComponent<CharcterBodyParts>();
+            CharacterBodyParts charcterBody = ai.GetComponent<CharacterBodyParts>();
             if (Application.internetReachability != NetworkReachability.NotReachable)
             {
                 try
@@ -219,7 +219,7 @@ namespace XanaAi
                         charcterBody.ApplyEyeBrowTexture(charcterBody.defaultEyebrow, ai.gameObject);
                     else if (ObjectType.Contains("Makeup"))
                         charcterBody.ApplyMakeup(charcterBody.defaultMakeup, ai.gameObject);
-                    else if (ObjectType.Contains("EyeLashes"))
+                    else if (ObjectType.Contains("EyeBrowPoints"))
                         charcterBody.ApplyEyeLashes(charcterBody.defaultEyelashes, ai.gameObject);
 
                     throw new Exception("Error occur in loading addressable Textures. Wear DefaultTextures");
@@ -243,7 +243,7 @@ namespace XanaAi
                         charcterBody.ApplyEyeBrowTexture(loadedObject, ai.gameObject);
                     else if (ObjectType.Contains("Makeup"))
                         charcterBody.ApplyMakeup(loadedObject, ai.gameObject);
-                    else if (ObjectType.Contains("EyeLashes"))
+                    else if (ObjectType.Contains("EyeBrowPoints"))
                         charcterBody.ApplyEyeLashes(loadedObject, ai.gameObject);
 
                     AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
@@ -264,7 +264,7 @@ namespace XanaAi
                     charcterBody.ApplyEyeBrowTexture(charcterBody.defaultEyebrow, ai.gameObject);
                 else if (ObjectType.Contains("Makeup"))
                     charcterBody.ApplyMakeup(charcterBody.defaultMakeup, ai.gameObject);
-                else if (ObjectType.Contains("EyeLashes"))
+                else if (ObjectType.Contains("EyeBrowPoints"))
                     charcterBody.ApplyEyeLashes(charcterBody.defaultEyelashes, ai.gameObject);
 
                 Debug.LogError("Failed to load addressable Textures: " + handle.OperationException);

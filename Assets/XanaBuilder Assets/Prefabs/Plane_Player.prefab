@@ -43,8 +43,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10.000002, y: 0, z: 10.000002}
-  m_Center: {x: 0, y: -0.2, z: 0}
+  m_Size: {x: 10.000002, y: 0.1, z: 10.000002}
+  m_Center: {x: 0, y: -0.6, z: 0}
 --- !u!1 &4680463021435520345
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,9 +102,9 @@ GameObject:
   - component: {fileID: 7965747545503586642}
   - component: {fileID: 7965747545503586643}
   - component: {fileID: 7965747545503586641}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: Underground
-  m_TagString: Untagged
+  m_TagString: Footsteps/grass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -338,7 +338,8 @@ GameObject:
   - component: {fileID: 2791413388498715028}
   - component: {fileID: 2675991669950279950}
   - component: {fileID: 2523145435164722802}
-  - component: {fileID: 4410792207685994352}
+  - component: {fileID: 5776188367373553610}
+  - component: {fileID: 2047930671462291505}
   m_Layer: 0
   m_Name: RealisticPlane
   m_TagString: Footsteps/grass
@@ -368,7 +369,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8013891528827313224}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -6890808213672705114, guid: f04d34dedfd7e4145ac023416cb7f449, type: 3}
 --- !u!23 &2523145435164722802
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -411,8 +412,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4410792207685994352
-BoxCollider:
+--- !u!64 &5776188367373553610
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -421,9 +422,28 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 10.000002, y: 2.220446e-16, z: 10.000002}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6890808213672705114, guid: f04d34dedfd7e4145ac023416cb7f449, type: 3}
+--- !u!114 &2047930671462291505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8013891528827313224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52a4d7bb02fbcee41899b79d1ad45c53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ppRefreshType: 2
+  ppIntervalSeconds: 1
+  ppConvexMeshCollider: 0
+  ppCookingOptions: -1
+  ppIgnoreRaycast: 0
+  ppColliderOffset: {x: 0, y: 0, z: 0}
 --- !u!1001 &7965747545512506361
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -431,17 +451,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7965747545624217532}
     m_Modifications:
+    - target: {fileID: 2827730419749978367, guid: 6071f4e00c3db0d41b7a17e0f94f4dab, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4f0c543c06ab39a459d0b661003c8b4e, type: 2}
     - target: {fileID: 3996154159519529872, guid: 6071f4e00c3db0d41b7a17e0f94f4dab, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3996154159519529872, guid: 6071f4e00c3db0d41b7a17e0f94f4dab, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3996154159519529872, guid: 6071f4e00c3db0d41b7a17e0f94f4dab, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
+      propertyPath: m_LocalScale.y
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 3996154159519529872, guid: 6071f4e00c3db0d41b7a17e0f94f4dab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -486,10 +506,6 @@ PrefabInstance:
     - target: {fileID: 4341155191822491946, guid: 6071f4e00c3db0d41b7a17e0f94f4dab, type: 3}
       propertyPath: m_Name
       value: TerrainBordereExtruded
-      objectReference: {fileID: 0}
-    - target: {fileID: 4341155191822491946, guid: 6071f4e00c3db0d41b7a17e0f94f4dab, type: 3}
-      propertyPath: m_Layer
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6071f4e00c3db0d41b7a17e0f94f4dab, type: 3}

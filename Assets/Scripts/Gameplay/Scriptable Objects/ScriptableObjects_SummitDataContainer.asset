@@ -1,0 +1,1667 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b98294f6be8980d4db7c36542613df30, type: 3}
+  m_Name: ScriptableObjects_SummitDataContainer
+  m_EditorClassIdentifier: 
+  maleAIAvatar: {fileID: 4894719807666117210, guid: 4e9173ac70f1604499e4c1b95772825f, type: 3}
+  femaleAIAvatar: {fileID: 4894719807666117210, guid: 59c2eb0e0e5718b4abc9387d2b2026ab, type: 3}
+  avatarJson:
+  - '{"id":"86947","name":"Test","thumbnail":"https://cdn.xana.net/xanaprod/Defaults/1680177561873_file.png","gender":"Male","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":12541,"ItemName":"Boy_Pant_V001","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1417,"ItemName":"Boy_Shirt_V001","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1225,"ItemName":"Boy_H_005","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1145,"ItemName":"Shoes_45","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}}]}'
+  - '{"id":"86952","name":"Test","thumbnail":"https://cdn.xana.net/xanaprod/Defaults/1680100976117_file.png","gender":"Male","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":913,"ItemName":"Boy_Pant_V002","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1415,"ItemName":"Boy_Shirt_V002","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1215,"ItemName":"Boy_H_014","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1078,"ItemName":"Shoes_381","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}}]}'
+  - '{"id":"86948","name":"Test","thumbnail":"https://cdn.xana.net/xanaprod/Defaults/1680176897662_file.png","gender":"Male","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1277,"ItemName":"Boy_Pant_V003","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1295,"ItemName":"Boy_Shirt_V003","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1231,"ItemName":"Boy_H_028","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1085,"ItemName":"Shoes_378","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}}]}'
+  - '{"id":"86951","name":"Test","thumbnail":"https://cdn.xana.net/xanaprod/Defaults/1680177258349_file.png","gender":"Male","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1274,"ItemName":"Boy_Pant_V005","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1312,"ItemName":"Boy_Shirt_V005","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1527,"ItemName":"Boy_H_029","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1185,"ItemName":"Shoes_332","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}}]}'
+  - '{"id":"","name":"Test","thumbnail":"","gender":"Male","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"instanceID":0},"ItemID":1369,"ItemName":"Boy_Pant_V004","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"instanceID":0},"ItemID":1388,"ItemName":"Boy_Shirt_V004","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"instanceID":0},"ItemID":1530,"ItemName":"Boy_H_029","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"instanceID":0},"ItemID":1085,"ItemName":"Shoes_068","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Glove","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chain","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}}]}'
+  - '{"id":"","name":"Test","thumbnail":"","gender":"Male","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"instanceID":0},"ItemID":1363,"ItemName":"Boy_Pant_V006","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"instanceID":0},"ItemID":1373,"ItemName":"Boy_Shirt_V006","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"instanceID":0},"ItemID":1201,"ItemName":"Boy_H_023","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"instanceID":0},"ItemID":1149,"ItemName":"Shoes_325","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Glove","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chain","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}}]}'
+  - '{"id":"","name":"Test","thumbnail":"","gender":"Male","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"instanceID":0},"ItemID":902,"ItemName":"Boy_Pant_V007","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"instanceID":0},"ItemID":1390,"ItemName":"Boy_Shirt_V007","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"instanceID":0},"ItemID":1195,"ItemName":"Boy_H_022","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"instanceID":0},"ItemID":1186,"ItemName":"Shoes_366","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Glove","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chain","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}}]}'
+  - '{"id":"","name":"Test","thumbnail":"","gender":"Male","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"instanceID":0},"ItemID":902,"ItemName":"Boy_Pant_V009","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"instanceID":0},"ItemID":1390,"ItemName":"Boy_Shirt_V009","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"instanceID":0},"ItemID":1195,"ItemName":"Boy_H_003","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"instanceID":0},"ItemID":1186,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Glove","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chain","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}}]}'
+  - '{"id":"","name":"Test","thumbnail":"","gender":"Male","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"instanceID":0},"ItemID":902,"ItemName":"Boy_Pant_V011","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"instanceID":0},"ItemID":1390,"ItemName":"Boy_Shirt_V011","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"instanceID":0},"ItemID":1195,"ItemName":"Boy_H_006","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"instanceID":0},"ItemID":1186,"ItemName":"Shoes_090","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Glove","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chain","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}}]}'
+  - '{"id":"","name":"Test","thumbnail":"","gender":"Male","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"instanceID":0},"ItemID":902,"ItemName":"Boy_Pant_V012","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"instanceID":0},"ItemID":1390,"ItemName":"Boy_Shirt_V012","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"instanceID":0},"ItemID":1195,"ItemName":"Boy_H_025","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"instanceID":0},"ItemID":1186,"ItemName":"Shoes_387","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Glove","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chain","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}}]}'
+  - '{"id":"86947","name":"Test","thumbnail":"https://cdn.xana.net/xanaprod/Defaults/1680177561873_file.png","gender":"Female","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":12541,"ItemName":"Girl_Pant_V001","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1417,"ItemName":"Girl_Shirt_V001","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1225,"ItemName":"Girl_H_010","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1145,"ItemName":"Shoes_478","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}}]}'
+  - '{"id":"86952","name":"Test","thumbnail":"https://cdn.xana.net/xanaprod/Defaults/1680100976117_file.png","gender":"Female","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":913,"ItemName":"Girl_Pant_V009","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1415,"ItemName":"Girl_Shirt_V009","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1215,"ItemName":"Girl_H_020","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1078,"ItemName":"Shoes_478","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}}]}'
+  - '{"id":"86948","name":"Test","thumbnail":"https://cdn.xana.net/xanaprod/Defaults/1680176897662_file.png","gender":"Female","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1277,"ItemName":"Girl_Pant_V008","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1295,"ItemName":"Girl_Shirt_V008","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1231,"ItemName":"Girl_H_022","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1085,"ItemName":"Shoes_478","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}}]}'
+  - '{"id":"86951","name":"Test","thumbnail":"https://cdn.xana.net/xanaprod/Defaults/1680177258349_file.png","gender":"Female","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1274,"ItemName":"Girl_Pant_V007","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1312,"ItemName":"Girl_Shirt_V007","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1527,"ItemName":"Girl_H_029","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1185,"ItemName":"Shoes_478","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}}]}'
+  - '{"id":"","name":"Test","thumbnail":"","gender":"Female","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"instanceID":0},"ItemID":1369,"ItemName":"Girl_Pant_V006","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"instanceID":0},"ItemID":1388,"ItemName":"Girl_Shirt_V006","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"instanceID":0},"ItemID":1530,"ItemName":"Girl_H_025","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"instanceID":0},"ItemID":1085,"ItemName":"Shoes_478","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Glove","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chain","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}}]}'
+  - '{"id":"","name":"Test","thumbnail":"","gender":"Female","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"instanceID":0},"ItemID":1363,"ItemName":"Girl_Pant_V003","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"instanceID":0},"ItemID":1373,"ItemName":"Girl_Shirt_V003","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"instanceID":0},"ItemID":1201,"ItemName":"Girl_H_011","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"instanceID":0},"ItemID":1149,"ItemName":"Shoes_478","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Glove","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chain","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}}]}'
+  - '{"id":"","name":"Test","thumbnail":"","gender":"Female","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"instanceID":0},"ItemID":902,"ItemName":"Girl_Pant_V002","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"instanceID":0},"ItemID":1390,"ItemName":"Girl_Shirt_V002","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"instanceID":0},"ItemID":1195,"ItemName":"Girl_H_015","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"instanceID":0},"ItemID":1186,"ItemName":"Shoes_478","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Glove","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chain","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}}]}'
+  - '{"id":"","name":"Test","thumbnail":"","gender":"Female","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"instanceID":0},"ItemID":902,"ItemName":"Girl_Pant_V003_1","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"instanceID":0},"ItemID":1390,"ItemName":"Girl_Shirt_V003_1","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"instanceID":0},"ItemID":1195,"ItemName":"Girl_H_022","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"instanceID":0},"ItemID":1186,"ItemName":"Shoes_478","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Glove","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chain","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}}]}'
+  - '{"id":"","name":"Test","thumbnail":"","gender":"Female","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"instanceID":0},"ItemID":902,"ItemName":"Girl_Pant_V008_1","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"instanceID":0},"ItemID":1390,"ItemName":"Girl_Shirt_004","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"instanceID":0},"ItemID":1195,"ItemName":"Girl_H_004","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"instanceID":0},"ItemID":1186,"ItemName":"Shoes_475","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Glove","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chain","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}}]}'
+  - '{"id":"","name":"Test","thumbnail":"","gender":"Female","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"instanceID":0},"ItemID":902,"ItemName":"Girl_Pant_V002_1","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"instanceID":0},"ItemID":1390,"ItemName":"Girl_Shirt_V008_1","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"instanceID":0},"ItemID":1195,"ItemName":"Girl_H_006","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"instanceID":0},"ItemID":1186,"ItemName":"Shoes_478","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Glove","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chain","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}}]}'
+  summitData:
+    domes:
+    - id: 0
+      name: DEEMO THE MOVIE Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: DEEMO THE MOVIE Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 1
+      name: Xana Festival
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Xana Festival
+      experienceType: 
+      builderWorldId: 
+    - id: 2
+      name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      experienceType: 
+      builderWorldId: 
+    - id: 3
+      name: JJ MUSEUM
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: JJ MUSEUM
+      experienceType: 
+      builderWorldId: 
+    - id: 4
+      name: Genesis ART Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Genesis ART Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 5
+      name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      experienceType: 
+      builderWorldId: 
+    - id: 6
+      name: Koto-ku Virtual Exhibition
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Koto-ku Virtual Exhibition
+      experienceType: 
+      builderWorldId: 
+    - id: 7
+      name: "ROCK\u2019N ROLL CIRCUS"
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: "ROCK\u2019N ROLL CIRCUS"
+      experienceType: 
+      builderWorldId: 
+    - id: 8
+      name: XANA Festival Stage
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: XANA Festival Stage
+      experienceType: 
+      builderWorldId: 
+    - id: 9
+      name: ZONE-X
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: ZONE-X
+      experienceType: 
+      builderWorldId: 
+    - id: 10
+      name: MASAMI TANAKA
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: MASAMI TANAKA
+      experienceType: 
+      builderWorldId: 
+    - id: 11
+      name: MASAMI TANAKA
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: MASAMI TANAKA
+      experienceType: 
+      builderWorldId: 
+    - id: 12
+      name: MASAMI TANAKA
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: MASAMI TANAKA
+      experienceType: 
+      builderWorldId: 
+    - id: 13
+      name: THE RHETORIC STAR
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: THE RHETORIC STAR
+      experienceType: 
+      builderWorldId: 
+    - id: 14
+      name: ZONE-X
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: ZONE-X
+      experienceType: 
+      builderWorldId: 
+    - id: 15
+      name: Genesis ART Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Genesis ART Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 16
+      name: MASAMI TANAKA
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: MASAMI TANAKA
+      experienceType: 
+      builderWorldId: 
+    - id: 17
+      name: Green Screen Studio
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Green Screen Studio
+      experienceType: 
+      builderWorldId: 
+    - id: 18
+      name: Xana Festival
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Xana Festival
+      experienceType: 
+      builderWorldId: 
+    - id: 19
+      name: JJ MUSEUM
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: JJ MUSEUM
+      experienceType: 
+      builderWorldId: 
+    - id: 20
+      name: BreakingDown Arena
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: BreakingDown Arena
+      experienceType: 
+      builderWorldId: 
+    - id: 21
+      name: ZONE X Musuem
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: ZONE X Musuem
+      experienceType: 
+      builderWorldId: 
+    - id: 22
+      name: JJ MUSEUM
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: JJ MUSEUM
+      experienceType: 
+      builderWorldId: 
+    - id: 23
+      name: Green Screen Studio
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Green Screen Studio
+      experienceType: 
+      builderWorldId: 
+    - id: 24
+      name: ZONE-X
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: ZONE-X
+      experienceType: 
+      builderWorldId: 
+    - id: 25
+      name: DEEMO THE MOVIE Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: DEEMO THE MOVIE Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 26
+      name: HOKUSAI KATSUSHIKA
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: HOKUSAI KATSUSHIKA
+      experienceType: 
+      builderWorldId: 
+    - id: 27
+      name: Genesis ART Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Genesis ART Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 28
+      name: Xana Festival
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Xana Festival
+      experienceType: 
+      builderWorldId: 
+    - id: 29
+      name: Xana Festival
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Xana Festival
+      experienceType: 
+      builderWorldId: 
+    - id: 30
+      name: Green Screen Studio
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Green Screen Studio
+      experienceType: 
+      builderWorldId: 
+    - id: 31
+      name: BreakingDown Arena
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: BreakingDown Arena
+      experienceType: 
+      builderWorldId: 
+    - id: 32
+      name: D_Infinity_Labo
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: D_Infinity_Labo
+      experienceType: 
+      builderWorldId: 
+    - id: 33
+      name: "ROCK\u2019N ROLL CIRCUS"
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: "ROCK\u2019N ROLL CIRCUS"
+      experienceType: 
+      builderWorldId: 
+    - id: 34
+      name: DEEMO THE MOVIE Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: DEEMO THE MOVIE Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 35
+      name: Genesis ART Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Genesis ART Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 36
+      name: MASAMI TANAKA
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: MASAMI TANAKA
+      experienceType: 
+      builderWorldId: 
+    - id: 37
+      name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      experienceType: 
+      builderWorldId: 
+    - id: 38
+      name: Genesis ART Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Genesis ART Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 39
+      name: Xana Festival
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Xana Festival
+      experienceType: 
+      builderWorldId: 
+    - id: 40
+      name: MASAMI TANAKA
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: MASAMI TANAKA
+      experienceType: 
+      builderWorldId: 
+    - id: 41
+      name: HOKUSAI KATSUSHIKA
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: HOKUSAI KATSUSHIKA
+      experienceType: 
+      builderWorldId: 
+    - id: 42
+      name: Xana Lobby
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Xana Lobby
+      experienceType: 
+      builderWorldId: 
+    - id: 43
+      name: Koto-ku Virtual Exhibition
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Koto-ku Virtual Exhibition
+      experienceType: 
+      builderWorldId: 
+    - id: 44
+      name: ZONE X Musuem
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: ZONE X Musuem
+      experienceType: 
+      builderWorldId: 
+    - id: 45
+      name: Green Screen Studio
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Green Screen Studio
+      experienceType: 
+      builderWorldId: 
+    - id: 46
+      name: XANA Festival Stage
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: XANA Festival Stage
+      experienceType: 
+      builderWorldId: 
+    - id: 47
+      name: FIVE ELEMENTS
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: FIVE ELEMENTS
+      experienceType: 
+      builderWorldId: 
+    - id: 48
+      name: "ROCK\u2019N ROLL CIRCUS"
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: "ROCK\u2019N ROLL CIRCUS"
+      experienceType: 
+      builderWorldId: 
+    - id: 49
+      name: XANA Festival Stage
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: XANA Festival Stage
+      experienceType: 
+      builderWorldId: 
+    - id: 50
+      name: "ROCK\u2019N ROLL CIRCUS"
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: "ROCK\u2019N ROLL CIRCUS"
+      experienceType: 
+      builderWorldId: 
+    - id: 51
+      name: Koto-ku Virtual Exhibition
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Koto-ku Virtual Exhibition
+      experienceType: 
+      builderWorldId: 
+    - id: 52
+      name: Genesis ART Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Genesis ART Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 53
+      name: FIVE ELEMENTS
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: FIVE ELEMENTS
+      experienceType: 
+      builderWorldId: 
+    - id: 54
+      name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      experienceType: 
+      builderWorldId: 
+    - id: 55
+      name: THE RHETORIC STAR
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: THE RHETORIC STAR
+      experienceType: 
+      builderWorldId: 
+    - id: 56
+      name: Xana Festival
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Xana Festival
+      experienceType: 
+      builderWorldId: 
+    - id: 57
+      name: MASAMI TANAKA
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: MASAMI TANAKA
+      experienceType: 
+      builderWorldId: 
+    - id: 58
+      name: JJ MUSEUM
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: JJ MUSEUM
+      experienceType: 
+      builderWorldId: 
+    - id: 59
+      name: ZONE X Musuem
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: ZONE X Musuem
+      experienceType: 
+      builderWorldId: 
+    - id: 60
+      name: HOKUSAI KATSUSHIKA
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: HOKUSAI KATSUSHIKA
+      experienceType: 
+      builderWorldId: 
+    - id: 61
+      name: JJ MUSEUM
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: JJ MUSEUM
+      experienceType: 
+      builderWorldId: 
+    - id: 62
+      name: Koto-ku Virtual Exhibition
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Koto-ku Virtual Exhibition
+      experienceType: 
+      builderWorldId: 
+    - id: 63
+      name: Xana Lobby
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Xana Lobby
+      experienceType: 
+      builderWorldId: 
+    - id: 64
+      name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      experienceType: 
+      builderWorldId: 
+    - id: 65
+      name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      experienceType: 
+      builderWorldId: 
+    - id: 66
+      name: Xana Festival
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Xana Festival
+      experienceType: 
+      builderWorldId: 
+    - id: 67
+      name: ZONE X Musuem
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: ZONE X Musuem
+      experienceType: 
+      builderWorldId: 
+    - id: 68
+      name: DEEMO THE MOVIE Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: DEEMO THE MOVIE Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 69
+      name: FIVE ELEMENTS
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: FIVE ELEMENTS
+      experienceType: 
+      builderWorldId: 
+    - id: 70
+      name: MASAMI TANAKA
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: MASAMI TANAKA
+      experienceType: 
+      builderWorldId: 
+    - id: 71
+      name: HOKUSAI KATSUSHIKA
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: HOKUSAI KATSUSHIKA
+      experienceType: 
+      builderWorldId: 
+    - id: 72
+      name: Green Screen Studio
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Green Screen Studio
+      experienceType: 
+      builderWorldId: 
+    - id: 73
+      name: "ROCK\u2019N ROLL CIRCUS"
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: "ROCK\u2019N ROLL CIRCUS"
+      experienceType: 
+      builderWorldId: 
+    - id: 74
+      name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      experienceType: 
+      builderWorldId: 
+    - id: 75
+      name: ZONE X Musuem
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: ZONE X Musuem
+      experienceType: 
+      builderWorldId: 
+    - id: 76
+      name: Astroboy x Tottori Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Astroboy x Tottori Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 77
+      name: Xana Festival
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Xana Festival
+      experienceType: 
+      builderWorldId: 
+    - id: 78
+      name: HOKUSAI KATSUSHIKA
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: HOKUSAI KATSUSHIKA
+      experienceType: 
+      builderWorldId: 
+    - id: 79
+      name: Xana Festival
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Xana Festival
+      experienceType: 
+      builderWorldId: 
+    - id: 80
+      name: Koto-ku Virtual Exhibition
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Koto-ku Virtual Exhibition
+      experienceType: 
+      builderWorldId: 
+    - id: 81
+      name: Genesis ART Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Genesis ART Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 82
+      name: "ROCK\u2019N ROLL CIRCUS"
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: "ROCK\u2019N ROLL CIRCUS"
+      experienceType: 
+      builderWorldId: 
+    - id: 83
+      name: ZONE-X
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: ZONE-X
+      experienceType: 
+      builderWorldId: 
+    - id: 84
+      name: Astroboy x Tottori Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Astroboy x Tottori Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 85
+      name: D_Infinity_Labo
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: D_Infinity_Labo
+      experienceType: 
+      builderWorldId: 
+    - id: 86
+      name: XANA Festival Stage
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: XANA Festival Stage
+      experienceType: 
+      builderWorldId: 
+    - id: 87
+      name: "ROCK\u2019N ROLL CIRCUS"
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: "ROCK\u2019N ROLL CIRCUS"
+      experienceType: 
+      builderWorldId: 
+    - id: 88
+      name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      experienceType: 
+      builderWorldId: 
+    - id: 89
+      name: JJ MUSEUM
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: JJ MUSEUM
+      experienceType: 
+      builderWorldId: 
+    - id: 90
+      name: XANA Festival Stage
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: XANA Festival Stage
+      experienceType: 
+      builderWorldId: 
+    - id: 91
+      name: FIVE ELEMENTS
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: FIVE ELEMENTS
+      experienceType: 
+      builderWorldId: 
+    - id: 92
+      name: MASAMI TANAKA
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: MASAMI TANAKA
+      experienceType: 
+      builderWorldId: 
+    - id: 93
+      name: Xana Festival
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Xana Festival
+      experienceType: 
+      builderWorldId: 
+    - id: 94
+      name: MASAMI TANAKA
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: MASAMI TANAKA
+      experienceType: 
+      builderWorldId: 
+    - id: 95
+      name: MASAMI TANAKA
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: MASAMI TANAKA
+      experienceType: 
+      builderWorldId: 
+    - id: 96
+      name: THE RHETORIC STAR
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: THE RHETORIC STAR
+      experienceType: 
+      builderWorldId: 
+    - id: 97
+      name: Genesis ART Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Genesis ART Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 98
+      name: "ROCK\u2019N ROLL CIRCUS"
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: "ROCK\u2019N ROLL CIRCUS"
+      experienceType: 
+      builderWorldId: 
+    - id: 99
+      name: Genesis ART Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Genesis ART Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 100
+      name: THE RHETORIC STAR
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: THE RHETORIC STAR
+      experienceType: 
+      builderWorldId: 
+    - id: 101
+      name: ZONE X Musuem
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: ZONE X Musuem
+      experienceType: 
+      builderWorldId: 
+    - id: 102
+      name: BreakingDown Arena
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: BreakingDown Arena
+      experienceType: 
+      builderWorldId: 
+    - id: 103
+      name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      experienceType: 
+      builderWorldId: 
+    - id: 104
+      name: DEEMO THE MOVIE Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: DEEMO THE MOVIE Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 105
+      name: XANA Festival Stage
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: XANA Festival Stage
+      experienceType: 
+      builderWorldId: 
+    - id: 106
+      name: MASAMI TANAKA
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: MASAMI TANAKA
+      experienceType: 
+      builderWorldId: 
+    - id: 107
+      name: Xana Festival
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Xana Festival
+      experienceType: 
+      builderWorldId: 
+    - id: 108
+      name: "ROCK\u2019N ROLL CIRCUS"
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: "ROCK\u2019N ROLL CIRCUS"
+      experienceType: 
+      builderWorldId: 
+    - id: 109
+      name: Astroboy x Tottori Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Astroboy x Tottori Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 110
+      name: MASAMI TANAKA
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: MASAMI TANAKA
+      experienceType: 
+      builderWorldId: 
+    - id: 111
+      name: Green Screen Studio
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Green Screen Studio
+      experienceType: 
+      builderWorldId: 
+    - id: 112
+      name: ZONE-X
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: ZONE-X
+      experienceType: 
+      builderWorldId: 
+    - id: 113
+      name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
+      experienceType: 
+      builderWorldId: 
+    - id: 114
+      name: ZONE-X
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: ZONE-X
+      experienceType: 
+      builderWorldId: 
+    - id: 115
+      name: ZONE-X
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: ZONE-X
+      experienceType: 
+      builderWorldId: 
+    - id: 116
+      name: DEEMO THE MOVIE Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: DEEMO THE MOVIE Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 117
+      name: Xana Festival
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Xana Festival
+      experienceType: 
+      builderWorldId: 
+    - id: 118
+      name: ZONE-X
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: ZONE-X
+      experienceType: 
+      builderWorldId: 
+    - id: 119
+      name: FIVE ELEMENTS
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: FIVE ELEMENTS
+      experienceType: 
+      builderWorldId: 
+    - id: 120
+      name: HOKUSAI KATSUSHIKA
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: HOKUSAI KATSUSHIKA
+      experienceType: 
+      builderWorldId: 
+    - id: 121
+      name: "ROCK\u2019N ROLL CIRCUS"
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: "ROCK\u2019N ROLL CIRCUS"
+      experienceType: 
+      builderWorldId: 
+    - id: 122
+      name: JJ MUSEUM
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: JJ MUSEUM
+      experienceType: 
+      builderWorldId: 
+    - id: 123
+      name: DEEMO THE MOVIE Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: DEEMO THE MOVIE Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 124
+      name: BreakingDown Arena
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: BreakingDown Arena
+      experienceType: 
+      builderWorldId: 
+    - id: 125
+      name: THE RHETORIC STAR
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: THE RHETORIC STAR
+      experienceType: 
+      builderWorldId: 
+    - id: 126
+      name: DEEMO THE MOVIE Metaverse Museum
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: DEEMO THE MOVIE Metaverse Museum
+      experienceType: 
+      builderWorldId: 
+    - id: 127
+      name: Xana Lobby
+      description: 
+      creatorName: 
+      bgm: 
+      thumbnail: 
+      worldType: 0
+      worldId: 0
+      world: Xana Lobby
+      experienceType: 
+      builderWorldId: 
+  summitData1:
+    domes:
+    - id: 1
+      name: Captains World
+      description: The First Avenger.
+      creatorName: Captain
+      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717675234412-infinity-heroes-epic-inspiring-adventurous-soundtrack-9278.mp3
+      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717675340059-CaptainAme.jpg
+      worldType: 0
+      worldId: 0
+      world: Green Screen Studio
+      experienceType: double
+      builderWorldId: 
+    - id: 2
+      name: aaa
+      description: aa
+      creatorName: aaa
+      bgm: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fvibrant&psig=AOvVaw1POU-1kvuova7TxZZCfcpB&ust=1718104686493000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCIiIte700IYDFQAAAAAdAAAAABAE.mp3
+      thumbnail: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fvibrant&psig=AOvVaw1POU-1kvuova7TxZZCfcpB&ust=1718104686493000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCIiIte700IYDFQAAAAAdAAAAABAE.jpg
+      worldType: 0
+      worldId: 0
+      world: Tottori Daisen World
+      experienceType: double
+      builderWorldId: 
+    - id: 3
+      name: sgfds
+      description: sd
+      creatorName: sdf
+      bgm: https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=600.mp3
+      thumbnail: https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=600.jpg
+      worldType: 0
+      worldId: 0
+      world: 'GOZ : Animator Haruna Gouzu Gallery 2021'
+      experienceType: single
+      builderWorldId: 
+    - id: 4
+      name: as
+      description: as
+      creatorName: as
+      bgm: https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1.mp3
+      thumbnail: https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1.jpg
+      worldType: 0
+      worldId: 0
+      world: Astroboy x Tottori Metaverse Museum
+      experienceType: double
+      builderWorldId: 
+    - id: 8
+      name: 'Amit XANA Festival '
+      description: 'Testing complete flow
+
+'
+      creatorName: Amit
+      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1718185663467-infinity-heroes-epic-inspiring-adventurous-soundtrack-9278.mp3
+      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1718185674219-CaptainAme.jpg
+      worldType: 0
+      worldId: 0
+      world: RooftopParty
+      experienceType: double
+      builderWorldId: 
+    - id: 9
+      name: New World
+      description: qwerty
+      creatorName: BusinessMAn
+      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717504440354-COPYING.mp3
+      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717496685602-BLDpost3.jpg
+      worldType: 0
+      worldId: 0
+      world: Xana Festival
+      experienceType: double
+      builderWorldId: 
+    - id: 10
+      name: aaa
+      description: aaa
+      creatorName: aa
+      bgm: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fvibrant&psig=AOvVaw1POU-1kvuova7TxZZCfcpB&ust=1718104686493000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCIiIte700IYDFQAAAAAdAAAAABAE.mp3
+      thumbnail: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fvibrant&psig=AOvVaw1POU-1kvuova7TxZZCfcpB&ust=1718104686493000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCIiIte700IYDFQAAAAAdAAAAABAE.jpg
+      worldType: 0
+      worldId: 0
+      world: XANA_KANZAKI
+      experienceType: double
+      builderWorldId: 
+    - id: 13
+      name: aqwert
+      description: vfd vfdvdfvd
+      creatorName: newApi Structure
+      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717496685602-BLDpost3.mp3
+      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717496685602-BLDpost3.jpg
+      worldType: 0
+      worldId: 0
+      world: Xana Festival
+      experienceType: double
+      builderWorldId: 
+    - id: 32
+      name: bhiya
+      description: zinger
+      creatorName: johnson
+      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717504440354-COPYING.mp3
+      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717162837543-snapcontainer.jpg
+      worldType: 0
+      worldId: 0
+      world: Koto-ku Virtual Exhibition
+      experienceType: double
+      builderWorldId: 
+    - id: 34
+      name: fvnkers
+      description: qwmkdqwmkmd
+      creatorName: xal
+      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717504440354-COPYING.mp3
+      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717162837543-snapcontainer.jpg
+      worldType: 0
+      worldId: 0
+      world: RFMDev
+      experienceType: double
+      builderWorldId: 
+    - id: 42
+      name: newTest
+      description: TYYGHGH
+      creatorName: xana
+      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717504440354-COPYING.mp3
+      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717504440354-COPYING.jpg
+      worldType: 0
+      worldId: 0
+      world: testing world
+      experienceType: double
+      builderWorldId: 
+    - id: 59
+      name: Xana Museum test world
+      description: Created world to test nfts in museum
+      creatorName: Umer-Xana
+      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717672646159-ZaalimBadshah128Kbps.mp3
+      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717672534898-1706187677302-Screenshot2024-01-19203036.jpg
+      worldType: 0
+      worldId: 0
+      world: Koto-ku Virtual Exhibition
+      experienceType: double
+      builderWorldId: 
+    - id: 65
+      name: dddddddddddd
+      description: ddddddddddddd
+      creatorName: ddddddddd
+      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717679275536-Shubh-MVPOfficialAudio.mp3
+      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717679276801-Screenshot_2024-05-24-15-08-01-41_7eaca60a9541dde15037f6acbb657edf.jpg
+      worldType: 1
+      worldId: 0
+      world: a2
+      experienceType: single
+      builderWorldId: 197
+    - id: 66
+      name: Dairy Milk
+      description: Dairy milk ki duniya
+      creatorName: Moo
+      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717162837543-snapcontainer.mp3
+      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717496685602-BLDpost3.jpg
+      worldType: 0
+      worldId: 0
+      world: MASAMI TANAKA
+      experienceType: single
+      builderWorldId: 
+    - id: 70
+      name: Museum Dome 70
+      description: Museum Dome to check nft data
+      creatorName: Umer-Xana
+      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717675662229-ZaalimBadshah128Kbps.mp3
+      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717675691986-1706187677302-Screenshot2024-01-19203036.jpg
+      worldType: 0
+      worldId: 0
+      world: Koto-ku Virtual Exhibition
+      experienceType: double
+      builderWorldId: 
+    - id: 123
+      name: 'World Name Test '
+      description: Tesst
+      creatorName: Creator Name Test
+      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717676093240-1704487205059.mp3
+      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717676093240-1704487205059.jpg
+      worldType: 1
+      worldId: 0
+      world: DokuroDome
+      experienceType: double
+      builderWorldId: 234
+    - id: 126
+      name: whatever
+      description: assdff
+      creatorName: whtever
+      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717496685602-BLDpost3.mp3
+      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717504440354-COPYING.jpg
+      worldType: 0
+      worldId: 0
+      world: ZONE-X
+      experienceType: double
+      builderWorldId: 
+    - id: 127
+      name: testworkd
+      description: nj jnknnknjk
+      creatorName: tesdt
+      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717504440354-COPYING.txt
+      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717496685602-BLDpost3.mp3
+      worldType: 0
+      worldId: 0
+      world: D +  Infinity Labo
+      experienceType: double
+      builderWorldId: 
+  aiData:
+    npcData:
+    - id: 181
+      domeId: 8
+      language: Japanese
+      name: Crash Debugger
+      avatarId: 17
+      personalityURL: https://xana-summit-ai.xana.net/npc-chat?input_string=a&npc_id=8id01&personality_id=8personalityId01&usr_id=Developer&personality_name=Crash
+        Debugger
+      spawnPositionArray: 020000000200000002000000
+    - id: 180
+      domeId: 8
+      language: English
+      name: Github Expert
+      avatarId: 3
+      personalityURL: https://xana-summit-ai.xana.net/npc-chat?input_string=a&npc_id=8id00&personality_id=8personalityId00&usr_id=Humble,
+        Smart&personality_name=Github Expert
+      spawnPositionArray: 010000000100000001000000

@@ -14,6 +14,10 @@ public class IKMuseum : MonoBehaviour
     [Header("TargetPosition")]
     public GameObject m_TargetPosition;
     public GameObject Lookatorder;
+
+    [Header("Right Hand")]
+    public GameObject RightHand;
+
     [Header("Selfie Stick")]
     public GameObject m_SelfieStick;
 
@@ -28,6 +32,10 @@ public class IKMuseum : MonoBehaviour
     public GameObject ConsoleObj;
     [Header("Consol for Server player")]
     public GameObject m_ConsoleObjOther;
+
+    //[HideInInspector]
+    public GameObject gourd;
+
     [Range(0, 1)]
     public float handIkPos = 1;
     [Range(0, 1)]
@@ -47,7 +55,7 @@ public class IKMuseum : MonoBehaviour
         }
         else
         {
-            SelfieController.Instance.InitializeCharacter(m_SelfieStick, this.transform.parent.gameObject, m_TargetPosition, this.gameObject,Lookatorder);
+            PlayerSelfieController.Instance.InitializeCharacter(m_SelfieStick, this.transform.parent.gameObject, m_TargetPosition, this.gameObject,Lookatorder);
            
         }
 
@@ -129,6 +137,15 @@ public class IKMuseum : MonoBehaviour
         this.GetComponent<PhotonView>().RPC("DisableFreeCamOnRemoteSide", RpcTarget.AllBuffered, this.GetComponent<PhotonView>().ViewID);
 
     }
+    public void RPCForKanzakiGourdEnable()
+    {
+        this.GetComponent<PhotonView>().RPC("EnableGourdOnRemoteSide", RpcTarget.AllBuffered, this.GetComponent<PhotonView>().ViewID);
+
+    }
+    public void RPCForKanzakiGourdDisable()
+    {
+        this.GetComponent<PhotonView>().RPC("DisableGourdOnRemoteSide", RpcTarget.AllBuffered, this.GetComponent<PhotonView>().ViewID);
+    }
 
     [PunRPC]
     public void EnableSelfieOnRemoteSide(int _viewID, Quaternion transformData)
@@ -145,9 +162,6 @@ public class IKMuseum : MonoBehaviour
            
         }
     }
-
-    
-
 
     [PunRPC]
     public void DisableSelfieOnRemoteSide(int _viewID, Quaternion transformData)
@@ -180,7 +194,7 @@ public class IKMuseum : MonoBehaviour
     {
         if (gameObject.GetComponent<PhotonView>().ViewID == _viewID)
         {
-            if(!ReferrencesForDynamicMuseum.instance.playerControllerNew.isFirstPerson)
+            if(!ReferencesForGamePlay.instance.playerControllerNew.isFirstPerson)
                 m_ConsoleObjOther.SetActive(true);
             m_Animator.SetBool("freecam", true);
            
@@ -201,4 +215,71 @@ public class IKMuseum : MonoBehaviour
         }
     }
 
+    #region XANA_Kanzaki Environment Events
+
+    [HideInInspector]
+    public UIController_Shine uIController_Shine;
+
+    [PunRPC]
+    public void EnableGourdOnRemoteSide(int _viewID)
+    {
+        //Debug.Log("EnableGourdOnRemoteSide RPC, ME ID : " + gameObject.GetComponent<PhotonView>().ViewID + " -- other ID : "+ _viewID);
+        if (gameObject.GetComponent<PhotonView>().ViewID == _viewID)
+        {
+            if (gourd)
+            {
+                gourd.SetActive(true);
+
+            }
+        }
+    }
+    [PunRPC]
+    public void DisableGourdOnRemoteSide(int _viewID)
+    {
+        //Debug.Log("DisableGourdOnRemoteSide RPC , ME ID : " + gameObject.GetComponent<PhotonView>().ViewID + " -- other ID : " + _viewID);
+        if (gameObject.GetComponent<PhotonView>().ViewID == _viewID)
+        {
+            gourd.SetActive(false);
+            //Destroy(SpawnedGourd);
+        }
+    }
+
+
+
+
+    //These are the events that are called from amination events
+    private void WashFin()
+    {
+        ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
+        PlayerController.PlayerIsIdle?.Invoke();
+        Enable_DisableObjects.Instance.DisableDashButton(true);
+        RPCForKanzakiGourdDisable();
+
+    }
+
+    private void BowTwiceFin()
+    {
+        if(uIController_Shine)
+            uIController_Shine.GetWorshipGameUI().gameObject.SetActive(true);
+    }
+
+    private void ClapFin()
+    {
+        if(uIController_Shine)
+            uIController_Shine.GetWorshipGameUI().gameObject.SetActive(true);
+    }
+
+    private void PrayFin()
+    {
+        if(uIController_Shine)
+            uIController_Shine.GetWorshipGameUI().gameObject.SetActive(true);
+    }
+
+    private void BowOnceFin()
+    {
+        if(uIController_Shine)
+            uIController_Shine.GetOmikuziUI().gameObject.SetActive(true);
+    }
+
+    #endregion
 }

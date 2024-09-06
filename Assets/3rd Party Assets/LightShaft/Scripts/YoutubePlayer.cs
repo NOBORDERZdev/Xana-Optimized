@@ -9,6 +9,8 @@ namespace LightShaft.Scripts
 {
     public class YoutubePlayer : YoutubeSettings
     {
+        internal string uploadPropertyID = "";
+
         public override void Start()
         {
             base.Start();
@@ -26,9 +28,9 @@ namespace LightShaft.Scripts
         {
             Debug.Log("Video is started ....");
 
-            if(thumbnailObject!=null)
+            if (thumbnailObject != null)
                 thumbnailObject.material.color = Color.white;
-            if(videoPlayer!=null && videoPlayer.targetMaterialRenderer)
+            if (videoPlayer != null && videoPlayer.targetMaterialRenderer)
                 videoPlayer.targetMaterialRenderer.material.color = Color.white;
             if (mPlayer != null)
                 mPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = Color.white;
@@ -146,7 +148,7 @@ namespace LightShaft.Scripts
             {
                 videoPlayer.Play();
 
-                audioPlayer.GetTargetAudioSource(0).volume = SoundManagerSettings.soundManagerSettings.totalVolumeSlider.value;
+                audioPlayer.GetTargetAudioSource(0).volume = SoundSettings.soundManagerSettings.totalVolumeSlider.value;
 
                 //if (_controller.volumeSlider != null)
                 //    audioPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
@@ -342,12 +344,12 @@ namespace LightShaft.Scripts
 
         private void OnApplicationQuit()
         {
-            if(videoPlayer != null)
+            if (videoPlayer != null)
             {
                 if (videoPlayer.targetTexture != null)
                     videoPlayer.targetTexture.Release();
             }
-            
+
 
             if (!playUsingInternalDevicePlayer)
             {
@@ -401,5 +403,5 @@ namespace LightShaft.Scripts
 
         }
     }
-    
+
 }

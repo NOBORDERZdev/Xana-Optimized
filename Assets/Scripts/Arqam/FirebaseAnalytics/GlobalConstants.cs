@@ -34,7 +34,34 @@ public class GlobalConstants
         CL_IMG_ZoneX,
         CL_IMG_FiveElements, // Done
         URL_ZoneX, 
-        URL_FiveElements
+        URL_FiveElements,
+        // Added Toyota Items
+        THA_Home_Thumbnail,
+        THA_Home_Thumbnail_PlayBtn,
+        StayTime_THA,
+        CL_NFT_THA_Stage,
+        CL_NFT_THA_Factory,
+        CL_NFT_THA_Consult,
+        CL_NFT_THA_LandInfo,
+        CL_NFT_THA_Architec,
+        URL_Stage,
+        URL_Factory,
+        URL_Consult,
+        URL_LandInfo,
+        URL_Architec,
+        SE_UU_Mobile_App_THA,
+
+        // Added Xana Items
+        App_Started,
+
+        Login_Email_Success,
+        Signup_Email_Completed,
+
+        Login_Wallet_Success,
+        Signup_Wallet_Completed,
+        
+        Join_World,
+        StayTime,  
     }
 
     public static void SendFirebaseEvent(string eventName)
@@ -43,12 +70,27 @@ public class GlobalConstants
 
         string prefix = "T_";
 
-        if (APIBaseUrlChange.instance.IsXanaLive)
+        if (APIBasepointManager.instance.IsXanaLive)
         {
             prefix = "L_"; environmentType = EnvironmentType.Live; 
         }
         eventName = prefix + eventName;
-        Debug.Log("<color=red>" + eventName + "</color>");
+        Debug.Log("<color=red>FB Event: " + eventName + "</color>");
+
+        Firebase.Analytics.FirebaseAnalytics.LogEvent(eventName);
+    }
+    public static void SendFirebaseEventForSummit(string eventName)
+    {
+        if (eventName.IsNullOrEmpty() || eventName.Substring(0) == "_") return;
+
+        string prefix = "TA_";
+
+        if (APIBasepointManager.instance.IsXanaLive)
+        {
+            prefix = "LA_"; environmentType = EnvironmentType.Live;
+        }
+        eventName = prefix + eventName;
+        Debug.Log("<color=red>FB Event: " + eventName + "</color>");
 
         Firebase.Analytics.FirebaseAnalytics.LogEvent(eventName);
     }

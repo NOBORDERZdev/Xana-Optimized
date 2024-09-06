@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using LightShaft.Scripts;
 using RenderHeads.Media.AVProVideo;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Video;
 
 public class YoutubeSimplified : MonoBehaviour
@@ -16,6 +17,9 @@ public class YoutubeSimplified : MonoBehaviour
     public float x;
     public float y;
     public float z;
+    [Space(5)]
+    public bool isEnableBtn = true;
+
     /*private void Awake()
     {
         videoPlayer = GetComponentInChildren<VideoPlayer>();
@@ -25,8 +29,8 @@ public class YoutubeSimplified : MonoBehaviour
 
     private void Start()
     {
-        Metaverse.AvatarManager.OninternetDisconnect += OnInternetDisconnect;
-        Metaverse.AvatarManager.OninternetConnected += OnInternetConnect;
+        AvatarSpawnerOnDisconnect.OninternetDisconnect += OnInternetDisconnect;
+        AvatarSpawnerOnDisconnect.OninternetConnected += OnInternetConnect;
     }
 
     public void Play()
@@ -57,6 +61,9 @@ public class YoutubeSimplified : MonoBehaviour
 
         if (autoPlay)
             player.Play(url);
+
+        if (videoPlayer.gameObject.GetComponent<Button>() is null) return;
+        videoPlayer.gameObject.GetComponent<Button>().enabled = isEnableBtn;
     }
     public void OnInternetDisconnect()
     {

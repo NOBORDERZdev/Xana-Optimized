@@ -98,5 +98,15 @@ public class HyperLinkPopComponent : ItemComponent
         _componentType = Constants.ItemComponentType.HyperLinkPopComponent;
     }
 
+    public override void CollisionExitBehaviour()
+    {
+        //CollisionExit();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
+    }
+
     #endregion
 }

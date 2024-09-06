@@ -17,7 +17,6 @@ public class NextPreScrollRect : MonoBehaviour
     {
         // Get the width of the content in the ScrollRect.
         scrollableWidth = scrollRect.content.rect.width - scrollRect.viewport.rect.width;
-
         // Initially, hide the buttons if content fits within the view.
         UpdatePaginationButtons();
 
@@ -39,9 +38,19 @@ public class NextPreScrollRect : MonoBehaviour
     {
         // Get the current horizontal scroll position.
         currentScrollPos = scrollRect.normalizedPosition.x;
+        if (scrollRect.content.rect.width > scrollRect.viewport.rect.width) //if tags are less than the width of the scroll view disable arrow buttons
+        {
+            UpdatePaginationButtons();
+
+        }
+        else
+        {
+            nextButton.gameObject.SetActive(false);
+            prevButton.gameObject.SetActive(false);
+        }
 
         // Update the buttons based on the horizontal normalized position.
-        UpdatePaginationButtons();
+        //UpdatePaginationButtons();
     }
 
     private void UpdatePaginationButtons()

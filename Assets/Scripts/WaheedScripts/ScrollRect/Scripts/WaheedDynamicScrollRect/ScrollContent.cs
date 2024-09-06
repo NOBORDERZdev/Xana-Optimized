@@ -98,14 +98,14 @@ namespace WaheedDynamicScrollRect
            // _CharaceterName = GameObject.Find(gameObjectName);
             //}
             _CharaceterName.GetComponent<Image>().sprite = DynamicScrollRect.avatarData[WaheedDynamicScrollRect.Counter].GetComponent<Image>().sprite;
-            AttachPresetDataScript();
-            UserRegisterationManager.instance.LogoImage.GetComponent<Image>().sprite = _CharaceterName.GetComponent<Image>().sprite;
+           // AttachPresetDataScript();
+           // UserRegisterationManager.instance.LogoImage.GetComponent<Image>().sprite = _CharaceterName.GetComponent<Image>().sprite;
             //Invoke("AttachPresetDataScript", 1f);
             //_FirstAvatar = DynamicScrollRect.content.GetChild(DynamicScrollRect.Counter).gameObject;
             //_FirstAvatar.GetComponent<Image>().sprite = DynamicScrollRect.avatarData[DynamicScrollRect.Counter].GetComponent<Image>().sprite;
         }
 
-        public void AttachPresetDataScript() 
+        /*public void AttachPresetDataScript() 
         {
             WaheedDynamicScrollRect.instance.presetScript = DynamicScrollRect.avatarData[WaheedDynamicScrollRect.Counter].GetComponent<PresetData_Jsons>();
             _CharaceterName.AddComponent(WaheedDynamicScrollRect.instance.presetScript);
@@ -115,7 +115,7 @@ namespace WaheedDynamicScrollRect
             {
                 DynamicScrollRect.ASNextButton.onClick.AddListener(WaheedDynamicScrollRect.instance.presetScript.ChangecharacterOnCLickFromserver);
             }
-        }
+        }*/
 
         public void InitScrollContent(List<ScrollItemData> contentDatum)
         {

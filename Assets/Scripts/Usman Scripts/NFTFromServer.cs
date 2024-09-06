@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Video;
 using XanaNFT;
-using static ServerSIdeCharacterHandling;
+using static ServerSideUserDataHandler;
 
 public class NFTFromServer : MonoBehaviour
 {
@@ -27,37 +28,28 @@ public class NFTFromServer : MonoBehaviour
     public int testnetMussuemId;
     public int mainnetMussuemId;
     private string dynamicMusuemApi = "/item/get-museum-all-assets/";
-    private string dynamicEventFeedApi = "";
+    private string dynamicEventFeedApi = "/userCustomEvent/get-events-all-assets-of-user/";
     public string eventid;
     string MussuemLink;
+    public GameObject XanaSummitNFTHandler;
     //public List<Datum> TestList;
     void Start()
     {
-        if(dynamicManager == null)
+        if (dynamicManager == null)
         {
             dynamicManager = FindObjectOfType<DynamicMuseumManager>();
         }   
 
-
-        if (APIBaseUrlChange.instance.IsXanaLive)
-        {
-            dynamicEventFeedApi = "/userCustomEvent/get-events-all-assets-of-user/12/";
-        }
-        else
-        {
-            dynamicEventFeedApi = "/userCustomEvent/get-events-all-assets-of-user/14/";
-        }
-
         if (XanaEventDetails.eventDetails.DataIsInitialized)
         {
             eventid = XanaEventDetails.eventDetails.id.ToString();
-            MussuemLink = dynamicEventFeedApi+eventid;
+            MussuemLink = dynamicEventFeedApi + XanaEventDetails.eventDetails.museumId + "/" + XanaEventDetails.eventDetails.id;
             Debug.Log("Event Lunching");
             Debug.Log("MussuemLink"+ MussuemLink);
         }
         else 
         {
-            MussuemLink = dynamicMusuemApi + XanaConstants.xanaConstants.MuseumID;
+            MussuemLink = dynamicMusuemApi + ConstantsHolder.xanaConstants.MuseumID;
             Debug.Log("Openning Mussuem");
         }
 
@@ -72,8 +64,21 @@ public class NFTFromServer : MonoBehaviour
             i++;
         }
         RoomCount = 4;
-       
-        Invoke(nameof(GetNFTDataDetails), 1f);
+        if (!ConstantsHolder.isFromXANASummit)
+        {
+            Invoke(nameof(GetNFTDataDetails), 1f);
+            //MussuemLink = _singleDomeMusuemApi + ConstantsHolder.xanaConstants.DomeID;
+        }
+        else
+        {
+            GameObject _summitNFTHandlerRef = Instantiate(XanaSummitNFTHandler, Vector3.zero, Quaternion.identity);
+            _summitNFTHandlerRef.GetComponentInChildren<SummitDomeNFTDataController>().NFTDataFetchScrptRef = this;
+            //if (!this.GetComponent<SummitDomeNFTDataController>())
+            //{
+            //    this.AddComponent<SummitDomeNFTDataController>();
+            //    this.GetComponent<SummitDomeNFTDataController>().NFTDataFetchScrptRef = this;
+            //}
+        }
 
        // Invoke(nameof(UpdateFrames), 2f);
     }

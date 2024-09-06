@@ -1,0 +1,171 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2111490954926417339
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6920493424476047820}
+  - component: {fileID: 4275561599409708667}
+  - component: {fileID: 4536817527108069043}
+  - component: {fileID: 1862381094906889283}
+  m_Layer: 5
+  m_Name: 10
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6920493424476047820
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111490954926417339}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 12368168281263514}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 9919, y: -473}
+  m_SizeDelta: {x: 392, y: 986}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &4275561599409708667
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111490954926417339}
+  m_CullTransparentMesh: 0
+--- !u!114 &4536817527108069043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111490954926417339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: a1f36a930d1f4cb42bae6ae680a8ec90, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1862381094906889283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111490954926417339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dbd110571754094bb4bac58b72c9e90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  JsonDataPreset: '{"id":"83680","name":"Test","thumbnail":"https://cdn.xana.net/xanaprod/Defaults/1680128805424_file.png","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1263,"ItemName":"boyc093pants","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1324,"ItemName":"boyc0104shirt","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1525,"ItemName":"boyh101","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1149,"ItemName":"shoesC49","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}}],"SavedBones":[{"Name":"iScale_L","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":-0.046260178089141846,"y":0.12077761441469193,"z":0.12197921425104141},"Rotation":{"x":2.3854177859475864e-15,"y":8.921215607805429e-21,"z":-5.465735484172499e-20},"Scale":{"x":1.0004907846450806,"y":1.0004907846450806,"z":1.0004907846450806}},{"Name":"iScale_R","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0.046260178089141846,"y":0.12077761441469193,"z":0.12197921425104141},"Rotation":{"x":9.55204839669932e-8,"y":180,"z":180},"Scale":{"x":1.0004907846450806,"y":1.0004907846450806,"z":1.0004907846450806}},{"Name":"eLineIn_L","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0,"y":0,"z":-0.039000000804662704},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":1,"y":1,"z":1}},{"Name":"eLineIn_R","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0,"y":0,"z":0.039000000804662704},"Rotation":{"x":4.0284863093036685e-21,"y":-5.352729364683257e-21,"z":7.37752694813242e-20},"Scale":{"x":1,"y":1,"z":1}},{"Name":"eLineOut_L","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0,"y":0,"z":-0.039000000804662704},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":1,"y":1,"z":1}},{"Name":"eLineOut_R","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0,"y":0,"z":0.039000000804662704},"Rotation":{"x":4.0284863093036685e-21,"y":-5.352729364683257e-21,"z":7.37752694813242e-20},"Scale":{"x":1,"y":1,"z":1}},{"Name":"lip_L","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":-0.03999999910593033,"y":0.0032999999821186066,"z":-0.013700000010430813},"Rotation":{"x":8.26258659362793,"y":333.2754211425781,"z":352.2431335449219},"Scale":{"x":1,"y":1,"z":1}},{"Name":"lip_R","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0.03999999910593033,"y":0.002300000051036477,"z":-0.010203000158071518},"Rotation":{"x":351.7374267578125,"y":206.7245635986328,"z":172.24313354492188},"Scale":{"x":1,"y":1,"z":1}},{"Name":"jBone","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":-2.7105053706292436e-22,"y":-0.02754758484661579,"z":-3.88578060273166e-18},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":1,"y":0.800000011920929,"z":1}},{"Name":"Xana_3_0_Head","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0,"y":0,"z":0},"Rotation":{"x":0,"y":0,"z":0},"Scale":{"x":1,"y":1,"z":1}},{"Name":"nose","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0,"y":0.05000000074505806,"z":0.15000000596046448},"Rotation":{"x":2.3854177859475864e-15,"y":8.921215607805429e-21,"z":-5.465735484172499e-20},"Scale":{"x":0.800000011920929,"y":0.800000011920929,"z":1}},{"Name":"mouth","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0,"y":0.012322383001446724,"z":0.15000000596046448},"Rotation":{"x":2.3854177859475864e-15,"y":8.921215607805429e-21,"z":-5.465735484172499e-20},"Scale":{"x":0.8999999761581421,"y":1,"z":1}},{"Name":"foreHead","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":6.51318408928514e-13,"y":2.8421708795129297e-16,"z":0.01407201960682869},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":1,"y":1,"z":1}},{"Name":"hairAll","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":-7.506948396240887e-10,"y":0.11257615685462952,"z":0.005374649539589882},"Rotation":{"x":2.3854177859475864e-15,"y":8.921215607805429e-21,"z":-5.465735484172499e-20},"Scale":{"x":1,"y":1,"z":1}},{"Name":"head_Ex","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":-1.8280114488788968e-7,"y":0.000006591571036551613,"z":-0.000011477729458420072},"Rotation":{"x":349.8862609863281,"y":349.3254089355469,"z":25.57903289794922},"Scale":{"x":1,"y":1,"z":1}},{"Name":"Hips_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":3.10045195626215e-14,"y":-2.0904948883071484e-8,"z":0},"Rotation":{"x":-2.1695232970902834e-27,"y":-1.516606673521762e-21,"z":1.2132853388174096e-20},"Scale":{"x":1,"y":1,"z":1}},{"Name":"LeftArm_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0,"y":-8.171241080076326e-16,"z":2.8421708795129297e-16},"Rotation":{"x":-1.5484578815569763e-14,"y":-9.401182990899061e-32,"z":3.4786105249539256e-16},"Scale":{"x":1,"y":1,"z":1}},{"Name":"LeftForeArm_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":3.552713467042264e-16,"y":9.237055226068124e-16,"z":7.389644180854499e-15},"Rotation":{"x":-1.5485273382586512e-14,"y":-1.5902773592947552e-15,"z":3.500267569228442e-16},"Scale":{"x":1,"y":1,"z":1}},{"Name":"LeftLeg_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":5.684341759025859e-16,"y":-1.1368683518051719e-15,"z":-1.776356799695581e-17},"Rotation":{"x":-1.192708045940846e-15,"y":-1.0871036739201567e-17,"z":2.9016932082054695e-16},"Scale":{"x":1,"y":1,"z":1}},{"Name":"LeftShoulder_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":-7.105427198782324e-17,"y":0,"z":1.4210854397564648e-16},"Rotation":{"x":-1.8087851569727025e-14,"y":1.5902773592947552e-15,"z":-8.758949596572802e-16},"Scale":{"x":1,"y":1,"z":1}},{"Name":"LeftUpLeg_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":-2.3980815637837487e-16,"y":-1.4210853868169056e-15,"z":-7.77156120546332e-18},"Rotation":{"x":2.484808373898055e-17,"y":-1.4559424388926342e-19,"z":1.3939321773582276e-17},"Scale":{"x":1,"y":1,"z":1}},{"Name":"Neck_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0,"y":-1.4210854397564648e-16,"z":-3.996802716596996e-17},"Rotation":{"x":-1.5906838292303188e-15,"y":2.843823917672572e-12,"z":-5.405076778890337e-19},"Scale":{"x":1,"y":1,"z":1}},{"Name":"RightArm_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":1.0658140798173486e-16,"y":3.197442173277597e-16,"z":-3.6948220904272494e-15},"Rotation":{"x":0,"y":0,"z":0},"Scale":{"x":1,"y":1,"z":1}},{"Name":"RightForeArm_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0,"y":0,"z":0},"Rotation":{"x":0,"y":0,"z":0},"Scale":{"x":1,"y":1,"z":1}},{"Name":"RightLeg_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":-2.3980815637837487e-16,"y":1.2079226634976645e-15,"z":4.44089183380283e-17},"Rotation":{"x":1.1380586152642216e-35,"y":-8.541529043768505e-18,"z":7.633991639736769e-17},"Scale":{"x":1,"y":1,"z":1}},{"Name":"RightShoulder_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":1.776356799695581e-17,"y":0,"z":1.4210854397564648e-16},"Rotation":{"x":0,"y":0,"z":0},"Scale":{"x":1,"y":1,"z":1}},{"Name":"RightUpLeg_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":2.753353122246212e-16,"y":-2.8421708795129297e-16,"z":-7.77156120546332e-18},"Rotation":{"x":-4.96961674779611e-17,"y":-6.399088762711063e-35,"z":7.377647044417605e-17},"Scale":{"x":1,"y":1,"z":1}},{"Name":"Spine1_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":1.852884580007391e-24,"y":-1.4210854397564648e-16,"z":-1.776356799695581e-17},"Rotation":{"x":-6.417946966607662e-43,"y":-3.033213347043524e-21,"z":-1.289115667444788e-20},"Scale":{"x":1,"y":1,"z":1}},{"Name":"Spine2_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":6.432155988828462e-23,"y":0,"z":1.776356799695581e-17},"Rotation":{"x":-9.640933434554741e-43,"y":-4.549820121539482e-21,"z":-1.289115667444788e-20},"Scale":{"x":1,"y":1,"z":1}},{"Name":"Spine_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":6.8821424440057e-23,"y":0,"z":-1.776356799695581e-17},"Rotation":{"x":-9.640933434554741e-43,"y":-4.549820121539482e-21,"z":-1.289115667444788e-20},"Scale":{"x":1,"y":1,"z":1}}],"SkinId":11,"Skin":{"r":0.9529411792755127,"g":0.7843137383460999,"b":0.6666667461395264,"a":1},"LipColor":{"r":0.8392156958580017,"g":0.6117647290229797,"b":0.5647059082984924,"a":1},"SssIntensity":0,"SkinGerdientColor":{"r":0.7176470756530762,"g":0.545098066329956,"b":0.545098066329956,"a":1},"isSkinColorChanged":false,"isLipColorChanged":false,"BodyFat":0,"FaceValue":10,"NoseValue":33,"EyeValue":0,"EyesColorValue":0,"EyeBrowValue":1483,"EyeLashesValue":1485,"MakeupValue":0,"LipsValue":0,"LipsColorValue":0,"faceMorphed":false,"eyeBrowMorphed":false,"eyeMorphed":false,"noseMorphed":false,"lipMorphed":false,"PresetValue":"","eyeTextureName":"xana_eye_default","eyeLashesName":"eyelash_2","eyebrrowTexture":"eyebrow_1","makeupName":"nomakeup","FaceBlendsShapes":[100,0,0,0,0,0,0,0,0,0,0,40.987327575683594,0,0,0,0,54.52045822143555,70,70,70,0,0,100,0,0,0,0,100,46.1437873840332,0,0,11.878314971923828,0,0,16.996742248535156,38.12168502807617,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}'
+  IsStartUp_Canvas: 1
+  eyeTex: {fileID: 2800000, guid: a715a20fdc5e5f248856acb9c32dff8d, type: 3}
+--- !u!1 &4421547468269197648
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 12368168281263514}
+  - component: {fileID: 7824348281700877469}
+  - component: {fileID: 6944481255849068524}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &12368168281263514
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4421547468269197648}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.01, y: 1.01, z: 1.01}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6920493424476047820}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 330, y: 1000}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &7824348281700877469
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4421547468269197648}
+  m_CullTransparentMesh: 0
+--- !u!114 &6944481255849068524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4421547468269197648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 12616aff7763c7b4589fb6f4bfd8a2d6, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1

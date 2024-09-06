@@ -19,7 +19,7 @@ public class ThrowThingsComponent : ItemComponent
         {
             BuilderEventManager.onComponentActivated?.Invoke(_componentType);
             PlayBehaviour();
-            if(GamificationComponentData.instance.withMultiplayer)
+            if (GamificationComponentData.instance.withMultiplayer)
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
             else
                 GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
@@ -40,10 +40,10 @@ public class ThrowThingsComponent : ItemComponent
 
     public override void StopBehaviour()
     {
-        if(isPlaying)
+        if (isPlaying)
         {
-        isPlaying = false;
-        StopComponent();
+            isPlaying = false;
+            StopComponent();
         }
     }
 
@@ -70,6 +70,16 @@ public class ThrowThingsComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.ThrowThingsComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
     }
 
     #endregion

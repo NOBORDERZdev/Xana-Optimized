@@ -20,6 +20,8 @@ public class BuildingDetect : MonoBehaviour
     private SkinnedMeshRenderer playerPants;
     [SerializeField]
     public SkinnedMeshRenderer playerShoes;
+    [SerializeField]
+    public SkinnedMeshRenderer[] playerEyebrow;
 
     [SerializeField]
     public MeshRenderer playerFreeCamConsole;
@@ -39,6 +41,8 @@ public class BuildingDetect : MonoBehaviour
     private Material defaultShoesMat;
     [SerializeField]
     private Material defaultFreeCamConsoleMat;
+    [SerializeField]
+    private Material[] defaltEyebrowMat;
 
     [Header("Gangster Character")]
     internal GameObject gangsterCharacter;
@@ -89,13 +93,6 @@ public class BuildingDetect : MonoBehaviour
     IEnumerator Start()
     {
         yield return new WaitForSeconds(2f);
-
-        _playerControllerNew = GamificationComponentData.instance.playerControllerNew;
-
-        defaultJumpHeight = _playerControllerNew.JumpVelocity;
-        defaultSprintSpeed = _playerControllerNew.sprintSpeed;
-        defaultMoveSpeed = _playerControllerNew.movementSpeed;
-
         powerUpCoroutine = playerPowerUp();
 
         SIpowerUpCoroutine = SIPowerUp();
@@ -104,14 +101,32 @@ public class BuildingDetect : MonoBehaviour
             vignette.active = false;
             motionBlur.active = false;
         }
+        AvatarController ac = GamificationComponentData.instance.avatarController;
         //Initializing
-        playerHair = GamificationComponentData.instance.avatarController.wornHair.GetComponent<SkinnedMeshRenderer>();
-        playerPants = GamificationComponentData.instance.avatarController.wornPant.GetComponent<SkinnedMeshRenderer>();
-        playerShirt = GamificationComponentData.instance.avatarController.wornShirt.GetComponent<SkinnedMeshRenderer>();
-        playerShoes = GamificationComponentData.instance.avatarController.wornShose.GetComponent<SkinnedMeshRenderer>();
-        playerBody = GamificationComponentData.instance.charcterBodyParts.Body;
+        if (ac.wornHair)
+            playerHair = ac.wornHair.GetComponent<SkinnedMeshRenderer>();
+        if (ac.wornPant)
+            playerPants = ac.wornPant.GetComponent<SkinnedMeshRenderer>();
+        if (ac.wornShirt)
+            playerShirt = ac.wornShirt.GetComponent<SkinnedMeshRenderer>();
+        if (ac.wornShoes)
+            playerShoes = ac.wornShoes.GetComponent<SkinnedMeshRenderer>();
+        int index = 0;
+        if (ac.wornEyebrow.Length > 0)
+        {
+            playerEyebrow = new SkinnedMeshRenderer[ac.wornEyebrow.Length];
+            foreach (var eyeBrow in ac.wornEyebrow)
+            {
+                playerEyebrow[index] = eyeBrow.GetComponent<SkinnedMeshRenderer>();
+                index++;
+            }
+            index = 0;
+        }
 
-        playerHead = GamificationComponentData.instance.charcterBodyParts.Head.GetComponent<SkinnedMeshRenderer>();
+
+        playerBody = GamificationComponentData.instance.charcterBodyParts.body;
+
+        playerHead = GamificationComponentData.instance.charcterBodyParts.head;
 
         playerFreeCamConsole = GamificationComponentData.instance.ikMuseum.ConsoleObj.GetComponent<MeshRenderer>();
         playerFreeCamConsoleOther = GamificationComponentData.instance.ikMuseum.m_ConsoleObjOther.GetComponent<MeshRenderer>();
@@ -122,15 +137,36 @@ public class BuildingDetect : MonoBehaviour
             defaultHeadMaterials[i] = playerHead.materials[i];
         }
 
-        defaultBodyMat = playerBody.material;
-        defaultPantsMat = playerPants.material;
-        defaultShirtMat = playerShirt.material;
-        defaultHairMat = playerHair.sharedMaterials;
-        defaultShoesMat = playerShoes.material;
+        if (playerBody)
+            defaultBodyMat = playerBody.material;
+        if (playerPants)
+            defaultPantsMat = playerPants.material;
+        if (playerShirt)
+            defaultShirtMat = playerShirt.material;
+        if (playerHair)
+            defaultHairMat = playerHair.sharedMaterials;
+        if (playerShoes)
+            defaultShoesMat = playerShoes.material;
+        if (playerEyebrow != null)
+        {
+            defaltEyebrowMat = new Material[playerEyebrow.Length];
+            foreach (var eyeBrowMat in playerEyebrow)
+            {
+                defaltEyebrowMat[index] = eyeBrowMat.material;
+            }
+        }
 
         defaultFreeCamConsoleMat = playerFreeCamConsole.material;
 
         nameCanvasDefaultYpos = GamificationComponentData.instance.nameCanvas.transform.localPosition.y;
+    }
+
+    internal void DefaultSpeedStore()
+    {
+        _playerControllerNew = GamificationComponentData.instance.playerControllerNew;
+        defaultJumpHeight = _playerControllerNew.JumpVelocity;
+        defaultSprintSpeed = _playerControllerNew.sprintSpeed;
+        defaultMoveSpeed = _playerControllerNew.movementSpeed;
     }
 
     private void OnEnable()
@@ -144,7 +180,7 @@ public class BuildingDetect : MonoBehaviour
         BuilderEventManager.ActivateAvatarInivisibility -= AvatarInvisibilityApply;
         BuilderEventManager.DeactivateAvatarInivisibility -= StopAvatarInvisibility;
         BuilderEventManager.StopAvatarChangeComponent -= ToggleAvatarChangeComponent;
-        ApplyDefaultEffect();
+        ApplySuperMarioEffect(false);
 
     }
 
@@ -203,7 +239,7 @@ public class BuildingDetect : MonoBehaviour
         gangsterCharacter = new GameObject("AvatarChange");
         gangsterCharacter.transform.SetParent(this.transform);
         gangsterCharacter.transform.localPosition = Vector3.zero;
-        gangsterCharacter.transform.localEulerAngles = Vector3.zero;
+        gangsterCharacter.transform.localEulerAngles = avatarIndex == 2 ? Vector3.up * -180 : curObject.transform.eulerAngles;
         //gangsterCharacter.SetActive(false);
 
         Vector3 pos = gangsterCharacter.transform.position;
@@ -215,8 +251,10 @@ public class BuildingDetect : MonoBehaviour
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 
         AppearanceChange.transform.SetParent(gangsterCharacter.transform);
-        AppearanceChange.transform.localPosition = Vector3.up*(GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? 0.1f : 0);
+        AppearanceChange.transform.localPosition = Vector3.up * (GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? 0.1f : 0);
         AppearanceChange.transform.localEulerAngles = Vector3.zero;
+        gangsterCharacter.GetComponentInChildren<Animator>().enabled = true;
+        gangsterCharacter.GetComponentInChildren<Animator>().runtimeAnimatorController = GamificationComponentData.instance.idleAnimation;
         CharacterControls cc = gangsterCharacter.GetComponentInChildren<CharacterControls>();
         if (cc != null)
         {
@@ -274,18 +312,13 @@ public class BuildingDetect : MonoBehaviour
             cullingMode = this.GetComponent<Animator>().cullingMode;
         }
 
-
-        gangsterCharacter.GetComponentInChildren<Animator>().enabled = false;
-        yield return new WaitForSecondsRealtime(0.01f);
-        this.GetComponent<Animator>().avatar = gangsterCharacter.GetComponentInChildren<Animator>().avatar;
-        this.GetComponent<Animator>().cullingMode = gangsterCharacter.GetComponentInChildren<Animator>().cullingMode;
-
         if (!GamificationComponentData.instance.playerControllerNew.isFirstPerson)
             gangsterCharacter.SetActive(true);
-
+        yield return new WaitForSecondsRealtime(0.1f);
+        this.GetComponent<Animator>().avatar = gangsterCharacter.GetComponentInChildren<Animator>().avatar;
+        this.GetComponent<Animator>().cullingMode = gangsterCharacter.GetComponentInChildren<Animator>().cullingMode;
+        gangsterCharacter.GetComponentInChildren<Animator>().enabled = false;
         BuilderEventManager.OnAvatarChangeComponentTriggerEnter?.Invoke(avatarChangeTime);
-
-
         while (avatarChangeTime > avatarTime)
         {
             avatarChangeTime = Mathf.Clamp(avatarChangeTime, 0, Mathf.Infinity);
@@ -309,16 +342,19 @@ public class BuildingDetect : MonoBehaviour
             if (gangsterCharacter != null)
             {
                 this.GetComponent<Animator>().avatar = tempAnimator;
-                PhotonNetwork.Destroy(AppearanceChange.GetPhotonView());
+                if (AppearanceChange != null)
+                    PhotonNetwork.Destroy(AppearanceChange.GetPhotonView());
                 Destroy(gangsterCharacter);
+                Delayed.Function(() =>
+                {
+                    _playerControllerNew.sprintSpeed = defaultSprintSpeed;
+                }, 0.5f);
             }
             BuilderEventManager.OnAvatarChangeComponentTriggerEnter?.Invoke(0);
 
             Vector3 canvasPos = GamificationComponentData.instance.nameCanvas.transform.localPosition;
             canvasPos.y = nameCanvasDefaultYpos;
             GamificationComponentData.instance.nameCanvas.transform.localPosition = canvasPos;
-            if (avatarChangeCoroutine != null)
-                StopCoroutine(avatarChangeCoroutine);
             avatarChangeCoroutine = null;
 
             GamificationComponentData.instance.isAvatarChanger = false;
@@ -328,12 +364,25 @@ public class BuildingDetect : MonoBehaviour
 
         if (!GamificationComponentData.instance.playerControllerNew.isFirstPerson)
         {
-            playerHair.enabled = state;
-            playerBody.enabled = state;
-            playerHead.enabled = state;
-            playerPants.enabled = state;
-            playerShirt.enabled = state;
-            playerShoes.enabled = state;
+            if (playerHair)
+                playerHair.enabled = state;
+            if (playerBody)
+                playerBody.enabled = state;
+            if (playerHead)
+                playerHead.enabled = state;
+            if (playerPants)
+                playerPants.enabled = state;
+            if (playerShirt)
+                playerShirt.enabled = state;
+            if (playerShoes)
+                playerShoes.enabled = state;
+            if (playerEyebrow != null)
+            {
+                foreach (var eyeBrow in playerEyebrow)
+                {
+                    eyeBrow.enabled = state;
+                }
+            }
         }
     }
     #endregion
@@ -342,7 +391,7 @@ public class BuildingDetect : MonoBehaviour
 
     IEnumerator SIpowerUpCoroutine;
     GameObject _specialEffects;
-    PlayerControllerNew _playerControllerNew;
+    PlayerController _playerControllerNew;
     public static bool canRunCo = false;
     //public TextMeshProUGUI _remainingText;
     float _timer;
@@ -369,13 +418,10 @@ public class BuildingDetect : MonoBehaviour
 
         if (_specialEffects == null)
         {
-            //GameObject effect = GamificationComponentData.instance.specialItemParticleEffect;
-            Vector3 pos = ReferrencesForDynamicMuseum.instance.m_34player.transform.position;
+            Vector3 pos = ReferencesForGamePlay.instance.m_34player.transform.position;
             pos.y += GamificationComponentData.instance.specialItemParticleEffect.transform.position.y;
-            //Quaternion rot = ReferrencesForDynamicMuseum.instance.m_34player.transform.rotation;
-            //rot.y+= GamificationComponentData.instance.specialItemParticleEffect.transform.rotation.y;
             _specialEffects = PhotonNetwork.Instantiate(GamificationComponentData.instance.specialItemParticleEffect.name, pos, GamificationComponentData.instance.specialItemParticleEffect.transform.rotation);
-            _specialEffects.transform.SetParent(ReferrencesForDynamicMuseum.instance.m_34player.transform);
+            _specialEffects.transform.SetParent(ReferencesForGamePlay.instance.m_34player.transform);
             _specialEffects.transform.localEulerAngles = Vector3.up * 180;
         }
         StartCoroutine(SIpowerUpCoroutine);
@@ -393,7 +439,7 @@ public class BuildingDetect : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate?.Invoke(powerProviderHeight, powerProviderSpeed);
         //_specialEffects.gameObject.SetActive(true);
-        ApplySuperMarioEffect();
+        ApplySuperMarioEffect(true);
         powerUpCurTime = 0;
         _playerControllerNew.specialItem = true;
 
@@ -404,56 +450,43 @@ public class BuildingDetect : MonoBehaviour
             _playerControllerNew.movementSpeed = powerProviderSpeed;
             yield return null;
         }
-        //_specialEffects.gameObject.SetActive(false);
-        if (_specialEffects)
-            PhotonNetwork.Destroy(_specialEffects.GetPhotonView());
-        ApplyDefaultEffect();
-        _specialEffects = null;
-        _playerControllerNew.specialItem = false;
-        _playerControllerNew.movementSpeed = defaultMoveSpeed;
-        BuilderEventManager.SpecialItemPlayerPropertiesUpdate?.Invoke(defaultJumpHeight, defaultSprintSpeed);
+        StopSpecialItemComponent();
     }
 
-    private void ApplySuperMarioEffect()
+    private void ApplySuperMarioEffect(bool state)
     {
-        playerHair.material.shader = newClothShader;
-        playerBody.material.shader = newSkinShader;
-        playerBody.material.SetFloat("_Outer_Glow", 2);
-        playerShirt.material.shader = newClothShader;
-        playerPants.material.shader = newClothShader;
-        playerShoes.material.shader = newClothShader;
-    }
-
-    private void ApplyDefaultEffect()
-    {
-        playerHair.material.shader = defaultClothShader;
-        playerBody.material.shader = defaultSkinShader;
-        playerShirt.material.shader = defaultClothShader;
-        playerPants.material.shader = defaultClothShader;
-        playerShoes.material.shader = defaultClothShader;
-        playerHead.sharedMaterials = defaultHeadMaterials;
+        if (playerHair)
+            playerHair.material.shader = state ? newClothShader : defaultClothShader;
+        if (playerBody)
+        {
+            playerBody.material.shader = state ? newSkinShader : defaultSkinShader;
+            playerBody.material.SetColor("_Lips_Color", state ? new Color32(0, 0, 0, 0) : new Color32(255, 255, 255, 0));
+            //if (state)
+            //    playerBody.material.SetFloat("_Outer_Glow", 2);
+        }
+        if (playerShirt)
+            playerShirt.material.shader = state ? newClothShader : defaultClothShader;
+        if (playerPants)
+            playerPants.material.shader = state ? newClothShader : defaultClothShader;
+        if (playerShoes)
+            playerShoes.material.shader = state ? newClothShader : defaultClothShader;
+        if (!state)
+            playerHead.sharedMaterials = defaultHeadMaterials;
     }
 
     public void StopSpecialItemComponent()
     {
-        //_remainingText.gameObject.SetActive(false);
-        if (_playerControllerNew.specialItem)
-        {
-            _playerControllerNew.specialItem = false;
-            BuilderEventManager.OnSpecialItemComponentCollisionEnter?.Invoke(0);
-        }
+        StoppingCoroutine();
+        BuilderEventManager.OnSpecialItemComponentCollisionEnter?.Invoke(0);
         if (_specialEffects)
         {
-            //_specialEffects.SetActive(false);
-            //if (_specialEffects.activeInHierarchy)
             PhotonNetwork.Destroy(_specialEffects.GetPhotonView());
-            ApplyDefaultEffect();
+            ApplySuperMarioEffect(false);
             _specialEffects = null;
         }
-        canRunCo = false;
-        _playerControllerNew.jumpHeight = defaultJumpHeight;
-        _playerControllerNew.sprintSpeed = defaultSprintSpeed;
+        _playerControllerNew.specialItem = false;
         _playerControllerNew.movementSpeed = defaultMoveSpeed;
+        BuilderEventManager.SpecialItemPlayerPropertiesUpdate?.Invoke(defaultJumpHeight, defaultSprintSpeed);
     }
     #endregion
 
@@ -461,17 +494,40 @@ public class BuildingDetect : MonoBehaviour
     //Hologram Material Set
     void AvatarInvisibilityApply()
     {
-        //playerHair.material = hologramMaterial;
-        Material[] hairMats = new Material[playerHair.sharedMaterials.Length];
-        for (int i = 0; i < hairMats.Length; i++)
+        AvatarInvisibility(false);
+    }
+    void StopAvatarInvisibility()
+    {
+        AvatarInvisibility(true);
+    }
+    private void AvatarInvisibility(bool state)
+    {
+        if (playerHair)
         {
-            hairMats[i] = hologramMaterial;
+            Material[] hairMats = new Material[playerHair.sharedMaterials.Length];
+            for (int i = 0; i < hairMats.Length; i++)
+            {
+                hairMats[i] = hologramMaterial;
+            }
+            playerHair.sharedMaterials = state ? defaultHairMat : hairMats;
         }
-        playerHair.sharedMaterials = hairMats;
-        playerBody.material = hologramMaterial;
-        playerShirt.material = hologramMaterial;
-        playerPants.material = hologramMaterial;
-        playerShoes.material = hologramMaterial;
+        if (playerBody)
+            playerBody.material = state ? defaultBodyMat : hologramMaterial;
+        if (playerShirt)
+            playerShirt.material = state ? defaultShirtMat : hologramMaterial;
+        if (playerPants)
+            playerPants.material = state ? defaultPantsMat : hologramMaterial;
+        if (playerShoes)
+            playerShoes.material = state ? defaultShoesMat : hologramMaterial;
+
+        if (playerEyebrow != null)
+        {
+            for (int i = 0; i < playerEyebrow.Length; i++)
+            {
+                playerEyebrow[i].material = state ? defaltEyebrowMat[i] : hologramMaterial;
+            }
+        }
+
         Material[] newMaterials = new Material[playerHead.sharedMesh.subMeshCount];
 
         // Assign the new material to all submeshes
@@ -481,24 +537,11 @@ public class BuildingDetect : MonoBehaviour
         }
 
         // Apply the new materials to the SkinnedMeshRenderer
-        playerHead.materials = newMaterials;
+        playerHead.sharedMaterials = state ? defaultHeadMaterials : newMaterials;
 
-        playerFreeCamConsole.material = hologramMaterial;
-        playerFreeCamConsoleOther.material = hologramMaterial;
+        playerFreeCamConsole.material = state ? defaultFreeCamConsoleMat : hologramMaterial;
+        playerFreeCamConsoleOther.material = state ? defaultFreeCamConsoleMat : hologramMaterial;
     }
-
-    void StopAvatarInvisibility()
-    {
-        playerHair.sharedMaterials = defaultHairMat;
-        playerBody.material = defaultBodyMat;
-        playerShirt.material = defaultShirtMat;
-        playerPants.material = defaultPantsMat;
-        playerShoes.material = defaultShoesMat;
-        playerHead.sharedMaterials = defaultHeadMaterials;
-        playerFreeCamConsole.material = defaultFreeCamConsoleMat;
-        playerFreeCamConsoleOther.material = defaultFreeCamConsoleMat;
-    }
-
     #endregion
 
     #region Camera Blur Effect
@@ -511,7 +554,7 @@ public class BuildingDetect : MonoBehaviour
 
     public void CameraEffect()
     {
-        StopSpecialItemComponent();
+        //StopSpecialItemComponent();
         volume = GamificationComponentData.instance.postProcessVol;
         RuntimeAnimatorController cameraEffect = GamificationComponentData.instance.cameraBlurEffect;
         cameraAnimator = GamificationComponentData.instance.playerControllerNew.ActiveCamera.GetComponent<Animator>();

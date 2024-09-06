@@ -4,14 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.IO;
-using static StoreManager;
+using static InventoryManager;
 
 public class SilderColorPicker : MonoBehaviour
 {
     [SerializeField] Slider slider;
     [SerializeField] Image output;
     [SerializeField] TMP_Text outputTxt;
-    CharcterBodyParts bodyParts;
+    [SerializeField] Image SliderBackground;
+   
+    CharacterBodyParts bodyParts;
     Button saveBtn;
     bool itemAlreadySaved = false;
 
@@ -20,16 +22,28 @@ public class SilderColorPicker : MonoBehaviour
     private float hue;
     private float saturation;
     private float brightness;
+    private Texture2D _cachedTexture;
+    private float _silderBackgroundWidth;
+    private int _silderBackgroundHeight;
+
 
     public SliderType sliderCategory;
 
+    void Start()
+    {
+        if (SliderBackground != null)
+        {
+            _cachedTexture = SliderBackground.sprite.texture;
+            _silderBackgroundWidth = (_cachedTexture.width - 1);
+            _silderBackgroundHeight = (_cachedTexture.height / 2);
+        }
+    }
 
     public void Awake()
     {
 
         //bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
-        bodyParts = CharcterBodyParts.instance;
-        saveBtn = StoreManager.instance.saveButton.GetComponent<Button>();
+        saveBtn = InventoryManager.instance.saveButton.GetComponent<Button>();
 
         //Int();
         //slider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
@@ -40,9 +54,11 @@ public class SilderColorPicker : MonoBehaviour
 
     private void OnEnable()
     {
+        bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
+
         SetRelatedData();
         if (sliderCategory.Equals(SliderType.Skin))
-            CharcterBodyParts.OnSkinColorApply += ChangeSliderColor;
+            CharacterBodyParts.OnSkinColorApply += ChangeSliderColor;
         slider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
 
         if (saveBtn.interactable)
@@ -55,7 +71,7 @@ public class SilderColorPicker : MonoBehaviour
     private void OnDisable()
     {
         if (sliderCategory.Equals(SliderType.Skin))
-            CharcterBodyParts.OnSkinColorApply -= ChangeSliderColor;
+            CharacterBodyParts.OnSkinColorApply -= ChangeSliderColor;
         slider.onValueChanged.RemoveAllListeners();
         isSaveBtnEnable = false;
     }
@@ -70,9 +86,9 @@ public class SilderColorPicker : MonoBehaviour
     public void ValueChangeCheck()
     {
 
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem(sliderCategory.ToString()))
+        if (!UserPassManager.Instance.CheckSpecificItem(sliderCategory.ToString()))
         {
-            PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            UserPassManager.Instance.PremiumUserUI.SetActive(true);
 
             print("Please Upgrade to Premium account");
             return;
@@ -96,7 +112,7 @@ public class SilderColorPicker : MonoBehaviour
 
             Color tempColor;
             Color.RGBToHSV(currColor, out hue, out saturation, out brightness);
-            tempColor = Color.HSVToRGB(slider.value, saturation, brightness);
+            tempColor =OnColorSliderChange(slider.value); //Color.HSVToRGB(slider.value, saturation, brightness);
             output.color = Color.HSVToRGB(slider.value, saturation + .2f, brightness);
 
             //CharcterBodyParts.instance.ChangeSkinColor(tempColor);
@@ -123,6 +139,17 @@ public class SilderColorPicker : MonoBehaviour
         //Debug.Log("Change slider: " + sliderCategory);
     }
 
+
+    Color OnColorSliderChange(float value)
+    {
+        if (_cachedTexture != null)
+        {
+            int x = Mathf.RoundToInt(value * _silderBackgroundWidth);
+            Color pickedColor = _cachedTexture.GetPixel(x, _silderBackgroundHeight );
+            return pickedColor;
+        }
+        return Color.white;
+    }
 
     string ConvertColorToHex(Color color)
     {
@@ -185,21 +212,21 @@ public class SilderColorPicker : MonoBehaviour
 
     void SaveBtnEnableDisable(bool _status)
     {
-        StoreManager.instance.SaveStoreBtn.SetActive(true);
+        InventoryManager.instance.SaveStoreBtn.SetActive(true);
 
         if (_status)
         {
             saveBtn.interactable = true;
-            StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
-            StoreManager.instance.GreyRibbonImage.SetActive(false);
-            StoreManager.instance.WhiteRibbonImage.SetActive(true);
+            InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
+            InventoryManager.instance.GreyRibbonImage.SetActive(false);
+            InventoryManager.instance.WhiteRibbonImage.SetActive(true);
         }
         else
         {
             saveBtn.interactable = false;
-            StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
-            StoreManager.instance.GreyRibbonImage.SetActive(true);
-            StoreManager.instance.WhiteRibbonImage.SetActive(false);
+            InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
+            InventoryManager.instance.GreyRibbonImage.SetActive(true);
+            InventoryManager.instance.WhiteRibbonImage.SetActive(false);
         }
     }
 
@@ -209,18 +236,18 @@ public class SilderColorPicker : MonoBehaviour
         {
             saveBtn.interactable = true;
 
-            StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
-            StoreManager.instance.GreyRibbonImage.SetActive(false);
-            StoreManager.instance.WhiteRibbonImage.SetActive(true);
+            InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
+            InventoryManager.instance.GreyRibbonImage.SetActive(false);
+            InventoryManager.instance.WhiteRibbonImage.SetActive(true);
         }
         else
         {
-            StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
-            StoreManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = false;
-            StoreManager.instance.GreyRibbonImage.SetActive(true);
-            StoreManager.instance.WhiteRibbonImage.SetActive(false);
+            InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
+            InventoryManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = false;
+            InventoryManager.instance.GreyRibbonImage.SetActive(true);
+            InventoryManager.instance.WhiteRibbonImage.SetActive(false);
         }
-        StoreManager.instance.SaveStoreBtn.SetActive(true);
+        InventoryManager.instance.SaveStoreBtn.SetActive(true);
     }
 
 
@@ -264,13 +291,13 @@ public class SilderColorPicker : MonoBehaviour
     void ChangeColor(Color _color)
     {
         //  Debug.Log("Change color call: " + _color);
-        if (!AR_UndoRedo.obj.addToList)  //  UndoRedo.undoRedo.back == true
+        if (!StoreUndoRedo.obj.addToList)  //  UndoRedo.undoRedo.back == true
         {
             ChangeSliderColor(_color);
             output.color = Color.HSVToRGB(slider.value, saturation + .2f, brightness);
             outputTxt.text = ConvertColorToHex(_color);
             //UndoRedo.undoRedo.back = false;
-            AR_UndoRedo.obj.addToList = true;
+            StoreUndoRedo.obj.addToList = true;
             Debug.Log("<color=red> Undo Redo back forcelly false </color>");
         }
         else
@@ -286,6 +313,7 @@ public class SilderColorPicker : MonoBehaviour
             case SliderType.HairColor:
                 Debug.Log("Hair color");
                 bodyParts.ChangeHairColor(_color);
+                InventoryManager.instance.itemData.hair_color = _color;
                 break;
 
             case SliderType.EyeBrowColor:
@@ -341,11 +369,11 @@ public class SilderColorPicker : MonoBehaviour
         if (isMouseUp)
         {
             Debug.Log("<color=red>Slider Up</color>");
-            if (!AR_UndoRedo.obj.addToList)
-                AR_UndoRedo.obj.addToList = true;
+            if (!StoreUndoRedo.obj.addToList)
+                StoreUndoRedo.obj.addToList = true;
             else
             {
-                AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ChangeColor", AR_UndoRedo.ActionType.ChangeColorBySlider, previousColor, EnumClass.CategoryEnum.SliderColor);
+                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ChangeColor", StoreUndoRedo.ActionType.ChangeColorBySlider, previousColor, EnumClass.CategoryEnum.SliderColor);
                 Debug.Log("<color=red> Set Default Hair </color>");
             }
             currentColor = previousColor;
@@ -390,11 +418,11 @@ public class SilderColorPicker : MonoBehaviour
     }
     void SetPreviousColorValueForUndoRedo(Color colorParam)
     {
-        if (!AR_UndoRedo.obj.addToList)
-            AR_UndoRedo.obj.addToList = true;
+        if (!StoreUndoRedo.obj.addToList)
+            StoreUndoRedo.obj.addToList = true;
         else
         {
-            AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ChangeColor", AR_UndoRedo.ActionType.ChangeColorBySlider, colorParam, EnumClass.CategoryEnum.SliderColor);
+            StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ChangeColor", StoreUndoRedo.ActionType.ChangeColorBySlider, colorParam, EnumClass.CategoryEnum.SliderColor);
             Debug.Log("<color=red> Set Default Hair </color>");
         }
     }

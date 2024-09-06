@@ -105,7 +105,7 @@ public class FeedEventPrefab : MonoBehaviour
             }
         }
 
-        userAnalyticsHandler = APIBaseUrlChange.instance.GetComponent<UserAnalyticsHandler>();
+        userAnalyticsHandler = APIBasepointManager.instance.GetComponent<UserAnalyticsHandler>();
         UpdateUserCount();
         if (m_EnvironmentName.Contains("XANA Lobby"))
         {
@@ -222,7 +222,7 @@ public class FeedEventPrefab : MonoBehaviour
     }
     int CheckServerForID()
     {
-        if (APIBaseUrlChange.instance.IsXanaLive)
+        if (APIBasepointManager.instance.IsXanaLive)
             return 38; // Xana Lobby Id Mainnet
         else
             return 406; // Xana Lobby Id Testnet
@@ -525,10 +525,9 @@ public class FeedEventPrefab : MonoBehaviour
         ScrollController.transform.parent.GetComponent<ScrollActivity>().enabled = false;
         m_EnvName = m_EnvironmentName;
         m_CreaName = creatorName;
-        XanaConstants.xanaConstants.builderMapID = int.Parse(idOfObject);
-        XanaConstants.xanaConstants.IsMuseum = isMuseumScene;
-        XanaConstants.xanaConstants.isBuilderScene = isBuilderScene;
-        Launcher.sceneName = m_EnvName;
+        ConstantsHolder.xanaConstants.builderMapID = int.Parse(idOfObject);
+        ConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
+        ConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
         ScrollController.verticalNormalizedPosition = 1f;
         //m_WorldDescriptionParser = m_WorldDescription;
         if (userProfile.sprite == null)
@@ -539,9 +538,9 @@ public class FeedEventPrefab : MonoBehaviour
             InstantiateWorldtags();
 
         loginPageManager.SetPanelToBottom();
-        XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;
-        //XanaConstants.xanaConstants.museumDownloadLink = m_EnvDownloadLink;
-        XanaConstants.xanaConstants.buttonClicked = this.gameObject;
+        ConstantsHolder.xanaConstants.EnviornmentName = m_EnvironmentName;
+        //ConstantsHolder.xanaConstants.museumDownloadLink = m_EnvDownloadLink;
+        ConstantsHolder.xanaConstants.buttonClicked = this.gameObject;
         if (isMuseumScene)
             LoginPageManager.m_MuseumIsClicked = true;
 
@@ -551,19 +550,19 @@ public class FeedEventPrefab : MonoBehaviour
         m_WorldDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(m_WorldDescription);
         if (m_EnvironmentName == "Xana Festival")
         {
-            XanaConstants.xanaConstants.userLimit = (Convert.ToInt32(userLimit) /*- 1*/).ToString();
+            ConstantsHolder.userLimit = (Convert.ToInt32(userLimit));
         }
         else
         {
-            XanaConstants.xanaConstants.userLimit = userLimit;
+            ConstantsHolder.userLimit = int.Parse(userLimit);
         }
         //tempWorldName = m_WorldName.text.ToString();
-        XanaConstants.xanaConstants.MuseumID = idOfObject;
+        ConstantsHolder.xanaConstants.MuseumID = idOfObject;
         //SetStringSize();
 
         // For Analitics & User Count
         UserAnalyticsHandler.onGetWorldId?.Invoke(int.Parse(idOfObject), entityType);
-        UserAnalyticsHandler.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, visitCount);
+        //UserAnalyticsHandler.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, visitCount); // Due to Flow change this API in not in use
 
         if (m_EnvironmentName == "ZONE-X")
             SendFirebaseEvent(FirebaseTrigger.Home_Thumbnail.ToString());
@@ -605,10 +604,13 @@ public class FeedEventPrefab : MonoBehaviour
 
         for (int i = 0; i < worldTags.Length; i++)
         {
-            GameObject temp = Instantiate(tagsPrefab, tagsParent);
-            temp.GetComponent<TagPrefabInfo>().tagName.text = worldTags[i];
-            temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = worldTags[i];
-            //temp.GetComponent<TagPrefabInfo>().descriptionPanel = descriptionPanelParent;
+            if (!worldTags[i].IsNullOrEmpty())
+            {
+                GameObject temp = Instantiate(tagsPrefab, tagsParent);
+                temp.GetComponent<TagPrefabInfo>().tagName.text = worldTags[i];
+                temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = worldTags[i];
+                //temp.GetComponent<TagPrefabInfo>().descriptionPanel = descriptionPanelParent;
+            }
         }
         tagsInstantiated = true;
     }

@@ -9,7 +9,7 @@ public class MiniMapOnOff : MonoBehaviour
 
     private void OnEnable()
     {
-        if (XanaConstants.xanaConstants.minimap == 1)
+        if (ConstantsHolder.xanaConstants.minimap == 1)
         {
             if (this.gameObject.name == "OffButton")
             {
@@ -40,18 +40,34 @@ public class MiniMapOnOff : MonoBehaviour
 
     public void ClickMicMain()
     {
-        if (XanaConstants.xanaConstants.minimap == 1)
+        if (ConstantsHolder.xanaConstants.minimap == 1)
         {
-            ReferrencesForDynamicMuseum.instance.minimap.SetActive(false);
+            ReferencesForGamePlay.instance.minimap.SetActive(false);
             PlayerPrefs.SetInt("minimap", 0);
-            XanaConstants.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
+            ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
+            ReferencesForGamePlay.instance.SumitMapStatus(false);
+
+            if (XanaChatSystem.instance.chatButton.GetComponent<UnityEngine.UI.Image>().enabled)
+                XanaChatSystem.instance.chatDialogBox.SetActive(true);
         }
         else
         {
-            ReferrencesForDynamicMuseum.instance.minimap.SetActive(true);
+            if (GameplayEntityLoader.instance != null && GameplayEntityLoader.instance.IsJoinSummitWorld)
+            {
+                Debug.Log("Minimap is not allowed in Summit World");
+                return;
+            }
+
+
+            ReferencesForGamePlay.instance.minimap.SetActive(true);
             PlayerPrefs.SetInt("minimap", 1);
-            XanaConstants.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
+            ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
+            ReferencesForGamePlay.instance.SumitMapStatus(true);
+
+            XanaChatSystem.instance.chatDialogBox.SetActive(false);
         }
         OnEnable();
     }
+
+   
 }

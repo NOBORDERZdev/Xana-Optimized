@@ -9,7 +9,7 @@ public class JjMusuem : MonoBehaviour
     [SerializeField] JjWorldMusuemManager manager;
     public static JjMusuem Instance { get; private set; }
     //  private Transform destinationPoint;
-    private PlayerControllerNew player;
+    private PlayerController player;
 
     private void Awake()
     {
@@ -33,14 +33,14 @@ public class JjMusuem : MonoBehaviour
 
     void SetPlayerPos()
     {
-        SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
+        SetPlayerPos(ConstantsHolder.xanaConstants.mussuemEntry);
     }
     /// <summary>
     /// Set player position in room according to the point on which the player enter
     /// </summary>
     public void SetPlayerPos(JJMussuemEntry mussuemEntry) {
-        player = ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<PlayerControllerNew>();
-        if (ReferrencesForDynamicMuseum.instance.m_34player.gameObject.GetComponentInChildren<PhotonView>().IsMine)
+        player = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>();
+        if (ReferencesForGamePlay.instance.m_34player.gameObject.GetComponentInChildren<PhotonView>().IsMine)
         {
             switch (mussuemEntry)
             {
@@ -61,7 +61,7 @@ public class JjMusuem : MonoBehaviour
     //    if (manager.allowTeleportation && (other.CompareTag("PhotonLocalPlayer") /*|| other.CompareTag("Player")*/) && player.allowTeleport)
     //    {
     //        print("player enter");
-    //        SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
+    //        SetPlayerPos(ConstantsHolder.xanaConstants.mussuemEntry);
     //    }
     //}
 
@@ -98,28 +98,28 @@ public class JjMusuem : MonoBehaviour
         }
         yield return new WaitForSeconds(.4f);
 
-        ReferrencesForDynamicMuseum.instance.PlayerParent.transform.position = new Vector3(0, 0, 0);
-        ReferrencesForDynamicMuseum.instance.MainPlayerParent.transform.position = new Vector3(0, 0, 0);
-        ReferrencesForDynamicMuseum.instance.MainPlayerParent.transform.position = tempSpawn;
-        ReferrencesForDynamicMuseum.instance.MainPlayerParent.transform.eulerAngles = destinationPoint.eulerAngles;
+        ReferencesForGamePlay.instance.PlayerParent.transform.position = new Vector3(0, 0, 0);
+        ReferencesForGamePlay.instance.MainPlayerParent.transform.position = new Vector3(0, 0, 0);
+        ReferencesForGamePlay.instance.MainPlayerParent.transform.position = tempSpawn;
+        ReferencesForGamePlay.instance.MainPlayerParent.transform.eulerAngles = destinationPoint.eulerAngles;
 
         yield return new WaitForSeconds(.8f);
-        ReferrencesForDynamicMuseum.instance.MainPlayerParent.transform.position = tempSpawn;
+        ReferencesForGamePlay.instance.MainPlayerParent.transform.position = tempSpawn;
         player.m_IsMovementActive = true;
         // isAlreadyRunning = true;
         manager.allowTeleportation = true;
         player.allowTeleport = true;
-        if (XanaConstants.xanaConstants.mussuemEntry == JJMussuemEntry.Astro)
+        if (ConstantsHolder.xanaConstants.mussuemEntry == JJMussuemEntry.Astro)
         {
-            LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.setPlayerCamAngle(180f, 0.5f));
+            GameplayEntityLoader.instance.StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(180f, 0.5f));
         }
         else
         {
-            LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.setPlayerCamAngle(0f, 0.5f));
+            GameplayEntityLoader.instance.StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(0f, 0.5f));
         }
 
-        //yield return new WaitForSeconds(.15f);
-        //LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+       // yield return new WaitForSeconds(.15f);
+       // LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
     }
 
 }

@@ -6,12 +6,13 @@ using UnityEngine;
 public class LoadingRotate : MonoBehaviour
 {
     bool rotate = false;
+    public float rotateValue = -180;
     // Start is called before the first frame update
     void Start()
     {
         if (!rotate)
         {
-            this.transform.DORotate(new Vector3(0, 0, 180), .5f).OnComplete(delegate ()
+            this.transform.DORotate(new Vector3(0, 0, rotateValue), .5f).OnComplete(delegate ()
             {
                 rotate = !rotate;
                 Start();
@@ -19,7 +20,7 @@ public class LoadingRotate : MonoBehaviour
         }
         else
         {
-            this.transform.DORotate(new Vector3(0, 0, 360), .5f).OnComplete(delegate ()
+            this.transform.DORotate(new Vector3(0, 0, rotateValue * 2), .5f).OnComplete(delegate ()
             {
                 rotate = !rotate;
                 Start();

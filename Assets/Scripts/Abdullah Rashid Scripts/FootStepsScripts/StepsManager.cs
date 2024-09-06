@@ -10,28 +10,45 @@ public class StepsManager : MonoBehaviour
 
     float distance = 3;
 
+    private void OnEnable()
+    {
+        if (SoundSettings.soundManagerSettings)
+        {
+            SoundSettings.soundManagerSettings.OnBGMAudioMuted += DisableStepsSound;
+        }
+    }
+
+    private void OnDisable()
+    {
+        SoundSettings.soundManagerSettings.OnBGMAudioMuted -= DisableStepsSound;
+    }
+
     void Awake()
     {
         if (StepAudio != null)
         {
             StepAudio.volume = StepsVolume;
         }
-        //if (XanaConstants.xanaConstants.isBuilderScene)
+        //if (ConstantsHolder.xanaConstants.isBuilderScene)
         //        distance = 0.2f;
     }
 
-    public void EnterStep(float targetWalkSpeed)
+    public void EnterStep(float targetWalkSpeed) //it is calling from the animation event on Walk, Run, and Sprint animations.
     {
+        if (SoundSettings.soundManagerSettings)
+        {
+            SoundSettings.soundManagerSettings.OnBGMAudioMuted += DisableStepsSound;
+        }
         if (isplayer)
         {
             Ray ray = new Ray(gameObject.transform.position, Vector3.down);
             if (Physics.Raycast(ray, out RaycastHit footRay, distance))
             {
-                float actualSpeed = ReferrencesForDynamicMuseum.instance.playerControllerNew.animationBlendValue;
+                float actualSpeed = ReferencesForGamePlay.instance.playerControllerNew.animationBlendValue;
 
                 if (GetMovementState(targetWalkSpeed) == GetMovementState(actualSpeed))
                 {
-                    if (StepAudio && ReferrencesForDynamicMuseum.instance.playerControllerNew._IsGrounded)
+                    if (StepAudio && ReferencesForGamePlay.instance.playerControllerNew._IsGrounded)
                     {
                         //Debug.LogError(footRay.collider.name+" ==> "+ footRay.collider.tag);
                         switch (footRay.collider.tag)
@@ -85,5 +102,11 @@ public class StepsManager : MonoBehaviour
             return 2;
 
         return 0;
+    }
+
+    public void DisableStepsSound(bool _mute)
+    {
+        if(StepAudio)
+            StepAudio.mute = _mute;
     }
 }

@@ -13,25 +13,25 @@ public class MicControllerButtons : MonoBehaviour
     public GameObject micOffButtonGameplay;
 
 
-    private void Start()
+    //private void Start()
+    //{
+    //    if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
+    //    {
+    //        if (OnStateUI)
+    //            OnStateUI.SetActive(false);
+
+    //        if (OffStateUI)
+    //        {
+    //            OffStateUI.SetActive(true);
+    //            OffStateUI.GetComponent<Button>().interactable = false;
+    //        }
+    //    }
+
+    //}
+    private void HandleObjects()
     {
-        if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
-        {
-            if (OnStateUI)
-                OnStateUI.SetActive(false);
 
-            if (OffStateUI)
-            {
-                OffStateUI.SetActive(true);
-                OffStateUI.GetComponent<Button>().interactable = false;
-            }
-        }
-
-    }
-    private void OnEnable()
-    {
-
-        if (XanaConstants.xanaConstants.mic == 1)
+        if (ConstantsHolder.xanaConstants.mic == 1)
         {
             if (this.gameObject.name == "OffButton")
             {
@@ -62,21 +62,21 @@ public class MicControllerButtons : MonoBehaviour
 
     public void ClickMicMain()
     {
-        if (XanaConstants.xanaConstants.mic == 1)
+        if (ConstantsHolder.xanaConstants.mic == 1)
         {
-            XanaConstants.xanaConstants.StopMic();
+            ConstantsHolder.xanaConstants.StopMic();
             XanaVoiceChat.instance.TurnOffMic();
             micOnButtonGameplay.SetActive(false);
             micOffButtonGameplay.SetActive(true);
         }
         else
         {
-            XanaConstants.xanaConstants.PlayMic();
+            ConstantsHolder.xanaConstants.PlayMic();
             XanaVoiceChat.instance.TurnOnMic();
             micOnButtonGameplay.SetActive(true);
             micOffButtonGameplay.SetActive(false);
         }
-        OnEnable();
+        HandleObjects();
 
 
     }

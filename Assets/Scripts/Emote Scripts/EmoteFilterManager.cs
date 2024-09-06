@@ -34,12 +34,10 @@ public class EmoteFilterManager : MonoBehaviour
     public  AnimationDetails bean;
     public Color[] emoteBGs;
 
-    //hardik changes animation
     public GameObject JyosticksObject;
     public GameObject BottomObject;
    
     public GameObject JumpObject;
-    //end hardik
     private void OnEnable()
     {
         ResetHighligt();
@@ -51,27 +49,15 @@ public class EmoteFilterManager : MonoBehaviour
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OnEmoteSelectionClose -= OnEmoteSelectionClose;
     }
 
-
-    // Start is called before the first frame update
     void Start()
     {
         animationTabName = "Dance";
         animationTabNameLang = "Dance";
         getLocalStorageEmote();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-       // HideIfClickedOutside(popUpPenal);
-    }
-
     public void GusterBtnClick()
     {
         Debug.Log("local manage====");
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
-        //EmoteAnimationPlay.Instance.alreadyRuning = true;
 
         taboneclick = true;
         tabtwoclick = false;
@@ -86,9 +72,6 @@ public class EmoteFilterManager : MonoBehaviour
     public void GusterBtnClick(string tabname)
     {
         Debug.Log("local manage====");
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
-        //EmoteAnimationPlay.Instance.alreadyRuning = true;
 
         taboneclick = true;
         tabtwoclick = false;
@@ -111,20 +94,13 @@ public class EmoteFilterManager : MonoBehaviour
             }
         }
         Debug.Log("local manage====");
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
-        //EmoteAnimationPlay.Instance.alreadyRuning = true;
 
-        //taboneclick = true;
-        //tabtwoclick = false;
         NoDataFound.SetActive(false);
         ScrollViewAnimation.SetActive(true);
         animationTabName = tabname.GetComponent<Text>().text;
         animationTabNameLang = tabname.transform.name;
         tabname.GetComponent<Text>().color = new Color32(0, 143, 255, 255);
         tabname.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-       
-       // PoseBtn.GetComponent<Text>().color = 
         callobjects();
     }
 
@@ -132,8 +108,6 @@ public class EmoteFilterManager : MonoBehaviour
 
     public void PoseBtnClick()
     {
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
         tabtwoclick = true;
         taboneclick = false;
         NoDataFound.SetActive(false);
@@ -147,15 +121,6 @@ public class EmoteFilterManager : MonoBehaviour
 
     public void PopupTextClik(Button TextBtn)
     {
-       // EmoteAnimationPlay.Instance.alreadyRuning = true;
-        //Caching.ClearCache();
-        //Debug.Log("text btn===="+ TextBtn.gameObject.transform.GetChild(0).GetComponent<Text>().text + "GestureBtn===="+ GestureBtn.GetComponent<Text>().text);
-        //Debug.Log("text btn2===="+ TextBtn.gameObject.transform.GetChild(0).GetComponent<Text>().text + "GestureBtn 2===="+ PoseBtn.GetComponent<Text>().text);
-
-        // Commented By WaqasAhmad
-        // Reason > NOt Selected first 2 items form All item tab
-        //if (!GestureBtn.GetComponent<Text>().text.Equals(TextBtn.gameObject.transform.GetChild(0).GetComponent<Text>().text)&&
-        //    !PoseBtn.GetComponent<Text>().text.Equals(TextBtn.gameObject.transform.GetChild(0).GetComponent<Text>().text))
         {
             if (taboneclick)
             {
@@ -180,8 +145,6 @@ public class EmoteFilterManager : MonoBehaviour
 
     public void seeAllClick()
     {
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
         if (!tabtwoclick)
         {
             tabtwoclick = true;
@@ -217,45 +180,33 @@ public class EmoteFilterManager : MonoBehaviour
     }
     public void getLocalStorageEmote()
     {
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
+        Debug.Log("Response Emote===" + EmoteAnimationHandler.Instance.emoteAnim.Count);
+            if (EmoteAnimationHandler.Instance.emoteAnim.Count > 0)
+            {
+                for (int i = 0; i < EmoteAnimationHandler.Instance.emoteAnim.Count; i++)
+            {
 
-        Debug.Log("Response Emote===" + EmoteAnimationPlay.Instance.emoteAnim.Count);
-            if (EmoteAnimationPlay.Instance.emoteAnim.Count > 0)
-            {
-                for (int i = 0; i < EmoteAnimationPlay.Instance.emoteAnim.Count; i++)
-            {
-                //    Debug.Log("GROUP NAME====" + EmoteAnimationPlay.Instance.emoteAnim[i].group);
-                //    Debug.Log("GROUP NAME MY====" + animationTabNameLang);
                 valueget = true;
-                        //Debug.Log("data for load==" + animationTabNameLang + "group name===" + EmoteAnimationPlay.Instance.emoteAnim[i].group);
-
-                        //Debug.Log("animation count===" + EmoteAnimationPlay.Instance.emoteAnim.Count);
 
                         animObject = Instantiate(ListItemPrefab);
                         animObject.transform.SetParent(ContentPanel.transform);
                         animObject.transform.localPosition = Vector3.zero;
                         animObject.transform.localScale = Vector3.one;
                         animObject.transform.localRotation = Quaternion.identity;
-                        if (EmoteAnimationPlay.Instance.emoteAnim[i].name.Contains("React")){
-                            EmoteAnimationPlay.Instance.emoteAnim[i].name = EmoteAnimationPlay.Instance.emoteAnim[i].name.Replace("React", "Reaction");
+                        if (EmoteAnimationHandler.Instance.emoteAnim[i].name.Contains("React")){
+                            EmoteAnimationHandler.Instance.emoteAnim[i].name = EmoteAnimationHandler.Instance.emoteAnim[i].name.Replace("React", "Reaction");
                         }
-                        animObject.transform.name = EmoteAnimationPlay.Instance.emoteAnim[i].name;
-
-                        //animObject.GetComponent<Image>().color= emoteBGs[(UnityEngine.Random.Range(0, emoteBGs.Length))];
-
-                        animObject.transform.GetChild(2).gameObject.SetActive(false);
+                        animObject.transform.name = EmoteAnimationHandler.Instance.emoteAnim[i].name;
+                        animObject.transform.GetChild(1).gameObject.SetActive(false);
                 int i1 = i;
               
-                Image ima = animObject.transform.GetChild(1).gameObject.GetComponent<Image>();
-                AssetCache.Instance.EnqueueOneResAndWait(EmoteAnimationPlay.Instance.emoteAnim[i1].thumbnail.ToString(), EmoteAnimationPlay.Instance.emoteAnim[i1].thumbnail.ToString(), (success) =>
+                Image ima = animObject.transform.GetChild(0).gameObject.GetComponent<Image>();
+                AssetCache.Instance.EnqueueOneResAndWait(EmoteAnimationHandler.Instance.emoteAnim[i1].thumbnail.ToString(), EmoteAnimationHandler.Instance.emoteAnim[i1].thumbnail.ToString(), (success) =>
                 {
                  
                     if (success)
                     {
-                        AssetCache.Instance.LoadSpriteIntoImage(ima, EmoteAnimationPlay.Instance.emoteAnim[i1].thumbnail, changeAspectRatio: true);
-                        // CheckAndSetResolutionOfImage(imgFeed.sprite);
-                        //  isImageSuccessDownloadAndSave = true;
+                        AssetCache.Instance.LoadSpriteIntoImage(ima, EmoteAnimationHandler.Instance.emoteAnim[i1].thumbnail, changeAspectRatio: true);
                         progressbar.SetActive(false);
                     }
                     else
@@ -263,20 +214,16 @@ public class EmoteFilterManager : MonoBehaviour
                         Debug.Log("Download Failed");
                     }
                 });
-              //  StartCoroutine(LoadSpriteEnv(EmoteAnimationPlay.Instance.emoteAnim[i].thumbnail, animObject.transform.GetChild(1).gameObject, i));
-
                         LoadButtonClick LBC = animObject.GetComponent<LoadButtonClick>();
-
                         if (LBC == null)
                         {
                             LBC = animObject.AddComponent<LoadButtonClick>();
                         }
-
 #if UNITY_ANDROID
 
-                        LBC.Initializ(EmoteAnimationPlay.Instance.emoteAnim[i1].android_file, EmoteAnimationPlay.Instance.emoteAnim[i1].name, this, ContentPanel.gameObject, EmoteAnimationPlay.Instance.emoteAnim[i1].thumbnail);
+                        LBC.Initializ(EmoteAnimationHandler.Instance.emoteAnim[i1].android_file, EmoteAnimationHandler.Instance.emoteAnim[i1].name, this, ContentPanel.gameObject, EmoteAnimationHandler.Instance.emoteAnim[i1].thumbnail);
 #elif UNITY_IOS
-                                LBC.Initializ(EmoteAnimationPlay.Instance.emoteAnim[i1].ios_file, EmoteAnimationPlay.Instance.emoteAnim[i1].name, this, ContentPanel.gameObject, EmoteAnimationPlay.Instance.emoteAnim[i1].thumbnail);
+                                LBC.Initializ(EmoteAnimationHandler.Instance.emoteAnim[i1].ios_file, EmoteAnimationHandler.Instance.emoteAnim[i1].name, this, ContentPanel.gameObject, EmoteAnimationHandler.Instance.emoteAnim[i1].thumbnail);
 
 #endif 
             }
@@ -297,47 +244,43 @@ public class EmoteFilterManager : MonoBehaviour
 
     public void closeWindow(GameObject panel)
     {
-        //if (Input.deviceOrientation == DeviceOrientation.Portrait)
-        //{
-        if (ChangeOrientation_waqas._instance.isPotrait)
+        if (ScreenOrientationManager._instance.isPotrait)
         {
-           // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
             BottomObject.SetActive(true);
             
 
             if (panel == this.gameObject)
                 panel.transform.DOLocalMoveY(-1500f, 0.1f);
 
-            JyosticksObject.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
-            JumpObject.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
+            JyosticksObject.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
+            JumpObject.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
             
                BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(225, true);
-         //   ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
         }
         else
         {
             BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(165,false);
         }
-        // }
         StartCoroutine(DelayToClose(panel));
-        EmoteAnimationPlay.Instance.isEmoteActive = false;
+        EmoteAnimationHandler.Instance.isEmoteActive = false;
         LoadEmoteAnimations.animClick = false;
         if (animObject.transform.GetChild(3).gameObject.activeInHierarchy)
         {
             animObject.transform.GetChild(3).gameObject.SetActive(false);
         }
-        if (EmoteAnimationPlay.Instance.AnimObject==null)
+        if (EmoteAnimationHandler.Instance.AnimObject == null /*|| EmoteAnimationHandler.Instance.currentAnimationTab == "Sit & lying"*/)
         {
             emoteAnimationHighlightButton.SetActive(false);
             if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.AllAnimationsPanelUpdate(false);
 
         }
+       
      
     }
 
     IEnumerator DelayToClose(GameObject g)
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.3f);
         g.SetActive(false);
     }
     public void ResetHighligt()
@@ -346,16 +289,11 @@ public class EmoteFilterManager : MonoBehaviour
         {
             foreach (Transform child in ContentPanel.transform)
             {
-                if (child.transform.GetChild(2).gameObject.activeInHierarchy)
+                if (child.transform.GetChild(1).gameObject.activeInHierarchy)
                 {
-                    child.transform.GetChild(2).gameObject.SetActive(false);
+                    child.transform.GetChild(1).gameObject.SetActive(false);
                 }
-               
-               
-                //Invoke("resetObject", 1f);
             }
-
-          //  Invoke("callobjects", 1f);
         }
     }
     private string animName = null;
@@ -476,7 +414,7 @@ public class EmoteFilterManager : MonoBehaviour
 
         }
 
-        EmoteAnimationPlay.Instance.currentAnimationTab = animationTabNameLang;
+        EmoteAnimationHandler.Instance.currentAnimationTab = animationTabNameLang;
     }
    
   
@@ -484,15 +422,11 @@ public class EmoteFilterManager : MonoBehaviour
     {
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
-            //ConnectionPopup.SetActive(false);
-            //OnOpenPopUp("No internet connection", true);
-            //Loader.SetActive(false);
         }
         else
         {
             if (ImageUrl.Equals(""))
             {
-               // Loader.SetActive(false);
             }
             else
             {
@@ -506,9 +440,7 @@ public class EmoteFilterManager : MonoBehaviour
                 thumbnailTexture.Compress(true);
                 if (Application.internetReachability == NetworkReachability.NotReachable)
                 {
-                    //Loader.SetActive(false);
-                    //ConnectionPopup.SetActive(false);
-                    //OnOpenPopUp("No internet connection", true);
+
                 }
                 else
                 {
@@ -517,11 +449,6 @@ public class EmoteFilterManager : MonoBehaviour
                     {
                         progressbar.SetActive(false);
                         thumbnail.GetComponent<Image>().sprite = sprite;
-                        //Loader.SetActive(false);
-                    }
-                    else
-                    {
-                       // Loader.SetActive(false);
                     }
                 }
                 www.Dispose();

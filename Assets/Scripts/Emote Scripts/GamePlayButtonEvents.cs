@@ -23,6 +23,7 @@ public class GamePlayButtonEvents : MonoBehaviour
     public event Action OnHelpButton;
     public event Action OnSettingButton;
     public event Action OnExitButton;
+    public static Action OnExitButtonXANASummit;
     public event Action OnPeope;
     public event Action OnAnnouncement;
     public event Action OnInvite;
@@ -91,7 +92,10 @@ public class GamePlayButtonEvents : MonoBehaviour
 
     public void OnExitButtonClick()
     {
-        OnExitButton?.Invoke();
+        if (ConstantsHolder.isFromXANASummit || XANASummitDataContainer.LoadedScenesInfo.Count>0)
+            OnExitButtonXANASummit?.Invoke();
+        else
+            OnExitButton?.Invoke();
     }
 
     public void OnSwitchCameraClick()
@@ -136,11 +140,11 @@ public class GamePlayButtonEvents : MonoBehaviour
 
     internal void OpenAllAnims()
     {
-  
+
         OpenAllAnimsPanel?.Invoke();
     }
 
-   
+
 
     public void ShowHelpObjects()
     {

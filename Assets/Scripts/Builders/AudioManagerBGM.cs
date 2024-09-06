@@ -32,7 +32,7 @@ public class AudioManagerBGM : MonoBehaviour
     private void AudioBGM(AudioPropertiesBGM audioPropertiesBGM)
     {
         this.audioPropertiesBGM = audioPropertiesBGM;
-        if (!this.audioPropertiesBGM.dataAudioBGM.pathAudioBGM.IsNullOrEmpty())
+        if (!this.audioPropertiesBGM.dataAudioBGM.pathAudioBGM.IsNullOrEmpty() && this.audioPropertiesBGM.dataAudioBGM.enableDisableBGM)
             StartCoroutine(setAudioFromUrl(this.audioPropertiesBGM.dataAudioBGM.pathAudioBGM));
         else
             downloadingError = true;
@@ -49,7 +49,11 @@ public class AudioManagerBGM : MonoBehaviour
 
         using (UnityWebRequest www = UnityWebRequest.Get(file_name))
         {
-            yield return www.Send();
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
@@ -65,6 +69,8 @@ public class AudioManagerBGM : MonoBehaviour
                 audioSource.volume = audioPropertiesBGM.dataAudioBGM.audioVolume;
                 isDownloaded = true;
             }
+
+            www.Dispose();
         }
     }
 
@@ -93,6 +99,9 @@ public class AudioManagerBGM : MonoBehaviour
 
         if (currentClip != null)
         {
+            SoundSettings.soundManagerSettings.totalVolumeSlider.Set(audioPropertiesBGM.dataAudioBGM.audioVolume);
+            SoundSettings.soundManagerSettings.totalVolumeSliderPotrait.Set(audioPropertiesBGM.dataAudioBGM.audioVolume);
+            SoundSettings.soundManagerSettings.SetBgmVolume(audioPropertiesBGM.dataAudioBGM.audioVolume);
             audioSource.clip = currentClip;
             audioSource.Play();
         }

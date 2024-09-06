@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static StoreManager;
+using static InventoryManager;
 
 public class ClickToAddInList : MonoBehaviour
 {
@@ -12,11 +12,11 @@ public class ClickToAddInList : MonoBehaviour
 
     private void OnEnable()
     {
-        StoreManager.instance.storeOpen += AddToList;
+        InventoryManager.instance.storeOpen += AddToList;
     }
     private void OnDisable()
     {
-        StoreManager.instance.storeOpen -= AddToList;
+        InventoryManager.instance.storeOpen -= AddToList;
     }
 
     void AddToList()
@@ -27,8 +27,8 @@ public class ClickToAddInList : MonoBehaviour
     {
         if (panelIndex == 1)
         {
-            AR_UndoRedo.obj.ActionWithParametersAdd(messageReceiverObject, panelIndex, "SelectPanel", AR_UndoRedo.ActionType.ChangeCategory, Color.white, EnumClass.CategoryEnum.Avatar);
-            AR_UndoRedo.obj.panelType = AR_UndoRedo.PanelType.Avatar;
+            StoreUndoRedo.obj.ActionWithParametersAdd(messageReceiverObject, panelIndex, "SelectPanel", StoreUndoRedo.ActionType.ChangeCategory, Color.white, EnumClass.CategoryEnum.Avatar);
+            StoreUndoRedo.obj.panelType = StoreUndoRedo.PanelType.Avatar;
         }
     }
 
@@ -41,19 +41,19 @@ public class ClickToAddInList : MonoBehaviour
     {
         if (selectedLine.activeSelf) return;
 
-        if (!AR_UndoRedo.obj.addToList)
-            AR_UndoRedo.obj.addToList = true;
+        if (!StoreUndoRedo.obj.addToList)
+            StoreUndoRedo.obj.addToList = true;
         else
         {
             if (panelIndex == 1)
             {
-                AR_UndoRedo.obj.ActionWithParametersAdd(messageReceiverObject, panelIndex, "SelectPanel", AR_UndoRedo.ActionType.ChangeCategory, Color.white, EnumClass.CategoryEnum.Avatar);
-                AR_UndoRedo.obj.panelType = AR_UndoRedo.PanelType.Avatar;
+                StoreUndoRedo.obj.ActionWithParametersAdd(messageReceiverObject, panelIndex, "SelectPanel", StoreUndoRedo.ActionType.ChangeCategory, Color.white, EnumClass.CategoryEnum.Avatar);
+                StoreUndoRedo.obj.panelType = StoreUndoRedo.PanelType.Avatar;
             }
             else if (panelIndex == 0)
             {
-                AR_UndoRedo.obj.ActionWithParametersAdd(messageReceiverObject, panelIndex, "SelectPanel", AR_UndoRedo.ActionType.ChangeCategory, Color.white, EnumClass.CategoryEnum.Wearable);
-                AR_UndoRedo.obj.panelType = AR_UndoRedo.PanelType.Wearable;
+                StoreUndoRedo.obj.ActionWithParametersAdd(messageReceiverObject, panelIndex, "SelectPanel", StoreUndoRedo.ActionType.ChangeCategory, Color.white, EnumClass.CategoryEnum.Wearable);
+                StoreUndoRedo.obj.panelType = StoreUndoRedo.PanelType.Wearable;
             }
             //Debug.Log("<color=red> Added Into List: " + this.gameObject.name + "</color>");
         }

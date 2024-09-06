@@ -124,9 +124,11 @@ MonoBehaviour:
   itemType: 0
   itemCategory: 0
   itemThemes: 
+  componentsAttachedToItem: 
   bottomTransform: 0
   isValid: 0
   isPlaced: 0
+  isCurrentSpawnPoint: 0
   IsItemLocked: 0
   IsItemVisible: 0
   hasParent: 0
@@ -324,6 +326,9 @@ GameObject:
   - component: {fileID: 2478570073420962163}
   - component: {fileID: 3377779356111991365}
   - component: {fileID: 1579593744542215147}
+  - component: {fileID: 8103340816841776460}
+  - component: {fileID: 9097667965977016340}
+  - component: {fileID: 6206193450427168282}
   m_Layer: 9
   m_Name: Colliders
   m_TagString: Item
@@ -342,7 +347,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5550321174035797498}
   m_Father: {fileID: 2026825375782336089}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -357,8 +363,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 7.3155212, y: 15.655044, z: 7.2364125}
-  m_Center: {x: -0.40304947, y: 7.8622155, z: 0.40058255}
+  m_Size: {x: 4.0873985, y: 15.594525, z: 7.2364125}
+  m_Center: {x: -2.0171108, y: 7.8319564, z: 0.40058255}
 --- !u!65 &1579593744542215147
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -372,3 +378,87 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 9.685008, y: 0.09422468, z: 9.718298}
   m_Center: {x: 0, y: 0.04427325, z: 0}
+--- !u!65 &8103340816841776460
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7478249822791809196}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.0873985, y: 15.58984, z: 3.9663777}
+  m_Center: {x: 1.29, y: 7.8296137, z: 2.0356}
+--- !u!65 &9097667965977016340
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7478249822791809196}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 7.8608932, y: 0.90377903, z: 8.272663}
+  m_Center: {x: -0.33418083, y: 15.171888, z: 0.11517811}
+--- !u!65 &6206193450427168282
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7478249822791809196}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 7.8608932, y: 0.8986778, z: 0.55151844}
+  m_Center: {x: -0.33418083, y: 15.549339, z: -3.4414315}
+--- !u!1 &8323639575101081407
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5550321174035797498}
+  - component: {fileID: 8234481135270864248}
+  m_Layer: 9
+  m_Name: 01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5550321174035797498
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8323639575101081407}
+  m_LocalRotation: {x: -0, y: -0.38268274, z: -0, w: 0.9238798}
+  m_LocalPosition: {x: 0.75, y: 0, z: -2.66}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2478570073420962163}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -45, z: 0}
+--- !u!65 &8234481135270864248
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8323639575101081407}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.7249556, y: 15.591519, z: 3.9104886}
+  m_Center: {x: 1.2899964, y: 7.8304534, z: 2.063544}

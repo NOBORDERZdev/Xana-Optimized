@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 64211638169632147}
   - component: {fileID: 1643207911}
-  - component: {fileID: 895531123}
   - component: {fileID: 64211639564321973}
+  - component: {fileID: 6347080590877859252}
+  - component: {fileID: 6347080590877859257}
   m_Layer: 0
   m_Name: '[Worlds Manager]'
   m_TagString: Untagged
@@ -46,52 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 919342d273e42d44ab4f6058e8067b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAddressableScene: 1
   AnimHighlight: {fileID: 0}
   popupPenal: {fileID: 0}
   spawnCharacterObject: {fileID: 0}
   spawnCharacterObjectRemote: {fileID: 0}
   EventEndedPanel: {fileID: 0}
   mainScene: 
---- !u!114 &895531123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 64211638169632173}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef69050fe9e26453b975a3c2ee83439d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_WorldPlayPanel: {fileID: 0}
-  m_TapAndHoldPanel: {fileID: 0}
-  world_name: {fileID: 0}
-  museum_description: {fileID: 0}
-  CreaterName: {fileID: 0}
-  tapholdworld: {fileID: 0}
-  Tapcreatorname: {fileID: 0}
-  _world_name: []
-  _description:
-  - 
-  - 
-  - 
-  - 
-  _CreaterName:
-  - 
-  - 
-  - 
-  - 
-  _SceneName: 
-  _bannerimage: {fileID: 0}
-  taphold_banner: {fileID: 0}
-  tapholdimages: []
-  tapholdProfileicon: []
-  creatorPic: {fileID: 0}
-  profileIcon: {fileID: 0}
-  taphold_profile: {fileID: 0}
-  t_Scroll_discription: {fileID: 0}
-  scrollActivity: {fileID: 0}
 --- !u!114 &64211639564321973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,28 +66,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ddd724fb8528194a80bd554173bc5c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventPrefab: {fileID: 3238374975130361925, guid: 6a92f9f8b85fd954cabca62e3e85109e, type: 3}
-  eventPrefabLobby: {fileID: 0}
-  eventPrefabTab: {fileID: 3238374975130361925, guid: 03128e8d5b38644cdba2d229489efe3e, type: 3}
-  descriptionParentPanel: {fileID: 0}
-  listParentHotSection: {fileID: 0}
-  listParentAllWorlds: {fileID: 0}
-  listParentMyWorlds: {fileID: 0}
-  listParentGameWorlds: {fileID: 0}
-  listParentEventWorlds: {fileID: 0}
-  world_HotScroll: {fileID: 0}
-  world_NewScroll: {fileID: 0}
-  world_myworldScroll: {fileID: 0}
-  world_GameWorldScroll: {fileID: 0}
-  world_EventWorldScroll: {fileID: 0}
+  worldFoundText: {fileID: 0}
+  EventPrefabLobby: {fileID: 0}
   orientationchanged: 0
-  _WorldInfo:
-    success: 0
-    data:
-      count: 0
-      rows: []
-    msg: 
-  m_AllWorldManage: {fileID: 0}
+  hotFeatSpacePN: 1
+  hotSpacePN: 1
+  hotGamesPN: 1
+  followingPN: 1
+  mySpacesPN: 1
+  dataIsFatched: 0
+  aPIURLGlobal: 0
   AutoSwtichWorldList:
   - name: Astroboy x Tottori Metaverse Museum
     isMussuem: 1
@@ -147,4 +97,145 @@ MonoBehaviour:
     isMussuem: 0
     mainnetId: 29
     testnetId: 386
+  fightingModulePopUp: {fileID: 0}
+  isCheckFightingModulePopUp: 0
+  HaveFighterNFT: 0
+  SearchPageNumb: 1
+  SearchPageSize: 15
+  SearchTagPageNumb: 1
+  SearchTagPageSize: 15
+  SearchKey: 
+  previousSearchKey: 
+  searchResponse: 
   worldstr: 
+  resultWorldList: []
+  _WorldInfo:
+    success: 0
+    data:
+      count: 0
+      rows: []
+    msg: 
+  AllWorldTabReference: {fileID: 0}
+  worldSpaceHomeScreenRef: {fileID: 6347080590877859252}
+  worldItemPreviewTabRef: {fileID: 0}
+  worldSearchManager: {fileID: 0}
+  searchWorldControllerRef: {fileID: 0}
+  changeFollowState: 0
+--- !u!114 &6347080590877859252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64211638169632173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 873e70a93093c6f4984ec839eb5bffac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultThumbnail: {fileID: 0}
+  userTagPrefab: {fileID: 9156112392926067791, guid: fa69dfc0fb2e67447ae0521490d27c34, type: 3}
+  hotSpacesParent: {fileID: 0}
+  hotGamesParent: {fileID: 0}
+  followingParent: {fileID: 0}
+  mySpaceParent: {fileID: 0}
+  userTagParent: {fileID: 0}
+  category1Parent: {fileID: 0}
+  category2Parent: {fileID: 0}
+  category3Parent: {fileID: 0}
+  category4Parent: {fileID: 0}
+  hotSpacesContent: {fileID: 0}
+  hotGamesContent: {fileID: 0}
+  followingContent: {fileID: 0}
+  mySpaceContent: {fileID: 0}
+  userTagContent: {fileID: 0}
+  category1: {fileID: 0}
+  category2: {fileID: 0}
+  category3: {fileID: 0}
+  category4: {fileID: 0}
+  category1Heading: {fileID: 0}
+  category2Heading: {fileID: 0}
+  category3Heading: {fileID: 0}
+  category4Heading: {fileID: 0}
+  categoryParent:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  categoryContent:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  categoryHeading:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  worldManager: {fileID: 64211639564321973}
+  apiResponseHolder: {fileID: 11400000, guid: e4ec6b99b4a637646a1c62897c29d08a, type: 2}
+  totalTagsInstCount: 0
+  _tagsTraversedCount: 0
+  tagAsCategoryData: []
+  CategorytagNames: []
+  spaceCategoryScroller: {fileID: 0}
+  ApiHolderContainsData: 0
+--- !u!114 &6347080590877859257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64211638169632173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 652584c374a7445b0bf8ade532b25d41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Children:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  Offset: 800
+  MyRect: {fileID: 0}
+  srcollRect: {fileID: 0}

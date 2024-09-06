@@ -9,13 +9,13 @@ public class DemoUI : MonoBehaviour
     
     private void Awake()
     {
-        Application.targetFrameRate = 60;
+        /*Application.targetFrameRate = 60;
         List<ScrollItemDefault> contentDatas = new List<ScrollItemDefault>();
         _content.TotalItems = _itemCount;
         for (int i = 0; i < _itemCount; i++)
         {
             contentDatas.Add(new ScrollItemDefault(i));
         }
-        //_content.InitScrollContent(contentDatas);
+        //_content.InitScrollContent(contentDatas);*/
     }
 }

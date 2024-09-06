@@ -5,8 +5,8 @@ using UnityEngine;
 public class SelfiMovementEnableOnPopup : MonoBehaviour
 {
     public void SelfiMovementEnable() {
-        //if(SelfieController.Instance)          Merging---------------------01-08-2020
-        // SelfieController.Instance.SelfiMovement = true;
+        //if(PlayerSelfieController.Instance)          Merging---------------------01-08-2020
+        // PlayerSelfieController.Instance.SelfiMovement = true;
 
     }
 }

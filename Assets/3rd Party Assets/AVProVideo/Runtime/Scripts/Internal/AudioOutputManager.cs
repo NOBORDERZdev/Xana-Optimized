@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿//-----------------------------------------------------------------------------
+// Copyright 2015-2023 RenderHeads Ltd.  All rights reserved.
+//-----------------------------------------------------------------------------
+
+using System.Collections.Generic;
 using UnityEngine;
 using System;
-
-//-----------------------------------------------------------------------------
-// Copyright 2015-2021 RenderHeads Ltd.  All rights reserved.
-//-----------------------------------------------------------------------------
 
 namespace RenderHeads.Media.AVProVideo
 {

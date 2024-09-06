@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jint.Parser.Ast;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -29,14 +30,22 @@ public class AndroidPermissionHandler : MonoBehaviour
 	}
 	public void RequestMultiplePermission(Stack<string> permissions, Delegate completationDelegate,int identifier)
 	{
-		this._delegate = completationDelegate;
-		this._identifier = identifier;
-		ClearPermissionStack();
-		this._permissions = permissions;
-		_isPermissionRequestAskingProcessOnGoing = true;
-
-		ShowPermissionDialog();
+		StartCoroutine(RequestMutliplePermissionDelay(permissions, completationDelegate,identifier));
 	}
+
+
+	IEnumerator RequestMutliplePermissionDelay(Stack<string> permissions, Delegate completationDelegate, int identifier)
+	{
+		yield return new WaitForSeconds(2f);
+        this._delegate = completationDelegate;
+        this._identifier = identifier;
+        ClearPermissionStack();
+        this._permissions = permissions;
+        _isPermissionRequestAskingProcessOnGoing = true;
+
+        ShowPermissionDialog();
+    }
+
 	public bool HasUserPermission(string permission)
 	{
 		return Permission.HasUserAuthorizedPermission(permission);

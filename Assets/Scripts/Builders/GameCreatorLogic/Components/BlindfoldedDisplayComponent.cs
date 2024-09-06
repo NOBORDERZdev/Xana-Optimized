@@ -43,6 +43,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.Others, RuntimeItemID, Constants.ItemComponentType.none);
             }
 
+            ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Invisible);
             BuilderEventManager.onComponentActivated?.Invoke(_componentType);
             PlayBehaviour();
             GamificationComponentData.instance.activeComponent = this;
@@ -62,7 +63,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
 
         //if (shoes.transform.childCount == 0)
         //{
-        footPrintAvatar = PhotonNetwork.Instantiate(GamificationComponentData.instance.FootSteps[0].name,Vector3.zero, Quaternion.identity);
+        footPrintAvatar = PhotonNetwork.Instantiate("Footprint", Vector3.zero, Quaternion.identity);
         footPrintAvatar.transform.SetParent(shoes);
         footPrintAvatar.transform.localPosition = Vector3.up * 0.0207f;
         footPrintAvatar.transform.localEulerAngles = Vector3.zero;
@@ -70,7 +71,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
 
         skinMesh = GamificationComponentData.instance.playerControllerNew.GetComponentsInChildren<SkinnedMeshRenderer>();
 
-        //other.gameObject.GetComponent<PlayerControllerNew>().isThrow = false;
+        //other.gameObject.GetComponent<PlayerController>().isThrow = false;
         footstepsBool = true;
         for (int i = 0; i < childCollider.Length; i++)
         {
@@ -124,9 +125,9 @@ public class BlindfoldedDisplayComponent : ItemComponent
 
     IEnumerator BackToAvatarVisiblityHologram()
     {
-        yield return new WaitForEndOfFrame();
+        //yield return new WaitForEndOfFrame();
         BuilderEventManager.ActivateAvatarInivisibility?.Invoke();
-        invisibleAvatar = PhotonNetwork.Instantiate("InvisibleAvatar",Vector3.zero,Quaternion.identity);
+        invisibleAvatar = PhotonNetwork.Instantiate("InvisibleAvatar", Vector3.zero, Quaternion.identity);
         yield return new WaitForSeconds(blindfoldedDisplayComponentData.blindfoldSliderValue);
         DeactivateAvatarInivisibility();
     }
@@ -142,18 +143,18 @@ public class BlindfoldedDisplayComponent : ItemComponent
             PhotonNetwork.Destroy(footPrintAvatar.GetPhotonView());
 
         notTriggerOther = false;
-        RaycastHit hit;
-        if (Physics.Raycast(raycast.transform.position + new Vector3(0, 100, 0), -raycast.transform.up, out hit, 200))
-        {
-            if (hit.collider.CompareTag("Item"))
-            {
-                //Debug.Log("Not Null");
-                BuilderEventManager.ReSpawnPlayer?.Invoke();
-                notTriggerOther = true;
+        //RaycastHit hit;
+        //if (Physics.Raycast(raycast.transform.position + new Vector3(0, 100, 0), -raycast.transform.up, out hit, 200))
+        //{
+        //    if (hit.collider.CompareTag("Item"))
+        //    {
+        //        //Debug.Log("Not Null");
+        //        BuilderEventManager.ReSpawnPlayer?.Invoke();
+        //        notTriggerOther = true;
 
-                Toast.Show("The avatar is now locked inside the object due to the avatar invisibility effect, so it will restart from the current point.");
-            }
-        }
+        //        Toast.Show("The avatar is now locked inside the object due to the avatar invisibility effect, so it will restart from the current point.");
+        //    }
+        //}
 
         if (blindfoldedDisplayComponentData.footprintPaintAvatar)
         {
@@ -173,11 +174,10 @@ public class BlindfoldedDisplayComponent : ItemComponent
                 rr.transform.GetChild(0).gameObject.SetActive(false);
             }
             GamificationComponentData.instance.isBlindfoldedFootPrinting = false;
-            GamificationComponentData.instance.activeComponent = null;
         }
 
+        GamificationComponentData.instance.activeComponent = null;
         //CanvasComponenetsManager._instance.avatarInvisiblityText.gameObject.SetActive(false);
-        BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(0);
         if (!notTriggerOther)
         {
             Physics.IgnoreLayerCollision(9, 22, false);
@@ -194,11 +194,12 @@ public class BlindfoldedDisplayComponent : ItemComponent
         //GamificationComponentData.instance.buildingDetect.StopSpecialItemComponent();
         //GamificationComponentData.instance.playerControllerNew.NinjaComponentTimerStart(0);
         //GamificationComponentData.instance.playerControllerNew.isThrow = false;
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Invisible);
         BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(blindfoldedDisplayComponentData.blindfoldSliderValue);
         raycast = GamificationComponentData.instance.raycast;
+        if (!gameObject.activeInHierarchy)
+            this.gameObject.SetActive(true);
 
-        Physics.IgnoreLayerCollision(9, 22, true);
+        //Physics.IgnoreLayerCollision(9, 22, true);
 
         if (blindfoldedDisplayComponentData.footprintPaintAvatar)
         {
@@ -213,15 +214,15 @@ public class BlindfoldedDisplayComponent : ItemComponent
     {
         //ther is no Stop because in this case the player have no colliders they are invisible
         //BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(0);
-        DeactivateAvatarInivisibility();
+        if (GamificationComponentData.instance.activeComponent != null)
+            DeactivateAvatarInivisibility();
     }
 
     public override void StopBehaviour()
     {
         if (!isPlaying)
             return;
-                isPlaying = false;
-        StopComponent();
+        isPlaying = false;
         StopComponent();
     }
 
@@ -248,6 +249,16 @@ public class BlindfoldedDisplayComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.BlindfoldedDisplayComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
     }
 
     #endregion

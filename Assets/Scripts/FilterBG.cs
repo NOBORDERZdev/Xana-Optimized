@@ -27,7 +27,7 @@ public class FilterBG : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void OnClickFilterItem(byte r, byte g, byte b, byte a)
@@ -40,8 +40,8 @@ public class FilterBG : MonoBehaviour
         //transform.GetChild(1).gameObject.SetActive(true);
         //transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().color = Color.blue;
 
-       
-         //profile.GetSetting<ColorGrading>().colorFilter.Override(new Color32(r,g,b,a));
+
+        //profile.GetSetting<ColorGrading>().colorFilter.Override(new Color32(r,g,b,a));
         // LiveVideoRoomManager.Instance.mainVolume.profile = profile;
 
         if (LiveVideoRoomManager.Instance.filterMainVolume.profile.TryGet<UnityEngine.Rendering.Universal.ColorAdjustments>(out var color))
@@ -52,7 +52,7 @@ public class FilterBG : MonoBehaviour
         }
     }
 
-  
+
 
     IEnumerator GetAllFilter()
     {
@@ -60,14 +60,7 @@ public class FilterBG : MonoBehaviour
         UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.FILTERPROFILE);
         try
         {
-            if (UserRegisterationManager.instance.LoggedInAsGuest)
-            {
-                uwr.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-            }
-            else
-            {
-                uwr.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-            }
+            uwr.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         }
         catch (Exception e1)
         {
@@ -81,40 +74,40 @@ public class FilterBG : MonoBehaviour
         }
         else
         {
-            
-                Debug.Log("response===="+ uwr.downloadHandler.text.ToString());
-                FilterProfile bean = JsonUtility.FromJson<FilterProfile>(uwr.downloadHandler.text.ToString());
-                if (!bean.Equals("") || !bean.Equals(null))
+
+            Debug.Log("response====" + uwr.downloadHandler.text.ToString());
+            FilterProfile bean = JsonUtility.FromJson<FilterProfile>(uwr.downloadHandler.text.ToString());
+            if (!bean.Equals("") || !bean.Equals(null))
+            {
+
+                for (int i = 0; i < bean.data.filter.Count; i++)
                 {
-                    
-                    for (int i = 0; i < bean.data.filter.Count; i++)
+                    //Debug.Log("response====" + bean.data.filter.Count);
+                    GameObject categoryObject;
+                    categoryObject = Instantiate(categoryPrefab);
+                    categoryObject.transform.SetParent(contentCategoryPanel.transform);
+                    categoryObject.transform.localPosition = Vector3.zero;
+                    categoryObject.transform.localScale = Vector3.one;
+                    categoryObject.transform.localRotation = Quaternion.identity;
+
+                    categoryObject.transform.GetComponent<Image>().color = new Color32(byte.Parse(bean.data.filter[i].color.R), byte.Parse(bean.data.filter[i].color.G), byte.Parse(bean.data.filter[i].color.B), 255);
+                    categoryObject.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = bean.data.filter[i].name;
+                    categoryObject.transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = new Color32(115, 115, 115, 255);
+
+                    BackGroundItem LBC = categoryObject.GetComponent<BackGroundItem>();
+
+                    if (LBC == null)
                     {
-                        //Debug.Log("response====" + bean.data.filter.Count);
-                        GameObject categoryObject;
-                        categoryObject = Instantiate(categoryPrefab);
-                        categoryObject.transform.SetParent(contentCategoryPanel.transform);
-                        categoryObject.transform.localPosition = Vector3.zero;
-                        categoryObject.transform.localScale = Vector3.one;
-                        categoryObject.transform.localRotation = Quaternion.identity;
-
-                        categoryObject.transform.GetComponent<Image>().color = new Color32(byte.Parse(bean.data.filter[i].color.R), byte.Parse(bean.data.filter[i].color.G), byte.Parse(bean.data.filter[i].color.B), 255);
-                        categoryObject.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = bean.data.filter[i].name;
-                        categoryObject.transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = new Color32(115, 115, 115, 255);
-
-                        BackGroundItem LBC = categoryObject.GetComponent<BackGroundItem>();
-
-                        if (LBC == null)
-                        {
-                            LBC = categoryObject.AddComponent<BackGroundItem>();
-                        }
-                        LBC.Initializ(byte.Parse(bean.data.filter[i].color.R), byte.Parse(bean.data.filter[i].color.G)
-                            , byte.Parse(bean.data.filter[i].color.B), byte.Parse(bean.data.filter[i].color.A),this,
-                            contentCategoryPanel.gameObject);
-
+                        LBC = categoryObject.AddComponent<BackGroundItem>();
                     }
-                }
+                    LBC.Initializ(byte.Parse(bean.data.filter[i].color.R), byte.Parse(bean.data.filter[i].color.G)
+                        , byte.Parse(bean.data.filter[i].color.B), byte.Parse(bean.data.filter[i].color.A), this,
+                        contentCategoryPanel.gameObject);
 
-          
+                }
+            }
+
+
         }
     }
     [System.Serializable]

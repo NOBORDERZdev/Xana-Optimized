@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2035374115179884366}
   - component: {fileID: 3072068365803088387}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3385622360790552749}
   - component: {fileID: 3058870212255446116}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 5852803012754490642}
   - component: {fileID: 6705622713093757623}
   - component: {fileID: 8698404033224147888}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c677f2d89a56a2b41ba4cddd54f979d1, type: 2}
+  - {fileID: 2100000, guid: 62e0c8daa0994564d9696885b07ed723, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -254,7 +254,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1961696161589573304}
   - component: {fileID: 3256325941789933117}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,9 +302,9 @@ GameObject:
   - component: {fileID: 8937473917631529290}
   - component: {fileID: 485302371147238111}
   - component: {fileID: 5628845079305212190}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: pfHOS1110005
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -316,7 +316,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7141500581605321914}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -413,9 +413,11 @@ MonoBehaviour:
   itemType: 0
   itemCategory: 0
   itemThemes: 
+  componentsAttachedToItem: 
   bottomTransform: 0
   isValid: 0
   isPlaced: 0
+  isCurrentSpawnPoint: 0
   IsItemLocked: 0
   IsItemVisible: 0
   hasParent: 0
@@ -466,7 +468,7 @@ GameObject:
   - component: {fileID: 8561798224285444237}
   - component: {fileID: 3779114492947580435}
   - component: {fileID: 3418403501932150908}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}

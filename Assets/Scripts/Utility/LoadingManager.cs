@@ -1,5 +1,4 @@
-﻿using Metaverse;
-using Photon.Pun;
+﻿using Photon.Pun;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -131,7 +130,7 @@ public class LoadingManager : MonoBehaviour
     public void LeaveMultiplayer()
     {
         gameObject.SetActive(true);
-        StartCoroutine(LoadingManager.Instance.LoadAsncScene("Main"));
+        StartCoroutine(LoadingManager.Instance.LoadAsncScene("Home"));
     }
     public void HideLoading()
     {
@@ -139,7 +138,7 @@ public class LoadingManager : MonoBehaviour
         fill.fillAmount = 0;
         photonChange = true;
         Scene scene = SceneManager.GetActiveScene();
-        if (scene.name == "Main")
+        if (scene.name == "Home")
         {
             time = 0;
              StartSavingwaitingBool = true;
@@ -160,7 +159,7 @@ public class LoadingManager : MonoBehaviour
        
          yield return new WaitForSeconds(TotalTimer);
         loading_.SetActive(true);
-        if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
+        if (!ConstantsHolder.xanaConstants.JjWorldSceneChange && !ConstantsHolder.xanaConstants.orientationchanged)
         {
             //Debug.LogError("~~~~~ Waqas_ LoadingManager ~~~~~~~~~~~");
             //Screen.orientation = ScreenOrientation.Portrait;

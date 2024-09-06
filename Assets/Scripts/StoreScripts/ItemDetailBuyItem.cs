@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static StoreManager;
+using static InventoryManager;
 
 public class ItemDetailBuyItem : MonoBehaviour
 {
@@ -50,11 +50,11 @@ public class ItemDetailBuyItem : MonoBehaviour
    //   print(  btnToggle.isOn);
    //     if(btnToggle.isOn)
    //     {
-   //         StoreManager.instance.AddItemsFromCheckOut(this.gameObject);
+   //         InventoryManager.instance.AddItemsFromCheckOut(this.gameObject);
    //     }  
    //     else
    //     {
-   //         StoreManager.instance.RemoveItemsFromCheckOut(this.gameObject);
+   //         InventoryManager.instance.RemoveItemsFromCheckOut(this.gameObject);
    //      }
    //  }
 }

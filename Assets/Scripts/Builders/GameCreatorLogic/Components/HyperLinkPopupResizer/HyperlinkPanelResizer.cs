@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class HyperlinkPanelResizer : MonoBehaviour
@@ -6,7 +7,35 @@ public class HyperlinkPanelResizer : MonoBehaviour
     Vector3 pos;
     [HideInInspector]
     public Transform target;
+    float val;
     Camera cam;
+
+    [SerializeField] private RectTransform viewportRectT;
+    [SerializeField] private TextMeshProUGUI text;
+    private int rightPosition = 23;
+    private int bottomPosition = -9;
+
+    private void OnEnable()
+    {
+        StartCoroutine(CheckJapaneseRoutine());
+    }
+
+    private IEnumerator CheckJapaneseRoutine()
+    {
+        yield return new WaitForSeconds(0.15f); //Wait for the text to be set
+        switch (LocalizationManager._instance.IsJapanese(text.text))
+        {
+            case false:
+                viewportRectT.offsetMin = new Vector2(0, 0);
+                viewportRectT.offsetMax = new Vector2(0, 0);
+                break;
+            case true:
+                viewportRectT.offsetMin = new Vector2(viewportRectT.offsetMin.x, bottomPosition);
+                viewportRectT.offsetMax = new Vector2(-rightPosition, viewportRectT.offsetMax.y);
+                break;
+        }
+        StopCoroutine(CheckJapaneseRoutine());
+    }
 
     private void OnDisable()
     {
@@ -14,7 +43,7 @@ public class HyperlinkPanelResizer : MonoBehaviour
         target = null;
         transform.localScale = Vector3.one;
     }
-    float val;
+
     void Update()
     {
         if (GamificationComponentData.instance.playerControllerNew == null)

@@ -16,9 +16,9 @@ public class AiTextCamRot : MonoBehaviour
     void Start()
     {
         localTrans = GetComponent<Transform>();
-        mainCam = LoadFromFile.instance.PlayerCamera.transform;
+        mainCam = GameplayEntityLoader.instance.PlayerCamera.transform;
         thirdPersonCam = mainCam;
-        firstPersonCam = LoadFromFile.instance.firstPersonCamera.transform;
+        firstPersonCam = GameplayEntityLoader.instance.firstPersonCamera.transform;
     }
 
     void Update()
@@ -38,10 +38,10 @@ public class AiTextCamRot : MonoBehaviour
             {
                 if (selfieCam== null)
                 {
-                    selfieCam = ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<MyBeachSelfieCam>().Selfie.transform;
+                    selfieCam = ReferencesForGamePlay.instance.m_34player.GetComponent<MyBeachSelfieCam>().Selfie.transform;
                 }
                  localTrans.LookAt(2 * localTrans.position - selfieCam.position);
-                //GameObject[] objects = Photon.Pun.Demo.PunBasics.Launcher.instance.playerobjects.ToArray();
+                //GameObject[] objects = Photon.Pun.Demo.PunBasics.MutiplayerController.instance.playerobjects.ToArray();
 
                 //for (int i = 0; i < objects.Length; i++)
                 //{
