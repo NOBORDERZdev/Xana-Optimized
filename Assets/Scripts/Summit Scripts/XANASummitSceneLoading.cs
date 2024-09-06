@@ -3,7 +3,6 @@ using Photon.Pun.Demo.PunBasics;
 using SuperStar.Helpers;
 using System;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -384,6 +383,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         // Map Working
         _domeMiniMap.SummitSceneReloaded();
         SummitMiniMapStatusOnSceneChange(true);
+        ConstantsHolder.xanaConstants.comingFrom = ConstantsHolder.ComingFrom.None;
         //
     }
     XANASummitDataContainer.DomeGeneralData GetDomeData(int domeId)
