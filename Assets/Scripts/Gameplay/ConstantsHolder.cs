@@ -10,7 +10,6 @@ public class ConstantsHolder : MonoBehaviour
 {
     public static ConstantsHolder xanaConstants;
 
-    public bool PenpenzBuild = false;
     public bool pushToTalk;
     public bool openLandingSceneDirectly;
     public bool SwitchXanaToXSummit = false;
@@ -190,6 +189,7 @@ public class ConstantsHolder : MonoBehaviour
 
 
     #region XANA PARTY WORLD
+    public bool PenpenzBuild = false;
     public bool isXanaPartyWorld = false;
     public bool isJoinigXanaPartyGame = false;
     public int XanaPartyGameId;
