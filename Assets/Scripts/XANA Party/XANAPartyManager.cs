@@ -212,9 +212,6 @@ public class XANAPartyManager : MonoBehaviour
         LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
     }
 
-
-
-
 }
 
 [Serializable]
