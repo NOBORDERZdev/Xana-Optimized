@@ -10,12 +10,12 @@ public class ConstantsHolder : MonoBehaviour
 {
     public static ConstantsHolder xanaConstants;
 
+    public bool PenpenzBuild = false;
     public bool pushToTalk;
     public bool openLandingSceneDirectly;
     public bool SwitchXanaToXSummit = false;
     public static bool IsXSummitApp;
     public bool OpenSpaceScreen_fromSummit = false;
-   
 
     //Login Info
     public static bool isAdmin;

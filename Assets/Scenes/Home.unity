@@ -4401,10 +4401,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efc9fe4f7d33abd40a93cbcb72c352e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PenpenzBuild: 0
   pushToTalk: 0
   openLandingSceneDirectly: 1
   SwitchXanaToXSummit: 1
-  OpenSpaceScreen_fromSummit: 0
+  OpenSpaceScreen_fromSummit: 1
   registerFirstTime: 0
   isHoldCharacterNFT: 0
   isNFTEquiped: 0
@@ -4499,6 +4500,11 @@ MonoBehaviour:
   IsChatUseByOther: 0
   isGoingForHomeScene: 0
   hasToShowDailyPopup: 0
+  isXanaPartyWorld: 0
+  isJoinigXanaPartyGame: 0
+  XanaPartyGameId: 0
+  XanaPartyGameName: 
+  isMasterOfGame: 0
   labels:
   - boyc11hair
   - staffshirt
@@ -10693,6 +10699,79 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 21}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1140160192
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1140160194}
+  - component: {fileID: 1140160193}
+  - component: {fileID: 1140160195}
+  m_Layer: 0
+  m_Name: XANAPartyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1140160193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140160192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21592390544ec3e45b42d14f83b58ce3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnableXANAPartyGuest: 0
+  TotalGamesToVisit: []
+  RemainingGamesToVisit: []
+  GamesToVisitInCurrentRound: []
+  GamesToVisitInCurrentRoundCount: 5
+  GameIndex: 0
+  debugMode: 0
+  debugGameId: 0
+  ActivePlayerInCurrentLevel: 0
+--- !u!4 &1140160194
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140160192}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 49
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1140160195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140160192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71cfbaade03c29e4e922abc0435918ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RaceID: 0
+  RaceStartWithPlayers: 0
+  PlayerIDs: 
+  WinnerPlayerIds: 
+  RaceFinishTime: 
+  RankPointsData: []
+  isLeaderboardShown: 0
 --- !u!1 &1146849714
 GameObject:
   m_ObjectHideFlags: 0

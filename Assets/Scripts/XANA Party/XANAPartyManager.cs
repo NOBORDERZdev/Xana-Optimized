@@ -108,7 +108,7 @@ public class XANAPartyManager : MonoBehaviour
         }
     }
         
-    IEnumerator FetchXanaPartyGames()
+    public IEnumerator FetchXanaPartyGames()
     {
         if (TotalGamesToVisit.Count != 0)
         {
@@ -117,6 +117,7 @@ public class XANAPartyManager : MonoBehaviour
                 GameIndex = 0;
                 RandomizeAndUpdateGameData();
             }
+            if( !ConstantsHolder.xanaConstants.SwitchXanaToXSummit )
             StartCoroutine(LoadXanaPartyGame(true));
         }
         else
@@ -143,7 +144,8 @@ public class XANAPartyManager : MonoBehaviour
                             RemainingGamesToVisit.Add(new GameData((int)row["id"], row["name"].ToString()));
                         }
                         RandomizeAndUpdateGameData();
-                        StartCoroutine(LoadXanaPartyGame(true));
+                        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                            StartCoroutine(LoadXanaPartyGame(true));
                     }
                     catch (Exception e)
                     {
@@ -169,7 +171,7 @@ public class XANAPartyManager : MonoBehaviour
             GetComponent<PenpenzLpManager>().WinnerPlayerIds.Clear();
             GetComponent<PenpenzLpManager>().RaceFinishTime.Clear();
 
-            ConstantsHolder.xanaConstants.XanaPartyGameName = "RoofTopParty"; // Setting world name to join XANA PARTY LOBBY
+            ConstantsHolder.xanaConstants.XanaPartyGameName = "RooftopParty"; // Setting world name to join XANA PARTY LOBBY
             if (APIBasepointManager.instance.IsXanaLive)
             {
                 ConstantsHolder.xanaConstants.MuseumID = ""; // Main net Id
