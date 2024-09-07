@@ -17,7 +17,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool SwitchXanaToXSummit = false;
     public static bool IsXSummitApp;
     public bool OpenSpaceScreen_fromSummit = false;
-   
+
 
     //Login Info
     public static bool isAdmin;
@@ -104,14 +104,16 @@ public class ConstantsHolder : MonoBehaviour
     public String MuseumID;
 
     //For Metabuzz Environments
-    public enum ComingFrom{
+    public enum ComingFrom
+    {
         None,
         Dune,
         Daisen
     }
     public ComingFrom comingFrom = ComingFrom.None;
 
-    public bool IsMetabuzzEnvironment{
+    public bool IsMetabuzzEnvironment
+    {
         get
         {
             if (EnviornmentName.Contains("DUNE") || EnviornmentName == "TOTTORI METAVERSE" || EnviornmentName.Contains("Daisen"))
@@ -175,7 +177,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool IsChatUseByOther = false;
 
     //XANA Summit 
-    public static bool isFromXANASummit=false;
+    public static bool isFromXANASummit = false;
     public static bool MultiSectionPhoton = false;
     public static bool TempDiasableMultiPartPhoton = false;
     public static bool DiasableMultiPartPhoton = false;
@@ -288,12 +290,20 @@ public class ConstantsHolder : MonoBehaviour
         //  StartCoroutine(LoadAddressableDependenceies());
     }
 
-    public void SetPlayerProperties()
+    public void SetPlayerProperties(string cloths = "")
     {
+        Debug.Log("SetPlayerProperties");
         PhotonNetwork.LocalPlayer.CustomProperties.Clear();
         ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
-        playerProperties.Add("ClothJson", ConstantsHolder.xanaConstants.GetJsonFolderData());
-        playerProperties.Add("NFTEquiped", ConstantsHolder.xanaConstants.isNFTEquiped);
+        if (string.IsNullOrEmpty(cloths))
+        {
+            playerProperties.Add("ClothJson", GetJsonFolderData());
+        }
+        else
+        {
+            playerProperties.Add("ClothJson", cloths);
+        }
+        playerProperties.Add("NFTEquiped", isNFTEquiped);
         PhotonNetwork.LocalPlayer.CustomProperties = playerProperties;
     }
     public string GetJsonFolderData()

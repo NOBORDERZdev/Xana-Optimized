@@ -20,6 +20,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
     [HideInInspector]
     public AssetBundle bundle;
     public AssetBundleRequest newRequest;
+    public string clothData;
     private string OtherPlayerId;
     public static List<string> bundle_Name = new List<string>();
     private bool ItemAlreadyExists = false;
@@ -115,11 +116,17 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             NFTEquiped = (bool)properties["NFTEquiped"];
             Debug.Log("NFTEquiped: " + NFTEquiped);
         }
+        clothData = ClothJson;
         AvatarController otherPlayer;
         SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
         _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(ClothJson.ToString());
 
         otherPlayer = gameObject.GetComponent<AvatarController>();
+        otherPlayer.GetComponent<AvatarController>().SetAvatarClothDefault(otherPlayer.gameObject, _CharacterData.gender);
+        otherPlayer.isLoadStaticClothFromJson = true;
+        otherPlayer.staticClothJson = ClothJson;
+        otherPlayer.BuildCharacterFromLocalJson();
+        return;
         CharacterBodyParts bodyparts = otherPlayer.GetComponent<CharacterBodyParts>();
 
         //otherPlayer._CharData = _CharacterData;
@@ -141,7 +148,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
             {
 
-                if (!otherPlayer.GetComponent<PhotonView>().IsMine)
+                //if (!otherPlayer.GetComponent<PhotonView>().IsMine)   commented by Riken
                 {
                     otherPlayer.GetComponent<AvatarController>().SetAvatarClothDefault(otherPlayer.gameObject, _CharacterData.gender);
                     //CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);

@@ -71,7 +71,7 @@ public class AddressableMemoryReleaser : MonoBehaviour
         }
         _memoryObjects.Clear();
         GC.Collect();
-        AssetBundle.UnloadAllAssetBundles(false);
+        //AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
     }
     public void RemoveAddressable(string key)         // Added by Ali Hamza to release specific object based on key
