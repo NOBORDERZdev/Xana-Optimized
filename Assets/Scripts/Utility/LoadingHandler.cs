@@ -93,7 +93,7 @@ public class LoadingHandler : MonoBehaviour
 
     public ManualRoomController manualRoomController;
     public StreamingLoadingText streamingLoading;
-
+    public string Aalternate;
     public bool enter = false, WaitForInput = false;
     public float currentValue = 0;
     private float timer = 0;
@@ -174,7 +174,14 @@ public class LoadingHandler : MonoBehaviour
 
     public void UpdateLoadingStatusText(string message)
     {
-        loadingText.text = message;
+        var text = message;
+        text = text.Replace("a", Aalternate);
+        if (!string.IsNullOrEmpty(text) && !text.Contains("..."))
+        {
+            text += "...  ";
+        }
+       
+        loadingText.text = text.ToUpper();
         loadingText.GetComponent<TextLocalization>().LocalizeTextText(message);
         loadingText.GetComponent<TextLocalization>().LocalizeTextText();
     }
@@ -189,7 +196,7 @@ public class LoadingHandler : MonoBehaviour
         {
             loadingSlider.fillAmount = value;
         }
-        loadingPercentageText.text = ((int)(value * 100f)).ToString() + "%";
+        loadingPercentageText.text =" "+ ((int)(value * 100f)).ToString() + "%";
 
     }
     public void UpdateLoadingSliderForJJ(float value, float fillSpeed, bool doLerp = false)
@@ -299,9 +306,9 @@ public class LoadingHandler : MonoBehaviour
         isLoadingComplete = false;
         timer = 0;
         loadingSlider.fillAmount = 0f;
-        loadingPercentageText.text = "0%".ToString();
+        loadingPercentageText.text = " 0%".ToString();
         JJLoadingSlider.fillAmount = 0f;
-        JJLoadingPercentageText.text = "0%".ToString();
+        JJLoadingPercentageText.text = " 0%".ToString();
         LoadingStatus.anchorMax = new Vector2(0, LoadingStatus.anchorMax.y);
         DomeProgress.text = "00";
     }
@@ -553,7 +560,7 @@ public class LoadingHandler : MonoBehaviour
     public IEnumerator IncrementSliderValue(float speed, bool loadMainScene = false)
     {
       
-        Debug.Log("Sizedelta " + LoadingStatus.anchorMax.x + LoadingStatus.anchorMax.y + "  " + ConstantsHolder.isFromXANASummit);
+     
         while (currentValue < sliderCompleteValue)  
         {
             timer += Time.deltaTime;
@@ -572,7 +579,7 @@ public class LoadingHandler : MonoBehaviour
             else
             {
                 loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
-                loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+                loadingPercentageText.text = " " + ((int)(currentValue)).ToString() + "%";
                
                
             }
@@ -615,7 +622,7 @@ public class LoadingHandler : MonoBehaviour
                 else
                 {
                     loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
-                    loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+                    loadingPercentageText.text = " " + ((int)(currentValue)).ToString() + "%";
                     //yield return new WaitForSeconds(1f);
                  
                     //HideLoading(ScreenOrientation.Portrait);
