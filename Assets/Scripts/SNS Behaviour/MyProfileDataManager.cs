@@ -156,9 +156,6 @@ public class MyProfileDataManager : MonoBehaviour
     bool profileMakedFlag = false;
     public string permissionCheck = "";
     public string TestingJasonForTags;
-    [Space(5)]
-    public GameObject permissionPopup;
-    public GameObject permissionPopup_Camera;
 
     UserLoginSignupManager userLoginSignupManager;
     SNS_APIManager apiManager;
@@ -1153,7 +1150,9 @@ public class MyProfileDataManager : MonoBehaviour
     {
         if (Application.isEditor)
         {
-            permissionPopup.SetActive(true);
+            PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromGellery;
+            PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+            PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
         }
         else
         {
@@ -1161,7 +1160,9 @@ public class MyProfileDataManager : MonoBehaviour
 #if UNITY_ANDROID
             if (permission == NativeGallery.Permission.ShouldAsk) //||permission == NativeCamera.Permission.ShouldAsk
             {
-                permissionPopup.SetActive(true);
+                PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromGellery;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+                PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
             }
             else
             {
@@ -1169,7 +1170,9 @@ public class MyProfileDataManager : MonoBehaviour
             }
 #elif UNITY_IOS
                 if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
-                     permissionPopup.SetActive(true);
+                     PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromGellery;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+                PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
                 }
                 else
                 {
@@ -1183,6 +1186,7 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to pick group avatar from gellery for group avatar.
     public void OnPickImageFromGellery(int maxSize)
     {
+        PermissionPopusSystem.Instance.onCloseActionWithParam -= OnPickImageFromGellery;
 #if UNITY_IOS
          PlayerPrefs.SetInt("PicPermission", 1);
 
@@ -1313,15 +1317,19 @@ public class MyProfileDataManager : MonoBehaviour
     {
         if (Application.isEditor)
         {
-            permissionPopup_Camera.SetActive(true);
+            PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromCamera;
+            PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Camera;
+            PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
         }
         else
         {
             NativeCamera.Permission permission = NativeCamera.CheckPermission(true);
 #if UNITY_ANDROID
-            if (permission == NativeCamera.Permission.ShouldAsk) //||permission == NativeCamera.Permission.Denied
+            if (permission == NativeCamera.Permission.ShouldAsk)
             {
-                permissionPopup_Camera.SetActive(true);
+                PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromCamera;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Camera;
+                PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
             }
             else
             {
@@ -1329,7 +1337,9 @@ public class MyProfileDataManager : MonoBehaviour
             }
 #elif UNITY_IOS
                 if(PlayerPrefs.GetInt("CamPermission", 0) == 0){
-                     permissionPopup_Camera.SetActive(true);
+                PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromCamera;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Camera;
+                PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
                 }
                 else
                 {
@@ -1343,6 +1353,7 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to take picture from camera for group avatar.
     public void OnPickImageFromCamera(int maxSize)
     {
+        PermissionPopusSystem.Instance.onCloseActionWithParam -= OnPickImageFromCamera;
 #if UNITY_IOS
         PlayerPrefs.SetInt("CamPermission", 1);
         if (permissionCheck == "false")
