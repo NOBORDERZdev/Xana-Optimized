@@ -530,22 +530,22 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 513
-  movementSpeed: 4.5
+  movementSpeed: 5
   crouchSpeedMultiplier: 0.248
-  movementThrashold: 0
+  movementThrashold: 0.01
   dampSpeedUp: 0.2
   dampSpeedDown: 0.1
-  jumpVelocity: 11
-  fallMultiplier: 3
+  jumpVelocity: 7
+  fallMultiplier: 0.7
   holdJumpMultiplier: 5
-  frictionAgainstFloor: 0.2
+  frictionAgainstFloor: 0.189
   frictionAgainstWall: 0.082
-  canLongJump: 0
-  groundCheckerThrashold: 0.04
-  slopeCheckerThrashold: 0.06
+  canLongJump: 1
+  groundCheckerThrashold: 0.001
+  slopeCheckerThrashold: 0.15
   stepCheckerThrashold: 0.07
-  maxClimbableSlopeAngle: 80
-  maxStepHeight: 0.3
+  maxClimbableSlopeAngle: 53.6
+  maxStepHeight: 0.74
   speedMultiplierOnAngle:
     serializedVersion: 2
     m_Curve:
@@ -573,10 +573,10 @@ MonoBehaviour:
   canSlideMultiplierCurve: 0.061
   cantSlideMultiplierCurve: 0.039
   climbingStairsMultiplierCurve: 0.086
-  gravityMultiplier: 1.5
+  gravityMultiplier: 8
   gravityMultiplyerOnSlideChange: 2
   gravityMultiplierIfUnclimbableSlope: 30
-  lockOnSlope: 0
+  lockOnSlope: 1
   wallCheckerThrashold: 0.15
   hightWallCheckerChecker: 0.07
   jumpFromWallMultiplier: 31
@@ -985,7 +985,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927154726348607534}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.167, z: 0.021}
+  m_LocalPosition: {x: 0, y: -0.015, z: 0.021}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
