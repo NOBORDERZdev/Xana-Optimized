@@ -12,17 +12,17 @@ public class XANAPartyManager : MonoBehaviour
 {
     public static XANAPartyManager Instance;
     public bool EnableXANAPartyGuest;
-    [SerializeField] private List<GameData> TotalGamesToVisit = new List<GameData>(); // List of games to play 
-    [SerializeField] private List<GameData> RemainingGamesToVisit = new List<GameData>(); // List of remaining games to visit
     public List<GameData> GamesToVisitInCurrentRound = new List<GameData>(); // List of games to visit in the current round
     public int GamesToVisitInCurrentRoundCount = 5; // Number of games to visit in the current round
     public int GameIndex = 0; // Index of the game to visit
+    public int ActivePlayerInCurrentLevel = 0;
 
+    [SerializeField] private List<GameData> TotalGamesToVisit = new List<GameData>(); // List of games to play 
+    [SerializeField] private List<GameData> RemainingGamesToVisit = new List<GameData>(); // List of remaining games to visit
     [SerializeField] private bool debugMode = false; // To test a specific game
     [SerializeField] private int debugGameId = 0; // Index of the game to test
     private readonly Random random = new Random();
 
-    public int ActivePlayerInCurrentLevel = 0;
     private void Awake()
     {
         if (Instance == null)
