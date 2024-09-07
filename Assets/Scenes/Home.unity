@@ -10699,79 +10699,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 21}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1140160192
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1140160194}
-  - component: {fileID: 1140160193}
-  - component: {fileID: 1140160195}
-  m_Layer: 0
-  m_Name: XANAPartyManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1140160193
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1140160192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21592390544ec3e45b42d14f83b58ce3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnableXANAPartyGuest: 0
-  TotalGamesToVisit: []
-  RemainingGamesToVisit: []
-  GamesToVisitInCurrentRound: []
-  GamesToVisitInCurrentRoundCount: 5
-  GameIndex: 0
-  debugMode: 0
-  debugGameId: 0
-  ActivePlayerInCurrentLevel: 0
---- !u!4 &1140160194
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1140160192}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 49
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1140160195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1140160192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71cfbaade03c29e4e922abc0435918ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RaceID: 0
-  RaceStartWithPlayers: 0
-  PlayerIDs: 
-  WinnerPlayerIds: 
-  RaceFinishTime: 
-  RankPointsData: []
-  isLeaderboardShown: 0
 --- !u!1 &1146849714
 GameObject:
   m_ObjectHideFlags: 0
@@ -31989,6 +31916,63 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1001 &5944344718891924183
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5944344720031403029, guid: d1ca10ce6d5b4aa47993d90d6bac6dab, type: 3}
+      propertyPath: m_RootOrder
+      value: 49
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944344720031403029, guid: d1ca10ce6d5b4aa47993d90d6bac6dab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944344720031403029, guid: d1ca10ce6d5b4aa47993d90d6bac6dab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944344720031403029, guid: d1ca10ce6d5b4aa47993d90d6bac6dab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944344720031403029, guid: d1ca10ce6d5b4aa47993d90d6bac6dab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944344720031403029, guid: d1ca10ce6d5b4aa47993d90d6bac6dab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944344720031403029, guid: d1ca10ce6d5b4aa47993d90d6bac6dab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944344720031403029, guid: d1ca10ce6d5b4aa47993d90d6bac6dab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944344720031403029, guid: d1ca10ce6d5b4aa47993d90d6bac6dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944344720031403029, guid: d1ca10ce6d5b4aa47993d90d6bac6dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944344720031403029, guid: d1ca10ce6d5b4aa47993d90d6bac6dab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944344720031403031, guid: d1ca10ce6d5b4aa47993d90d6bac6dab, type: 3}
+      propertyPath: m_Name
+      value: XANAPartyManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d1ca10ce6d5b4aa47993d90d6bac6dab, type: 3}
 --- !u!222 &5974742812859949899
 CanvasRenderer:
   m_ObjectHideFlags: 0
