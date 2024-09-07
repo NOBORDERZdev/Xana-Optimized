@@ -135,7 +135,7 @@ public class LoadingHandler : MonoBehaviour
     private void Start()
     {
         sliderFinalValue = Random.Range(80f, 95f);
-        sliderCompleteValue = Random.Range(96f, 99f);
+        sliderCompleteValue = 100;// Random.Range(96f, 99f);
         StartCoroutine(StartBGChange());
         canvasGroup = GetComponent<CanvasGroup>();
     }
@@ -530,7 +530,7 @@ public class LoadingHandler : MonoBehaviour
     }
 
 
-    public void LoadSceneByIndex(string sceneName, bool isBuilder = false)
+    public AsyncOperation LoadSceneByIndex(string sceneName, bool isBuilder = false,LoadSceneMode mode = LoadSceneMode.Single)
     {
         //UpdateLoadingSlider(.2f);
         if (ConstantsHolder.xanaConstants.JjWorldSceneChange)
@@ -546,7 +546,8 @@ public class LoadingHandler : MonoBehaviour
             else
                 StartCoroutine(IncrementSliderValue(Random.Range(10f, 13f)));
         }
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName,mode);
+        return asyncOperation;
     }
 
     public IEnumerator IncrementSliderValue(float speed, bool loadMainScene = false)
@@ -564,7 +565,8 @@ public class LoadingHandler : MonoBehaviour
                 JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
             }
             else if (ConstantsHolder.isFromXANASummit) {
-                LoadingStatus.anchorMax = Vector2.Lerp(LoadingStatus.anchorMax, new Vector2(currentValue / 100, LoadingStatus.anchorMax.y), 0.15f); ;
+            
+              LoadingStatus.DOAnchorMax(new Vector2(currentValue / 100, LoadingStatus.anchorMax.y), 0.15f); ;
                 DomeProgress.text = ((int)(currentValue)).ToString();
             }
             else
@@ -607,7 +609,7 @@ public class LoadingHandler : MonoBehaviour
                 }
                 if (ConstantsHolder.isFromXANASummit)
                 {
-                      LoadingStatus.anchorMax = Vector2.Lerp(LoadingStatus.anchorMax, new Vector2(currentValue / 100, LoadingStatus.anchorMax.y), 0.15f); ;
+                    LoadingStatus.DOAnchorMax(new Vector2(currentValue / 100, LoadingStatus.anchorMax.y), 0.15f); ;
                     DomeProgress.text = ((int)(currentValue)).ToString();
                 }
                 else
@@ -856,7 +858,7 @@ public class LoadingHandler : MonoBehaviour
         WaitForInput = false;
         ApprovalUI.SetActive(false);
         DomeLodingUI.SetActive(true);
-        await Task.Delay(1000);
+        await Task.Delay(500);
         StartCoroutine(IncrementSliderValue(Random.Range(0f, 5f)));
 
     }
@@ -880,7 +882,7 @@ public class LoadingHandler : MonoBehaviour
     public void DomeLoadingProgess(float progress)
     {
         Debug.Log("Loading progress...");
-        LoadingStatus.anchorMax = Vector2.Lerp(LoadingStatus.anchorMax, new Vector2(progress / 100, LoadingStatus.anchorMax.y), 0.15f); ;
+        LoadingStatus.DOAnchorMax(new Vector2(currentValue / 100, LoadingStatus.anchorMax.y), 0.15f); ;
         DomeProgress.text = ((int)progress).ToString("D2");
     }
 }

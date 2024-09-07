@@ -31,7 +31,7 @@ public class XANASummitSceneLoading : MonoBehaviour
     public delegate void SetPlayerOnSubworldBack();
     public static event SetPlayerOnSubworldBack setPlayerPositionDelegate;
 
-    public AsyncOperation handle;
+    
 
     private void OnEnable()
     {
@@ -51,14 +51,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (handle != null && !handle.isDone)
-        {
-            LoadingHandler.Instance.DomeLoadingProgess(handle.progress);
-        } 
-    }
-
+   
     private void OnDisable()
     {
         BuilderEventManager.LoadNewScene -= LoadingFromDome;
@@ -313,9 +306,11 @@ public class XANASummitSceneLoading : MonoBehaviour
         ConstantsHolder.xanaConstants.builderMapID = builderMapId;
         ConstantsHolder.xanaConstants.isBuilderScene = true;
         gameplayEntityLoader.addressableSceneName = null;
-       
-        handle = SceneManager.LoadSceneAsync("Builder", LoadSceneMode.Additive);
-          await handle;
+
+       AsyncOperation handle= await LoadingHandler.Instance.LoadSceneByIndex("Builder",true ,LoadSceneMode.Additive);
+       // handle = SceneManager.LoadSceneAsync("Builder", LoadSceneMode.Additive);
+        
+         
         handle.completed += Handle_completed;
     }
 
