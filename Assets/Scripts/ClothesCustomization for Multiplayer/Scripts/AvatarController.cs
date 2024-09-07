@@ -32,7 +32,7 @@ public class AvatarController : MonoBehaviour
     public GameObject[] wornEyebrow;
     public NFTColorCodes _nftAvatarColorCodes;
     public CharacterBodyParts characterBodyParts;
-    SavingCharacterDataClass _PCharacterData = new SavingCharacterDataClass();
+    public SavingCharacterDataClass _PCharacterData = new SavingCharacterDataClass();
     [SerializeField] RuntimeAnimatorController ArAnimator;
     #endregion
 
