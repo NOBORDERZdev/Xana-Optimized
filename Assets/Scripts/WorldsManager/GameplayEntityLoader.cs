@@ -986,7 +986,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
     }
 
-    void ResetPlayerPosition()
+   public void ResetPlayerPosition()
     {
         if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
