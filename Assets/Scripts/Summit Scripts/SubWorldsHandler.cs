@@ -6,6 +6,10 @@ using System.Collections.Generic;
 
 public class SubWorldsHandler : MonoBehaviour
 {
+    [SerializeField]
+    private StayTimeTrackerForSummit _stayTimeTrackerForSummit;
+    private bool _isBuilderWorld;
+    private bool _isEnteringInSubWorld = false;
     public GameObject SubworldListParent;
     public Transform ContentParent;
     public GameObject SubworldPrefab;
@@ -27,7 +31,7 @@ public class SubWorldsHandler : MonoBehaviour
     public XANASummitDataContainer XANASummitDataContainer;
     public XANASummitSceneLoading XANASummitSceneLoadingInstance;
 
-    public static Action<Sprite,string, string,string, string, string, string, string,Vector3> OpenSubWorldDescriptionPanel;
+    public static Action<Sprite,string, string,string, string, string, string, string,Vector3,bool> OpenSubWorldDescriptionPanel;
     //public static int CurrentlyLoadedDomes;
 
     private string worldId;
@@ -123,7 +127,7 @@ public class SubWorldsHandler : MonoBehaviour
             _SubWorldPrefab.WorldDomeId = domeGeneralData.id.ToString();
             _SubWorldPrefab.ThumbnailUrl = domeGeneralData.SubWorlds[i].selectWorld.icon;
             _SubWorldPrefab.WorldName.text = domeGeneralData.SubWorlds[i].selectWorld.label;
-
+            _SubWorldPrefab.IsBuilderWorld = domeGeneralData.SubWorlds[i].builderWorld;
             _SubWorldPrefab.PlayerReturnPosition = PlayerReturnPosition;
             _SubWorldPrefab.Init();
             subworldsList.Add(temp);
@@ -134,7 +138,7 @@ public class SubWorldsHandler : MonoBehaviour
             return new Task<bool>(() => false);
     }
 
-    void OpenDescirptionPanel(Sprite thumbnailImage,string _worldId,string worldName,string worldDesCription,string creatorName,string worldType,string worldCategory,string worldDomeId,Vector3 _playerReturnPosition)
+    void OpenDescirptionPanel(Sprite thumbnailImage,string _worldId,string worldName,string worldDesCription,string creatorName,string worldType,string worldCategory,string worldDomeId,Vector3 _playerReturnPosition,bool isBuilderWorld)
     {
         ThumbnailImage.sprite = thumbnailImage;
         WorldName.text = worldName;
@@ -146,7 +150,7 @@ public class SubWorldsHandler : MonoBehaviour
 
         worldId = _worldId;
         playerReturnPosition = _playerReturnPosition;
-
+        _isBuilderWorld = isBuilderWorld;
         DescriptionPanelParent.SetActive(true);
     }
 
@@ -162,6 +166,7 @@ public class SubWorldsHandler : MonoBehaviour
         EnterButton.interactable = false;
         BackButton.interactable = false;
         EnterButtonAnimation.SetActive(true);
+        _isEnteringInSubWorld = true;
     }
 
     void OnEnteredIntoWorld()
@@ -171,6 +176,11 @@ public class SubWorldsHandler : MonoBehaviour
         EnterButton.interactable = true;
         BackButton.interactable = true;
         EnterButtonAnimation.SetActive(false);
+        if (_isEnteringInSubWorld)
+        {
+            _isEnteringInSubWorld = false;
+            CallAnalyticsForSubWorlds();
+        }
     }
 
     public void OnBack()
@@ -187,5 +197,22 @@ public class SubWorldsHandler : MonoBehaviour
         subworldsList.Clear();
         SubworldListParent.SetActive(false);
     }
-   
+    private void CallAnalyticsForSubWorlds()
+    {
+        if (_stayTimeTrackerForSummit != null)
+        {
+            if (_stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea)
+                _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = false;
+            _stayTimeTrackerForSummit.DomeId = int.Parse(DomeId.text);
+            _stayTimeTrackerForSummit.DomeWorldId = int.Parse(worldId);
+            _stayTimeTrackerForSummit.IsBuilderWorld = _isBuilderWorld;
+            string eventName;
+            if (_isBuilderWorld)
+                eventName = "TV_Dome_" + _stayTimeTrackerForSummit.DomeId + "_BW_" + _stayTimeTrackerForSummit.DomeWorldId;
+            else
+                eventName = "TV_Dome_" + _stayTimeTrackerForSummit.DomeId + "_XW_" + _stayTimeTrackerForSummit.DomeWorldId;
+            GlobalConstants.SendFirebaseEventForSummit(eventName);
+            _stayTimeTrackerForSummit.StartTrackingTime();
+        }
+    }
 }

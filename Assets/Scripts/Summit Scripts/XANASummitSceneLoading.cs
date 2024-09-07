@@ -160,25 +160,27 @@ public class XANASummitSceneLoading : MonoBehaviour
             if (_stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea)
             {
                 _stayTimeTrackerForSummit.StopTrackingTime();
-                _stayTimeTrackerForSummit.CalculateAndLogStayTime();
+                //_stayTimeTrackerForSummit.CalculateAndLogStayTime();
                 _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = false;
             }
             _stayTimeTrackerForSummit.DomeId = domeId;
-            if (domeGeneralData.worldType)
-                _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.builderWorldId;
-            else
-                _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.worldId;
             _stayTimeTrackerForSummit.IsBuilderWorld = domeGeneralData.worldType;
+            string eventName;
+            if (_stayTimeTrackerForSummit.IsBuilderWorld)
+            {
+                _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.builderWorldId;
+                eventName = "TV_Dome_" + domeId + "_BW_" + domeGeneralData.builderWorldId;
+            }
+            else
+            {
+                _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.worldId;
+                eventName = "TV_Dome_" + domeId + "_XW_" + domeGeneralData.worldId;
+            }
+            GlobalConstants.SendFirebaseEventForSummit(eventName);
             _stayTimeTrackerForSummit.StartTrackingTime();
         }
-        string eventName;
-        if (domeGeneralData.worldType)
-            eventName = "TV_Dome_" + domeId + "_BW_" + domeGeneralData.builderWorldId;
-        else
-            eventName = "TV_Dome_" + domeId + "_XW_" + domeGeneralData.worldId;
 
         GameplayEntityLoader.instance.AssignRaffleTickets(domeId);
-        GlobalConstants.SendFirebaseEventForSummit(eventName);
     }
 
 
@@ -275,10 +277,10 @@ public class XANASummitSceneLoading : MonoBehaviour
             return;
         if (_stayTimeTrackerForSummit != null)
         {
-            if (_stayTimeTrackerForSummit.IsTrackingTime)
+            if (!_stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea)
             {
                 _stayTimeTrackerForSummit.StopTrackingTime();
-                _stayTimeTrackerForSummit.CalculateAndLogStayTime();
+                //_stayTimeTrackerForSummit.CalculateAndLogStayTime();
                 _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = true;
             }
         }

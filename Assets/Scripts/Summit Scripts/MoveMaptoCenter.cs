@@ -32,7 +32,7 @@ public class MoveMaptoCenter : MonoBehaviour
         for (int i = 0; i < MapHighlightObjs.Count; i++)
         {
             int index = i;
-            MapHighlightObjs[i].GetComponent<Button>().onClick.AddListener(() => ItemClicked(index));
+            MapHighlightObjs[i].GetComponent<Button>().onClick.AddListener(() => ItemClicked(index+1));
         }
 
         InitializeSubBtns();
@@ -64,13 +64,13 @@ public class MoveMaptoCenter : MonoBehaviour
 
 
 
-
     public void ItemClicked(int ind)
     {
         Debug.Log("Item Clicked: " + ind);
 
         int arratInd = ind - 1;
         grandChildPing = MapHighlightObjs[arratInd];
+        string areaName = grandChildPing.name;
         StartCoroutine(MoveChildToCenterOfMainScreen());
         EnableSelectedImage(arratInd);
 
@@ -95,7 +95,7 @@ public class MoveMaptoCenter : MonoBehaviour
         }
 
         goBtn.SetActive(true);
-        DomeMinimapDataHolder.OnSetDomeId?.Invoke(ind);
+        DomeMinimapDataHolder.OnSetDomeId?.Invoke(ind,areaName);
     }
     IEnumerator MoveChildToCenterOfMainScreen()
     {
