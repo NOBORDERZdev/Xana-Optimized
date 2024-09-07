@@ -18,6 +18,7 @@ public class PatchForProfileWallet : MonoBehaviour
             // gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
             gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().SetProfileButton();
         }
+        closeloader.SetActive(false);
     }
 
     private void Start()
@@ -35,8 +36,20 @@ public class PatchForProfileWallet : MonoBehaviour
     public void CloseCrossbtn()
     {
         if (!ConstantsHolder.loggedIn)
-            UserLoginSignupManager.instance.ShowWelcomeScreen();
-        LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+        {
+           if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                UserLoginSignupManager.instance.ShowWelcomeScreen();
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                closeloader.SetActive(false);
+            }
+            else
+            {
+                UserLoginSignupManager.instance.ShowWelcomeScreen();
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+                closeloader.SetActive(false);
+            }
+        }
     }
 
 }

@@ -39,7 +39,6 @@ public class XanaVoiceChat : MonoBehaviour
     public string MicroPhoneDevice;
     public int index;
 
-
     public void Awake()
     {
         if (instance == null)
@@ -49,6 +48,7 @@ public class XanaVoiceChat : MonoBehaviour
     }
     private void OnEnable()
     {
+        BuilderEventManager.AfterPlayerInstantiated += CheckMicPermission;
         // Added by Waqas Ahmad
         if (instance != this && instance.recorder != null)
         {
@@ -64,13 +64,70 @@ public class XanaVoiceChat : MonoBehaviour
             //}
 
             instance = this;
-            StartCoroutine(instance.Start());
+            if (Permission.HasUserAuthorizedPermission(Permission.Microphone))
+            {
+                StartCoroutine(instance.SetMic());
+            }
+        }
+    }
+    private void OnDisable()
+    {
+        BuilderEventManager.AfterPlayerInstantiated -= CheckMicPermission;
+    }
+
+    private void CheckMicPermission()
+    {
+        if (!ScreenOrientationManager._instance.isPotrait)
+        {
+            // There is two instance of this script
+            // one used for Landscape & one for Portrait
+            // Already Called For Landscape no need to call again.
+            if (Application.isEditor)
+            {
+                PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
+                PermissionPopusSystem.Instance.OpenPermissionScreen();
+            }
+            else
+            {
+#if UNITY_ANDROID
+                if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+                {
+                    PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
+                    PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
+                    PermissionPopusSystem.Instance.OpenPermissionScreen();
+                }
+                else
+                {
+                    StartCoroutine(SetMic());
+                }
+#elif UNITY_IOS
+                if(PlayerPrefs.GetInt("MicPermission", 0) == 0){
+                      PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
+                    PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
+                    PermissionPopusSystem.Instance.OpenPermissionScreen();
+                }
+                else
+                {
+                    StartCoroutine(SetMic());
+                }
+#endif
+            }
         }
     }
 
-
-    private IEnumerator Start()
+    public void SetMicByBtn()
     {
+        PermissionPopusSystem.Instance.onCloseAction -= SetMicByBtn;
+        StartCoroutine(SetMic());
+    }
+
+    private IEnumerator SetMic()
+    {
+#if UNITY_IOS
+        PlayerPrefs.SetInt("MicPermission", 1);
+#endif
+
         //Adding delay because of loading screen stuck issue in rotation by getting permission popup. // Sohaib
         yield return new WaitForSeconds(1f);
 

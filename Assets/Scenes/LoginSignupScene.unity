@@ -329,6 +329,7 @@ MonoBehaviour:
   SetProfileAvatarTempFilename: 
   PermissionCheck: 
   PickImageOptionScreen: {fileID: 4054904675507621100}
+  permissionPopup: {fileID: 0}
   errorHandler: {fileID: 1458762913}
   validationPopupPanel: {fileID: 1151006359}
   errorTextMsg: {fileID: 6526982720957554883}
@@ -4406,12 +4407,48 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 219101427}
     - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 219101427}
+    - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnPickImageFromGellery
+      objectReference: {fileID: 0}
+    - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: CheckPermissionStatus
+      objectReference: {fileID: 0}
+    - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UserLoginSignupManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_IntArgument
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
