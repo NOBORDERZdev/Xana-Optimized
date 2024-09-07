@@ -12,15 +12,15 @@ public class XANAPartyManager : MonoBehaviour
 {
     public static XANAPartyManager Instance;
     public bool EnableXANAPartyGuest;
-    [SerializeField] List<GameData> TotalGamesToVisit = new List<GameData>(); // List of games to play 
-    [SerializeField] List<GameData> RemainingGamesToVisit = new List<GameData>(); // List of remaining games to visit
+    [SerializeField] private List<GameData> TotalGamesToVisit = new List<GameData>(); // List of games to play 
+    [SerializeField] private List<GameData> RemainingGamesToVisit = new List<GameData>(); // List of remaining games to visit
     public List<GameData> GamesToVisitInCurrentRound = new List<GameData>(); // List of games to visit in the current round
     public int GamesToVisitInCurrentRoundCount = 5; // Number of games to visit in the current round
     public int GameIndex = 0; // Index of the game to visit
 
-    [SerializeField] bool debugMode = false; // To test a specific game
-    [SerializeField] int debugGameId = 0; // Index of the game to test
-    private Random random = new Random();
+    [SerializeField] private bool debugMode = false; // To test a specific game
+    [SerializeField] private int debugGameId = 0; // Index of the game to test
+    private readonly Random random = new Random();
 
     public int ActivePlayerInCurrentLevel = 0;
     private void Awake()
@@ -35,10 +35,10 @@ public class XANAPartyManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-  
+
     private void Start()
     {
-        
+
     }
 
     public void EnablingXANAParty()
@@ -52,8 +52,8 @@ public class XANAPartyManager : MonoBehaviour
         }
         else
         {
-           StartCoroutine( LoadXanaPartyGame(false) ); // Joining XANA PARTY GAME
-        }   
+            StartCoroutine(LoadXanaPartyGame(false)); // Joining XANA PARTY GAME
+        }
     }
 
     private bool ShouldFetchXanaPartyGames()
@@ -61,11 +61,9 @@ public class XANAPartyManager : MonoBehaviour
         return ConstantsHolder.xanaConstants.isXanaPartyWorld && !ConstantsHolder.xanaConstants.JjWorldSceneChange && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame;
     }
 
-    
-
     public void RandomizeAndUpdateGameData()
     {
-        if(RemainingGamesToVisit.Count == 0)      // If all games are visited
+        if (RemainingGamesToVisit.Count == 0)      // If all games are visited
         {
             RemainingGamesToVisit = new List<GameData>(TotalGamesToVisit);
         }
@@ -82,10 +80,10 @@ public class XANAPartyManager : MonoBehaviour
 
         GamesToVisitInCurrentRound.Clear();
 
-        for (int i = 0; i < GamesToVisitInCurrentRoundCount; i++)     
+        for (int i = 0; i < GamesToVisitInCurrentRoundCount; i++)
         {
             int randIndex = random.Next(RemainingGamesToVisit.Count);
-            GamesToVisitInCurrentRound.Add(RemainingGamesToVisit[randIndex]);  
+            GamesToVisitInCurrentRound.Add(RemainingGamesToVisit[randIndex]);
             RemainingGamesToVisit.RemoveAt(randIndex);
         }
     }
@@ -107,7 +105,7 @@ public class XANAPartyManager : MonoBehaviour
             return GamesToVisitInCurrentRound[GameIndex];
         }
     }
-        
+
     public IEnumerator FetchXanaPartyGames()
     {
         if (TotalGamesToVisit.Count != 0)
@@ -117,8 +115,8 @@ public class XANAPartyManager : MonoBehaviour
                 GameIndex = 0;
                 RandomizeAndUpdateGameData();
             }
-            if( !ConstantsHolder.xanaConstants.SwitchXanaToXSummit )
-            StartCoroutine(LoadXanaPartyGame(true));
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                StartCoroutine(LoadXanaPartyGame(true));
         }
         else
         {
@@ -197,7 +195,7 @@ public class XANAPartyManager : MonoBehaviour
                 yield return new WaitForSeconds(2);
             }
         }
-        
+
 
         HideLoadingScreens();
         ConstantsHolder.xanaConstants.EnviornmentName = ConstantsHolder.xanaConstants.XanaPartyGameName;
@@ -205,7 +203,7 @@ public class XANAPartyManager : MonoBehaviour
         WorldManager.instance.PlayWorld();
     }
 
-    void HideLoadingScreens()
+    private void HideLoadingScreens()
     {
         LoadingHandler.Instance.characterLoading.SetActive(false);
         LoadingHandler.Instance.presetCharacterLoading.SetActive(false);
@@ -214,13 +212,13 @@ public class XANAPartyManager : MonoBehaviour
         LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
     }
 
-   
+
 
 
 }
 
 [Serializable]
-public class  GameData
+public class GameData
 {
     public int Id;
     public string WorldName;
