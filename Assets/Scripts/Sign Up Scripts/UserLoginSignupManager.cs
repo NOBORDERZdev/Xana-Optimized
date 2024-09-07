@@ -1184,31 +1184,32 @@ public class UserLoginSignupManager : MonoBehaviour
 
                     GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
 
-            }));
-           
-            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
-            {
-               // LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
-                RequestSubmitUsername(userUsername);
-            }
-            else
-            {
-                GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
-                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
-                if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+                }));
+
+                if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
                 {
-                    MainSceneEventHandler.OpenLandingScene?.Invoke();
-                    return;
+                    // LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+                    RequestSubmitUsername(userUsername);
                 }
-                else {
-                    Screen.orientation = ScreenOrientation.Portrait;
-                    LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
-                    enterNamePanel.SetActive(false);
+                else
+                {
+                    GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
+                    LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+                    if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+                    {
+                        MainSceneEventHandler.OpenLandingScene?.Invoke();
+                        return;
+                    }
+                    else
+                    {
+                        Screen.orientation = ScreenOrientation.Portrait;
+                        LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+                        enterNamePanel.SetActive(false);
+                    }
                 }
+
             }
-           
         }
-        
     }
     public void UserDisplayNameErrors(string errorMSg)
     {
