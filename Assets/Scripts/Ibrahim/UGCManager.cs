@@ -15,7 +15,6 @@ public class UGCManager : MonoBehaviour
     private UGCItemsClass ugcItems;
     public TMP_Text warningText;
     public GameObject warningPanel;
-    public GameObject permissionPopup;
     public static bool isSelfieTaken = false;
 
     public void OnClickSaveSelfieButton()
@@ -52,23 +51,29 @@ public class UGCManager : MonoBehaviour
     {
         if (Application.isEditor)
         {
-            permissionPopup.SetActive(true);
+            PermissionPopusSystem.Instance.onCloseAction += OnClickSelfieButton;
+            PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Camera;
+            PermissionPopusSystem.Instance.OpenPermissionScreen();
         }
         else
         {
-            NativeCamera.Permission permission = NativeCamera.CheckPermission(true);
+            NativeGallery.Permission permission = NativeGallery.CheckPermission(NativeGallery.PermissionType.Read, NativeGallery.MediaType.Image);
 #if UNITY_ANDROID
-             if (permission == NativeCamera.Permission.ShouldAsk) //||permission == NativeCamera.Permission.Denied
+            if (permission == NativeGallery.Permission.ShouldAsk)
             {
-                permissionPopup.SetActive(true);
+                PermissionPopusSystem.Instance.onCloseAction += OnClickSelfieButton;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Camera;
+                PermissionPopusSystem.Instance.OpenPermissionScreen();
             }
             else
             {
                 OnClickSelfieButton();
             }
 #elif UNITY_IOS
-                if(PlayerPrefs.GetInt("CamPermission", 0) == 0){
-                     permissionPopup.SetActive(true);
+                if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
+                     PermissionPopusSystem.Instance.onCloseAction += OnClickSelfieButton;
+            PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Camera;
+            PermissionPopusSystem.Instance.OpenPermissionScreen();
                 }
                 else
                 {
@@ -80,6 +85,7 @@ public class UGCManager : MonoBehaviour
 
     public void OnClickSelfieButton()
     {
+        PermissionPopusSystem.Instance.onCloseAction -= OnClickSelfieButton;
 #if UNITY_IOS
             PlayerPrefs.SetInt("CamPermission", 1);
 

@@ -38,8 +38,6 @@ public class XanaVoiceChat : MonoBehaviour
     public Transform placetoload;
     public string MicroPhoneDevice;
     public int index;
-    [Space(5)]
-    public GameObject PermissionAlertPopup;
 
     public void Awake()
     {
@@ -83,22 +81,29 @@ public class XanaVoiceChat : MonoBehaviour
             // Already Called For Landscape no need to call again.
             if (Application.isEditor)
             {
-                PermissionAlertPopup.SetActive(true);
+                PermissionPopusSystem.Instance.onCloseAction += SetMic;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
+                PermissionPopusSystem.Instance.OpenPermissionScreen();
             }
             else
             {
-#if !UNITY_EDITOR && UNITY_ANDROID
-                 if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+                NativeGallery.Permission permission = NativeGallery.CheckPermission(NativeGallery.PermissionType.Read, NativeGallery.MediaType.Image);
+#if UNITY_ANDROID
+                if (permission == NativeGallery.Permission.ShouldAsk)
                 {
-                    PermissionAlertPopup.SetActive(true);
+                    PermissionPopusSystem.Instance.onCloseAction += SetMic;
+                    PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
+                    PermissionPopusSystem.Instance.OpenPermissionScreen();
                 }
                 else
                 {
                     SetMic();
                 }
-#elif !UNITY_EDITOR && UNITY_IOS
-                if(PlayerPrefs.GetInt("MicPermission", 0) == 0){
-                      PermissionAlertPopup.SetActive(true);
+#elif UNITY_IOS
+                if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
+                     PermissionPopusSystem.Instance.onCloseAction += SetMic;
+            PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
+            PermissionPopusSystem.Instance.OpenPermissionScreen();
                 }
                 else
                 {
@@ -111,6 +116,7 @@ public class XanaVoiceChat : MonoBehaviour
 
     public void SetMic()      //Start()
     {
+        PermissionPopusSystem.Instance.onCloseAction -= SetMic;
 #if !UNITY_EDITOR && UNITY_IOS
         PlayerPrefs.SetInt("MicPermission", 1);
 #endif
