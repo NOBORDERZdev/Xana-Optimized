@@ -7,6 +7,8 @@ public class ButtonsOnOff : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject otherButton;
+    Button button;
+    Button otherbutton;
     public void ClickHidebtnOn()
     {
         otherButton.SetActive(true);
@@ -22,14 +24,19 @@ public class ButtonsOnOff : MonoBehaviour
         BuilderEventManager.UIToggle?.Invoke(false);
 
     }
-
+    private void Start()
+    {
+        button = GetComponent<Button>();
+        otherbutton = otherbutton.GetComponent<Button>();
+    }
+ 
 
 
     public void HideButtonsForFreeCam(bool b)
     {
-        otherButton.GetComponent<Button>().interactable = !b;
-        if (GetComponent<Button>())
-            GetComponent<Button>().interactable = !b;
+        otherbutton.interactable = !b;
+        if (button)
+            button.interactable = !b;
 
         BuilderEventManager.UIToggle?.Invoke(b);
 
