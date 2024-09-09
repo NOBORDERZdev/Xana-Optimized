@@ -85,8 +85,8 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             var car = carview.gameObject.GetComponent<SplineFollower>();
            
             isInsideCAr = true;
-            
-         
+            ConstantsHolder.DisableFppRotation = true;
+
             if (isdriver)
             {
 
@@ -314,6 +314,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 
         
         yield return new WaitForSeconds(2);
+        ConstantsHolder.DisableFppRotation = false;
         isInsideCAr = false;
     }
 
@@ -373,6 +374,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
         string name = PhotonNetwork.CurrentRoom.CustomProperties["Sector"].ToString();
         if (name == "Wheel")
         {
+           
             getcar();
         }
         
@@ -652,8 +654,9 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 
         Debug.LogError("Joined Wheel");
             ConstantsHolder.DisableFppRotation = true;
-            isInsideWheel = true;
-            if (playpos == 1)
+        isInsideWheel = true;
+        LoadingHandler.Instance.DisableDomeLoading();
+        if (playpos == 1)
             {
 
                 var car = GiantWheelManager.Instance.car;
@@ -975,7 +978,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             }
             else return;
 
-
+            LoadingHandler.Instance.DomeLoadingProgess(100);
             Debug.Log("Calling  RPC");
             view.RPC("EnterWheelCar", RpcTarget.All, MyPlayerPos);
         }
