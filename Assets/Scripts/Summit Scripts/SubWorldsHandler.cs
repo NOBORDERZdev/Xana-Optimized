@@ -3,13 +3,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
+using static XANASummitDataContainer;
 
 public class SubWorldsHandler : MonoBehaviour
 {
-    [SerializeField]
-    private StayTimeTrackerForSummit _stayTimeTrackerForSummit;
-    private bool _isBuilderWorld;
-    private bool _isEnteringInSubWorld = false;
     public GameObject SubworldListParent;
     public Transform ContentParent;
     public GameObject SubworldPrefab;
@@ -31,12 +28,14 @@ public class SubWorldsHandler : MonoBehaviour
     public XANASummitDataContainer XANASummitDataContainer;
     public XANASummitSceneLoading XANASummitSceneLoadingInstance;
 
-    public static Action<Sprite,string, string,string, string, string, string, string,Vector3,bool> OpenSubWorldDescriptionPanel;
+    public static Action<Sprite,string, string,string, string, string, string, string,Vector3, OfficialWorldDetails> OpenSubWorldDescriptionPanel;
     //public static int CurrentlyLoadedDomes;
 
     private string worldId;
     private Vector3 playerReturnPosition;
     private List<GameObject> subworldsList = new List<GameObject>();
+    public OfficialWorldDetails selectedWold;
+
     // Start is called before the first frame update
     void OnEnable()
     {
@@ -127,7 +126,8 @@ public class SubWorldsHandler : MonoBehaviour
             _SubWorldPrefab.WorldDomeId = domeGeneralData.id.ToString();
             _SubWorldPrefab.ThumbnailUrl = domeGeneralData.SubWorlds[i].selectWorld.icon;
             _SubWorldPrefab.WorldName.text = domeGeneralData.SubWorlds[i].selectWorld.label;
-            _SubWorldPrefab.IsBuilderWorld = domeGeneralData.SubWorlds[i].builderWorld;
+            _SubWorldPrefab.subworlddata = domeGeneralData.SubWorlds[i].selectWorld;
+
             _SubWorldPrefab.PlayerReturnPosition = PlayerReturnPosition;
             _SubWorldPrefab.Init();
             subworldsList.Add(temp);
@@ -138,8 +138,8 @@ public class SubWorldsHandler : MonoBehaviour
             return new Task<bool>(() => false);
     }
 
-    void OpenDescirptionPanel(Sprite thumbnailImage,string _worldId,string worldName,string worldDesCription,string creatorName,string worldType,string worldCategory,string worldDomeId,Vector3 _playerReturnPosition,bool isBuilderWorld)
-    {
+    void OpenDescirptionPanel(Sprite thumbnailImage,string _worldId,string worldName,string worldDesCription,string creatorName,string worldType,string worldCategory,string worldDomeId,Vector3 _playerReturnPosition, OfficialWorldDetails details)
+    {/*
         ThumbnailImage.sprite = thumbnailImage;
         WorldName.text = worldName;
         WorldDescription.text = worldDesCription;
@@ -150,8 +150,12 @@ public class SubWorldsHandler : MonoBehaviour
 
         worldId = _worldId;
         playerReturnPosition = _playerReturnPosition;
-        _isBuilderWorld = isBuilderWorld;
-        DescriptionPanelParent.SetActive(true);
+
+        DescriptionPanelParent.SetActive(true);*/
+        worldId = _worldId;
+        BuilderEventManager.LoadSceneByName?.Invoke(worldId, _playerReturnPosition);
+        selectedWold = details;
+      
     }
 
     public void CloseSubWorldList()
@@ -166,21 +170,15 @@ public class SubWorldsHandler : MonoBehaviour
         EnterButton.interactable = false;
         BackButton.interactable = false;
         EnterButtonAnimation.SetActive(true);
-        _isEnteringInSubWorld = true;
     }
 
-    void OnEnteredIntoWorld()
+   public void OnEnteredIntoWorld()
     {
         SubworldListParent.SetActive(false);
         DescriptionPanelParent.SetActive(false);
         EnterButton.interactable = true;
         BackButton.interactable = true;
         EnterButtonAnimation.SetActive(false);
-        if (_isEnteringInSubWorld)
-        {
-            _isEnteringInSubWorld = false;
-            CallAnalyticsForSubWorlds();
-        }
     }
 
     public void OnBack()
@@ -197,22 +195,5 @@ public class SubWorldsHandler : MonoBehaviour
         subworldsList.Clear();
         SubworldListParent.SetActive(false);
     }
-    private void CallAnalyticsForSubWorlds()
-    {
-        if (_stayTimeTrackerForSummit != null)
-        {
-            if (_stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea)
-                _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = false;
-            _stayTimeTrackerForSummit.DomeId = int.Parse(DomeId.text);
-            _stayTimeTrackerForSummit.DomeWorldId = int.Parse(worldId);
-            _stayTimeTrackerForSummit.IsBuilderWorld = _isBuilderWorld;
-            string eventName;
-            if (_isBuilderWorld)
-                eventName = "TV_Dome_" + _stayTimeTrackerForSummit.DomeId + "_BW_" + _stayTimeTrackerForSummit.DomeWorldId;
-            else
-                eventName = "TV_Dome_" + _stayTimeTrackerForSummit.DomeId + "_XW_" + _stayTimeTrackerForSummit.DomeWorldId;
-            GlobalConstants.SendFirebaseEventForSummit(eventName);
-            _stayTimeTrackerForSummit.StartTrackingTime();
-        }
-    }
+   
 }
