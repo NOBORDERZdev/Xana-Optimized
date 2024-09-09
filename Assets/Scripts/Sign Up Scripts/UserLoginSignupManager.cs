@@ -63,8 +63,6 @@ public class UserLoginSignupManager : MonoBehaviour
     public string SetProfileAvatarTempFilename = "";
     public string PermissionCheck = "";
     public GameObject PickImageOptionScreen;
-    [Space(5)]
-    public GameObject permissionPopup;
 
     [Header("Validation Popup Panel")]
     public ErrorHandler errorHandler;
@@ -1945,15 +1943,19 @@ public class UserLoginSignupManager : MonoBehaviour
     {
         if (Application.isEditor)
         {
-            permissionPopup.SetActive(true);
+            PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromGellery;
+            PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+            PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
         }
         else
         {
             NativeGallery.Permission permission = NativeGallery.CheckPermission(NativeGallery.PermissionType.Read, NativeGallery.MediaType.Image);
 #if UNITY_ANDROID
-            if (permission == NativeGallery.Permission.ShouldAsk) //||permission == NativeCamera.Permission.ShouldAsk
+            if (permission == NativeGallery.Permission.ShouldAsk)
             {
-                permissionPopup.SetActive(true);
+                PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromGellery;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+                PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
             }
             else
             {
@@ -1961,19 +1963,21 @@ public class UserLoginSignupManager : MonoBehaviour
             }
 #elif UNITY_IOS
                 if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
-                     permissionPopup.SetActive(true);
+                     PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromGellery;
+            PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+            PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
                 }
                 else
                 {
                     OnPickImageFromGellery(maxSize);
                 }
 #endif
-
         }
     }
 
     public void OnPickImageFromGellery(int maxSize)
     {
+        PermissionPopusSystem.Instance.onCloseActionWithParam -= OnPickImageFromGellery;
 #if UNITY_IOS
         PlayerPrefs.SetInt("PicPermission", 1);
 
