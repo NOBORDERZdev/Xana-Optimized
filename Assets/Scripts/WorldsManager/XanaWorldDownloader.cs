@@ -172,7 +172,7 @@ public class XanaWorldDownloader : MonoBehaviour
             {
                 DownloadQueueData temp = new DownloadQueueData();
                 temp.ItemID = xanaSceneData.SceneObjects[i].addressableKey;
-                if (!uniqueDownloadKeys.Contains(xanaSceneData.SceneObjects[i].addressableKey))
+                if (!uniqueDownloadKeys.Contains(xanaSceneData.SceneObjects[i].addressableKey) && !XanaWorldDownloader.CheckForVisitedWorlds(ConstantsHolder.xanaConstants.EnviornmentName))
                 {
                     uniqueDownloadKeys.Add(xanaSceneData.SceneObjects[i].addressableKey);
                     downloadSize += Addressables.GetDownloadSizeAsync(xanaSceneData.SceneObjects[i].addressableKey).WaitForCompletion();

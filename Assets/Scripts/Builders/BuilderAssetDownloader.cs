@@ -109,7 +109,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             DownloadQueueData temp = new DownloadQueueData();
             temp.ItemID = BuilderData.mapData.data.json.otherItems[i].ItemID;
             string downloadKey=prefabPrefix + BuilderData.mapData.data.json.otherItems[i].ItemID + prefabSuffix;
-            if (!uniqueDownloadKeys.Contains(downloadKey))
+            if (!uniqueDownloadKeys.Contains(downloadKey) && !XanaWorldDownloader.CheckForVisitedWorlds(ConstantsHolder.xanaConstants.builderMapID.ToString()))
             {
                 uniqueDownloadKeys.Add(downloadKey);
                 XanaWorldDownloader.downloadSize += Addressables.GetDownloadSizeAsync(downloadKey).WaitForCompletion();
