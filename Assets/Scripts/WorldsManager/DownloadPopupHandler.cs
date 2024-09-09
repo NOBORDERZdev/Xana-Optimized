@@ -76,6 +76,7 @@ public class DownloadPopupHandler : MonoBehaviour
     {
         userResponseTCS?.TrySetResult(true); // Complete the task with a result of true
         OnAlwaysAllow();
+        XanaWorldDownloader.downloadSize = 0;
     }
 
     // Called when the user clicks the Decline button
@@ -83,5 +84,6 @@ public class DownloadPopupHandler : MonoBehaviour
     {
         userResponseTCS?.TrySetResult(false); // Complete the task with a result of false
         HomeSceneLoaderInstance.LoadMain(false);
+        XanaWorldDownloader.downloadSize = 0;
     }
 }
