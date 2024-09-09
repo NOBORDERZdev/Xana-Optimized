@@ -152,7 +152,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         GamePlayButtonEvents.OnExitButtonXANASummit -= ResetOnBackFromSummit;
     }
 
-    void ForcedMapOpenForSummitScene()
+    public void ForcedMapOpenForSummitScene()
     {
         if (ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit")
         {
@@ -162,6 +162,14 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             ReferencesForGamePlay.instance.SumitMapStatus(true);
 
             XanaChatSystem.instance.chatDialogBox.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("Load map value===");
+            ReferencesForGamePlay.instance.minimap.SetActive(false);
+            PlayerPrefs.SetInt("minimap", 0);
+            ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
+            ReferencesForGamePlay.instance.SumitMapStatus(false);
         }
     }
 
@@ -1059,17 +1067,23 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 string name = environmentLabel.Replace(" : ", string.Empty);
                 environmentLabel = name;
             }
-            while (!ConstantsHolder.isAddressableCatalogDownload)
-            {
-                yield return new WaitForSeconds(1f);
-            }
+            /*  while (!ConstantsHolder.isAddressableCatalogDownload) //Zeel Replaced loop with waituntil
+              {
+                  yield return new WaitForSeconds(1f);
+              }*/
+
+            yield return new WaitUntil(() => ConstantsHolder.isAddressableCatalogDownload);
+
             AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(environmentLabel, LoadSceneMode.Additive, false);
             if (!ConstantsHolder.xanaConstants.isFromXanaLobby)
             {
                 LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             }
             while (!handle.IsDone)
+            {
+              
                 yield return null;
+            }
             addressableSceneName = environmentLabel;
 
             //One way to handle manual scene activation.

@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
+using static XANASummitDataContainer;
 
 public class SubWorldsHandler : MonoBehaviour
 {
@@ -27,12 +28,14 @@ public class SubWorldsHandler : MonoBehaviour
     public XANASummitDataContainer XANASummitDataContainer;
     public XANASummitSceneLoading XANASummitSceneLoadingInstance;
 
-    public static Action<Sprite,string, string,string, string, string, string, string,Vector3> OpenSubWorldDescriptionPanel;
+    public static Action<Sprite,string, string,string, string, string, string, string,Vector3, OfficialWorldDetails> OpenSubWorldDescriptionPanel;
     //public static int CurrentlyLoadedDomes;
 
     private string worldId;
     private Vector3 playerReturnPosition;
     private List<GameObject> subworldsList = new List<GameObject>();
+    public OfficialWorldDetails selectedWold;
+
     // Start is called before the first frame update
     void OnEnable()
     {
@@ -123,6 +126,7 @@ public class SubWorldsHandler : MonoBehaviour
             _SubWorldPrefab.WorldDomeId = domeGeneralData.id.ToString();
             _SubWorldPrefab.ThumbnailUrl = domeGeneralData.SubWorlds[i].selectWorld.icon;
             _SubWorldPrefab.WorldName.text = domeGeneralData.SubWorlds[i].selectWorld.label;
+            _SubWorldPrefab.subworlddata = domeGeneralData.SubWorlds[i].selectWorld;
 
             _SubWorldPrefab.PlayerReturnPosition = PlayerReturnPosition;
             _SubWorldPrefab.Init();
@@ -134,8 +138,8 @@ public class SubWorldsHandler : MonoBehaviour
             return new Task<bool>(() => false);
     }
 
-    void OpenDescirptionPanel(Sprite thumbnailImage,string _worldId,string worldName,string worldDesCription,string creatorName,string worldType,string worldCategory,string worldDomeId,Vector3 _playerReturnPosition)
-    {
+    void OpenDescirptionPanel(Sprite thumbnailImage,string _worldId,string worldName,string worldDesCription,string creatorName,string worldType,string worldCategory,string worldDomeId,Vector3 _playerReturnPosition, OfficialWorldDetails details)
+    {/*
         ThumbnailImage.sprite = thumbnailImage;
         WorldName.text = worldName;
         WorldDescription.text = worldDesCription;
@@ -147,7 +151,11 @@ public class SubWorldsHandler : MonoBehaviour
         worldId = _worldId;
         playerReturnPosition = _playerReturnPosition;
 
-        DescriptionPanelParent.SetActive(true);
+        DescriptionPanelParent.SetActive(true);*/
+        worldId = _worldId;
+        BuilderEventManager.LoadSceneByName?.Invoke(worldId, _playerReturnPosition);
+        selectedWold = details;
+      
     }
 
     public void CloseSubWorldList()
@@ -164,7 +172,7 @@ public class SubWorldsHandler : MonoBehaviour
         EnterButtonAnimation.SetActive(true);
     }
 
-    void OnEnteredIntoWorld()
+   public void OnEnteredIntoWorld()
     {
         SubworldListParent.SetActive(false);
         DescriptionPanelParent.SetActive(false);
