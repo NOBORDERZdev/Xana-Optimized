@@ -1,3 +1,4 @@
+using CSCore;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,10 +25,11 @@ public class PlayerDashHandler : MonoBehaviour
     private bool _canDash = true;
     [SerializeField]
     private Color _buttonDisableColor;
+    [SerializeField]
+    private AudioSource _audioSource;
 
     private float _sprintTime = 4f;
     private float _actualSpringSpeed;
-
     public bool IsPlayerInOtherState
     {
         get
@@ -40,7 +42,22 @@ public class PlayerDashHandler : MonoBehaviour
                 return true;
         }
     }
+    private void OnEnable()
+    {
+        _audioSource = _dashEffect.GetComponent<AudioSource>();
+        _audioSource.volume = SoundSettings.soundManagerSettings.totalVolumeSlider.value;
+        BuilderEventManager.BGMVolume += BGMVolume;
+    }
 
+    private void OnDisable()
+    {
+        BuilderEventManager.BGMVolume -= BGMVolume;
+    }
+
+    void BGMVolume(float volume)
+    {
+        _audioSource.volume = volume;
+    }
     private void Start()
     {
         if (gameObject.TryGetComponent(out PlayerController playerController))
