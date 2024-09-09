@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 public class LoadingHandler : MonoBehaviour
 {
     public static LoadingHandler Instance;
+    public static bool StopLoader;
 
     [Header("Loading UI Elements")]
     public GameObject loadingPanel;
@@ -526,6 +527,10 @@ public class LoadingHandler : MonoBehaviour
     {
         while (currentValue < sliderCompleteValue)
         {
+            while(StopLoader && currentValue>30)
+            {
+                yield return null;
+            }
             timer += Time.deltaTime;
             currentValue = Mathf.Lerp(0, sliderFinalValue, timer / speed);
             if ((ConstantsHolder.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
