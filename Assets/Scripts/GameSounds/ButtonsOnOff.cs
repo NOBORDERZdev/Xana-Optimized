@@ -29,26 +29,7 @@ public class ButtonsOnOff : MonoBehaviour
         button = GetComponent<Button>();
         otherbutton = otherbutton.GetComponent<Button>();
     }
-    private void FixedUpdate()
-    {
-        if(ConstantsHolder.DisableFppRotation && otherButton.transform.parent.gameObject.name== "Toggle -FreeFloatCamera") {
-
-            if (otherButton.name == "OffButton")
-            {
-                button.onClick.Invoke();
-                otherbutton.interactable = false;
-            }
-            else
-            {
-                button.interactable = false;
-            }
-
-        }
-        else
-        {
-            button.interactable = true;
-        }
-    }
+ 
 
 
     public void HideButtonsForFreeCam(bool b)
