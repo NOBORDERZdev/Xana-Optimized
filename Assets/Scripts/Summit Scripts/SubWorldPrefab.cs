@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using static XANASummitDataContainer;
 
 public class SubWorldPrefab : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class SubWorldPrefab : MonoBehaviour
     public Sprite WorldImage;
     public TMPro.TextMeshProUGUI WorldName;
     public Vector3 PlayerReturnPosition;
+    public OfficialWorldDetails subworlddata;
+
 
     public void Init()
     {
@@ -27,7 +30,7 @@ public class SubWorldPrefab : MonoBehaviour
 
     public void OnPrefabClicked()
     {
-        SubWorldsHandler.OpenSubWorldDescriptionPanel?.Invoke(WorldImage,WorldId.ToString(),SubWorldName,WorldDescription,CreatorName,WorldType,WorldCategory,WorldDomeId,PlayerReturnPosition);
+        SubWorldsHandler.OpenSubWorldDescriptionPanel?.Invoke(WorldImage,WorldId.ToString(),SubWorldName,WorldDescription,CreatorName,WorldType,WorldCategory,WorldDomeId,PlayerReturnPosition,subworlddata);
     }
 
     IEnumerator DownloadTexture()
