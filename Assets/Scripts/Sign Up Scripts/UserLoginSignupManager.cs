@@ -15,6 +15,7 @@ using Photon.Pun.Demo.PunBasics;
 using Newtonsoft.Json;
 using SuperStar.Helpers;
 using Newtonsoft.Json.Linq;
+using UnityEngine.SceneManagement;
 
 public class UserLoginSignupManager : MonoBehaviour
 {
@@ -88,6 +89,11 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public GameObject DownloadPermissionPopup;
 
+    public void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     private void OnEnable()
     {
 
@@ -122,7 +128,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
     private void OnDisable()
     {
-        verficationPlaceHolder.OnValueChanged.RemoveListener(delegate { ValueChangeCheck(); });
+      //  verficationPlaceHolder.OnValueChanged.RemoveListener(delegate { ValueChangeCheck(); });
         Web3Web2Handler.AllDataFetchedfromServer -= Web3EventForNFTData;
     }
 
@@ -583,7 +589,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
     private async void Web3EventForNFTData(string _userType)
     {
-        if (_userType == "Web2")
+       /* if (_userType == "Web2")
         {
             if (_web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.count > 0)
             {
@@ -616,7 +622,7 @@ public class UserLoginSignupManager : MonoBehaviour
         else
         {
             ////Debug.Log("not Logged in");
-        }
+        }*/
     }
 
 
@@ -1796,25 +1802,26 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.SetString("publicID", "");
         PlayerPrefs.Save();
         UserPassManager.Instance.testing = false;
-        if (FeedUIController.Instance.SNSSettingController != null)
+      /*  if (FeedUIController.Instance.SNSSettingController != null)
         {
             FeedUIController.Instance.SNSSettingController.LogoutSuccess();
-        }
+        }*/
         ConstantsGod.UserRoles = new List<string>() { "Guest" };
-        if (InventoryManager.instance.MultipleSave)
+       /* if (InventoryManager.instance.MultipleSave)
         {
             LoadPlayerAvatar.instance_loadplayer.avatarButton.gameObject.SetActive(false);
-        }
+        }*/
         LoadingHandler.Instance.characterLoading.gameObject.SetActive(false);
         LoadingHandler.Instance.HideLoading();
         ConstantsHolder.xanaConstants.isCameraMan = false;
         ConstantsHolder.xanaConstants.IsDeemoNFT = false;
-        InventoryManager.instance.CheckWhenUserLogin();
-        UserLoginSignupManager.instance.ShowWelcomeScreen();
-        if (_web3APIforWeb2._OwnedNFTDataObj != null)
+       // InventoryManager.instance.CheckWhenUserLogin();
+        //  UserLoginSignupManager.instance.ShowWelcomeScreen();
+        SceneManager.LoadSceneAsync("Home");
+      /*  if (_web3APIforWeb2._OwnedNFTDataObj != null)
         {
             _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
-        }
+        }*/
 
         yield return null;
     }
@@ -1868,7 +1875,7 @@ public class UserLoginSignupManager : MonoBehaviour
             {
                 if (APIResponse.msg.Contains("Username"))
                 {
-
+                    Debug.Log("Loging bug");
                     bykeyLocalize = TextLocalization.GetLocaliseTextByKey("Username already exists");
                     UserDisplayNameErrors(bykeyLocalize);
 
