@@ -97,6 +97,11 @@ public class GamePlayUIHandler : MonoBehaviour
         GamePlayButtonEvents.inst.OnExitButtonClick();
     }
 
+    public void OnOptionButtonClick()
+    {
+        GamePlayButtonEvents.inst.OnClickOptionButton();
+    }
+
     public void OnPeopeClick()
     {
         GamePlayButtonEvents.inst.OnPeopeClick();

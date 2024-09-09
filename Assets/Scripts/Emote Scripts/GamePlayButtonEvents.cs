@@ -23,6 +23,7 @@ public class GamePlayButtonEvents : MonoBehaviour
     public event Action OnHelpButton;
     public event Action OnSettingButton;
     public event Action OnExitButton;
+    public event Action OnOptionButton;
     public event Action OnPeope;
     public event Action OnAnnouncement;
     public event Action OnInvite;
@@ -92,6 +93,11 @@ public class GamePlayButtonEvents : MonoBehaviour
     public void OnExitButtonClick()
     {
         OnExitButton?.Invoke();
+    }
+
+    public void OnClickOptionButton()
+    {
+        OnOptionButton?.Invoke();
     }
 
     public void OnSwitchCameraClick()

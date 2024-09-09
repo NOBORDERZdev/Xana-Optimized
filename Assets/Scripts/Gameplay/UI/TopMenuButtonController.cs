@@ -38,6 +38,7 @@ public class TopMenuButtonController : MonoBehaviour
     {
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OnHelpButton += HelpBtnPressed;
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OnExitButton += OnExitClick;
+        if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OnOptionButton += OnOptionClick;
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OnSettingButton += OnSettingClick;
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OnInvite += OnInviteClick;
     }
@@ -46,6 +47,7 @@ public class TopMenuButtonController : MonoBehaviour
     {
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OnHelpButton -= HelpBtnPressed;
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OnExitButton -= OnExitClick;
+        if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OnOptionButton -= OnOptionClick;
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OnSettingButton -= OnSettingClick;
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OnInvite -= OnInviteClick;
     }
@@ -79,6 +81,11 @@ public class TopMenuButtonController : MonoBehaviour
     void OnExitClick()
     {
         SetPress(1);
+    }
+    
+    void OnOptionClick()
+    {
+        SetPress(3);
     }
 
     void OnSettingClick()
