@@ -79,10 +79,10 @@ public class XANASummitSceneLoading : MonoBehaviour
             ReferencesForGamePlay.instance.minimap.SetActive(false);
         }
     }
- 
+
     async void LoadingFromDome(int domeId, Vector3 playerPos)
     {
-        XANASummitDataContainer.DomeGeneralData domeGeneralData=new XANASummitDataContainer.DomeGeneralData();
+        XANASummitDataContainer.DomeGeneralData domeGeneralData = new XANASummitDataContainer.DomeGeneralData();
         domeGeneralData = GetDomeData(domeId);
 
         if (string.IsNullOrEmpty(domeGeneralData.world))
@@ -152,7 +152,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (domeGeneralData.worldType)
             LoadBuilderSceneLoading(domeGeneralData.builderWorldId);
         else
-            multiplayerController.Connect("XANA Summit-" + ConstantsHolder.domeId+"-"+domeGeneralData.world);
+            multiplayerController.Connect("XANA Summit-" + ConstantsHolder.domeId + "-" + domeGeneralData.world);
 
         // Summit Analytics Part
         if (_stayTimeTrackerForSummit != null)
@@ -179,6 +179,12 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         GameplayEntityLoader.instance.AssignRaffleTickets(domeId);
         GlobalConstants.SendFirebaseEventForSummit(eventName);
+
+        if (ReferencesForGamePlay.instance.playerControllerNew.isFirstPerson)
+        {
+            GamePlayButtonEvents.inst.OnSwitchCameraClick();
+        }
+        GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
     }
 
 
@@ -240,6 +246,12 @@ public class XANASummitSceneLoading : MonoBehaviour
             multiplayerController.Connect("XANA Summit-" + ConstantsHolder.domeId + "-" + worldInfo.data.name);
 
 
+        if (ReferencesForGamePlay.instance.playerControllerNew.isFirstPerson)
+        {
+
+            GamePlayButtonEvents.inst.OnSwitchCameraClick();
+        }
+        GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
 
     }
     async Task UnloadScene(string sceneName)
@@ -332,6 +344,12 @@ public class XANASummitSceneLoading : MonoBehaviour
         _domeMiniMap.SummitSceneReloaded();
         SummitMiniMapStatusOnSceneChange(true);
         ConstantsHolder.xanaConstants.comingFrom = ConstantsHolder.ComingFrom.None;
+
+        if (ReferencesForGamePlay.instance.playerControllerNew.isFirstPerson)
+        {
+            GamePlayUIHandler.inst.OnSwitchCameraClick();
+        }
+        GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
         //
     }
     XANASummitDataContainer.DomeGeneralData GetDomeData(int domeId)

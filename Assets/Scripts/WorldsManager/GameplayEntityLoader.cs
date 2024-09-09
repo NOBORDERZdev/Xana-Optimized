@@ -150,8 +150,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         GamePlayButtonEvents.OnExitButtonXANASummit -= ResetOnBackFromSummit;
     }
 
-    void ForcedMapOpenForSummitScene()
+    public void ForcedMapOpenForSummitScene()
     {
+        Debug.Log("Xana Summit Environment===="+ ConstantsHolder.xanaConstants.EnviornmentName);
         if(ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit")
         {
             ReferencesForGamePlay.instance.minimap.SetActive(true);
@@ -160,6 +161,14 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             ReferencesForGamePlay.instance.SumitMapStatus(true);
 
             XanaChatSystem.instance.chatDialogBox.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("Call map status===");
+            ReferencesForGamePlay.instance.minimap.SetActive(false);
+            PlayerPrefs.SetInt("minimap", 0);
+            ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
+            ReferencesForGamePlay.instance.SumitMapStatus(false);
         }
     }
 
