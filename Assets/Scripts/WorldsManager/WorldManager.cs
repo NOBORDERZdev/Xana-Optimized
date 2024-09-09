@@ -177,6 +177,7 @@ public class WorldManager : MonoBehaviour
             ConstantsHolder.xanaConstants.isFromHomeTab = true;
             ConstantsHolder.xanaConstants.MuseumID = singleWorldInfo.data.id;
             WorldItemView.m_EnvName = singleWorldInfo.data.name;
+            ConstantsHolder.Thumbnail = singleWorldInfo.data.thumbnail;
             ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             ConstantsHolder.xanaConstants.UserMicEnable = singleWorldInfo.data.userMicEnable;
             LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
@@ -1059,7 +1060,7 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.presetCharacterLoading.SetActive(false);
             LoadingHandler.Instance.characterLoading.SetActive(false);
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-            LoadingHandler.Instance.loadingPanel.SetActive(false);
+          //  LoadingHandler.Instance.loadingPanel.SetActive(false);
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
             ConstantsHolder.xanaConstants.EnviornmentName = ConstantsHolder.xanaConstants.JjWorldTeleportSceneName;
