@@ -1420,14 +1420,24 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         referenceForPenguin.XanaJumpPotraite.SetActive(false);
         referenceForPenguin.XanaJumpLandsacape.SetActive(false);
         PositionResetButton.SetActive(false);
-        if (ConstantsHolder.xanaConstants.isXanaPartyWorld && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld )
         {
-            ReferencesForGamePlay.instance.XANAPartyWaitingText.SetActive(true);
-
+            if (!ConstantsHolder.xanaConstants.isJoinigXanaPartyGame) // For Spwaning in PENPENZ Lobby
+            {
+                ReferencesForGamePlay.instance.XANAPartyWaitingText.SetActive(true);
+            }
+            else // For Spwaning in PENPENZ GAME
+            {
+                ReferencesForGamePlay.instance.XANAPartyWaitingText.SetActive(false);
+            }
+            player.GetComponent<PartyTimerManager>().enabled = true;
+            player.GetComponent<XANAPartyMulitplayer>().enabled = true;
         }
         else
         {
             ReferencesForGamePlay.instance.XANAPartyWaitingText.SetActive(false);
+            player.GetComponent<PartyTimerManager>().enabled = false;
+            player.GetComponent<XANAPartyMulitplayer>().enabled = false;
         }
         if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && GamificationComponentData.instance != null && !GamificationComponentData.instance.isRaceStarted && ReferencesForGamePlay.instance != null)
         {

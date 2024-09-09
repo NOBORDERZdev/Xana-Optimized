@@ -137,7 +137,7 @@ public class XANASummitDataContainer : ScriptableObject
         public string world360Image;
         public string companyLogo;
         public int maxPlayer;
-        public bool Penpenz;
+        public bool is_penpenz;
         public List<SubWorldInfo> SubWorlds;
         public bool isSubWorld;
     }

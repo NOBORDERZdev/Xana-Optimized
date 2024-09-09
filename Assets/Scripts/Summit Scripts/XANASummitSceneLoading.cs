@@ -121,6 +121,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         gameplayEntityLoader.addressableSceneName = domeGeneralData.world;
         ConstantsHolder.userLimit = domeGeneralData.maxPlayer;
         ConstantsHolder.isPenguin = domeGeneralData.IsPenguin;
+        ConstantsHolder.xanaConstants.isXanaPartyWorld = domeGeneralData.is_penpenz;
         ConstantsHolder.isFixedHumanoid = domeGeneralData.Ishumanoid;
         ConstantsHolder.AvatarIndex = domeGeneralData.AvatarIndex;
         if (domeGeneralData.worldType)
@@ -357,7 +358,7 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.world360Image = dataContainer.summitData.domes[i].world360Image;
                 domeGeneralData.companyLogo = dataContainer.summitData.domes[i].companyLogo;
                 domeGeneralData.SubWorlds = dataContainer.summitData.domes[i].SubWorlds;
-                domeGeneralData.Penpenz = dataContainer.summitData.domes[i].Penpenz;
+                domeGeneralData.is_penpenz = dataContainer.summitData.domes[i].is_penpenz;
                 //if (dataContainer.summitData1.domes[i].worldType)
                 //    return new Tuple<string[],string>(new[] { dataContainer.summitData1.domes[i].world, "1", dataContainer.summitData1.domes[i].builderWorldId }, dataContainer.summitData1.domes[i].experienceType);
                 //else
