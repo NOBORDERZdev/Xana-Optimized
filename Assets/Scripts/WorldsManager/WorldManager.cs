@@ -144,7 +144,8 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
             LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
             LoadingHandler.Instance.ShowLoading();
-            LoadingHandler.Instance.UpdateLoadingSlider(0);
+            LoadingHandler.StopLoader = true;
+            //LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
             Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
