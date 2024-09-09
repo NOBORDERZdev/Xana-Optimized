@@ -94,6 +94,11 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                     GameplayEntityLoader.instance._uiReferences.Onfreecam.interactable = false;
                     GameplayEntityLoader.instance._uiReferences.OffFreecam.interactable = false;
                 }
+                else
+                {
+                    GameplayEntityLoader.instance._uiReferences.Onfreecam.interactable = false;
+                    GameplayEntityLoader.instance._uiReferences.OffFreecam.interactable = false;
+                }
             }
          
 
@@ -327,12 +332,11 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
         if (view.IsMine)
         {
             ConstantsHolder.DisableFppRotation = false;
-            if (GameplayEntityLoader.instance._uiReferences.Onfreecam.gameObject.activeInHierarchy)
-            {
+           
               
                 GameplayEntityLoader.instance._uiReferences.Onfreecam.interactable = true;
                 GameplayEntityLoader.instance._uiReferences.OffFreecam.interactable = true;
-            }
+           
         }
         isInsideCAr = false;
     }
@@ -681,6 +685,11 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 GameplayEntityLoader.instance._uiReferences.Onfreecam.interactable = false;
                 GameplayEntityLoader.instance._uiReferences.OffFreecam.interactable = false;
             }
+            else
+            {
+                GameplayEntityLoader.instance._uiReferences.Onfreecam.interactable = false;
+                GameplayEntityLoader.instance._uiReferences.OffFreecam.interactable = false;
+            }
         }
         isInsideWheel = true;
         LoadingHandler.Instance.DisableDomeLoading();
@@ -922,12 +931,11 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             }
            
                 ConstantsHolder.DisableFppRotation = false;
-                if (GameplayEntityLoader.instance._uiReferences.Onfreecam.gameObject.activeInHierarchy)
-                {
+               
 
                     GameplayEntityLoader.instance._uiReferences.Onfreecam.interactable = true;
                     GameplayEntityLoader.instance._uiReferences.OffFreecam.interactable = true;
-                }
+                
             
             MutiplayerController.instance.disableSector = false;
             CarNavigationManager.CarNavigationInstance.DisableExitCanvas();
