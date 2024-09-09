@@ -85,7 +85,17 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             var car = carview.gameObject.GetComponent<SplineFollower>();
            
             isInsideCAr = true;
-            ConstantsHolder.DisableFppRotation = true;
+            if (view.IsMine)
+            {
+                ConstantsHolder.DisableFppRotation = true;
+             if(GameplayEntityLoader.instance._uiReferences.Onfreecam.gameObject.activeInHierarchy)
+                {
+                    GameplayEntityLoader.instance._uiReferences.Onfreecam.onClick.Invoke();
+                    GameplayEntityLoader.instance._uiReferences.Onfreecam.interactable = false;
+                    GameplayEntityLoader.instance._uiReferences.OffFreecam.interactable = false;
+                }
+            }
+         
 
             if (isdriver)
             {
@@ -314,7 +324,16 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 
         
         yield return new WaitForSeconds(2);
-        ConstantsHolder.DisableFppRotation = false;
+        if (view.IsMine)
+        {
+            ConstantsHolder.DisableFppRotation = false;
+            if (GameplayEntityLoader.instance._uiReferences.Onfreecam.gameObject.activeInHierarchy)
+            {
+              
+                GameplayEntityLoader.instance._uiReferences.Onfreecam.interactable = true;
+                GameplayEntityLoader.instance._uiReferences.OffFreecam.interactable = true;
+            }
+        }
         isInsideCAr = false;
     }
 
@@ -653,7 +672,16 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
        
 
         Debug.LogError("Joined Wheel");
+        if (view.IsMine)
+        {
             ConstantsHolder.DisableFppRotation = true;
+            if (GameplayEntityLoader.instance._uiReferences.Onfreecam.gameObject.activeInHierarchy)
+            {
+                GameplayEntityLoader.instance._uiReferences.Onfreecam.onClick.Invoke();
+                GameplayEntityLoader.instance._uiReferences.Onfreecam.interactable = false;
+                GameplayEntityLoader.instance._uiReferences.OffFreecam.interactable = false;
+            }
+        }
         isInsideWheel = true;
         LoadingHandler.Instance.DisableDomeLoading();
         if (playpos == 1)
@@ -892,7 +920,15 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             {
                 item.enabled = true;
             }
-            ConstantsHolder.DisableFppRotation = false;
+           
+                ConstantsHolder.DisableFppRotation = false;
+                if (GameplayEntityLoader.instance._uiReferences.Onfreecam.gameObject.activeInHierarchy)
+                {
+
+                    GameplayEntityLoader.instance._uiReferences.Onfreecam.interactable = true;
+                    GameplayEntityLoader.instance._uiReferences.OffFreecam.interactable = true;
+                }
+            
             MutiplayerController.instance.disableSector = false;
             CarNavigationManager.CarNavigationInstance.DisableExitCanvas();
             loader.mainController.transform.parent = Parent;
