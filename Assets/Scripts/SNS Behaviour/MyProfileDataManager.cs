@@ -156,6 +156,7 @@ public class MyProfileDataManager : MonoBehaviour
     bool profileMakedFlag = false;
     public string permissionCheck = "";
     public string TestingJasonForTags;
+
     UserLoginSignupManager userLoginSignupManager;
     SNS_APIManager apiManager;
     ProfileUIHandler profileUIHandler;
@@ -1145,11 +1146,50 @@ public class MyProfileDataManager : MonoBehaviour
         }
     }
 
+    public void CheckPermissionStatus(int maxSize)
+    {
+        if (Application.isEditor)
+        {
+            PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromGellery;
+            PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+            PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
+        }
+        else
+        {
+            NativeGallery.Permission permission = NativeGallery.CheckPermission(NativeGallery.PermissionType.Read, NativeGallery.MediaType.Image);
+#if UNITY_ANDROID
+            if (permission == NativeGallery.Permission.ShouldAsk) //||permission == NativeCamera.Permission.ShouldAsk
+            {
+                PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromGellery;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+                PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
+            }
+            else
+            {
+                OnPickImageFromGellery(maxSize);
+            }
+#elif UNITY_IOS
+                if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
+                     PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromGellery;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+                PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
+                }
+                else
+                {
+                    OnPickImageFromGellery(maxSize);
+                }
+#endif
+
+        }
+    }
 
     //this method is used to pick group avatar from gellery for group avatar.
     public void OnPickImageFromGellery(int maxSize)
     {
+        PermissionPopusSystem.Instance.onCloseActionWithParam -= OnPickImageFromGellery;
 #if UNITY_IOS
+         PlayerPrefs.SetInt("PicPermission", 1);
+
         if (permissionCheck == "false")
         {
             string url = MyNativeBindings.GetSettingsURL();
@@ -1273,10 +1313,49 @@ public class MyProfileDataManager : MonoBehaviour
 #endif
     }
 
+    public void CheckPermissionStatus_Camera(int maxSize)
+    {
+        if (Application.isEditor)
+        {
+            PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromCamera;
+            PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Camera;
+            PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
+        }
+        else
+        {
+            NativeCamera.Permission permission = NativeCamera.CheckPermission(true);
+#if UNITY_ANDROID
+            if (permission == NativeCamera.Permission.ShouldAsk)
+            {
+                PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromCamera;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Camera;
+                PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
+            }
+            else
+            {
+                OnPickImageFromCamera(maxSize);
+            }
+#elif UNITY_IOS
+                if(PlayerPrefs.GetInt("CamPermission", 0) == 0){
+                PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromCamera;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Camera;
+                PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
+                }
+                else
+                {
+                    OnPickImageFromCamera(maxSize);
+                }
+#endif
+
+        }
+    }
+
     //this method is used to take picture from camera for group avatar.
     public void OnPickImageFromCamera(int maxSize)
     {
+        PermissionPopusSystem.Instance.onCloseActionWithParam -= OnPickImageFromCamera;
 #if UNITY_IOS
+        PlayerPrefs.SetInt("CamPermission", 1);
         if (permissionCheck == "false")
         {
             string url = MyNativeBindings.GetSettingsURL();

@@ -435,6 +435,15 @@ public class ReferencesForGamePlay : MonoBehaviour
 
     public void FullScreenMapStatus (bool _enable)
     {
+        if (_enable)
+        {
+            Input.multiTouchEnabled = false;
+        }
+        else
+        {
+            Input.multiTouchEnabled = true;
+        }
+
         FullscreenMapSummit.SetActive(_enable);
     }
 

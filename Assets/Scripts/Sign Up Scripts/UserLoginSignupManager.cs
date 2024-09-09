@@ -66,6 +66,8 @@ public class UserLoginSignupManager : MonoBehaviour
     public string SetProfileAvatarTempFilename = "";
     public string PermissionCheck = "";
     public GameObject PickImageOptionScreen;
+    [Space(5)]
+    public GameObject permissionPopup;
 
     [Header("Validation Popup Panel")]
     public ErrorHandler errorHandler;
@@ -1183,6 +1185,7 @@ public class UserLoginSignupManager : MonoBehaviour
                     GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
 
                 }));
+
                 if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
                 {
                     // LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
@@ -1190,6 +1193,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 }
                 else
                 {
+                    GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
                     LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
                     if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
                     {
@@ -2270,10 +2274,42 @@ public class UserLoginSignupManager : MonoBehaviour
         PickImageOptionScreen.SetActive(true);
     }
 
+    public void CheckPermissionStatus(int maxSize)
+    {
+        if (Application.isEditor)
+        {
+            permissionPopup.SetActive(true);
+        }
+        else
+        {
+            NativeGallery.Permission permission = NativeGallery.CheckPermission(NativeGallery.PermissionType.Read, NativeGallery.MediaType.Image);
+#if UNITY_ANDROID
+            if (permission == NativeGallery.Permission.ShouldAsk) //||permission == NativeCamera.Permission.ShouldAsk
+            {
+                permissionPopup.SetActive(true);
+            }
+            else
+            {
+                OnPickImageFromGellery(maxSize);
+            }
+#elif UNITY_IOS
+                if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
+                     permissionPopup.SetActive(true);
+                }
+                else
+                {
+                    OnPickImageFromGellery(maxSize);
+                }
+#endif
+
+        }
+    }
 
     public void OnPickImageFromGellery(int maxSize)
     {
 #if UNITY_IOS
+        PlayerPrefs.SetInt("PicPermission", 1);
+
         if (PermissionCheck == "false")
         {
             string url = MyNativeBindings.GetSettingsURL();

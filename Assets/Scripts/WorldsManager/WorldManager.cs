@@ -108,6 +108,8 @@ public class WorldManager : MonoBehaviour
 
     public IEnumerator xanaParty()
     {
+        if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            yield return null;
         if (!XANAPartyManager.Instance.EnableXANAPartyGuest)
         {
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
@@ -194,6 +196,8 @@ public class WorldManager : MonoBehaviour
     void AddingDeleyToLoadScene()
     {
         LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+        XANAPartyManager xANAPartyManager = XANAPartyManager.Instance;
+        xANAPartyManager.StartCoroutine(xANAPartyManager.FetchXanaPartyGames());
     }
 
     IEnumerator GetSingleWorldData(string apiURL, Action<bool> callback)
