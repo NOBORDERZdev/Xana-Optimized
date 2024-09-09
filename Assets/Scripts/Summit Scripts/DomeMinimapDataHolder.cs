@@ -151,8 +151,6 @@ public class DomeMinimapDataHolder : MonoBehaviour
     }
     public void OnClickYesBtn()
     {
-        if (GiantWheelManager.Instance != null && GiantWheelManager.Instance.CarAdded)
-            return;
 
         ConfirmationPanelHandling(false);
         ReferencesForGamePlay.instance.FullScreenMapStatus(false);
