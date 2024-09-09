@@ -166,7 +166,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
             Addressables.Release(async);
         }
         AddressableDownloader.bundleAsyncOperationHandle.Clear();
-        Caching.ClearCache();
+        //Caching.ClearCache();
         AssetBundle.UnloadAllAssetBundles(true);
         await Resources.UnloadUnusedAssets();
 

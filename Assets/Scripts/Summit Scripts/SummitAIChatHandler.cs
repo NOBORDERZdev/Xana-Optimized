@@ -26,19 +26,19 @@ public class SummitAIChatHandler : MonoBehaviour
     private void OnEnable()
     {
         _CommonChatRef = LandscapeChatRef;
-        BuilderEventManager.AINPCActivated += LoadAIChat;
-        BuilderEventManager.AINPCDeactivated += RemoveAIChat;
-        BuilderEventManager.AfterPlayerInstantiated += LoadNPC;
-        BuilderEventManager.ResetSummit += ResetOnExit;
-        ScreenOrientationManager.switchOrientation += UpdateChatInstance;
+        //BuilderEventManager.AINPCActivated += LoadAIChat;
+        //BuilderEventManager.AINPCDeactivated += RemoveAIChat;
+        //BuilderEventManager.AfterPlayerInstantiated += LoadNPC;
+        //BuilderEventManager.ResetSummit += ResetOnExit;
+        //ScreenOrientationManager.switchOrientation += UpdateChatInstance;
     }
     private void OnDisable()
     {
-        BuilderEventManager.AINPCActivated -= LoadAIChat;
-        BuilderEventManager.AINPCDeactivated -= RemoveAIChat;
-        BuilderEventManager.AfterPlayerInstantiated -= LoadNPC;
-        BuilderEventManager.ResetSummit -= ResetOnExit;
-        ScreenOrientationManager.switchOrientation -= UpdateChatInstance;
+        //BuilderEventManager.AINPCActivated -= LoadAIChat;
+        //BuilderEventManager.AINPCDeactivated -= RemoveAIChat;
+        //BuilderEventManager.AfterPlayerInstantiated -= LoadNPC;
+        //BuilderEventManager.ResetSummit -= ResetOnExit;
+        //ScreenOrientationManager.switchOrientation -= UpdateChatInstance;
     }
 
     void UpdateChatInstance(bool IsPortrait)

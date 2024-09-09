@@ -973,6 +973,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         environmentLabel = label;
         if (label == "XANA Summit")
         {
+            Debug.LogError("here for Summit World only");
             XanaWorldDownloader.downloadSize = Addressables.GetDownloadSizeAsync(environmentLabel).WaitForCompletion();
             XanaWorldDownloader.downloadSize += (71 * 1024 * 1024);
             if (!DownloadPopupHandler.AlwaysAllowDownload && !XanaWorldDownloader.CheckForVisitedWorlds(ConstantsHolder.xanaConstants.EnviornmentName))

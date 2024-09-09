@@ -174,6 +174,7 @@ public class XanaWorldDownloader : MonoBehaviour
                 temp.ItemID = xanaSceneData.SceneObjects[i].addressableKey;
                 if (!uniqueDownloadKeys.Contains(xanaSceneData.SceneObjects[i].addressableKey) && !XanaWorldDownloader.CheckForVisitedWorlds(ConstantsHolder.xanaConstants.EnviornmentName))
                 {
+                    Debug.LogError("Calculate Download Size");
                     uniqueDownloadKeys.Add(xanaSceneData.SceneObjects[i].addressableKey);
                     downloadSize += Addressables.GetDownloadSizeAsync(xanaSceneData.SceneObjects[i].addressableKey).WaitForCompletion();
                 }
@@ -200,6 +201,7 @@ public class XanaWorldDownloader : MonoBehaviour
                     }
                 }
             }
+            uniqueDownloadKeys.Clear();
             dataArranged = true;
         }
         catch (Exception e)
