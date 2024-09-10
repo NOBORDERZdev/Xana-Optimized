@@ -100,7 +100,7 @@ public class XanaVoiceChat : MonoBehaviour
                     SetMic();
                 }
 #elif UNITY_IOS
-                if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
+                if(PlayerPrefs.GetInt("MicPermission", 0) == 0){
                      PermissionPopusSystem.Instance.onCloseAction += SetMic;
             PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
             PermissionPopusSystem.Instance.OpenPermissionScreen();
