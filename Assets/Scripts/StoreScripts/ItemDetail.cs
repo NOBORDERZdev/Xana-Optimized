@@ -526,7 +526,7 @@ public class ItemDetail : MonoBehaviour
         }
         else
         {
-            // SelectImg.enabled = false;
+           //  SelectImg.enabled = false;
             this.gameObject.GetComponent<Image>().color = NormalColor;
         }
         if (!SelectedBool)
@@ -541,12 +541,14 @@ public class ItemDetail : MonoBehaviour
 
     public void ItemBtnClicked()
     {
+        Debug.Log("on hua yaha par");
         if (GameManager.Instance.isStoreAssetDownloading || GetComponent<Image>().enabled is true)
             return;
 
         string CurrentString = "";
         CurrentString = CategoriesEnumVar.ToString();
         GameManager.Instance.ResetSelectedItems();
+       
 
         switch (CurrentString)
         {
@@ -782,12 +784,12 @@ public class ItemDetail : MonoBehaviour
                 return;
 
             ////Debug.Log("<color=red>" + ConstantsHolder.xanaConstants._curretClickedBtn.GetComponent<ItemDetail>().id + "</color>");
-            ConstantsHolder.xanaConstants._curretClickedBtn.GetComponent<Image>().enabled = true;
+            ConstantsHolder.xanaConstants._curretClickedBtn.GetComponent<ItemDetail>().SelectImg.enabled = true;
 
             if (ConstantsHolder.xanaConstants._lastClickedBtn)
             {
                 if (ConstantsHolder.xanaConstants._lastClickedBtn.GetComponent<ItemDetail>())
-                    ConstantsHolder.xanaConstants._lastClickedBtn.GetComponent<Image>().enabled = false;
+                    ConstantsHolder.xanaConstants._lastClickedBtn.GetComponent<ItemDetail>().SelectImg.enabled=false;
             }
             //Debug.Log("<color=red>ItemDetail AssignLastClickedBtnHere</color>");
             ConstantsHolder.xanaConstants._lastClickedBtn = this.gameObject;
@@ -918,7 +920,7 @@ public class ItemDetail : MonoBehaviour
     // open color pallete panel by press color btn
     public void ColorBtnClicked()
     {
-        //SelectImg.enabled = true;
+        SelectImg.enabled = true;
         //this.gameObject.GetComponent<Image>().color = HighlightedColor;
         //return;
         if (GetComponent<Image>().enabled is true)
