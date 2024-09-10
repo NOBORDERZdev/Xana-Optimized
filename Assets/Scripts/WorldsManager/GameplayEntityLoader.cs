@@ -32,6 +32,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     private GameObject mainControllerRefHolder;
     private GameObject YoutubeStreamPlayer;
     public GameObject PenguinPlayer;
+    public GameObject DashButton;
     public ActionManager ActionEmoteSystem;
 
     public CinemachineFreeLook PlayerCamera;
@@ -411,31 +412,90 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             LoadingHandler.Instance.UpdateLoadingStatusText("Joining World...");
         }
+        //code by hardik 9aug2024
         if (!(SceneManager.GetActiveScene().name.Contains("Museum")))
         {
             spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
             RaycastHit hit;
-        CheckAgain:
-            // Does the ray intersect any objects excluding the player layer
-            if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
+
+            // Loop to check for valid spawn point
+            bool validSpawnPointFound = false;
+            int maxAttempts = 10; // Limit the number of attempts to prevent an infinite loop
+            int attempts = 0;
+
+            while (!validSpawnPointFound && attempts < maxAttempts)
             {
-                if (hit.collider.gameObject.tag == "PhotonLocalPlayer" || hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
+                attempts++;
+
+                // Cast a ray downwards from the spawn point to detect collisions
+                if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
                 {
-                    spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
-                    goto CheckAgain;
+                    // Check if the hit object is a player or other non-walkable surface
+                    if (hit.collider.gameObject.CompareTag("PhotonLocalPlayer") ||
+                        hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
+                    {
+                        // Adjust spawn point slightly if occupied
+                        spawnPoint = new Vector3(
+                            spawnPoint.x + UnityEngine.Random.Range(-1f, 1f),
+                            spawnPoint.y,
+                            spawnPoint.z + UnityEngine.Random.Range(-1f, 1f)
+                        );
+                    }
+                    else
+                    {
+                        // Valid spawn point found
+                        spawnPoint = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
+                        validSpawnPointFound = true;
+                    }
                 }
-                spawnPoint = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
             }
+
+            if (!validSpawnPointFound)
+            {
+                Debug.LogWarning("Failed to find a valid spawn point after multiple attempts.");
+            }
+
             SetPlayerCameraAngle();
         }
 
-
+        // Set main player and controller positions
         mainPlayer.transform.position = new Vector3(0, 0, 0);
+
         if (mainController == null)
             mainController = mainControllerRefHolder;
+
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
 
+        // Optional: Adjust camera position based on new player position
         Vector3 newPos = spawnPoint + new Vector3(500, 500f, 500);
+
+
+
+        //if (!(SceneManager.GetActiveScene().name.Contains("Museum")))
+        //{
+        //    spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
+        //    RaycastHit hit;
+        //CheckAgain:
+        //    // Does the ray intersect any objects excluding the player layer
+        //    if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
+        //    {
+        //        if (hit.collider.gameObject.tag == "PhotonLocalPlayer" || hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
+        //        {
+        //            spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
+        //            goto CheckAgain;
+        //        }
+        //        spawnPoint = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
+        //    }
+        //    SetPlayerCameraAngle();
+        //}
+
+
+        //mainPlayer.transform.position = new Vector3(0, 0, 0);
+        //if (mainController == null)
+        //    mainController = mainControllerRefHolder;
+        //mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
+
+        //Vector3 newPos = spawnPoint + new Vector3(500, 500f, 500);
         InstantiatePlayerAvatar(newPos);
 
         ReferencesForGamePlay.instance.m_34player = player;
@@ -640,8 +700,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void InstantiatePlayerAvatar(Vector3 pos)
     {
+       
         if (ConstantsHolder.isPenguin)
         {
+            DashButton.SetActive(false);
             XanaWorldController.SetActive(false);
             XanaPartyController.SetActive(true);
             player = PhotonNetwork.Instantiate("XanaPenguin", spawnPoint, Quaternion.identity, 0);
@@ -658,6 +720,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         mainController = mainControllerRefHolder;
         if (ConstantsHolder.isFixedHumanoid)
         {
+            DashButton.SetActive(true);
             InstantiatePlayerForFixedHumanoid();
             return;
         }
