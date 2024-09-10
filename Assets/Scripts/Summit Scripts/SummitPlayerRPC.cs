@@ -84,7 +84,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             StopCar = false;
             var car = carview.gameObject.GetComponent<SplineFollower>();
            
-            isInsideCAr = true;
+            
             if (view.IsMine)
             {
                 ConstantsHolder.DisableFppRotation = true;
@@ -100,7 +100,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                     GameplayEntityLoader.instance._uiReferences.OffFreecam.interactable = false;
                 }
             }
-         
+
 
             if (isdriver)
             {
@@ -110,16 +110,16 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 {
                     ConstantsHolder.TempDiasableMultiPartPhoton = true;
                     parentCharacterController.enabled = false;
-                     parentPlayerController.enabled = false;
+                    parentPlayerController.enabled = false;
                     charcontroller.enabled = false;
                     arrowManager.enabled = false;
                     Transformview.enabled = false;
-                 
+
 
                     Parent = loader.mainPlayer.transform;
-                    loader.mainController.transform.parent =  car.transform;
+                    loader.mainController.transform.parent = car.transform;
                     transform.localPosition = Vector3.zero;
-                     loader.mainController.transform.localPosition = car.DriverPosition.transform.localPosition;
+                    loader.mainController.transform.localPosition = car.DriverPosition.transform.localPosition;
 
 
                     PlayerCameraController.instance.EnableCameraRecenter();
@@ -128,7 +128,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 
 
                     transform.rotation = new Quaternion(0, 0, 0, 0);
-                     loader.mainController.transform.rotation = new Quaternion(0, 0, 0, 0);
+                    loader.mainController.transform.rotation = new Quaternion(0, 0, 0, 0);
 
 
                     if (voiceNetwork == null) { voiceNetwork = PhotonVoiceNetwork.Instance; }
@@ -141,8 +141,8 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 else
                 {
                     Transformview.enabled = false;
-                   charcontroller.enabled = false;
-                   arrowManager.enabled = false;
+                    charcontroller.enabled = false;
+                    arrowManager.enabled = false;
 
 
                     Parent = transform.parent;
@@ -169,7 +169,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 {
                     car.showLove();
                 }
-               animator.SetTrigger("EnterCar");
+                animator.SetTrigger("EnterCar");
 
             }
             else
@@ -178,30 +178,30 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 if (view.IsMine)
                 {
                     ConstantsHolder.TempDiasableMultiPartPhoton = true;
-                     parentCharacterController.enabled = false;
-                     parentPlayerController.enabled = false;
-                   charcontroller.enabled = false;
-                   arrowManager.enabled = false;
+                    parentCharacterController.enabled = false;
+                    parentPlayerController.enabled = false;
+                    charcontroller.enabled = false;
+                    arrowManager.enabled = false;
                     Transformview.enabled = false;
                     PlayerCameraController.instance.EnableCameraRecenter();
                     Parent = loader.mainPlayer.transform;
-                    loader.mainController.transform.parent =  car.transform;
+                    loader.mainController.transform.parent = car.transform;
                     transform.localPosition = Vector3.zero;
-                     loader.mainController.transform.localPosition = car.PacengerPosition.transform.localPosition;
+                    loader.mainController.transform.localPosition = car.PacengerPosition.transform.localPosition;
                     CarNavigationManager.CarNavigationInstance.EnableExitCanvas();
                     SummitCarUIHandler.SummitCarUIHandlerInstance.UpdateUIelement(false);
                     transform.rotation = new Quaternion(0, 0, 0, 0);
-                     loader.mainController.transform.rotation = new Quaternion(0, 0, 0, 0);
+                    loader.mainController.transform.rotation = new Quaternion(0, 0, 0, 0);
                     CarNavigationManager.CarNavigationInstance.OnExitpress += Exit;
                     CarNavigationManager.CarNavigationInstance.OnCancelPress += CancelExit;
-                    if (voiceNetwork == null ) { voiceNetwork = PhotonVoiceNetwork.Instance; }
+                    if (voiceNetwork == null) { voiceNetwork = PhotonVoiceNetwork.Instance; }
                     Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { voiceNetwork.Client.GlobalInterestGroup }, new byte[] { car.PrivateRoomName }));
 
                 }
                 else
                 {
-                   charcontroller.enabled = false;
-                   arrowManager.enabled = false;
+                    charcontroller.enabled = false;
+                    arrowManager.enabled = false;
                     Transformview.enabled = false;
 
 
@@ -216,7 +216,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                     gasme.transform.localRotation = new Quaternion(0, 0, 0, 0);
                 }
                 car.PlayerListinCar.Add(view.Owner, 1);
-               animator.SetTrigger("EnterCar");
+                animator.SetTrigger("EnterCar");
                 if (gameObject.name.Contains("XanaAvatar2.0_Female"))
                 {
                     car._isPassengerMale = false;
@@ -232,8 +232,9 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 
 
             }
+            isInsideCAr = true;
         }
-        
+
     }
 
     [PunRPC]

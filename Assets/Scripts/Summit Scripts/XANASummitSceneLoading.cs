@@ -119,6 +119,10 @@ public class XANASummitSceneLoading : MonoBehaviour
             LoadingHandler.Instance.enter = false;
 
             #endregion
+            if (ConstantsHolder.MultiSectionPhoton)
+            {
+                ConstantsHolder.DiasableMultiPartPhoton = true;
+            }
         }
 
         SummitMiniMapStatusOnSceneChange(false);
@@ -254,6 +258,10 @@ public class XANASummitSceneLoading : MonoBehaviour
         LoadingHandler.Instance.enter = false;
 
         #endregion
+        if (ConstantsHolder.MultiSectionPhoton)
+        {
+            ConstantsHolder.DiasableMultiPartPhoton = true;
+        }
         XANASummitDataContainer.StackInfoWorld subWorldInfo = new XANASummitDataContainer.StackInfoWorld();
         subWorldInfo.id = ConstantsHolder.xanaConstants.MuseumID;
         subWorldInfo.name = sceneToBeUnload;

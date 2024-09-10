@@ -22,8 +22,8 @@ public class CarStopTrigger : MonoBehaviour
                 return;
             }
             
-
-           Players.Add(other.gameObject);
+           if(! Players.Contains(other.gameObject) )
+            Players.Add(other.gameObject);
             StopCar = true;
           
         }
