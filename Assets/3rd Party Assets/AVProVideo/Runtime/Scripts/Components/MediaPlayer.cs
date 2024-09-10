@@ -429,10 +429,10 @@ namespace RenderHeads.Media.AVProVideo
 				// Check that the plugin version number is not too old
 				if (!nativePluginVersion.StartsWith(expectedNativePluginVersion))
 				{
-					Debug.LogError("[AVProVideo] Plugin version number " + nativePluginVersion + " doesn't match the expected version number " + expectedNativePluginVersion + ".  It looks like the plugin didn't upgrade correctly.  To resolve this please restart Unity and try to upgrade the package again.");
-				}
+                    Debug.Log("<color=red>[AVProVideo] Plugin version number " + nativePluginVersion + " doesn't match the expected version number " + expectedNativePluginVersion + ".  It looks like the plugin didn't upgrade correctly.  To resolve this please restart Unity and try to upgrade the package again.</color>");
+                }
 
-				s_TrialVersion = nativePluginVersion.Contains("-trial");
+                s_TrialVersion = nativePluginVersion.Contains("-trial");
 
 				if (!s_GlobalStartup)
 				{
@@ -539,9 +539,9 @@ namespace RenderHeads.Media.AVProVideo
 					}
 					else
 					{
-						Debug.LogError("[AVProVideo] No MediaReference specified", this);
-					}
-				}
+                        Debug.Log("<color=red>[AVProVideo] No MediaReference specified</color>", this);
+                    }
+                }
 				else if (_mediaSource == MediaSource.Path)
 				{
 					if (!string.IsNullOrEmpty(_mediaPath.Path))
@@ -550,9 +550,9 @@ namespace RenderHeads.Media.AVProVideo
 					}
 					else
 					{
-						Debug.LogError("[AVProVideo] No file path specified", this);
-					}
-				}
+                        Debug.Log("<color=red>[AVProVideo] No file path specified</color>", this);
+                    }
+                }
 				
 				if (null != mediaPath)
 				{
@@ -571,9 +571,9 @@ namespace RenderHeads.Media.AVProVideo
 #endif
 					if (checkForFileExist && !System.IO.File.Exists(fullPath))
 					{
-						Debug.LogError("[AVProVideo] File not found: " + fullPath, this);
-					}
-					else
+                        Debug.Log("<color=red>[AVProVideo] File not found: " + fullPath + "</color>", this);
+                    }
+                    else
 					{
 						Helper.LogInfo(string.Format("Opening {0} (offset {1}) with API {2}", fullPath, fileOffset, GetPlatformVideoApiString()), this);
 
@@ -609,9 +609,9 @@ namespace RenderHeads.Media.AVProVideo
 
 						if (!_controlInterface.OpenMedia(fullPath, fileOffset, customHttpHeaders, mediaHints, (int)_forceFileFormat, startWithHighestBitrate))
 						{
-							Debug.LogError("[AVProVideo] Failed to open " + fullPath, this);
-						}
-						else
+                            Debug.Log("<color=red>[AVProVideo] Failed to open " + fullPath + "</color>", this);
+                        }
+                        else
 						{
 							SetPlaybackOptions();
 							result = true;
@@ -621,9 +621,9 @@ namespace RenderHeads.Media.AVProVideo
 				}
 				else
 				{
-					Debug.LogError("[AVProVideo] No file path specified", this);
-				}
-			}
+                    Debug.Log("<color=red>[AVProVideo] No file path specified</color>", this);
+                }
+            }
 			return result;
 		}
 
@@ -1404,10 +1404,10 @@ namespace RenderHeads.Media.AVProVideo
 			ErrorCode errorCode = _controlInterface.GetLastError();
 			if (ErrorCode.None != errorCode)
 			{
-				Debug.LogError("[AVProVideo] Error: " + Helper.GetErrorMessage(errorCode));
+                Debug.LogError("[AVProVideo] Error: " + Helper.GetErrorMessage(errorCode));
 
-				// Display additional information for load failures
-				if (ErrorCode.LoadFailed == errorCode)
+                // Display additional information for load failures
+                if (ErrorCode.LoadFailed == errorCode)
 				{
 					#if !UNITY_EDITOR && UNITY_ANDROID
 					// TODO: Update this to handle case where media is MediaReference
