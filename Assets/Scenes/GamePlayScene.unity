@@ -487,6 +487,7 @@ MonoBehaviour:
   mainPlayer: {fileID: 360146152713065801}
   mainController: {fileID: 1808683680640967398}
   PenguinPlayer: {fileID: 0}
+  DashButton: {fileID: 508458022}
   ActionEmoteSystem: {fileID: 1527999181}
   PlayerCamera: {fileID: 360146154038492715}
   playerCameraCharacterRender: {fileID: 1272852912}
@@ -2201,6 +2202,34 @@ PrefabInstance:
       propertyPath: actionImg
       value: 
       objectReference: {fileID: 9067209682325055451}
+    - target: {fileID: 5377329306282220411, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5377329306282220411, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5377329306282220411, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1808683680640967397}
+    - target: {fileID: 5377329306282220411, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5377329306282220411, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: StopAnimationEmote
+      objectReference: {fileID: 0}
+    - target: {fileID: 5377329306282220411, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PlayerController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5377329306282220411, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5443329728096857815, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
       propertyPath: manager
       value: 
@@ -12954,7 +12983,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.06806946, y: -0.0008904675, z: 0.000060756443, w: 0.99768025}
+  m_LocalRotation: {x: 0.06806946, y: -0.0008904677, z: 0.00006075646, w: 0.99768025}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13405,7 +13434,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010641542, y: -0.00089248974, z: 0.00000949987, w: 0.999943}
+  m_LocalRotation: {x: 0.01064157, y: -0.0008924915, z: 0.000009499914, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14473,6 +14502,7 @@ MonoBehaviour:
   _dashEffect: {fileID: 1126408771}
   _canDash: 1
   _buttonDisableColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+  _audioSource: {fileID: 0}
 --- !u!1 &4161355177358333909 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4161355176556536759, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
@@ -15488,9 +15518,37 @@ PrefabInstance:
       value: -19.919922
       objectReference: {fileID: 0}
     - target: {fileID: 1861008371, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1861008371, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1861008371, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 4134801982122276582}
+    - target: {fileID: 1861008371, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1808683680640967397}
+    - target: {fileID: 1861008371, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1861008371, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: StopAnimationEmote
+      objectReference: {fileID: 0}
+    - target: {fileID: 1861008371, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PlayerController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1861008371, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1954104836, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: animationSelectionPanelPotrait
       value: 
@@ -15606,6 +15664,34 @@ PrefabInstance:
     - target: {fileID: 1112965298598220594, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.00048828125
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112965298652459272, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112965298652459272, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112965298652459272, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1808683680640967397}
+    - target: {fileID: 1112965298652459272, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112965298652459272, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: StopAnimationEmote
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112965298652459272, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: PlayerController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112965298652459272, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1130693566171777640, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: manager
@@ -16383,6 +16469,34 @@ PrefabInstance:
       propertyPath: manager
       value: 
       objectReference: {fileID: 1339195405}
+    - target: {fileID: 8081035336110541161, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8081035336110541161, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8081035336110541161, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1808683680640967397}
+    - target: {fileID: 8081035336110541161, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8081035336110541161, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: StopAnimationEmote
+      objectReference: {fileID: 0}
+    - target: {fileID: 8081035336110541161, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: PlayerController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8081035336110541161, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8112392722063851119, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: manager
       value: 
