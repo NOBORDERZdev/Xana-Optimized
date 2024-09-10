@@ -11,33 +11,17 @@ public class EmailEntryController : MonoBehaviour
     public string WorldIdTestnet;
     public string WorldIdMainnet;
     public string WorldId;
-    public bool IsEmailVerificationReq = false;
-    public SingleDomeAuthEmails AuthEmailData;
+    public EmailEntryTPPHandler WarpPointsAndAuthMailHandler;
     private bool alreadyTriggered;
 
     private void OnEnable()
     {
+        WarpPointsAndAuthMailHandler = GetComponentInParent<EmailEntryTPPHandler>();
+
         if (APIBasepointManager.instance.IsXanaLive)
             WorldId = WorldIdMainnet;
         else
             WorldId = WorldIdTestnet;
-    }
-
-    // Start is called before the first frame update
-    async void Start()
-    {
-        AuthEmailData = await GetSingleDomeEmails(ConstantsHolder.domeId.ToString());
-        if (AuthEmailData.data != null && AuthEmailData.data.Count > 0)
-        {
-            foreach (string email in AuthEmailData.data)
-            {
-                Debug.Log("==============Auth Email==============: " + email);
-            }
-        }
-        else
-        {
-            Debug.Log("No Auth Email Data Found Against Dome ID: " + ConstantsHolder.domeId);
-        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -47,10 +31,10 @@ public class EmailEntryController : MonoBehaviour
             if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine && !alreadyTriggered)
             {
                 alreadyTriggered = true;
-                if (IsEmailVerificationReq)
+                if (WarpPointsAndAuthMailHandler.IsEmailVerificationReq)
                 {
-
-                    
+                    GamePlayUIHandler.inst.SummitCXOEmailAuthUIHandle.SetAuthEmailUIState(true);
+                    GamePlayUIHandler.inst.SummitCXOEmailAuthUIHandle.AuthEmailAfterVerification += VerifyUserEnteredEmail;
                 }
                 else
                 {
@@ -68,12 +52,35 @@ public class EmailEntryController : MonoBehaviour
             if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine && alreadyTriggered)
             {
                 alreadyTriggered = false;
+                GamePlayUIHandler.inst.SummitCXOEmailAuthUIHandle.AuthEmailAfterVerification -= VerifyUserEnteredEmail;
             }
+        }
+    }
+
+    void VerifyUserEnteredEmail(string _userEnteredEmail)
+    {
+
+        if (WarpPointsAndAuthMailHandler.AuthEmailData.data != null && WarpPointsAndAuthMailHandler.AuthEmailData.data.Count > 0)
+        {
+            if (WarpPointsAndAuthMailHandler.AuthEmailData.data.Contains(_userEnteredEmail))
+            {
+                TriggerSceneLoading(WorldId);
+                DisableCollider();
+            }
+            else
+            {
+                GamePlayUIHandler.inst.SummitCXOEmailAuthUIHandle.PlayErrorMsgAnim();
+            }
+        }
+        else
+        {
+            Debug.LogError("No Auth Email Data Found Against Dome ID: " + ConstantsHolder.domeId);
         }
     }
 
     void TriggerSceneLoading(string WorldId)
     {
+        GamePlayUIHandler.inst.SummitCXOEmailAuthUIHandle.SetAuthEmailUIState(false);
         if (ConstantsHolder.MultiSectionPhoton)
         {
             ConstantsHolder.DiasableMultiPartPhoton = true;
@@ -87,35 +94,4 @@ public class EmailEntryController : MonoBehaviour
         alreadyTriggered = false;
     }
 
-    async Task<SingleDomeAuthEmails> GetSingleDomeEmails(string _domeID)
-    {
-        string url;
-        url = ConstantsGod.API_BASEURL + ConstantsGod.GETSINGLEDOMEAUTHEMAILS + _domeID;
-
-        using (UnityWebRequest www = UnityWebRequest.Get(url))
-        {
-            await www.SendWebRequest();
-            if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
-            {
-                www.Dispose();
-                return null;
-            }
-            else
-            {
-                SingleDomeAuthEmails authEmailData = new SingleDomeAuthEmails();
-                authEmailData = JsonUtility.FromJson<SingleDomeAuthEmails>(www.downloadHandler.text);
-                www.Dispose();
-                return authEmailData;
-            }
-        }
-    }
-
-}
-
-[System.Serializable]
-public class SingleDomeAuthEmails
-{
-    public bool success;
-    public List<string> data;
-    public string msg;
 }
