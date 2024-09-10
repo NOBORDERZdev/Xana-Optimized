@@ -3129,7 +3129,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MovementRange: 30
+  m_DynamicOriginRange: 100
   m_ControlPath: <Gamepad>/leftStick
+  m_Behaviour: 0
+  m_UseIsolatedInputActions: 0
+  m_PointerDownAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: abce8760-564e-423e-b336-0bf2f0106a6b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  m_PointerMoveAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: abd5833d-6373-41b2-acc3-a5ce22c0493e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!114 &5906869195532275748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4782,11 +4803,11 @@ RectTransform:
   - {fileID: 1790493795493339539}
   - {fileID: 3407668205176815303}
   m_Father: {fileID: 6500497453926481985}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 270.5, y: -141.00012}
+  m_AnchoredPosition: {x: 22, y: -141.00012}
   m_SizeDelta: {x: 63.773315, y: 63.7733}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &4795958683251479143
@@ -5012,6 +5033,7 @@ Canvas:
   m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1
@@ -25162,11 +25184,11 @@ RectTransform:
   - {fileID: 5710314097191228504}
   - {fileID: 1832709038526645728}
   m_Father: {fileID: 6500497453926481985}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 32.80005, y: -141}
+  m_AnchoredPosition: {x: 195.86, y: -141}
   m_SizeDelta: {x: 138.53, y: 63.7733}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &4533307653154332307
@@ -29201,11 +29223,11 @@ RectTransform:
   - {fileID: 759466630300493659}
   - {fileID: 1219183348017594774}
   m_Father: {fileID: 6500497453926481985}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 185.5, y: -141.00012}
+  m_AnchoredPosition: {x: 107.4, y: -141.00012}
   m_SizeDelta: {x: 63.773315, y: 63.7733}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5940793331534797834
@@ -45340,6 +45362,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 5
@@ -45641,10 +45664,10 @@ RectTransform:
   - {fileID: 5942847129552543621}
   - {fileID: 8324368499129892224}
   - {fileID: 2173291878876492075}
+  - {fileID: 2724500994587266989}
   - {fileID: 1992503909236250068}
   - {fileID: 2763390675744384058}
   - {fileID: 8663148969984179007}
-  - {fileID: 2724500994587266989}
   m_Father: {fileID: 122545080570072655}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -46836,7 +46859,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MovementRange: 50
+  m_DynamicOriginRange: 100
   m_ControlPath: <Gamepad>/rightStick
+  m_Behaviour: 0
+  m_UseIsolatedInputActions: 0
+  m_PointerDownAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: ac89ea62-d07d-487a-a2d3-8663fa62cb70
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  m_PointerMoveAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 8881e324-a73d-4d85-a9a0-3cfa30f3d4a1
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!1 &6469192698120357309
 GameObject:
   m_ObjectHideFlags: 0
@@ -49795,7 +49839,7 @@ RectTransform:
   - {fileID: 7006672568886019588}
   - {fileID: 7185924870342751184}
   m_Father: {fileID: 6500497453926481985}
-  m_RootOrder: 9
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -53938,7 +53982,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MovementRange: 50
+  m_DynamicOriginRange: 100
   m_ControlPath: <Gamepad>/rightStick
+  m_Behaviour: 0
+  m_UseIsolatedInputActions: 0
+  m_PointerDownAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: d9084b64-ef4d-480d-82fa-74a4b31d474c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  m_PointerMoveAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 7a9a486d-4525-4484-87a4-b923ed7a599a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!1 &7693678582078681692
 GameObject:
   m_ObjectHideFlags: 0
