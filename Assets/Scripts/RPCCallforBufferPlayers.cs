@@ -102,15 +102,23 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
     public void SyncPlayer()
     {
         ExitGames.Client.Photon.Hashtable properties = this.GetComponent<PhotonView>().Owner.CustomProperties;
-        string ClothJson="";
+        string ClothJson = "";
         bool NFTEquiped = false;
         // Get specific properties
         if (properties.ContainsKey("ClothJson"))
         {
             ClothJson = (string)properties["ClothJson"];
+            if (string.IsNullOrEmpty(ClothJson))
+            {
+                ClothJson = ConstantsHolder.xanaConstants.GetRandomPresetClothJson();
+            }
             Debug.Log("ClothJson: " + ClothJson);
         }
-
+        else
+        {
+            ClothJson = ConstantsHolder.xanaConstants.GetRandomPresetClothJson();
+            Debug.Log("Random ClothJson: " + ClothJson);
+        }
         if (properties.ContainsKey("NFTEquiped"))
         {
             NFTEquiped = (bool)properties["NFTEquiped"];
@@ -122,110 +130,9 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(ClothJson.ToString());
 
         otherPlayer = gameObject.GetComponent<AvatarController>();
-        otherPlayer.GetComponent<AvatarController>().SetAvatarClothDefault(otherPlayer.gameObject, _CharacterData.gender);
         otherPlayer.isLoadStaticClothFromJson = true;
         otherPlayer.staticClothJson = ClothJson;
-        otherPlayer.BuildCharacterFromLocalJson();
-        return;
-        CharacterBodyParts bodyparts = otherPlayer.GetComponent<CharacterBodyParts>();
-
-        //otherPlayer._CharData = _CharacterData;
-        if (IsNFTCharacter)
-        {
-            bodyparts.head.materials[2].SetInt("_Active", 0);
-            bodyparts.body.materials[0].SetInt("_Active", 0);
-
-            //extra blendshape added to character to build muscles on Character
-            bodyparts.head.SetBlendShapeWeight(54, 100);
-            bodyparts.body.SetBlendShapeWeight(0, 100);
-
-            bodyparts.GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
-
-        }
-
-        if (_CharacterData.myItemObj.Count != 0)
-        {
-            for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
-            {
-
-                //if (!otherPlayer.GetComponent<PhotonView>().IsMine)   commented by Riken
-                {
-                    otherPlayer.GetComponent<AvatarController>().SetAvatarClothDefault(otherPlayer.gameObject, _CharacterData.gender);
-                    //CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);
-                    //bodyparts.SetAvatarByGender(_CharacterData.gender);
-
-
-                    if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
-                    {
-                        float _rand = UnityEngine.Random.Range(0.1f, 2f);
-                        string _gen = _rand <= 1 ? "Male" : "Female";
-                        otherPlayer.SetAvatarClothDefault(otherPlayer.gameObject, _gen);
-                    }
-                    else
-                    {
-                        //Update Body fate
-                        if (_CharacterData.myItemObj[i].ItemName != "")
-                        {
-                            string type = _CharacterData.myItemObj[i].ItemType;
-                            if (type.Contains("Legs") || type.Contains("Chest") || type.Contains("Feet") || type.Contains("Hair") || type.Contains("EyeWearable") || type.Contains("Chain") || type.Contains("Glove"))
-                            {
-                                if (type.Contains("Hair") && _CharacterData.hairItemData.Contains("No hair"))
-                                {
-                                    if (otherPlayer.GetComponent<AvatarController>().wornHair)
-                                        UnStichItem("Hair");
-                                }
-                                else
-                                    WearAddreesable(_CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName, otherPlayer.gameObject, _CharacterData.HairColor, _CharacterData.gender != null ? _CharacterData.gender : "Male");
-                            }
-                        }
-                        else
-                        {
-                            if (otherPlayer)
-                            {
-                                switch (_CharacterData.myItemObj[i].ItemType)
-                                {
-                                    case "Legs":
-                                        otherPlayer.WearDefaultItem("Legs", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
-                                        break;
-                                    case "Chest":
-                                        otherPlayer.WearDefaultItem("Chest", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
-                                        break;
-                                    case "Feet":
-                                        otherPlayer.WearDefaultItem("Feet", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
-                                        break;
-                                    case "Hair":
-                                        otherPlayer.WearDefaultItem("Hair", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        else // if player is all default cloths
-        {
-            _CharacterData.gender = GetComponent<CharacterBodyParts>().AvatarGender.ToString();
-            otherPlayer.WearDefaultItem("Legs", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
-            otherPlayer.WearDefaultItem("Chest", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
-            otherPlayer.WearDefaultItem("Feet", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
-            otherPlayer.WearDefaultItem("Hair", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
-        }
-        if (_CharacterData.charactertypeAi == true)
-        {
-            ApplyAIData(_CharacterData, bodyparts);
-        }
-        bodyparts.LoadBlendShapes(_CharacterData, otherPlayer.gameObject);
-
-        StartCoroutine(otherPlayer.RPCMaskApply(otherPlayer.gameObject));
-
-        if (otherPlayer.GetComponent<EyesBlinking>())                      // Added by Ali Hamza
-        {
-            otherPlayer.GetComponent<EyesBlinking>().StoreBlendShapeValues();
-            StartCoroutine(otherPlayer.GetComponent<EyesBlinking>().BlinkingStartRoutine());
-        }
+        otherPlayer.OnEnable();
     }
     [PunRPC]
     void CheckRpc(object[] Datasend)
@@ -259,9 +166,15 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 bodyparts.body.SetBlendShapeWeight(0, 100);
 
                 bodyparts.GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
-
+            }
+            if (!otherPlayer.GetComponent<PhotonView>().IsMine)
+            {
+                otherPlayer.isLoadStaticClothFromJson = true;
+                otherPlayer.staticClothJson = Datasend[1].ToString();
+                otherPlayer.BuildCharacterFromLocalJson();
             }
 
+            return;
             if (_CharacterData.myItemObj.Count != 0)
             {
                 for (int i = 0; i < _CharacterData.myItemObj.Count; i++)

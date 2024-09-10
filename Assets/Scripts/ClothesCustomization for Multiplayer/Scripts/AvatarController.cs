@@ -271,6 +271,119 @@ public class AvatarController : MonoBehaviour
         Custom_InitializeAvatar(_tempdata);
     }
 
+    public bool isStitchedSuccessfully;
+    public SavingCharacterDataClass clothDataClass = new SavingCharacterDataClass();
+    public List<string> clothsList = new List<string>();
+    public Coroutine clothsStichedOrNotCoroutine;
+    public void CheckClothsStitchedOrNot(string cJson)
+    {
+        if (clothsStichedOrNotCoroutine != null)
+        {
+            StopCoroutine(clothsStichedOrNotCoroutine);
+        }
+        clothsStichedOrNotCoroutine = StartCoroutine(IECheckClothsStitchedOrNot(cJson));
+    }
+
+    public IEnumerator IECheckClothsStitchedOrNot(string cJson)
+    {
+        characterBodyParts.head.enabled = characterBodyParts.body.enabled = false;
+        clothJson = cJson;
+        if (!string.IsNullOrEmpty(clothJson))
+        {
+            clothsList.Clear();
+            isStitchedSuccessfully = false;
+            SavingCharacterDataClass clothDataClass = JsonUtility.FromJson<SavingCharacterDataClass>(clothJson);
+            if (clothDataClass.gender == "Male")
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    clothsList.Add(clothDataClass.myItemObj[i].ItemName);
+                }
+            }
+            else if (clothDataClass.gender == "Female")
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    clothsList.Add(clothDataClass.myItemObj[i].ItemName);
+                }
+            }
+
+            while (!ConstantsHolder.isAddressableCatalogDownload)
+            {
+                yield return new WaitForSeconds(.1f);
+            }
+            while (!isClothStichedOrNot(clothsList, this))
+            {
+                if (wornHair != null)
+                {
+                    wornHair.SetActive(false);
+                }
+                if (wornShirt != null)
+                {
+                    wornShirt.SetActive(false);
+                }
+                if (wornPant != null)
+                {
+                    wornPant.SetActive(false);
+                }
+                if (wornShoes != null)
+                {
+                    wornShoes.SetActive(false);
+                }
+                yield return new WaitForSeconds(.1f);
+            }
+
+            if (wornHair != null)
+            {
+                wornHair.SetActive(true);
+            }
+            if (wornShirt != null)
+            {
+                wornShirt.SetActive(true);
+            }
+            if (wornPant != null)
+            {
+                wornPant.SetActive(true);
+            }
+            if (wornShoes != null)
+            {
+                wornShoes.SetActive(true);
+            }
+            characterBodyParts.head.enabled = characterBodyParts.body.enabled = true;
+            isStitchedSuccessfully = true;
+        }
+        else
+        {
+            characterBodyParts.head.enabled = characterBodyParts.body.enabled = true;
+        }
+        clothsStichedOrNotCoroutine = null;
+    }
+
+    public bool isClothStichedOrNot(List<string> clothsList, AvatarController avatar)
+    {
+        string pant = "";
+        string shirt = "";
+        string hair = "";
+        string shoes = "";
+        if (avatar.wornPant != null)
+        {
+            pant = avatar.wornPant.name;
+        }
+        if (avatar.wornShirt != null)
+        {
+            shirt = avatar.wornShirt.name;
+        }
+        if (avatar.wornHair != null)
+        {
+            hair = avatar.wornHair.name;
+        }
+        if (avatar.wornShoes != null)
+        {
+            shoes = avatar.wornShoes.name;
+        }
+        return clothsList[0] == pant && clothsList[1] == shirt && clothsList[2] == hair;
+    }
+
     /// <summary>
     /// Downloading Random Preset
     /// </summary>
@@ -445,7 +558,7 @@ public class AvatarController : MonoBehaviour
                 _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(folderPath));
                 clothJson = File.ReadAllText(folderPath);
             }
-
+            CheckClothsStitchedOrNot(clothJson);
             _PCharacterData = _CharacterData;
 
             var gender = _CharacterData.gender ?? "Male";
@@ -909,6 +1022,7 @@ public class AvatarController : MonoBehaviour
             clothJson = staticClothJson;
             _CharacterData = _CharacterData.CreateFromJSON(staticClothJson);
         }
+        CheckClothsStitchedOrNot(clothJson);
         _PCharacterData = _CharacterData;
         var gender = _CharacterData.gender ?? "Male";
         var avatarController = this.gameObject.GetComponent<AvatarController>();

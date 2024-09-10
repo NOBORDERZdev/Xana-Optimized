@@ -189,6 +189,8 @@ public class ConstantsHolder : MonoBehaviour
     public static bool HaveSubWorlds;
     public static string Thumbnail;
 
+    public List<string> presetClothsJsonList =new List<string>();
+
     //Daily reward
     public bool isGoingForHomeScene = false;
     public bool hasToShowDailyPopup = false;
@@ -306,6 +308,11 @@ public class ConstantsHolder : MonoBehaviour
         }
         playerProperties.Add("NFTEquiped", isNFTEquiped);
         PhotonNetwork.LocalPlayer.CustomProperties = playerProperties;
+    }
+
+    public string GetRandomPresetClothJson()
+    {
+        return presetClothsJsonList[UnityEngine.Random.Range(0, presetClothsJsonList.Count)];
     }
     public string GetJsonFolderData()
     {
