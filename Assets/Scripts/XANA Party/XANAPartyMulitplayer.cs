@@ -105,7 +105,7 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
         _XanaConstants.builderMapID = 0;
         // Load the main scene
         Screen.orientation = ScreenOrientation.LandscapeLeft;
-        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.PenpenzLoading(FadeAction.In));
         yield return new WaitForSeconds(2f);
         GameplayEntityLoader.instance._uiReferences.LoadMain(false);
     }
