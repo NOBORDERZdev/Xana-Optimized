@@ -151,7 +151,6 @@ public class DomeMinimapDataHolder : MonoBehaviour
     }
     public void OnClickYesBtn()
     {
-
         ConfirmationPanelHandling(false);
         ReferencesForGamePlay.instance.FullScreenMapStatus(false);
 
