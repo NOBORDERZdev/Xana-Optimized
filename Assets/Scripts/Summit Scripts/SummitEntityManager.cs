@@ -37,7 +37,7 @@ public class SummitEntityManager : MonoBehaviour, IMatchmakingCallbacks
 
     public async Task InstantiateCAR()
     {
-        if(!PhotonNetwork.IsMasterClient) { return; }
+        if(!PhotonNetwork.IsMasterClient || CarNavigationManager.CarNavigationInstance.Cars.Count>0) { return; }
             CarSpline = SplineDone.Instance;
         var length = CarSpline.GetSplineLength(.0005f);
        var distancebetweencar = length / 12;
