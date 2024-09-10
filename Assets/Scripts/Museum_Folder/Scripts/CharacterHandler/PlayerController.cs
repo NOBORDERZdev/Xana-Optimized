@@ -1293,6 +1293,17 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void StopAnimationEmote()
+    {
+        if (ActionManager.IsAnimRunning)
+        {
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            //  EmoteAnimationHandler.Instance.StopAllCoroutines();
+        }
+    }
+
     public void JumpNotAllowed()
     {
         //Debug.Log("JumpNotAllowed");

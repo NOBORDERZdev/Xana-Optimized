@@ -324,7 +324,7 @@ public class FeedController : MonoBehaviour
             SerchBarObj.SetActive(true);
             SerachPanel.SetActive(true);
             SearchContentPanel.SetActive(true);
-            feedTabsContainer.sizeDelta = new Vector2(feedTabsContainer.rect.width, 60);
+            feedTabsContainer.sizeDelta = new Vector2(feedTabsContainer.rect.width, 85);
         }
     } 
 

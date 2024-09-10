@@ -94,18 +94,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (string.IsNullOrEmpty(domeGeneralData.world))
             return;
 
-        #region WaitingForPLayerApproval
-        LoadingHandler.Instance.showApprovaldomeloading(domeGeneralData);
-
-        while (LoadingHandler.Instance.WaitForInput)
-        {
-            await Task.Delay(1000);
-        }
-        if (!LoadingHandler.Instance.enter) { return; }
-
-        LoadingHandler.Instance.enter = false;
-
-        #endregion
+     
 
         if (domeGeneralData.isSubWorld)
         {
@@ -115,6 +104,21 @@ public class XANASummitSceneLoading : MonoBehaviour
             bool Success = await SubWorldsHandlerInstance.CreateSubWorldList(domeGeneralData, playerPos);
             if (Success)
                 return;
+        }
+        else
+        {
+            #region WaitingForPLayerApproval
+            LoadingHandler.Instance.showApprovaldomeloading(domeGeneralData);
+
+            while (LoadingHandler.Instance.WaitForInput)
+            {
+                await Task.Delay(1000);
+            }
+            if (!LoadingHandler.Instance.enter) { return; }
+
+            LoadingHandler.Instance.enter = false;
+
+            #endregion
         }
 
         SummitMiniMapStatusOnSceneChange(false);
@@ -213,6 +217,14 @@ public class XANASummitSceneLoading : MonoBehaviour
             GamePlayUIHandler.inst.OnSwitchCameraClick();
         }
         GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
+
+        if (ActionManager.IsAnimRunning)
+        {
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            //  EmoteAnimationHandler.Instance.StopAllCoroutines();
+        }
         GameplayEntityLoader.instance.AssignRaffleTickets(domeId);
 
        
@@ -299,6 +311,13 @@ public class XANASummitSceneLoading : MonoBehaviour
             GamePlayUIHandler.inst.OnSwitchCameraClick();
         }
         GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
+        if (ActionManager.IsAnimRunning)
+        {
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            //  EmoteAnimationHandler.Instance.StopAllCoroutines();
+        }
 
     }
     async Task UnloadScene(string sceneName)
@@ -404,6 +423,13 @@ public class XANASummitSceneLoading : MonoBehaviour
             GamePlayUIHandler.inst.OnSwitchCameraClick();
         }
         GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
+        if (ActionManager.IsAnimRunning)
+        {
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            //  EmoteAnimationHandler.Instance.StopAllCoroutines();
+        }
         //
     }
     XANASummitDataContainer.DomeGeneralData GetDomeData(int domeId)

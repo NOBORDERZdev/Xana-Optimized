@@ -78,7 +78,7 @@ public class GamePlayMicController : MonoBehaviour
             if (PlayerPrefs.GetInt("micSound") == 0)
             {
                 //ConstantsHolder.xanaConstants.StopMic();
-                XanaVoiceChat.instance.StopRecorder();
+                //XanaVoiceChat.instance.StopRecorder();
                 XanaVoiceChat.instance.TurnOffMic();
                 _micOff.interactable = true;
                 _micOffPotrait.interactable = true;
@@ -88,7 +88,7 @@ public class GamePlayMicController : MonoBehaviour
             else
             {
                 //ConstantsHolder.xanaConstants.PlayMic();
-                XanaVoiceChat.instance.EnableRecoder();
+                //XanaVoiceChat.instance.EnableRecoder();
                 XanaVoiceChat.instance.TurnOnMic();
                 _settingOnButton.gameObject.SetActive(true);
                 _settingOnButtonPotrait.gameObject.SetActive(true);
@@ -104,7 +104,7 @@ public class GamePlayMicController : MonoBehaviour
         else
         {
             //ConstantsHolder.xanaConstants.StopMic();
-            XanaVoiceChat.instance.StopRecorder();
+            //XanaVoiceChat.instance.StopRecorder();
             XanaVoiceChat.instance.TurnOffMic();
             _settingOnButton.gameObject.SetActive(false);
             _settingOnButtonPotrait.gameObject.SetActive(false);
