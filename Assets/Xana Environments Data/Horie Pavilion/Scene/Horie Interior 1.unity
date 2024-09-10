@@ -1906,7 +1906,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.003685, y: 1.2197832, z: 0.89293104}
   m_Center: {x: -1.9786962, y: 0.4713289, z: -0.23385292}
---- !u!1 &961739749
+--- !u!1 &952344536
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1914,115 +1914,28 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 961739753}
-  - component: {fileID: 961739752}
-  - component: {fileID: 961739751}
-  - component: {fileID: 961739750}
+  - component: {fileID: 952344537}
   m_Layer: 0
-  m_Name: Main Camera
-  m_TagString: MainCamera
+  m_Name: Spawn Point
+  m_TagString: SpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &961739750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 961739749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
-  m_Antialiasing: 1
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 1
-  m_ClearDepth: 1
-  m_AllowXRRendering: 1
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2
---- !u!81 &961739751
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 961739749}
-  m_Enabled: 1
---- !u!20 &961739752
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 961739749}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: -1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!4 &961739753
+--- !u!4 &952344537
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 961739749}
-  m_LocalRotation: {x: -0.09902932, y: -0.32563588, z: 0.03431796, w: -0.9396684}
-  m_LocalPosition: {x: -8.999577, y: 4.050214, z: -13.291412}
+  m_GameObject: {fileID: 952344536}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_Father: {fileID: 1556366122}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &983977870
 GameObject:
@@ -2786,6 +2699,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1471593295}
+  - component: {fileID: 1471593296}
   m_Layer: 0
   m_Name: Assets
   m_TagString: Untagged
@@ -2815,8 +2729,22 @@ Transform:
   - {fileID: 8891792827316034026}
   - {fileID: 2286593022146696201}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1471593296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1471593294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd617247844f1b447a0320228ca36a12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldJson: '{"SceneObjects":[{"addressableKey":"HMI_Screen","name":"HMI_Screen","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-1.078582763671875,"y":1.63535737991333,"z":1.8899424076080323},"m_Extent":{"x":11.102105140686036,"y":0.9408175945281982,"z":8.045065879821778}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":3,"lightmapScaleOffset":{"x":0.5546875,"y":0.5546875,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"HMI_Booth","name":"HMI_Booth","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-0.07652473449707031,"y":1.5519449710845948,"z":2.5306715965270998},"m_Extent":{"x":13.34076976776123,"y":1.5056350231170655,"z":10.036079406738282}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":0,"lightmapScaleOffset":{"x":1.0048710107803345,"y":1.0048710107803345,"z":-0.0031803343445062639,"w":-0.0031803343445062639}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"HMI_Chair","name":"HMI_Chair","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.48078155517578127,"y":0.5797423124313355,"z":2.2588109970092775},"m_Extent":{"x":10.39369010925293,"y":0.4701122045516968,"z":7.917593955993652}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.7116144299507141,"y":0.7116144299507141,"z":-0.008957015350461007,"w":-0.008957015350461007}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"HMI_MutipleScreen","name":"HMI_MutipleScreen","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-0.06754827499389649,"y":1.6733551025390626,"z":2.7450320720672609},"m_Extent":{"x":12.539257049560547,"y":0.7946503758430481,"z":8.805991172790528}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.1904296875,"y":0.1904296875,"z":0.7021484375,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"HMI_Lamp","name":"HMI_Lamp","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.37669944763183596,"y":0.6100000143051148,"z":0.8001666069030762},"m_Extent":{"x":6.412357330322266,"y":0.6355730295181274,"z":6.077646255493164}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.111328125,"y":0.111328125,"z":0.890625,"w":0.1943359375}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"HMI_Rocket_Booth","name":"HMI_Rocket_Booth","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.07544171810150147,"y":1.6280462741851807,"z":-10.924163818359375},"m_Extent":{"x":2.535365104675293,"y":1.5182642936706544,"z":2.4229836463928224}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":3,"lightmapScaleOffset":{"x":0.3919544517993927,"y":0.3919544517993927,"z":0.5555217266082764,"w":-0.0030720403883606197}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"HMI_Banner","name":"HMI_Banner","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.3042140007019043,"y":1.4019999504089356,"z":0.22573328018188477},"m_Extent":{"x":9.198345184326172,"y":1.2324185371398926,"z":9.248514175415039}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":4,"lightmapScaleOffset":{"x":0.9615856409072876,"y":0.9615856409072876,"z":-0.012036572210490704,"w":-0.012036572210490704}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"HMI_Hologram","name":"HMI_Hologram","position":{"x":-0.09899818897247315,"y":0.023933231830596925,"z":-0.042999267578125},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-0.09898191690444946,"y":0.6107805371284485,"z":-0.04300004243850708},"m_Extent":{"x":1.7440857887268067,"y":0.5877280235290527,"z":1.5138118267059327}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.18715958297252656,"y":0.18715958297252656,"z":0.7013665437698364,"w":0.17796677350997926}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"HMI_Rocket","name":"HMI_Rocket","position":{"x":0.010690569877624512,"y":1.9276466369628907,"z":-10.87601375579834},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.010690540075302124,"y":1.9276466369628907,"z":-10.87601375579834},"m_Extent":{"x":0.7461564540863037,"y":1.418929100036621,"z":0.7461565732955933}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.22924228012561799,"y":0.22924228012561799,"z":0.8200390338897705,"w":-0.04665159061551094}}],"summitDomeInfo":{"domeIndex":0}}]}'
+  assetsParent: {fileID: 1471593295}
 --- !u!1 &1494125713
 GameObject:
   m_ObjectHideFlags: 0
@@ -3054,8 +2982,9 @@ Transform:
   - {fileID: 494593476}
   - {fileID: 1160234427}
   - {fileID: 379460960}
+  - {fileID: 952344537}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1559561426
 GameObject:
