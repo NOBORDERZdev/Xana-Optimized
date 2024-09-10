@@ -162,25 +162,6 @@ MonoBehaviour:
   scalerMask:
     m_OverrideState: 1
     m_Value: 0.2
---- !u!114 &-7482853116644999212
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb60a22f311433c4c962b888d1393f88, type: 3}
-  m_Name: PaniniProjection
-  m_EditorClassIdentifier: 
-  active: 0
-  distance:
-    m_OverrideState: 1
-    m_Value: 0.694
-  cropToFit:
-    m_OverrideState: 1
-    m_Value: 1
 --- !u!114 &-6339190553890831587
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -713,10 +694,10 @@ MonoBehaviour:
   active: 1
   temperature:
     m_OverrideState: 1
-    m_Value: 12
+    m_Value: -16
   tint:
     m_OverrideState: 1
-    m_Value: 8
+    m_Value: 17
 --- !u!114 &-5761057358524706462
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -732,13 +713,13 @@ MonoBehaviour:
   active: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 1.3
+    m_Value: 1.22
   intensity:
     m_OverrideState: 1
-    m_Value: 1.5
+    m_Value: 1.18
   scatter:
-    m_OverrideState: 0
-    m_Value: 0.385
+    m_OverrideState: 1
+    m_Value: 0.687
   clamp:
     m_OverrideState: 0
     m_Value: 1
@@ -776,7 +757,7 @@ MonoBehaviour:
     m_Value: 0.2
   contrast:
     m_OverrideState: 1
-    m_Value: 8
+    m_Value: 15
   colorFilter:
     m_OverrideState: 0
     m_Value: {r: 1.7411011, g: 1.4372298, b: 1.4731294, a: 1}
@@ -785,7 +766,7 @@ MonoBehaviour:
     m_Value: 0
   saturation:
     m_OverrideState: 1
-    m_Value: 60
+    m_Value: 25
 --- !u!114 &-5007420959866115160
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -954,7 +935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 558a8e2b6826cf840aae193990ba9f2e, type: 3}
   m_Name: ShadowsMidtonesHighlights
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   shadows:
     m_OverrideState: 1
     m_Value: {x: 0.7761766, y: 0.84160614, z: 1, w: 0}
@@ -1052,15 +1033,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   components:
   - {fileID: -5761057358524706462}
-  - {fileID: 7331911192584372412}
-  - {fileID: 4660263191818839518}
   - {fileID: 38415987715210131}
-  - {fileID: 4007487950925859663}
-  - {fileID: -7482853116644999212}
   - {fileID: -5013989890047549814}
   - {fileID: -4035850962973811738}
-  - {fileID: 6006494562362040170}
-  - {fileID: -1682452371091571932}
   - {fileID: -5920911177897325019}
 --- !u!114 &38415987715210131
 MonoBehaviour:
@@ -1493,28 +1468,6 @@ MonoBehaviour:
   cascadeShadowBorder3:
     m_OverrideState: 0
     m_Value: 0
---- !u!114 &4007487950925859663
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70afe9e12c7a7ed47911bb608a23a8ff, type: 3}
-  m_Name: SplitToning
-  m_EditorClassIdentifier: 
-  active: 0
-  shadows:
-    m_OverrideState: 0
-    m_Value: {r: 0.5943396, g: 0.44385824, b: 0.38968495, a: 1}
-  highlights:
-    m_OverrideState: 0
-    m_Value: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 1}
-  balance:
-    m_OverrideState: 0
-    m_Value: -30
 --- !u!114 &4291193248687608038
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1591,52 +1544,6 @@ MonoBehaviour:
   fogType:
     m_OverrideState: 0
     m_Value: 0
---- !u!114 &4660263191818839518
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c01700fd266d6914ababb731e09af2eb, type: 3}
-  m_Name: DepthOfField
-  m_EditorClassIdentifier: 
-  active: 0
-  mode:
-    m_OverrideState: 1
-    m_Value: 2
-  gaussianStart:
-    m_OverrideState: 1
-    m_Value: 10
-  gaussianEnd:
-    m_OverrideState: 1
-    m_Value: 30
-  gaussianMaxRadius:
-    m_OverrideState: 1
-    m_Value: 1
-  highQualitySampling:
-    m_OverrideState: 1
-    m_Value: 0
-  focusDistance:
-    m_OverrideState: 1
-    m_Value: 8.41
-  aperture:
-    m_OverrideState: 1
-    m_Value: 8.1
-  focalLength:
-    m_OverrideState: 1
-    m_Value: 117
-  bladeCount:
-    m_OverrideState: 1
-    m_Value: 6
-  bladeCurvature:
-    m_OverrideState: 1
-    m_Value: 1
-  bladeRotation:
-    m_OverrideState: 1
-    m_Value: 70
 --- !u!114 &5662319574751907688
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1687,22 +1594,6 @@ MonoBehaviour:
   intensity:
     m_OverrideState: 1
     m_Value: 0.851
---- !u!114 &7331911192584372412
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81180773991d8724ab7f2d216912b564, type: 3}
-  m_Name: ChromaticAberration
-  m_EditorClassIdentifier: 
-  active: 0
-  intensity:
-    m_OverrideState: 1
-    m_Value: 0.1
 --- !u!114 &8204484217339855208
 MonoBehaviour:
   m_ObjectHideFlags: 3
