@@ -17,12 +17,13 @@ using UnityEngine.Rendering.Universal;
 using Photon.Pun.Demo.PunBasics;
 using Photon.Voice.PUN;
 using PhysicsCharacterController;
+using System.Threading.Tasks;
 
 public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
     public StayTimeTrackerForSummit StayTimeTrackerForSummit;
     public bool isAlreadySpawned;
-    public Camera MiniMapCamera; 
+    public Camera MiniMapCamera;
     [Header("singleton object")]
     public static GameplayEntityLoader instance;
     public bool IsJoinSummitWorld = false;
@@ -87,6 +88,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     [Header("XANA Summit Performer AI")]
     public GameObject[] AIAvatarPrefab;
 
+    public DownloadPopupHandler DownloadPopupHandlerInstance;
     private void Awake()
     {
         instance = this;
@@ -150,9 +152,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         GamePlayButtonEvents.OnExitButtonXANASummit -= ResetOnBackFromSummit;
     }
 
-    void ForcedMapOpenForSummitScene()
+    public void ForcedMapOpenForSummitScene()
     {
-        if(ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit")
+        if (ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit")
         {
             ReferencesForGamePlay.instance.minimap.SetActive(true);
             PlayerPrefs.SetInt("minimap", 1);
@@ -160,6 +162,14 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             ReferencesForGamePlay.instance.SumitMapStatus(true);
 
             XanaChatSystem.instance.chatDialogBox.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("Load map value===");
+            ReferencesForGamePlay.instance.minimap.SetActive(false);
+            PlayerPrefs.SetInt("minimap", 0);
+            ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
+            ReferencesForGamePlay.instance.SumitMapStatus(false);
         }
     }
 
@@ -370,11 +380,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         //change youtube player instantiation code because while env is in loading and youtube started playing video
 
-      
+
 
 
         XanaWorldDownloader.initialPlayerPos = mainController.transform.localPosition;
-      
+
 
 
         // Firebase Event for Join World
@@ -401,31 +411,90 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             LoadingHandler.Instance.UpdateLoadingStatusText("Joining World...");
         }
+        //code by hardik 9aug2024
         if (!(SceneManager.GetActiveScene().name.Contains("Museum")))
         {
             spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
             RaycastHit hit;
-            CheckAgain:
-            // Does the ray intersect any objects excluding the player layer
-            if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
+
+            // Loop to check for valid spawn point
+            bool validSpawnPointFound = false;
+            int maxAttempts = 10; // Limit the number of attempts to prevent an infinite loop
+            int attempts = 0;
+
+            while (!validSpawnPointFound && attempts < maxAttempts)
             {
-                if (hit.collider.gameObject.tag == "PhotonLocalPlayer" || hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
+                attempts++;
+
+                // Cast a ray downwards from the spawn point to detect collisions
+                if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
                 {
-                    spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
-                    goto CheckAgain;
+                    // Check if the hit object is a player or other non-walkable surface
+                    if (hit.collider.gameObject.CompareTag("PhotonLocalPlayer") ||
+                        hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
+                    {
+                        // Adjust spawn point slightly if occupied
+                        spawnPoint = new Vector3(
+                            spawnPoint.x + UnityEngine.Random.Range(-1f, 1f),
+                            spawnPoint.y,
+                            spawnPoint.z + UnityEngine.Random.Range(-1f, 1f)
+                        );
+                    }
+                    else
+                    {
+                        // Valid spawn point found
+                        spawnPoint = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
+                        validSpawnPointFound = true;
+                    }
                 }
-                spawnPoint = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
             }
+
+            if (!validSpawnPointFound)
+            {
+                Debug.LogWarning("Failed to find a valid spawn point after multiple attempts.");
+            }
+
             SetPlayerCameraAngle();
         }
 
-
+        // Set main player and controller positions
         mainPlayer.transform.position = new Vector3(0, 0, 0);
+
         if (mainController == null)
             mainController = mainControllerRefHolder;
+
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
 
+        // Optional: Adjust camera position based on new player position
         Vector3 newPos = spawnPoint + new Vector3(500, 500f, 500);
+
+
+
+        //if (!(SceneManager.GetActiveScene().name.Contains("Museum")))
+        //{
+        //    spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
+        //    RaycastHit hit;
+        //CheckAgain:
+        //    // Does the ray intersect any objects excluding the player layer
+        //    if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
+        //    {
+        //        if (hit.collider.gameObject.tag == "PhotonLocalPlayer" || hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
+        //        {
+        //            spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
+        //            goto CheckAgain;
+        //        }
+        //        spawnPoint = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
+        //    }
+        //    SetPlayerCameraAngle();
+        //}
+
+
+        //mainPlayer.transform.position = new Vector3(0, 0, 0);
+        //if (mainController == null)
+        //    mainController = mainControllerRefHolder;
+        //mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
+
+        //Vector3 newPos = spawnPoint + new Vector3(500, 500f, 500);
         InstantiatePlayerAvatar(newPos);
 
         ReferencesForGamePlay.instance.m_34player = player;
@@ -535,7 +604,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         // Firebase Event for Join World
         GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
-        if(ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
+        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
         {
             ReferencesForGamePlay.instance.m_34player.AddComponent<SummitAnalyticsTrigger>();
             if (StayTimeTrackerForSummit != null)
@@ -646,7 +715,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         XanaPartyController.SetActive(false);
         XanaWorldController.SetActive(true);
         mainController = mainControllerRefHolder;
-        if(ConstantsHolder.isFixedHumanoid)
+        if (ConstantsHolder.isFixedHumanoid)
         {
             InstantiatePlayerForFixedHumanoid();
             return;
@@ -673,7 +742,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void InstantiatePlayerForFixedHumanoid()
     {
-        if (ConstantsHolder.AvatarIndex<10)
+        if (ConstantsHolder.AvatarIndex < 10)
         {
             player = PhotonNetwork.Instantiate("XanaAvatar2.0_Male", spawnPoint, Quaternion.identity, 0);    // Instantiate Male Avatar
             player.transform.parent = mainController.transform;
@@ -718,7 +787,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
 
         RaycastHit hit;
-        CheckAgain:
+    CheckAgain:
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(spawnPoint, -transform.up, out hit, Mathf.Infinity))
         {
@@ -794,7 +863,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 SituationChangerSkyboxScript.instance.builderMapDownload.UpdateScene();
                 BuilderEventManager.ChangeCameraHeight?.Invoke(false);
             }
-                
+
             SituationChangerSkyboxScript.instance.builderMapDownload.PlayerSetup();
         }
         if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
@@ -966,9 +1035,28 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     /*******************************************************************new code */
 
     string environmentLabel;
-    public void LoadEnvironment(string label)
+    public async void LoadEnvironment(string label)
     {
         environmentLabel = label;
+        if (label == "XANA Summit")
+        {
+            XanaWorldDownloader.downloadSize = Addressables.GetDownloadSizeAsync(environmentLabel).WaitForCompletion();
+            XanaWorldDownloader.downloadSize += (71 * 1024 * 1024);
+            if (!DownloadPopupHandler.AlwaysAllowDownload && !XanaWorldDownloader.CheckForVisitedWorlds(ConstantsHolder.xanaConstants.EnviornmentName))
+            {
+                LoadingHandler.StopLoader = true;
+                if (!XanaWorldDownloader.DownloadedWorldNames.Contains(ConstantsHolder.xanaConstants.EnviornmentName))
+                    XanaWorldDownloader.DownloadedWorldNames.Add(ConstantsHolder.xanaConstants.EnviornmentName);
+                bool permission = await DownloadPopupHandlerInstance.ShowDialogAsync();
+                LoadingHandler.StopLoader = false;
+                if (!permission)
+                {
+                    return;
+                }
+            }
+            else
+                LoadingHandler.StopLoader = false;
+        }
         StartCoroutine(DownloadAssets());
     }
 
@@ -1038,17 +1126,23 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 string name = environmentLabel.Replace(" : ", string.Empty);
                 environmentLabel = name;
             }
-            while (!ConstantsHolder.isAddressableCatalogDownload)
-            {
-                yield return new WaitForSeconds(1f);
-            }
+            /*  while (!ConstantsHolder.isAddressableCatalogDownload) //Zeel Replaced loop with waituntil
+              {
+                  yield return new WaitForSeconds(1f);
+              }*/
+
+            yield return new WaitUntil(() => ConstantsHolder.isAddressableCatalogDownload);
+
             AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(environmentLabel, LoadSceneMode.Additive, false);
             if (!ConstantsHolder.xanaConstants.isFromXanaLobby)
             {
                 LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             }
             while (!handle.IsDone)
+            {
+              
                 yield return null;
+            }
             addressableSceneName = environmentLabel;
 
             //One way to handle manual scene activation.
@@ -1075,6 +1169,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             RespawnPlayer();
         }
     }
+
     private void DownloadCompleted()
     {
         isEnvLoaded = true;
@@ -1085,7 +1180,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     {
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        CheckAgain:
+    CheckAgain:
         Transform temp = null;
 
         Debug.Log("not coming from else");
@@ -1152,7 +1247,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         spawnPoint.y += BuilderSpawnPoint ? 2 : 1000;
 
         RaycastHit hit;
-        CheckAgain:
+    CheckAgain:
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(spawnPoint, -transform.up, out hit, Mathf.Infinity))
         {
