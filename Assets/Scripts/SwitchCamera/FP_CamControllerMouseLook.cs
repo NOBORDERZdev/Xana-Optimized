@@ -227,7 +227,6 @@ public class FP_CamControllerMouseLook : MonoBehaviour
 
     private void MoveCameraFreeFloat()
     {
-
         // Get touch count
         int _touchCount = Input.touchCount;
 
@@ -235,23 +234,19 @@ public class FP_CamControllerMouseLook : MonoBehaviour
         if (_touchCount > 0)
         {
             // Get the first touch position
-            //Touch touch = Input.GetTouch(0);
-            //Vector2 touchDelta = touch.deltaPosition;
-
             Vector2 _touchDelta = delta;
+
             // Rotate the camera horizontally (around the y-axis)
             yRotation += _touchDelta.x * touchSensitivity;
-            transform.rotation = Quaternion.Euler(xRotation, yRotation, 0f);
 
             // Calculate vertical rotation
             xRotation -= _touchDelta.y * touchSensitivity;
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-            // Rotate the camera vertically (around the x-axis)
-            transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
+            // Smooth the rotation
+            Quaternion targetRotation = Quaternion.Euler(xRotation, yRotation, 0f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * sensitivity);
         }
-
-
     }
     private void MoveCamera(Vector2 delta)
     {
