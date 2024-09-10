@@ -286,7 +286,8 @@ public class AvatarController : MonoBehaviour
 
     public IEnumerator IECheckClothsStitchedOrNot(string cJson)
     {
-        if (characterBodyParts.eyeShadow!=null)
+        float timeWithoutCloth= 0f;
+        if (characterBodyParts.eyeShadow != null)
         {
             characterBodyParts.eyeShadow.enabled = false;
         }
@@ -335,6 +336,15 @@ public class AvatarController : MonoBehaviour
                     wornShoes.SetActive(false);
                 }
                 yield return new WaitForSeconds(.1f);
+                timeWithoutCloth += .1f;
+                if (timeWithoutCloth>15)
+                {
+                    if (clothsStichedOrNotCoroutine != null)
+                    {
+                        StopCoroutine(clothsStichedOrNotCoroutine);
+                    }
+                    OnEnable();
+                }
             }
 
             if (wornHair != null)
