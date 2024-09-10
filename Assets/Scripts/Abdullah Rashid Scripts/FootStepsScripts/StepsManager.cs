@@ -20,7 +20,8 @@ public class StepsManager : MonoBehaviour
 
     private void OnDisable()
     {
-        SoundSettings.soundManagerSettings.OnBGMAudioMuted -= DisableStepsSound;
+        if (SoundSettings.soundManagerSettings)
+            SoundSettings.soundManagerSettings.OnBGMAudioMuted -= DisableStepsSound;
     }
 
     void Awake()
