@@ -1,8 +1,10 @@
 ﻿using ExitGames.Client.Photon;
 using Photon.Realtime;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Photon.Pun.Demo.Asteroids
 {
@@ -363,7 +365,7 @@ namespace Photon.Pun.Demo.Asteroids
                 GameObject entry = Instantiate(RoomListEntryPrefab);
                 entry.transform.SetParent(RoomListContent.transform);
                 entry.transform.localScale = Vector3.one;
-                entry.GetComponent<RoomListEntry>().Initialize(info.Name, (byte)info.PlayerCount, info.MaxPlayers);
+                entry.GetComponent<RoomListEntry>().Initialize(info.Name, (byte)info.PlayerCount, Convert.ToByte(info.MaxPlayers) );
 
                 roomListEntries.Add(info.Name, entry);
             }

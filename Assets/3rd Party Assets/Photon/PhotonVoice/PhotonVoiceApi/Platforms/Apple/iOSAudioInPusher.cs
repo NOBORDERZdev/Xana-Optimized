@@ -1,4 +1,4 @@
-﻿#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+﻿#if ((UNITY_IOS || UNITY_VISIONOS) && !UNITY_EDITOR) || __IOS__
 using System;
 using System.Threading;
 using System.Collections.Generic;
@@ -6,12 +6,6 @@ using System.Runtime.InteropServices;
 
 namespace Photon.Voice.IOS
 {
-    public class MonoPInvokeCallbackAttribute : System.Attribute
-    {
-        private Type type;
-        public MonoPInvokeCallbackAttribute(Type t) { type = t; }
-    }
-
     public class AudioInPusher : IAudioPusher<float>, IResettable
     {
         const string lib_name = "__Internal";
@@ -46,7 +40,7 @@ namespace Photon.Voice.IOS
                         {
                             Error = "Exception in AudioInPusher constructor";
                         }
-                        logger.LogError("[PV] AudioInPusher: " + Error);
+                        logger.Log(LogLevel.Error, "[PV] AudioInPusher: " + Error);
                     }
                     finally
                     {
@@ -54,7 +48,7 @@ namespace Photon.Voice.IOS
                     }
                 }
             });
-            t.Name = "IOS AudioInPusher ctr";
+            Util.SetThreadName(t, "[PV] IOSAudioInPusherCtr");
             t.Start();
         }
 
@@ -87,10 +81,10 @@ namespace Photon.Voice.IOS
         public void SetCallback(Action<float[]> callback, ObjectFactory<float[], int> bufferFactory)
         {
             this.bufferFactory = bufferFactory;
-            this.pushCallback = callback;            
+            this.pushCallback = callback;
         }
         private void push(IntPtr buf, int len)
-        {            
+        {
             if (this.pushCallback != null)
             {
                 var bufManaged = bufferFactory.New(len);
