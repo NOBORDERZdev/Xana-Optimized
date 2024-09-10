@@ -408,6 +408,8 @@ public class ReferencesForGamePlay : MonoBehaviour
 
     public void FullScreenMapStatus (bool _enable)
     {
+        if(ConstantsHolder.DisableFppRotation) { return; }
+
         if (_enable)
         {
             Input.multiTouchEnabled = false;

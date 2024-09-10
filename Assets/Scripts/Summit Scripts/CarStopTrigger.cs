@@ -39,6 +39,7 @@ public class CarStopTrigger : MonoBehaviour
                     if (player != null)
                     {
                         StartCoroutine(CarNavigationManager.CarNavigationInstance.TPlayer(other.gameObject, player, this));
+                        break;
                     }
                 }
             }

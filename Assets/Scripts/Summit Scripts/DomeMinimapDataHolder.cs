@@ -6,12 +6,10 @@ using System.Linq;
 using UnityEngine.Networking;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using static StayTimeTrackerForSummit;
+using Photon.Pun.Demo.PunBasics;
 
 public class DomeMinimapDataHolder : MonoBehaviour
 {
-    [SerializeField]
-    private StayTimeTrackerForSummit _stayTimeTrackerForSummit;
     public Sprite HighlightedSprite;
     public List<DomeDataForMap> MapDomes;
     public List<DomeDataForMap> MapDomes_portrait;
@@ -21,12 +19,11 @@ public class DomeMinimapDataHolder : MonoBehaviour
     public GameObject ConfirmationPopup_Portrait;
 
     public static Action<OnTriggerSceneSwitch> OnInitDome;
-    public static Action<int,string> OnSetDomeId;
+    public static Action<int> OnSetDomeId;
 
     private Dictionary<int, Transform> _allInitDomes = new Dictionary<int, Transform>();
     private Transform _playerTransform;
     private int _clickedDomeID;
-    private string _clickedDomeArea;
     private int _totalDomeCount = 128;
 
 
@@ -95,6 +92,7 @@ public class DomeMinimapDataHolder : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             await www.SendWebRequest();
+
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log("Get Dome Visit : "+ www.error);
@@ -117,6 +115,24 @@ public class DomeMinimapDataHolder : MonoBehaviour
     {
         if (_allInitDomes.TryGetValue(_domeId, out Transform domeTransform))
         {
+            if(_domeId>8&& _domeId<37)
+            {
+                MutiplayerController.instance.Ontriggered("GrassLand");
+            }else if(_domeId>40&& _domeId<69)
+            {
+                MutiplayerController.instance.Ontriggered("Sea");
+            }else if(_domeId>68&& _domeId<97)
+            {
+                MutiplayerController.instance.Ontriggered("Solid");
+            }else if(_domeId>100&& _domeId<129)
+            {
+                MutiplayerController.instance.Ontriggered("Sand");
+            }
+            else
+            {
+                MutiplayerController.instance.Ontriggered("Default");
+            }
+
             // Attempt to find "Player Spawner" or default to first child if not found
             Transform domePos = domeTransform.Find("Player Spawner") ?? domeTransform.GetChild(0);
             playerTransform.position = domePos.position;
@@ -139,30 +155,11 @@ public class DomeMinimapDataHolder : MonoBehaviour
         ReferencesForGamePlay.instance.FullScreenMapStatus(false);
 
         TeleportPlayerToSelectedDome(_clickedDomeID, _playerTransform);
-        CallAnalyticsFromMinimapTeleport();
     }
-    void CallAnalyticsFromMinimapTeleport()
-    {
-        if (Enum.GetNames(typeof(SummitAreaTrigger)).Any(name => _clickedDomeArea.Contains(name)))
-        {
-            _clickedDomeArea = Enum.GetNames(typeof(SummitAreaTrigger)).FirstOrDefault(name => _clickedDomeArea.Contains(name));
-            if (_stayTimeTrackerForSummit != null)
-            {
-                if (_clickedDomeArea != _stayTimeTrackerForSummit.SummitAreaName)
-                {
-                    _stayTimeTrackerForSummit.SummitAreaName = _clickedDomeArea;
-                    string eventName = "XS_TV_" + _stayTimeTrackerForSummit.SummitAreaName;
-                    GlobalConstants.SendFirebaseEventForSummit(eventName);
-                    _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = true;
-                    _stayTimeTrackerForSummit.StartTrackingTime();
-                }
-            }
-        }
-    }
-    public void SetDomeID(int DomeId, string areaName)
+
+    public void SetDomeID(int DomeId)
     {
         _clickedDomeID = DomeId;
-        _clickedDomeArea = areaName;
         if (_playerTransform == null)
             _playerTransform = GameplayEntityLoader.instance.mainController.transform;
     }
