@@ -32,6 +32,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     private GameObject mainControllerRefHolder;
     private GameObject YoutubeStreamPlayer;
     public GameObject PenguinPlayer;
+    public GameObject DashButton;
     public ActionManager ActionEmoteSystem;
 
     public CinemachineFreeLook PlayerCamera;
@@ -699,8 +700,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void InstantiatePlayerAvatar(Vector3 pos)
     {
+       
         if (ConstantsHolder.isPenguin)
         {
+            DashButton.SetActive(false);
             XanaWorldController.SetActive(false);
             XanaPartyController.SetActive(true);
             player = PhotonNetwork.Instantiate("XanaPenguin", spawnPoint, Quaternion.identity, 0);
@@ -717,6 +720,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         mainController = mainControllerRefHolder;
         if (ConstantsHolder.isFixedHumanoid)
         {
+            DashButton.SetActive(true);
             InstantiatePlayerForFixedHumanoid();
             return;
         }
