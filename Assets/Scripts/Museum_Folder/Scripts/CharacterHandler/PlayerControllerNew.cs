@@ -1133,7 +1133,7 @@ public class PlayerControllerNew : MonoBehaviour
         {
             canDoubleJump = true;
             animator.SetBool("canDoubleJump", canDoubleJump);
-            Invoke(nameof(StopDoubleJump), 0.2f);
+            Invoke(nameof(StopDoubleJump), 0.05f);
             gravityVector.y = JumpVelocity * 2;
         }
 
