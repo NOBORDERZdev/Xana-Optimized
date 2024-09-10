@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI.Extensions;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 
 public class CharSelectSummit : MonoBehaviour
 {
@@ -76,9 +77,14 @@ public class CharSelectSummit : MonoBehaviour
                     {
                         contentParent.GetChild(1).GetChild(0).GetComponent<Image>().enabled = false;
                     }
-                    contentParent.GetChild(i - 1).GetChild(0).DOScale(new Vector3(1.3f, 1.3f, 0.1f), 0.1f);
-                    contentParent.GetChild(i + 1).GetChild(0).DOScale(new Vector3(1.3f, 1.3f, 0.1f), 0.1f);
-                   
+                    if (contentParent.childCount < i)
+                    {
+                        contentParent.GetChild(i - 1).GetChild(0).DOScale(new Vector3(1.3f, 1.3f, 0.1f), 0.1f);
+                    }
+                    if (contentParent.childCount < i)
+                    {
+                        contentParent.GetChild(i + 1).GetChild(0).DOScale(new Vector3(1.3f, 1.3f, 0.1f), 0.1f);
+                    }
                 }
             }
             else
