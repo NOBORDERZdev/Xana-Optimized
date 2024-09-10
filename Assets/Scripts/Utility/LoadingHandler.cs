@@ -9,7 +9,7 @@ using DG.Tweening;
 using UnityEngine.Video;
 using System.Threading.Tasks;
 using SuperStar.Helpers;
-using Unity.VisualScripting;
+using UnityEngine.Events;
 
 public class LoadingHandler : MonoBehaviour
 {
@@ -91,6 +91,8 @@ public class LoadingHandler : MonoBehaviour
     public TextMeshProUGUI DomeEstimateTime;
     public TextMeshProUGUI DomeID;
     public RectTransform LoadingStatus;
+
+    public System.Action<bool> EnterWheel;
 
     public ManualRoomController manualRoomController;
     public StreamingLoadingText streamingLoading;
@@ -864,6 +866,21 @@ public class LoadingHandler : MonoBehaviour
         DomeLodingUI.SetActive(false);
         if (info.data.entityType == "USER_WORLD") { Autostartslider = false; } else { Autostartslider = true; }
     }
+    public void showApprovalWheelloading()
+    {
+        ResetLoadingValues();
+        DomeThumbnail.gameObject.SetActive(false);
+        DomeLoading.SetActive(true);
+        DomeName.text = "Giant Wheel";
+        DomeDescription.text = "Giant Wheel";
+        DomeCreator.text = "XANA";
+        DomeType.text = "Entertainment";
+        DomeCategory.text = "Entertainment";
+ 
+        ApprovalUI.SetActive(true);
+        DomeLodingUI.SetActive(false);
+
+    }
     public async  void EnterDome()
     {
         enter = true;
@@ -871,6 +888,7 @@ public class LoadingHandler : MonoBehaviour
         ApprovalUI.SetActive(false);
         DomeLodingUI.SetActive(true);
         await Task.Delay(500);
+        EnterWheel?.Invoke(true);
         StartCoroutine(IncrementSliderValue(Random.Range(0f, 5f)));
 
     }
@@ -878,6 +896,7 @@ public class LoadingHandler : MonoBehaviour
     {
         enter = false;
         WaitForInput = false;
+        EnterWheel?.Invoke(false);
         DomeLoading.SetActive(false);
     }
 
@@ -894,8 +913,9 @@ public class LoadingHandler : MonoBehaviour
     public void DomeLoadingProgess(float progress)
     {
         Debug.Log("Loading progress...");
-        LoadingStatus.DOAnchorMax(new Vector2(currentValue / 100, LoadingStatus.anchorMax.y), 0.15f); ;
+        LoadingStatus.DOAnchorMax(new Vector2(progress / 100, LoadingStatus.anchorMax.y), 0.15f); ;
         DomeProgress.text = ((int)progress).ToString("D2");
+       
     }
 }
 

@@ -85,8 +85,23 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             var car = carview.gameObject.GetComponent<SplineFollower>();
            
             isInsideCAr = true;
-            
+            if (view.IsMine)
+            {
+                ConstantsHolder.DisableFppRotation = true;
+             if(GameplayEntityLoader.instance._uiReferences.Onfreecam.gameObject.activeInHierarchy)
+                {
+                    GameplayEntityLoader.instance._uiReferences.Onfreecam.onClick.Invoke();
+                    GameplayEntityLoader.instance._uiReferences.Onfreecam.interactable = false;
+                    GameplayEntityLoader.instance._uiReferences.OffFreecam.interactable = false;
+                }
+                else
+                {
+                    GameplayEntityLoader.instance._uiReferences.Onfreecam.interactable = false;
+                    GameplayEntityLoader.instance._uiReferences.OffFreecam.interactable = false;
+                }
+            }
          
+
             if (isdriver)
             {
 
@@ -314,6 +329,15 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 
         
         yield return new WaitForSeconds(2);
+        if (view.IsMine)
+        {
+            ConstantsHolder.DisableFppRotation = false;
+           
+              
+                GameplayEntityLoader.instance._uiReferences.Onfreecam.interactable = true;
+                GameplayEntityLoader.instance._uiReferences.OffFreecam.interactable = true;
+           
+        }
         isInsideCAr = false;
     }
 
@@ -373,6 +397,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
         string name = PhotonNetwork.CurrentRoom.CustomProperties["Sector"].ToString();
         if (name == "Wheel")
         {
+           
             getcar();
         }
         
@@ -651,9 +676,24 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
        
 
         Debug.LogError("Joined Wheel");
+        if (view.IsMine)
+        {
             ConstantsHolder.DisableFppRotation = true;
-            isInsideWheel = true;
-            if (playpos == 1)
+            if (GameplayEntityLoader.instance._uiReferences.Onfreecam.gameObject.activeInHierarchy)
+            {
+                GameplayEntityLoader.instance._uiReferences.Onfreecam.onClick.Invoke();
+                GameplayEntityLoader.instance._uiReferences.Onfreecam.interactable = false;
+                GameplayEntityLoader.instance._uiReferences.OffFreecam.interactable = false;
+            }
+            else
+            {
+                GameplayEntityLoader.instance._uiReferences.Onfreecam.interactable = false;
+                GameplayEntityLoader.instance._uiReferences.OffFreecam.interactable = false;
+            }
+        }
+        isInsideWheel = true;
+        LoadingHandler.Instance.DisableDomeLoading();
+        if (playpos == 1)
             {
 
                 var car = GiantWheelManager.Instance.car;
@@ -889,7 +929,14 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             {
                 item.enabled = true;
             }
-            ConstantsHolder.DisableFppRotation = false;
+           
+                ConstantsHolder.DisableFppRotation = false;
+               
+
+                    GameplayEntityLoader.instance._uiReferences.Onfreecam.interactable = true;
+                    GameplayEntityLoader.instance._uiReferences.OffFreecam.interactable = true;
+                
+            
             MutiplayerController.instance.disableSector = false;
             CarNavigationManager.CarNavigationInstance.DisableExitCanvas();
             loader.mainController.transform.parent = Parent;
@@ -975,7 +1022,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             }
             else return;
 
-
+            LoadingHandler.Instance.DomeLoadingProgess(100);
             Debug.Log("Calling  RPC");
             view.RPC("EnterWheelCar", RpcTarget.All, MyPlayerPos);
         }
