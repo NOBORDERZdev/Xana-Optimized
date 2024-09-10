@@ -18,7 +18,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
-using Photon.Voice.PUN;
+
 
 namespace Photon.Pun.Demo.PunBasics
 {
@@ -436,6 +436,8 @@ namespace Photon.Pun.Demo.PunBasics
                     playerobjects.RemoveAt(x);
                 }
             }
+            Resources.UnloadUnusedAssets();
+            GC.Collect();
         }
 
         public override void OnJoinRoomFailed(short returnCode, string message)
