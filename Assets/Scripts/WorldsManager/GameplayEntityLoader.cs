@@ -680,7 +680,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             mainController = player;
             if (player != null)
             {
-                if (SceneManager.GetActiveScene().name == "Builder")
+                if (SceneManager.GetActiveScene().name == "Builder" && ConstantsHolder.xanaConstants.isXanaPartyWorld)
                 {
                     SituationChangerSkyboxScript.instance.builderMapDownload.XANAPartyLoading.SetActive(false);
                 }

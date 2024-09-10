@@ -86,6 +86,11 @@ public class BuilderMapDownload : MonoBehaviour
     {
         BuilderEventManager.OnBuilderDataFetch?.Invoke(ConstantsHolder.xanaConstants.builderMapID, ConstantsGod.AUTH_TOKEN);
         GamificationComponentData.instance.isSkyLoaded = false;
+
+        if(ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            XANAPartyLoading.SetActive(true);
+        }
     }
 
 
@@ -621,7 +626,8 @@ public class BuilderMapDownload : MonoBehaviour
             SetLensFlareData(null, 1, 1);
         GamificationComponentData.instance.isSkyLoaded = true;
         directionalLight.gameObject.SetActive(true);
-        RenderSettings.ambientLight = TimeStats.playerCanvas.oldAmbientColorBlind;
+        if (TimeStats.playerCanvas)
+            RenderSettings.ambientLight = TimeStats.playerCanvas.oldAmbientColorBlind;
         DynamicGI.UpdateEnvironment();
     }
 
@@ -777,7 +783,7 @@ public class BuilderMapDownload : MonoBehaviour
         Vignette vignette;
         postProcessVol.profile.TryGet(out vignette);
 
-        if (vignette)
+        if (vignette && GamificationComponentData.instance.buildingDetect)
         {
             GamificationComponentData.instance.buildingDetect.defaultIntensityvalue = (float)vignette.intensity;
             GamificationComponentData.instance.buildingDetect.defaultSmootnesshvalue = (float)vignette.smoothness;
@@ -913,7 +919,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     void LoadAddressableSceneAfterDownload()
     {
-        if (SceneManager.sceneCount > 1 || ConstantsHolder.isFromXANASummit)
+        if ((SceneManager.sceneCount > 1 || ConstantsHolder.isFromXANASummit) && !ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
             Photon.Pun.Demo.PunBasics.MutiplayerController.instance.Connect(ConstantsHolder.xanaConstants.EnviornmentName);
             return;

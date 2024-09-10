@@ -446,6 +446,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
 
         DisplayMessageText.text = DisplayMessage;
+        XANAPartyMessageText.text = DisplayMessage;
         bool isJPText = CheckJapaneseDisplayMessage(DisplayMessage);
         if (isJPText)
             DisplayMessageText.font = GamificationComponentData.instance.hiraginoFont;
@@ -481,6 +482,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         DisplayMessageParentUI.SetActive(false);
         XANAPartyMessageParentUI.SetActive(false);
         DisplayMessageText.text = "";
+        XANAPartyMessageText.text = "";
         DisplayMessageTimeText.text = "00:00";
         DisplayMessageTimeText.transform.parent.gameObject.SetActive(true);
     }
