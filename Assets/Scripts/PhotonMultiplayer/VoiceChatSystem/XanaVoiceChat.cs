@@ -38,8 +38,6 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
     public Transform placetoload;
     public string MicroPhoneDevice;
     public int index;
-    [Space(5)]
-    public GameObject PermissionAlertPopup;
 
     public void Awake()
     {
@@ -87,14 +85,18 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
             // Already Called For Landscape no need to call again.
             if (Application.isEditor)
             {
-                PermissionAlertPopup.SetActive(true);
+                PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
+                PermissionPopusSystem.Instance.OpenPermissionScreen();
             }
             else
             {
 #if UNITY_ANDROID
                 if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
                 {
-                    PermissionAlertPopup.SetActive(true);
+                    PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
+                    PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
+                    PermissionPopusSystem.Instance.OpenPermissionScreen();
                 }
                 else
                 {
@@ -102,7 +104,9 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
                 }
 #elif UNITY_IOS
                 if(PlayerPrefs.GetInt("MicPermission", 0) == 0){
-                      PermissionAlertPopup.SetActive(true);
+                      PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
+                    PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
+                    PermissionPopusSystem.Instance.OpenPermissionScreen();
                 }
                 else
                 {
@@ -115,12 +119,13 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
 
     public void SetMicByBtn()
     {
+        PermissionPopusSystem.Instance.onCloseAction -= SetMicByBtn;
         StartCoroutine(SetMic());
     }
     
     private IEnumerator SetMic()
     {
-#if !UNITY_EDITOR && UNITY_IOS
+#if UNITY_IOS
         PlayerPrefs.SetInt("MicPermission", 1);
 #endif
 

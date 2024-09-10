@@ -59,6 +59,9 @@ public class UserLoginSignupManager : MonoBehaviour
     public RawImage AiPresetImageforEditProfil;
     public Button NameScreenNextButton;
     public Button ProfilePicNextButton;
+    public Sprite NameFeildSelectedSprite;
+    public Sprite NameFeildUnSelectedSprite;
+    public Image NameScreenNextButtonImage;
     public GameObject NameScreenLoader;
     public GameObject ProfilePicScreenLoader;
     public Image EditProfileImage;
@@ -1010,6 +1013,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
         }
         else if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit) {
+
             if (displayrname == "")
             {
                 keytoLocalize = TextLocalization.GetLocaliseTextByKey("Display name or username should not be empty.");
@@ -1158,6 +1162,21 @@ public class UserLoginSignupManager : MonoBehaviour
         errorHandler.ShowErrorMessage(errorMSg, errorTextMsg);
         NameScreenLoader.SetActive(false);
         NameScreenNextButton.interactable = true;
+
+    }
+    public void OnValueChangedSprite() {
+        if (NameFeildSelectedSprite != null && NameFeildUnSelectedSprite != null)
+        {
+            if (!string.IsNullOrEmpty(displayrNameField.Text))
+            {
+                NameScreenNextButtonImage.sprite = NameFeildSelectedSprite;
+            }
+            else
+            {
+                NameScreenNextButtonImage.sprite = NameFeildUnSelectedSprite;
+            }
+        }
+
 
     }
     IEnumerator RegisterUserWithNewTechnique(string url, string Jsondata, string JsonOfName, String NameofUser, Action<bool> CallBack)
