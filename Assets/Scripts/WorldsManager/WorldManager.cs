@@ -112,7 +112,7 @@ public class WorldManager : MonoBehaviour
             yield return null;
         if (!XANAPartyManager.Instance.EnableXANAPartyGuest)
         {
-            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.PenpenzLoading(FadeAction.In));
             while (PlayerPrefs.GetInt("WalletLogin") == 1 && ConstantsHolder.userId.IsNullOrEmpty() && ConstantsHolder.userName.IsNullOrEmpty())
             {
                 yield return new WaitForSeconds(0.5f);

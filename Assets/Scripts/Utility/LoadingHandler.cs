@@ -88,6 +88,13 @@ public class LoadingHandler : MonoBehaviour
 
     public GameObject SearchLoadingCanvas;
     private CanvasGroup canvasGroup;
+
+    #region XANA Party
+    [Header("XANA Party TELEPORT")]
+    public CanvasGroup XANAPartyFeader;
+    public GameObject XANAPartyLandscape, XANAPartyPotraite;
+    #endregion
+
     private void Awake()
     {
         if (Instance == null)
@@ -621,6 +628,48 @@ public class LoadingHandler : MonoBehaviour
 
                 teleportFeader.gameObject.SetActive(true);
                 teleportFeader.DOFade(1, 0.5f);
+                break;
+            default:
+                break;
+        }
+        yield return null;
+    }
+
+
+    public IEnumerator PenpenzLoading(FadeAction action)
+    {
+        // teleportFeader.gameObject.SetActive(true);
+        switch (action)
+        {
+            case FadeAction.Out:
+                XANAPartyFeader.DOFade(0, 0.5f).OnComplete(() =>
+                {
+                    XANAPartyFeader.gameObject.SetActive(false);
+                    XANAPartyLandscape.SetActive(false);
+                    XANAPartyPotraite.SetActive(false);
+                });
+                break;
+            case FadeAction.In:
+                if (ConstantsHolder.xanaConstants != null)
+                {
+                    XANAPartyLandscape.SetActive(!ConstantsHolder.xanaConstants.orientationchanged);
+                    XANAPartyPotraite.SetActive(ConstantsHolder.xanaConstants.orientationchanged);
+                }
+                else
+                {
+                    XANAPartyLandscape.SetActive(true);
+                }
+                if (!XANAPartyFeader.gameObject.activeInHierarchy)
+                {
+                    currentValue = 0;
+                    isLoadingComplete = false;
+                    timer = 0;
+                    //JJLoadingSlider.fillAmount = 0f;
+                    //JJLoadingPercentageText.text = "0%".ToString();
+                }
+
+                XANAPartyFeader.gameObject.SetActive(true);
+                XANAPartyFeader.DOFade(1, 0.5f);
                 break;
             default:
                 break;
