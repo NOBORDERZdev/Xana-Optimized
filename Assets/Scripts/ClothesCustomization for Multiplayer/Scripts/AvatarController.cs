@@ -286,6 +286,10 @@ public class AvatarController : MonoBehaviour
 
     public IEnumerator IECheckClothsStitchedOrNot(string cJson)
     {
+        if (characterBodyParts.eyeShadow!=null)
+        {
+            characterBodyParts.eyeShadow.enabled = false;
+        }
         characterBodyParts.head.enabled = characterBodyParts.body.enabled = false;
         clothJson = cJson;
         if (!string.IsNullOrEmpty(clothJson))
@@ -349,11 +353,19 @@ public class AvatarController : MonoBehaviour
             {
                 wornShoes.SetActive(true);
             }
+            if (characterBodyParts.eyeShadow != null)
+            {
+                characterBodyParts.eyeShadow.enabled = true;
+            }
             characterBodyParts.head.enabled = characterBodyParts.body.enabled = true;
             isStitchedSuccessfully = true;
         }
         else
         {
+            if (characterBodyParts.eyeShadow != null)
+            {
+                characterBodyParts.eyeShadow.enabled = true;
+            }
             characterBodyParts.head.enabled = characterBodyParts.body.enabled = true;
         }
         clothsStichedOrNotCoroutine = null;

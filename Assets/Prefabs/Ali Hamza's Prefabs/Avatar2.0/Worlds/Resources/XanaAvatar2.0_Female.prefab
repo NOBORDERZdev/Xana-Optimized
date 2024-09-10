@@ -4008,6 +4008,7 @@ MonoBehaviour:
   boxerHead: {fileID: 6483856165262445224}
   body: {fileID: 5212556724569025453}
   head: {fileID: 6483856165262445224}
+  eyeShadow: {fileID: 2395429303150701447}
   randomPresetData:
   - Name: Preset 1
     GenderType: Female
@@ -4368,6 +4369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bundle: {fileID: 0}
+  clothData: 
 --- !u!114 &3150524130530545092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4560,6 +4562,75 @@ MonoBehaviour:
   wornGlovesId: 0
   wornChainId: 0
   masks: []
+  isStitchedSuccessfully: 0
+  clothDataClass:
+    id: 
+    name: 
+    thumbnail: 
+    gender: 
+    avatarType: OldAvatar
+    myItemObj: []
+    ai_gender: 
+    hair_color: {r: 0, g: 0, b: 0, a: 0}
+    skin_color: 
+    lip_color: {r: 0, g: 0, b: 0, a: 0}
+    faceItemData: 0
+    lipItemData: 0
+    noseItemData: 0
+    hairItemData: 
+    eyeItemData: 
+    eyeShapeItemData: 0
+    charactertypeAi: 0
+    SavedBones: []
+    SkinId: 0
+    Skin: {r: 0, g: 0, b: 0, a: 0}
+    LipColor: {r: 0, g: 0, b: 0, a: 0}
+    HairColor: {r: 0, g: 0, b: 0, a: 0}
+    EyebrowColor: {r: 0, g: 0, b: 0, a: 0}
+    EyeColor: {r: 0, g: 0, b: 0, a: 0}
+    isSkinColorChanged: 0
+    isLipColorChanged: 0
+    HairColorPaletteValue: 0
+    BodyFat: 0
+    FaceValue: 0
+    NoseValue: 0
+    EyeValue: 0
+    EyesColorValue: 0
+    EyesColorPaletteValue: 0
+    EyeBrowValue: 0
+    EyeBrowColorPaletteValue: 0
+    EyeLashesValue: 0
+    MakeupValue: 0
+    LipsValue: 0
+    LipsColorValue: 0
+    LipsColorPaletteValue: 0
+    faceMorphed: 0
+    eyeBrowMorphed: 0
+    eyeMorphed: 0
+    noseMorphed: 0
+    lipMorphed: 0
+    PresetValue: 
+    eyeTextureName: 
+    eyeLashesName: 
+    makeupName: 
+    SssIntensity: 0
+    SkinGerdientColor: {r: 0, g: 0, b: 0, a: 0}
+    eyebrrowTexture: 
+    mustacheTextureName: 
+    faceTattooTextureName: 
+    chestTattooTextureName: 
+    legsTattooTextureName: 
+    armTattooTextureName: 
+    eyeLidTextureName: 
+    FaceBlendsShapes: []
+    stamina: 0
+    speed: 0
+    profile: 
+    defence: 0
+    special_move: 0
+    punch: 0
+    kick: 0
+  clothsList: []
 --- !u!114 &5845246805614999515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11349,6 +11420,10 @@ PrefabInstance:
       value: 22
       objectReference: {fileID: 0}
     - target: {fileID: -6888641671729121812, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6888641671729121812, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5b7d6b0ba56215140a24b19ca649f90f, type: 2}
@@ -11379,6 +11454,10 @@ PrefabInstance:
     - target: {fileID: -5694567166147809188, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
       propertyPath: m_Layer
       value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -5635321960573266711, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -5635321960573266711, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -11435,6 +11514,10 @@ PrefabInstance:
     - target: {fileID: -2840322712266303552, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
       propertyPath: m_Layer
       value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: -2836231529216355133, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2836231529216355133, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -11743,6 +11826,11 @@ GameObject:
 --- !u!4 &2247581968729100585 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -1824824446595371411, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
+  m_PrefabInstance: {fileID: 8763415751287652164}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &2395429303150701447 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -2836231529216355133, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
   m_PrefabInstance: {fileID: 8763415751287652164}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &3991031163302025358 stripped
