@@ -44,7 +44,7 @@ public class XANAPartyManager : MonoBehaviour
     public void EnablingXANAParty()
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
-        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.PenpenzLoading(FadeAction.In));
         if (ShouldFetchXanaPartyGames())
         {
             PhotonNetwork.AutomaticallySyncScene = true;
@@ -158,7 +158,7 @@ public class XANAPartyManager : MonoBehaviour
     public IEnumerator LoadXanaPartyGame(bool isJoiningLobby)
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
-        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.PenpenzLoading(FadeAction.In));
         ConstantsHolder.userLimit = ConstantsHolder.XanaPartyMaxPlayers;//"3"; // update the user limit for xana party
 
         if (isJoiningLobby)

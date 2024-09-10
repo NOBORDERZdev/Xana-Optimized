@@ -112,7 +112,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
                     ConstantsHolder.xanaConstants.builderMapID = 0;
                     // Load the main scene
                     Screen.orientation = ScreenOrientation.LandscapeLeft;
-                    LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+                    LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.PenpenzLoading(FadeAction.In));
 
                     MutiplayerController.instance.working = ScenesList.AddressableScene;
                     if (PhotonNetwork.Server == ServerConnection.GameServer)
