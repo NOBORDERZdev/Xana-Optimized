@@ -18,6 +18,10 @@ using Photon.Pun.Demo.PunBasics;
 using Photon.Voice.PUN;
 using PhysicsCharacterController;
 using System.Threading.Tasks;
+#if UNITY_IOS
+using UnityEngine.iOS;
+#endif
+
 
 public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
@@ -32,6 +36,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     private GameObject mainControllerRefHolder;
     private GameObject YoutubeStreamPlayer;
     public GameObject PenguinPlayer;
+    public GameObject DashButton;
     public ActionManager ActionEmoteSystem;
 
     public CinemachineFreeLook PlayerCamera;
@@ -332,7 +337,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     bool CheckVoid()
     {
-        if (mainController.transform.position.y < (updatedSpawnpoint.transform.position.y - fallOffset))
+        if ( mainController?.transform.position.y < (updatedSpawnpoint.transform.position.y - fallOffset))
         {
             RaycastHit hit;
             if (Physics.Raycast(mainController.transform.position, mainController.transform.TransformDirection(Vector3.down), out hit, 1000))
@@ -699,8 +704,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void InstantiatePlayerAvatar(Vector3 pos)
     {
+       
         if (ConstantsHolder.isPenguin)
         {
+            DashButton.SetActive(false);
             XanaWorldController.SetActive(false);
             XanaPartyController.SetActive(true);
             player = PhotonNetwork.Instantiate("XanaPenguin", spawnPoint, Quaternion.identity, 0);
@@ -717,6 +724,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         mainController = mainControllerRefHolder;
         if (ConstantsHolder.isFixedHumanoid)
         {
+            DashButton.SetActive(true);
             InstantiatePlayerForFixedHumanoid();
             return;
         }
@@ -737,7 +745,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             player.transform.localRotation = Quaternion.identity;
             player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Female");      // Set Default Cloth to avoid naked avatar
         }
-        ActionAnimationApplyToPlayer.PlayerAnimatorInitializer?.Invoke(player.GetComponent<Animator>().runtimeAnimatorController);
     }
 
     void InstantiatePlayerForFixedHumanoid()
@@ -758,7 +765,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             player.transform.localRotation = Quaternion.identity;
             player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Female");      // Set Default Cloth to avoid naked avatar
         }
-        ActionAnimationApplyToPlayer.PlayerAnimatorInitializer?.Invoke(player.GetComponent<Animator>().runtimeAnimatorController);
+
     }
 
     void ActivateNpcChat()

@@ -113,6 +113,7 @@ public class DomeMinimapDataHolder : MonoBehaviour
     }
     void TeleportPlayerToSelectedDome(int _domeId, Transform playerTransform)
     {
+      
         if (_allInitDomes.TryGetValue(_domeId, out Transform domeTransform))
         {
             if(_domeId>8&& _domeId<37)
@@ -153,6 +154,13 @@ public class DomeMinimapDataHolder : MonoBehaviour
     {
         ConfirmationPanelHandling(false);
         ReferencesForGamePlay.instance.FullScreenMapStatus(false);
+        if (ActionManager.IsAnimRunning)
+        {
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            //  EmoteAnimationHandler.Instance.StopAllCoroutines();
+        }
 
         TeleportPlayerToSelectedDome(_clickedDomeID, _playerTransform);
     }

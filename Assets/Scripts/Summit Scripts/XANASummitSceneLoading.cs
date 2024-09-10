@@ -119,6 +119,10 @@ public class XANASummitSceneLoading : MonoBehaviour
             LoadingHandler.Instance.enter = false;
 
             #endregion
+            if (ConstantsHolder.MultiSectionPhoton)
+            {
+                ConstantsHolder.DiasableMultiPartPhoton = true;
+            }
         }
 
         SummitMiniMapStatusOnSceneChange(false);
@@ -216,6 +220,14 @@ public class XANASummitSceneLoading : MonoBehaviour
             GamePlayUIHandler.inst.OnSwitchCameraClick();
         }
         GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
+
+        if (ActionManager.IsAnimRunning)
+        {
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            //  EmoteAnimationHandler.Instance.StopAllCoroutines();
+        }
         GameplayEntityLoader.instance.AssignRaffleTickets(domeId);
 
        
@@ -254,6 +266,10 @@ public class XANASummitSceneLoading : MonoBehaviour
         LoadingHandler.Instance.enter = false;
 
         #endregion
+        if (ConstantsHolder.MultiSectionPhoton)
+        {
+            ConstantsHolder.DiasableMultiPartPhoton = true;
+        }
         XANASummitDataContainer.StackInfoWorld subWorldInfo = new XANASummitDataContainer.StackInfoWorld();
         subWorldInfo.id = ConstantsHolder.xanaConstants.MuseumID;
         subWorldInfo.name = sceneToBeUnload;
@@ -302,6 +318,13 @@ public class XANASummitSceneLoading : MonoBehaviour
             GamePlayUIHandler.inst.OnSwitchCameraClick();
         }
         GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
+        if (ActionManager.IsAnimRunning)
+        {
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            //  EmoteAnimationHandler.Instance.StopAllCoroutines();
+        }
 
     }
     async Task UnloadScene(string sceneName)
@@ -407,6 +430,13 @@ public class XANASummitSceneLoading : MonoBehaviour
             GamePlayUIHandler.inst.OnSwitchCameraClick();
         }
         GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
+        if (ActionManager.IsAnimRunning)
+        {
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            //  EmoteAnimationHandler.Instance.StopAllCoroutines();
+        }
         //
     }
     XANASummitDataContainer.DomeGeneralData GetDomeData(int domeId)
