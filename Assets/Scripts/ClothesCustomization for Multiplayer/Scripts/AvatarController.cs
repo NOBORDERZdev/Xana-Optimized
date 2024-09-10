@@ -105,6 +105,9 @@ public class AvatarController : MonoBehaviour
             addressableDownloader = AddressableDownloader.Instance;
         if (xanaConstants != null)
         {
+            if (xanaConstants.isStoreActive)
+                return;
+
             if (sceneName.Contains("Home") || sceneName.Contains("UGC")) // For Home
             {
                 if (xanaConstants.isNFTEquiped)
