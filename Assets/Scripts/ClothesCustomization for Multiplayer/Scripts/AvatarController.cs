@@ -286,7 +286,7 @@ public class AvatarController : MonoBehaviour
 
     public IEnumerator IECheckClothsStitchedOrNot(string cJson)
     {
-        float timeWithoutCloth= 0f;
+        float timeWithoutCloth = 0f;
         if (characterBodyParts.eyeShadow != null)
         {
             characterBodyParts.eyeShadow.enabled = false;
@@ -302,14 +302,20 @@ public class AvatarController : MonoBehaviour
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    clothsList.Add(clothDataClass.myItemObj[i].ItemName);
+                    if (i < clothDataClass.myItemObj.Count)
+                    {
+                        clothsList.Add(clothDataClass.myItemObj[i].ItemName);
+                    }
                 }
             }
             else if (clothDataClass.gender == "Female")
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    clothsList.Add(clothDataClass.myItemObj[i].ItemName);
+                    if (i < clothDataClass.myItemObj.Count)
+                    {
+                        clothsList.Add(clothDataClass.myItemObj[i].ItemName);
+                    }
                 }
             }
 
@@ -337,7 +343,7 @@ public class AvatarController : MonoBehaviour
                 }
                 yield return new WaitForSeconds(.1f);
                 timeWithoutCloth += .1f;
-                if (timeWithoutCloth>15)
+                if (timeWithoutCloth > 15)
                 {
                     if (clothsStichedOrNotCoroutine != null)
                     {
@@ -383,6 +389,10 @@ public class AvatarController : MonoBehaviour
 
     public bool isClothStichedOrNot(List<string> clothsList, AvatarController avatar)
     {
+        if (clothsList.Count == 0)
+        {
+            return true;
+        }
         string pant = "";
         string shirt = "";
         string hair = "";
