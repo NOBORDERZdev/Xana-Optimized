@@ -1,11 +1,34 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Crab : MonoBehaviour
 {
     Coroutine cor;
+    AudioSource _audioSource;
+    private void OnEnable()
+    {
+        _audioSource = GetComponent<AudioSource>();
+        _audioSource.volume = SoundSettings.soundManagerSettings.totalVolumeSlider.value;
+        SoundSettings.soundManagerSettings.OnBGMAudioMuted += DisableCrabSound;
+        BuilderEventManager.BGMVolume += BGMVolume;
 
+    }
+
+    private void OnDisable()
+    {
+        SoundSettings.soundManagerSettings.OnBGMAudioMuted -= DisableCrabSound;
+        BuilderEventManager.BGMVolume -= BGMVolume;
+
+    }
+
+    private void DisableCrabSound(bool _mute)
+    {
+        _audioSource.mute = _mute;
+    }
+    void BGMVolume(float volume)
+    {
+        _audioSource.volume = volume;
+    }
     public void UpperStart(float upSpeed)
     {
         cor = StartCoroutine(OnUpper(upSpeed));
