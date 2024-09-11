@@ -262,21 +262,18 @@ public class UserLoginSignupManager : MonoBehaviour
                 DefaultClothDatabase.instance.GetComponent<SaveCharacterProperties>().SavePlayerProperties();
                 InventoryManager.instance.OnSaveBtnClicked();  // reg complete go home
             }
-        }
-        else
-        {
-            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit && !ConstantsHolder.xanaConstants.openLandingSceneDirectly)
             {
-               if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
                 {
                     Screen.orientation = ScreenOrientation.Portrait;
+                    signUpOrloginSelectionPanel.SetActive(false);
                 }
 
             }
-            else
-            {
-                 Screen.orientation = ScreenOrientation.LandscapeLeft;
-            }
+        }
+        else
+        {
             signUpOrloginSelectionPanel.SetActive(false);
 
             if (!PlayerPrefs.HasKey("shownWelcome"))
