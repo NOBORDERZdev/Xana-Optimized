@@ -167,7 +167,28 @@ public class XanaChatSystem : MonoBehaviour
 
         //this.CurrentChannelText.text = _userName + " : " + _msg + "\n" + this.CurrentChannelText.text;
     }
+    public void DisplayMsg_FromSocket(string _userName, string _msg, TextMeshProUGUI MsgTextBox)
+    {
+        //Debug.Log("<color=red> XanaOldChat: " + _userName + " : " + _userName.Length + " : " + _msg +"</color>");
 
+        if (_userName.Length > 12)
+        {
+            MsgTextBox.text = "<b>" + _userName.Substring(0, 12) + "...</b>" + " : " + _msg;
+        }
+        else
+        {
+            MsgTextBox.text = "<b>" + _userName + "</b>" + " : " + _msg;
+        }
+
+        if (!chatDialogBox.activeSelf && _userName != UserName)
+        {
+            chatNotificationIcon.SetActive(true);
+        }
+
+        StartCoroutine(Delay());
+
+        //this.CurrentChannelText.text = _userName + " : " + _msg + "\n" + this.CurrentChannelText.text;
+    }
     public void ClearChatTxtForMeeting()
     {
         this.CurrentChannelText.text = "";
