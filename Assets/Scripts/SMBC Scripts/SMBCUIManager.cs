@@ -198,7 +198,7 @@ public class SMBCUIManager : MonoBehaviour
         _next = "Next";
         DisableUIObject();
 
-        if (_questionIndex == _numOfQuestions - 1)
+        if (_questionIndex == _numOfQuestions)
             _questionIndex = 0;
 
         QuizComponentUI.SetActive(true);
@@ -298,7 +298,10 @@ public class SMBCUIManager : MonoBehaviour
             _quizComponent.gameObject.SetActive(false);
             var quizData = SMBCManager.Instance.GetQuizData();
             Debug.Log(JsonUtility.ToJson(quizData));
-            EnableNarrationUI(quizData.Explanation[_questionIndex], true, true);
+            int index = _questionIndex - 1;
+            if (index == -1)
+                index = 0;
+            EnableNarrationUI(quizData.Explanation[index], true, true);
             _nextButtonText.text = _confirm;
             ShowQuestion();
             NextButton.interactable = true;
