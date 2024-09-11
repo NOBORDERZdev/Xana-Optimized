@@ -70,7 +70,7 @@ public class UGCManager : MonoBehaviour
                 OnClickSelfieButton();
             }
 #elif UNITY_IOS
-                if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
+                if(PlayerPrefs.GetInt("CamPermission", 0) == 0){
                      PermissionPopusSystem.Instance.onCloseAction += OnClickSelfieButton;
             PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Camera;
             PermissionPopusSystem.Instance.OpenPermissionScreen();
