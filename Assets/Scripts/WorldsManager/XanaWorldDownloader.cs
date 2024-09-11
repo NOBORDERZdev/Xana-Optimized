@@ -300,11 +300,25 @@ public class XanaWorldDownloader : MonoBehaviour
             //    yield break;
             //}
             //else
+            LoadAssetAgain:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
                 yield return null;
             }
+            if(_async.IsValid() && _async.Result!=null)
+            {
+                
+            }
+            else
+            {
+                Addressables.ClearDependencyCacheAsync(downloadKey);
+                Addressables.ReleaseInstance(_async);
+                Addressables.Release(_async);
+                yield return new WaitForSeconds(1);
+                goto LoadAssetAgain;
+            }
+
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
                 AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
@@ -350,11 +364,23 @@ public class XanaWorldDownloader : MonoBehaviour
             //    yield break;
             //}
             //else
+            LoadAssetAgain:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-
             while (!_async.IsDone)
             {
                 yield return null;
+            }
+            if (_async.IsValid() && _async.Result != null)
+            {
+                
+            }
+            else
+            {
+                Addressables.ClearDependencyCacheAsync(downloadKey);
+                Addressables.ReleaseInstance(_async);
+                Addressables.Release(_async);
+                yield return new WaitForSeconds(1);
+                goto LoadAssetAgain;
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
@@ -391,10 +417,23 @@ public class XanaWorldDownloader : MonoBehaviour
             //    yield break;
             //}
             //else
+            LoadAssetAgain:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
                 yield return null;
+            }
+            if (_async.IsValid() && _async.Result != null)
+            {
+                
+            }
+            else
+            {
+                Addressables.ClearDependencyCacheAsync(downloadKey);
+                Addressables.ReleaseInstance(_async);
+                Addressables.Release(_async);
+                yield return new WaitForSeconds(1);
+                goto LoadAssetAgain;
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {

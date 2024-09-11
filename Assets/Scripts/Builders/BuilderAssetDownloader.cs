@@ -230,7 +230,25 @@ public class BuilderAssetDownloader : MonoBehaviour
             //bool flag = false;
             //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
             //if (!flag)
-            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            AsyncOperationHandle<GameObject> _async;
+            LoadAssetAgain:
+            _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            while (!_async.IsDone)
+            {
+                yield return null;
+            }
+            if (_async.IsValid() && _async.Result != null)
+            {
+
+            }
+            else
+            {
+                Addressables.ClearDependencyCacheAsync(downloadKey);
+                Addressables.ReleaseInstance(_async);
+                Addressables.Release(_async);
+                yield return new WaitForSeconds(1);
+                goto LoadAssetAgain;
+            }
             while (!_async.IsDone)
             {
                 yield return null;
@@ -278,7 +296,25 @@ public class BuilderAssetDownloader : MonoBehaviour
             //bool flag = false;
             //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
             //if (!flag)
-            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            AsyncOperationHandle<GameObject> _async;
+            LoadAssetAgain:
+            _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            while (!_async.IsDone)
+            {
+                yield return null;
+            }
+            if (_async.IsValid() && _async.Result != null)
+            {
+
+            }
+            else
+            {
+                Addressables.ClearDependencyCacheAsync(downloadKey);
+                Addressables.ReleaseInstance(_async);
+                Addressables.Release(_async);
+                yield return new WaitForSeconds(1);
+                goto LoadAssetAgain;
+            }
             while (!_async.IsDone)
             {
                 yield return null;
@@ -318,7 +354,25 @@ public class BuilderAssetDownloader : MonoBehaviour
             //bool flag = false;
             //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
             //if (!flag)
-            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            AsyncOperationHandle<GameObject> _async;
+            LoadAssetAgain:
+            _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            while (!_async.IsDone)
+            {
+                yield return null;
+            }
+            if (_async.IsValid() && _async.Result != null)
+            {
+
+            }
+            else
+            {
+                Addressables.ClearDependencyCacheAsync(downloadKey);
+                Addressables.ReleaseInstance(_async);
+                Addressables.Release(_async);
+                yield return new WaitForSeconds(1);
+                goto LoadAssetAgain;
+            }
             while (!_async.IsDone)
             {
                 yield return null;
