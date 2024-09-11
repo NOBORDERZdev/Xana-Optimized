@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 7198574914145771621}
   - component: {fileID: 6073563881823629248}
   - component: {fileID: 8335412364906961674}
+  - component: {fileID: 7236370647970638370}
+  - component: {fileID: 7236370647970638371}
   m_Layer: 0
   m_Name: VLN_Rocket
   m_TagString: Untagged
@@ -25,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7542870846696733407}
-  m_LocalRotation: {x: -0.68928623, y: -0, z: -0, w: 0.7244892}
+  m_LocalRotation: {x: -0.6892846, y: 0, z: 0, w: 0.72449064}
   m_LocalPosition: {x: 828.7744, y: 46.84, z: 717.95}
   m_LocalScale: {x: 44.3025, y: 44.3025, z: 44.3025}
   m_ConstrainProportionsScale: 0
@@ -83,3 +85,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7236370647970638370
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7542870846696733407}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.019999998, y: 0.020000001, z: 0.025449138}
+  m_Center: {x: 0, y: -4.7402707e-11, z: 0.012724569}
+--- !u!114 &7236370647970638371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7542870846696733407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fa5941a7cab0264dae559e19c3bd14f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
