@@ -274,8 +274,9 @@ public class SMBCUIManager : MonoBehaviour
         {
             _currentOutline.enabled = false;
             UpdateQuizData(1);
-            //Invoke(nameof(ResetCredentials), 2f);
-            //return;
+            Invoke(nameof(ResetCredentials), 2f);
+            BuilderEventManager.OnSMBCQuizWrongAnswer?.Invoke();
+            return;
         }
 
         _questionIndex += 1;
