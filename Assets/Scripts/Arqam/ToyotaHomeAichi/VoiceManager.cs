@@ -30,7 +30,7 @@ public class VoiceManager : MonoBehaviourPunCallbacks
         recorder.InterestGroup = newGroup;
 
         // Change the groups: unsubscribe from the old group and subscribe to the new group
-        if (PhotonVoiceNetwork.Instance.Client.InRoom)
+        if (PunVoiceClient.Instance.Client.InRoom)
             ChangeGroups(new byte[] { oldGroup }, new byte[] { newGroup });
         else
             Debug.LogError("Not connected to Game Server. Cannot change groups.");
@@ -38,9 +38,9 @@ public class VoiceManager : MonoBehaviourPunCallbacks
 
     private void ChangeGroups(byte[] groupsToLeave, byte[] groupsToJoin)
     {
-        if (PhotonVoiceNetwork.Instance.Client.InRoom)
+        if (PunVoiceClient.Instance.Client.InRoom)
         {
-            PhotonVoiceNetwork.Instance.Client.OpChangeGroups(groupsToLeave, groupsToJoin);
+            PunVoiceClient.Instance.Client.OpChangeGroups(groupsToLeave, groupsToJoin);
         }
         else
         {

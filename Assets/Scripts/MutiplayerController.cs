@@ -18,7 +18,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
-using Photon.Voice.PUN;
+
 
 namespace Photon.Pun.Demo.PunBasics
 {
@@ -67,7 +67,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "Summit20";
+        string gameVersion = "Summit20VoiceNew";
         #endregion
 
         #region Multtisection Fields
@@ -436,6 +436,8 @@ namespace Photon.Pun.Demo.PunBasics
                     playerobjects.RemoveAt(x);
                 }
             }
+            Resources.UnloadUnusedAssets();
+            GC.Collect();
         }
 
         public override void OnJoinRoomFailed(short returnCode, string message)

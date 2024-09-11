@@ -291,6 +291,10 @@ public class SoundSettings : MonoBehaviour
             {
                 SetAudioSourceSliderValLive(liveVideoSource, Vol);
             }
+            if (videoSource)
+            {
+                videoSource.volume = Vol;
+            }
         }
 
         BuilderEventManager.BGMVolume?.Invoke(Vol);
