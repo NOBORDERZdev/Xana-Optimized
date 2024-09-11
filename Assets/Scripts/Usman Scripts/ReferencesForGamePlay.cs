@@ -48,7 +48,7 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
     public XanaChatSystem ChatSystemRef;
 
     #region XANA PARTY WORLD
-    public GameObject XANAPartyWaitingText;
+    public GameObject XANAPartyWaitingPanel;
     public GameObject XANAPartyCounterPanel;
     public TMP_Text XANAPartyCounterText;
     public bool isCounterStarted = false;
@@ -421,22 +421,25 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
     #region XANA PARTY WORLD
     public IEnumerator ShowLobbyCounterAndMovePlayer()
     {
-        XANAPartyWaitingText.SetActive(false);
-        XANAPartyCounterPanel.SetActive(true);
-        for (int i = 3; i >= 1; i--)
+        if (XANAPartyWaitingPanel && XANAPartyCounterPanel)
         {
-            XANAPartyCounterText.text = i.ToString();
-            yield return new WaitForSeconds(1);
-        }
-        XANAPartyCounterPanel.SetActive(false);
+            XANAPartyWaitingPanel.SetActive(false);
+            XANAPartyCounterPanel.SetActive(true);
+            for (int i = 3; i >= 1; i--)
+            {
+                XANAPartyCounterText.text = i.ToString();
+                yield return new WaitForSeconds(1);
+            }
+            XANAPartyCounterPanel.SetActive(false);
 
-        Screen.orientation = ScreenOrientation.LandscapeLeft;
-        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-        yield return new WaitForSeconds(2);
-        if (PhotonNetwork.IsMasterClient)
-        {
-            var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
-            xanaPartyMulitplayer.StartCoroutine(xanaPartyMulitplayer.MovePlayersToRandomGame());
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+            yield return new WaitForSeconds(2);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
+                xanaPartyMulitplayer.StartCoroutine(xanaPartyMulitplayer.MovePlayersToRandomGame());
+            }
         }
     }
 

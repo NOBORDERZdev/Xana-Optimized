@@ -59,7 +59,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4096008611815151470}
-  m_LocalRotation: {x: -0.03424991, y: 0.000000017196284, z: 5.893168e-10, w: 0.9994133}
+  m_LocalRotation: {x: 0.43231276, y: -0, z: -0, w: 0.90172374}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -523,10 +523,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 0
-  m_FollowOffset: {x: 0, y: 0.5, z: -2.5}
-  m_XDamping: 2.37
-  m_YDamping: 1.62
-  m_ZDamping: 1.52
+  m_FollowOffset: {x: 0, y: -0.12, z: -0.55}
+  m_XDamping: 0
+  m_YDamping: 0
+  m_ZDamping: 0
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
@@ -649,6 +649,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -1025,11 +1026,11 @@ MonoBehaviour:
   firstPersonHeightOnTransition: 0
   thirdPersonMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 536739639
   thirdPersonMaskChangeDelay: 0.1
   thirdPersonHeightOnTransition: 0.5
   activeThirdPerson: 1
-  activeDebug: 1
+  activeDebug: 0
   AutoSetCamera: 0
 --- !u!1 &4096008612801490186
 GameObject:
@@ -1090,10 +1091,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 0
-  m_FollowOffset: {x: 0, y: 0.5, z: -2.5}
-  m_XDamping: 1.52
-  m_YDamping: 1.9
-  m_ZDamping: 1.43
+  m_FollowOffset: {x: 0, y: 1.14, z: -0.5}
+  m_XDamping: 0
+  m_YDamping: 0
+  m_ZDamping: 0
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
@@ -1309,8 +1310,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4096008613081825275}
-  m_LocalRotation: {x: 0.09853762, y: 0.000000030450682, z: -0.0000000030152119, w: 0.99513334}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.64, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1387,7 +1388,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4096008613429326582}
-  m_LocalRotation: {x: 0.030024333, y: 0.000000031423905, z: -9.439072e-10, w: 0.9995492}
+  m_LocalRotation: {x: 0.48823318, y: 0.000000025494952, z: -0.000000014262969, w: 0.87271327}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1613,7 +1614,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4096008613447409449}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: -2.5}
+  m_LocalPosition: {x: 0, y: 1.14, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1648,7 +1649,7 @@ MonoBehaviour:
     FieldOfView: 80
     OrthographicSize: 10
     NearClipPlane: 0.1
-    FarClipPlane: 1000
+    FarClipPlane: 500
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
@@ -1662,7 +1663,7 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_YAxis:
-    Value: 0.5
+    Value: 0
     m_SpeedMode: 0
     m_MaxSpeed: 5
     m_AccelTime: 0.1
@@ -1717,7 +1718,7 @@ MonoBehaviour:
   m_SplineCurvature: 0.2
   m_Orbits:
   - m_Height: 1.14
-    m_Radius: 0.1
+    m_Radius: 0.5
   - m_Height: 0.5
     m_Radius: 2.5
   - m_Height: -0.12
@@ -1746,11 +1747,11 @@ MonoBehaviour:
   m_TransparentLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_MinimumDistanceFromTarget: 0.1
+  m_MinimumDistanceFromTarget: 0.5
   m_AvoidObstacles: 1
-  m_DistanceLimit: 0
+  m_DistanceLimit: 15
   m_MinimumOcclusionTime: 0
-  m_CameraRadius: 0.1
+  m_CameraRadius: 0.3
   m_Strategy: 0
   m_MaximumEffort: 4
   m_SmoothingTime: 0
@@ -1770,8 +1771,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orientationType: 0
-  lookSpeed: 0
-  lookSpeedd: 0
   cinemachine: {fileID: 0}
   freelookup: {fileID: 0}
   editorSensitivity: 0.05
@@ -1853,7 +1852,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1073610551
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1878,7 +1877,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowDebugText: 0
-  m_ShowCameraFrustum: 1
+  m_ShowCameraFrustum: 0
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
   m_UpdateMethod: 0
@@ -2612,7 +2611,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MovementRange: 30
+  m_DynamicOriginRange: 100
   m_ControlPath: <Gamepad>/leftStick
+  m_Behaviour: 0
+  m_UseIsolatedInputActions: 0
+  m_PointerDownAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 41257c84-75e2-49d3-bba8-cea68f71603a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  m_PointerMoveAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: a3ddcecb-50fc-4a53-86be-2061f1855063
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!1 &6072491830168791179
 GameObject:
   m_ObjectHideFlags: 0
@@ -2942,6 +2962,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0

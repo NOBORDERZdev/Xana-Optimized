@@ -1504,18 +1504,18 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             if (!ConstantsHolder.xanaConstants.isJoinigXanaPartyGame) // For Spwaning in PENPENZ Lobby
             {
-                ReferencesForGamePlay.instance.XANAPartyWaitingText.SetActive(true);
+                ReferencesForGamePlay.instance.XANAPartyWaitingPanel.SetActive(true);
             }
             else // For Spwaning in PENPENZ GAME
             {
-                ReferencesForGamePlay.instance.XANAPartyWaitingText.SetActive(false);
+                ReferencesForGamePlay.instance.XANAPartyWaitingPanel.SetActive(false);
             }
             player.GetComponent<PartyTimerManager>().enabled = true;
             player.GetComponent<XANAPartyMulitplayer>().enabled = true;
         }
         else
         {
-            ReferencesForGamePlay.instance.XANAPartyWaitingText.SetActive(false);
+            ReferencesForGamePlay.instance.XANAPartyWaitingPanel.SetActive(false);
             player.GetComponent<PartyTimerManager>().enabled = false;
             player.GetComponent<XANAPartyMulitplayer>().enabled = false;
         }
@@ -1542,11 +1542,16 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         referenceForPenguin.XanaJumpPotraite.SetActive(true);
         referenceForPenguin.XanaJumpLandsacape.SetActive(true);
 
+        ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(false);
+        ReferencesForGamePlay.instance.XANAPartyWaitingPanel.SetActive(false);
+
         Destroy(penguinJump);
         Destroy(penguinJumpPot);
 
         ConstantsHolder.isFixedHumanoid = false;
         ConstantsHolder.isPenguin = false;
+        ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
+        ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
     }
 
     public void AssignRaffleTickets(int domeID)
