@@ -1962,7 +1962,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 OnPickImageFromGellery(maxSize);
             }
 #elif UNITY_IOS
-                if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
+                if(PlayerPrefs.GetInt("GetPic", 0) == 0){
                      PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromGellery;
             PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
             PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
@@ -1979,7 +1979,7 @@ public class UserLoginSignupManager : MonoBehaviour
     {
         PermissionPopusSystem.Instance.onCloseActionWithParam -= OnPickImageFromGellery;
 #if UNITY_IOS
-        PlayerPrefs.SetInt("PicPermission", 1);
+        PlayerPrefs.SetInt("GetPic", 1);
 
         if (PermissionCheck == "false")
         {
