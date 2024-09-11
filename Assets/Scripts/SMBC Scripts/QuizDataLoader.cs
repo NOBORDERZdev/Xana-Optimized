@@ -16,6 +16,7 @@ public class QuizDataLoader : ScriptableObject
 
     public QuizData GetQuizData(string planetName)
     {
+        Debug.LogError(planetName);
         switch (planetName)
         {
             case "SMBC_Forest_Planet":

@@ -17,8 +17,8 @@ public class SMBCUIManager : MonoBehaviour
     {
         BuilderEventManager.OnNarrationCollisionEnter += EnableNarrationUI;
         BuilderEventManager.OnDoorKeyCollisionEnter += EnableDoorKeyUI;
-        BuilderEventManager.OnQuizComponentCollisionEnter += EnableQuizComponentUI;
-        BuilderEventManager.OnQuizComponentColse += ResetCredentials;
+        BuilderEventManager.OnSMBCQuizComponentCollisionEnter += EnableQuizComponentUI;
+        BuilderEventManager.OnSMBCQuizComponentColse += ResetCredentials;
         SceneManager.sceneLoaded += ResetData;
     }
 
@@ -26,7 +26,7 @@ public class SMBCUIManager : MonoBehaviour
     {
         BuilderEventManager.OnNarrationCollisionEnter -= EnableNarrationUI;
         BuilderEventManager.OnDoorKeyCollisionEnter -= EnableDoorKeyUI;
-        BuilderEventManager.OnQuizComponentCollisionEnter -= EnableQuizComponentUI;
+        BuilderEventManager.OnSMBCQuizComponentCollisionEnter -= EnableQuizComponentUI;
         BuilderEventManager.OnQuizComponentColse -= ResetCredentials;
         SceneManager.sceneLoaded -= ResetData;
     }
@@ -189,18 +189,20 @@ public class SMBCUIManager : MonoBehaviour
     string _confirm = "Confirm";
     string _result = "Result";
     string _next = "Next";
-    QuizComponent _quizComponent;
+    SMBCQuizComponent _quizComponent;
 
-    void EnableQuizComponentUI(QuizComponent quizComponent, QuizComponentData quizComponentData)
+    void EnableQuizComponentUI(SMBCQuizComponent quizComponent, QuizComponentData quizComponentData)
     {
         _confirm = "Confirm";
         _result = "Result";
         _next = "Next";
         DisableUIObject();
 
-        if (_questionIndex > _numOfQuestions)
-            _questionIndex = 0;
-        NextButton.interactable = true;
+        //if (_questionIndex + 1 > _numOfQuestions)
+        //    _questionIndex = 0;
+        //else
+        //    _nextButtonText.text = _next;
+        //NextButton.interactable = true;
         QuizComponentUI.SetActive(true);
         this._quizComponent = quizComponent;
         StartQuiz(quizComponentData);
@@ -213,6 +215,7 @@ public class SMBCUIManager : MonoBehaviour
 
     public void StartQuiz(QuizComponentData data)
     {
+
         for (int i = 0; i < Options.Length; i++)
         {
             Options[i].onClick.RemoveAllListeners();
@@ -271,8 +274,8 @@ public class SMBCUIManager : MonoBehaviour
         {
             _currentOutline.enabled = false;
             UpdateQuizData(1);
-            Invoke(nameof(ResetCredentials), 2f);
-            return;
+            //Invoke(nameof(ResetCredentials), 2f);
+            //return;
         }
 
         _questionIndex += 1;
@@ -287,15 +290,16 @@ public class SMBCUIManager : MonoBehaviour
 
         new Delayed.Action(() =>
         {
-            //Debug.LogError("Action call");
+            Debug.LogError("Action call ==>" + _questionIndex);
             if (_quizComponent.gameObject.name.Contains("Key"))
                 SMBCManager.Instance.AddKey();
 
             _quizComponent.gameObject.SetActive(false);
-            var quizData = SMBCManager.Instance.QuizDataLoader.GetQuizData(SMBCManager.Instance.CurrentWorldName);
-            EnableNarrationUI(quizData.Explanation[_questionIndex - 1], true, true);
+            var quizData = SMBCManager.Instance.GetQuizData();
+            Debug.LogError(JsonUtility.ToJson(quizData));
+            EnableNarrationUI(quizData.Explanation[0], true, true);
             _nextButtonText.text = _confirm;
-            SetButtonInteractability(true, true);
+            ShowQuestion();
             NextButton.interactable = true;
         }, 0.5f);
     }
@@ -369,7 +373,7 @@ public class SMBCUIManager : MonoBehaviour
             string s3 = TextLocalization.GetLocaliseTextByKey("Q");
             //Debug.Log("TextLocalization==>" + s + " " + s2 + " " + s3);
 
-            Debug.LogError("_questionIndex => " + _questionIndex);
+            //Debug.LogError("_questionIndex => " + _questionIndex);
             NumberOfQuestions.text = s + " " + (_questionIndex + 1) + " " + s2 + " " + _numOfQuestions;
             QuizButtonTextInformation.text = s3 + ": " + _quizComponentData.rewritingStringList[_questionIndex * _inputFieldsPerQuestion];
 
@@ -588,10 +592,6 @@ public class SMBCUIManager : MonoBehaviour
         DoorKeyText.text = DisplayMessage;
         bool isJPText = CheckJapaneseDisplayMessage(DisplayMessage);
         //Debug.LogError(isJPText);
-        if (isJPText)
-            DoorKeyText.font = GamificationComponentData.instance.hiraginoFont;
-        else
-            DoorKeyText.font = GamificationComponentData.instance.orbitronFont;
         DoorKeyParentUI.SetActive(true);
 
         float time = 5f;

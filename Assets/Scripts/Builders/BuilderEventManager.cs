@@ -143,4 +143,7 @@ public static class BuilderEventManager
     public static Action StopBGM;
     public static Action ResetSummit;
 
+    //SMBC specific events
+    public static Action<SMBCQuizComponent, QuizComponentData> OnSMBCQuizComponentCollisionEnter;
+    public static Action OnSMBCQuizComponentColse;
 }

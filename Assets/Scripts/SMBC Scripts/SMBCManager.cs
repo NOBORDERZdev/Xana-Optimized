@@ -16,10 +16,10 @@ public class SMBCManager : MonoBehaviour
     public string ParentWorldName;
     public QuizDataLoader QuizDataLoader;
 
-
-    List<QuizComponent> quizComponents = new List<QuizComponent>();
     bool _isPotrait = false;
-    QuizData quizData;
+    bool _requireKeyCollected = false;
+    bool _requireAxeCollected = false;
+    QuizData _quizData;
     int _keyCounter = 0;
 
     private void Awake()
@@ -30,15 +30,12 @@ public class SMBCManager : MonoBehaviour
     private void OnEnable()
     {
         BuilderEventManager.BuilderSceneOrientationChange += OrientationChange;
-        //BuilderEventManager.AfterPlayerInstantiated += WorldLoaded;
         OrientationChange(false);
     }
 
     private void OnDisable()
     {
-        quizComponents.Clear();
         BuilderEventManager.BuilderSceneOrientationChange -= OrientationChange;
-        //BuilderEventManager.AfterPlayerInstantiated -= WorldLoaded;
     }
 
     #region OrientationChange
@@ -93,22 +90,65 @@ public class SMBCManager : MonoBehaviour
     }
     #endregion
 
-    public void InitQuizComponent(QuizComponent quizComponent)
+    public void InitQuizComponent(SMBCQuizComponent quizComponent)
     {
-        if (quizData == null)
+        if (_quizData == null)
             WorldLoaded();
-        quizComponent.Init(quizData.WorldQuizComponentData);
+        quizComponent.Init(_quizData.WorldQuizComponentData);
     }
 
     void WorldLoaded()
     {
         CurrentWorldName = CurrentWorldName.Replace(" ", "_");
-        quizData = QuizDataLoader.GetQuizData(CurrentWorldName);
+        _quizData = QuizDataLoader.GetQuizData(CurrentWorldName);
     }
 
     public void AddKey()
     {
         _keyCounter++;
+        if (_keyCounter >= 5)
+            _requireKeyCollected = true;
     }
 
+    public void RemoveKey()
+    {
+        if (_keyCounter > 1)
+            _keyCounter--;
+    }
+
+    public void AddRocketPart()
+    {
+        //_keyCounter++;
+    }
+
+    public void AddAxe()
+    {
+        _requireAxeCollected = true;
+    }
+    public QuizData GetQuizData()
+    {
+        return _quizData;
+    }
+
+    public bool CheckForObjectCollectible(SMBCCollectibleType collectibleType)
+    {
+        switch (collectibleType)
+        {
+            case SMBCCollectibleType.DoorKey:
+                return _requireKeyCollected;
+            case SMBCCollectibleType.Axe:
+                return _requireAxeCollected;
+            case SMBCCollectibleType.RocketPart:
+                return _requireAxeCollected;
+            default:
+                return false;
+        }
+    }
+}
+
+public enum SMBCCollectibleType
+{
+    DoorKey,
+    Axe,
+    RocketPart
 }
