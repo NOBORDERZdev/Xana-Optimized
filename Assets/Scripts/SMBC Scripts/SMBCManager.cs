@@ -144,8 +144,8 @@ public class SMBCManager : MonoBehaviour
             _keyObject.transform.localPosition = Vector3.up * 18.5f;
         }
 
-        _keyObject.cameraMain = ReferencesForGamePlay.instance.playerControllerNew.ActiveCamera.transform;
         _keyObject.ToggleKey(true);
+        _keyObject.cameraMain = ReferencesForGamePlay.instance.playerControllerNew.ActiveCamera.transform;
         _keyObject.keyCounter.text = "x" + _keyCounter;
 
         if (_keyCounter == 0)
