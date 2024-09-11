@@ -198,11 +198,9 @@ public class SMBCUIManager : MonoBehaviour
         _next = "Next";
         DisableUIObject();
 
-        //if (_questionIndex + 1 > _numOfQuestions)
-        //    _questionIndex = 0;
-        //else
-        //    _nextButtonText.text = _next;
-        //NextButton.interactable = true;
+        if (_questionIndex == _numOfQuestions - 1)
+            _questionIndex = 0;
+
         QuizComponentUI.SetActive(true);
         this._quizComponent = quizComponent;
         StartQuiz(quizComponentData);
@@ -274,8 +272,8 @@ public class SMBCUIManager : MonoBehaviour
         {
             _currentOutline.enabled = false;
             UpdateQuizData(1);
-            //Invoke(nameof(ResetCredentials), 2f);
-            //return;
+            Invoke(nameof(ResetCredentials), 2f);
+            return;
         }
 
         _questionIndex += 1;
@@ -294,10 +292,12 @@ public class SMBCUIManager : MonoBehaviour
             if (_quizComponent.gameObject.name.Contains("Key"))
                 SMBCManager.Instance.AddKey();
 
+            if (_quizComponent.RequireCollectible == SMBCCollectibleType.DoorKey)
+                SMBCManager.Instance.RemoveKey();
             _quizComponent.gameObject.SetActive(false);
             var quizData = SMBCManager.Instance.GetQuizData();
-            Debug.LogError(JsonUtility.ToJson(quizData));
-            EnableNarrationUI(quizData.Explanation[0], true, true);
+            Debug.Log(JsonUtility.ToJson(quizData));
+            EnableNarrationUI(quizData.Explanation[_questionIndex], true, true);
             _nextButtonText.text = _confirm;
             ShowQuestion();
             NextButton.interactable = true;
