@@ -345,10 +345,6 @@ public class AvatarController : MonoBehaviour
                 timeWithoutCloth += .1f;
                 if (timeWithoutCloth > 15)
                 {
-                    if (clothsStichedOrNotCoroutine != null)
-                    {
-                        StopCoroutine(clothsStichedOrNotCoroutine);
-                    }
                     OnEnable();
                 }
             }
