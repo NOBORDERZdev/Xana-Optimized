@@ -402,8 +402,8 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
             minimap.transform.parent.GetComponent<RawImage>().enabled = true;
             minimap.transform.parent.GetComponent<Mask>().enabled = true;
 
-            if (!ScreenOrientationManager._instance.isPotrait)
-                minimap.GetComponent<RectTransform>().sizeDelta = new Vector2(530, 300);
+           /* if (!ScreenOrientationManager._instance.isPotrait)
+                minimap.GetComponent<RectTransform>().sizeDelta = new Vector2(530, 300);*/
         }
         else
         {
