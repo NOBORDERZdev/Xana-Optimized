@@ -6,6 +6,11 @@ public class QuizComponent : ItemComponent
 {
     private QuizComponentData quizComponentData;
 
+    private void Start()
+    {
+        if (SMBCManager.Instance)
+            SMBCManager.Instance.InitQuizComponent(this);
+    }
     public void Init(QuizComponentData quizComponentData)
     {
         this.quizComponentData = quizComponentData;
@@ -17,6 +22,15 @@ public class QuizComponent : ItemComponent
     private void OnCollisionEnter(Collision _other)
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
+        {
+            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+            PlayBehaviour();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             BuilderEventManager.onComponentActivated?.Invoke(_componentType);
             PlayBehaviour();
