@@ -1109,7 +1109,17 @@ public class UserLoginSignupManager : MonoBehaviour
             PlayerPrefs.SetInt("IsProcessComplete", 1);// user is registered as guest/register.
             GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
             if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
-            LoadSummit();
+            {
+                LoadSummit();
+            }
+            else {
+                if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                    if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                {
+                    Screen.orientation = ScreenOrientation.Portrait;
+                }
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+            }
             return;
         }
         ConstantsHolder.uniqueUserName = userUsername;
