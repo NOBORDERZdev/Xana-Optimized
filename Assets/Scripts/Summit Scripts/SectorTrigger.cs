@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using UnityEngine;
 
 
@@ -21,18 +22,28 @@ public class SectorTrigger : MonoBehaviour
             }
         }
     }
-
+    IEnumerator routine;
     private void OnTriggerExit(Collider other)
     {
         if (PhotonNetwork.InRoom)
         {
             if (other.gameObject.tag == "PhotonLocalPlayer")
-            {
-                if (other.GetComponent<PhotonView>().IsMine)
+            {   if(routine != null)
                 {
-                    SectorManager.Instance.TriggeredExit(gameObject.name);
+                    StopCoroutine(routine);
                 }
+                routine = waitforPhotonview(other);
+                StartCoroutine(routine);
             }
         }
+    }
+    IEnumerator waitforPhotonview(Collider other)
+    {
+        yield return new WaitUntil(() => other.GetComponent<PhotonView>());
+        if (other.GetComponent<PhotonView>().IsMine)
+        {
+            SectorManager.Instance.TriggeredExit(gameObject.name);
+        }
+        routine = null;
     }
 }
