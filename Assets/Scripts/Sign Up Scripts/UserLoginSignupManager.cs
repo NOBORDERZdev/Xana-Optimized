@@ -262,10 +262,18 @@ public class UserLoginSignupManager : MonoBehaviour
                 DefaultClothDatabase.instance.GetComponent<SaveCharacterProperties>().SavePlayerProperties();
                 InventoryManager.instance.OnSaveBtnClicked();  // reg complete go home
             }
+            if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit && !ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+            {
+                if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                {
+                    Screen.orientation = ScreenOrientation.Portrait;
+                    signUpOrloginSelectionPanel.SetActive(false);
+                }
+
+            }
         }
         else
         {
-
             signUpOrloginSelectionPanel.SetActive(false);
 
             if (!PlayerPrefs.HasKey("shownWelcome"))
@@ -278,8 +286,6 @@ public class UserLoginSignupManager : MonoBehaviour
                 {
                     InventoryManager.instance.StartPanel_PresetParentPanelSummit.SetActive(true);
                 }
-               
-               
             }
         }
 
@@ -343,8 +349,8 @@ public class UserLoginSignupManager : MonoBehaviour
        
         if (!ConstantsHolder.xanaConstants.openLandingSceneDirectly && ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
         {
-           
-            LoginRegisterScreen.SetActive(true);
+
+            signUpOrloginSelectionPanel.SetActive(true);
         }
         else {
             
@@ -1103,7 +1109,17 @@ public class UserLoginSignupManager : MonoBehaviour
             PlayerPrefs.SetInt("IsProcessComplete", 1);// user is registered as guest/register.
             GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
             if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
-            LoadSummit();
+            {
+                LoadSummit();
+            }
+            else {
+                if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                    if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                {
+                    Screen.orientation = ScreenOrientation.Portrait;
+                }
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+            }
             return;
         }
         ConstantsHolder.uniqueUserName = userUsername;
