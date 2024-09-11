@@ -172,8 +172,9 @@ public class XanaWorldDownloader : MonoBehaviour
             {
                 DownloadQueueData temp = new DownloadQueueData();
                 temp.ItemID = xanaSceneData.SceneObjects[i].addressableKey;
-                if (!uniqueDownloadKeys.Contains(xanaSceneData.SceneObjects[i].addressableKey))
+                if (!uniqueDownloadKeys.Contains(xanaSceneData.SceneObjects[i].addressableKey) && !XanaWorldDownloader.CheckForVisitedWorlds(ConstantsHolder.xanaConstants.EnviornmentName))
                 {
+                    Debug.LogError("Calculate Download Size");
                     uniqueDownloadKeys.Add(xanaSceneData.SceneObjects[i].addressableKey);
                     downloadSize += Addressables.GetDownloadSizeAsync(xanaSceneData.SceneObjects[i].addressableKey).WaitForCompletion();
                 }
@@ -200,6 +201,7 @@ public class XanaWorldDownloader : MonoBehaviour
                     }
                 }
             }
+            uniqueDownloadKeys.Clear();
             dataArranged = true;
         }
         catch (Exception e)
@@ -298,11 +300,25 @@ public class XanaWorldDownloader : MonoBehaviour
             //    yield break;
             //}
             //else
+            LoadAssetAgain:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
                 yield return null;
             }
+            if(_async.IsValid() && _async.Result!=null)
+            {
+                
+            }
+            else
+            {
+                Addressables.ClearDependencyCacheAsync(downloadKey);
+                Addressables.ReleaseInstance(_async);
+                Addressables.Release(_async);
+                yield return new WaitForSeconds(1);
+                goto LoadAssetAgain;
+            }
+
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
                 AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
@@ -348,11 +364,23 @@ public class XanaWorldDownloader : MonoBehaviour
             //    yield break;
             //}
             //else
+            LoadAssetAgain:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-
             while (!_async.IsDone)
             {
                 yield return null;
+            }
+            if (_async.IsValid() && _async.Result != null)
+            {
+                
+            }
+            else
+            {
+                Addressables.ClearDependencyCacheAsync(downloadKey);
+                Addressables.ReleaseInstance(_async);
+                Addressables.Release(_async);
+                yield return new WaitForSeconds(1);
+                goto LoadAssetAgain;
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
@@ -389,10 +417,23 @@ public class XanaWorldDownloader : MonoBehaviour
             //    yield break;
             //}
             //else
+            LoadAssetAgain:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
                 yield return null;
+            }
+            if (_async.IsValid() && _async.Result != null)
+            {
+                
+            }
+            else
+            {
+                Addressables.ClearDependencyCacheAsync(downloadKey);
+                Addressables.ReleaseInstance(_async);
+                Addressables.Release(_async);
+                yield return new WaitForSeconds(1);
+                goto LoadAssetAgain;
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
