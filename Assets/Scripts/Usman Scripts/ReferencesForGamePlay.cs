@@ -217,6 +217,8 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
             landscapeMoveWhileDancingButton.SetActive(true);
             instance.portraitMoveWhileDancingButton.SetActive(true);
         }
+
+        isMatchingTimerFinished = false;
     }
 
 
@@ -399,10 +401,6 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
                 if (((PlayerCount == ConstantsHolder.XanaPartyMaxPlayers && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame) || isMatchingTimerFinished) && !isCounterStarted)
                 {  // to check if the room count is full then move all the player randomly form the list of XANA Party Rooms
                     MakeRoomPrivate();
-                    if (isMatchingTimerFinished)
-                        StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().ShowLobbyCounter(0f));
-                    else
-                        StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().ShowLobbyCounter(10f));
                 }
                 //else
                 //{
