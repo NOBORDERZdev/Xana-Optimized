@@ -1502,6 +1502,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         PositionResetButton.SetActive(false);
         if (ConstantsHolder.xanaConstants.isXanaPartyWorld )
         {
+            ReferencesForGamePlay.instance.SetGameplayForPenpenz();
             if (!ConstantsHolder.xanaConstants.isJoinigXanaPartyGame) // For Spwaning in PENPENZ Lobby
             {
                 ReferencesForGamePlay.instance.XANAPartyWaitingPanel.SetActive(true);
@@ -1522,6 +1523,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && GamificationComponentData.instance != null && !GamificationComponentData.instance.isRaceStarted && ReferencesForGamePlay.instance != null)
         {
             ReferencesForGamePlay.instance.IsLevelPropertyUpdatedOnlevelLoad = false;
+           
             ReferencesForGamePlay.instance.CheckActivePlayerInCurrentLevel();
         }
     }

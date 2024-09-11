@@ -53,10 +53,10 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
     public TMP_Text XANAPartyCounterText;
     public bool isCounterStarted = false;
     public bool isMatchingTimerFinished = false;
-
-
     private const string InLevelProperty = "InLevel";
     public bool IsLevelPropertyUpdatedOnlevelLoad = false;
+    [SerializeField]
+    private List<GameObject> PenpenzDisableUi;
     #endregion
 
 
@@ -587,6 +587,14 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
     public void OnLeftRoom()
     {
        
+    }
+
+    public void SetGameplayForPenpenz()
+    {
+        foreach (var item in PenpenzDisableUi)
+        {
+            item.SetActive(false);
+        }
     }
 }
 
