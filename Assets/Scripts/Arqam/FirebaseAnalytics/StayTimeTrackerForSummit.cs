@@ -88,6 +88,7 @@ public class StayTimeTrackerForSummit : MonoBehaviour
     {
         SendFirebaseEventForSummit("ST_1" + SetEventName());
         //_startTime = Time.time;
+        timeRemaining = 60;
         IsTrackingTime = true;
     }
     public void StopTrackingTime()

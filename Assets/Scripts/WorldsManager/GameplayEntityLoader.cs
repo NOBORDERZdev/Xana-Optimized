@@ -375,6 +375,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         InstantiatePlayerAvatar(spawnPoint);
 
         ReferencesForGamePlay.instance.m_34player = player;
+        if (player.GetComponent<SummitAnalyticsTrigger>() == null)
+            player.AddComponent<SummitAnalyticsTrigger>();
         //  SetAxis();
         mainPlayer.SetActive(true);
         if (player.GetComponent<StepsManager>())
