@@ -470,16 +470,6 @@ namespace Photon.Pun.Demo.PunBasics
             GC.Collect();
         }
 
-                    if (GamificationComponentData.instance != null && !GamificationComponentData.instance.isRaceStarted && ReferencesForGamePlay.instance != null)
-                    {
-                        ReferencesForGamePlay.instance.IsLevelPropertyUpdatedOnlevelLoad = false;
-                        ReferencesForGamePlay.instance.CheckActivePlayerInCurrentLevel();
-                    }
-                }
-
-            }
-        }
-
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
 
