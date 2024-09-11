@@ -343,8 +343,8 @@ public class UserLoginSignupManager : MonoBehaviour
        
         if (!ConstantsHolder.xanaConstants.openLandingSceneDirectly && ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
         {
-           
-            LoginRegisterScreen.SetActive(true);
+
+            signUpOrloginSelectionPanel.SetActive(true);
         }
         else {
             
