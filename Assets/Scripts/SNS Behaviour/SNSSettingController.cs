@@ -8,6 +8,7 @@ using System.IO;
 using AdvancedInputFieldPlugin;
 using System.Text.RegularExpressions;
 using DG.Tweening;
+using SuperSimple;
 
 public class SNSSettingController : MonoBehaviour
 {
@@ -41,15 +42,17 @@ public class SNSSettingController : MonoBehaviour
 
     [Space]
     [Header("Contact Support Items")]
+    public ContactSupportController ContactSupportHandle;
     public GameObject ContactSupportPanelRef;
     public AdvancedInputField UserEmailInputField;
     public AdvancedInputField EmailSubjectInputField;
     public AdvancedInputField EmailBodyInputField;
     public TextMeshProUGUI EmailText;
-    public TextMeshProUGUI ErrorMsgText;
+    public TextMeshProUGUI EmailErrorMsgText;
+    public TextMeshProUGUI EmailSubjectErrorMsgText;
+    public TextMeshProUGUI EmailBodyErrorMsgText;
     public Button SendEmailBtn;
     private Tween fadeTween;
-    private string verifiedEmail;
     private bool isEmail;
 
     public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
@@ -313,7 +316,6 @@ public class SNSSettingController : MonoBehaviour
         {
             EmailText.color = Color.black;
             SendEmailBtn.interactable = isEmail;
-            verifiedEmail = UserEmailInputField.GetText();
         }
         else
         {
@@ -337,7 +339,28 @@ public class SNSSettingController : MonoBehaviour
         ContactSupportPanelRef.SetActive(true);
     }
 
-    public void PlayErrorMsgAnim()
+    public void OnClickSendEmail()
+    {
+        if (!string.IsNullOrEmpty(EmailSubjectInputField.Text) && !string.IsNullOrWhiteSpace(EmailSubjectInputField.Text))
+        {
+            if (!string.IsNullOrEmpty(EmailBodyInputField.Text) && !string.IsNullOrWhiteSpace(EmailBodyInputField.Text))
+            {
+                string userEmailBodyText = "User Provided Email: " + UserEmailInputField.GetText() + "\n" + EmailBodyInputField.GetText();
+                ContactSupportHandle.SendEmail(EmailSubjectInputField.Text, userEmailBodyText);
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            }
+            else
+            {
+                PlayErrorMsgAnim(EmailBodyErrorMsgText);
+            }
+        }
+        else
+        {
+            PlayErrorMsgAnim(EmailSubjectErrorMsgText);
+        }
+    }
+
+    public void PlayErrorMsgAnim(TextMeshProUGUI _errorMsgText)
     {
         if (fadeTween != null)
         {
@@ -345,9 +368,9 @@ public class SNSSettingController : MonoBehaviour
         }
         else
         {
-            fadeTween = ErrorMsgText.DOFade(1, 1).OnComplete(() =>
+            fadeTween = _errorMsgText.DOFade(1, 1).OnComplete(() =>
             {
-                fadeTween = ErrorMsgText.DOFade(0, 4).OnComplete(() =>
+                fadeTween = _errorMsgText.DOFade(0, 4).OnComplete(() =>
                 {
                     fadeTween = null;
                 });

@@ -25,12 +25,16 @@ public class ContactSupportController : MonoBehaviour
         EmailService.Instance.Destroy();
     }
 
-    public void SendEmail()
+    public void SendEmail(string _emailSubjectText, string _emailBodyText)
     {
-        EmailService.Instance.SendPlainText("umeraftab@noborderz.com", "SSEmail Example 1", @"this is plain text email, 這是第二行文字", (success) =>
-        {
-            Debug.Log("SSEmail Example 1 sent " + success);
-        });
+        EmailService.Instance.SendPlainText("umernoborderz@gmail.com",
+                    _emailSubjectText,
+                    _emailBodyText, (success) =>
+                {
+                    Debug.Log("SSEmail Example 1 sent " + success);
+                    SettingControllerRef.ContactSupportPanelRef.SetActive(false);
+                    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                });
 
         #region Formate to send email with attachments
         //Formate to send email with attachments
