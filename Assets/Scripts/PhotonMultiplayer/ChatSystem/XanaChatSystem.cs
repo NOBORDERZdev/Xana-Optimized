@@ -87,7 +87,13 @@ public class XanaChatSystem : MonoBehaviour
 
     #endregion
 
-
+    private void OnEnable()
+    {
+        if (InputFieldChat.text != null)
+        {
+            InputFieldChat.text = "";
+        }
+    }
     private void Awake()
     {
         if (instance != null && instance != this)
