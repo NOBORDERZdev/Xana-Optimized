@@ -27,7 +27,7 @@ public class ContactSupportController : MonoBehaviour
 
     public void SendEmail(string _emailSubjectText, string _emailBodyText)
     {
-        EmailService.Instance.SendPlainText("umernoborderz@gmail.com",
+        EmailService.Instance.SendPlainText("tool@noborderz.com",
                     _emailSubjectText,
                     _emailBodyText, (success) =>
                 {

@@ -336,6 +336,7 @@ public class SNSSettingController : MonoBehaviour
         UserEmailInputField.Clear();
         EmailSubjectInputField.Clear();
         EmailBodyInputField.Clear();
+        SendEmailBtn.interactable = false;
         ContactSupportPanelRef.SetActive(true);
     }
 
