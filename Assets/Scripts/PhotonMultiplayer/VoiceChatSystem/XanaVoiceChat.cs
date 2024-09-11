@@ -151,12 +151,6 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
         {
             yield return new WaitForSeconds(1f);
         }
-            if (recorder != null)
-            {
-                recorder.AutoStart = true;
-                recorder.Init(voiceConnection);
-            }
-
 
         if (recorder != null)
         {
