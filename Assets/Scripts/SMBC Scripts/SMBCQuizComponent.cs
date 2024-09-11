@@ -28,8 +28,7 @@ public class SMBCQuizComponent : MonoBehaviour
     {
         if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            Debug.LogError("CheckForObjectCollectible ==> " + SMBCManager.Instance.CheckForObjectCollectible(RequireCollectible));
-            if (SMBCManager.Instance.CheckForObjectCollectible(RequireCollectible))
+            if (!SMBCManager.Instance.CheckForObjectCollectible(RequireCollectible))
                 BuilderEventManager.OnSMBCQuizComponentCollisionEnter?.Invoke(this, _quizComponentData);
             else
                 BuilderEventManager.OnDoorKeyCollisionEnter?.Invoke("Please collect all require keys first!!");

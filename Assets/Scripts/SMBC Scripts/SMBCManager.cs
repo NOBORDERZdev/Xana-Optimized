@@ -15,7 +15,12 @@ public class SMBCManager : MonoBehaviour
     public string CurrentWorldName;
     public string ParentWorldName;
     public QuizDataLoader QuizDataLoader;
+    public PlayerCanvas PlayerCanvas;
 
+    //Name canvas
+    internal Canvas NameCanvas;
+
+    PlayerCanvas _keyObject;
     bool _isPotrait = false;
     bool _requireKeyCollected = false;
     bool _requireAxeCollected = false;
@@ -106,6 +111,7 @@ public class SMBCManager : MonoBehaviour
     public void AddKey()
     {
         _keyCounter++;
+        AddKeyObjectOnPlayerHead();
         if (_keyCounter >= 5)
             _requireKeyCollected = true;
     }
@@ -114,6 +120,7 @@ public class SMBCManager : MonoBehaviour
     {
         if (_keyCounter > 1)
             _keyCounter--;
+        AddKeyObjectOnPlayerHead();
     }
 
     public void AddRocketPart()
@@ -125,6 +132,26 @@ public class SMBCManager : MonoBehaviour
     {
         _requireAxeCollected = true;
     }
+
+    void AddKeyObjectOnPlayerHead()
+    {
+        if (_keyObject == null)
+            _keyObject = Instantiate(PlayerCanvas);
+
+        if (_keyObject.transform.parent != NameCanvas)
+        {
+            _keyObject.transform.SetParent(NameCanvas.transform);
+            _keyObject.transform.localPosition = Vector3.up * 18.5f;
+        }
+
+        _keyObject.cameraMain = ReferencesForGamePlay.instance.playerControllerNew.ActiveCamera.transform;
+        _keyObject.ToggleKey(true);
+        _keyObject.keyCounter.text = "x" + _keyCounter;
+
+        if (_keyCounter == 0)
+            Destroy(_keyObject);
+    }
+
     public QuizData GetQuizData()
     {
         return _quizData;
@@ -140,6 +167,8 @@ public class SMBCManager : MonoBehaviour
                 return _requireAxeCollected;
             case SMBCCollectibleType.RocketPart:
                 return _requireAxeCollected;
+            case SMBCCollectibleType.None:
+                return true;
             default:
                 return false;
         }
@@ -150,5 +179,6 @@ public enum SMBCCollectibleType
 {
     DoorKey,
     Axe,
-    RocketPart
+    RocketPart,
+    None
 }
