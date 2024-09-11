@@ -3,9 +3,18 @@ using UnityEngine;
 
 public class RocketCollectable : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision collision)
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("PhotonLocalPlayer")  && collision.gameObject.GetComponent<PhotonView>().IsMine)
+    //    {
+    //        BuilderEventManager.OnDoorKeyCollisionEnter?.Invoke("Rocket part collected, Redirecting to Earth");
+    //        gameObject.GetComponent<MeshRenderer>().enabled = false;
+    //        Invoke(nameof(BackToEarth), 3f);
+    //    }
+    //}
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("PhotonLocalPlayer")  && collision.gameObject.GetComponent<PhotonView>().IsMine)
+        if (other.CompareTag("PhotonLocalPlayer") && other.GetComponent<PhotonView>().IsMine)
         {
             BuilderEventManager.OnDoorKeyCollisionEnter?.Invoke("Rocket part collected, Redirecting to Earth");
             gameObject.GetComponent<MeshRenderer>().enabled = false;
