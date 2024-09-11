@@ -5,13 +5,11 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System;
 
-
 namespace ZeelKheni.YoutubePlayer.Api
 {
     public class FetchHtmlContent
     {
         private string hlsurl;
-
 
         public IEnumerator GetHtmlContent(string url, Action<string> callback)
         {
@@ -20,16 +18,13 @@ namespace ZeelKheni.YoutubePlayer.Api
 
             if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
             {
-                Debug.LogError("Error: " + webRequest.error);
+                Debug.Log("<color=red>Error: " + webRequest.error + "</color>");
             }
             else
             {
                 string htmlContent = webRequest.downloadHandler.text;
-               
-
-
                 hlsurl = ParseHLSManifestUrl(htmlContent);
-                Debug.LogError("HLS found  " + hlsurl);
+                Debug.Log("<color=red>HLS found " + hlsurl + "</color>");
             }
             callback(hlsurl);
         }
@@ -44,7 +39,7 @@ namespace ZeelKheni.YoutubePlayer.Api
             }
             else
             {
-                Debug.LogError("HLS Manifest URL not found in the HTML content.");
+                Debug.Log("<color=red>HLS Manifest URL not found in the HTML content.</color>");
                 return null;
             }
         }

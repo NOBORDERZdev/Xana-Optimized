@@ -9,17 +9,18 @@
 // ----------------------------------------------------------------------------
 
 
+
 namespace Photon.Pun
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
     using ExitGames.Client.Photon;
     using Photon.Realtime;
-    using System.Collections.Generic;
     using UnityEngine;
-
-#if UNITY_5_5_OR_NEWER
     using UnityEngine.Profiling;
-#endif
 
+    using Debug = UnityEngine.Debug;
 
     /// <summary>
     /// Internal MonoBehaviour that allows Photon to run an Update loop.
@@ -50,7 +51,7 @@ namespace Photon.Pun
 
         /// <summary>Limits the number of datagrams that are created in each LateUpdate.</summary>
         /// <remarks>Helps spreading out sending of messages minimally.</remarks>
-        public static int MaxDatagrams = 3;
+        public static int MaxDatagrams = 10;
 
         /// <summary>Signals that outgoing messages should be sent in the next LateUpdate call.</summary>
         /// <remarks>Up to MaxDatagrams are created to send queued messages.</remarks>
@@ -64,15 +65,19 @@ namespace Photon.Pun
 
         protected internal int UpdateIntervalOnSerialize; // time [ms] between consecutive RunViewUpdate calls (sending syncs, etc)
 
-        private int nextSendTickCount;
 
-        private int nextSendTickCountOnSerialize;
+        private readonly Stopwatch swSendOutgoing = new Stopwatch();
+
+        private readonly Stopwatch swViewUpdate = new Stopwatch();
 
         private SupportLogger supportLoggerComponent;
 
-        public static string levelName;
+
         protected override void Awake()
         {
+            this.swSendOutgoing.Start();
+            this.swViewUpdate.Start();
+
             if (instance == null || ReferenceEquals(this, instance))
             {
                 instance = this;
@@ -137,44 +142,42 @@ namespace Photon.Pun
         /// <summary>Called in intervals by UnityEngine. Affected by Time.timeScale.</summary>
         protected void FixedUpdate()
         {
-#if PUN_DISPATCH_IN_FIXEDUPDATE
+            #if PUN_DISPATCH_IN_FIXEDUPDATE
             this.Dispatch();
-#elif PUN_DISPATCH_IN_LATEUPDATE
+            #elif PUN_DISPATCH_IN_LATEUPDATE
             // do not dispatch here
-#else
+            #else
             if (Time.timeScale > PhotonNetwork.MinimalTimeScaleToDispatchInFixedUpdate)
             {
                 this.Dispatch();
             }
-#endif
+            #endif
         }
 
         /// <summary>Called in intervals by UnityEngine, after running the normal game code and physics.</summary>
         protected void LateUpdate()
         {
-#if PUN_DISPATCH_IN_LATEUPDATE
+            #if PUN_DISPATCH_IN_LATEUPDATE
             this.Dispatch();
-#elif PUN_DISPATCH_IN_FIXEDUPDATE
+            #elif PUN_DISPATCH_IN_FIXEDUPDATE
             // do not dispatch here
-#else
+            #else
             // see MinimalTimeScaleToDispatchInFixedUpdate and FixedUpdate for explanation:
             if (Time.timeScale <= PhotonNetwork.MinimalTimeScaleToDispatchInFixedUpdate)
             {
                 this.Dispatch();
             }
-#endif
+            #endif
 
-
-            int currentMsSinceStart = (int)(Time.realtimeSinceStartup * 1000); // avoiding Environment.TickCount, which could be negative on long-running platforms
-            if (PhotonNetwork.IsMessageQueueRunning && currentMsSinceStart > this.nextSendTickCountOnSerialize)
+            if (PhotonNetwork.IsMessageQueueRunning && this.swViewUpdate.ElapsedMilliseconds >= this.UpdateIntervalOnSerialize - SerializeRateFrameCorrection)
             {
                 PhotonNetwork.RunViewUpdate();
-                this.nextSendTickCountOnSerialize = currentMsSinceStart + this.UpdateIntervalOnSerialize - SerializeRateFrameCorrection;
-                this.nextSendTickCount = 0; // immediately send when synchronization code was running
+                this.swViewUpdate.Restart();
+                SendAsap = true; // immediately send when synchronization code was running
             }
 
-            currentMsSinceStart = (int)(Time.realtimeSinceStartup * 1000);
-            if (SendAsap || currentMsSinceStart > this.nextSendTickCount)
+            
+            if (SendAsap || this.swSendOutgoing.ElapsedMilliseconds >= this.UpdateInterval)
             {
                 SendAsap = false;
                 bool doSend = true;
@@ -187,8 +190,12 @@ namespace Photon.Pun
                     sendCounter++;
                     Profiler.EndSample();
                 }
+                if (sendCounter >= MaxDatagrams)
+                {
+                    SendAsap = true;
+                }
 
-                this.nextSendTickCount = currentMsSinceStart + this.UpdateInterval;
+                this.swSendOutgoing.Restart();
             }
         }
 
@@ -214,12 +221,31 @@ namespace Photon.Pun
 
 
             bool doDispatch = true;
+            Exception ex = null;
+            int exceptionCount = 0;
             while (PhotonNetwork.IsMessageQueueRunning && doDispatch)
             {
                 // DispatchIncomingCommands() returns true of it dispatched any command (event, response or state change)
                 Profiler.BeginSample("DispatchIncomingCommands");
-                doDispatch = PhotonNetwork.NetworkingClient.LoadBalancingPeer.DispatchIncomingCommands();
+                try
+                {
+                    doDispatch = PhotonNetwork.NetworkingClient.LoadBalancingPeer.DispatchIncomingCommands();
+                }
+                catch (Exception e)
+                {
+                    exceptionCount++;
+                    if (ex == null)
+                    {
+                        ex = e;
+                    }
+                }
+
                 Profiler.EndSample();
+            }
+
+            if (ex != null)
+            {
+                throw new AggregateException("Caught " + exceptionCount + " exception(s) in methods called by DispatchIncomingCommands(). Rethrowing first only (see above).", ex);
             }
         }
 
@@ -231,7 +257,7 @@ namespace Photon.Pun
 
         public void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
         {
-            //PhotonNetwork.LoadLevelIfSynced();
+            PhotonNetwork.LoadLevelIfSynced();
         }
 
 
@@ -244,7 +270,7 @@ namespace Photon.Pun
             {
                 if (view.IsRoomView)
                 {
-                    view.OwnerActorNr = newMasterClient.ActorNumber;
+                    view.OwnerActorNr= newMasterClient.ActorNumber;
                     view.ControllerActorNr = newMasterClient.ActorNumber;
                 }
             }
@@ -259,7 +285,6 @@ namespace Photon.Pun
         public void OnJoinRandomFailed(short returnCode, string message) { }
 
         protected List<int> reusableIntList = new List<int>();
-        public static bool PlayeEnterInRoom;
 
         public void OnJoinedRoom()
         {
@@ -282,7 +307,7 @@ namespace Photon.Pun
                 int viewCreatorId = view.CreatorActorNr;
 
                 // on join / rejoin, assign control to either the Master Client (for room objects) or the owner (for anything else)
-                view.RebuildControllerCache();
+                    view.RebuildControllerCache();
 
                 // Rejoining master should enforce its world view, and override any changes that happened while it was soft disconnected
                 if (amRejoiningMaster)
@@ -301,15 +326,14 @@ namespace Photon.Pun
 
         public void OnLeftRoom()
         {
-            // Destroy spawned objects and reset scene objects
-            PhotonNetwork.LocalCleanupAnythingInstantiated(true);
+            // destroying the objects here is not a good option. LocalCleanupAnythingInstantiated is called from another place, which checks auto cleanup properly, too.
+            //// Destroy spawned objects and reset scene objects
+            //PhotonNetwork.LocalCleanupAnythingInstantiated(true);
         }
 
 
         public void OnPlayerEnteredRoom(Player newPlayer)
         {
-            PlayeEnterInRoom = true;
-            Debug.Log("player entered===" + newPlayer.ActorNumber);
             // note: if the master client becomes inactive, someone else becomes master. so there is no case where the active master client reconnects
             // what may happen is that the Master Client disconnects locally and uses ReconnectAndRejoin before anyone (including the server) notices.
 
@@ -347,25 +371,15 @@ namespace Photon.Pun
 
         public void OnPlayerLeftRoom(Player otherPlayer)
         {
-
-
             var views = PhotonNetwork.PhotonViewCollection;
 
             int leavingPlayerId = otherPlayer.ActorNumber;
-            Debug.Log("call player Actr===" + otherPlayer.ActorNumber);
             bool isInactive = otherPlayer.IsInactive;
 
             // SOFT DISCONNECT: A player has timed out to the relay but has not yet exceeded PlayerTTL and may reconnect.
             // Master will take control of this objects until the player hard disconnects, or returns.
-            Debug.Log("call player left===" + isInactive);
             if (isInactive)
             {
-                if (Application.internetReachability != NetworkReachability.NotReachable)
-                {
-                    PhotonNetwork.DestroyPlayerObjects(otherPlayer.ActorNumber);
-                }
-
-                Debug.Log("call player left===" + otherPlayer.UserId);
                 foreach (var view in views)
                 {
                     // v2.27: changed from owner-check to controller-check
@@ -374,41 +388,18 @@ namespace Photon.Pun
                 }
 
             }
-
-            //Debug.Log("call player left===" + isInactive);
-            //bool autocleanup = PhotonNetwork.CurrentRoom.AutoCleanUp;
-
-            //foreach (var view in views)
-            //{
-            //    // Skip changing Owner/Controller for items that will be cleaned up.
-            //    if (autocleanup && view.CreatorActorNr == leavingPlayerId)
-            //        continue;
-
-            //    // Any views owned by the leaving player, default to null owner (which will become master controlled).
-            //    if (view.OwnerActorNr == leavingPlayerId || view.ControllerActorNr == leavingPlayerId)
-            //    {
-            //        view.OwnerActorNr = 0;
-            //        view.ControllerActorNr = PhotonNetwork.MasterClient.ActorNumber;
-            //    }
-            //}
-
             // HARD DISCONNECT: Player permanently removed. Remove that actor as owner for all items they created (Unless AutoCleanUp is false)
             else
             {
-                Debug.Log("call player left===" + isInactive);
                 bool autocleanup = PhotonNetwork.CurrentRoom.AutoCleanUp;
 
-                if (Application.internetReachability != NetworkReachability.NotReachable)
-                {
-                    PhotonNetwork.DestroyPlayerObjects(otherPlayer.ActorNumber);
-                }
                 foreach (var view in views)
                 {
                     // Skip changing Owner/Controller for items that will be cleaned up.
                     if (autocleanup && view.CreatorActorNr == leavingPlayerId)
                         continue;
 
-                    // Any views owned by the leaving player, default to null owner (which will become mast  er controlled).
+                    // Any views owned by the leaving player, default to null owner (which will become master controlled).
                     if (view.OwnerActorNr == leavingPlayerId || view.ControllerActorNr == leavingPlayerId)
                     {
                         view.OwnerActorNr = 0;
