@@ -132,7 +132,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -19.920044}
+  m_AnchoredPosition: {x: 0, y: -19.919922}
   m_SizeDelta: {x: 330, y: 27.9749}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &506276330
@@ -1251,6 +1251,18 @@ MonoBehaviour:
         - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: PlayerDashHandler, Assembly-CSharp
           m_MethodName: DashButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+          m_MethodName: StopAnimationEmote
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2962,6 +2974,7 @@ GameObject:
   - component: {fileID: 5959550275494887418}
   - component: {fileID: 5518588634480791483}
   - component: {fileID: 2694798584784107952}
+  - component: {fileID: 8130360827824684238}
   m_Layer: 23
   m_Name: Text
   m_TagString: Untagged
@@ -3086,6 +3099,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8130360827824684238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178237886725852977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  LocalizeText: {fileID: 0}
+  LocalizeTextTMP: {fileID: 2694798584784107952}
 --- !u!1 &196680711212835967
 GameObject:
   m_ObjectHideFlags: 0
@@ -15168,7 +15196,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.50421405, y: 0.0056597223}
   m_AnchorMax: {x: 0.89154685, y: 0.07357638}
-  m_AnchoredPosition: {x: -29.5, y: -2.2000732}
+  m_AnchoredPosition: {x: -29.5, y: -2.2001953}
   m_SizeDelta: {x: 0, y: -0.000015258789}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1112965297600551976
@@ -23300,7 +23328,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00024414062}
+  m_AnchoredPosition: {x: 0, y: 0.00048828125}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1112965298598220596
@@ -23592,6 +23620,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: StopAnimationEmote
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -31908,7 +31948,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.19327927, y: -0.5999985}
+  m_AnchoredPosition: {x: 0.19328308, y: -0.6000061}
   m_SizeDelta: {x: -0.10429382, y: 4.741005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9176514045825150893
@@ -69729,7 +69769,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 17.17395}
+  m_AnchoredPosition: {x: 0, y: 17.173828}
   m_SizeDelta: {x: 0, y: 34.348}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &690865624263574295
@@ -70494,7 +70534,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0.9692383, y: -20.591187}
+  m_AnchoredPosition: {x: 0.9692383, y: -20.591309}
   m_SizeDelta: {x: 526, y: 297}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &341106742356269163
@@ -75298,6 +75338,7 @@ GameObject:
   - component: {fileID: 6509732483605119541}
   - component: {fileID: 7509076295493875816}
   - component: {fileID: 4880360264832904421}
+  - component: {fileID: 6740570744865014773}
   m_Layer: 23
   m_Name: Text (1)
   m_TagString: Untagged
@@ -75422,6 +75463,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6740570744865014773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6864459003749772995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  LocalizeText: {fileID: 0}
+  LocalizeTextTMP: {fileID: 4880360264832904421}
 --- !u!1 &6865807681469005914
 GameObject:
   m_ObjectHideFlags: 0
@@ -76210,7 +76266,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 30.000183}
+  m_AnchoredPosition: {x: 0, y: 30.000244}
   m_SizeDelta: {x: 230, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &6907531792610345426
@@ -82722,6 +82778,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: StopAnimationEmote
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -101503,6 +101571,26 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1252195893940236480, guid: 91c0f85a08132014fb194e63873620f4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -108.22266
+      objectReference: {fileID: 0}
+    - target: {fileID: 1252195893940236480, guid: 91c0f85a08132014fb194e63873620f4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 144.31628
+      objectReference: {fileID: 0}
+    - target: {fileID: 1613051086137750431, guid: 91c0f85a08132014fb194e63873620f4, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1613051086137750431, guid: 91c0f85a08132014fb194e63873620f4, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1613051086137750431, guid: 91c0f85a08132014fb194e63873620f4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -35
+      objectReference: {fileID: 0}
     - target: {fileID: 2423824303637411955, guid: 91c0f85a08132014fb194e63873620f4, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -101537,11 +101625,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3309599096137304997, guid: 91c0f85a08132014fb194e63873620f4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 154.38826
+      value: 154.38818
       objectReference: {fileID: 0}
     - target: {fileID: 3309599096137304997, guid: 91c0f85a08132014fb194e63873620f4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -33.719315
+      value: -33.71924
+      objectReference: {fileID: 0}
+    - target: {fileID: 3918154486010582575, guid: 91c0f85a08132014fb194e63873620f4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -108.220215
       objectReference: {fileID: 0}
     - target: {fileID: 4881960250901096691, guid: 91c0f85a08132014fb194e63873620f4, type: 3}
       propertyPath: m_AnchorMax.y
@@ -101790,6 +101882,10 @@ PrefabInstance:
     - target: {fileID: 7586470164299441641, guid: 91c0f85a08132014fb194e63873620f4, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -108.69815
+      objectReference: {fileID: 0}
+    - target: {fileID: 8397633085054333595, guid: 91c0f85a08132014fb194e63873620f4, type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91c0f85a08132014fb194e63873620f4, type: 3}
