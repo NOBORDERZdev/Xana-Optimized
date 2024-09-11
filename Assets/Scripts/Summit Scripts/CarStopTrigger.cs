@@ -22,8 +22,8 @@ public class CarStopTrigger : MonoBehaviour
                 return;
             }
             
-
-           Players.Add(other.gameObject);
+           if(! Players.Contains(other.gameObject) )
+            Players.Add(other.gameObject);
             StopCar = true;
           
         }
@@ -39,6 +39,7 @@ public class CarStopTrigger : MonoBehaviour
                     if (player != null)
                     {
                         StartCoroutine(CarNavigationManager.CarNavigationInstance.TPlayer(other.gameObject, player, this));
+                        break;
                     }
                 }
             }

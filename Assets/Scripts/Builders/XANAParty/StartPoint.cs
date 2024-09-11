@@ -11,9 +11,17 @@ public class StartPoint : MonoBehaviour
     public bool isStartPoint;
     public Animator OpenGateAnimator;
     public bool IsRaceStarted = false;
+    public GameObject[] ObjectsToEnable;
 
     private void OnEnable()
     {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            foreach (GameObject obj in ObjectsToEnable)
+            {
+                obj.SetActive(true);
+            }
+        }
         if ( BuilderData.mapData != null && BuilderData.mapData.data.worldType != 1)
         {
             DisableCollider();

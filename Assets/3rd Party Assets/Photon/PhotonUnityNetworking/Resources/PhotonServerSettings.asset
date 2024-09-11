@@ -15,7 +15,7 @@ MonoBehaviour:
   AppSettings:
     AppIdRealtime: 2108abae-ee43-41e4-b9ee-144679aaa0d2
     AppIdFusion: 
-    AppIdChat: edc7f5fb-e32f-4161-9c4d-e4061ccde70c
+    AppIdChat: 
     AppIdVoice: dc2021dc-8390-4887-af90-4bdd66e6c8da
     AppVersion: 1
     UseNameServer: 1
@@ -36,46 +36,47 @@ MonoBehaviour:
   RpcList:
   - CantHearYou
   - ChangeColour
-  - CheckRpc
   - ClickRpc
   - DestroyRpc
+  - HeresWhy
+  - AddForce
+  - CheckRpc
   - DestroySpaceship
   - DisableFreeCamOnRemoteSide
+  - DisableGourdOnRemoteSide
   - DisableSelfieOnRemoteSide
   - EnableFreeCamOnRemoteSide
+  - EnableGourdOnRemoteSide
   - EnableSelfieOnRemoteSide
-  - Fire
-  - HeresWhy
-  - JumpAnimSitLying
-  - RespawnSpaceship
-  - sendDataChatMsg
-  - SendDataIfPlayerSetFirstPersonView
-  - sendDataReactionUrl
-  - sendDataUserNAmeToggle
-  - SynchronizeSelfieIKData
-  - SyncSpeaker2D
-  - SyncSpeaker3D
-  - UpdateStatsAnimClicked
-  - GetObject
-  - AddForce
-  - ThrowBall
-  - Init
-  - NinjaAttackSync
-  - NinjaSwordInit
-  - SwordHolding
-  - PlayerSelection
-  - RemoteChangeVoice
-  - RemoteUpdateTxt
-  - SetActorNum
-  - SetMeetingCounter
-  - StartMeeting
-  - UpdatePortal
   - EnterCAr
   - EnterWheel
   - EnterWheelCar
   - ExitCAr
   - ExitWheelCar
+  - Fire
+  - GetObject
+  - Init
+  - JumpAnimSitLying
+  - NinjaAttackSync
+  - NinjaSwordInit
+  - PlayerSelection
+  - RemoteChangeVoice
+  - RemoteUpdateTxt
+  - RespawnSpaceship
+  - sendDataChatMsg
+  - SendDataIfPlayerSetFirstPersonView
+  - sendDataReactionUrl
+  - sendDataUserNAmeToggle
+  - SetActorNum
+  - SetMeetingCounter
+  - SetPlayerDataOnRemoteSide
+  - StartMeeting
+  - SwordHolding
   - syncdata
+  - SynchronizeSelfieIKData
+  - ThrowBall
+  - UpdatePortal
+  - UpdateStatsAnimClicked
   - WheelStoped
   - DisableGourdOnRemoteSide
   - EnableGourdOnRemoteSide
@@ -95,4 +96,4 @@ MonoBehaviour:
   - StartGameRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
-  DevRegionSetOnce: 1
+  DevRegionSetOnce: 0

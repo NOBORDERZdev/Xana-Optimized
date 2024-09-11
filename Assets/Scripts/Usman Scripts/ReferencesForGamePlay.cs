@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class ReferencesForGamePlay : MonoBehaviour
+public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmakingCallbacks
 {
     public GameObject eventSystemObj;
     [Space(5)]
@@ -47,7 +47,6 @@ public class ReferencesForGamePlay : MonoBehaviour
     public QualityManager QualityManager;
     public XanaChatSystem ChatSystemRef;
 
-
     #region XANA PARTY WORLD
     public GameObject XANAPartyWaitingText;
     public GameObject XANAPartyCounterPanel;
@@ -59,6 +58,7 @@ public class ReferencesForGamePlay : MonoBehaviour
     private const string InLevelProperty = "InLevel";
     public bool IsLevelPropertyUpdatedOnlevelLoad = false;
     #endregion
+
 
 
     // Start is called before the first frame update
@@ -122,7 +122,7 @@ public class ReferencesForGamePlay : MonoBehaviour
     private void OnEnable()
     {
         instance = this;
-
+        PhotonNetwork.AddCallbackTarget(this);
         if(m_34player==null)
         {
             m_34player=GameplayEntityLoader.instance.player;
@@ -171,17 +171,17 @@ public class ReferencesForGamePlay : MonoBehaviour
                 m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat.SetActive(true);
             }
         }
-        if (counterCoroutine == null)
+        /*if (counterCoroutine == null)
         {
-            counterCoroutine = SetPlayerCounter();
-            StartCoroutine(counterCoroutine);
+           SetPlayerCounter();
+           // StartCoroutine(counterCoroutine);
         }
         else
         {
-            StopCoroutine(counterCoroutine);
-            StartCoroutine(counterCoroutine);
-        }
-
+           *//* StopCoroutine(counterCoroutine);
+            StartCoroutine(counterCoroutine);*//*
+        }*/
+        SetPlayerCounter();
         if (WorldItemView.m_EnvName.Contains("AfterParty") || ConstantsHolder.xanaConstants.IsMuseum)
         {
             if (WorldItemView.m_EnvName.Contains("J&J WORLD_5"))
@@ -217,6 +217,8 @@ public class ReferencesForGamePlay : MonoBehaviour
             landscapeMoveWhileDancingButton.SetActive(true);
             instance.portraitMoveWhileDancingButton.SetActive(true);
         }
+
+        isMatchingTimerFinished = false;
     }
 
 
@@ -293,6 +295,10 @@ public class ReferencesForGamePlay : MonoBehaviour
         }
 
     }
+    private void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this);
+    }
     public void potraithiddenButtonDisable()
     {
         //To Hide potrait Buttons
@@ -348,9 +354,9 @@ public class ReferencesForGamePlay : MonoBehaviour
     //    StartCoroutine(SetPlayerCounter());
     //}
 
-    IEnumerator SetPlayerCounter()
+    void SetPlayerCounter()
     {
-    CheckAgain:
+    //CheckAgain:
         try
         {
             if (totalCounter != null)
@@ -395,10 +401,6 @@ public class ReferencesForGamePlay : MonoBehaviour
                 if (((PlayerCount == ConstantsHolder.XanaPartyMaxPlayers && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame) || isMatchingTimerFinished) && !isCounterStarted)
                 {  // to check if the room count is full then move all the player randomly form the list of XANA Party Rooms
                     MakeRoomPrivate();
-                    if (isMatchingTimerFinished)
-                        StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().ShowLobbyCounter(0f));
-                    else
-                        StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().ShowLobbyCounter(10f));
                 }
                 //else
                 //{
@@ -412,41 +414,11 @@ public class ReferencesForGamePlay : MonoBehaviour
 
         }
 
-        yield return new WaitForSeconds(2f);
-        goto CheckAgain;
-    }
-    public void SumitMapStatus(bool _status)
-    {
-        if (_status && ConstantsHolder.xanaConstants.EnviornmentName.Equals("XANA Summit"))
-        {
-            MinimapSummit.SetActive(true);
-
-            minimap.transform.parent.GetComponent<RawImage>().enabled = true;
-            minimap.transform.parent.GetComponent<Mask>().enabled = true;
-
-            if (!ScreenOrientationManager._instance.isPotrait)
-                minimap.GetComponent<RectTransform>().sizeDelta = new Vector2(530, 300);
-        }
-        else
-        {
-            MinimapSummit.SetActive(false);
-        }
+      /*  yield return new WaitForSeconds(2f);
+        goto CheckAgain;*/
     }
 
-    public void FullScreenMapStatus (bool _enable)
-    {
-        if (_enable)
-        {
-            Input.multiTouchEnabled = false;
-        }
-        else
-        {
-            Input.multiTouchEnabled = true;
-        }
-
-        FullscreenMapSummit.SetActive(_enable);
-    }
-
+    #region XANA PARTY WORLD
     public IEnumerator ShowLobbyCounterAndMovePlayer()
     {
         XANAPartyWaitingText.SetActive(false);
@@ -459,7 +431,7 @@ public class ReferencesForGamePlay : MonoBehaviour
         XANAPartyCounterPanel.SetActive(false);
 
         Screen.orientation = ScreenOrientation.LandscapeLeft;
-        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.PenpenzLoading(FadeAction.In));
+        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         yield return new WaitForSeconds(2);
         if (PhotonNetwork.IsMasterClient)
         {
@@ -518,6 +490,100 @@ public class ReferencesForGamePlay : MonoBehaviour
     public void MakeRoomPrivate()
     {
         PhotonNetwork.CurrentRoom.IsVisible = false;
+    }
+
+    #endregion
+    public void SumitMapStatus(bool _status)
+    {
+        if (_status && ConstantsHolder.xanaConstants.EnviornmentName.Equals("XANA Summit"))
+        {
+            MinimapSummit.SetActive(true);
+
+            minimap.transform.parent.GetComponent<RawImage>().enabled = true;
+            minimap.transform.parent.GetComponent<Mask>().enabled = true;
+
+            if (!ScreenOrientationManager._instance.isPotrait)
+                minimap.GetComponent<RectTransform>().sizeDelta = new Vector2(530, 300);
+        }
+        else
+        {
+            MinimapSummit.SetActive(false);
+        }
+    }
+
+    public void FullScreenMapStatus (bool _enable)
+    {
+        if(ConstantsHolder.DisableFppRotation) { return; }
+
+        if (_enable)
+        {
+            Input.multiTouchEnabled = false;
+        }
+        else
+        {
+            Input.multiTouchEnabled = true;
+        }
+
+        FullscreenMapSummit.SetActive(_enable);
+    }
+
+    public void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        SetPlayerCounter();
+    }
+
+    public void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        SetPlayerCounter();
+    }
+
+    public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+      
+    }
+
+    public void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+       
+    }
+
+    public void OnMasterClientSwitched(Player newMasterClient)
+    {
+       
+    }
+
+    public void OnFriendListUpdate(List<FriendInfo> friendList)
+    {
+       
+    }
+
+    public void OnCreatedRoom()
+    {
+        
+    }
+
+    public void OnCreateRoomFailed(short returnCode, string message)
+    {
+    }
+
+    public void OnJoinedRoom()
+    {
+        SetPlayerCounter();
+    }
+
+    public void OnJoinRoomFailed(short returnCode, string message)
+    {
+       
+    }
+
+    public void OnJoinRandomFailed(short returnCode, string message)
+    {
+        
+    }
+
+    public void OnLeftRoom()
+    {
+       
     }
 }
 

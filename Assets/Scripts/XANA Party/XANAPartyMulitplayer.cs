@@ -52,12 +52,17 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
         GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC(nameof(MovePlayersToRoom), RpcTarget.AllBuffered, gameData.Id, gameData.WorldName);
     }
 
-    public IEnumerator ShowLobbyCounter(float waitTime)
+
+
+    public IEnumerator ShowLobbyCounter()
     {
         if (GetComponent<PhotonView>().IsMine && PhotonNetwork.IsMasterClient)
         {
             ReferencesForGamePlay.instance.isCounterStarted = true;
-            yield return new WaitForSeconds(waitTime); // wait to show that other player spwan and then lobby full
+            if (!ReferencesForGamePlay.instance.isMatchingTimerFinished)
+                yield return new WaitForSeconds(10f);                     // wait to show that other player spwan and then lobby full
+            else
+                yield return new WaitForSeconds(0f);
             GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC(nameof(StartLobbyCounter), RpcTarget.AllBuffered);
         }
     }

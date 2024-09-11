@@ -857,7 +857,7 @@ public class HomeFooterHandler : MonoBehaviour
             if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
             {
                     Screen.orientation = ScreenOrientation.LandscapeLeft;
-                    UserLoginSignupManager.instance.LoginRegisterScreen.SetActive(true);
+                    UserLoginSignupManager.instance.signUpOrloginSelectionPanel.SetActive(true);
             }
             else
             {

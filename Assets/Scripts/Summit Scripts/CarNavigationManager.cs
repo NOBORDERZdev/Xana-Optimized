@@ -56,7 +56,7 @@ public class CarNavigationManager : MonoBehaviour
             Players.GetComponent<SummitPlayerRPC>().EnterCar(car.View.ViewID, true);
             triger.Pop();
             yield break;
-        }
+        }else
         if (car.PasengerSeatEmty)
         {
             Players.GetComponent<SummitPlayerRPC>().EnterCar(car.View.ViewID, false);

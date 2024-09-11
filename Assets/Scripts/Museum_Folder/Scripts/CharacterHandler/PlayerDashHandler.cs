@@ -24,13 +24,42 @@ public class PlayerDashHandler : MonoBehaviour
     private bool _canDash = true;
     [SerializeField]
     private Color _buttonDisableColor;
+    [SerializeField]
+    private AudioSource _audioSource;
 
     private float _sprintTime = 4f;
     private float _actualSpringSpeed;
+    public bool IsPlayerInOtherState
+    {
+        get
+        {
+            if (!_playerController.animator.IsInTransition(0) && (_playerController.animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || _playerController.animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle")))
+            {
+                return false;
+            }
+            else
+                return true;
+        }
+    }
+    private void OnEnable()
+    {
+        _audioSource = _dashEffect.GetComponent<AudioSource>();
+        _audioSource.volume = SoundSettings.soundManagerSettings.totalVolumeSlider.value;
+        BuilderEventManager.BGMVolume += BGMVolume;
+    }
 
+    private void OnDisable()
+    {
+        BuilderEventManager.BGMVolume -= BGMVolume;
+    }
+
+    void BGMVolume(float volume)
+    {
+        _audioSource.volume = volume;
+    }
     private void Start()
     {
-        if (gameObject.TryGetComponent<PlayerController>(out PlayerController playerController))
+        if (gameObject.TryGetComponent(out PlayerController playerController))
         {
             _playerController = playerController;
             _actualSpringSpeed = _playerController.sprintSpeed;
@@ -52,10 +81,9 @@ public class PlayerDashHandler : MonoBehaviour
 
     public void DashButton()
     {
-        if (_playerController == null /*|| _playerController.characterController.velocity.y != 0f*/ || !_canDash)
+        if (_playerController == null || !_canDash || IsPlayerInOtherState)
             return;
-        if (_playerController.animator.GetCurrentAnimatorStateInfo(0).IsName("JumpMove") || _playerController.animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") || _playerController.animator.GetCurrentAnimatorStateInfo(0).IsName("Falling") || _playerController.animator.GetCurrentAnimatorStateInfo(0).IsName("LandSoft"))
-            return;
+
         StartCoroutine(DashRoutine());
     }
 
@@ -139,45 +167,46 @@ public class PlayerDashHandler : MonoBehaviour
         }
     }
 
+    //not in use
     #region Sprint
 
-    public void SprintButton()
-    {
-        if (_playerController == null || _playerController.characterController.velocity.y != 0f || _playerController.desiredMoveDirection == Vector3.zero || !_canDash)
-            return;
-        StartCoroutine(SprintRoutine());
-    }
+    //public void SprintButton()
+    //{
+    //    if (_playerController == null || _playerController.characterController.velocity.y != 0f || _playerController.desiredMoveDirection == Vector3.zero || !_canDash)
+    //        return;
+    //    StartCoroutine(SprintRoutine());
+    //}
 
-    private IEnumerator SprintRoutine()
-    {
-        EnableDashButton(false);
-        if (_dashEffect)
-            _dashEffect.SetActive(true);  // Enable speed lines effect on Camera
+    //private IEnumerator SprintRoutine()
+    //{
+    //    EnableDashButton(false);
+    //    if (_dashEffect)
+    //        _dashEffect.SetActive(true);  // Enable speed lines effect on Camera
 
-        _playerController.sprintSpeed = 16f;
-        StartCoroutine(SprintEndRoutine());
+    //    _playerController.sprintSpeed = 16f;
+    //    StartCoroutine(SprintEndRoutine());
 
-        while (_playerController.cinemachineFreeLook.m_Lens.FieldOfView < 70)
-        {
-            _playerController.cinemachineFreeLook.m_Lens.FieldOfView += _fovIncreasingSpeed;
-            yield return null;
-        }
-    }
+    //    while (_playerController.cinemachineFreeLook.m_Lens.FieldOfView < 70)
+    //    {
+    //        _playerController.cinemachineFreeLook.m_Lens.FieldOfView += _fovIncreasingSpeed;
+    //        yield return null;
+    //    }
+    //}
 
-    private IEnumerator SprintEndRoutine()
-    {
-        yield return new WaitForSeconds(_sprintTime);
-        if (_dashEffect)
-            _dashEffect.SetActive(false);
-        _playerController.sprintSpeed = _actualSpringSpeed;
-        while (_playerController.cinemachineFreeLook.m_Lens.FieldOfView >= 60f)
-        {
-            _playerController.cinemachineFreeLook.m_Lens.FieldOfView -= _fovDecreasingSpeed;
-            yield return null;
-        }
-        EnableDashButton(true);
+    //private IEnumerator SprintEndRoutine()
+    //{
+    //    yield return new WaitForSeconds(_sprintTime);
+    //    if (_dashEffect)
+    //        _dashEffect.SetActive(false);
+    //    _playerController.sprintSpeed = _actualSpringSpeed;
+    //    while (_playerController.cinemachineFreeLook.m_Lens.FieldOfView >= 60f)
+    //    {
+    //        _playerController.cinemachineFreeLook.m_Lens.FieldOfView -= _fovDecreasingSpeed;
+    //        yield return null;
+    //    }
+    //    EnableDashButton(true);
 
-    }
-    #endregion
+    //}
+    #endregion 
 
 }

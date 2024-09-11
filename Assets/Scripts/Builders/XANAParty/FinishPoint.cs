@@ -11,9 +11,12 @@ public class FinishPoint : MonoBehaviour
     public List<Transform> SpawnPoints;
     public GameObject triggerCollider;
     public Collider FinishRaceCollider;
-
     private void OnEnable()
     {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            FinishRaceCollider.gameObject.SetActive(true);
+        }
         DisableCollider();
         if (BuilderData.mapData.data.worldType != 1)
         {

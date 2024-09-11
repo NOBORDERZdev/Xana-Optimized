@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine.Networking;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Photon.Pun.Demo.PunBasics;
 
 public class DomeMinimapDataHolder : MonoBehaviour
 {
@@ -112,8 +113,27 @@ public class DomeMinimapDataHolder : MonoBehaviour
     }
     void TeleportPlayerToSelectedDome(int _domeId, Transform playerTransform)
     {
+      
         if (_allInitDomes.TryGetValue(_domeId, out Transform domeTransform))
         {
+            if(_domeId>8&& _domeId<37)
+            {
+                MutiplayerController.instance.Ontriggered("GrassLand");
+            }else if(_domeId>40&& _domeId<69)
+            {
+                MutiplayerController.instance.Ontriggered("Sea");
+            }else if(_domeId>68&& _domeId<97)
+            {
+                MutiplayerController.instance.Ontriggered("Solid");
+            }else if(_domeId>100&& _domeId<129)
+            {
+                MutiplayerController.instance.Ontriggered("Sand");
+            }
+            else
+            {
+                MutiplayerController.instance.Ontriggered("Default");
+            }
+
             // Attempt to find "Player Spawner" or default to first child if not found
             Transform domePos = domeTransform.Find("Player Spawner") ?? domeTransform.GetChild(0);
             playerTransform.position = domePos.position;
@@ -134,6 +154,13 @@ public class DomeMinimapDataHolder : MonoBehaviour
     {
         ConfirmationPanelHandling(false);
         ReferencesForGamePlay.instance.FullScreenMapStatus(false);
+        if (ActionManager.IsAnimRunning)
+        {
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            //  EmoteAnimationHandler.Instance.StopAllCoroutines();
+        }
 
         TeleportPlayerToSelectedDome(_clickedDomeID, _playerTransform);
     }

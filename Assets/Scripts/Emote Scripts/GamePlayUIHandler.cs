@@ -40,6 +40,9 @@ public class GamePlayUIHandler : MonoBehaviour
 
     public GameObject jumpBtn;
 
+    //Summit related UI References
+    public EmailEntryUIController SummitCXOEmailAuthUIHandle;
+
     public GameObject JJPortalPopup;
     public GameObject currentPortalObject;
     public TextMeshProUGUI JJPortalPopupText;
