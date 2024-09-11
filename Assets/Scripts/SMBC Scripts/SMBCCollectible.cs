@@ -27,7 +27,7 @@ public class SMBCCollectible : MonoBehaviour
                 SMBCManager.Instance.AddRocketPart();
                 break;
             case SMBCCollectibleType.Axe:
-                SMBCManager.Instance.AddRocketPart();
+                SMBCManager.Instance.AddAxe();
                 break;
         }
     }
