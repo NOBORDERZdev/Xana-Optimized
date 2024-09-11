@@ -20,7 +20,7 @@ namespace ZeelKheni.YoutubePlayer
             try
             {
                 await request.SendWebRequestAsync(cancellationToken);
-                Debug.Log("<color=red>Response .... " + request.result.ToString() + "  \n " + request.downloadHandler.text + "    \n    </color>");
+               // Debug.Log("<color=red>Response .... " + request.result.ToString() + "  \n " + request.downloadHandler.text + "    \n    </color>");
                 var text = request.downloadHandler.text;
                 if (string.IsNullOrEmpty(text)) { throw new NullReferenceException(); }
                if(skipPrevious && previousBase == requestUrl) { throw new NullReferenceException(); }
@@ -30,7 +30,7 @@ namespace ZeelKheni.YoutubePlayer
             }
             catch (Exception exception)
             {
-                Debug.Log(exception  + "   " + requestUrl);
+              //  Debug.Log(exception  + "   " + requestUrl);
                 if (urlslist != null)
                 {
                     urlslist.RemoveAt(0);

@@ -461,7 +461,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                 if (www.isHttpError || www.isNetworkError)
                 {
                     _apiResponse = null;
-                    Debug.Log("Youtube API returned no result");
+                //    Debug.Log("Youtube API returned no result");
                 }
                 else
                 {
@@ -497,7 +497,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                         }
                         else
                         {
-                            Debug.Log("No Link Found Turning off player");
+                         //   Debug.Log("No Link Found Turning off player");
                             Data = null;
                         }
                     }
