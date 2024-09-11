@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.IO;
+using AdvancedInputFieldPlugin;
+using System.Text.RegularExpressions;
+using DG.Tweening;
 
 public class SNSSettingController : MonoBehaviour
 {
@@ -35,6 +38,20 @@ public class SNSSettingController : MonoBehaviour
     [Header("Simultaneous Connections Items")]
     public Image btnImageOn;
     public Image btnImageOff;
+
+    [Space]
+    [Header("Contact Support Items")]
+    public GameObject ContactSupportPanelRef;
+    public AdvancedInputField UserEmailInputField;
+    public AdvancedInputField EmailSubjectInputField;
+    public AdvancedInputField EmailBodyInputField;
+    public TextMeshProUGUI EmailText;
+    public TextMeshProUGUI ErrorMsgText;
+    public Button SendEmailBtn;
+    private Tween fadeTween;
+    private string verifiedEmail;
+    private bool isEmail;
+
     public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
 
     //public Sprite offBtn, onBtn;
@@ -281,10 +298,60 @@ public class SNSSettingController : MonoBehaviour
             btnImageOff.gameObject.SetActive(false);
         }
     }
+
+    private void Start()
+    {
+        UserEmailInputField.OnValueChanged.AddListener(OnValueChanged);
+    }
+
+    public void OnValueChanged(string newText)
+    {
+        isEmail = Regex.IsMatch(newText, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", RegexOptions.IgnoreCase);
+        // Check if the entered string matches your desired value
+
+        if (isEmail)
+        {
+            EmailText.color = Color.black;
+            SendEmailBtn.interactable = isEmail;
+            verifiedEmail = UserEmailInputField.GetText();
+        }
+        else
+        {
+            EmailText.color = Color.red;
+            SendEmailBtn.interactable = isEmail;
+        }
+    }
+
     private void OnEnable()
     {
         CheckBtnStatus(PlayerPrefs.GetInt("ShowLiveUserCounter"));
         QuestDataHandler.Instance.MyQuestButton = Questbutton;
         QuestDataHandler.Instance.QuestButton();
+    }
+
+    public void OnClickContactSupportBtn()
+    {
+        UserEmailInputField.Clear();
+        EmailSubjectInputField.Clear();
+        EmailBodyInputField.Clear();
+        ContactSupportPanelRef.SetActive(true);
+    }
+
+    public void PlayErrorMsgAnim()
+    {
+        if (fadeTween != null)
+        {
+            fadeTween.Restart();
+        }
+        else
+        {
+            fadeTween = ErrorMsgText.DOFade(1, 1).OnComplete(() =>
+            {
+                fadeTween = ErrorMsgText.DOFade(0, 4).OnComplete(() =>
+                {
+                    fadeTween = null;
+                });
+            });
+        }
     }
 }
