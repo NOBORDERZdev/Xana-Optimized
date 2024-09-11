@@ -1452,6 +1452,7 @@ public class UserLoginSignupManager : MonoBehaviour
             if (myObject1.success)
             {
                 PlayerPrefs.SetString("DeviceToken", LocalGetDeviceID);
+                Debug.Log("device id " + LocalGetDeviceID);
             }
         }
 
@@ -1674,19 +1675,30 @@ public class UserLoginSignupManager : MonoBehaviour
         if (!string.IsNullOrEmpty(deviceToken))
             StartCoroutine(HitLogOutAPI(ConstantsGod.API_BASEURL + ConstantsGod.LogOutAPI, deviceToken, (onSucess) =>
             {
+                Debug.Log("Delete");
+
                 if (onSucess)
                     StartCoroutine(DeleteAccountApi((deleteSucess) =>
                     {
+                        Debug.Log("Deleted Before");
+
                         if (deleteSucess)
                         {
+                            Debug.Log("Deleted after");
+
                             StartCoroutine(OnSucessLogout());
                             callback();
                         }
 
                     }));
+
+                else
+                {
+                    Debug.Log("success false " + onSucess);
+                }
             }
             ));
-        InventoryManager.instance.CheckWhenUserLogin();
+      //  InventoryManager.instance.CheckWhenUserLogin();
     }
 
     public IEnumerator HitLogOutAPI(string url, string Jsondata, Action<bool> CallBack)
@@ -1707,15 +1719,19 @@ public class UserLoginSignupManager : MonoBehaviour
         }
         MyClassNewApi myObject1 = new MyClassNewApi();
         myObject1 = myObject1.Load(request.downloadHandler.text);
+        Debug.Log("Error" + request.downloadHandler.text);
+
         if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             CallBack(true);
+           // Debug.Log("Error" + request.downloadHandler.text);
             yield break;
         }
         else
         {
             if (request.result == UnityWebRequest.Result.ConnectionError)
             {
+                Debug.Log("Data " + request.downloadHandler.text);
             }
             else
             {
