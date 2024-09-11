@@ -278,8 +278,13 @@ public class SMBCUIManager : MonoBehaviour
         {
             _currentOutline.enabled = false;
             UpdateQuizData(1);
-            Invoke(nameof(ResetCredentials), 2f);
-            BuilderEventManager.OnSMBCQuizWrongAnswer?.Invoke();
+            new Delayed.Action(() =>
+            {
+                ResetCredentials();
+                BuilderEventManager.OnSMBCQuizWrongAnswer?.Invoke();
+                _nextButtonText.text = _confirm;
+                NextButton.interactable = true;
+            }, 2f);
             return;
         }
 
