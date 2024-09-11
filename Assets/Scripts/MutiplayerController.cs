@@ -18,7 +18,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
-using Photon.Voice.PUN;
+
 
 namespace Photon.Pun.Demo.PunBasics
 {
@@ -441,7 +441,6 @@ namespace Photon.Pun.Demo.PunBasics
                     playerobjects.RemoveAt(x);
                 }
             }
-
             if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
             {
                 if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
@@ -458,6 +457,18 @@ namespace Photon.Pun.Demo.PunBasics
                     {
                         GamificationComponentData.instance.UpdateRaceStatusIfPlayerLeaveWithoutCompletiting(raceFinishStatus);
                     }
+
+                    if (GamificationComponentData.instance != null && !GamificationComponentData.instance.isRaceStarted && ReferencesForGamePlay.instance != null)
+                    {
+                        ReferencesForGamePlay.instance.IsLevelPropertyUpdatedOnlevelLoad = false;
+                        ReferencesForGamePlay.instance.CheckActivePlayerInCurrentLevel();
+                    }
+                }
+
+            }
+            Resources.UnloadUnusedAssets();
+            GC.Collect();
+        }
 
                     if (GamificationComponentData.instance != null && !GamificationComponentData.instance.isRaceStarted && ReferencesForGamePlay.instance != null)
                     {

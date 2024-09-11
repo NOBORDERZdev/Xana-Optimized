@@ -58,12 +58,10 @@ public class SectorManager : MonoBehaviour
     public IEnumerator WaitBeforeHandover(string Name)
     {
         if(ConstantsHolder.DiasableMultiPartPhoton) {   yield break;    }
-        while (ConstantsHolder.TempDiasableMultiPartPhoton==true || MutiplayerController.instance.isShifting)
-        {
-            yield return new WaitForSeconds(2);
-        }
+        Debug.Log("Sectror trigger status  " + ConstantsHolder.TempDiasableMultiPartPhoton + "  shifting " + MutiplayerController.instance.isShifting);
+        yield return new WaitUntil(() => (!ConstantsHolder.TempDiasableMultiPartPhoton && !MutiplayerController.instance.isShifting));
+       
 
-        yield return new WaitForSeconds(1);
 
         MutiplayerController.instance.Ontriggered(Name);
     }
