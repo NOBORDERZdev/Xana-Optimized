@@ -85,6 +85,7 @@ public class CheckOnlineFriend : MonoBehaviour
     {
         //print("Getting Click here name" + _feedUserData.name);
         //Debug.Log("Search User id:" + _feedUserData.id);
+        int bodyLayer = LayerMask.NameToLayer("Body");
         SNS_APIManager.Instance.RequestGetUserLatestAvatarData<CheckOnlineFriend>(searchUserRow.id.ToString(), this);
         //DressUpUserAvatar();
         if (MyProfileDataManager.Instance)
@@ -106,6 +107,7 @@ public class CheckOnlineFriend : MonoBehaviour
             FeedUIController.Instance.AddFriendPanel.SetActive(false);
             //MyProfileDataManager.Instance.gameObject.SetActive(false);
         }
+        ProfileUIHandler.instance._renderTexCamera.GetComponent<Camera>().cullingMask &= ~(1 << bodyLayer);
         ProfileUIHandler.instance.SwitchBetweenUserAndOtherProfileUI(false);
         ProfileUIHandler.instance.SetMainScrollRefs();
         ProfileUIHandler.instance.editProfileBtn.SetActive(false);
@@ -118,7 +120,7 @@ public class CheckOnlineFriend : MonoBehaviour
             ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
         }
         ProfileUIHandler.instance.followProfileBtn.SetActive(true);
-        ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        //ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
 
         AllUserWithFeedRow feedRawData = new AllUserWithFeedRow();
         feedRawData.id = searchUserRow.id;
@@ -179,7 +181,8 @@ public class CheckOnlineFriend : MonoBehaviour
         }
         else
         {
-            ProfileUIHandler.instance.SetUserAvatarRandomClothingForProfile(randomPreset, randomPresetGender);
+            //ProfileUIHandler.instance.SetUserAvatarRandomClothingForProfile(randomPreset, randomPresetGender);
+            ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
         }
     }
 }

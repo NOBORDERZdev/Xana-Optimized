@@ -46,7 +46,7 @@ public class BuilderMapDownload : MonoBehaviour
     internal LevelData levelData;
     private AISkyboxItem aiSkyboxItem;
     #endregion
-    internal string response;
+    //internal string response;
 
     #region UNITY_METHOD
     private void OnEnable()
@@ -102,11 +102,11 @@ public class BuilderMapDownload : MonoBehaviour
             }
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
-                response = www.downloadHandler.text;
+                //response = www.downloadHandler.text;
             }
             else
             {
-                response = www.downloadHandler.text;
+                //response = www.downloadHandler.text;
                 serverData = JsonUtility.FromJson<ServerData>(www.downloadHandler.text);
                 BuilderData.mapData = serverData;
                 StartCoroutine(PopulateLevel());
@@ -138,6 +138,7 @@ public class BuilderMapDownload : MonoBehaviour
 
             }
         }
+        client.Dispose();
         File.Delete(path);
         yield return null;
     }
@@ -161,6 +162,18 @@ public class BuilderMapDownload : MonoBehaviour
             }));
         }
 
+        if (BuilderAssetDownloader.isPostLoading)
+        {
+            BuilderEventManager.AfterMapDataDownloaded?.Invoke();
+        }
+        else
+        {
+            StartCoroutine(DownloadAssetsData(() =>
+            {
+                LoadAddressableSceneAfterDownload();
+            }));
+        }
+
         GamificationComponentData.instance.previousSkyID = levelData.skyProperties.skyId;
         if (levelData.skyProperties.skyId != -1)
         {
@@ -168,16 +181,16 @@ public class BuilderMapDownload : MonoBehaviour
             if (!skyBoxExist)
             {
                 aiSkyboxItem = levelData.skyProperties.aISkyboxItem;
-                StartCoroutine(AISkyTextureDownload());
+                yield return StartCoroutine(AISkyTextureDownload());
             }
         }
 
         if (!string.IsNullOrEmpty(levelData.terrainProperties.meshDeformationPath))
             yield return StartCoroutine(LoadMeshDeformationFile(levelData.terrainProperties.meshDeformationPath, GetTerrainDeformation));
         if (!string.IsNullOrEmpty(levelData.terrainProperties.texturePath))
-            SetTerrainTexture(levelData.terrainProperties.texturePath);
+            yield return StartCoroutine(SetTerrainTexture(levelData.terrainProperties.texturePath));
         if (!string.IsNullOrEmpty(levelData.terrainProperties.waterTexturePath))
-            SetWaterTexture(levelData.terrainProperties.waterTexturePath);
+            yield return StartCoroutine(SetWaterTexture(levelData.terrainProperties.waterTexturePath));
 
         SetPlaneScaleAndPosition(levelData.terrainProperties.planeScale, levelData.terrainProperties.planePos);
 
@@ -194,18 +207,7 @@ public class BuilderMapDownload : MonoBehaviour
         }
 
         //Debug.LogError("Map is downloaed");
-        if (BuilderAssetDownloader.isPostLoading)
-        {
-            //Debug.LogError("Map is downloaed start post loading");
-            BuilderEventManager.AfterMapDataDownloaded?.Invoke();
-        }
-        else
-        {
-            StartCoroutine(DownloadAssetsData(() =>
-            {
-                LoadAddressableSceneAfterDownload();
-            }));
-        }
+        
     }
 
     public IEnumerator GemificationObjectLoadWait(float waitTime)
@@ -232,22 +234,24 @@ public class BuilderMapDownload : MonoBehaviour
         {
             foreach (string key in GamificationComponentData.instance.multiplayerComponentsName)
             {
-                bool flag = false;
-                AsyncOperationHandle loadOp = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key, ref flag);
-                if (!flag)
-                {
+                AsyncOperationHandle loadOp;
+                //bool flag = false;
+                //AsyncOperationHandle loadOp = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key, ref flag);
+                //if (!flag)
+                //{
                     if (key != "Hiragino-Sans")
                         loadOp = Addressables.LoadAssetAsync<GameObject>(key);
                     else
                         loadOp = Addressables.LoadAssetAsync<TMPro.TMP_FontAsset>(key);
-                }
+                //}
                 while (!loadOp.IsDone)
-                    yield return loadOp;
+                    yield return null;
                 if (loadOp.Status == AsyncOperationStatus.Failed)
                 {
                 }
                 else if (loadOp.Status == AsyncOperationStatus.Succeeded)
                 {
+                    AddressableDownloader.bundleAsyncOperationHandle.Add(loadOp);
                     //Debug.Log("Gamification Loaded" + loadOp.Result);
                     if (key != "Hiragino-Sans")
                     {
@@ -260,7 +264,7 @@ public class BuilderMapDownload : MonoBehaviour
                     else
                         GamificationComponentData.instance.hiraginoFont = loadOp.Result as TMPro.TMP_FontAsset;
 
-                    AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadOp, key);
+                    //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadOp, key);
                 }
             }
         }
@@ -369,6 +373,8 @@ public class BuilderMapDownload : MonoBehaviour
             deformationData = results;
             callback?.Invoke(results);
         }
+
+        www.Dispose();
     }
 
     public void GetTerrainDeformation(byte[] meshDeformation)
@@ -392,14 +398,14 @@ public class BuilderMapDownload : MonoBehaviour
 
 
 
-    void SetTerrainTexture(string textureUrl)
+    IEnumerator SetTerrainTexture(string textureUrl)
     {
         MeshRenderer meshRenderer = terrainPlane.GetComponent<MeshRenderer>();
 
         if (meshRenderer != null)
         {
             //Debug.Log(textureUrl);
-            StartCoroutine(GetTexture(textureUrl, (Texture tex) =>
+            yield return StartCoroutine(GetTexture(textureUrl, (Texture tex) =>
             {
                 meshRenderer.material.SetTexture("_MainTex", tex);
             }));
@@ -407,7 +413,7 @@ public class BuilderMapDownload : MonoBehaviour
 
         if (levelData.terrainProperties.realisticMatIndex != -1)
         {
-            StartCoroutine(SetRealisticTerrain(meshRenderer));
+            yield return StartCoroutine(SetRealisticTerrain(meshRenderer));
         }
     }
 
@@ -454,13 +460,13 @@ public class BuilderMapDownload : MonoBehaviour
         }
     }
 
-    void SetWaterTexture(string textureUrl)
+    IEnumerator SetWaterTexture(string textureUrl)
     {
         MeshRenderer meshRenderer = waterPlane.GetComponent<MeshRenderer>();
 
         if (meshRenderer != null)
         {
-            StartCoroutine(GetTexture(textureUrl, (Texture tex) =>
+            yield return StartCoroutine(GetTexture(textureUrl, (Texture tex) =>
             {
                 meshRenderer.material.SetTexture("_MainTex", tex);
             }));
@@ -498,9 +504,9 @@ public class BuilderMapDownload : MonoBehaviour
 
                 SkyBoxItem skyBoxItem = skyBoxData.skyBoxes.Find(x => x.skyId == skyProperties.skyId);
                 string skyboxMatKey = skyBoxItem.skyName.Replace(" ", "");
-                bool flag = false;
-                loadSkyBox = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(skyboxMatKey, ref flag);
-                if (!flag)
+                //bool flag = false;
+                //loadSkyBox = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(skyboxMatKey, ref flag);
+                //if (!flag)
                     loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
                 while (!loadSkyBox.IsDone)
                 {
@@ -517,7 +523,8 @@ public class BuilderMapDownload : MonoBehaviour
                 else if (loadSkyBox.Status == AsyncOperationStatus.Succeeded)
                 {
                     // //Debug.LogError(" ---------- Success ------------ SKY BOXX");
-                    AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadSkyBox, skyboxMatKey);
+                    //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadSkyBox, skyboxMatKey);
+                    AddressableDownloader.bundleAsyncOperationHandle.Add(loadSkyBox);
                     Material _mat = loadSkyBox.Result as Material;
                     _mat.shader = Shader.Find(skyBoxItem.shaderName);
                     if (_mat.GetTexture("_Tex") == null && skyProperties.skyId == 32)
@@ -545,7 +552,7 @@ public class BuilderMapDownload : MonoBehaviour
                     //Remove texture downloading code
                     yield return StartCoroutine(AISkyTextureDownload());
                 }
-                GamificationComponentData.instance.aiSkyMaterial.mainTexture = skyBoxItem.texture;
+                GamificationComponentData.instance.aiSkyMaterial.mainTexture =skyBoxItem.texture;
                 RenderSettings.skybox = GamificationComponentData.instance.aiSkyMaterial;
                 directionalLight.intensity = skyBoxItem.lightPPData.directionalLightData.lightIntensity;
                 characterLight.intensity = skyBoxItem.lightPPData.directionalLightData.character_directionLightIntensity;
@@ -685,7 +692,7 @@ public class BuilderMapDownload : MonoBehaviour
             BuilderEventManager.CombineMeshes?.Invoke();
         }
 
-        PlayerSetup();
+        //PlayerSetup();
 
         //call for Execute all rpcs of this room
         BuilderEventManager.RPCcallwhenPlayerJoin?.Invoke();
@@ -708,16 +715,17 @@ public class BuilderMapDownload : MonoBehaviour
         capsuleCollider_34.enabled = true;
         capsuleCollider_34.isTrigger = false;
         CharacterController mainPlayerCharacterController = GamificationComponentData.instance.playerControllerNew.GetComponent<CharacterController>();
-        mainPlayerCharacterController.center = Vector3.up * 0.498f;
-        mainPlayerCharacterController.height = 1f;
-        mainPlayerCharacterController.radius = 0.15f;
-        mainPlayerCharacterController.stepOffset = 1f;
+        mainPlayerCharacterController.center = Vector3.up * 0.9f;
+        mainPlayerCharacterController.height = 1.65f;
+        mainPlayerCharacterController.radius = 0.2f;
+        mainPlayerCharacterController.stepOffset = .5f;
         CapsuleCollider mainPlayerCollider = GamificationComponentData.instance.playerControllerNew.GetComponent<CapsuleCollider>();
         mainPlayerCollider.center = Vector3.up * 0.5f;
 
         //CapsuleCollider playerCollider = GamificationComponentData.instance.charcterBodyParts.GetComponent<CapsuleCollider>();
         capsuleCollider_34.height = 1.5f;
-        capsuleCollider_34.center = Vector3.up * (capsuleCollider_34.height / 2);
+        capsuleCollider_34.center = Vector3.up * 0.68f;
+        capsuleCollider_34.radius = .3f;
         CharacterController playerCharacterController = GamificationComponentData.instance.charcterBodyParts.GetComponent<CharacterController>();
         playerCharacterController.height = capsuleCollider_34.height;
         playerCharacterController.center = capsuleCollider_34.center;
@@ -804,9 +812,18 @@ public class BuilderMapDownload : MonoBehaviour
 
     IEnumerator AISkyTextureDownload()
     {
-        var texture = new Texture2D(512, 512, TextureFormat.RGB24, false);
-        var imagineImageRequest = UnityWebRequest.Get(aiSkyboxItem.textureURL);
-        yield return imagineImageRequest.SendWebRequest();
+        string textureURL = aiSkyboxItem.textureURL;
+        if (textureURL.Contains("https://cdn.xana.net/xanaprod/Defaults/"))
+        {
+            textureURL = textureURL.Replace("https://cdn.xana.net/xanaprod/Defaults/", "https://aydvewoyxq.cloudimg.io/" + (APIBasepointManager.instance.IsXanaLive ? "_xanaprod_" : "_apitestxana_") + "/xanaprod/Defaults/");
+            textureURL += "?width=4096&height=2048";
+        }
+        var texture = new Texture2D(256, 128, GamificationComponentData.instance.GetTextureFormat(), false);
+        var imagineImageRequest = UnityWebRequest.Get(textureURL);
+        imagineImageRequest.SendWebRequest();
+
+        while (!imagineImageRequest.isDone)
+            yield return null;
 
         if (imagineImageRequest.result != UnityWebRequest.Result.Success)
         {
@@ -816,6 +833,7 @@ public class BuilderMapDownload : MonoBehaviour
         {
             var image = imagineImageRequest.downloadHandler.data;
             texture.LoadImage(image);
+            texture.Compress(true);
             aiSkyboxItem.texture = texture;
             imagineImageRequest.Dispose();
         }
@@ -824,19 +842,26 @@ public class BuilderMapDownload : MonoBehaviour
     IEnumerator GetTexture(string url, Action<Texture> DownloadedTexture)
     {
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
-        yield return request.SendWebRequest();
+        request.SendWebRequest();
+        while (!request.isDone)
+            yield return null;
         if ((request.result == UnityWebRequest.Result.ConnectionError) || (request.result == UnityWebRequest.Result.ProtocolError))
             Debug.Log(request.error);
         else
         {
             DownloadedTexture(((DownloadHandlerTexture)request.downloadHandler).texture);
         }
+
+        request.Dispose();
     }
 
     void LoadAddressableSceneAfterDownload()
     {
         if (SceneManager.sceneCount > 1 || ConstantsHolder.isFromXANASummit)
+        {
+            Photon.Pun.Demo.PunBasics.MutiplayerController.instance.Connect(ConstantsHolder.xanaConstants.EnviornmentName);
             return;
+        }
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
         //if (ConstantsHolder.xanaConstants.isFromXanaLobby)
         //{

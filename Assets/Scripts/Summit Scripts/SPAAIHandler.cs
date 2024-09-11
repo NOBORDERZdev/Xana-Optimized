@@ -15,7 +15,6 @@ public class SPAAIHandler : MonoBehaviour
 {
     public int AreaID = 0;
     public int AvatarID = 0;
-    public GameObject[] AIAvatarPrefabs;
     public Transform SpawnPoint;
     public GameObject CurrentAIPerformerRef;
     public PerformerAvatarData AvatarData;
@@ -138,7 +137,7 @@ public class SPAAIHandler : MonoBehaviour
     {
         if (!CurrentAIPerformerRef)
         {
-            CurrentAIPerformerRef = Instantiate(AIAvatarPrefabs[_index], SpawnPoint.position, SpawnPoint.localRotation);
+            CurrentAIPerformerRef = Instantiate(GameplayEntityLoader.instance.AIAvatarPrefab[_index], SpawnPoint.position, SpawnPoint.localRotation);
             AssignFtchDataToAIAvtr();
         }
     }

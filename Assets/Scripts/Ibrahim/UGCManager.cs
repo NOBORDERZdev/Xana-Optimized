@@ -16,7 +16,50 @@ public class UGCManager : MonoBehaviour
     public TMP_Text warningText;
     public GameObject warningPanel;
     public static bool isSelfieTaken = false;
+    private byte[] ResizeTexture(byte[] sourceBytes, int targetSize = 768)
+    {
+        // Create a temporary texture and load the bytes
+        Texture2D sourceTexture = new Texture2D(2, 2);
+        sourceTexture.LoadImage(sourceBytes);
 
+        // Calculate new dimensions
+        int width, height;
+        if (sourceTexture.width > sourceTexture.height)
+        {
+            width = targetSize;
+            height = (int)((float)sourceTexture.height / sourceTexture.width * targetSize);
+        }
+        else
+        {
+            height = targetSize;
+            width = (int)((float)sourceTexture.width / sourceTexture.height * targetSize);
+        }
+
+        // Create a new texture for the resized image
+        Texture2D resizedTexture = new Texture2D(targetSize, targetSize, TextureFormat.RGBA32, false);
+
+        // Create a temporary RenderTexture for scaling
+        RenderTexture rt = RenderTexture.GetTemporary(width, height, 24);
+        RenderTexture.active = rt;
+
+        // Copy and scale the source texture to the RenderTexture
+        Graphics.Blit(sourceTexture, rt);
+
+        // Read the RenderTexture into the resized texture
+        resizedTexture.ReadPixels(new Rect(0, 0, width, height), (targetSize - width) / 2, (targetSize - height) / 2);
+        resizedTexture.Apply();
+
+        // Clean up
+        RenderTexture.active = null;
+        RenderTexture.ReleaseTemporary(rt);
+        Destroy(sourceTexture);
+
+        // Convert the resized texture to PNG bytes
+        byte[] resizedBytes = resizedTexture.EncodeToPNG();
+        Destroy(resizedTexture);
+
+        return resizedBytes;
+    }
     public void OnClickSaveSelfieButton()
     {
         InventoryManager.instance.loaderPanel.SetActive(true);
@@ -24,7 +67,8 @@ public class UGCManager : MonoBehaviour
         if (texture != null)
         {
             // Encode texture to PNG format
-            byte[] imageBytes = texture.EncodeToPNG();
+            byte[] imageBytes = texture.EncodeToJPG();
+            imageBytes=ResizeTexture(imageBytes);
             StartCoroutine(IERequest(imageBytes));
         }
     }
@@ -146,7 +190,7 @@ public class UGCManager : MonoBehaviour
 
     public IEnumerator IERequest(byte[] imageBytes)
     {
-        float requestTimeout = 180f; // Timeout value in seconds (3 minutes)
+        float requestTimeout = 300f; // Timeout value in seconds (5 minutes)
         float timer = 0f;
         // Create a form with 'multipart/form-data' encoding
         WWWForm form = new WWWForm();

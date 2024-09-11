@@ -150,6 +150,9 @@ public class RaffleTicketHandler : MonoBehaviour
     }
     private void TransferDatatoMainDomeList()
     {
+        if (_summitDomesVisitedByUser.domeVisits == null || _summitDomesVisitedByUser.domeVisits.Count == 0)
+            return;
+
         foreach (var item in _summitDomesVisitedByUser.domeVisits)
         {
             _allVisitedDomeIds.Add(item.domeId);
@@ -165,33 +168,42 @@ public class RaffleTicketHandler : MonoBehaviour
     }
     private void CheckForAnyRaffleticketGifts(int RaffleTickets)
     {
-        if (RaffleTickets % 5 == 0)
-        {
-            _earnTicketsInOneCycle += 4;
-            _totalNumberOfTickets += _earnTicketsInOneCycle;
-            _earnTicketsInOneCycle = 0;
-            StartCoroutine(RewardPopUp("You have earned 5 tickets for visiting 5 unique domes", "05", true, 5f));
-        }
+
         if (_totalNumberOfDomes == _allVisitedDomeIds.Count)
         {
             _earnTicketsInOneCycle += 50;
             _totalNumberOfTickets += _earnTicketsInOneCycle;
-            StartCoroutine(RewardPopUp("You've been awarded 50 raffle tickets for completing each summit dome visit", "50", false, 8f));
+            StartCoroutine(RewardPopUp("You have received your gift!", "50", 8f));
             _earnTicketsInOneCycle = 0;
         }
-        UpdateUI();
-    }
-    IEnumerator RewardPopUp(string value, string number, bool _val, float time)
-    {
-        yield return new WaitForSeconds(time);
-
-        if (_val)
+        else if (RaffleTickets % 5 == 0)
         {
-            StartCoroutine(SaveUpdatedTicketsCount(5));
+            _earnTicketsInOneCycle += 4;
+            _totalNumberOfTickets += _earnTicketsInOneCycle;
+            _earnTicketsInOneCycle = 0;
+            StartCoroutine(RewardPopUp("You have received your gift!", "05", 5f));
         }
         else
         {
-            StartCoroutine(SaveUpdatedTicketsCount(50));
+            StartCoroutine(RewardPopUp("You have received your gift!", "01", 5f));
+        }
+        UpdateUI();
+    }
+    IEnumerator RewardPopUp(string value, string number,float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        switch (number)
+        {
+            case "01":
+                StartCoroutine(SaveUpdatedTicketsCount(1));
+                break;
+            case "05":
+                StartCoroutine(SaveUpdatedTicketsCount(5));
+                break;
+            case "50":
+                StartCoroutine(SaveUpdatedTicketsCount(50));
+                break;
         }
         _giftTicketsPopUpDescriptionTextPotrait.text = value;
         _giftTicketsPopUpDescriptionTextLandScape.text = value;

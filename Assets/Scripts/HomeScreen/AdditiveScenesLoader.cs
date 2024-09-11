@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class AdditiveScenesLoader : MonoBehaviour
 {
+    //public bool SwitchXanaToXSummit=false;
     public float sceneDelay;
     string sceneTest= "LoginSignupScene";
+    string sceneTest1= "XSummitLoginSignupScene";
     string sceneTest2= "InventoryScene";
     string sceneTest3= "SNSFeedModuleScene";
     string sceneTest4= "SNSMessageModuleScene";
@@ -52,10 +54,19 @@ public class AdditiveScenesLoader : MonoBehaviour
     IEnumerator AddDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        SceneManager.LoadSceneAsync(sceneTest, LoadSceneMode.Additive);
-    }
+        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+           
+            SceneManager.LoadSceneAsync(sceneTest, LoadSceneMode.Additive);
 
-    IEnumerator AddDelaySNSFeedModule(float delay)
+        }
+        else
+        {
+           
+            SceneManager.LoadSceneAsync(sceneTest1, LoadSceneMode.Additive);
+        }
+    }
+        IEnumerator AddDelaySNSFeedModule(float delay)
     {
         yield return new WaitForSeconds(delay);
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneTest3, LoadSceneMode.Additive);
@@ -77,7 +88,7 @@ public class AdditiveScenesLoader : MonoBehaviour
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.App_Started.ToString());
         }
         GameManager.Instance.isAllSceneLoaded = true;
-        MainSceneEventHandler.MemoryRelaseAfterLoading?.Invoke();
+        //MainSceneEventHandler.MemoryRelaseAfterLoading?.Invoke();
     }
     //IEnumerator AddDelaySNSMessageModule(float delay)
     //{

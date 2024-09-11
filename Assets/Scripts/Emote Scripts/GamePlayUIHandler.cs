@@ -40,6 +40,9 @@ public class GamePlayUIHandler : MonoBehaviour
 
     public GameObject jumpBtn;
 
+    //Summit related UI References
+    public EmailEntryUIController SummitCXOEmailAuthUIHandle;
+
     public GameObject JJPortalPopup;
     public GameObject currentPortalObject;
     public TextMeshProUGUI JJPortalPopupText;
@@ -158,7 +161,6 @@ public class GamePlayUIHandler : MonoBehaviour
 
     public void OnOpenAnimationPanel()
     {
-        ;
         ref_LoadEmoteAnimations.OpenAnimationSelectionPanel();
         Debug.Log("call hua times 3===" + GamePlayButtonEvents.inst.selectionPanelOpen);
         GamePlayButtonEvents.inst.selectionPanelOpen = true;
@@ -171,11 +173,11 @@ public class GamePlayUIHandler : MonoBehaviour
 
         EmoteAnimationHandler.Instance.isEmoteActive = false;      // AH working
 
-        if (stopCurrentPlayingAnim)                            // AH working
+        if (ActionManager.IsAnimRunning)                            // AH working
         {
+            ActionManager.StopActionAnimation?.Invoke();
 
-            stopCurrentPlayingAnim = false;
-            EmoteAnimationHandler.Instance.StopAnimation();
+            // EmoteAnimationHandler.Instance.StopAnimation();
         }
 
         ref_LoadEmoteAnimations.CloseAnimationSelectionPanel();

@@ -1,4 +1,5 @@
 using Photon.Pun.Demo.PunBasics;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,7 +50,7 @@ public class SectorManager : MonoBehaviour
             StopCoroutine(routine);
         }
         
-       routine= StartCoroutine(WaitBeforeHandover(Name));
+       routine = StartCoroutine(WaitBeforeHandover(Name));
 
 
     }
@@ -57,14 +58,26 @@ public class SectorManager : MonoBehaviour
     public IEnumerator WaitBeforeHandover(string Name)
     {
         if(ConstantsHolder.DiasableMultiPartPhoton) {   yield break;    }
-        while (ConstantsHolder.TempDiasableMultiPartPhoton==true)
-        {
-            yield return new WaitForSeconds(2);
-        }
+        Debug.Log("Sectror trigger status  " + ConstantsHolder.TempDiasableMultiPartPhoton + "  shifting " + MutiplayerController.instance.isShifting);
+        yield return new WaitUntil(() => (!ConstantsHolder.TempDiasableMultiPartPhoton && !MutiplayerController.instance.isShifting));
+       
 
-        yield return new WaitForSeconds(1);
 
         MutiplayerController.instance.Ontriggered(Name);
     }
 
+
+    public void UpdateMultisector()
+    {
+        if (ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit")
+        {
+            ConstantsHolder.MultiSectionPhoton = true;
+        }
+        else
+        {
+            ConstantsHolder.MultiSectionPhoton = false;
+            ConstantsHolder.DiasableMultiPartPhoton = false;
+            ConstantsHolder.TempDiasableMultiPartPhoton = false;
+        }
+    }
 }

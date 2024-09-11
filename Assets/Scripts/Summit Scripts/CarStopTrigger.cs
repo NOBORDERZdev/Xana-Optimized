@@ -13,34 +13,33 @@ public class CarStopTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
         if(other.gameObject.tag == "PhotonLocalPlayer")
         {
-            Debug.LogError("Trigger Entered...1");
             var summitrpc = other.gameObject.GetComponent<SummitPlayerRPC>();
             if (summitrpc.isInsideCAr)
             {
-                Debug.LogError("Trigger Entered...2");
                 summitrpc.checkforExit();
                 return;
             }
             
-
-           Players.Add(other.gameObject);
+           if(! Players.Contains(other.gameObject) )
+            Players.Add(other.gameObject);
             StopCar = true;
-            XANASummitSceneLoading.OnJoinSubItem?.Invoke(false);
+          
         }
 
-        if(other.gameObject.tag == "CAR"&& StopCar &&(other.GetComponent<SplineFollower>().driverseatempty|| other.GetComponent<SplineFollower>().pasengerseatemty) )
+        if(other.gameObject.tag == "CAR"&& StopCar &&(other.GetComponent<SplineFollower>().DriverSeatEmpty|| other.GetComponent<SplineFollower>().PasengerSeatEmty) )
         {
             
-            CarNavigationManager.instance.StopCar(other.gameObject);
+            CarNavigationManager.CarNavigationInstance.StopCar(other.gameObject);
             if (PhotonNetwork.IsMasterClient)
-            {foreach (var player in Players)
+            {
+                foreach (var player in Players)
                 {
                     if (player != null)
                     {
-                        StartCoroutine(CarNavigationManager.instance.TPlayer(other.gameObject, player, this));
+                        StartCoroutine(CarNavigationManager.CarNavigationInstance.TPlayer(other.gameObject, player, this));
+                        break;
                     }
                 }
             }
@@ -51,7 +50,6 @@ public class CarStopTrigger : MonoBehaviour
 
     public void Pop()
     {
-        Debug.Log("Pop Player from waiting"); 
         Players.RemoveAt(0);
         if (Players.Count == 0)
             StopCar = false;

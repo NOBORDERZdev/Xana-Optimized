@@ -6,9 +6,13 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class SummitAIChatHandler : XanaChatSystem
+public class SummitAIChatHandler : MonoBehaviour
 {
     [Header("Base Class variables ↑")]
+
+    public XanaChatSystem LandscapeChatRef;
+    public XanaChatSystem PortraitChatRef;
+    private XanaChatSystem _CommonChatRef;
 
     [Header("This Class variables")]
     public XANASummitDataContainer XANASummitDataContainer;
@@ -17,20 +21,33 @@ public class SummitAIChatHandler : XanaChatSystem
 
     private string npcName;
     private string npcURL;
+    private bool _NPCInstantiated;
 
     private void OnEnable()
     {
+        _CommonChatRef = LandscapeChatRef;
         BuilderEventManager.AINPCActivated += LoadAIChat;
         BuilderEventManager.AINPCDeactivated += RemoveAIChat;
         BuilderEventManager.AfterPlayerInstantiated += LoadNPC;
-        GamePlayButtonEvents.OnExitButtonXANASummit += ResetOnExit;
+        BuilderEventManager.ResetSummit += ResetOnExit;
+        ScreenOrientationManager.switchOrientation += UpdateChatInstance;
     }
     private void OnDisable()
     {
         BuilderEventManager.AINPCActivated -= LoadAIChat;
         BuilderEventManager.AINPCDeactivated -= RemoveAIChat;
         BuilderEventManager.AfterPlayerInstantiated -= LoadNPC;
-        GamePlayButtonEvents.OnExitButtonXANASummit -= ResetOnExit;
+        BuilderEventManager.ResetSummit -= ResetOnExit;
+        ScreenOrientationManager.switchOrientation -= UpdateChatInstance;
+    }
+
+    void UpdateChatInstance(bool IsPortrait)
+    {
+        if(IsPortrait)
+            _CommonChatRef = PortraitChatRef;
+        else
+            _CommonChatRef = PortraitChatRef;
+
     }
 
     private void Start()
@@ -40,8 +57,11 @@ public class SummitAIChatHandler : XanaChatSystem
 
     void LoadNPC()
     {
-        if (ConstantsHolder.isFromXANASummit)
+        if (ConstantsHolder.isFromXANASummit && !_NPCInstantiated)
+        {
+            _NPCInstantiated = true;
             GetNPCDATA(ConstantsHolder.domeId);
+        }
     }
 
     async void GetNPCDATA(int domeId)
@@ -67,6 +87,7 @@ public class SummitAIChatHandler : XanaChatSystem
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().npcName.text = XANASummitDataContainer.aiData.npcData[i].name;
             int avatarPresetId= XANASummitDataContainer.aiData.npcData[i].avatarId;
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().json = XANASummitDataContainer.avatarJson[avatarPresetId-1];
+            AINPCAvatar.GetComponent<SummitNPCAssetLoader>().Init();
             AINPCAvatar.GetComponent<AINPCTrigger>().npcID = XANASummitDataContainer.aiData.npcData[i].id;
         }
     }
@@ -90,59 +111,59 @@ public class SummitAIChatHandler : XanaChatSystem
         ClearOldMessages();
         OpenChatBox();
         foreach (string msg in welcomeMsgs)
-            DisplayMsg_FromSocket(npcName, msg);
+            _CommonChatRef.DisplayMsg_FromSocket(npcName, msg);
     }
 
     void RemoveAIChat(int npcId)
     {
         ClearOldMessages();
         RemoveAIListenerFromChatField();
-        LoadOldChat();
+        _CommonChatRef.LoadOldChat();
     }
 
     void ClearOldMessages()
     {
-        CurrentChannelText.text = string.Empty;
-        PotriatCurrentChannelText.text = string.Empty;
+        _CommonChatRef.CurrentChannelText.text = string.Empty;
+        _CommonChatRef.PotriatCurrentChannelText.text = string.Empty;
     }
 
     void ClearInputField()
     {
-        InputFieldChat.text = "";
+        _CommonChatRef.InputFieldChat.text = "";
     }
 
     void OpenChatBox()
     {
-        chatDialogBox.SetActive(true);
-        chatNotificationIcon.SetActive(false);
-        chatButton.GetComponent<Image>().enabled = true;
+        _CommonChatRef.chatDialogBox.SetActive(true);
+        _CommonChatRef.chatNotificationIcon.SetActive(false);
+        _CommonChatRef.chatButton.GetComponent<Image>().enabled = true;
     }
 
     void CloseChatBox()
     {
-        chatDialogBox.SetActive(false);
-        chatNotificationIcon.SetActive(false);
-        chatButton.GetComponent<Image>().enabled = false;
+        _CommonChatRef.chatDialogBox.SetActive(false);
+        _CommonChatRef.chatNotificationIcon.SetActive(false);
+        _CommonChatRef.chatButton.GetComponent<Image>().enabled = false;
     }
 
 
     void AddAIListenerOnChatField()
     {
-        InputFieldChat.onSubmit.RemoveAllListeners();
-        InputFieldChat.onSubmit.AddListener(SendMessageFromAI);
+        _CommonChatRef.InputFieldChat.onSubmit.RemoveAllListeners();
+        _CommonChatRef.InputFieldChat.onSubmit.AddListener(SendMessageFromAI);
     }
 
     void RemoveAIListenerFromChatField()
     {
-        InputFieldChat.onSubmit.RemoveAllListeners();
-        InputFieldChat.onSubmit.AddListener(OnEnterSend);
+        _CommonChatRef.InputFieldChat.onSubmit.RemoveAllListeners();
+        _CommonChatRef.InputFieldChat.onSubmit.AddListener(_CommonChatRef.OnEnterSend);
     }
 
     async void SendMessageFromAI(string s)
     {
-        DisplayMsg_FromSocket(ConstantsHolder.userName, InputFieldChat.text);
+        _CommonChatRef.DisplayMsg_FromSocket(ConstantsHolder.userName, _CommonChatRef.InputFieldChat.text);
 
-        string url = npcURL + "&usr_id="+ConstantsHolder.userId + "&input_string=" + InputFieldChat.text;
+        string url = npcURL + "&usr_id="+ConstantsHolder.userId + "&input_string=" + _CommonChatRef.InputFieldChat.text;
 
         ClearInputField();
 
@@ -154,7 +175,7 @@ public class SummitAIChatHandler : XanaChatSystem
 
         string res = JsonUtility.FromJson<AIResponse>(response).data;
 
-        DisplayMsg_FromSocket(npcName, res);
+        _CommonChatRef.DisplayMsg_FromSocket(npcName, res);
     }
 
     async Task<string> GetAIResponse(string url)
@@ -189,6 +210,7 @@ public class SummitAIChatHandler : XanaChatSystem
         }
 
         aiNPC.Clear();
+        _NPCInstantiated = false;
     }
 
 

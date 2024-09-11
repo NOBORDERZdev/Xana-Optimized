@@ -494,6 +494,7 @@ GameObject:
   m_Component:
   - component: {fileID: 76253048478804356}
   - component: {fileID: 6336225385623286782}
+  - component: {fileID: 5973165885814086734}
   m_Layer: 22
   m_Name: XanaAvatar2.0_Female
   m_TagString: Untagged
@@ -542,6 +543,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &5973165885814086734
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740058267462333246}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 1.5, z: 0.5}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &781625584759625085
 GameObject:
   m_ObjectHideFlags: 0
@@ -3959,7 +3973,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5507173864533548447}
   - component: {fileID: 6234924633825439289}
-  - component: {fileID: 1835877247679848373}
   - component: {fileID: 4914183792923319717}
   - component: {fileID: 363187588729219715}
   - component: {fileID: 6695394099681832824}
@@ -4013,19 +4026,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!65 &1835877247679848373
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5958298307327268428}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 1.5, z: 0.5}
-  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!54 &4914183792923319717
 Rigidbody:
   m_ObjectHideFlags: 0

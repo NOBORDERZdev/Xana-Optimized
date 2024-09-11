@@ -71,7 +71,7 @@ public class ButtonScript : MonoBehaviour
         // Items which are not downloaded stop them to download
         // because new category is opened
         inventoryManager.StopAllCoroutines();
-        inventoryManager.eyeBrowTapButton.SetActive(false);
+        //inventoryManager.eyeBrowTapButton.SetActive(false);
 
         // InventoryManager.instance.DeletePreviousItems();            // AR changes
         
@@ -87,7 +87,7 @@ public class ButtonScript : MonoBehaviour
         ConstantsHolder.xanaConstants.currentButtonIndex = Index;
         inventoryManager.UpdateXanaConstants();
         inventoryManager.DisableColorPanels();
-        ResetSelectedItems();
+        //ResetSelectedItems();
 
 
         if (Index == 7 && inventoryManager.panelIndex == 1)
@@ -111,22 +111,26 @@ public class ButtonScript : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             var data = StoreUndoRedo.obj.data[i];
-            var avatarBtn = data.actionObject.GetComponent<AvatarBtn>();
-            var presetBtn = data.actionObject.GetComponent<PresetData_Jsons>();
-            var image = data.actionObject.GetComponent<Image>();
+            if (data.actionObject)
+            {
+                var avatarBtn = data.actionObject.GetComponent<AvatarBtn>();
+                var presetBtn = data.actionObject.GetComponent<PresetData_Jsons>();
+                var image = data.actionObject.GetComponent<Image>();
 
-            if (presetBtn != null)
-            {
-                presetBtn.transform.GetChild(0).GetComponent<Image>().enabled = false;
+                if (presetBtn != null)
+                {
+                    presetBtn.transform.GetChild(0).GetComponent<Image>().enabled = false;
+                }
+                else if (avatarBtn != null && image != null)
+                {
+                    image.color = new Color(1, 1, 1, 0);
+                }
+                else if (!data.methodName.Equals("BtnClicked") && image != null)
+                {
+                    image.enabled = false;
+                }
             }
-            else if (avatarBtn != null && image != null)
-            {
-                image.color = new Color(1, 1, 1, 0);
-            }
-            else if (!data.methodName.Equals("BtnClicked") && image != null)
-            {
-                image.enabled = false;
-            }
+           
         }
     }
     private void ButtonPressed()

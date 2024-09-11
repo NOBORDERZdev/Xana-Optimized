@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-
-
     public delegate void CameraChangeDelegate(Camera camera);
     public static event CameraChangeDelegate CameraChangeDelegateEvent;
 
@@ -29,16 +27,20 @@ public class PlayerController : MonoBehaviour
     private float gravityValue = -9.81f;
 
     public float JumpVelocity = 3;
+    
+    public float YourDownhillThreshold = 30f; // Adjust slope Threshold 
+    public float CurrentSlope = 0f;
+    private readonly float _rayOffsett = 0.5f;
+
     //[SerializeField]
     public float jumpHeight = 1.0f;
-
     public Transform cameraTransform = null;
     //public Transform cameraCharacterTransform = null;
     //public GameObject cmVcam;
 
-    public bool sprint, _IsGrounded, jumpNow, sprint_Button, IsJumping;
+    public bool sprint, _IsGrounded, jumpNow, sprint_Button, IsJumping,DebugColloision;
 
-    private CharacterController characterController = null;
+    internal CharacterController characterController = null;
 
     public Animator animator = null;
 
@@ -100,11 +102,11 @@ public class PlayerController : MonoBehaviour
     float jumpMultiplier = 1;
     #endregion
     [SerializeField]
-    CinemachineFreeLook cinemachineFreeLook;
+    internal CinemachineFreeLook cinemachineFreeLook;
     float topRigDefaultRadius;
 
     internal float animationBlendValue = 0;
-
+    internal Vector3 desiredMoveDirection;
     private void OnEnable()
     {
         BuilderEventManager.OnHideOpenSword += HideorOpenSword;
@@ -115,6 +117,7 @@ public class PlayerController : MonoBehaviour
 
         //Update jump height according to builder
         BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
+        BuilderEventManager.AfterPlayerInstantiated += RemoveLayerFromCameraCollider;
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate += SpecialItemPlayerPropertiesUpdate;
     }
     private void OnDisable()
@@ -127,6 +130,7 @@ public class PlayerController : MonoBehaviour
 
         //Update jump height according to builder
         BuilderEventManager.ApplyPlayerProperties -= PlayerJumpUpdate;
+        BuilderEventManager.AfterPlayerInstantiated -= RemoveLayerFromCameraCollider;
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate -= SpecialItemPlayerPropertiesUpdate;
 
     }
@@ -153,6 +157,7 @@ public class PlayerController : MonoBehaviour
         innerJoystick.gameObject.AddComponent<JoyStickIssue>();
         innerJoystick_Portrait.gameObject.AddComponent<JoyStickIssue>();
 
+
         if (GamePlayButtonEvents.inst != null)
         {
             GamePlayButtonEvents.inst.OnSwitchCamera += SwitchCameraButton;
@@ -166,21 +171,34 @@ public class PlayerController : MonoBehaviour
         ////Update jump height according to builder
         //BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
 
+        RemoveLayerFromCameraCollider();
+
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (DebugColloision)
+        {
+            Debug.LogError("Colloided    " + collision.gameObject.name);
+        }
+    }
+
+    private void RemoveLayerFromCameraCollider()
+    {
         if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
             CinemachineCollider cinemachineCollider = GameplayEntityLoader.instance.PlayerCamera.GetComponent<CinemachineCollider>();
             if (cinemachineCollider != null)
             {
-                int layerIndex = LayerMask.NameToLayer("NoPostProcessing");
+                int noPostProcessingLayerIndex = LayerMask.NameToLayer("NoPostProcessing");
+                int characterLayerIndex = LayerMask.NameToLayer("Character");
                 // Remove the layer from the collide against mask
-                cinemachineCollider.m_CollideAgainst &= ~(1 << layerIndex);
+                cinemachineCollider.m_CollideAgainst &= ~(1 << noPostProcessingLayerIndex);
+                cinemachineCollider.m_CollideAgainst &= ~(1 << characterLayerIndex);
             }
             cinemachineFreeLook = GameplayEntityLoader.instance.PlayerCamera.GetComponent<CinemachineFreeLook>();
             topRigDefaultRadius = cinemachineFreeLook.m_Orbits[0].m_Radius;
         }
-
     }
-
 
     public void OnDestroy()
     {
@@ -416,40 +434,67 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+    public bool IsGoingDownhill()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, characterController.height / 2f + _rayOffsett))
+        {
+            CurrentSlope = Vector3.Angle(Vector3.up, hit.normal);
+            return CurrentSlope >= 0 && CurrentSlope < YourDownhillThreshold;
+        }
+        else
+        {
+            // Character is not on ground, assume not downhill
+            return false;
+        }
+    }
+
 
     private void Update()
     {
         if (animator == null)
             return;
+        //IsGoingDownhill();
+        //if (IsGrounded() && !IsJumping)
+        //{
+        //    gravityVector.y = gravityValue * Time.deltaTime;
+        //    animator.SetBool("IsFalling", false);
+        //}
+        //else if (!IsGrounded() && characterController.velocity.y < -1)
+        //    animator.SetBool("IsFalling", true);
+
 
         if (characterController.isGrounded && !IsJumping)
         {
             gravityVector.y = gravityValue * Time.deltaTime;
             animator.SetBool("IsFalling", false);
         }
-        else if (!characterController.isGrounded && characterController.velocity.y < -1)
+        else if (!IsGoingDownhill())
             animator.SetBool("IsFalling", true);
+
+
 
         if (m_IsMovementActive)
         {
             if (isFirstPerson && !m_FreeFloatCam)
             {
-                if (EmoteAnimationHandler.Instance.isAnimRunning && isJoystickDragging)
+                if (ActionManager.IsAnimRunning && isJoystickDragging)
                 {
-                    EmoteAnimationHandler.Instance.StopAnimation();
-                    EmoteAnimationHandler.Instance.StopAllCoroutines();
+                    ActionManager.StopActionAnimation?.Invoke();
+                    // EmoteAnimationHandler.Instance.StopAnimation();
+                    //  EmoteAnimationHandler.Instance.StopAllCoroutines();
                 }
                 FirstPersonCameraMove(); // FOR FIRST PERSON MOVEMENT XX
             }
             if (!isFirstPerson && !m_FreeFloatCam)
             {
-                if (EmoteAnimationHandler.Instance.isAnimRunning && isJoystickDragging)
+                if (ActionManager.IsAnimRunning && isJoystickDragging)
                 {
                     if (ReferencesForGamePlay.instance.moveWhileDanceCheck == 0)
                     {
-                        EmoteAnimationHandler.Instance.StopAnimation();
-                        EmoteAnimationHandler.Instance.StopAllCoroutines();
+                        ActionManager.StopActionAnimation?.Invoke();
+                        //  EmoteAnimationHandler.Instance.StopAnimation();
+                        //  EmoteAnimationHandler.Instance.StopAllCoroutines();
                     }
                 }
                 Move();
@@ -901,7 +946,9 @@ public class PlayerController : MonoBehaviour
         //    forward.Normalize();
         //    right.Normalize();
 
-        Vector3 desiredMoveDirection = (forward * movementInput.y + right * movementInput.x).normalized;
+        //Vector3 desiredMoveDirection = (forward * movementInput.y + right * movementInput.x).normalized;
+        desiredMoveDirection = (forward * movementInput.y + right * movementInput.x).normalized;
+
         //Debug.Log("call hua for===="+ jumpNow + characterController.isGrounded + allowJump + Input.GetKeyDown(KeyCode.Space));
         //Debug.Log("MovmentInput:" + movementInput + "  :DesiredMoveDirection:" + desiredMoveDirection);
         if ((animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Animation")) && (((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && characterController.isGrounded && !animator.IsInTransition(0))/* || (characterController.isGrounded && jumpNow && allowJump)*/))
@@ -1232,12 +1279,25 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (EmoteAnimationHandler.Instance.isAnimRunning)
+        if (ActionManager.IsAnimRunning)
         {
-            EmoteAnimationHandler.Instance.StopAnimation();
-            EmoteAnimationHandler.Instance.StopAllCoroutines();
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            //  EmoteAnimationHandler.Instance.StopAllCoroutines();
         }
 
+    }
+
+    public void StopAnimationEmote()
+    {
+        if (ActionManager.IsAnimRunning)
+        {
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            //  EmoteAnimationHandler.Instance.StopAllCoroutines();
+        }
     }
 
     public void JumpNotAllowed()
@@ -1338,10 +1398,12 @@ public class PlayerController : MonoBehaviour
         }
         Invoke(nameof(UpdateVelocity), .1f);
 
-        if (EmoteAnimationHandler.Instance.isAnimRunning)
+        if (ActionManager.IsAnimRunning)
         {
-            EmoteAnimationHandler.Instance.StopAnimation();
-            EmoteAnimationHandler.Instance.StopAllCoroutines();
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            // EmoteAnimationHandler.Instance.StopAllCoroutines();
         }
     }
 
@@ -1708,8 +1770,8 @@ public class PlayerController : MonoBehaviour
             animator.CrossFade("Withdrawing", 0.2f);
             yield return new WaitForSecondsRealtime(1.3f);
             swordModel.transform.SetParent(swordHook, false);
-            swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
-            swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
+            swordModel.transform.localPosition = new Vector3(-0.17f, 0.06f, 0.03f);
+            swordModel.transform.localRotation = new Quaternion(0.89543f, -0.21528f, 0.28035f, -0.27066f);
             isMovementAllowed = true;
         }
     }
@@ -1760,8 +1822,8 @@ public class PlayerController : MonoBehaviour
         if (swordModel && time != 0)
         {
             swordModel.transform.SetParent(swordHook, false);
-            swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
-            swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
+            swordModel.transform.localPosition = new Vector3(-0.17f, 0.06f, 0.03f);
+            swordModel.transform.localRotation = new Quaternion(0.89543f, -0.21528f, 0.28035f, -0.27066f);
             //swordModel.SetActive(true);
         }
         yield return new WaitForSeconds(time);
@@ -1779,7 +1841,7 @@ public class PlayerController : MonoBehaviour
         //Ninja_Throw(false);
         isDrawSword = false;
         JumpVelocity = GamificationComponentData.instance.MapValue(jumpMultiplier,
-                Constants.minPlayerUISpeed, Constants.maxPlayerUISpeed, Constants.minPlayerSprintSpeed, Constants.maxPlayerSprintSpeed);
+                Constants.minPlayerUIJump, Constants.maxPlayerUIJump, Constants.minPlayerJumpHeight, Constants.maxPlayerJumpHeight);
         sprintSpeed = GamificationComponentData.instance.MapValue(speedMultiplier,
                 Constants.minPlayerUISpeed, Constants.maxPlayerUISpeed, Constants.minPlayerSprintSpeed, Constants.maxPlayerSprintSpeed);
         BuilderEventManager.DisableAnimationsButtons?.Invoke(true);

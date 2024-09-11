@@ -156,6 +156,17 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         return (oldValue - oldMin) * (newMax - newMin) / (oldMax - oldMin) + newMin;
     }
 
+    public TextureFormat GetTextureFormat()
+    {
+#if UNITY_ANDROID || UNITY_IOS
+        return TextureFormat.ASTC_8x8;
+#elif UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
+        return TextureFormat.ETC2_RGBA8Crunched;
+#elif UNITY_WEBGL
+        return TextureFormat.ETC2_RGBA8Crunched;
+#endif
+    }
+
     #region OrientationChange
     void OrientationChange(bool orientation)
     {
@@ -228,10 +239,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
                     if (startKey == data2.warpPortalEndKeyValue && startKey != "")
                     {
                         Vector3 endPoint = warpFunctionComponent2.transform.position;
-                        endPoint.y += warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
+                        endPoint.y += warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y;
                         UpdateEndPortalLocations(data1.warpPortalDataEndPoint, startKey, endPoint);
                         Vector3 startPoint = warpFunctionComponent1.transform.position;
-                        startPoint.y += warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
+                        startPoint.y += warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y;
                         UpdateStartPortalLocations(data2.warpPortalDataStartPoint, startKey, startPoint);
                     }
                 }
@@ -241,10 +252,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
                     if (endKey == data2.warpPortalStartKeyValue && endKey != "")
                     {
                         Vector3 endPoint = warpFunctionComponent1.transform.position;
-                        endPoint.y += warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
+                        endPoint.y += warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y;
                         UpdateEndPortalLocations(data2.warpPortalDataEndPoint, endKey, endPoint);
                         Vector3 startPoint = warpFunctionComponent2.transform.position;
-                        startPoint.y += warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
+                        startPoint.y += warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y;
                         UpdateStartPortalLocations(data1.warpPortalDataStartPoint, endKey, startPoint);
                     }
                 }

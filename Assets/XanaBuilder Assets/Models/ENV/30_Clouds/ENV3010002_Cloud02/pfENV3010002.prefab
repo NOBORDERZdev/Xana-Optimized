@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3691ec6b6bb2d049bae4c5341852077, type: 2}
+  - {fileID: 2100000, guid: 785c1193cccffd24989724c1591090ce, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -181,7 +181,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3334969170530137463}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -324,8 +324,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2216242548424763011}
-  - component: {fileID: 5758388624000405418}
-  - component: {fileID: 3424155749272134158}
+  - component: {fileID: 8546433457480089726}
   m_Layer: 9
   m_Name: Colliders
   m_TagString: Item
@@ -348,8 +347,8 @@ Transform:
   m_Father: {fileID: 2667222133308108749}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5758388624000405418
-BoxCollider:
+--- !u!64 &8546433457480089726
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -358,19 +357,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.3266215, y: 1.2166569, z: 0.89393103}
-  m_Center: {x: -0.22353244, y: 0.60832846, z: 0.000000029802322}
---- !u!65 &3424155749272134158
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3354454904947767868}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.9619238, y: 0.3460579, z: 0.3524457}
-  m_Center: {x: 0, y: 0.17302895, z: 0.0032619685}
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 347645792772356571, guid: 513484d6e6956d04ea3f77cc715e30f4, type: 3}

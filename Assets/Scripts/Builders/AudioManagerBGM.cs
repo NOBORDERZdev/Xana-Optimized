@@ -69,6 +69,8 @@ public class AudioManagerBGM : MonoBehaviour
                 audioSource.volume = audioPropertiesBGM.dataAudioBGM.audioVolume;
                 isDownloaded = true;
             }
+
+            www.Dispose();
         }
     }
 

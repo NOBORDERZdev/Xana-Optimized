@@ -29,6 +29,7 @@ public class AddForceComponent : ItemComponent
         _rigidBody = GetComponent<Rigidbody>();
         _rigidBody.isKinematic = true;
         _rigidBody.useGravity = true;
+        _rigidBody.collisionDetectionMode = CollisionDetectionMode.Continuous;
         this._addForceComponentData = addForceComponentData;
         _isActivated = addForceComponentData.isActive;
 
@@ -93,7 +94,8 @@ public class AddForceComponent : ItemComponent
         _rigidBody.isKinematic = true;
         if (_rigidBodyPlayer)
             _rigidBodyPlayer.isKinematic = true;
-        _characterControllerNew.enabled = true;
+        if (_characterControllerNew)
+            _characterControllerNew.enabled = true;
         //RemoveRigidBody();
     }
 
@@ -130,10 +132,10 @@ public class AddForceComponent : ItemComponent
     #region BehaviourControl
     private void StartComponent()
     {
-        if (collideWithComponent)
-            return;
-        collideWithComponent = true;
-        Invoke(nameof(CollideWithComponet), 0.5f);
+        //if (collideWithComponent)
+        //    return;
+        //collideWithComponent = true;
+        //Invoke(nameof(CollideWithComponet), 0.5f);
         ApplyAddForce();
     }
 

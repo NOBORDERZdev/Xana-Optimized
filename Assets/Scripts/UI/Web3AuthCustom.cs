@@ -9,6 +9,7 @@ using System.Security.Principal;
 using static WalletLogin;
 using static System.Net.WebRequestMethods;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class Web3AuthCustom : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class Web3AuthCustom : MonoBehaviour
     public float cooldownTime;
     public static Web3AuthCustom Instance;
     public Action<string> onLoginAction;
+   
 
     private void Awake()
     {
@@ -142,6 +144,7 @@ public class Web3AuthCustom : MonoBehaviour
 
     public void PasswordLessEmailLogin(bool isnewreg)
     {
+        WebViewManager.Instance.WebViewBool = true;
         var selectedProvider = Provider.JWT;
         isNewReg = isnewreg;
         var options = new LoginParams()
@@ -171,6 +174,7 @@ public class Web3AuthCustom : MonoBehaviour
     
     public void GoogleLogin(bool isnewreg)
     {
+        WebViewManager.Instance.WebViewBool = false;
         var selectedProvider = Provider.GOOGLE;
         isNewReg = isnewreg;
 
@@ -192,6 +196,7 @@ public class Web3AuthCustom : MonoBehaviour
 
     public void AppleLogin(bool isnewreg)
     {
+        WebViewManager.Instance.WebViewBool = false;
         var selectedProvider = Provider.APPLE;
         isNewReg = isnewreg;
         var options = new LoginParams()
@@ -229,10 +234,30 @@ public class Web3AuthCustom : MonoBehaviour
 #endif
         GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
         UserLoginSignupManager.instance.StartCoroutine(UserLoginSignupManager.instance.LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
-        UserLoginSignupManager.instance.LoggedInAsGuest = false;
+        ConstantsHolder.xanaConstants.LoggedInAsGuest = false;
         Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
-        LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
-        userInfo = response.userInfo;
+        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+        {
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+            }
+        }
+        else if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            if (!ConstantsHolder.xanaConstants.isBackFromWorld)
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+
+            }
+        }
+
+
+            userInfo = response.userInfo;
         privateKey = response.privKey;
         PlayerPrefs.SetString("LoggedInMail", response.userInfo.email);
         onLoginAction?.Invoke(userInfo.email);
@@ -261,6 +286,7 @@ public class Web3AuthCustom : MonoBehaviour
 
                 case Web3AuthSociallogin.Login:
                     UserLoginSignupManager.instance.emailOrWalletLoginPanel.SetActive(false);
+                    UserLoginSignupManager.instance.signUpPanel.SetActive(false);
                     ConnectWallet.instance.StartCoroutine(ConnectWallet.instance.SaveChainSafeNonce(mysignature1, publicAdress, msg1));
 
                     break;
@@ -268,6 +294,7 @@ public class Web3AuthCustom : MonoBehaviour
 
                 case Web3AuthSociallogin.NewRegistration:
                     UserLoginSignupManager.instance.signUpPanel.SetActive(false);
+                    UserLoginSignupManager.instance.emailOrWalletLoginPanel.SetActive(false);
                     ConnectWallet.instance.StartCoroutine(ConnectWallet.instance.SaveChainSafeNonce(mysignature1, publicAdress, msg1));
 
                     break;
@@ -279,7 +306,14 @@ public class Web3AuthCustom : MonoBehaviour
         }
         catch (Exception ex)
         {
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+            }
             UserLoginSignupManager.instance.emailOrWalletLoginPanel.SetActive(true);
 
         }

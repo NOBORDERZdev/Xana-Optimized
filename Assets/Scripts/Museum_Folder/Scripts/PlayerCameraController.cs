@@ -3,15 +3,12 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.InputSystem;
 using TouchPhase = UnityEngine.TouchPhase;
-using Metaverse;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerCameraController : MonoBehaviour
 {
-    public enum OrientationType { Landscape, Portrait };
-    public OrientationType orientationType;
     [Space(5)]
     public float lookSpeed;
     public float lookSpeedd;
@@ -70,13 +67,11 @@ public class PlayerCameraController : MonoBehaviour
     private void OnEnable()
     {
         controls.Enable();
-        ScreenOrientationManager.switchOrientation += SwitchOrientation;
         BuilderEventManager.ChangeCameraHeight += ChangeCameraHeight;
     }
     private void OnDisable()
     {
         controls.Disable();
-        ScreenOrientationManager.switchOrientation -= SwitchOrientation;
         BuilderEventManager.ChangeCameraHeight -= ChangeCameraHeight;
 
     }
@@ -116,14 +111,6 @@ public class PlayerCameraController : MonoBehaviour
             zoomScrollVal = originalOrbits[1].m_Radius;
         }
         camRender = ReferencesForGamePlay.instance.randerCamera.gameObject;
-    }
-
-    void SwitchOrientation()
-    {
-        if (orientationType.Equals(OrientationType.Landscape))
-            orientationType = OrientationType.Portrait;
-        else if (orientationType.Equals(OrientationType.Portrait))
-            orientationType = OrientationType.Landscape;
     }
 
     public void AllowControl()

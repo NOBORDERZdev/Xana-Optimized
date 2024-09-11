@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using UnityEngine.Video;
-using UnityEngine.XR.ARFoundation;
+
 
 public class UGCUIManager : MonoBehaviour
 {
@@ -356,6 +356,7 @@ public class UGCUIManager : MonoBehaviour
         else
         {
             SceneManager.LoadScene("Home");
+            LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
         }
         OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Hometab);
     }

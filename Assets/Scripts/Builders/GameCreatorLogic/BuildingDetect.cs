@@ -239,12 +239,12 @@ public class BuildingDetect : MonoBehaviour
         gangsterCharacter = new GameObject("AvatarChange");
         gangsterCharacter.transform.SetParent(this.transform);
         gangsterCharacter.transform.localPosition = Vector3.zero;
-        gangsterCharacter.transform.localEulerAngles = curObject.transform.eulerAngles;
+        gangsterCharacter.transform.localEulerAngles = avatarIndex == 2 ? Vector3.up * -180 : curObject.transform.eulerAngles;
         //gangsterCharacter.SetActive(false);
 
         Vector3 pos = gangsterCharacter.transform.position;
         pos.y = GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? 0.1f : 0;
-        AppearanceChange = PhotonNetwork.Instantiate(GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex], pos, curObject.transform.localRotation);
+        AppearanceChange = PhotonNetwork.Instantiate(GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex], pos, Quaternion.identity);
 
         var hash = new ExitGames.Client.Photon.Hashtable();
         hash.Add("avatarChanger", (avatarIndex + 1) + "," + curObject.GetComponent<XanaItem>().itemData.RuntimeItemID + "," + this.GetComponent<PhotonView>().ViewID);
@@ -437,7 +437,7 @@ public class BuildingDetect : MonoBehaviour
     {
         print("Calling Routine" + _timer);
         yield return new WaitForSeconds(0.2f);
-        BuilderEventManager.SpecialItemPlayerPropertiesUpdate?.Invoke(powerProviderHeight / 4, powerProviderSpeed / 6);
+        BuilderEventManager.SpecialItemPlayerPropertiesUpdate?.Invoke(powerProviderHeight, powerProviderSpeed);
         //_specialEffects.gameObject.SetActive(true);
         ApplySuperMarioEffect(true);
         powerUpCurTime = 0;
@@ -554,7 +554,7 @@ public class BuildingDetect : MonoBehaviour
 
     public void CameraEffect()
     {
-        StopSpecialItemComponent();
+        //StopSpecialItemComponent();
         volume = GamificationComponentData.instance.postProcessVol;
         RuntimeAnimatorController cameraEffect = GamificationComponentData.instance.cameraBlurEffect;
         cameraAnimator = GamificationComponentData.instance.playerControllerNew.ActiveCamera.GetComponent<Animator>();

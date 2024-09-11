@@ -122,7 +122,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 744114455}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.49101102
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1176,7 +1176,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1166319798}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.48651686
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1419,7 +1419,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: -0.000030517578}
+  m_AnchoredPosition: {x: 0.000030517578, y: 0.0000076293945}
   m_SizeDelta: {x: 291.683, y: 50.121}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1269568194
@@ -1768,8 +1768,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1855873952}
   m_HandleRect: {fileID: 1855873951}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0
+  m_Value: 0
+  m_Size: 0.99999946
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1812,7 +1812,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -0.000030517578, y: -0.00005340576}
+  m_AnchoredPosition: {x: 0.000030517578, y: -0.000045776367}
   m_SizeDelta: {x: 221.6, y: 50.121}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1478207752
@@ -3105,7 +3105,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2065128664}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0
+  m_Size: 0.9999995
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4601,6 +4601,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &2282683543561009817
 GameObject:
   m_ObjectHideFlags: 0
@@ -5015,6 +5027,7 @@ Canvas:
   m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 5
@@ -7868,7 +7881,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 3315977629885075529}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.49434024
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8607,7 +8620,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 3315977629293138283}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0
+  m_Size: 0.9999997
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8875,8 +8888,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.599609, y: 5.4000244}
-  m_SizeDelta: {x: -178.7405, y: -75.2275}
+  m_AnchoredPosition: {x: -12.599609, y: 2.4671936}
+  m_SizeDelta: {x: -178.7405, y: -69.3619}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3315977629025093400
 CanvasRenderer:
@@ -10856,7 +10869,7 @@ MonoBehaviour:
   LocalizeTextTMP: {fileID: 0}
 --- !u!95 &3315977629350814321
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -10873,7 +10886,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3315977629403536747
 GameObject:
   m_ObjectHideFlags: 0
@@ -13493,7 +13507,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00008392334}
+  m_AnchoredPosition: {x: 0, y: 0.000038146973}
   m_SizeDelta: {x: 244.876, y: 50.121}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &3315977630094744900
@@ -14345,7 +14359,7 @@ MonoBehaviour:
   LocalizeTextTMP: {fileID: 0}
 --- !u!95 &6282597859235743581
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -14362,4 +14376,5 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -14,6 +14,7 @@ public class AddressableDownloader : MonoBehaviour
     public List<Item> presetsItem;
     public int presetItemCount;
     public static AddressableDownloader Instance;
+    public static List<AsyncOperationHandle> bundleAsyncOperationHandle = new List<AsyncOperationHandle>();
     public AddressableMemoryReleaser MemoryManager;
     private void Start()
     {
@@ -41,7 +42,8 @@ public class AddressableDownloader : MonoBehaviour
             isDownloading = true;
 #if UNITY_EDITOR
             string catalogFilePath = UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "Remote.LoadPath");
-            Debug.LogError(catalogFilePath);
+            //Debug.LogError(catalogFilePath);
+            Debug.Log("<color=red>" + catalogFilePath + "</color>");
             catalogFilePath = catalogFilePath.Replace("[BuildTarget]", UnityEditor.EditorUserBuildSettings.activeBuildTarget.ToString());
             catalogFilePath = catalogFilePath + "/XanaAddressableCatalog.json";
             AsyncOperationHandle DownloadingCatalog = Addressables.LoadContentCatalogAsync(catalogFilePath, true);
@@ -80,7 +82,8 @@ public class AddressableDownloader : MonoBehaviour
         int _counter = 0;
         while (!ConstantsHolder.isAddressableCatalogDownload)
         {
-            Debug.LogError("Waiting for Addressable Catalog to download");
+            Debug.Log("<color=red> Waiting for Addressable Catalog to download </color>");
+
             yield return new WaitForSeconds(1f);
         }
 
@@ -99,9 +102,9 @@ public class AddressableDownloader : MonoBehaviour
             {
                 AsyncOperationHandle loadOp;
                 // Debug.LogError("key :- "+key.ToLower());
-                bool flag = false;
-                loadOp = MemoryManager.GetReferenceIfExist(key.ToLower(), ref flag);
-                if (!flag)
+                //bool flag = false;
+                //loadOp = MemoryManager.GetReferenceIfExist(key.ToLower(), ref flag);
+                //if (!flag)
                     loadOp = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
 
                 SwitchToShoesHirokoKoshino.Instance?.SwitchLightFor_HirokoKoshino(key.ToLower());
@@ -120,17 +123,18 @@ public class AddressableDownloader : MonoBehaviour
                 {
                     if (loadOp.Result == null || loadOp.Result.Equals(null))  // Added by Ali Hamza to resolve avatar naked issue 
                     {
-                        _counter++;
-                        if (_counter < 5)
-                        {
-                            Addressables.ClearDependencyCacheAsync(key);
-                            MemoryManager.RemoveAddressable(key);
-                        }
-                        else
-                        {
+                        //_counter++;
+                        //if (_counter < 5)
+                        //{
+                        //    Addressables.ClearDependencyCacheAsync(key);
+                        //    MemoryManager.RemoveAddressable(key);
+                        //}
+                        //else
+                        //{
+                            AddressableDownloader.bundleAsyncOperationHandle.Add(loadOp);
                             applyOn.WearDefaultItem(type, applyOn.gameObject, _gender);
                             yield break;
-                        }
+                        //}
                     }
                     else
                     {
@@ -140,7 +144,7 @@ public class AddressableDownloader : MonoBehaviour
                         }
                         //Debug.LogError(":Wear cloth");
                         //loadOp.Result. = key;
-                        MemoryManager.AddToReferenceList(loadOp, key.ToLower());
+                        //MemoryManager.AddToReferenceList(loadOp, key.ToLower());
                         if (PlayerPrefs.GetInt("presetPanel") != 1)
                         {
                             //if (callFromMultiplayer)
@@ -303,10 +307,10 @@ public class AddressableDownloader : MonoBehaviour
             {
                 AsyncOperationHandle loadOp;
 
-                bool flag = false;
+                //bool flag = false;
 
-                loadOp = MemoryManager.GetReferenceIfExist(key, ref flag);
-                if (!flag)
+                //loadOp = MemoryManager.GetReferenceIfExist(key, ref flag);
+                //if (!flag)
                     loadOp = Addressables.LoadAssetAsync<Texture>(key);
 
                 while (!loadOp.IsDone)
@@ -329,21 +333,22 @@ public class AddressableDownloader : MonoBehaviour
                 {
                     if (loadOp.Result == null || loadOp.Result.Equals(null))   // Added by Ali Hamza to resolve avatar naked issue
                     {
-                        _counter++;
-                        if (_counter < 5)
-                        {
-                            Addressables.ClearDependencyCacheAsync(key);
-                            MemoryManager.RemoveAddressable(key);
-                        }
-                        else
-                        {
-                            applyOn.GetComponent<CharacterBodyParts>().SetTextureDefault(type, applyOn);
+                        //_counter++;
+                        //if (_counter < 5)
+                        //{
+                        //    Addressables.ClearDependencyCacheAsync(key);
+                        //    MemoryManager.RemoveAddressable(key);
+                        //}
+                        //else
+                        //{
+                        AddressableDownloader.bundleAsyncOperationHandle.Add(loadOp);
+                        applyOn.GetComponent<CharacterBodyParts>().SetTextureDefault(type, applyOn);
                             yield break;
-                        }
+                        //}
                     }
                     else
                     {
-                        MemoryManager.AddToReferenceList(loadOp, key);
+                        //MemoryManager.AddToReferenceList(loadOp, key);
                         switch (type)
                         {
                             case CurrentTextureType.Null:
@@ -402,9 +407,9 @@ public class AddressableDownloader : MonoBehaviour
             string address = $"{groupName}/{key}.png"; // Combine group name and key to form the address
             AsyncOperationHandle loadOp;
 
-            bool flag = false;
-            loadOp = MemoryManager.GetReferenceIfExist(address, ref flag);
-            if (!flag)
+            //bool flag = false;
+            //loadOp = MemoryManager.GetReferenceIfExist(address, ref flag);
+            //if (!flag)
                 loadOp = Addressables.LoadAssetAsync<Texture>(address);
 
             while (!loadOp.IsDone)
@@ -419,7 +424,8 @@ public class AddressableDownloader : MonoBehaviour
             }
             else if (loadOp.Status == AsyncOperationStatus.Succeeded)
             {
-                MemoryManager.AddToReferenceList(loadOp, address);
+                //MemoryManager.AddToReferenceList(loadOp, address);
+                AddressableDownloader.bundleAsyncOperationHandle.Add(loadOp);
                 switch (nFTOjectType)
                 {
                     case CurrentTextureType.Skin:

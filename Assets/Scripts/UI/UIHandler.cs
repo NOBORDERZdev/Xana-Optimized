@@ -4,14 +4,20 @@ using System.Numerics;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using UnityEngine.Networking;
+using SimpleJSON;
 
 public class UIHandler : MonoBehaviour
 {
     public GameObject LoginRegisterScreen, SignUpScreen, HomePage, Canvas,HomeWorldScreen;
      public CanvasGroup Loadinghandler_CanvasRef;
     public GameObject _SplashScreen;
+    public GameObject SplashScreenXana;
+    public GameObject SplashScreenSummit;
 
-    public Transform _postScreen,_postCamera;
+    public Transform _postScreen,_postCamera, _postScreenBG;
     public bool IsSplashActive = true;
     /*public Transform SecondSliderScrollView;*/
 
@@ -41,6 +47,7 @@ public class UIHandler : MonoBehaviour
 
     private void Awake()
     {
+        StartCoroutine(FetchFeatures()); 
         Canvas.GetComponent<CanvasGroup>().alpha = 0;
         Canvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
         Canvas.GetComponent<CanvasGroup>().interactable = false;
@@ -80,6 +87,7 @@ public class UIHandler : MonoBehaviour
             GameManager.Instance.HomeCameraInputHandler(!flag);
 
             _postScreen.gameObject.SetActive(flag);
+            _postScreenBG.gameObject.SetActive(flag);
             HomePage.gameObject.SetActive(!flag);
             _postCamera.gameObject.SetActive(flag);
             ShowFooter(!flag);
@@ -113,15 +121,39 @@ public class UIHandler : MonoBehaviour
     }
     private void Start()
     {
+        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            SplashScreenXana.SetActive(true);
+            SplashScreenSummit.SetActive(false);
+            if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+            {
+                Screen.orientation = ScreenOrientation.Portrait;
+            }
+
+        }
+        else 
+        {
+            SplashScreenXana.SetActive(false);
+            SplashScreenSummit.SetActive(true);
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+        }
         if (SaveCharacterProperties.NeedToShowSplash == 1)
         {
             if (PlayerPrefs.HasKey("TermsConditionAgreement"))
             {
                 IsSplashActive = false;
                 StartCoroutine(IsSplashEnable(false, 3f));
-                if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
                 {
-                    Screen.orientation = ScreenOrientation.Portrait;
+                    if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                    {
+                        Screen.orientation = ScreenOrientation.Portrait;
+                    }
+
+                }
+                else
+                {
+                    Screen.orientation = ScreenOrientation.LandscapeLeft;
                 }
             }
          }
@@ -219,6 +251,7 @@ public class UIHandler : MonoBehaviour
                     //AvatarWindowHolder.gameObject.SetActive(false);
                     /*LobbyTabHolder.gameObject.SetActive(false);*/
                     //worldHolder.SetActive(false);
+                    WorldManager.instance.worldSearchManager.searchWorldInput.Clear();
                     searchWorldHolder.SetActive(true);
                   //  HomeWorldTabsHolder.gameObject.SetActive(false);
                     //WorldWorldTabsHolder.gameObject.SetActive(false);
@@ -231,4 +264,43 @@ public class UIHandler : MonoBehaviour
                 }
         }
     }
+    IEnumerator FetchFeatures()
+    {
+        UnityWebRequest request = UnityWebRequest.Get(ConstantsGod.API_BASEURL+ConstantsGod.FeaturesListApi);
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+        {
+            Debug.LogError("Error fetching features: " + request.error);
+        }
+        else
+        {
+            string jsonResponse = request.downloadHandler.text;
+            //JSONNode jsonNode = JSON.Parse(jsonResponse);
+            ApiFeatureListResponse apiResponse = JsonConvert.DeserializeObject<ApiFeatureListResponse>(jsonResponse);
+            for (int i = 0; i < apiResponse.data.Count; i++) 
+            {
+                if (apiResponse.data[i].feature_name == "SummitApp")
+                    ConstantsHolder.xanaConstants.SwitchXanaToXSummit = apiResponse.data[i].feature_status;
+            }
+            Debug.Log("Features List: " + apiResponse.data.Count);
+        }
+    }
+
+}
+public class ApiFeatureListResponse
+{
+    public bool success { get; set; }
+    public List<Feature> data { get; set; }
+    public string msg { get; set; }
+}
+
+public class Feature
+{
+    public int id { get; set; }
+    public string feature_name { get; set; }
+    public bool feature_status { get; set; }
 }

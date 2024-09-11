@@ -156,6 +156,7 @@ public class MyProfileDataManager : MonoBehaviour
     bool profileMakedFlag = false;
     public string permissionCheck = "";
     public string TestingJasonForTags;
+
     UserLoginSignupManager userLoginSignupManager;
     SNS_APIManager apiManager;
     ProfileUIHandler profileUIHandler;
@@ -261,6 +262,7 @@ public class MyProfileDataManager : MonoBehaviour
             if (!isEditProfileNameAlreadyExists)
             {
                 editProfileScreen.SetActive(false);
+                feedUIController.footerCan.SetActive(true);
             }
             isEditProfileNameAlreadyExists = false;
             //Debug.Log("Profile Update Success and delete file");
@@ -321,7 +323,20 @@ public class MyProfileDataManager : MonoBehaviour
             profileUIHandler.followingBtn.interactable = true;
         }
         playerNameText.text = myProfileData.name;
-        displayName.text = "@"+myProfileData.userProfile.username;
+        if (!string.IsNullOrEmpty(myProfileData.userProfile.username))
+        {
+            string _userName = SNS_APIManager.DecodedString(myProfileData.userProfile.username);
+            if (!_userName.StartsWith("@"))
+            {
+                displayName.text = "@" + _userName;
+            }
+            displayName.gameObject.SetActive(true);
+        }
+        else
+        {
+            displayName.gameObject.SetActive(false);
+        }
+        //displayName.text = "@"+myProfileData.userProfile.username;
         lastTopUserText = myProfileData.name;
 
         totalFollowerText.text = myProfileData.followerCount.ToString();
@@ -343,6 +358,7 @@ public class MyProfileDataManager : MonoBehaviour
             }
             else
             {
+                textUserBio.text = "";
                 seeMoreBioButton.SetActive(false);
                 _alignment_space.SetActive(false);
             }
@@ -663,6 +679,7 @@ public class MyProfileDataManager : MonoBehaviour
     {
         EditProfileDoneButtonSetUp(true);//setup edit profile done button.......
         editProfileScreen.SetActive(true);
+        feedUIController.footerCan.SetActive(false);
         SetupEditProfileScreen();
         OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.EditProfile);
     }
@@ -829,7 +846,6 @@ public class MyProfileDataManager : MonoBehaviour
     public void OnClickEditProfileBackButton()
     {
         ProfilePostPartShow();
-
         if (File.Exists(setImageAvatarTempPath))
         {
             File.Delete(setImageAvatarTempPath);
@@ -875,6 +891,7 @@ public class MyProfileDataManager : MonoBehaviour
     void EditProfileInfoCheckAndAPICalling()
     {
         string tempStr;
+        string keytoLocalize;
         if (!string.IsNullOrEmpty(editProfileNameAdvanceInputfield.Text) && editProfileNameAdvanceInputfield.Text != playerNameText.text)
         {
             tempStr = editProfileNameAdvanceInputfield.Text.Trim();
@@ -891,10 +908,25 @@ public class MyProfileDataManager : MonoBehaviour
         if (!string.IsNullOrEmpty(editProfileUniqueNameAdvanceInputfield.Text) && editProfileUniqueNameAdvanceInputfield.Text != uniqueUsername
             && (uniqueUsername != "null" || uniqueUsername != "Null"))
         {
+             if (editProfileUniqueNameAdvanceInputfield.Text.Length < 5 || editProfileUniqueNameAdvanceInputfield.Text.Length > 15)
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must be between 5 and 15 characters.");
+                ShowEditProfileUniqueNameErrorMessage(keytoLocalize);
+                return;
+            }
+            else if (!editProfileUniqueNameAdvanceInputfield.Text.Any(c => char.IsDigit(c) || c == '_'))
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must not include Space. Alphabet, Numbers, or Underscore allowed.");
+                ShowEditProfileUniqueNameErrorMessage(keytoLocalize);
+                return;
+
+            }
+            
             tempStr = editProfileUniqueNameAdvanceInputfield.Text.Trim();
             tempStr = tempStr.Replace("@", "");
             uniqueUsername = tempStr;
             checkEditInfoUpdated = 1;
+            ConstantsHolder.uniqueUserName = uniqueUsername;
         }
         else if (string.IsNullOrEmpty(editProfileUniqueNameAdvanceInputfield.Text))
         {
@@ -941,6 +973,7 @@ public class MyProfileDataManager : MonoBehaviour
             else
             {
                 editProfileScreen.SetActive(false);
+                feedUIController.footerCan.SetActive(true);
                 EditProfileDoneButtonSetUp(true);
             }
         }
@@ -1113,11 +1146,50 @@ public class MyProfileDataManager : MonoBehaviour
         }
     }
 
+    public void CheckPermissionStatus(int maxSize)
+    {
+        if (Application.isEditor)
+        {
+            PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromGellery;
+            PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+            PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
+        }
+        else
+        {
+            NativeGallery.Permission permission = NativeGallery.CheckPermission(NativeGallery.PermissionType.Read, NativeGallery.MediaType.Image);
+#if UNITY_ANDROID
+            if (permission == NativeGallery.Permission.ShouldAsk) //||permission == NativeCamera.Permission.ShouldAsk
+            {
+                PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromGellery;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+                PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
+            }
+            else
+            {
+                OnPickImageFromGellery(maxSize);
+            }
+#elif UNITY_IOS
+                if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
+                     PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromGellery;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+                PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
+                }
+                else
+                {
+                    OnPickImageFromGellery(maxSize);
+                }
+#endif
+
+        }
+    }
 
     //this method is used to pick group avatar from gellery for group avatar.
     public void OnPickImageFromGellery(int maxSize)
     {
+        PermissionPopusSystem.Instance.onCloseActionWithParam -= OnPickImageFromGellery;
 #if UNITY_IOS
+         PlayerPrefs.SetInt("PicPermission", 1);
+
         if (permissionCheck == "false")
         {
             string url = MyNativeBindings.GetSettingsURL();
@@ -1163,7 +1235,10 @@ public class MyProfileDataManager : MonoBehaviour
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
                 fileName = fileNameArray[0] + str + fileNameArray[1];
 
-                setImageAvatarTempPath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName); ;
+                string directoryPath = Path.Combine(Application.persistentDataPath, "XanaChat");
+                Directory.CreateDirectory(directoryPath);
+
+                setImageAvatarTempPath = Path.Combine(directoryPath, fileName);
                 setImageAvatarTempFilename = fileName;
 
                 Crop(texture, setImageAvatarTempPath);
@@ -1209,7 +1284,7 @@ public class MyProfileDataManager : MonoBehaviour
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
                 fileName = fileNameArray[0] + str + fileNameArray[1];
 
-                setImageAvatarTempPath = Path.Combine(Application.persistentDataPath, "UserProfilePic", fileName); ;
+                setImageAvatarTempPath = Path.Combine(Application.persistentDataPath, "UserProfilePic", fileName);
                 setImageAvatarTempFilename = fileName;
 
                 Crop(texture, setImageAvatarTempPath);
@@ -1238,10 +1313,49 @@ public class MyProfileDataManager : MonoBehaviour
 #endif
     }
 
+    public void CheckPermissionStatus_Camera(int maxSize)
+    {
+        if (Application.isEditor)
+        {
+            PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromCamera;
+            PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Camera;
+            PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
+        }
+        else
+        {
+            NativeCamera.Permission permission = NativeCamera.CheckPermission(true);
+#if UNITY_ANDROID
+            if (permission == NativeCamera.Permission.ShouldAsk)
+            {
+                PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromCamera;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Camera;
+                PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
+            }
+            else
+            {
+                OnPickImageFromCamera(maxSize);
+            }
+#elif UNITY_IOS
+                if(PlayerPrefs.GetInt("CamPermission", 0) == 0){
+                PermissionPopusSystem.Instance.onCloseActionWithParam += OnPickImageFromCamera;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Camera;
+                PermissionPopusSystem.Instance.OpenPermissionScreen(maxSize);
+                }
+                else
+                {
+                    OnPickImageFromCamera(maxSize);
+                }
+#endif
+
+        }
+    }
+
     //this method is used to take picture from camera for group avatar.
     public void OnPickImageFromCamera(int maxSize)
     {
+        PermissionPopusSystem.Instance.onCloseActionWithParam -= OnPickImageFromCamera;
 #if UNITY_IOS
+        PlayerPrefs.SetInt("CamPermission", 1);
         if (permissionCheck == "false")
         {
             string url = MyNativeBindings.GetSettingsURL();
@@ -1511,11 +1625,11 @@ public class MyProfileDataManager : MonoBehaviour
                 //croppedImageSize.enabled = false;
             }
             // Destroy the screenshot as we no longer need it in this case
-            Destroy(screenshot);
-            Resources.UnloadUnusedAssets();
             //Caching.ClearCache();
             //GC.Collect();
-            Invoke("ProfilePostPartShow", 0.5f);
+        Destroy(screenshot);
+        Invoke(nameof(ProfilePostPartShow), 0.5f);
+        Resources.UnloadUnusedAssets();
         },
         settings: new ImageCropper.Settings()
         {

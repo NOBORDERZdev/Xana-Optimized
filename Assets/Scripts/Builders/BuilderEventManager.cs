@@ -111,7 +111,7 @@ public static class BuilderEventManager
 
     //UI toggle
     public static Action<bool> UIToggle;
-    public static Action<Constants.ItemComponentType> ResetComponentUI;
+    public static Action<Constants.ItemComponentType, bool> ResetComponentUI;
     public static Action EnableWorldCanvasCamera;
     public static Action<bool> DisableAnimationsButtons;
 
@@ -135,11 +135,12 @@ public static class BuilderEventManager
     public static Action LoadSummitScene;
     public static Action<int, Vector3> LoadNewScene;
     public static Action<string, Vector3> LoadSceneByName;
-    public static Action<int,string[]> AINPCActivated;
+    public static Action<int, string[]> AINPCActivated;
     public static Action<int> AINPCDeactivated;
 
-    public static Action<VideoClip,Vector3> spaceXActivated;
+    public static Action<VideoClip, Vector3> spaceXActivated;
     public static Action<string> loadBGMDirectly;
     public static Action StopBGM;
+    public static Action ResetSummit;
 
 }

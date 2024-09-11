@@ -1,12 +1,13 @@
 ﻿using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ReferencesForGamePlay : MonoBehaviour
+public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmakingCallbacks
 {
     public GameObject eventSystemObj;
     [Space(5)]
@@ -23,6 +24,7 @@ public class ReferencesForGamePlay : MonoBehaviour
 
     public GameObject m_34player;
     public PlayerController playerControllerNew;
+    public GameObject spawnedSkateBoard;
     public GameObject minimap;
     public GameObject MinimapSummit;
     public GameObject FullscreenMapSummit;
@@ -41,6 +43,7 @@ public class ReferencesForGamePlay : MonoBehaviour
     public GameObject portraitMoveWhileDancingButton;
     public int moveWhileDanceCheck;
     public QualityManager QualityManager;
+    public XanaChatSystem ChatSystemRef;
     // Start is called before the first frame update
     void Awake()
     {
@@ -102,6 +105,11 @@ public class ReferencesForGamePlay : MonoBehaviour
     private void OnEnable()
     {
         instance = this;
+        PhotonNetwork.AddCallbackTarget(this);
+        if(m_34player==null)
+        {
+            m_34player=GameplayEntityLoader.instance.player;
+        }
         if (WorldItemView.m_EnvName.Contains("Xana Festival")) // for Xana Festival
         {
             //RoomMaxPlayerCount = (ConstantsHolder.xanaConstants.userLimit - 1);
@@ -125,7 +133,7 @@ public class ReferencesForGamePlay : MonoBehaviour
         {
             if (instance.totalCounter != null)
             {
-                totalCounter.text = totalCounter.text = PlayerCount + "/" + ConstantsHolder.userLimit /*ConstantsHolder.xanaConstants.userLimit*/;
+                totalCounter.text = totalCounter.text = PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers /*ConstantsHolder.xanaConstants.userLimit*/;
             }
         }
       
@@ -146,17 +154,17 @@ public class ReferencesForGamePlay : MonoBehaviour
                 m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat.SetActive(true);
             }
         }
-        if (counterCoroutine == null)
+        /*if (counterCoroutine == null)
         {
-            counterCoroutine = SetPlayerCounter();
-            StartCoroutine(counterCoroutine);
+           SetPlayerCounter();
+           // StartCoroutine(counterCoroutine);
         }
         else
         {
-            StopCoroutine(counterCoroutine);
-            StartCoroutine(counterCoroutine);
-        }
-
+           *//* StopCoroutine(counterCoroutine);
+            StartCoroutine(counterCoroutine);*//*
+        }*/
+        SetPlayerCounter();
         if (WorldItemView.m_EnvName.Contains("AfterParty") || ConstantsHolder.xanaConstants.IsMuseum)
         {
             if (WorldItemView.m_EnvName.Contains("J&J WORLD_5"))
@@ -240,16 +248,17 @@ public class ReferencesForGamePlay : MonoBehaviour
         foreach (GameObject go in hiddenBtnObjects)
         {
             //go.SetActive(true);
-            if (go.name.Contains("map"))
-            {
-                if (!ConstantsHolder.xanaConstants.IsMuseum && ConstantsHolder.xanaConstants.minimap != 0)
-                    go.SetActive(true);
-            }
-            else
+            //if (go.name.Contains("map"))
+            //{
+            //    if (!ConstantsHolder.xanaConstants.IsMuseum)// && ConstantsHolder.xanaConstants.minimap != 0)
+            //        go.SetActive(true); 
+            //}
+            //else
             {
                 if (!go.GetComponent<CanvasGroup>())
                 {
                     go.AddComponent<CanvasGroup>();
+                    
                 }
                 go.GetComponent<CanvasGroup>().alpha = 1;
             }
@@ -258,11 +267,18 @@ public class ReferencesForGamePlay : MonoBehaviour
         //To enable disable Buttons
         foreach (GameObject go in disableBtnObjects)
         {
-
-            go.SetActive(true);
-
+            if (go.name.Contains("_Summit") && !ConstantsHolder.xanaConstants.EnviornmentName.Equals("XANA Summit"))
+            {
+                go.SetActive(false);
+            }
+            else if (!ConstantsHolder.xanaConstants.IsMuseum && !go.name.Contains("map"))
+                go.SetActive(true);
         }
 
+    }
+    private void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this);
     }
     public void potraithiddenButtonDisable()
     {
@@ -319,9 +335,9 @@ public class ReferencesForGamePlay : MonoBehaviour
     //    StartCoroutine(SetPlayerCounter());
     //}
 
-    IEnumerator SetPlayerCounter()
+    void SetPlayerCounter()
     {
-    CheckAgain:
+    //CheckAgain:
         try
         {
             if (totalCounter != null)
@@ -336,7 +352,7 @@ public class ReferencesForGamePlay : MonoBehaviour
                     {
                         PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
                     }
-                    totalCounter.text = PlayerCount + "/" + ConstantsHolder.userLimit /*ConstantsHolder.xanaConstants.userLimit*/;
+                    totalCounter.text = PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers /*ConstantsHolder.xanaConstants.userLimit*/;
 
                     //if (ConstantsHolder.xanaConstants.isCameraMan)
                     //{
@@ -360,7 +376,7 @@ public class ReferencesForGamePlay : MonoBehaviour
                 if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
                 {
                     PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + NpcSpawner.npcSpawner.npcCounter;
-                    totalCounter.text = PlayerCount + "/" + ConstantsHolder.userLimit + 5;
+                    totalCounter.text = PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers + 5;
                 }
                 //else
                 //{
@@ -374,8 +390,8 @@ public class ReferencesForGamePlay : MonoBehaviour
 
         }
 
-        yield return new WaitForSeconds(2f);
-        goto CheckAgain;
+      /*  yield return new WaitForSeconds(2f);
+        goto CheckAgain;*/
     }
     public void SumitMapStatus(bool _status)
     {
@@ -397,7 +413,77 @@ public class ReferencesForGamePlay : MonoBehaviour
 
     public void FullScreenMapStatus (bool _enable)
     {
+        if(ConstantsHolder.DisableFppRotation) { return; }
+
+        if (_enable)
+        {
+            Input.multiTouchEnabled = false;
+        }
+        else
+        {
+            Input.multiTouchEnabled = true;
+        }
+
         FullscreenMapSummit.SetActive(_enable);
+    }
+
+    public void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        SetPlayerCounter();
+    }
+
+    public void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        SetPlayerCounter();
+    }
+
+    public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+      
+    }
+
+    public void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+       
+    }
+
+    public void OnMasterClientSwitched(Player newMasterClient)
+    {
+       
+    }
+
+    public void OnFriendListUpdate(List<FriendInfo> friendList)
+    {
+       
+    }
+
+    public void OnCreatedRoom()
+    {
+        
+    }
+
+    public void OnCreateRoomFailed(short returnCode, string message)
+    {
+    }
+
+    public void OnJoinedRoom()
+    {
+        SetPlayerCounter();
+    }
+
+    public void OnJoinRoomFailed(short returnCode, string message)
+    {
+       
+    }
+
+    public void OnJoinRandomFailed(short returnCode, string message)
+    {
+        
+    }
+
+    public void OnLeftRoom()
+    {
+       
     }
 }
 

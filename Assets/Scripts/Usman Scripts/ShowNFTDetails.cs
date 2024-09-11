@@ -672,7 +672,15 @@ public class ShowNFTDetails : MonoBehaviour
         if (displayImageWithoutDesPortrait)
             displayImageWithoutDesPortrait.GetComponent<Image>().sprite = currFrame;
     }
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            Debug.Log("---Astroboy Nft Close due to Application minimized");
+            ClosePanel();
+        }
 
+    }
     public void ClosePanel()
     {
         ShowNFTDetails.instance.loadingImage.SetActive(false);

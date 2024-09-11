@@ -6,6 +6,7 @@ using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 using RenderHeads.Media.AVProVideo;
 using System.Collections;
+
 public class SoundSettings : MonoBehaviour
 {
     public static SoundSettings soundManagerSettings;
@@ -41,6 +42,10 @@ public class SoundSettings : MonoBehaviour
     [Header("Speakers")]
     private Speaker speaker;
     private Recorder recorder;
+
+    public delegate void BgmAudioEvent(bool _isMuted);
+    public BgmAudioEvent OnBGMAudioMuted;
+
     void Awake()
     {
         if (soundManagerSettings == null)
@@ -93,7 +98,7 @@ public class SoundSettings : MonoBehaviour
         ScreenOrientationManager.switchOrientation += OnOrientationChanged;
         //  Invoke("ObjectsDeley", 1f);
     }
-    void OnOrientationChanged()
+    void OnOrientationChanged(bool IsPortrait)
     {
         //Debug.Log("orientation is changed ......"+ PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
         totalVolumeSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
@@ -286,9 +291,21 @@ public class SoundSettings : MonoBehaviour
             {
                 SetAudioSourceSliderValLive(liveVideoSource, Vol);
             }
+            if (videoSource)
+            {
+                videoSource.volume = Vol;
+            }
         }
 
         BuilderEventManager.BGMVolume?.Invoke(Vol);
+        if (Vol <= 0)
+        {
+            OnBGMAudioMuted?.Invoke(true);
+        }
+        else
+        {
+            OnBGMAudioMuted?.Invoke(false);
+        }
     }
     public void SetVideoVolume(float Vol)
     {
@@ -355,7 +372,7 @@ public class SoundSettings : MonoBehaviour
 
         foreach (var gameobject in MutiplayerController.instance.playerobjects)
         {
-            if (!gameobject.GetComponent<PhotonView>().IsMine) 
+            if (gameobject != null && !gameobject.GetComponent<PhotonView>().IsMine) 
             {
                 gameobject.GetComponent<SpeakerRefrence>().RangeVolSpeaker.volume = UserSlider.value;
             }

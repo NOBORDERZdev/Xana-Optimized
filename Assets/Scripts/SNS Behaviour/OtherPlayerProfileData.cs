@@ -21,7 +21,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     public AllUserWithFeedRow FeedRawData;
 
     public List<AllFeedByUserIdRow> allMyFeedImageRootDataList = new List<AllFeedByUserIdRow>();//image feed list
-    public List<FeedResponseRow> allMyTextPostRootDataList = new List<FeedResponseRow>();//image feed list
+    //public List<FeedResponseRow> allMyTextPostRootDataList = new List<FeedResponseRow>();//image feed list
     //For Temp use needs to be deleted later 
     public List<AllFeedByUserIdRow> allMyFeedVideoRootDataList = new List<AllFeedByUserIdRow>();//video feed list
 
@@ -64,7 +64,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     [SerializeField] TextMeshProUGUI textPlayerTottleFollower;
     [SerializeField] TextMeshProUGUI textPlayerTottleFollowing;
     public TextMeshProUGUI textPlayerTottlePost;
-    [SerializeField] TextMeshProUGUI jobText;
+    [SerializeField] TextMeshProUGUI userNameText;
     [SerializeField] TextMeshProUGUI textUserBio;
     public GameObject seeMoreBioButton;
     public GameObject seeMoreButtonTextObj;
@@ -160,8 +160,8 @@ public class OtherPlayerProfileData : MonoBehaviour
     public void ClearDummyData()
     {
         textPlayerName.text = "";
-        jobText.text = "";
-        jobText.gameObject.SetActive(false);
+        userNameText.text = "";
+        userNameText.gameObject.SetActive(false);
         textUserBio.text = "";
     }
 
@@ -195,14 +195,18 @@ public class OtherPlayerProfileData : MonoBehaviour
             //Debug.Log("user" + FeedRawData.UserProfile);
             if (singleUserProfileData.userProfile != null)
             {
-                if (!string.IsNullOrEmpty(singleUserProfileData.userProfile.job))
+                if (!string.IsNullOrEmpty(singleUserProfileData.userProfile.username))
                 {
-                    jobText.text = SNS_APIManager.DecodedString(singleUserProfileData.userProfile.job);
-                    jobText.gameObject.SetActive(true);
+                    string _userName = SNS_APIManager.DecodedString(singleUserProfileData.userProfile.username);
+                    if (!_userName.StartsWith("@"))
+                    {
+                        userNameText.text = "@" + _userName;
+                    }
+                    userNameText.gameObject.SetActive(true);
                 }
                 else
                 {
-                    jobText.gameObject.SetActive(false);
+                    userNameText.gameObject.SetActive(false);
                 }
 
                 if (!string.IsNullOrEmpty(singleUserProfileData.userProfile.bio))
@@ -467,7 +471,7 @@ public class OtherPlayerProfileData : MonoBehaviour
                     userPostItem.SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
                     userPostItem.isProfileScene = true;
                     loadedMyPostAndVideoId.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
-                    allMyTextPostRootDataList.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i]);
+                    //allMyTextPostRootDataList.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i]);
                 }
             }
             else//Case added to instantiate empty object at end of posts so last one wont get hidden behide bottom UI

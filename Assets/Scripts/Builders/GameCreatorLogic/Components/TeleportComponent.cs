@@ -16,6 +16,12 @@ public class TeleportComponent : ItemComponent
     public void Init(TeleportComponentData teleportComponentData)
     {
         this._teleportComponentData = teleportComponentData;
+
+        gameObject.AddComponent<OnTriggerSceneSwitch>();
+        gameObject.GetComponent<OnTriggerSceneSwitch>().DomeId = -1;
+        gameObject.GetComponent<OnTriggerSceneSwitch>().WorldId = _teleportComponentData.spaceID;
+        
+
     }
 
     //IEnumerator TimerCountDown()
@@ -28,6 +34,7 @@ public class TeleportComponent : ItemComponent
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
+            //BuilderEventManager.LoadSceneByName?.Invoke(_teleportComponentData.spaceID, new Vector3(0,0,0));
             StartComponent();
         }
     }

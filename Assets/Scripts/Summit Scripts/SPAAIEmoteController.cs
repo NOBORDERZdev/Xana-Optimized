@@ -17,7 +17,7 @@ public class SPAAIEmoteController : MonoBehaviour
     [SerializeField] SPAAIBehvrController spaAIBhvrController;
     [SerializeField] NpcMovementController npcMC;
     [SerializeField] Animator animationController;
-    GameObject spawnCharacterObjectRemote;
+   // GameObject spawnCharacterObjectRemote;
     Coroutine emotCoroutine;
     string emoteName;
     string emoteBundleUrl;
@@ -25,11 +25,21 @@ public class SPAAIEmoteController : MonoBehaviour
     //private int minAnimTime = 5;
     //private int maxAnimTime = 20;
 
-    private void Awake()
+  //  private void Awake()
+  //  {
+       // spawnCharacterObjectRemote = EmoteAnimationHandler.Instance.spawnCharacterObjectRemote;
+   // }
+    public bool CheckForIsAssetBundleAvailable(string path)
     {
-        spawnCharacterObjectRemote = EmoteAnimationHandler.Instance.spawnCharacterObjectRemote;
+        if (File.Exists(path))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
-
     public IEnumerator PlayEmote()
     {
         if (!npcMC.isMoving)
@@ -45,7 +55,7 @@ public class SPAAIEmoteController : MonoBehaviour
                     }
                     if (SerachForEmoteWithName(AnimPlayList[i]))
                     {
-                        if (EmoteAnimationHandler.Instance.CheckForIsAssetBundleAvailable(Path.Combine(ConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, emoteName + ".unity3d")))
+                        if (CheckForIsAssetBundleAvailable(Path.Combine(ConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, emoteName + ".unity3d")))
                         {
                             emotCoroutine = StartCoroutine(LoadAssetBundleFromStorage(Path.Combine(ConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, emoteName + ".unity3d")));
                             yield return new WaitForSeconds(AnimPlayTimer[i]);
@@ -569,21 +579,23 @@ public class SPAAIEmoteController : MonoBehaviour
 
     bool SerachForEmoteWithName(string _emoteName)
     {
-        int _emoteIndex = EmoteAnimationHandler.Instance.emoteAnim.FindIndex(obj => obj.name == _emoteName);
+        int _emoteIndex = GameplayEntityLoader.instance.ActionEmoteSystem.EmoteManager.EmoteServerData.data.animationList.FindIndex(obj => obj.name == _emoteName);
         if (_emoteIndex != -1)
         {
-            if (EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].group.Contains("Dance") || EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].group.Contains("Moves") ||
-                EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].group.Contains("Idle") || EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].group.Contains("Etc") ||
-                EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].group.Contains("Walk"))
+            if (GameplayEntityLoader.instance.ActionEmoteSystem.EmoteManager.EmoteServerData.data.animationList[_emoteIndex].group.Contains("Dance") ||
+                GameplayEntityLoader.instance.ActionEmoteSystem.EmoteManager.EmoteServerData.data.animationList[_emoteIndex].group.Contains("Moves") ||
+                GameplayEntityLoader.instance.ActionEmoteSystem.EmoteManager.EmoteServerData.data.animationList[_emoteIndex].group.Contains("Idle") ||
+                GameplayEntityLoader.instance.ActionEmoteSystem.EmoteManager.EmoteServerData.data.animationList[_emoteIndex].group.Contains("Etc") ||
+                GameplayEntityLoader.instance.ActionEmoteSystem.EmoteManager.EmoteServerData.data.animationList[_emoteIndex].group.Contains("Walk"))
             {
-                emoteName = EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].name;
+                emoteName = GameplayEntityLoader.instance.ActionEmoteSystem.EmoteManager.EmoteServerData.data.animationList[_emoteIndex].name;
                 CurrDanceAnimName = emoteName;
 #if UNITY_ANDROID
-                emoteBundleUrl = EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].android_file;
+                emoteBundleUrl = GameplayEntityLoader.instance.ActionEmoteSystem.EmoteManager.EmoteServerData.data.animationList[_emoteIndex].android_file;
 #elif UNITY_IOS
-                    emoteBundleUrl = EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].ios_file;
+                    emoteBundleUrl = GameplayEntityLoader.instance.ActionEmoteSystem.EmoteManager.EmoteServerData.data.animationList[_emoteIndex].ios_file;
 #elif UNITY_EDITOR
-                    emoteBundleUrl = EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].android_file;
+                    emoteBundleUrl = GameplayEntityLoader.instance.ActionEmoteSystem.EmoteManager.EmoteServerData.data.animationList[_emoteIndex].android_file;
 #endif
                 emoteBundlePath = Path.Combine(ConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, emoteBundleUrl + ".unity3d");
                 return true;

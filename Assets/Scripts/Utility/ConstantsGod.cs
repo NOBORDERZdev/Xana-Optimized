@@ -272,7 +272,8 @@ public class ConstantsGod
     public static string FOLLOWINGSPACES = "/world/get-favourite-space-list-for-xana/";//pageNumber/pageSize
     public static string MOSTVISITEDTAG = "/world/get-most-visited-tags/";  //pageNumber/pageSize
     public static string FOLLOWWORLD = "/world/mark-favourite-space/";  //:worldId    //same work for both follow world and unfollow world.
-    public static string SINGLEWORLDINFO = "/item/get-one-world-data?worldId=";   //worldName=&worldId=
+    public static string SINGLEWORLDINFO = "/item/get-one-world-data?worldId=";   //:id/:type
+    public static string SINGLEWORLDINFOBYNAME = "/item/get-one-world-data?worldName=";   //:id/:type
 
     #endregion
 
@@ -281,6 +282,10 @@ public class ConstantsGod
     public static string GetPostSentToServer = "/item/get-latest-text-post/";///"/item/get-user-text-post/1/100";
     public static string GetUserAllTextPosts = "/item/get-user-text-post/";
     #endregion
+    #region Get App Features List Api's
+    public static string FeaturesListApi = "/admin/get-features-list";
+    #endregion
+
 
     #region Jj World Api's
     public static string JJWORLDASSET = "/item/jjWorld/get-museum-all-assets/";
@@ -306,11 +311,14 @@ public class ConstantsGod
     #region PMY World Api's
     public static string toyotaApi = "/toyotaAichiWorlds/get-all-assets-by-worldId/";//"/pmyWorlds/get-all-assets-by-worldId/";
     #endregion
-
+    #region JJ Test World Api's
+    public static string JjTestWorldAssets = "/airin/get-all-assets-by-worldId/"; 
+    #endregion
 
     #region XANA Summit Api's
     public static string GETDOMENPCINFO = "/domes/getDomeNPCInfo/";  //:domeId/:type
     public static string GETALLDOMES = "/domes/getcreatedDomes";
+    public static string GETSINGLEDOMEAUTHEMAILS = "/domes/get-domes-participants/";
     public static string GETSINGLEDOME = "/domes/getDomeGeneralInfoById/";  //:domeId
     public static string GETVISITDOMES = "/domes/getvisitedomes";
     public static string SETVISITDOMEWITHID = "/domes/domesvisits/";

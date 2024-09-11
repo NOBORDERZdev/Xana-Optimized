@@ -26,15 +26,22 @@ public class AvProDirectionalSound : MonoBehaviour
 
     private void OnEnable()
     {
+        AvatarSpawnerOnDisconnect.OninternetDisconnect += VolumeCoroutineUnAssign;
+        AvatarSpawnerOnDisconnect.OninternetConnected += VolumeCoroutineAssigning;
         InRoomSoundHandler.soundAction += Mute_UnMute_Sound;
         ScreenOrientationManager.switchOrientation += ChangeOrientation;
+        if (volumeCoroutine == null)
+            volumeCoroutine = StartCoroutine(AdjustScreenVolume());
     }
     private void OnDisable()
     {
+        AvatarSpawnerOnDisconnect.OninternetDisconnect -= VolumeCoroutineUnAssign;
+        AvatarSpawnerOnDisconnect.OninternetConnected -= VolumeCoroutineAssigning;
         InRoomSoundHandler.soundAction -= Mute_UnMute_Sound;
         ScreenOrientationManager.switchOrientation -= ChangeOrientation;
         if (volumeCoroutine != null)
             StopCoroutine(volumeCoroutine);
+            volumeCoroutine = null;
     }
 
     private void Start()
@@ -102,6 +109,7 @@ public class AvProDirectionalSound : MonoBehaviour
 
     public void ActiveDirectionalSound()
     {
+        playerCam = ReferencesForGamePlay.instance.m_34player.transform;
         if (activePlayer.gameObject.activeSelf)
         {
             if (volumeCoroutine == null)
@@ -124,10 +132,16 @@ public class AvProDirectionalSound : MonoBehaviour
 
     IEnumerator AdjustScreenVolume()
     {
-            playerCam = ReferencesForGamePlay.instance.m_34player.transform;
-
         while (true)
         {
+            if (!playerCam)
+            {
+                if (ReferencesForGamePlay.instance.m_34player)
+                {
+                    playerCam = ReferencesForGamePlay.instance.m_34player.transform;
+                }
+            }
+
             if (!activePlayer.gameObject.activeSelf)
             {
                 if (volumeCoroutine != null)
@@ -175,9 +189,9 @@ public class AvProDirectionalSound : MonoBehaviour
             maxDistance = defaultMaxDis;
     }
 
-    private void ChangeOrientation()
+    private void ChangeOrientation(bool IsPortrait)
     {
-        if (ScreenOrientationManager._instance.isPotrait)
+        if (IsPortrait)
         {
             sliderValue = SoundSettings.soundManagerSettings.totalVolumeSliderPotrait.value;
             AddTriggerOnSlider(SoundSettings.soundManagerSettings.totalVolumeSliderPotrait);
@@ -189,5 +203,36 @@ public class AvProDirectionalSound : MonoBehaviour
         }
     }
 
+    public void VolumeCoroutineUnAssign()
+    {
+        activePlayer.AudioVolume = 0f;
+        audioSource.mute = true;
+        if (volumeCoroutine != null)
+        {
+            StopCoroutine(volumeCoroutine);
+            volumeCoroutine = null;
+        }
+    }
 
+    public void VolumeCoroutineAssigning()
+    {
+        StartCoroutine(EnableVideoSound());
+    }
+
+    public IEnumerator EnableVideoSound()
+    {
+        if (!LoadingHandler.Instance.isLoadingComplete)
+        {
+            // Wait for a end of frame
+            yield return null;
+        }
+        SoundController.Instance.EffectsSource.mute = false;
+        SoundController.Instance.EffectsSource.volume = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME);
+        yield return new WaitForSeconds(0.5f);
+        audioSource.mute = false;
+        if (volumeCoroutine == null)
+        {
+            volumeCoroutine = StartCoroutine(AdjustScreenVolume());
+        }
+    }
 }

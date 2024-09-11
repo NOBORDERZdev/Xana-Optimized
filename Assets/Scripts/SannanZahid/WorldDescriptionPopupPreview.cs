@@ -35,6 +35,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
     public GameObject m_WorldPlayPanel;
     public ScrollActivity scrollActivity;
     public Transform AvatarIcon;
+    public Transform XanaAvatarIcon;
     public Sprite NoAvatarIcon;
     public TextMeshProUGUI CreatorDescriptionTxt;
     public GameObject creatorPanel, sepLineSmallView, sepLineLargeView;
@@ -49,7 +50,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
     public bool tagsInstantiated;
     public Transform PreviewLogo;
     public GameObject backButton;
-
+    public bool UserMicEnable;
     public static Action<bool> OndescriptionPanelSwipUp;
     private void OnEnable()
     {
@@ -115,7 +116,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
 
     public void Init(GameObject thumbnailObjRef, Sprite worldImg, string worldName, string worldDescription, string creatorName,
         string createdAt, string updatedAt, bool isBuilderSceneF, string userAvatarURL, string ThumbnailDownloadURLHigh, string[] worldTags,
-        string entityType, string creator_Name, string creator_Description, string creatorAvatar, bool isFavourite, string _worldId)
+        string entityType, string creator_Name, string creator_Description, string creatorAvatar, bool userMicEnable, bool isFavourite, string _worldId)
     {
         WorldDetailContentrRef.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         worldId = _worldId;
@@ -182,23 +183,23 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         CreatorNameTxt.GetComponent<TextLocalization>().LocalizeTextText(creator_Name);
         CreatorDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(creator_Description);
         AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon;
-        if (string.IsNullOrEmpty(userAvatarURL))
-        {
+        //if (string.IsNullOrEmpty(userAvatarURL))
+        //{
             //NoAvatarIcon.gameObject.SetActive(true);
             //XanaAvatarIcon.gameObject.SetActive(false);
             //AvatarIcon.gameObject.SetActive(true);
-        }
-        //else if (!string.IsNullOrEmpty(creatorName) && creatorName.ToLower().Contains("xana"))
-        //{
-        //    NoAvatarIcon.gameObject.SetActive(false);
-        //    XanaAvatarIcon.gameObject.SetActive(true);
-        //    AvatarIcon.gameObject.SetActive(false);
         //}
-        else
+        if (!string.IsNullOrEmpty(creatorName) && creatorName.ToLower().Contains("xana"))
         {
             //NoAvatarIcon.gameObject.SetActive(false);
-            //XanaAvatarIcon.gameObject.SetActive(false);
-            //AvatarIcon.gameObject.SetActive(true);
+            XanaAvatarIcon.gameObject.SetActive(true);
+            AvatarIcon.gameObject.SetActive(false);
+        }
+        else if (!string.IsNullOrEmpty(userAvatarURL))
+        {
+            //NoAvatarIcon.gameObject.SetActive(false);
+            XanaAvatarIcon.gameObject.SetActive(false);
+            AvatarIcon.gameObject.SetActive(true);
             StartCoroutine(DownloadAndSetImage(userAvatarURL, UserProfileImg));
         }
         creatorPanel.SetActive(true);
@@ -207,7 +208,8 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         {
             creatorPanel.SetActive(false);
         }*/
-
+        UserMicEnable = userMicEnable;
+        ConstantsHolder.xanaConstants.UserMicEnable = UserMicEnable;
         CheckWorldFav(isFavourite);
         WorldDescriptionTxt.transform.parent.GetComponent<ParentHeightAdjuster>().SetParentHeight();
         //CreatorDescriptionTxt.transform.parent.GetComponent<ParentHeightAdjuster>().SetParentHeight();

@@ -47,7 +47,7 @@ public class NFT_Holder_Manager : MonoBehaviour
         else
             Destroy(this.gameObject);
     }
-
+   
     private void Start()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -65,7 +65,15 @@ public class NFT_Holder_Manager : MonoBehaviour
         // send Space_Entry_UniqueUsers_Mobile_App
         GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.SE_UU_Mobile_App_THA.ToString());
     }
+    //private void OnApplicationFocus(bool hasFocus)
+    //{
+    //    if (!hasFocus)
+    //    {
+    //        Debug.Log("---Infinity Labo Nft Close due to Application minimized");
+    //        CloseBtnClicked();
+    //    }
 
+    //}
     public void SetChatRefrence()
     {
         _chatSystem = XanaChatSystem.instance;
@@ -91,30 +99,18 @@ public class NFT_Holder_Manager : MonoBehaviour
 
     public void CloseBtnClicked()
     {
-        currentRoom.CloseInfoPop();
+        currentRoom?.CloseInfoPop();
         if (currentRoom != null) currentRoom = null;
-
-        if (renderTexture_16x9 != null)
-        {
-            renderTexture_16x9.Release();
-        }
-        if (renderTexture_9x16 != null)
-        {
-            renderTexture_9x16.Release();
-        }
-        if (renderTexture_1x1 != null)
-        {
-            renderTexture_1x1.Release();
-        }
-        if (renderTexture_4x3 != null)
-        {
-            renderTexture_4x3.Release();
-        }
+        renderTexture_16x9?.Release();
+        renderTexture_9x16?.Release();
+        renderTexture_1x1?.Release();
+        renderTexture_4x3?.Release();
     }
+
 
     public void PdfClosed()
     {
-        currentRoom.EnableControlls();
+        currentRoom?.EnableControlls();
         if (currentRoom != null) currentRoom = null;
     }
 

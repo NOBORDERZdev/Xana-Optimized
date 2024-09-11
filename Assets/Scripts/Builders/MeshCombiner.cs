@@ -32,7 +32,7 @@ public class MeshCombiner : MonoBehaviour
     bool CheckComponent(ItemData data)
     {
         //print(data.rotatorComponent);
-        if (data.rotatorComponentData.IsActive || data.collectibleComponentData.IsActive || data.translateComponentData.IsActive || data.toFroComponentData.IsActive || data.scalerComponentData.IsActive || data.rotateComponentData.IsActive || data.enemyNPCComponentData.IsActive || data.quizComponentData.IsActive || data.blindfoldedDisplayComponentData.IsActive || data.addForceComponentData.isActive || data.avatarChangerComponentData.IsActive || data.doorKeyComponentData.IsActive || data.chestKeyComponentData.IsActive || data.speicalItemComponentData.IsActive || data.ninjaComponentData.IsActive || data.throwThingsComponentData.IsActive|| data.avatarChangerComponentData.IsActive)
+        if (data.rotatorComponentData.IsActive || data.collectibleComponentData.IsActive || data.translateComponentData.IsActive || data.toFroComponentData.IsActive || data.scalerComponentData.IsActive || data.rotateComponentData.IsActive || data.enemyNPCComponentData.IsActive || data.blindfoldedDisplayComponentData.IsActive || data.addForceComponentData.isActive || data.avatarChangerComponentData.IsActive || data.doorKeyComponentData.IsActive || data.chestKeyComponentData.IsActive || data.speicalItemComponentData.IsActive || data.ninjaComponentData.IsActive || data.quizComponentData.IsActive || data.throwThingsComponentData.IsActive || data.physicsComponentData.PhysicsComponentIsActive)
             return true;
         else return false;
     }
@@ -63,14 +63,17 @@ public class MeshCombiner : MonoBehaviour
                 meshFilters.Clear();
                 for (int j = 0; j < allRenderers.Count; j++)
                 {
-                    if (allRenderers[j] != null && allRenderers[j].material != null &&
-                        targetMaterial[i].name == allRenderers[j].material.name &&
-                        targetMaterial[i].HasProperty("_Color") && targetMaterial[i].color == allRenderers[j].material.color)
+                    if (targetMaterial[i].HasProperty("_Color") && allRenderers[j].material.HasProperty("_Color"))
                     {
-                        MeshFilter meshFilter = allRenderers[j].GetComponent<MeshFilter>();
-                        if (meshFilter != null && meshFilter.mesh != null)
+                        if (allRenderers[j] != null && allRenderers[j].material != null &&
+                       targetMaterial[i].name == allRenderers[j].material.name &&
+                       targetMaterial[i].color == allRenderers[j].material.color)
                         {
-                            meshFilters.Add(meshFilter);
+                            MeshFilter meshFilter = allRenderers[j].GetComponent<MeshFilter>();
+                            if (meshFilter != null && meshFilter.mesh != null)
+                            {
+                                meshFilters.Add(meshFilter);
+                            }
                         }
                     }
                 }

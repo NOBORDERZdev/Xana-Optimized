@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine.Networking;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Photon.Pun.Demo.PunBasics;
 
 public class DomeMinimapDataHolder : MonoBehaviour
 {
@@ -18,7 +19,8 @@ public class DomeMinimapDataHolder : MonoBehaviour
     public GameObject ConfirmationPopup_Portrait;
 
     public static Action<OnTriggerSceneSwitch> OnInitDome;
-    
+    public static Action<int> OnSetDomeId;
+
     private Dictionary<int, Transform> _allInitDomes = new Dictionary<int, Transform>();
     private Transform _playerTransform;
     private int _clickedDomeID;
@@ -28,11 +30,14 @@ public class DomeMinimapDataHolder : MonoBehaviour
     private void OnEnable()
     {
         OnInitDome += UpdateDomeList;
+        OnSetDomeId += SetDomeID;
+
         SummitSceneReloaded();
     }
     private void OnDisable()
     {
         OnInitDome -= UpdateDomeList;
+        OnSetDomeId -= SetDomeID;
     }
 
     public void SummitSceneReloaded()
@@ -45,11 +50,11 @@ public class DomeMinimapDataHolder : MonoBehaviour
     }
     void UpdateDomeList(OnTriggerSceneSwitch domeObj)
     {
-        if (!_allInitDomes.ContainsKey(domeObj.domeId))
-            _allInitDomes.Add(domeObj.domeId, domeObj.transform);
+        if (!_allInitDomes.ContainsKey(domeObj.DomeId))
+            _allInitDomes.Add(domeObj.DomeId, domeObj.transform);
         else
         {
-            _allInitDomes[domeObj.domeId]= domeObj.transform;
+            _allInitDomes[domeObj.DomeId]= domeObj.transform;
         }
     }
     public async Task GetVisitedDomeData()
@@ -60,7 +65,7 @@ public class DomeMinimapDataHolder : MonoBehaviour
         Debug.Log("VisitedWorld: Result: " + result);
         if (string.IsNullOrEmpty(result))
         {
-            Debug.LogError("Error fetching dome data.");
+            Debug.Log("<color=red>Error fetching dome data. Might be the user is Guest</color>");
             return;
         }
         var jsonNode = JSON.Parse(result);
@@ -108,8 +113,27 @@ public class DomeMinimapDataHolder : MonoBehaviour
     }
     void TeleportPlayerToSelectedDome(int _domeId, Transform playerTransform)
     {
+      
         if (_allInitDomes.TryGetValue(_domeId, out Transform domeTransform))
         {
+            if(_domeId>8&& _domeId<37)
+            {
+                MutiplayerController.instance.Ontriggered("GrassLand");
+            }else if(_domeId>40&& _domeId<69)
+            {
+                MutiplayerController.instance.Ontriggered("Sea");
+            }else if(_domeId>68&& _domeId<97)
+            {
+                MutiplayerController.instance.Ontriggered("Solid");
+            }else if(_domeId>100&& _domeId<129)
+            {
+                MutiplayerController.instance.Ontriggered("Sand");
+            }
+            else
+            {
+                MutiplayerController.instance.Ontriggered("Default");
+            }
+
             // Attempt to find "Player Spawner" or default to first child if not found
             Transform domePos = domeTransform.Find("Player Spawner") ?? domeTransform.GetChild(0);
             playerTransform.position = domePos.position;
@@ -130,7 +154,21 @@ public class DomeMinimapDataHolder : MonoBehaviour
     {
         ConfirmationPanelHandling(false);
         ReferencesForGamePlay.instance.FullScreenMapStatus(false);
+        if (ActionManager.IsAnimRunning)
+        {
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            //  EmoteAnimationHandler.Instance.StopAllCoroutines();
+        }
 
         TeleportPlayerToSelectedDome(_clickedDomeID, _playerTransform);
+    }
+
+    public void SetDomeID(int DomeId)
+    {
+        _clickedDomeID = DomeId;
+        if (_playerTransform == null)
+            _playerTransform = GameplayEntityLoader.instance.mainController.transform;
     }
 }

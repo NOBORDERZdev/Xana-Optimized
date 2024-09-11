@@ -1,42 +1,60 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
+
 
 public class OnTriggerSceneSwitch : MonoBehaviour
 {
-    public int domeId;
-    [Tooltip("This only require when dome id is set to -1")]
-    public string sceneName;
+    [Tooltip("Set it to -1 if you are manually loading scene")]
+    public int DomeId;
+    public string WorldIdTestnet;
+    public string WorldIdMainnet;
+    public GameObject textMeshPro;
+    [HideInInspector]
+    public string WorldId;
+    private bool alreadyTriggered;
 
-    public TMPro.TextMeshPro textMeshPro;
+    private void OnEnable()
+    {
+        if (APIBasepointManager.instance.IsXanaLive)
+            WorldId = WorldIdMainnet;
+        else
+            WorldId = WorldIdTestnet;
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (PhotonNetwork.InRoom)
         {
-            if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
+            if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine && !alreadyTriggered)
             {
-                if (ConstantsHolder.MultiSectionPhoton)
+                alreadyTriggered = true;
+             
+                if (DomeId == -1)
                 {
-                    ConstantsHolder.DiasableMultiPartPhoton = true;
+                    TriggerSceneLoading(WorldId);
                 }
-                if (domeId == -1 && !string.IsNullOrEmpty(sceneName))
-                    TriggerSceneLoading(sceneName);
                 else
                     TriggerSceneLoading();
+
+                DisableCollider();
             }
         }
     }
 
     void TriggerSceneLoading()
     {
-        GameplayEntityLoader.instance.AssignRaffleTickets(domeId);
-        ConstantsHolder.domeId = domeId;
-        BuilderEventManager.LoadNewScene?.Invoke(domeId, transform.GetChild(0).transform.position);
+        //GameplayEntityLoader.instance.AssignRaffleTickets(DomeId);
+        BuilderEventManager.LoadNewScene?.Invoke(DomeId, transform.GetChild(0).transform.position);
     }
 
-    void TriggerSceneLoading(string sceneName)
+    void TriggerSceneLoading(string WorldId)
     {
-        BuilderEventManager.LoadSceneByName?.Invoke(sceneName, transform.GetChild(0).transform.position);
+        BuilderEventManager.LoadSceneByName?.Invoke(WorldId, transform.GetChild(0).transform.position);
+    }
+
+    async void DisableCollider()
+    {
+        await Task.Delay(2000);
+        alreadyTriggered = false;
     }
 }

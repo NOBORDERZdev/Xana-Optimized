@@ -5,17 +5,18 @@ using UnityEngine.Video;
 
 public class SpaceXHandler : MonoBehaviour
 {
-    public GameObject planetOptions;
-    public VideoPlayer videoPlayer;
-    public string[] planetNames;
-    private bool waitForRestart;
+    public GameObject PlanetOptions;
+    public VideoPlayer VideoPlayer;
+    public TMPro.TextMeshProUGUI LaunchCounter;
+    public string[] PlanetWorldId_Testnet;
+    public string[] PlanetWorldId_Mainnet;
+    public XANASummitSceneLoading SummitSceneLoading;
     //public AudioSource launchCountingAudioSource;
     //public AudioClip countingAudioClip;
-    public TMPro.TextMeshProUGUI launchCounter;
 
-    public XANASummitSceneLoading summitSceneLoading;
 
-    private Vector3 returnPlayerPos;
+    private bool _WaitForRestart;
+    private Vector3 _ReturnPlayerPos;
 
     private void OnEnable()
     {
@@ -26,67 +27,69 @@ public class SpaceXHandler : MonoBehaviour
         BuilderEventManager.spaceXActivated -= StartVideoPlayer;
     }
 
-    async void StartVideoPlayer(VideoClip videoClip,Vector3 _returnPlayerPos)
+    async void StartVideoPlayer(VideoClip VideoClip,Vector3 ReturnPlayerPos)
     {
-        if (waitForRestart)
+        if (_WaitForRestart)
             return;
         await ShowCounter();
-        returnPlayerPos = _returnPlayerPos;
-        videoPlayer.gameObject.SetActive(true);
-        videoPlayer.clip=videoClip; 
-        videoPlayer.Play();
-        videoPlayer.loopPointReached += VideoPlayer_loopPointReached;
+        _ReturnPlayerPos = ReturnPlayerPos;
+        VideoPlayer.gameObject.SetActive(true);
+        VideoPlayer.targetTexture.Release();
+        VideoPlayer.clip=VideoClip; 
+        VideoPlayer.Play();
+        VideoPlayer.loopPointReached += VideoPlayer_loopPointReached;
     }
 
     async Task ShowCounter()
     {
-
-        //AudioClip audioClip = launchCountingAudioSource.clip;
-        //launchCountingAudioSource.clip = countingAudioClip;
-        //launchCountingAudioSource.volume = 1;
-        //launchCountingAudioSource.Play();
-        //await Task.Delay(4000);
-        launchCounter.GetComponent<Animator>().enabled = true;
-        waitForRestart = true;
+        LaunchCounter.GetComponent<Animator>().enabled = true;
+        _WaitForRestart = true;
         int x = 10;
-        launchCounter.gameObject.SetActive(true);
+        LaunchCounter.gameObject.SetActive(true);
         while (x> 0)
         {
-            launchCounter.text=x.ToString();
+            LaunchCounter.text=x.ToString();
             await Task.Delay(1000);
             x--;
         }
-        launchCounter.GetComponent<Animator>().enabled=false;
+        LaunchCounter.GetComponent<Animator>().enabled=false;
+        LaunchCounter.gameObject.SetActive(false);
         await Task.Delay(1000);
         //launchCountingAudioSource.clip=audioClip;
-        launchCounter.gameObject.SetActive(false);
     }
 
 
     private void VideoPlayer_loopPointReached(VideoPlayer source)
     {
-        planetOptions.SetActive(true);
+        PlanetOptions.SetActive(true);
     }
 
     void DisableVideoPlayer()
     {
-        videoPlayer.gameObject.SetActive(false);
+        VideoPlayer.gameObject.SetActive(false);
     }
 
     void DisablePlanetOptionScreen()
     {
-        planetOptions.SetActive(false);
+        PlanetOptions.SetActive(false);
     }
 
     public void LoadPlanetScene(int x)
     {
-        StartCoroutine(LoadingHandler.Instance.FadeIn());
-        string sceneName = planetNames[x];
-        summitSceneLoading.LoadingNewScene(sceneName,returnPlayerPos);
-        Destroy(videoPlayer.clip);
+        string SceneId;
+        //StartCoroutine(LoadingHandler.Instance.FadeIn());
+        LoadingHandler.Instance.ShowVideoLoading();
+        if (APIBasepointManager.instance.IsXanaLive)
+            SceneId = PlanetWorldId_Mainnet[x];
+        else
+            SceneId = PlanetWorldId_Testnet[x];
+
+        ConstantsHolder.isFromXANASummit = true;
+        SummitSceneLoading.LoadingSceneByIDOrName(SceneId, _ReturnPlayerPos);
+        Destroy(VideoPlayer.clip);
         DisableVideoPlayer();
         DisablePlanetOptionScreen();
-        waitForRestart = false;
+        _WaitForRestart = false;
        // SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
     }
 

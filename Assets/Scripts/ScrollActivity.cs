@@ -238,6 +238,9 @@ public class ScrollActivity : MonoBehaviour
         float parentHeight = fakeBGRectTransform.parent.GetComponent<RectTransform>().rect.height;
         anchorMax.y = 1f - (_desrHeight / parentHeight);
 
+        //Required clamping due to fakebg showing outside
+        anchorMax.y = Mathf.Clamp(anchorMax.y, 0, 1);
+
         // Apply the new anchor values to the RectTransform
         fakeBGRectTransform.anchorMax = anchorMax;
     }

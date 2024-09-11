@@ -3,15 +3,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class BGMVolumeControlOnTrigger : MonoBehaviour
 {
-    public float bgmMinVolume;
-    public float bgmMaxVolume;
+    public AdvancedYoutubePlayer VideoPlayerController;
+    public AudioSource PrePrecordered;
+    public bool IsPlayerCollided = false;
 
     private void Start()
     {
-        SetBGMAudioOnTrigger(bgmMaxVolume);
+        if (gameObject.GetComponent<AdvancedYoutubePlayer>())
+        {
+            VideoPlayerController = gameObject.GetComponent<AdvancedYoutubePlayer>();
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -20,7 +25,18 @@ public class BGMVolumeControlOnTrigger : MonoBehaviour
         {
             if (other.gameObject.GetComponent<PhotonView>().IsMine)
             {
-                SetBGMAudioOnTrigger(bgmMinVolume);
+                IsPlayerCollided = true;
+                SetBGMAudioOnTrigger(true);
+                if (PrePrecordered && PrePrecordered.isActiveAndEnabled)
+                {
+                    SoundSettings.soundManagerSettings.videoSource = PrePrecordered;
+                    //if(IsPlayerCollided)
+                    // SoundSettings.soundManagerSettings.SetBgmVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
+                    SoundSettings.soundManagerSettings.SetAudioSourceSliderVal(PrePrecordered, PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
+
+                    PrePrecordered.mute = false;
+                }
+
             }
         }
     }
@@ -31,24 +47,23 @@ public class BGMVolumeControlOnTrigger : MonoBehaviour
         {
             if (other.gameObject.GetComponent<PhotonView>().IsMine)
             {
-                SetBGMAudioOnTrigger(bgmMaxVolume);
+                IsPlayerCollided = false;
+                SetBGMAudioOnTrigger(false);
+                if (PrePrecordered && PrePrecordered.isActiveAndEnabled)
+                {
+                    SoundSettings.soundManagerSettings.videoSource = null;
+                    PrePrecordered.mute = true;
+                }
             }
-            
         }
     }
 
-    void SetBGMAudioOnTrigger(float _volume)
-    {
-        try
-        {
-            if (SoundController.Instance != null)
-            {
-                SoundController.Instance.EffectsSource.volume = _volume;
-            }
-        }
-        catch (Exception e)
-        {
 
+    public void SetBGMAudioOnTrigger(bool _mute)
+    {
+        if (SoundController.Instance != null)
+        {
+            SoundController.Instance.EffectsSource.mute = _mute;
         }
     }
 }

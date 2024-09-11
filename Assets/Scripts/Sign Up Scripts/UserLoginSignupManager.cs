@@ -52,12 +52,16 @@ public class UserLoginSignupManager : MonoBehaviour
     public GameObject EditProfilePanel;
     public AdvancedInputField displayrNameField;
     public AdvancedInputField userUsernameField;
+    public GameObject UserNameFieldObj;
     public Image SelectedPresetImage;
     public Image SelectPresetImageforEditProfil;
     public RawImage AiPresetImage;
     public RawImage AiPresetImageforEditProfil;
     public Button NameScreenNextButton;
     public Button ProfilePicNextButton;
+    public Sprite NameFeildSelectedSprite;
+    public Sprite NameFeildUnSelectedSprite;
+    public Image NameScreenNextButtonImage;
     public GameObject NameScreenLoader;
     public GameObject ProfilePicScreenLoader;
     public Image EditProfileImage;
@@ -65,6 +69,8 @@ public class UserLoginSignupManager : MonoBehaviour
     public string SetProfileAvatarTempFilename = "";
     public string PermissionCheck = "";
     public GameObject PickImageOptionScreen;
+    [Space(5)]
+    public GameObject permissionPopup;
 
     [Header("Validation Popup Panel")]
     public ErrorHandler errorHandler;
@@ -88,7 +94,7 @@ public class UserLoginSignupManager : MonoBehaviour
     EyesBlinking ref_EyesBlinking;
     [Header("Bools Fields")]
     private bool _isUserClothDataFetched = false;
-    public bool LoggedInAsGuest = false;
+    //public bool LoggedInAsGuest = false;
 
     private void OnEnable()
     {
@@ -157,13 +163,26 @@ public class UserLoginSignupManager : MonoBehaviour
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1 || PlayerPrefs.GetInt("WalletLogin") == 1)
         {
             LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+            }
             StartCoroutine(RefreshXanaTokenAPI());
         }
         else
         {
-            LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 0;
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+            }
             ShowWelcomeScreen();
         }
     }
@@ -214,25 +233,10 @@ public class UserLoginSignupManager : MonoBehaviour
     }
     void AutoLogin()
     {
-        //if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
-        //{
-        //    //Debug.LogError("Email login .... ");
-        //    //MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
-        //    //LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
-        //    //StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), (isSucess) =>
-        //    //{
-        //    //    //write if you want something on sucessfull login
-        //    //}));
-        //}
-        //else if (PlayerPrefs.GetInt("WalletLogin") == 1)
-        //{
-            ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
-            ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
-            ConstantsHolder.isWalletLogin = true;
-            LoggedInAsGuest = false;
-            WalletAutoLogin();
-            //GetUserCoinsAfterLogin();
-        //}
+        ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
+        ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
+        ConstantsHolder.isWalletLogin = true;
+        WalletAutoLogin();
     }
     #region SignUp Functions 
 
@@ -258,15 +262,30 @@ public class UserLoginSignupManager : MonoBehaviour
                 DefaultClothDatabase.instance.GetComponent<SaveCharacterProperties>().SavePlayerProperties();
                 InventoryManager.instance.OnSaveBtnClicked();  // reg complete go home
             }
+            if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit && !ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+            {
+                if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                {
+                    Screen.orientation = ScreenOrientation.Portrait;
+                    signUpOrloginSelectionPanel.SetActive(false);
+                }
+
+            }
         }
         else
         {
-
             signUpOrloginSelectionPanel.SetActive(false);
 
             if (!PlayerPrefs.HasKey("shownWelcome"))
             {
-                InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                {
+                    InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                }
+                else
+                {
+                    InventoryManager.instance.StartPanel_PresetParentPanelSummit.SetActive(true);
+                }
             }
         }
 
@@ -274,7 +293,9 @@ public class UserLoginSignupManager : MonoBehaviour
     }
     public void ContinueAsGuest()
     {
-         GameManager.Instance.NotNowOfSignManager();
+        //GameManager.Instance.NotNowOfSignManager();
+        LoginRegisterScreen.SetActive(false);
+        Screen.orientation = ScreenOrientation.Portrait;
     }
     public void OnClickSignUpSelection()
     {
@@ -306,7 +327,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void OnClickLoginSelection()
     {
-        if (LoggedInAsGuest)
+        if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
         {
             LoginRegisterScreen.SetActive(false);
             emailOrWalletLoginPanel.SetActive(true);
@@ -325,15 +346,16 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void BackFromLoginSelection()
     {
-        if (LoggedInAsGuest)
+       
+        if (!ConstantsHolder.xanaConstants.openLandingSceneDirectly && ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
         {
-            emailOrWalletLoginPanel.SetActive(false);
-            
+
+            signUpOrloginSelectionPanel.SetActive(true);
         }
         else {
-            emailOrWalletLoginPanel.SetActive(false);
+            
             signUpOrloginSelectionPanel.SetActive(true);
-             }
+        }
     }
 
     public void OnClickLoginWithEmail()
@@ -372,10 +394,19 @@ public class UserLoginSignupManager : MonoBehaviour
     }
     public void BackFromUserNamePanel()
     {
-        enterNamePanel.SetActive(false);
-        displayrNameField.Clear();
-        userUsernameField.Clear();
-        InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            enterNamePanel.SetActive(false);
+            displayrNameField.Clear();
+            userUsernameField.Clear();
+            InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        }
+        else {
+            enterNamePanel.SetActive(false);
+            displayrNameField.Clear();
+            userUsernameField.Clear();
+            InventoryManager.instance.StartPanel_PresetParentPanelSummit.SetActive(true);
+        }
     }
 
 
@@ -409,7 +440,7 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
 
-        if(ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
         {
             GetUserClothData();
             return;
@@ -565,7 +596,14 @@ public class UserLoginSignupManager : MonoBehaviour
             }
             else
             {
-                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                {
+                    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                }
+                else
+                {
+                    LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+                }
             }
         }
         else
@@ -593,6 +631,7 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
         SubmitSetDeviceToken();
+        WebViewManager.Instance.CloseWebView();
         if (signUpOrloginSelectionPanel.activeInHierarchy)
         {
             signUpOrloginSelectionPanel.SetActive(false);
@@ -950,57 +989,107 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void EnterUserName()
     {
-        NameScreenLoader.SetActive(true);
-        NameScreenNextButton.interactable = false;
+        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            NameScreenLoader.SetActive(true);
+            NameScreenNextButton.interactable = false;
+
+        }
         string displayrname = displayrNameField.Text;
         string userUsername = userUsernameField.Text;
         string keytoLocalize;
-        if (displayrname == "" || userUsername == "")
+        if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
         {
-            keytoLocalize = TextLocalization.GetLocaliseTextByKey("Display name or username should not be empty.");
-            UserDisplayNameErrors(keytoLocalize);
-            return;
-        }
+            if (displayrname == "")
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("Display name or username should not be empty.");
+                UserDisplayNameErrors(keytoLocalize);
+                return;
+            }
 
-        else if (displayrname.StartsWith(" ") || userUsername.StartsWith(" "))
-        {
-            UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
-            return;
-        }
-        else if (userUsername.All(char.IsDigit))
-        {
-            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must include letters.");
-            UserDisplayNameErrors(keytoLocalize);
-            return;
-        }
-        else if (userUsername.Length < 5 || userUsername.Length > 15)
-        {
-            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must be between 5 and 15 characters.");
-            UserDisplayNameErrors(keytoLocalize);
-            return;
-        }
-        else if (!userUsername.Any(c => char.IsDigit(c) || c == '_'))
-        {
-            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must not include Space. Alphabet, Numbers, or Underscore allowed.");
-            UserDisplayNameErrors(keytoLocalize);
-            return;
+            else if (displayrname.StartsWith(" "))
+            {
+                UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
+                return;
+            }
+            else if (displayrname.EndsWith(" "))
+            {
+                displayrname = displayrname.TrimEnd(' ');
+            }
 
         }
-        else if (displayrname.EndsWith(" "))
-        {
-            displayrname = displayrname.TrimEnd(' ');
+        else if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit) {
+
+            if (displayrname == "")
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("Display name or username should not be empty.");
+                UserDisplayNameErrors(keytoLocalize);
+                return;
+            }
+
+            else if (displayrname.StartsWith(" "))
+            {
+                UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
+                return;
+            }
+            else if (displayrname.EndsWith(" "))
+            {
+                displayrname = displayrname.TrimEnd(' ');
+            }
         }
-        else if (userUsername.EndsWith(" "))
+        else
         {
-            userUsername = userUsername.TrimEnd(' ');
+
+            if (displayrname == "" || userUsername == "")
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("Display name or username should not be empty.");
+                UserDisplayNameErrors(keytoLocalize);
+                return;
+            }
+
+            else if (displayrname.StartsWith(" ") || userUsername.StartsWith(" "))
+            {
+                UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
+                return;
+            }
+            else if (userUsername.All(char.IsDigit))
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must include letters.");
+                UserDisplayNameErrors(keytoLocalize);
+                return;
+            }
+            else if (userUsername.Length < 5 || userUsername.Length > 15)
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must be between 5 and 15 characters.");
+                UserDisplayNameErrors(keytoLocalize);
+                return;
+            }
+            else if (!userUsername.Any(c => char.IsDigit(c) || c == '_'))
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must not include Space. Alphabet, Numbers, or Underscore allowed.");
+                UserDisplayNameErrors(keytoLocalize);
+                return;
+
+            }
+            else if (displayrname.EndsWith(" "))
+            {
+                displayrname = displayrname.TrimEnd(' ');
+            }
+            else if (userUsername.EndsWith(" "))
+            {
+                userUsername = userUsername.TrimEnd(' ');
+            }
         }
         if (PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetInt("IsProcessComplete") == 0 && PlayerPrefs.GetInt("iSignup") == 0)
         {
             Debug.LogError("Set Name for Guest User");
             //DynamicEventManager.deepLink?.Invoke("come from Guest Registration");
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, displayrname);
-            NameScreenNextButton.interactable = true;
-            NameScreenLoader.SetActive(false);
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                NameScreenNextButton.interactable = true;
+                NameScreenLoader.SetActive(false);
+            }
             enterNamePanel.SetActive(false);
             //checkbool_preser_start = true;
             PlayerPrefs.SetInt("shownWelcome", 1);
@@ -1008,13 +1097,32 @@ public class UserLoginSignupManager : MonoBehaviour
             {
                 InventoryManager.instance.OnSaveBtnClicked();
             }
-            GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+            }
+            ConstantsHolder.userName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
             PlayerPrefs.SetInt("IsProcessComplete", 1);// user is registered as guest/register.
+            GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
             if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
-                MainSceneEventHandler.OpenLandingScene?.Invoke();
+            {
+                LoadSummit();
+            }
+            else {
+                if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                    if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                {
+                    Screen.orientation = ScreenOrientation.Portrait;
+                }
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+            }
             return;
         }
-
+        ConstantsHolder.uniqueUserName = userUsername;
         PlayerPrefs.SetInt("IsProcessComplete", 1);
         MyClassOfPostingName myObject = new MyClassOfPostingName();
         string bodyJsonOfName = JsonUtility.ToJson(myObject.GetNamedata(displayrname));
@@ -1028,6 +1136,7 @@ public class UserLoginSignupManager : MonoBehaviour
         if (ConstantsHolder.isWalletLogin)
         {
 
+
             StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, displayrname, (isSucess) =>
             {
 
@@ -1036,25 +1145,30 @@ public class UserLoginSignupManager : MonoBehaviour
                 GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
 
             }));
-
-            RequestSubmitUsername(userUsername);
+           
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+               // LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+                RequestSubmitUsername(userUsername);
+            }
+            else
+            {
+                GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+                if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+                {
+                    MainSceneEventHandler.OpenLandingScene?.Invoke();
+                    return;
+                }
+                else {
+                    Screen.orientation = ScreenOrientation.Portrait;
+                    LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+                    enterNamePanel.SetActive(false);
+                }
+            }
+           
         }
-        //else
-        //{
-        //    StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, displayrname, (isSucess) =>
-        //    {
-
-        //        NameScreenLoader.SetActive(false);
-        //        NameScreenNextButton.interactable = true;
-
-        //        Debug.Log("Email Signup");
-        //        GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Email_Completed.ToString());
-        //        UserPassManager.Instance.GetGroupDetails("freeuser");
-        //    }));
-        //}
-
-
-        //ProfilePictureManager.instance.MakeProfilePicture(Localusername);
+        
     }
     public void UserDisplayNameErrors(string errorMSg)
     {
@@ -1064,6 +1178,21 @@ public class UserLoginSignupManager : MonoBehaviour
         errorHandler.ShowErrorMessage(errorMSg, errorTextMsg);
         NameScreenLoader.SetActive(false);
         NameScreenNextButton.interactable = true;
+
+    }
+    public void OnValueChangedSprite() {
+        if (NameFeildSelectedSprite != null && NameFeildUnSelectedSprite != null)
+        {
+            if (!string.IsNullOrEmpty(displayrNameField.Text))
+            {
+                NameScreenNextButtonImage.sprite = NameFeildSelectedSprite;
+            }
+            else
+            {
+                NameScreenNextButtonImage.sprite = NameFeildUnSelectedSprite;
+            }
+        }
+
 
     }
     IEnumerator RegisterUserWithNewTechnique(string url, string Jsondata, string JsonOfName, String NameofUser, Action<bool> CallBack)
@@ -1344,7 +1473,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
         request.Dispose();
     }
-   
+
     void CheckCameraMan(string email)
     {
         if (email.Contains("xanacameraman@yopmail.com"))
@@ -1543,7 +1672,7 @@ public class UserLoginSignupManager : MonoBehaviour
             case 19:
                 {
                     PlayerPrefs.SetInt("iSignup", 0);// going for guest user registration
-                    LoggedInAsGuest = true;
+                    ConstantsHolder.xanaConstants.LoggedInAsGuest = true;
                     ConstantsHolder.xanaConstants.LoginasGustprofile = true;
                     break;
                 }
@@ -1609,7 +1738,7 @@ public class UserLoginSignupManager : MonoBehaviour
         if (!string.IsNullOrEmpty(deviceToken))
             StartCoroutine(HitLogOutAPI(ConstantsGod.API_BASEURL + ConstantsGod.LogOutAPI, deviceToken, (onSucess) =>
             {
-                if (onSucess)
+                //if (onSucess)
                     StartCoroutine(DeleteAccountApi((deleteSucess) =>
                     {
                         if (deleteSucess)
@@ -1676,9 +1805,11 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public IEnumerator LoginGuest(string url, bool ComesFromLogOut = false)
     {
+        ConstantsHolder.userId = PlayerPrefs.GetString("UserId");
+        Debug.Log("Login Guest userId: " + ConstantsHolder.userId);
         using (UnityWebRequest www = UnityWebRequest.Post(url, "POST"))
         {
-            LoggedInAsGuest = true;
+            ConstantsHolder.xanaConstants.LoggedInAsGuest = true;
             ConstantsHolder.xanaConstants.LoginasGustprofile = true;
             var operation = www.SendWebRequest();
             while (!operation.isDone)
@@ -1711,17 +1842,22 @@ public class UserLoginSignupManager : MonoBehaviour
                                 UserPassManager.Instance.GetGroupDetails("guest");
                             }
                         }
-                        ConstantsHolder.userId = myObject1.data.user.id.ToString();
-                        UserPassManager.Instance.GetGroupDetailsForComingSoon();
-                        PlayerPrefs.SetInt("FirstTime", 1);
+
+                        if (ConstantsHolder.userId.IsNullOrEmpty())
+                        {
+                            ConstantsHolder.userId = myObject1.data.user.id.ToString();
+                            PlayerPrefs.SetString("UserId", ConstantsHolder.userId);
+                            UserPassManager.Instance.GetGroupDetailsForComingSoon();
+                            PlayerPrefs.SetInt("FirstTime", 1);
+                        }
+                        ConstantsHolder.userName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
                         PlayerPrefs.Save();
                         LoadSummit();
-
-
                     }
                 }
             }
         }
+
     }
 
 
@@ -1730,8 +1866,8 @@ public class UserLoginSignupManager : MonoBehaviour
         if (ConstantsHolder.xanaConstants.openLandingSceneDirectly && PlayerPrefs.GetInt("IsProcessComplete") == 1)
         {
             
-            print("Initialize ---=======  LoggedInAsGuest " + UserLoginSignupManager.instance.LoggedInAsGuest);
-            if (LoggedInAsGuest)
+            print("Initialize ---=======  LoggedInAsGuest " + ConstantsHolder.xanaConstants.LoggedInAsGuest);
+            if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
             {
                 Debug.Log("Initialize Avatar with Guest");
                 MainSceneEventHandler.OpenLandingScene?.Invoke();
@@ -1781,7 +1917,7 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.isAdmin = false;
         ConstantsHolder.loggedIn = false;
         ConstantsHolder.xanaConstants.LoginasGustprofile = false;
-        LoggedInAsGuest = false;
+        ConstantsHolder.xanaConstants.LoggedInAsGuest = false;
         PlayerPrefs.SetString("SaveuserRole", "");
         if (CryptouserData.instance != null)
         {
@@ -1821,7 +1957,17 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.xanaConstants.isCameraMan = false;
         ConstantsHolder.xanaConstants.IsDeemoNFT = false;
         InventoryManager.instance.CheckWhenUserLogin();
-        signUpOrloginSelectionPanel.SetActive(true);
+        if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            LoginRegisterScreen.SetActive(true);
+           // signUpOrloginSelectionPanel.SetActive(true);
+        }
+        else
+        {
+            signUpOrloginSelectionPanel.SetActive(true);
+        }
+        //signUpOrloginSelectionPanel.SetActive(true);
         if (_web3APIforWeb2._OwnedNFTDataObj != null)
         {
             _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
@@ -1888,10 +2034,22 @@ public class UserLoginSignupManager : MonoBehaviour
             }
             else if (APIResponse.success)
             {
-                OpenUIPanel(16);
-                EditProfilePanel.SetActive(true);
-                NameScreenLoader.SetActive(false);
-                NameScreenNextButton.interactable = true;
+               
+                if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                {
+                    OpenUIPanel(16);
+                    EditProfilePanel.SetActive(true);
+                    NameScreenLoader.SetActive(false);
+                    NameScreenNextButton.interactable = true;
+                }
+                else {
+                    OpenUIPanel(16);
+                    NameScreenLoader.SetActive(false);
+                    NameScreenNextButton.interactable = true;
+                    if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+                        MainSceneEventHandler.OpenLandingScene?.Invoke();
+                    
+                }
 
 
             }
@@ -2090,10 +2248,42 @@ public class UserLoginSignupManager : MonoBehaviour
         PickImageOptionScreen.SetActive(true);
     }
 
+    public void CheckPermissionStatus(int maxSize)
+    {
+        if (Application.isEditor)
+        {
+            permissionPopup.SetActive(true);
+        }
+        else
+        {
+            NativeGallery.Permission permission = NativeGallery.CheckPermission(NativeGallery.PermissionType.Read, NativeGallery.MediaType.Image);
+#if UNITY_ANDROID
+            if (permission == NativeGallery.Permission.ShouldAsk) //||permission == NativeCamera.Permission.ShouldAsk
+            {
+                permissionPopup.SetActive(true);
+            }
+            else
+            {
+                OnPickImageFromGellery(maxSize);
+            }
+#elif UNITY_IOS
+                if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
+                     permissionPopup.SetActive(true);
+                }
+                else
+                {
+                    OnPickImageFromGellery(maxSize);
+                }
+#endif
+
+        }
+    }
 
     public void OnPickImageFromGellery(int maxSize)
     {
 #if UNITY_IOS
+        PlayerPrefs.SetInt("PicPermission", 1);
+
         if (PermissionCheck == "false")
         {
             string url = MyNativeBindings.GetSettingsURL();

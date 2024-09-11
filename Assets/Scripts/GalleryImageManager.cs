@@ -278,7 +278,15 @@ public class GalleryImageManager : MonoBehaviour
     {
 
     }
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            Debug.Log("---GOZ Nft Close due to Application minimized");
+            OnDisablePictureDescriptionPanel();
+        }
 
+    }
     public void OnDisablePictureDescriptionPanel()
     {
         if (m_IsVideo)

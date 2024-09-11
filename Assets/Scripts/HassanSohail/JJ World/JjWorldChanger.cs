@@ -85,6 +85,10 @@ public class JjWorldChanger : MonoBehaviour
         {
             ConstantsHolder.xanaConstants.isFromXanaLobby = true;
         }
+        if (ConstantsHolder.xanaConstants.IsMetabuzzEnvironment)
+        {
+            ConstantsHolder.xanaConstants.isFromTottoriWorld = true;
+        }
 
         // LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.1f, 0.19f), 1f, false);
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
