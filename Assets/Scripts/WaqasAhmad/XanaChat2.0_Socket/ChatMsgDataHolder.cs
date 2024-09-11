@@ -8,8 +8,8 @@ public class ChatMsgDataHolder : MonoBehaviour
 {
     
     public TextMeshProUGUI MsgText;
-
     public GameObject HighLighter;
+    public GameObject DotedBtn;
     
     public Image FlagBtn;
     public Sprite FlagActive, FlagInactive;
@@ -32,11 +32,16 @@ public class ChatMsgDataHolder : MonoBehaviour
     }
 
 
-    public void SetRequireData(string msgText, string msgId, string senderUserId)
+    public void SetRequireData(string msgText, string msgId, string senderUserId, int isMessageBlocked)
     {
        _MsgID = msgId;
        _MsgTextString = msgText;   
        _SenderUserID = senderUserId;
+
+        if (isMessageBlocked == 1)
+        {
+            OnFlagUserApiCompleted(true);
+        }
     }
 
     public void BtnForcedStatus(bool status)
@@ -47,11 +52,15 @@ public class ChatMsgDataHolder : MonoBehaviour
 
         FlagLoader.SetActive(false);
         BlockLoader.SetActive(false);
+
+        BtnActiveStatus = status;
     }
 
     // Calling this function From Unity Button
     public void BtnStatus()
     {
+        ChatSocketManager.instance.DisableAllBtn();
+
         BtnActiveStatus = !BtnActiveStatus;
         FlagBtn.gameObject.SetActive(BtnActiveStatus);
         BlockBtn.gameObject.SetActive(BtnActiveStatus);

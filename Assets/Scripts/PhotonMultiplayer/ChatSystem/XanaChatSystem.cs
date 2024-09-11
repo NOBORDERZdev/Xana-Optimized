@@ -11,6 +11,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Realtime;
+using System.Collections;
+
 #if PHOTON_UNITY_NETWORKING
 using Photon.Pun;
 using TMPro;
@@ -277,6 +279,12 @@ public class XanaChatSystem : MonoBehaviour
             ReferencesForGamePlay.instance.minimap.SetActive(false);
             ReferencesForGamePlay.instance.SumitMapStatus(false);
 
+            if (!oneTime)
+            {
+                oneTime = true;
+                StartCoroutine(ChatOpenDelay());
+            }
+            
             // Confirmation Panel Not Require
             //if (!isPanelConfirmationRequire)
             //{
@@ -307,9 +315,42 @@ public class XanaChatSystem : MonoBehaviour
                 ReferencesForGamePlay.instance.SumitMapStatus(true);
             }
         }
+        Debug.Log("ChatOpenDelay");
+        
+    }
+    bool oneTime = false;
+    IEnumerator ChatOpenDelay()
+    {
+        // This coroutine is used to fix the chat box issue when it is opened
+        // This need to be fix in future
+
+        GameObject chatContant = ChatSocketManager.instance.MsgParentObj.parent.gameObject;
+        yield return new WaitForSeconds(0.1f);
+        chatContant.SetActive(false);
+
+        yield return new WaitForSeconds(0.2f);
+        chatContant.SetActive(true);
+
+        VerticalLayoutGroup verticalLayoutGroup = ChatSocketManager.instance.MsgParentObj.GetComponent<VerticalLayoutGroup>();
+        int paddingValue = 0;
+
+        while (paddingValue < 10)
+        {
+            paddingValue += 1;
+            verticalLayoutGroup.padding.top = paddingValue;
+        }
+
+        yield return new WaitForSeconds(0.1f);
+        chatContant.SetActive(false);
+
+        yield return new WaitForSeconds(0.1f);
+        chatContant.SetActive(true);
+
+        chatContant.GetComponent<CanvasGroup>().alpha = 1;
 
 
-
+        //Debug.Log("ChatOpenDelay : " + paddingValue);
+        //verticalLayoutGroup.padding.top = paddingValue;
     }
     public void OpenCloseChatDialog(bool _state)
     {

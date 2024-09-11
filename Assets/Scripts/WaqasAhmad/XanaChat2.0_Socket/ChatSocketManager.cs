@@ -1,20 +1,19 @@
 using System;
-using System.IO;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
-using TMPro;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 using BestHTTP.SocketIO3;
 using BestHTTP.SocketIO3.Events;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json.Linq;
+using SimpleJSON;
+using UnityEngine.UI;
+using Unity.Mathematics;
+
 
 public enum CallBy { User, UserNpc, FreeSpeechNpc, NpcToNpc };
 public class ChatSocketManager : MonoBehaviour
@@ -46,8 +45,8 @@ public class ChatSocketManager : MonoBehaviour
     //string fetchApi = "api/v1/fetch-world-chat-byEventId/";
     string fetchApi = "api/v3/fetch-world-chat-byEventId/";
 
-    string blockMsgApi = "/api/v1/block-message/"; // --- /api/v1/block-message/:messageId/:loginUserId
-    string blockUserApi = "/api/v1/block-user/"; //--- /api/v1/block-user/:blockUserId/:loginUserId
+    string blockMsgApi = "api/v1/block-message/"; // --- /api/v1/block-message/:messageId/:loginUserId
+    string blockUserApi = "api/v1/block-user/"; //--- /api/v1/block-user/:blockUserId/:loginUserId
 
 
     public SocketManager Manager;
@@ -68,6 +67,8 @@ public class ChatSocketManager : MonoBehaviour
     public static ChatSocketManager instance;
     public GameObject MsgPrefab;
     public Transform MsgParentObj;
+
+    private List<ChatMsgDataHolder> allMsgData;
 
 
     private bool isConnected = false;
@@ -325,7 +326,7 @@ public class ChatSocketManager : MonoBehaviour
             tempUser = "XanaUser-(" + msg.socket_id + ")";//XanaUser-(userId)
         }
         //XanaChatSystem.instance.DisplayMsg_FromSocket(tempUser, msg.message);
-        AddNewMsg(tempUser, msg.message, msg.id, msg.userId);
+        AddNewMsg(tempUser, msg.message, msg.message_id.ToString(), msg.userId, 0);
     }
     bool CheckUserNameIsValid(string _UserName)
     {
@@ -352,8 +353,8 @@ public class ChatSocketManager : MonoBehaviour
         string token = ConstantsGod.AUTH_TOKEN;
         WWWForm form = new WWWForm();
 
-        string api = fetchAllMsgApi + ConstantsHolder.xanaConstants.MuseumID + "/" + eventId + "/" + socketId + "/" + pageNumber + "/" + dataLimit;
-        //Debug.Log("<color=red> XanaChat -- API : " + api + "</color>");
+        string api = fetchAllMsgApi + ConstantsHolder.xanaConstants.MuseumID + "/" + eventId + "/" + socketId + "/" + pageNumber + "/" + dataLimit + "/" + ConstantsHolder.userId;
+        Debug.Log("<color=red> XanaChat -- API : " + api + "</color>");
 
         UnityWebRequest www;
         www = UnityWebRequest.Get(api);
@@ -400,18 +401,30 @@ public class ChatSocketManager : MonoBehaviour
                     tempUser = tempUser = "XanaUser-(" + socketId + ")";//XanaUser-(userId)
                 }
 
-                AddNewMsg(tempUser, rootData.data[i].message, rootData.data[i].id, rootData.data[i].user_id);
+                AddNewMsg(tempUser, rootData.data[i].message, rootData.data[i].id, rootData.data[i].user_id, rootData.data[i].block_message);
             }
         }
     }
 
-    void AddNewMsg(string userName, string msg,string msgId, string userId)
+    void AddNewMsg(string userName, string msg,string msgId, string userId, int blockMessage)
     {
         GameObject _newMsg = Instantiate(MsgPrefab, MsgParentObj);
         ChatMsgDataHolder _dataHolder = _newMsg.GetComponent<ChatMsgDataHolder>();
-        _dataHolder.SetRequireData(msg, msgId, userId);
+        _dataHolder.SetRequireData(msg, msgId, userId, blockMessage);
 
+        if (userId.Equals(ConstantsHolder.userId))
+        {
+            // That My msg, and i cannot flag or block it
+            _dataHolder.DotedBtn.SetActive(false);
+        }
+
+        MsgParentObj.GetComponent<VerticalLayoutGroup>().padding.top = UnityEngine.Random.Range(10,12);
         XanaChatSystem.instance.DisplayMsg_FromSocket(userName, msg, _dataHolder.MsgText);
+
+        // Add to List
+        if (allMsgData == null)
+            allMsgData = new List<ChatMsgDataHolder>();
+        allMsgData.Add(_dataHolder);
     }
 
     // Submit Guest User Name
@@ -448,7 +461,7 @@ public class ChatSocketManager : MonoBehaviour
     IEnumerator FlagMessagesRoutine(string msgID, Action<bool> callback)
     {
         string token = ConstantsGod.AUTH_TOKEN;
-        string api =  ConstantsGod.API_BASEURL +  blockMsgApi + msgID + "/" + ConstantsHolder.userId;
+        string api =  address +  blockMsgApi + msgID + "/" + ConstantsHolder.userId;
 
         UnityWebRequest www;
         www = UnityWebRequest.Post(api,"");
@@ -465,7 +478,19 @@ public class ChatSocketManager : MonoBehaviour
         if (!www.isHttpError && !www.isNetworkError)
         {
             Debug.Log("<color=green> XanaChat -- FlagMsg : " + www.downloadHandler.text + "</color>");
-            callback(true);
+            JObject jsonObject = JObject.Parse(www.downloadHandler.text);
+            string dataValue = "";
+            
+            if (jsonObject.ContainsKey("data"))
+                dataValue = jsonObject["data"].ToString();
+
+
+            if ( dataValue.Equals("message blocked"))
+                callback(true);
+            else
+            {
+                callback(false);
+            }
         }
         else
         {
@@ -484,7 +509,7 @@ public class ChatSocketManager : MonoBehaviour
     IEnumerator BlockUserRoutine(string blockUserId, Action<bool> callback)
     {
         string token = ConstantsGod.AUTH_TOKEN;
-        string api = ConstantsGod.API_BASEURL + blockUserApi + blockUserId + "/" + ConstantsHolder.userId;
+        string api = address + blockUserApi + blockUserId + "/" + ConstantsHolder.userId;
 
         UnityWebRequest www;
         www = UnityWebRequest.Post(api,"");
@@ -511,6 +536,14 @@ public class ChatSocketManager : MonoBehaviour
         }
 
         www.Dispose();
+    }
+
+    public void DisableAllBtn()
+    {
+        foreach (var item in allMsgData)
+        {
+            item.BtnForcedStatus(false);
+        }
     }
 }
 
@@ -583,6 +616,7 @@ public class MessageData
     public string guest_username;
     public string id; // messageID
     public string user_id;
+    public int block_message;
 }
 [System.Serializable]
 public class RootData
