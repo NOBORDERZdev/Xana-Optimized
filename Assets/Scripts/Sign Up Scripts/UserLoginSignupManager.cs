@@ -265,7 +265,18 @@ public class UserLoginSignupManager : MonoBehaviour
         }
         else
         {
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+               if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                {
+                    Screen.orientation = ScreenOrientation.Portrait;
+                }
 
+            }
+            else
+            {
+                 Screen.orientation = ScreenOrientation.LandscapeLeft;
+            }
             signUpOrloginSelectionPanel.SetActive(false);
 
             if (!PlayerPrefs.HasKey("shownWelcome"))
@@ -278,8 +289,6 @@ public class UserLoginSignupManager : MonoBehaviour
                 {
                     InventoryManager.instance.StartPanel_PresetParentPanelSummit.SetActive(true);
                 }
-               
-               
             }
         }
 
