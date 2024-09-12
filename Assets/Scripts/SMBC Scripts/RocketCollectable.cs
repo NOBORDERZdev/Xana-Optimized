@@ -11,12 +11,8 @@ public class RocketCollectable : MonoBehaviour
         {
             alreadyTriggered = true;
             BuilderEventManager.OnDoorKeyCollisionEnter?.Invoke("Rocket part collected, Redirecting to Earth");
-            gameObject.GetComponent<MeshRenderer>().enabled = false;
-            Invoke(nameof(BackToEarth), 3f);
+            SMBCManager.Instance.AddRocketPart();
+            Destroy(gameObject, 0.1f);
         }
-    }
-    private void BackToEarth()
-    {
-        GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
     }
 }
