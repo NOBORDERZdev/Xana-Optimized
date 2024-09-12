@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maleAIAvatar: {fileID: 4894719807666117210, guid: 4e9173ac70f1604499e4c1b95772825f, type: 3}
   femaleAIAvatar: {fileID: 4894719807666117210, guid: 59c2eb0e0e5718b4abc9387d2b2026ab, type: 3}
+  penguinAvatar: {fileID: 1927154725259993610, guid: 8122b2e223842d1408d51549387f1d79, type: 3}
   avatarJson:
   - '{"id":"86947","name":"Test","thumbnail":"https://cdn.xana.net/xanaprod/Defaults/1680177561873_file.png","gender":"Male","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":12541,"ItemName":"Boy_Pant_V001","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1417,"ItemName":"Boy_Shirt_V001","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1225,"ItemName":"Boy_H_005","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1145,"ItemName":"Shoes_45","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}}]}'
   - '{"id":"86952","name":"Test","thumbnail":"https://cdn.xana.net/xanaprod/Defaults/1680100976117_file.png","gender":"Male","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":913,"ItemName":"Boy_Pant_V002","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1415,"ItemName":"Boy_Shirt_V002","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1215,"ItemName":"Boy_H_014","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1078,"ItemName":"Shoes_381","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}}]}'
@@ -47,7 +48,16 @@ MonoBehaviour:
       worldId: 0
       world: DEEMO THE MOVIE Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 1
       name: Xana Festival
       description: 
@@ -58,7 +68,16 @@ MonoBehaviour:
       worldId: 0
       world: Xana Festival
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 2
       name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       description: 
@@ -69,7 +88,16 @@ MonoBehaviour:
       worldId: 0
       world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 3
       name: JJ MUSEUM
       description: 
@@ -80,7 +108,16 @@ MonoBehaviour:
       worldId: 0
       world: JJ MUSEUM
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 4
       name: Genesis ART Metaverse Museum
       description: 
@@ -91,7 +128,16 @@ MonoBehaviour:
       worldId: 0
       world: Genesis ART Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 5
       name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       description: 
@@ -102,7 +148,16 @@ MonoBehaviour:
       worldId: 0
       world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 6
       name: Koto-ku Virtual Exhibition
       description: 
@@ -113,7 +168,16 @@ MonoBehaviour:
       worldId: 0
       world: Koto-ku Virtual Exhibition
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 7
       name: "ROCK\u2019N ROLL CIRCUS"
       description: 
@@ -124,7 +188,16 @@ MonoBehaviour:
       worldId: 0
       world: "ROCK\u2019N ROLL CIRCUS"
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 8
       name: XANA Festival Stage
       description: 
@@ -135,7 +208,16 @@ MonoBehaviour:
       worldId: 0
       world: XANA Festival Stage
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 9
       name: ZONE-X
       description: 
@@ -146,7 +228,16 @@ MonoBehaviour:
       worldId: 0
       world: ZONE-X
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 10
       name: MASAMI TANAKA
       description: 
@@ -157,7 +248,16 @@ MonoBehaviour:
       worldId: 0
       world: MASAMI TANAKA
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 11
       name: MASAMI TANAKA
       description: 
@@ -168,7 +268,16 @@ MonoBehaviour:
       worldId: 0
       world: MASAMI TANAKA
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 12
       name: MASAMI TANAKA
       description: 
@@ -179,7 +288,16 @@ MonoBehaviour:
       worldId: 0
       world: MASAMI TANAKA
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 13
       name: THE RHETORIC STAR
       description: 
@@ -190,7 +308,16 @@ MonoBehaviour:
       worldId: 0
       world: THE RHETORIC STAR
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 14
       name: ZONE-X
       description: 
@@ -201,7 +328,16 @@ MonoBehaviour:
       worldId: 0
       world: ZONE-X
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 15
       name: Genesis ART Metaverse Museum
       description: 
@@ -212,7 +348,16 @@ MonoBehaviour:
       worldId: 0
       world: Genesis ART Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 16
       name: MASAMI TANAKA
       description: 
@@ -223,7 +368,16 @@ MonoBehaviour:
       worldId: 0
       world: MASAMI TANAKA
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 17
       name: Green Screen Studio
       description: 
@@ -234,7 +388,16 @@ MonoBehaviour:
       worldId: 0
       world: Green Screen Studio
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 18
       name: Xana Festival
       description: 
@@ -245,7 +408,16 @@ MonoBehaviour:
       worldId: 0
       world: Xana Festival
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 19
       name: JJ MUSEUM
       description: 
@@ -256,7 +428,16 @@ MonoBehaviour:
       worldId: 0
       world: JJ MUSEUM
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 20
       name: BreakingDown Arena
       description: 
@@ -267,7 +448,16 @@ MonoBehaviour:
       worldId: 0
       world: BreakingDown Arena
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 21
       name: ZONE X Musuem
       description: 
@@ -278,7 +468,16 @@ MonoBehaviour:
       worldId: 0
       world: ZONE X Musuem
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 22
       name: JJ MUSEUM
       description: 
@@ -289,7 +488,16 @@ MonoBehaviour:
       worldId: 0
       world: JJ MUSEUM
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 23
       name: Green Screen Studio
       description: 
@@ -300,7 +508,16 @@ MonoBehaviour:
       worldId: 0
       world: Green Screen Studio
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 24
       name: ZONE-X
       description: 
@@ -311,7 +528,16 @@ MonoBehaviour:
       worldId: 0
       world: ZONE-X
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 25
       name: DEEMO THE MOVIE Metaverse Museum
       description: 
@@ -322,7 +548,16 @@ MonoBehaviour:
       worldId: 0
       world: DEEMO THE MOVIE Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 26
       name: HOKUSAI KATSUSHIKA
       description: 
@@ -333,7 +568,16 @@ MonoBehaviour:
       worldId: 0
       world: HOKUSAI KATSUSHIKA
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 27
       name: Genesis ART Metaverse Museum
       description: 
@@ -344,7 +588,16 @@ MonoBehaviour:
       worldId: 0
       world: Genesis ART Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 28
       name: Xana Festival
       description: 
@@ -355,7 +608,16 @@ MonoBehaviour:
       worldId: 0
       world: Xana Festival
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 29
       name: Xana Festival
       description: 
@@ -366,7 +628,16 @@ MonoBehaviour:
       worldId: 0
       world: Xana Festival
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 30
       name: Green Screen Studio
       description: 
@@ -377,7 +648,16 @@ MonoBehaviour:
       worldId: 0
       world: Green Screen Studio
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 31
       name: BreakingDown Arena
       description: 
@@ -388,7 +668,16 @@ MonoBehaviour:
       worldId: 0
       world: BreakingDown Arena
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 32
       name: D_Infinity_Labo
       description: 
@@ -399,7 +688,16 @@ MonoBehaviour:
       worldId: 0
       world: D_Infinity_Labo
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 33
       name: "ROCK\u2019N ROLL CIRCUS"
       description: 
@@ -410,7 +708,16 @@ MonoBehaviour:
       worldId: 0
       world: "ROCK\u2019N ROLL CIRCUS"
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 34
       name: DEEMO THE MOVIE Metaverse Museum
       description: 
@@ -421,7 +728,16 @@ MonoBehaviour:
       worldId: 0
       world: DEEMO THE MOVIE Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 35
       name: Genesis ART Metaverse Museum
       description: 
@@ -432,7 +748,16 @@ MonoBehaviour:
       worldId: 0
       world: Genesis ART Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 36
       name: MASAMI TANAKA
       description: 
@@ -443,7 +768,16 @@ MonoBehaviour:
       worldId: 0
       world: MASAMI TANAKA
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 37
       name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       description: 
@@ -454,7 +788,16 @@ MonoBehaviour:
       worldId: 0
       world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 38
       name: Genesis ART Metaverse Museum
       description: 
@@ -465,7 +808,16 @@ MonoBehaviour:
       worldId: 0
       world: Genesis ART Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 39
       name: Xana Festival
       description: 
@@ -476,7 +828,16 @@ MonoBehaviour:
       worldId: 0
       world: Xana Festival
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 40
       name: MASAMI TANAKA
       description: 
@@ -487,7 +848,16 @@ MonoBehaviour:
       worldId: 0
       world: MASAMI TANAKA
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 41
       name: HOKUSAI KATSUSHIKA
       description: 
@@ -498,7 +868,16 @@ MonoBehaviour:
       worldId: 0
       world: HOKUSAI KATSUSHIKA
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 42
       name: Xana Lobby
       description: 
@@ -509,7 +888,16 @@ MonoBehaviour:
       worldId: 0
       world: Xana Lobby
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 43
       name: Koto-ku Virtual Exhibition
       description: 
@@ -520,7 +908,16 @@ MonoBehaviour:
       worldId: 0
       world: Koto-ku Virtual Exhibition
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 44
       name: ZONE X Musuem
       description: 
@@ -531,7 +928,16 @@ MonoBehaviour:
       worldId: 0
       world: ZONE X Musuem
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 45
       name: Green Screen Studio
       description: 
@@ -542,7 +948,16 @@ MonoBehaviour:
       worldId: 0
       world: Green Screen Studio
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 46
       name: XANA Festival Stage
       description: 
@@ -553,7 +968,16 @@ MonoBehaviour:
       worldId: 0
       world: XANA Festival Stage
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 47
       name: FIVE ELEMENTS
       description: 
@@ -564,7 +988,16 @@ MonoBehaviour:
       worldId: 0
       world: FIVE ELEMENTS
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 48
       name: "ROCK\u2019N ROLL CIRCUS"
       description: 
@@ -575,7 +1008,16 @@ MonoBehaviour:
       worldId: 0
       world: "ROCK\u2019N ROLL CIRCUS"
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 49
       name: XANA Festival Stage
       description: 
@@ -586,7 +1028,16 @@ MonoBehaviour:
       worldId: 0
       world: XANA Festival Stage
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 50
       name: "ROCK\u2019N ROLL CIRCUS"
       description: 
@@ -597,7 +1048,16 @@ MonoBehaviour:
       worldId: 0
       world: "ROCK\u2019N ROLL CIRCUS"
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 51
       name: Koto-ku Virtual Exhibition
       description: 
@@ -608,7 +1068,16 @@ MonoBehaviour:
       worldId: 0
       world: Koto-ku Virtual Exhibition
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 52
       name: Genesis ART Metaverse Museum
       description: 
@@ -619,7 +1088,16 @@ MonoBehaviour:
       worldId: 0
       world: Genesis ART Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 53
       name: FIVE ELEMENTS
       description: 
@@ -630,7 +1108,16 @@ MonoBehaviour:
       worldId: 0
       world: FIVE ELEMENTS
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 54
       name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       description: 
@@ -641,7 +1128,16 @@ MonoBehaviour:
       worldId: 0
       world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 55
       name: THE RHETORIC STAR
       description: 
@@ -652,7 +1148,16 @@ MonoBehaviour:
       worldId: 0
       world: THE RHETORIC STAR
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 56
       name: Xana Festival
       description: 
@@ -663,7 +1168,16 @@ MonoBehaviour:
       worldId: 0
       world: Xana Festival
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 57
       name: MASAMI TANAKA
       description: 
@@ -674,7 +1188,16 @@ MonoBehaviour:
       worldId: 0
       world: MASAMI TANAKA
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 58
       name: JJ MUSEUM
       description: 
@@ -685,7 +1208,16 @@ MonoBehaviour:
       worldId: 0
       world: JJ MUSEUM
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 59
       name: ZONE X Musuem
       description: 
@@ -696,7 +1228,16 @@ MonoBehaviour:
       worldId: 0
       world: ZONE X Musuem
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 60
       name: HOKUSAI KATSUSHIKA
       description: 
@@ -707,7 +1248,16 @@ MonoBehaviour:
       worldId: 0
       world: HOKUSAI KATSUSHIKA
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 61
       name: JJ MUSEUM
       description: 
@@ -718,7 +1268,16 @@ MonoBehaviour:
       worldId: 0
       world: JJ MUSEUM
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 62
       name: Koto-ku Virtual Exhibition
       description: 
@@ -729,7 +1288,16 @@ MonoBehaviour:
       worldId: 0
       world: Koto-ku Virtual Exhibition
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 63
       name: Xana Lobby
       description: 
@@ -740,7 +1308,16 @@ MonoBehaviour:
       worldId: 0
       world: Xana Lobby
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 64
       name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       description: 
@@ -751,7 +1328,16 @@ MonoBehaviour:
       worldId: 0
       world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 65
       name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       description: 
@@ -762,7 +1348,16 @@ MonoBehaviour:
       worldId: 0
       world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 66
       name: Xana Festival
       description: 
@@ -773,7 +1368,16 @@ MonoBehaviour:
       worldId: 0
       world: Xana Festival
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 67
       name: ZONE X Musuem
       description: 
@@ -784,7 +1388,16 @@ MonoBehaviour:
       worldId: 0
       world: ZONE X Musuem
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 68
       name: DEEMO THE MOVIE Metaverse Museum
       description: 
@@ -795,7 +1408,16 @@ MonoBehaviour:
       worldId: 0
       world: DEEMO THE MOVIE Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 69
       name: FIVE ELEMENTS
       description: 
@@ -806,7 +1428,16 @@ MonoBehaviour:
       worldId: 0
       world: FIVE ELEMENTS
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 70
       name: MASAMI TANAKA
       description: 
@@ -817,7 +1448,16 @@ MonoBehaviour:
       worldId: 0
       world: MASAMI TANAKA
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 71
       name: HOKUSAI KATSUSHIKA
       description: 
@@ -828,7 +1468,16 @@ MonoBehaviour:
       worldId: 0
       world: HOKUSAI KATSUSHIKA
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 72
       name: Green Screen Studio
       description: 
@@ -839,7 +1488,16 @@ MonoBehaviour:
       worldId: 0
       world: Green Screen Studio
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 73
       name: "ROCK\u2019N ROLL CIRCUS"
       description: 
@@ -850,7 +1508,16 @@ MonoBehaviour:
       worldId: 0
       world: "ROCK\u2019N ROLL CIRCUS"
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 74
       name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       description: 
@@ -861,7 +1528,16 @@ MonoBehaviour:
       worldId: 0
       world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 75
       name: ZONE X Musuem
       description: 
@@ -872,7 +1548,16 @@ MonoBehaviour:
       worldId: 0
       world: ZONE X Musuem
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 76
       name: Astroboy x Tottori Metaverse Museum
       description: 
@@ -883,7 +1568,16 @@ MonoBehaviour:
       worldId: 0
       world: Astroboy x Tottori Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 77
       name: Xana Festival
       description: 
@@ -894,7 +1588,16 @@ MonoBehaviour:
       worldId: 0
       world: Xana Festival
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 78
       name: HOKUSAI KATSUSHIKA
       description: 
@@ -905,7 +1608,16 @@ MonoBehaviour:
       worldId: 0
       world: HOKUSAI KATSUSHIKA
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 79
       name: Xana Festival
       description: 
@@ -916,7 +1628,16 @@ MonoBehaviour:
       worldId: 0
       world: Xana Festival
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 80
       name: Koto-ku Virtual Exhibition
       description: 
@@ -927,7 +1648,16 @@ MonoBehaviour:
       worldId: 0
       world: Koto-ku Virtual Exhibition
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 81
       name: Genesis ART Metaverse Museum
       description: 
@@ -938,7 +1668,16 @@ MonoBehaviour:
       worldId: 0
       world: Genesis ART Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 82
       name: "ROCK\u2019N ROLL CIRCUS"
       description: 
@@ -949,7 +1688,16 @@ MonoBehaviour:
       worldId: 0
       world: "ROCK\u2019N ROLL CIRCUS"
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 83
       name: ZONE-X
       description: 
@@ -960,7 +1708,16 @@ MonoBehaviour:
       worldId: 0
       world: ZONE-X
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 84
       name: Astroboy x Tottori Metaverse Museum
       description: 
@@ -971,7 +1728,16 @@ MonoBehaviour:
       worldId: 0
       world: Astroboy x Tottori Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 85
       name: D_Infinity_Labo
       description: 
@@ -982,7 +1748,16 @@ MonoBehaviour:
       worldId: 0
       world: D_Infinity_Labo
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 86
       name: XANA Festival Stage
       description: 
@@ -993,7 +1768,16 @@ MonoBehaviour:
       worldId: 0
       world: XANA Festival Stage
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 87
       name: "ROCK\u2019N ROLL CIRCUS"
       description: 
@@ -1004,7 +1788,16 @@ MonoBehaviour:
       worldId: 0
       world: "ROCK\u2019N ROLL CIRCUS"
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 88
       name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       description: 
@@ -1015,7 +1808,16 @@ MonoBehaviour:
       worldId: 0
       world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 89
       name: JJ MUSEUM
       description: 
@@ -1026,7 +1828,16 @@ MonoBehaviour:
       worldId: 0
       world: JJ MUSEUM
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 90
       name: XANA Festival Stage
       description: 
@@ -1037,7 +1848,16 @@ MonoBehaviour:
       worldId: 0
       world: XANA Festival Stage
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 91
       name: FIVE ELEMENTS
       description: 
@@ -1048,7 +1868,16 @@ MonoBehaviour:
       worldId: 0
       world: FIVE ELEMENTS
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 92
       name: MASAMI TANAKA
       description: 
@@ -1059,7 +1888,16 @@ MonoBehaviour:
       worldId: 0
       world: MASAMI TANAKA
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 93
       name: Xana Festival
       description: 
@@ -1070,7 +1908,16 @@ MonoBehaviour:
       worldId: 0
       world: Xana Festival
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 94
       name: MASAMI TANAKA
       description: 
@@ -1081,7 +1928,16 @@ MonoBehaviour:
       worldId: 0
       world: MASAMI TANAKA
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 95
       name: MASAMI TANAKA
       description: 
@@ -1092,7 +1948,16 @@ MonoBehaviour:
       worldId: 0
       world: MASAMI TANAKA
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 96
       name: THE RHETORIC STAR
       description: 
@@ -1103,7 +1968,16 @@ MonoBehaviour:
       worldId: 0
       world: THE RHETORIC STAR
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 97
       name: Genesis ART Metaverse Museum
       description: 
@@ -1114,7 +1988,16 @@ MonoBehaviour:
       worldId: 0
       world: Genesis ART Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 98
       name: "ROCK\u2019N ROLL CIRCUS"
       description: 
@@ -1125,7 +2008,16 @@ MonoBehaviour:
       worldId: 0
       world: "ROCK\u2019N ROLL CIRCUS"
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 99
       name: Genesis ART Metaverse Museum
       description: 
@@ -1136,7 +2028,16 @@ MonoBehaviour:
       worldId: 0
       world: Genesis ART Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 100
       name: THE RHETORIC STAR
       description: 
@@ -1147,7 +2048,16 @@ MonoBehaviour:
       worldId: 0
       world: THE RHETORIC STAR
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 101
       name: ZONE X Musuem
       description: 
@@ -1158,7 +2068,16 @@ MonoBehaviour:
       worldId: 0
       world: ZONE X Musuem
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 102
       name: BreakingDown Arena
       description: 
@@ -1169,7 +2088,16 @@ MonoBehaviour:
       worldId: 0
       world: BreakingDown Arena
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 103
       name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       description: 
@@ -1180,7 +2108,16 @@ MonoBehaviour:
       worldId: 0
       world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 104
       name: DEEMO THE MOVIE Metaverse Museum
       description: 
@@ -1191,7 +2128,16 @@ MonoBehaviour:
       worldId: 0
       world: DEEMO THE MOVIE Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 105
       name: XANA Festival Stage
       description: 
@@ -1202,7 +2148,16 @@ MonoBehaviour:
       worldId: 0
       world: XANA Festival Stage
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 106
       name: MASAMI TANAKA
       description: 
@@ -1213,7 +2168,16 @@ MonoBehaviour:
       worldId: 0
       world: MASAMI TANAKA
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 107
       name: Xana Festival
       description: 
@@ -1224,7 +2188,16 @@ MonoBehaviour:
       worldId: 0
       world: Xana Festival
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 108
       name: "ROCK\u2019N ROLL CIRCUS"
       description: 
@@ -1235,7 +2208,16 @@ MonoBehaviour:
       worldId: 0
       world: "ROCK\u2019N ROLL CIRCUS"
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 109
       name: Astroboy x Tottori Metaverse Museum
       description: 
@@ -1246,7 +2228,16 @@ MonoBehaviour:
       worldId: 0
       world: Astroboy x Tottori Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 110
       name: MASAMI TANAKA
       description: 
@@ -1257,7 +2248,16 @@ MonoBehaviour:
       worldId: 0
       world: MASAMI TANAKA
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 111
       name: Green Screen Studio
       description: 
@@ -1268,7 +2268,16 @@ MonoBehaviour:
       worldId: 0
       world: Green Screen Studio
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 112
       name: ZONE-X
       description: 
@@ -1279,7 +2288,16 @@ MonoBehaviour:
       worldId: 0
       world: ZONE-X
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 113
       name: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       description: 
@@ -1290,7 +2308,16 @@ MonoBehaviour:
       worldId: 0
       world: GOZANIMATOR HARUNA GOUZU GALLERY 2021
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 114
       name: ZONE-X
       description: 
@@ -1301,7 +2328,16 @@ MonoBehaviour:
       worldId: 0
       world: ZONE-X
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 115
       name: ZONE-X
       description: 
@@ -1312,7 +2348,16 @@ MonoBehaviour:
       worldId: 0
       world: ZONE-X
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 116
       name: DEEMO THE MOVIE Metaverse Museum
       description: 
@@ -1323,7 +2368,16 @@ MonoBehaviour:
       worldId: 0
       world: DEEMO THE MOVIE Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 117
       name: Xana Festival
       description: 
@@ -1334,7 +2388,16 @@ MonoBehaviour:
       worldId: 0
       world: Xana Festival
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 118
       name: ZONE-X
       description: 
@@ -1345,7 +2408,16 @@ MonoBehaviour:
       worldId: 0
       world: ZONE-X
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 119
       name: FIVE ELEMENTS
       description: 
@@ -1356,7 +2428,16 @@ MonoBehaviour:
       worldId: 0
       world: FIVE ELEMENTS
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 120
       name: HOKUSAI KATSUSHIKA
       description: 
@@ -1367,7 +2448,16 @@ MonoBehaviour:
       worldId: 0
       world: HOKUSAI KATSUSHIKA
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 121
       name: "ROCK\u2019N ROLL CIRCUS"
       description: 
@@ -1378,7 +2468,16 @@ MonoBehaviour:
       worldId: 0
       world: "ROCK\u2019N ROLL CIRCUS"
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 122
       name: JJ MUSEUM
       description: 
@@ -1389,7 +2488,16 @@ MonoBehaviour:
       worldId: 0
       world: JJ MUSEUM
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 123
       name: DEEMO THE MOVIE Metaverse Museum
       description: 
@@ -1400,7 +2508,16 @@ MonoBehaviour:
       worldId: 0
       world: DEEMO THE MOVIE Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 124
       name: BreakingDown Arena
       description: 
@@ -1411,7 +2528,16 @@ MonoBehaviour:
       worldId: 0
       world: BreakingDown Arena
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 125
       name: THE RHETORIC STAR
       description: 
@@ -1422,7 +2548,16 @@ MonoBehaviour:
       worldId: 0
       world: THE RHETORIC STAR
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 126
       name: DEEMO THE MOVIE Metaverse Museum
       description: 
@@ -1433,7 +2568,16 @@ MonoBehaviour:
       worldId: 0
       world: DEEMO THE MOVIE Metaverse Museum
       experienceType: 
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
     - id: 127
       name: Xana Lobby
       description: 
@@ -1444,209 +2588,16 @@ MonoBehaviour:
       worldId: 0
       world: Xana Lobby
       experienceType: 
-      builderWorldId: 
-  summitData1:
-    domes:
-    - id: 1
-      name: Captains World
-      description: The First Avenger.
-      creatorName: Captain
-      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717675234412-infinity-heroes-epic-inspiring-adventurous-soundtrack-9278.mp3
-      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717675340059-CaptainAme.jpg
-      worldType: 0
-      worldId: 0
-      world: Green Screen Studio
-      experienceType: double
-      builderWorldId: 
-    - id: 2
-      name: aaa
-      description: aa
-      creatorName: aaa
-      bgm: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fvibrant&psig=AOvVaw1POU-1kvuova7TxZZCfcpB&ust=1718104686493000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCIiIte700IYDFQAAAAAdAAAAABAE.mp3
-      thumbnail: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fvibrant&psig=AOvVaw1POU-1kvuova7TxZZCfcpB&ust=1718104686493000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCIiIte700IYDFQAAAAAdAAAAABAE.jpg
-      worldType: 0
-      worldId: 0
-      world: Tottori Daisen World
-      experienceType: double
-      builderWorldId: 
-    - id: 3
-      name: sgfds
-      description: sd
-      creatorName: sdf
-      bgm: https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=600.mp3
-      thumbnail: https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=600.jpg
-      worldType: 0
-      worldId: 0
-      world: 'GOZ : Animator Haruna Gouzu Gallery 2021'
-      experienceType: single
-      builderWorldId: 
-    - id: 4
-      name: as
-      description: as
-      creatorName: as
-      bgm: https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1.mp3
-      thumbnail: https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1.jpg
-      worldType: 0
-      worldId: 0
-      world: Astroboy x Tottori Metaverse Museum
-      experienceType: double
-      builderWorldId: 
-    - id: 8
-      name: 'Amit XANA Festival '
-      description: 'Testing complete flow
-
-'
-      creatorName: Amit
-      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1718185663467-infinity-heroes-epic-inspiring-adventurous-soundtrack-9278.mp3
-      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1718185674219-CaptainAme.jpg
-      worldType: 0
-      worldId: 0
-      world: RooftopParty
-      experienceType: double
-      builderWorldId: 
-    - id: 9
-      name: New World
-      description: qwerty
-      creatorName: BusinessMAn
-      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717504440354-COPYING.mp3
-      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717496685602-BLDpost3.jpg
-      worldType: 0
-      worldId: 0
-      world: Xana Festival
-      experienceType: double
-      builderWorldId: 
-    - id: 10
-      name: aaa
-      description: aaa
-      creatorName: aa
-      bgm: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fvibrant&psig=AOvVaw1POU-1kvuova7TxZZCfcpB&ust=1718104686493000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCIiIte700IYDFQAAAAAdAAAAABAE.mp3
-      thumbnail: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fvibrant&psig=AOvVaw1POU-1kvuova7TxZZCfcpB&ust=1718104686493000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCIiIte700IYDFQAAAAAdAAAAABAE.jpg
-      worldType: 0
-      worldId: 0
-      world: XANA_KANZAKI
-      experienceType: double
-      builderWorldId: 
-    - id: 13
-      name: aqwert
-      description: vfd vfdvdfvd
-      creatorName: newApi Structure
-      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717496685602-BLDpost3.mp3
-      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717496685602-BLDpost3.jpg
-      worldType: 0
-      worldId: 0
-      world: Xana Festival
-      experienceType: double
-      builderWorldId: 
-    - id: 32
-      name: bhiya
-      description: zinger
-      creatorName: johnson
-      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717504440354-COPYING.mp3
-      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717162837543-snapcontainer.jpg
-      worldType: 0
-      worldId: 0
-      world: Koto-ku Virtual Exhibition
-      experienceType: double
-      builderWorldId: 
-    - id: 34
-      name: fvnkers
-      description: qwmkdqwmkmd
-      creatorName: xal
-      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717504440354-COPYING.mp3
-      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717162837543-snapcontainer.jpg
-      worldType: 0
-      worldId: 0
-      world: RFMDev
-      experienceType: double
-      builderWorldId: 
-    - id: 42
-      name: newTest
-      description: TYYGHGH
-      creatorName: xana
-      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717504440354-COPYING.mp3
-      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717504440354-COPYING.jpg
-      worldType: 0
-      worldId: 0
-      world: testing world
-      experienceType: double
-      builderWorldId: 
-    - id: 59
-      name: Xana Museum test world
-      description: Created world to test nfts in museum
-      creatorName: Umer-Xana
-      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717672646159-ZaalimBadshah128Kbps.mp3
-      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717672534898-1706187677302-Screenshot2024-01-19203036.jpg
-      worldType: 0
-      worldId: 0
-      world: Koto-ku Virtual Exhibition
-      experienceType: double
-      builderWorldId: 
-    - id: 65
-      name: dddddddddddd
-      description: ddddddddddddd
-      creatorName: ddddddddd
-      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717679275536-Shubh-MVPOfficialAudio.mp3
-      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717679276801-Screenshot_2024-05-24-15-08-01-41_7eaca60a9541dde15037f6acbb657edf.jpg
-      worldType: 1
-      worldId: 0
-      world: a2
-      experienceType: single
-      builderWorldId: 197
-    - id: 66
-      name: Dairy Milk
-      description: Dairy milk ki duniya
-      creatorName: Moo
-      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717162837543-snapcontainer.mp3
-      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717496685602-BLDpost3.jpg
-      worldType: 0
-      worldId: 0
-      world: MASAMI TANAKA
-      experienceType: single
-      builderWorldId: 
-    - id: 70
-      name: Museum Dome 70
-      description: Museum Dome to check nft data
-      creatorName: Umer-Xana
-      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717675662229-ZaalimBadshah128Kbps.mp3
-      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717675691986-1706187677302-Screenshot2024-01-19203036.jpg
-      worldType: 0
-      worldId: 0
-      world: Koto-ku Virtual Exhibition
-      experienceType: double
-      builderWorldId: 
-    - id: 123
-      name: 'World Name Test '
-      description: Tesst
-      creatorName: Creator Name Test
-      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717676093240-1704487205059.mp3
-      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717676093240-1704487205059.jpg
-      worldType: 1
-      worldId: 0
-      world: DokuroDome
-      experienceType: double
-      builderWorldId: 234
-    - id: 126
-      name: whatever
-      description: assdff
-      creatorName: whtever
-      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717496685602-BLDpost3.mp3
-      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717504440354-COPYING.jpg
-      worldType: 0
-      worldId: 0
-      world: ZONE-X
-      experienceType: double
-      builderWorldId: 
-    - id: 127
-      name: testworkd
-      description: nj jnknnknjk
-      creatorName: tesdt
-      bgm: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1717504440354-COPYING.txt
-      thumbnail: https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1717496685602-BLDpost3.mp3
-      worldType: 0
-      worldId: 0
-      world: D +  Infinity Labo
-      experienceType: double
-      builderWorldId: 
+      builderWorldId: 0
+      IsPenguin: 0
+      Ishumanoid: 0
+      AvatarIndex: 0
+      Avatarjson: 
+      world360Image: 
+      companyLogo: 
+      maxPlayer: 0
+      SubWorlds: []
+      isSubWorld: 0
   aiData:
     npcData:
     - id: 181

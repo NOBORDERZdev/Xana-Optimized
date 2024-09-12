@@ -406,7 +406,7 @@ public class ChatSocketManager : MonoBehaviour
         }
     }
 
-    void AddNewMsg(string userName, string msg,string msgId, string userId, int blockMessage)
+    public void AddNewMsg(string userName, string msg, string msgId, string userId, int blockMessage)
     {
         GameObject _newMsg = Instantiate(MsgPrefab, MsgParentObj);
         ChatMsgDataHolder _dataHolder = _newMsg.GetComponent<ChatMsgDataHolder>();
@@ -417,14 +417,20 @@ public class ChatSocketManager : MonoBehaviour
             // That My msg, and i cannot flag or block it
             _dataHolder.DotedBtn.SetActive(false);
         }
-
-        MsgParentObj.GetComponent<VerticalLayoutGroup>().padding.top = UnityEngine.Random.Range(10,12);
+        MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = false;
+        Invoke("DelayAdded", 0.05f);
         XanaChatSystem.instance.DisplayMsg_FromSocket(userName, msg, _dataHolder.MsgText);
+        
 
         // Add to List
         if (allMsgData == null)
             allMsgData = new List<ChatMsgDataHolder>();
         allMsgData.Add(_dataHolder);
+    }
+
+    void DelayAdded()
+    {
+        MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = true;
     }
 
     // Submit Guest User Name
@@ -461,10 +467,10 @@ public class ChatSocketManager : MonoBehaviour
     IEnumerator FlagMessagesRoutine(string msgID, Action<bool> callback)
     {
         string token = ConstantsGod.AUTH_TOKEN;
-        string api =  address +  blockMsgApi + msgID + "/" + ConstantsHolder.userId;
+        string api = address + blockMsgApi + msgID + "/" + ConstantsHolder.userId;
 
         UnityWebRequest www;
-        www = UnityWebRequest.Post(api,"");
+        www = UnityWebRequest.Post(api, "");
 
         www.SetRequestHeader("Authorization", token);
         www.SendWebRequest();
@@ -480,12 +486,12 @@ public class ChatSocketManager : MonoBehaviour
             Debug.Log("<color=green> XanaChat -- FlagMsg : " + www.downloadHandler.text + "</color>");
             JObject jsonObject = JObject.Parse(www.downloadHandler.text);
             string dataValue = "";
-            
+
             if (jsonObject.ContainsKey("data"))
                 dataValue = jsonObject["data"].ToString();
 
 
-            if ( dataValue.Equals("message blocked"))
+            if (dataValue.Equals("message blocked"))
                 callback(true);
             else
             {
@@ -512,7 +518,7 @@ public class ChatSocketManager : MonoBehaviour
         string api = address + blockUserApi + blockUserId + "/" + ConstantsHolder.userId;
 
         UnityWebRequest www;
-        www = UnityWebRequest.Post(api,"");
+        www = UnityWebRequest.Post(api, "");
 
         www.SetRequestHeader("Authorization", token);
         www.SendWebRequest();
@@ -544,6 +550,15 @@ public class ChatSocketManager : MonoBehaviour
         {
             item.BtnForcedStatus(false);
         }
+    }
+
+    public void ClearAllMessages()
+    {
+        foreach (var item in allMsgData)
+        {
+            Destroy(item.gameObject);
+        }
+        allMsgData.Clear();
     }
 }
 
