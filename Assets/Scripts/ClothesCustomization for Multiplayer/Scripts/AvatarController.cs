@@ -321,7 +321,7 @@ public class AvatarController : MonoBehaviour
 
             while (!ConstantsHolder.isAddressableCatalogDownload)
             {
-                yield return new WaitForSeconds(.1f);
+                yield return new WaitForSeconds(1f);
             }
             while (!isClothStichedOrNot(clothsList, this))
             {
@@ -341,36 +341,41 @@ public class AvatarController : MonoBehaviour
                 {
                     wornShoes.SetActive(false);
                 }
-                yield return new WaitForSeconds(.1f);
-                timeWithoutCloth += .1f;
+                yield return new WaitForSeconds(.5f);
+
+                timeWithoutCloth += .5f;
                 if (timeWithoutCloth > 10)
                 {
-                    OnEnable();
+                    Custom_InitializeAvatar();
+                    yield break;
                 }
             }
 
-            if (wornHair != null)
+            if (isClothStichedOrNot(clothsList, this))
             {
-                wornHair.SetActive(true);
+                if (wornHair != null)
+                {
+                    wornHair.SetActive(true);
+                }
+                if (wornShirt != null)
+                {
+                    wornShirt.SetActive(true);
+                }
+                if (wornPant != null)
+                {
+                    wornPant.SetActive(true);
+                }
+                if (wornShoes != null)
+                {
+                    wornShoes.SetActive(true);
+                }
+                if (characterBodyParts.eyeShadow != null)
+                {
+                    characterBodyParts.eyeShadow.enabled = true;
+                }
+                characterBodyParts.head.enabled = characterBodyParts.body.enabled = true;
+                isStitchedSuccessfully = true;
             }
-            if (wornShirt != null)
-            {
-                wornShirt.SetActive(true);
-            }
-            if (wornPant != null)
-            {
-                wornPant.SetActive(true);
-            }
-            if (wornShoes != null)
-            {
-                wornShoes.SetActive(true);
-            }
-            if (characterBodyParts.eyeShadow != null)
-            {
-                characterBodyParts.eyeShadow.enabled = true;
-            }
-            characterBodyParts.head.enabled = characterBodyParts.body.enabled = true;
-            isStitchedSuccessfully = true;
         }
         else
         {
