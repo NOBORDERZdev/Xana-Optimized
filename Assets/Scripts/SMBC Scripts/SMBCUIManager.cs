@@ -19,6 +19,7 @@ public class SMBCUIManager : MonoBehaviour
         BuilderEventManager.OnDoorKeyCollisionEnter += EnableDoorKeyUI;
         BuilderEventManager.OnSMBCQuizComponentCollisionEnter += EnableQuizComponentUI;
         BuilderEventManager.OnSMBCQuizComponentColse += ResetCredentials;
+        SMBCManager.Instance.OnIntroductryPanelClicked += OnClickIntroductryObject;
         SceneManager.sceneLoaded += ResetData;
     }
 
@@ -28,6 +29,7 @@ public class SMBCUIManager : MonoBehaviour
         BuilderEventManager.OnDoorKeyCollisionEnter -= EnableDoorKeyUI;
         BuilderEventManager.OnSMBCQuizComponentCollisionEnter -= EnableQuizComponentUI;
         BuilderEventManager.OnQuizComponentColse -= ResetCredentials;
+        SMBCManager.Instance.OnIntroductryPanelClicked -= OnClickIntroductryObject;
         SceneManager.sceneLoaded -= ResetData;
     }
 
@@ -151,7 +153,6 @@ public class SMBCUIManager : MonoBehaviour
             StopCoroutine(_storyNarrationCoroutine);
     }
     #endregion
-
 
     #region Quiz Component
 
@@ -620,6 +621,17 @@ public class SMBCUIManager : MonoBehaviour
         DoorKeyParentUI.SetActive(false);
         DoorKeyText.text = "";
     }
+    #endregion
+
+    #region IntroductryComponent
+
+    [SerializeField] private GameObject _introductryPanel;
+
+    public void OnClickIntroductryObject()
+    {
+        _introductryPanel.SetActive(true);
+    }
+
     #endregion
 
     bool CheckJapaneseDisplayMessage(string displayTitle)

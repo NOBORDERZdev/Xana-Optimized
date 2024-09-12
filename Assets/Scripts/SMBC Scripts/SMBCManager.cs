@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -27,6 +28,8 @@ public class SMBCManager : MonoBehaviour
     bool _volcanicRocketPartCollected = false;
     QuizData _quizData;
     int _keyCounter = 0;
+
+    public Action OnIntroductryPanelClicked;
 
     private void Awake()
     {
