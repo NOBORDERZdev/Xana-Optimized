@@ -1,9 +1,6 @@
 using DG.Tweening;
-using Models;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class SMBCManager : MonoBehaviour
 {
@@ -46,12 +43,18 @@ public class SMBCManager : MonoBehaviour
     private void OnEnable()
     {
         BuilderEventManager.BuilderSceneOrientationChange += OrientationChange;
+        BuilderEventManager.OnSMBCRocketCollected += BackToEarthWithDelay;
+        BuilderEventManager.OnSMBCQuizWrongAnswer += BackToEarthWithDelay;
+
         OrientationChange(false);
     }
 
     private void OnDisable()
     {
         BuilderEventManager.BuilderSceneOrientationChange -= OrientationChange;
+        BuilderEventManager.OnSMBCRocketCollected -= BackToEarthWithDelay;
+        BuilderEventManager.OnSMBCQuizWrongAnswer -= BackToEarthWithDelay;
+
     }
 
     #region OrientationChange
@@ -184,15 +187,6 @@ public class SMBCManager : MonoBehaviour
         return _quizData;
     }
 
-
-    internal void BackToEarth()
-    {
-        new Delayed.Action(() =>
-        {
-            GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
-        }, 2f);
-    }
-
     public bool CheckForObjectCollectible(SMBCCollectibleType collectibleType)
     {
         switch (collectibleType)
@@ -207,20 +201,14 @@ public class SMBCManager : MonoBehaviour
                 return false;
         }
     }
-
-    public bool CheckRocketPartCollectOrNot(string planetName)
+    private void BackToEarthWithDelay()
     {
-        switch (planetName)
-        {
-            case "SMBC_Forest_Planet":
-                return _forestRocketPartCollected;
-            case "SMBC_Icy_Planet":
-                return _icyRocketPartCollected;
-            case "SMBC_Volcanic_Planet":
-                return _volcanicRocketPartCollected;
-            default:
-                return false;
-        }
+        Invoke(nameof(BackToEarth), 3f);
+    }
+
+    private void BackToEarth()
+    {
+        GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
     }
 }
 

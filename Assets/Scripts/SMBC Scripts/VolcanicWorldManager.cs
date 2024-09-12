@@ -5,21 +5,15 @@ public class VolcanicWorldManager : MonoBehaviour
     [SerializeField] private GameObject _ground;
     private void OnEnable()
     {
-        BuilderEventManager.OnSMBCQuizWrongAnswer += RedirectToEarth;
+        BuilderEventManager.OnSMBCQuizWrongAnswer += DisableGround;
     }
     private void OnDisable()
     {
-        BuilderEventManager.OnSMBCQuizWrongAnswer -= RedirectToEarth;
+        BuilderEventManager.OnSMBCQuizWrongAnswer -= DisableGround;
     }
 
-    private void RedirectToEarth()
+    private void DisableGround()
     {
         _ground.SetActive(false);
-        Invoke(nameof(BackToEarth), 3f);
-    }
-
-    private void BackToEarth()
-    {
-        GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
     }
 }
