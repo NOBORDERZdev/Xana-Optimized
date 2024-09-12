@@ -12810,6 +12810,7 @@ GameObject:
   - component: {fileID: 360146153501369239}
   - component: {fileID: 360146153501369241}
   - component: {fileID: 360146153501369242}
+  - component: {fileID: 360146153501369243}
   m_Layer: 19
   m_Name: EnvironmentRenderCamera
   m_TagString: MainCamera
@@ -12885,6 +12886,22 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &360146153501369243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360146153501369240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c49b4cc203aa6414fae5c798d1d0e7d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0
 --- !u!114 &360146153575805074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12996,7 +13013,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.06806946, y: -0.00089046743, z: 0.00006075644, w: 0.99768025}
+  m_LocalRotation: {x: 0.06806946, y: -0.000890469, z: 0.000060756545, w: 0.99768025}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13447,7 +13464,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010641537, y: -0.0008924894, z: 0.000009499861, w: 0.999943}
+  m_LocalRotation: {x: 0.010641724, y: -0.0008925007, z: 0.000009500149, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
