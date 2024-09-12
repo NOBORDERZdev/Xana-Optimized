@@ -120,6 +120,10 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
 
     public void SetMicByBtn()
     {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            return;
+        }
         PermissionPopusSystem.Instance.onCloseAction -= SetMicByBtn;
         StartCoroutine(SetMic());
     }

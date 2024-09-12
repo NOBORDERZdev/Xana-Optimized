@@ -433,7 +433,7 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
             XANAPartyCounterPanel.SetActive(false);
 
             Screen.orientation = ScreenOrientation.LandscapeLeft;
-            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.PenpenzLoading(FadeAction.In));
             yield return new WaitForSeconds(2);
             if (PhotonNetwork.IsMasterClient)
             {
