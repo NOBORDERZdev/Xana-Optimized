@@ -12,7 +12,7 @@ public class TriggerSpaceX : MonoBehaviour
     private void OnEnable()
     {
         gameObject.transform.localScale = Vector3.zero;
-        AsyncOperationHandle AsyncOp=Addressables.LoadAssetAsync<VideoClip>("SpaceX");
+        AsyncOperationHandle AsyncOp = Addressables.LoadAssetAsync<VideoClip>("SpaceX");
         AsyncOp.Completed += AsyncOp_Completed;
     }
 
@@ -26,10 +26,13 @@ public class TriggerSpaceX : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine && vClip!=null)
+        if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>() && vClip != null)
         {
-            XANASummitSceneLoading.OnJoinSubItem?.Invoke(false);
-            BuilderEventManager.spaceXActivated?.Invoke(vClip,playerPos.position);
+            if (other.GetComponent<PhotonView>().IsMine)
+            {
+                XANASummitSceneLoading.OnJoinSubItem?.Invoke(false);
+                BuilderEventManager.spaceXActivated?.Invoke(vClip, playerPos.position);
+            }
         }
     }
 }

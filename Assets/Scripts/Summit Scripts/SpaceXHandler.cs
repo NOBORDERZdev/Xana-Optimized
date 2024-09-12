@@ -14,28 +14,36 @@ public class SpaceXHandler : MonoBehaviour
     //public AudioSource launchCountingAudioSource;
     //public AudioClip countingAudioClip;
 
+    public bool spaceXactivated;
 
     private bool _WaitForRestart;
     private Vector3 _ReturnPlayerPos;
 
     private void OnEnable()
     {
-        BuilderEventManager.spaceXActivated += StartVideoPlayer;   
+        BuilderEventManager.spaceXActivated += StartVideoPlayer;
+        BuilderEventManager.spaceXDeactivated += OnspaceXDeactivated;
     }
     private void OnDisable()
     {
         BuilderEventManager.spaceXActivated -= StartVideoPlayer;
+        BuilderEventManager.spaceXDeactivated -= OnspaceXDeactivated;
     }
 
-    async void StartVideoPlayer(VideoClip VideoClip,Vector3 ReturnPlayerPos)
+    async void StartVideoPlayer(VideoClip VideoClip, Vector3 ReturnPlayerPos)
     {
+        spaceXactivated = true;
         if (_WaitForRestart)
             return;
         await ShowCounter();
+        if (!spaceXactivated)
+        {
+            return;
+        }
         _ReturnPlayerPos = ReturnPlayerPos;
         VideoPlayer.gameObject.SetActive(true);
         VideoPlayer.targetTexture.Release();
-        VideoPlayer.clip=VideoClip; 
+        VideoPlayer.clip = VideoClip;
         VideoPlayer.Play();
         VideoPlayer.loopPointReached += VideoPlayer_loopPointReached;
     }
@@ -46,13 +54,17 @@ public class SpaceXHandler : MonoBehaviour
         _WaitForRestart = true;
         int x = 10;
         LaunchCounter.gameObject.SetActive(true);
-        while (x> 0)
+        while (x > 0)
         {
-            LaunchCounter.text=x.ToString();
+            if (!spaceXactivated)
+            {
+                break;
+            }
+            LaunchCounter.text = x.ToString();
             await Task.Delay(1000);
             x--;
         }
-        LaunchCounter.GetComponent<Animator>().enabled=false;
+        LaunchCounter.GetComponent<Animator>().enabled = false;
         LaunchCounter.gameObject.SetActive(false);
         await Task.Delay(1000);
         //launchCountingAudioSource.clip=audioClip;
@@ -74,6 +86,13 @@ public class SpaceXHandler : MonoBehaviour
         PlanetOptions.SetActive(false);
     }
 
+    public void OnspaceXDeactivated()
+    {
+        _WaitForRestart = spaceXactivated = false;
+        VideoPlayer.gameObject.SetActive(false);
+        PlanetOptions.SetActive(false);
+    }
+
     public void LoadPlanetScene(int x)
     {
         string SceneId;
@@ -90,7 +109,7 @@ public class SpaceXHandler : MonoBehaviour
         DisableVideoPlayer();
         DisablePlanetOptionScreen();
         _WaitForRestart = false;
-       // SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
+        // SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
     }
 
     //private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)

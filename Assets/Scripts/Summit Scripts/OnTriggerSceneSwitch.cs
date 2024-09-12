@@ -43,6 +43,7 @@ public class OnTriggerSceneSwitch : MonoBehaviour
 
     void TriggerSceneLoading()
     {
+        BuilderEventManager.spaceXDeactivated?.Invoke();
         //GameplayEntityLoader.instance.AssignRaffleTickets(DomeId);
         BuilderEventManager.LoadNewScene?.Invoke(DomeId, transform.GetChild(0).transform.position);
     }
