@@ -74,16 +74,16 @@ public class DownloadPopupHandler : MonoBehaviour
     // Called when the user clicks the Accept button
     private void OnAcceptButtonClicked()
     {
+        XanaWorldDownloader.downloadSize = 0;
         userResponseTCS?.TrySetResult(true); // Complete the task with a result of true
         OnAlwaysAllow();
-        XanaWorldDownloader.downloadSize = 0;
     }
 
     // Called when the user clicks the Decline button
     private void OnDeclineButtonClicked()
     {
+        XanaWorldDownloader.downloadSize = 0;
         userResponseTCS?.TrySetResult(false); // Complete the task with a result of false
         HomeSceneLoaderInstance.LoadMain(false);
-        XanaWorldDownloader.downloadSize = 0;
     }
 }
