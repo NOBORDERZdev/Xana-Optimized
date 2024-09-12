@@ -59,9 +59,10 @@ public class ChatMsgDataHolder : MonoBehaviour
     // Calling this function From Unity Button
     public void BtnStatus()
     {
+        bool status = BtnActiveStatus; // Save Current Status
         ChatSocketManager.instance.DisableAllBtn();
 
-        BtnActiveStatus = !BtnActiveStatus;
+        BtnActiveStatus = !status;
         FlagBtn.gameObject.SetActive(BtnActiveStatus);
         BlockBtn.gameObject.SetActive(BtnActiveStatus);
         HighLighter.SetActive(BtnActiveStatus);

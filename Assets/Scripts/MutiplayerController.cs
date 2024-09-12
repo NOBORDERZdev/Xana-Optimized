@@ -39,6 +39,8 @@ namespace Photon.Pun.Demo.PunBasics
         public NetworkStates internetState = NetworkStates.NotConnectedToInternet;
 
         public static MutiplayerController instance;
+        public static Action onRespawnPlayer;
+
         public ScenesList working;
         #region Private Serializable Fields
 
@@ -591,6 +593,7 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 playerobjectRoom = new List<GameObject>(playerobjects);
                 playerobjects.Clear();
+                onRespawnPlayer?.Invoke();
                 JoinLobby(CurrLobbyName);
                 CarNavigationManager.CarNavigationInstance.Cars.Clear();
                 LoadingHandler.Instance.DomeLoadingProgess(10);
