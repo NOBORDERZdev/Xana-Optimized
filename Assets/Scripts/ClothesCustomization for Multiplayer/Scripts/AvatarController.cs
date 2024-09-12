@@ -300,7 +300,7 @@ public class AvatarController : MonoBehaviour
             SavingCharacterDataClass clothDataClass = JsonUtility.FromJson<SavingCharacterDataClass>(clothJson);
             if (clothDataClass.gender == "Male")
             {
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     if (i < clothDataClass.myItemObj.Count)
                     {
@@ -310,7 +310,7 @@ public class AvatarController : MonoBehaviour
             }
             else if (clothDataClass.gender == "Female")
             {
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     if (i < clothDataClass.myItemObj.Count)
                     {
@@ -343,7 +343,7 @@ public class AvatarController : MonoBehaviour
                 }
                 yield return new WaitForSeconds(.1f);
                 timeWithoutCloth += .1f;
-                if (timeWithoutCloth > 15)
+                if (timeWithoutCloth > 10)
                 {
                     OnEnable();
                 }
