@@ -351,7 +351,7 @@ public class SplineDone : MonoBehaviour {
     }
     public void SetDirty() {
         _splineLength = GetSplineLength(0.001f);
-
+        SetupPointList();
         UpdatePointList();
 
         OnDirty?.Invoke(this, EventArgs.Empty);
