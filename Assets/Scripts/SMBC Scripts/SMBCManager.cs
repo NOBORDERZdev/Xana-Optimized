@@ -12,8 +12,7 @@ public class SMBCManager : MonoBehaviour
     //Orientation Changer
     public CanvasGroup LandscapeCanvas;
     public CanvasGroup PotraitCanvas;
-    public string CurrentWorldName;
-    public string ParentWorldName;
+    public string CurrentPlanetName;
     public QuizDataLoader QuizDataLoader;
     public PlayerCanvas PlayerCanvas;
 
@@ -24,6 +23,9 @@ public class SMBCManager : MonoBehaviour
     bool _isPotrait = false;
     bool _requireKeyCollected = false;
     bool _requireAxeCollected = false;
+    bool _forestRocketPartCollected = false;
+    bool _icyRocketPartCollected = false;
+    bool _volcanicRocketPartCollected = false;
     QuizData _quizData;
     int _keyCounter = 0;
 
@@ -113,8 +115,8 @@ public class SMBCManager : MonoBehaviour
 
     void WorldLoaded()
     {
-        CurrentWorldName = CurrentWorldName.Replace(" ", "_");
-        _quizData = QuizDataLoader.GetQuizData(CurrentWorldName);
+        CurrentPlanetName = CurrentPlanetName.Replace(" ", "_");
+        _quizData = QuizDataLoader.GetQuizData(CurrentPlanetName);
     }
 
     public void AddKey()
@@ -127,14 +129,30 @@ public class SMBCManager : MonoBehaviour
 
     public void RemoveKey()
     {
-        if (_keyCounter > 1)
+        if (_keyCounter > 0)
             _keyCounter--;
         AddKeyObjectOnPlayerHead();
     }
 
     public void AddRocketPart()
     {
-        //_keyCounter++;
+        switch (CurrentPlanetName)
+        {
+            case "SMBC_Forest_Planet":
+                _forestRocketPartCollected = true;
+                break;
+            case "SMBC_Icy_Planet":
+                _icyRocketPartCollected = true;
+                break;
+            case "SMBC_Volcanic_Planet":
+                _volcanicRocketPartCollected = true;
+                break;
+            default:
+                _forestRocketPartCollected = false;
+                _icyRocketPartCollected = false;
+                _volcanicRocketPartCollected = false;
+                break;
+        }
     }
 
     public void AddAxe()
@@ -166,6 +184,15 @@ public class SMBCManager : MonoBehaviour
         return _quizData;
     }
 
+
+    internal void BackToEarth()
+    {
+        new Delayed.Action(() =>
+        {
+            GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
+        }, 2f);
+    }
+
     public bool CheckForObjectCollectible(SMBCCollectibleType collectibleType)
     {
         switch (collectibleType)
@@ -173,8 +200,6 @@ public class SMBCManager : MonoBehaviour
             case SMBCCollectibleType.DoorKey:
                 return _requireKeyCollected;
             case SMBCCollectibleType.Axe:
-                return _requireAxeCollected;
-            case SMBCCollectibleType.RocketPart:
                 return _requireAxeCollected;
             case SMBCCollectibleType.None:
                 return true;
