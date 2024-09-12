@@ -107,6 +107,14 @@ public class UserLoginSignupManager : MonoBehaviour
     private void OnEnable()
     {
         instance = this;
+
+        if (ConstantsHolder.xanaConstants.EnableSignInPanelByDefault)
+        {
+            emailOrWalletLoginPanel.SetActive(true);
+            ClearInputFieldsData();
+        }
+
+
         if (!File.Exists(GameManager.Instance.GetStringFolderPath()))
         {
             SaveCharacterProperties.instance.CreateFileFortheFirstTime();
@@ -415,7 +423,12 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void BackFromLoginSelection()
     {
-       
+        if (ConstantsHolder.xanaConstants.EnableSignInPanelByDefault)
+        {
+            emailOrWalletLoginPanel.SetActive(false);
+            return;
+        }
+
         if (!ConstantsHolder.xanaConstants.openLandingSceneDirectly && ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
         {
 

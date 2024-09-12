@@ -56,6 +56,7 @@ public class GamePlayUIHandler : MonoBehaviour
     public GameObject PlayerLeaderboardStatsContainer;
     public GameObject PlayerLeaderboardStatsPrefab;
     public GameObject MoveToLobbyBtn;
+    public GameObject SignInPopupForGuestUser;
     #endregion
 
     private void Start()
@@ -69,6 +70,8 @@ public class GamePlayUIHandler : MonoBehaviour
     {
         if (_inst != this)
             _inst = this;
+
+        ConstantsHolder.xanaConstants.EnableSignInPanelByDefault = false;
     }
     void ChangeOrientation()
     {
@@ -256,6 +259,14 @@ public class GamePlayUIHandler : MonoBehaviour
         XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().ResetGame();
         StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().MoveToLobby());
         LeaderboardPanel.SetActive(false);
+    }
+
+    public void OnSignInBtnClick()
+    {
+        LoadingHandler.Instance.ShowLoading();
+        ConstantsHolder.xanaConstants.EnableSignInPanelByDefault = true;
+        GameplayEntityLoader.instance._uiReferences.LoadMain(false);
+        SignInPopupForGuestUser.SetActive(false);
     }
     #endregion
 }
