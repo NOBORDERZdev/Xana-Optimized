@@ -27,7 +27,10 @@ public class ButtonsOnOff : MonoBehaviour
     private void Start()
     {
         button = GetComponent<Button>();
-        otherbutton = otherbutton.GetComponent<Button>();
+        if (otherbutton)
+        {
+            otherbutton = otherbutton.GetComponent<Button>();
+        }
     }
  
 
