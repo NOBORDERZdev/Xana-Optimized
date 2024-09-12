@@ -1,9 +1,6 @@
 using DG.Tweening;
-using Models;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class SMBCManager : MonoBehaviour
 {
@@ -44,12 +41,18 @@ public class SMBCManager : MonoBehaviour
     private void OnEnable()
     {
         BuilderEventManager.BuilderSceneOrientationChange += OrientationChange;
+        BuilderEventManager.OnSMBCRocketCollected += BackToEarthWithDelay;
+        BuilderEventManager.OnSMBCQuizWrongAnswer += BackToEarthWithDelay;
+
         OrientationChange(false);
     }
 
     private void OnDisable()
     {
         BuilderEventManager.BuilderSceneOrientationChange -= OrientationChange;
+        BuilderEventManager.OnSMBCRocketCollected -= BackToEarthWithDelay;
+        BuilderEventManager.OnSMBCQuizWrongAnswer -= BackToEarthWithDelay;
+
     }
 
     #region OrientationChange
@@ -181,6 +184,15 @@ public class SMBCManager : MonoBehaviour
             default:
                 return false;
         }
+    }
+    private void BackToEarthWithDelay()
+    {
+        Invoke(nameof(BackToEarth), 3f);
+    }
+
+    private void BackToEarth()
+    {
+        GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
     }
 }
 

@@ -146,5 +146,6 @@ public static class BuilderEventManager
     //SMBC specific events
     public static Action<SMBCQuizComponent, QuizComponentData> OnSMBCQuizComponentCollisionEnter;
     public static Action OnSMBCQuizComponentColse;
+    public static Action OnSMBCRocketCollected;
     public static Action OnSMBCQuizWrongAnswer;
 }

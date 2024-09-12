@@ -19,7 +19,6 @@ public class SMBCUIManager : MonoBehaviour
         BuilderEventManager.OnDoorKeyCollisionEnter += EnableDoorKeyUI;
         BuilderEventManager.OnSMBCQuizComponentCollisionEnter += EnableQuizComponentUI;
         BuilderEventManager.OnSMBCQuizComponentColse += ResetCredentials;
-        BuilderEventManager.OnSMBCQuizWrongAnswer += BackToEarth;
         SceneManager.sceneLoaded += ResetData;
     }
 
@@ -29,7 +28,6 @@ public class SMBCUIManager : MonoBehaviour
         BuilderEventManager.OnDoorKeyCollisionEnter -= EnableDoorKeyUI;
         BuilderEventManager.OnSMBCQuizComponentCollisionEnter -= EnableQuizComponentUI;
         BuilderEventManager.OnQuizComponentColse -= ResetCredentials;
-        BuilderEventManager.OnSMBCQuizWrongAnswer -= BackToEarth;
         SceneManager.sceneLoaded -= ResetData;
     }
 
@@ -263,10 +261,6 @@ public class SMBCUIManager : MonoBehaviour
         _isOptionSelected = false;
     }
 
-    private void BackToEarth()
-    {
-        GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
-    }
     private void CheckAnswer()
     {
         NextButton.interactable = false;
