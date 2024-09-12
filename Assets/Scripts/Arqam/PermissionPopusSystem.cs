@@ -54,6 +54,10 @@ public class PermissionPopusSystem : MonoBehaviour
     public void OpenPermissionScreen(int ActionParam = 0)
     {
         actionParameter = ActionParam;
+        if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+        {
+            return;
+        }
         ShowPermissionScreen();
     }
 
