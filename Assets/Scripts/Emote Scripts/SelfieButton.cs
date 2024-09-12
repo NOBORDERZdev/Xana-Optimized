@@ -28,7 +28,10 @@ public class SelfieButton : MonoBehaviour
 
     private void OnSelfieClick()
     {
-        ActionManager.StopActionAnimation?.Invoke();
+        if (ActionManager.IsAnimRunning) //for stop dance animation
+        {
+            ActionManager.StopActionAnimation?.Invoke();
+        }
         GamePlayButtonEvents.inst.OnSelfieClick();
         BuilderEventManager.UIToggle?.Invoke(true);
         PlayerController.PlayerIsWalking?.Invoke();
