@@ -669,6 +669,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void SetPlayerCameraAngle()
     {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            StartCoroutine(setPlayerCamAngle(-0.830f, 0.5572f));
+            return;
+        }
         if (WorldItemView.m_EnvName.Contains("DJ Event") || WorldItemView.m_EnvName.Contains("XANA Festival Stage"))
         {
             mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
@@ -716,7 +721,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             mainPlayer.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
             StartCoroutine(setPlayerCamAngle(0f, 0.5f));
         }
-
         if (WorldItemView.m_EnvName == "TOTTORI METAVERSE")
         {
             mainPlayer.transform.rotation = _spawnTransform.rotation;
@@ -982,8 +986,17 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public IEnumerator setPlayerCamAngle(float xValue, float yValue)
     {
         yield return new WaitForSeconds(0.1f);
-        PlayerCamera.m_XAxis.Value = xValue;
-        PlayerCamera.m_YAxis.Value = yValue;
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            CinemachineFreeLook cam = XanaPartyCamera.GetComponentInChildren<CinemachineFreeLook>();
+            cam.m_XAxis.Value = xValue;
+            cam.m_YAxis.Value = yValue;
+        }
+        else
+        {
+            PlayerCamera.m_XAxis.Value = xValue;
+            PlayerCamera.m_YAxis.Value = yValue;
+        }
     }
 
     //void SetKotoAngle()

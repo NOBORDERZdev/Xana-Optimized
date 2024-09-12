@@ -73,7 +73,8 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
     private void OnDisable()
     {
         BuilderEventManager.AfterPlayerInstantiated -= CheckMicPermission;
-        _punVoiceClient.Client.StateChanged -= VoiceClientStateChanged;
+        if (_punVoiceClient != null)
+            _punVoiceClient.Client.StateChanged -= VoiceClientStateChanged;
     }
 
     private void CheckMicPermission()
