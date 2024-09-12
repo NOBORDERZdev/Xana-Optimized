@@ -235,7 +235,7 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
             }
             go.GetComponent<CanvasGroup>().alpha = 0;
         }
-
+        ActionManager.DisableCircleDialog?.Invoke();
         //To disable Buttons  
         foreach (GameObject go in disableBtnObjects)
         {
