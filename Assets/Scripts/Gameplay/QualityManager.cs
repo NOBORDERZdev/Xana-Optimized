@@ -16,7 +16,8 @@ public class QualityManager : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("DefaultQuality") == 0 && PlayerPrefs.GetInt("QualitySettings") == 0)
         {
-            AdjustQualityBasedOnDevice();
+            //AdjustQualityBasedOnDevice();
+            SetQualitySettings(1); // Medium
         }
         else
         {
@@ -52,51 +53,51 @@ public class QualityManager : MonoBehaviour
             SetQualityToggles(index);
         }
     }
-    void AdjustQualityBasedOnDevice()
-    {
-        int systemMemory = SystemInfo.systemMemorySize;
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            AdjustQualityForAndroid(systemMemory);
-        }
-        else if (Application.platform == RuntimePlatform.IPhonePlayer)
-        {
-            AdjustQualityForIOS(systemMemory);
-        }
-        else
-        {
-            SetQualitySettings(2); // High
-        }
-    }
-    void AdjustQualityForIOS(int systemMemory)
-    {
-        if (systemMemory < 2048)
-        {
-            SetQualitySettings(0); // Low
-        }
-        else if (systemMemory < 4096)
-        {
-            SetQualitySettings(1); // Medium
-        }
-        else if (systemMemory <= 6144) //High
-        {
-            SetQualitySettings(2);
-        }
-    }
+    //void AdjustQualityBasedOnDevice()
+    //{
+    //    int systemMemory = SystemInfo.systemMemorySize;
+    //    if (Application.platform == RuntimePlatform.Android)
+    //    {
+    //        AdjustQualityForAndroid(systemMemory);
+    //    }
+    //    else if (Application.platform == RuntimePlatform.IPhonePlayer)
+    //    {
+    //        AdjustQualityForIOS(systemMemory);
+    //    }
+    //    else
+    //    {
+    //        SetQualitySettings(2); // High
+    //    }
+    //}
+    //void AdjustQualityForIOS(int systemMemory)
+    //{
+    //    if (systemMemory < 2048)
+    //    {
+    //        SetQualitySettings(0); // Low
+    //    }
+    //    else if (systemMemory < 4096)
+    //    {
+    //        SetQualitySettings(1); // Medium
+    //    }
+    //    else //if (systemMemory <= 6144) //High
+    //    {
+    //        SetQualitySettings(2);
+    //    }
+    //}
 
-    void AdjustQualityForAndroid(int systemMemory)
-    {
-        if (systemMemory < 2048)
-        {
-            SetQualitySettings(0); // Low
-        }
-        else if (systemMemory < 4096)
-        {
-            SetQualitySettings(1); // Medium
-        }
-        else
-        {
-            SetQualitySettings(2); // High
-        }
-    }
+    //void AdjustQualityForAndroid(int systemMemory)
+    //{
+    //    if (systemMemory < 2048)
+    //    {
+    //        SetQualitySettings(0); // Low
+    //    }
+    //    else if (systemMemory < 4096)
+    //    {
+    //        SetQualitySettings(1); // Medium
+    //    }
+    //    else
+    //    {
+    //        SetQualitySettings(2); // High
+    //    }
+    //}
 }
