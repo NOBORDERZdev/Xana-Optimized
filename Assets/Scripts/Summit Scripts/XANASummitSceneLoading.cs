@@ -94,7 +94,11 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (string.IsNullOrEmpty(domeGeneralData.world))
             return;
 
-     
+        if (domeGeneralData.is_penpenz && ConstantsHolder.xanaConstants.LoggedInAsGuest)
+        {
+            GamePlayUIHandler.inst.SignInPopupForGuestUser.SetActive(true);
+            return;
+        }
 
         if (domeGeneralData.isSubWorld)
         {
