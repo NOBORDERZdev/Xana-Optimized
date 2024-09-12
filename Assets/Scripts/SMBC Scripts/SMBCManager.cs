@@ -9,6 +9,7 @@ public class SMBCManager : MonoBehaviour
     //Orientation Changer
     public CanvasGroup LandscapeCanvas;
     public CanvasGroup PotraitCanvas;
+    [HideInInspector]
     public string CurrentPlanetName;
     public QuizDataLoader QuizDataLoader;
     public PlayerCanvas PlayerCanvas;
@@ -139,6 +140,7 @@ public class SMBCManager : MonoBehaviour
 
     public void AddRocketPart()
     {
+        Debug.LogError("Add rocket part => " + CurrentPlanetName);
         switch (CurrentPlanetName)
         {
             case "SMBC_Forest_Planet":
@@ -209,6 +211,26 @@ public class SMBCManager : MonoBehaviour
     private void BackToEarth()
     {
         GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
+    }
+
+    public bool CheckRocketPartCollectedOrNot(string planetName)
+    {
+        switch (planetName)
+        {
+            case "SMBC_Forest_Planet":
+                return _forestRocketPartCollected;
+            case "SMBC_Icy_Planet":
+                return _icyRocketPartCollected;
+            case "SMBC_Volcanic_Planet":
+                return _volcanicRocketPartCollected;
+            default:
+                return false;
+        }
+    }
+
+    public bool CheckAllRocketPartIsCollected()
+    {
+        return _forestRocketPartCollected = _icyRocketPartCollected = _volcanicRocketPartCollected;
     }
 }
 

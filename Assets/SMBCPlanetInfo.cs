@@ -5,10 +5,12 @@ public class SMBCPlanetInfo : MonoBehaviour
 {
     public string PlanetName;
     private bool _alreadyTriggered = false;
+    
 
     private void Start()
     {
-        if (SMBCManager.Instance.CheckRocketPartCollectOrNot(PlanetName))
+        PlanetName = PlanetName.Replace(" ", "_");
+        if (SMBCManager.Instance.CheckRocketPartCollectedOrNot(PlanetName))
         {
             gameObject.SetActive(false);
         }

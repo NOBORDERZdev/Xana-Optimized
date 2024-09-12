@@ -1,7 +1,5 @@
 using Models;
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SMBCQuizComponent : MonoBehaviour
@@ -12,8 +10,8 @@ public class SMBCQuizComponent : MonoBehaviour
 
     private void Start()
     {
-        if (SMBCManager.Instance)
-            SMBCManager.Instance.InitQuizComponent(this);
+        Debug.Log("Quiz function calling");
+        SMBCManager.Instance?.InitQuizComponent(this);
     }
 
     public void Init(QuizComponentData quizComponentData)
