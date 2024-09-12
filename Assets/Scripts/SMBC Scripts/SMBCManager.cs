@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -28,6 +29,7 @@ public class SMBCManager : MonoBehaviour
     bool _volcanicRocketPartCollected = false;
     QuizData _quizData;
     int _keyCounter = 0;
+    List<string> _npcText;
 
     public Action OnIntroductryPanelClicked;
 
@@ -123,6 +125,7 @@ public class SMBCManager : MonoBehaviour
             Destroy(gameObject);
         }
         _quizData = null;
+        _npcText = null;
         _keyCounter = 0;
     }
     public void InitQuizComponent(SMBCQuizComponent quizComponent)
@@ -132,12 +135,34 @@ public class SMBCManager : MonoBehaviour
         quizComponent.Init(_quizData.WorldQuizComponentData);
     }
 
+    public void InitNPCText(SMBCNPC npcs)
+    {
+        if (_npcText == null)
+            NPCTextLoad(npcs.PlanetName);
+        npcs.Init(_npcText);
+    }
+
     void WorldLoaded()
     {
         CurrentPlanetName = CurrentPlanetName.Replace(" ", "_");
         _quizData = QuizDataLoader.GetQuizData(CurrentPlanetName);
     }
 
+    void NPCTextLoad(string planetName)
+    {
+        switch (planetName)
+        {
+            case "Earth_Planet":
+                _npcText = QuizDataLoader.EarthPlanetNPC;
+                break;
+            case "REDMoon_Planet":
+                _npcText = QuizDataLoader.RedMoonPlanetNPC;
+                break;
+            default:
+                _npcText = null;
+                break;
+        }
+    }
     public void AddKey()
     {
         _keyCounter++;
@@ -174,6 +199,8 @@ public class SMBCManager : MonoBehaviour
                 break;
         }
     }
+
+
 
     public void AddAxe()
     {
