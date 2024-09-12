@@ -18,7 +18,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
-using Photon.Voice.PUN;
+
 
 namespace Photon.Pun.Demo.PunBasics
 {
@@ -109,7 +109,7 @@ namespace Photon.Pun.Demo.PunBasics
                 }
                 // #Critical
                 // this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
-                PhotonNetwork.AutomaticallySyncScene = true;
+               // PhotonNetwork.AutomaticallySyncScene = true;  Zeel Removed confilicting with sector
                
             }
             else
@@ -218,7 +218,7 @@ namespace Photon.Pun.Demo.PunBasics
         public override void OnJoinedLobby()
         {
 
-            Debug.LogError("On Joined lobby :- " + PhotonNetwork.CurrentLobby.Name + "--" + Time.time);
+            Debug.LogError("On Joined lobby :- " + PhotonNetwork.CurrentLobby.Name + "--" + Time.time  + " Shifting "+ isShifting);
             if (SectorManager.Instance)
             {
                 SectorManager.Instance.UpdateMultisector();
@@ -324,7 +324,7 @@ namespace Photon.Pun.Demo.PunBasics
                             }
 
                             CurrRoomName = info.Name;
-                            Debug.LogError("Joining room   " + SectorName);
+                            Debug.LogError("Joining room   " + " Shifting " + isShifting+"  " +SectorName);
                             joinedRoom = PhotonNetwork.JoinRoom(CurrRoomName);
                             return;
                         }
@@ -354,7 +354,7 @@ namespace Photon.Pun.Demo.PunBasics
                 }
                 else
                 {
-                    Debug.LogError("Joining room   " + SectorName);
+                    Debug.LogError("Joining room   " + " Shifting " + isShifting+" " +SectorName);
                     PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(4, ConstantsHolder.MultiSectionPhoton), new TypedLobby(CurrLobbyName, LobbyType.Default));
                 }
                 //   PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(CurrLobbyName, LobbyType.Default));
@@ -402,7 +402,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnJoinedRoom()
         {
-            Debug.Log("Joined room   " + PhotonNetwork.CurrentRoom.Name);
+            Debug.Log("Joined room   " + PhotonNetwork.CurrentRoom.Name +" Shifting "  + isShifting);
             CurrRoomName = PhotonNetwork.CurrentRoom.Name;
             if (!isShifting)
             {
@@ -436,6 +436,8 @@ namespace Photon.Pun.Demo.PunBasics
                     playerobjects.RemoveAt(x);
                 }
             }
+            Resources.UnloadUnusedAssets();
+            GC.Collect();
         }
 
         public override void OnJoinRoomFailed(short returnCode, string message)
@@ -484,15 +486,21 @@ namespace Photon.Pun.Demo.PunBasics
                 DestroyImmediate(item);
             }
             await new WaitForEndOfFrame();
+            Debug.Log("Updated Is Shifting..." + isShifting);
             isShifting = false;
         }
 
 
         #region Sector Management
 
-        public void Ontriggered(string SectorName, bool isWheel = false)
+        public async void Ontriggered(string SectorName, bool isWheel = false)
         {
             if (SectorName == this.SectorName || (disableSector && !isWheel) || ConstantsHolder.DiasableMultiPartPhoton) return;
+
+            while(isShifting)
+            {
+                await Task.Delay(1000);
+            }
 
             isShifting = true;
             var player = ReferencesForGamePlay.instance.m_34player;
@@ -518,15 +526,17 @@ namespace Photon.Pun.Demo.PunBasics
                 Destroy(summitplayer.Transformview);
                 Destroy(summitplayer.view);
             }
-            XANASummitSceneLoading.OnJoinSubItem?.Invoke(ConstantsHolder.xanaConstants.minimap == 1);
-
+            if (isWheel)
+            {
+                XANASummitSceneLoading.OnJoinSubItem?.Invoke(ConstantsHolder.xanaConstants.minimap == 1);
+            }
             PhotonNetwork.LeaveRoom();
 
         }
 
         public override void OnLeftRoom()
         {
-            Debug.Log("OnLeftRoom  ..... " + PhotonNetwork.IsConnectedAndReady);
+            Debug.Log("OnLeftRoom  ..... " + PhotonNetwork.IsConnectedAndReady  +"Is Shifting" +isShifting);
 
 
             // PhotonNetwork.ConnectUsingSettings();
