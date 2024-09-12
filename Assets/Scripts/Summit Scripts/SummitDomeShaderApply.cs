@@ -83,33 +83,5 @@ public class SummitDomeShaderApply : MonoBehaviour
         return null;
     }
 
-   /* void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            DetectObject(Input.mousePosition);
-        }
-
-        // Detect touch input
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-        {
-            DetectObject(Input.GetTouch(0).position);
-        }
-    }
-
-    void DetectObject(Vector3 inputPosition)
-    {
-        Ray ray = Camera.main.ScreenPointToRay(inputPosition); // Convert screen/touch position to a ray
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            GameObject clickedObject = hit.collider.gameObject; // Get the object hit by the ray
-            Debug.Log("Clicked on: " + clickedObject.name);
-            if (clickedObject == this.gameObject)
-            {
-                SummitDomeImageHandler.ShowNftData?.Invoke(DomeId);
-            }
-        }
-    }*/
+ 
 }

@@ -68,49 +68,44 @@ public class SummitDomeImageHandler : MonoBehaviour
         switch (domedata.proportionType)
         {
             case "1:1":
-                if (JJFrameManager.instance)
-                    JJFrameManager.instance.SetTransformForFrameSpotLight(0);
+             
                 if (domedata.mediaType == "VIDEO" || domedata.mediaType == "LIVE")
                     PMY_Ratio = PMY_Ratio.OneXOneWithoutDes;
                 else
                     PMY_Ratio = PMY_Ratio.OneXOneWithDes;
-                compersionPrfex = "?width=512&height=512";
+       
                 break;
             case "16:9":
-                if (JJFrameManager.instance)
-                    JJFrameManager.instance.SetTransformForFrameSpotLight(1);
+              
                 if (domedata.mediaType == "VIDEO" || domedata.mediaType == "LIVE")
                     PMY_Ratio = PMY_Ratio.SixteenXNineWithoutDes;
                 else
                     PMY_Ratio = PMY_Ratio.SixteenXNineWithDes;
-                compersionPrfex = "?width=800&height=450";//"?width=500&height=600";
+     
                 break;
             case "9:16":
-                if (JJFrameManager.instance)
-                    JJFrameManager.instance.SetTransformForFrameSpotLight(2);
+           
                 if (domedata.mediaType == "VIDEO" || domedata.mediaType == "LIVE")
                     PMY_Ratio = PMY_Ratio.NineXSixteenWithoutDes;
                 else
                     PMY_Ratio = PMY_Ratio.NineXSixteenWithDes;
-                compersionPrfex = "?width=450&height=800"; //"?width=700&height=500";
+   
                 break;
             case "4:3":
-                if (JJFrameManager.instance)
-                    JJFrameManager.instance.SetTransformForFrameSpotLight(3);
+                
                 if (domedata.mediaType == "VIDEO" || domedata.mediaType == "LIVE")
                     PMY_Ratio = PMY_Ratio.FourXThreeWithoutDes;
                 else
                     PMY_Ratio = PMY_Ratio.FourXThreeWithDes;
-                compersionPrfex = "?width=640&height=480";
+            
                 break;
             default:
-                if (JJFrameManager.instance)
-                    JJFrameManager.instance.SetTransformForFrameSpotLight(0);
+               
                 if (domedata.mediaType == "VIDEO" || domedata.mediaType == "LIVE")
                     PMY_Ratio = PMY_Ratio.OneXOneWithoutDes;
                 else
                     PMY_Ratio = PMY_Ratio.OneXOneWithDes;
-                compersionPrfex = "?width=512&height=512";
+               
                 break;
         }
         int ratioId = (int)PMY_Ratio;
