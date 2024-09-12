@@ -94,6 +94,10 @@ public class UserLoginSignupManager : MonoBehaviour
     EyesBlinking ref_EyesBlinking;
     [Header("Bools Fields")]
     private bool _isUserClothDataFetched = false;
+
+    public float DisplayNameFieldMoveUpValue = 500f; // Distance to move the input field up
+    Vector2 _originalPosition;
+    AdvancedInputField _displayNameInputField;
     //public bool LoggedInAsGuest = false;
 
     #region XANA PARTY WORLD
@@ -124,12 +128,39 @@ public class UserLoginSignupManager : MonoBehaviour
         {
             Directory.CreateDirectory(saveDir);
         }
+
+        _displayNameInputField = displayrNameField.GetComponent<AdvancedInputField>();
+
+        _originalPosition = _displayNameInputField.GetComponent<RectTransform>().anchoredPosition;
+
+        
+        if (_displayNameInputField != null)
+        {
+            _displayNameInputField.OnBeginEdit.AddListener(MoveInputFieldUp);
+            _displayNameInputField.OnEndEdit.AddListener(MoveInputFieldDown);
+        }
     }
 
     private void OnDisable()
     {
         verficationPlaceHolder.OnValueChanged.RemoveListener(delegate { ValueChangeCheck(); });
         Web3Web2Handler.AllDataFetchedfromServer -= Web3EventForNFTData;
+    }
+
+
+    private void MoveInputFieldUp(BeginEditReason reason)
+    {
+        // Move the input field up by a certain distance
+        _displayNameInputField.GetComponent<RectTransform>().anchoredPosition = new Vector2(
+            _originalPosition.x,
+            _originalPosition.y + DisplayNameFieldMoveUpValue
+        );
+    }
+
+    private void MoveInputFieldDown(string text, EndEditReason reason)
+    {
+        // Move the input field back to its original position
+        _displayNameInputField.GetComponent<RectTransform>().anchoredPosition = _originalPosition;
     }
 
 
