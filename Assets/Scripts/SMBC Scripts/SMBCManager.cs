@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SMBCManager : MonoBehaviour
 {
@@ -46,7 +47,7 @@ public class SMBCManager : MonoBehaviour
         BuilderEventManager.BuilderSceneOrientationChange += OrientationChange;
         BuilderEventManager.OnSMBCRocketCollected += BackToEarthWithDelay;
         BuilderEventManager.OnSMBCQuizWrongAnswer += BackToEarthWithDelay;
-
+        SceneManager.sceneLoaded += ResetData;
         OrientationChange(false);
     }
 
@@ -55,6 +56,8 @@ public class SMBCManager : MonoBehaviour
         BuilderEventManager.BuilderSceneOrientationChange -= OrientationChange;
         BuilderEventManager.OnSMBCRocketCollected -= BackToEarthWithDelay;
         BuilderEventManager.OnSMBCQuizWrongAnswer -= BackToEarthWithDelay;
+        SceneManager.sceneLoaded -= ResetData;
+
 
     }
 
@@ -110,6 +113,10 @@ public class SMBCManager : MonoBehaviour
     }
     #endregion
 
+    void ResetData(Scene scene, LoadSceneMode mode)
+    {
+        _quizData = null;
+    }
     public void InitQuizComponent(SMBCQuizComponent quizComponent)
     {
         if (_quizData == null)
