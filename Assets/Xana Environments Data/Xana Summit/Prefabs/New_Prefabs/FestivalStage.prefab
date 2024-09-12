@@ -5518,107 +5518,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 15.730135, y: 3.1404157, z: 1.1528778}
   m_Center: {x: 3.0190935, y: 2.535013, z: 0.076438904}
---- !u!1 &6438475895580648691
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 778702156507735427}
-  - component: {fileID: 6473915143395362864}
-  - component: {fileID: 3612438506652031764}
-  - component: {fileID: 5756297911590187127}
-  m_Layer: 0
-  m_Name: Screen_Android_Live
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &778702156507735427
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6438475895580648691}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.014198303, y: -0.024535656, z: -3.961019}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1004711107734768055}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!33 &6473915143395362864
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6438475895580648691}
-  m_Mesh: {fileID: 3941715523697911101, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
---- !u!23 &3612438506652031764
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6438475895580648691}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: defafc270006f9542810c84a52cd6d39, type: 2}
-  - {fileID: 2100000, guid: 38cfd16213a728740993c15a325297d6, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5756297911590187127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6438475895580648691}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
-  isMeshRendrer: 1
-  shaderName: Sprites/Default
-  isTerrain: 0
 --- !u!1 &6546492010329750252
 GameObject:
   m_ObjectHideFlags: 0
@@ -16380,56 +16279,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7283810243342376521, guid: cf0babc408386a345b6de20d74273457, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7283810243342376521, guid: cf0babc408386a345b6de20d74273457, type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: 38cfd16213a728740993c15a325297d6, type: 2}
-    - target: {fileID: 8457309367440106790, guid: cf0babc408386a345b6de20d74273457, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 8457309367440106790, guid: cf0babc408386a345b6de20d74273457, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 8457309367440106790, guid: cf0babc408386a345b6de20d74273457, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8457309367440106790, guid: cf0babc408386a345b6de20d74273457, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8457309367440106790, guid: cf0babc408386a345b6de20d74273457, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 8457309367440106790, guid: cf0babc408386a345b6de20d74273457, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9085368634543030172, guid: cf0babc408386a345b6de20d74273457, type: 3}
-      propertyPath: m_Name
-      value: Screen_Android_PR
-      objectReference: {fileID: 0}
-    - target: {fileID: 9085368634543030172, guid: cf0babc408386a345b6de20d74273457, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf0babc408386a345b6de20d74273457, type: 3}
---- !u!23 &467874371793251874 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 5529967731817611029, guid: cf0babc408386a345b6de20d74273457, type: 3}
+--- !u!33 &427423228105447796 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: 5705742075926628419, guid: cf0babc408386a345b6de20d74273457, type: 3}
   m_PrefabInstance: {fileID: 5386407517370880311}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1004711107734768055 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5129932529088403584, guid: cf0babc408386a345b6de20d74273457, type: 3}
+  m_PrefabInstance: {fileID: 5386407517370880311}
+  m_PrefabAsset: {fileID: 0}
+--- !u!33 &1375755800533326087 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: 6473915143395362864, guid: cf0babc408386a345b6de20d74273457, type: 3}
+  m_PrefabInstance: {fileID: 5386407517370880311}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2452900905505861054 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7550893328758979721, guid: cf0babc408386a345b6de20d74273457, type: 3}
   m_PrefabInstance: {fileID: 5386407517370880311}
   m_PrefabAsset: {fileID: 0}
 --- !u!23 &3446687248146534270 stripped
@@ -16442,53 +16311,21 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9085368634543030172, guid: cf0babc408386a345b6de20d74273457, type: 3}
   m_PrefabInstance: {fileID: 5386407517370880311}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5041309588220991131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3807208245232873131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
-  isMeshRendrer: 1
-  shaderName: Sprites/Default
-  isTerrain: 0
---- !u!23 &7781112014133997208 stripped
+--- !u!23 &4738976100247378201 stripped
 MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 2394874038449717167, guid: cf0babc408386a345b6de20d74273457, type: 3}
+  m_CorrespondingSourceObject: {fileID: 793870205526542382, guid: cf0babc408386a345b6de20d74273457, type: 3}
   m_PrefabInstance: {fileID: 5386407517370880311}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &9161882439058482584 stripped
+--- !u!1 &6540570088622274764 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 3883746168137249967, guid: cf0babc408386a345b6de20d74273457, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1154215418676816379, guid: cf0babc408386a345b6de20d74273457, type: 3}
   m_PrefabInstance: {fileID: 5386407517370880311}
   m_PrefabAsset: {fileID: 0}
---- !u!205 &5219298533881929769
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!23 &8710428662162082339 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3612438506652031764, guid: cf0babc408386a345b6de20d74273457, type: 3}
+  m_PrefabInstance: {fileID: 5386407517370880311}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9161882439058482584}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.014198303, y: -0.024536133, z: -3.0390594}
-  m_Size: 39.37485
-  m_FadeMode: 1
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.10046316
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 7781112014133997208}
-    - renderer: {fileID: 467874371793251874}
-    - renderer: {fileID: 3446687248146534270}
-  m_Enabled: 1
 --- !u!1001 &6785823998868750890
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16846,23 +16683,23 @@ PrefabInstance:
     - target: {fileID: 2714939065781328881, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: _renderer
       value: 
-      objectReference: {fileID: 3612438506652031764}
+      objectReference: {fileID: 8710428662162082339}
     - target: {fileID: 3141503287995704522, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: IOSLiveVideoMesh
       value: 
-      objectReference: {fileID: 3941715523697911101, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
+      objectReference: {fileID: 7029844424008885896, guid: 3b445dd2d58229b4e8c0b4c6f9c2fbe7, type: 3}
     - target: {fileID: 3141503287995704522, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: PreRecVideoScreen
       value: 
-      objectReference: {fileID: 3807208245232873131}
+      objectReference: {fileID: 6540570088622274764}
     - target: {fileID: 3141503287995704522, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: AndroidLiveVideoMesh
       value: 
-      objectReference: {fileID: 3941715523697911101, guid: 21e9cb7cf15aec04183b2a8f91112f81, type: 3}
+      objectReference: {fileID: -9148963184695921697, guid: 042aff744d4373741b59bf4a483ff577, type: 3}
     - target: {fileID: 3141503287995704522, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: LiveVideoPlayerScreen
       value: 
-      objectReference: {fileID: 6473915143395362864}
+      objectReference: {fileID: 427423228105447796}
     - target: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -16914,7 +16751,7 @@ PrefabInstance:
     - target: {fileID: 5226123731516465620, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: _renderer
       value: 
-      objectReference: {fileID: 3612438506652031764}
+      objectReference: {fileID: 2452900905505861054}
     - target: {fileID: 5226123731516465621, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: _audioMuted
       value: 1
@@ -17038,7 +16875,7 @@ PrefabInstance:
     - target: {fileID: 5226123732534829229, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: m_TargetMaterialRenderer
       value: 
-      objectReference: {fileID: 3446687248146534270}
+      objectReference: {fileID: 4738976100247378201}
     - target: {fileID: 5794338245972623171, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -17054,7 +16891,7 @@ PrefabInstance:
     - target: {fileID: 5819901891346889974, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: LiveVideoPlayerScreen
       value: 
-      objectReference: {fileID: 6473915143395362864}
+      objectReference: {fileID: 1375755800533326087}
     - target: {fileID: 7430662137214033731, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: m_IsActive
       value: 0
