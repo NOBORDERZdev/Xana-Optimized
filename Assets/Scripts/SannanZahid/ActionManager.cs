@@ -8,6 +8,7 @@ public class ActionManager : MonoBehaviour
     public ActionFavouriteManager ActionFavouriteManager;
     public static Action<ActionData> ActionBtnClick;
     public static Action<bool> OpenActionFavouritPanel;
+    public static Action DisableCircleDialog;
     public static Action<EmoteReactionItemBtnHandler.ItemType, int> OpenActionCategoryTab;
     public static Action StopActionAnimation;
     public static bool IsAnimRunning = default;
@@ -19,6 +20,7 @@ public class ActionManager : MonoBehaviour
         OpenActionFavouritPanel += OpenActionFavouritSelectionPanel;
         OpenActionCategoryTab += SetActionCategoryTab;
         StopActionAnimation += StopAnimation;
+        DisableCircleDialog += CloseActionCircleDialog;
     }
 
     private void OnDisable()
@@ -27,6 +29,7 @@ public class ActionManager : MonoBehaviour
         OpenActionFavouritPanel -= OpenActionFavouritSelectionPanel;
         OpenActionCategoryTab -= SetActionCategoryTab;
         StopActionAnimation -= StopAnimation;
+        DisableCircleDialog -= CloseActionCircleDialog;
     }
 
     private void Start()
@@ -44,7 +47,11 @@ public class ActionManager : MonoBehaviour
     {
         ReactionManager.OpenReactionDialogUI();
     }
-
+    public void CloseActionCircleDialog()
+    {
+        _actionBtnActive = false;
+        ActionFavouriteManager.ActivateCircleDialog(false);
+    }
     public void OpenActionCircleDialog()
     {
         _actionBtnActive = !_actionBtnActive;
