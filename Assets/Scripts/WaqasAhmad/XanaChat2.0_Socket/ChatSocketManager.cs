@@ -406,7 +406,7 @@ public class ChatSocketManager : MonoBehaviour
         }
     }
 
-    void AddNewMsg(string userName, string msg, string msgId, string userId, int blockMessage)
+    public void AddNewMsg(string userName, string msg, string msgId, string userId, int blockMessage)
     {
         GameObject _newMsg = Instantiate(MsgPrefab, MsgParentObj);
         ChatMsgDataHolder _dataHolder = _newMsg.GetComponent<ChatMsgDataHolder>();
@@ -417,7 +417,6 @@ public class ChatSocketManager : MonoBehaviour
             // That My msg, and i cannot flag or block it
             _dataHolder.DotedBtn.SetActive(false);
         }
-
         MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = false;
         Invoke("DelayAdded", 0.05f);
         XanaChatSystem.instance.DisplayMsg_FromSocket(userName, msg, _dataHolder.MsgText);
@@ -551,6 +550,15 @@ public class ChatSocketManager : MonoBehaviour
         {
             item.BtnForcedStatus(false);
         }
+    }
+
+    public void ClearAllMessages()
+    {
+        foreach (var item in allMsgData)
+        {
+            Destroy(item.gameObject);
+        }
+        allMsgData.Clear();
     }
 }
 
