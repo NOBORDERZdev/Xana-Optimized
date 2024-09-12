@@ -3734,6 +3734,7 @@ GameObject:
   - component: {fileID: 3896840288255319210}
   - component: {fileID: 7960267596015189877}
   - component: {fileID: 5162600008226989694}
+  - component: {fileID: 6816457930719845082}
   m_Layer: 22
   m_Name: XanaAvatar2.0_Female
   m_TagString: PhotonLocalPlayer
@@ -4335,13 +4336,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126494ae2a10a34499272ed97a6c9f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logLevel: 0
-  ignoreGlobalLogLevel: 0
-  recorderInUse: {fileID: 0}
-  speakerInUse: {fileID: 8321987126736790954}
-  AutoCreateRecorderIfNotFound: 0
-  UsePrimaryRecorder: 1
-  SetupDebugSpeaker: 0
 --- !u!114 &2356209556997522361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4981,6 +4975,25 @@ CapsuleCollider:
   m_Height: 1.3
   m_Direction: 1
   m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!114 &6816457930719845082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3290326269450676071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c7864ef995c4b94488687b8552d58a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lights:
+  - light: {fileID: 1688884169341732316}
+    value: 0.8
+  - light: {fileID: 2339845189546372967}
+    value: 0.8
+  - light: {fileID: 6219303127650217978}
+    value: 0.7
 --- !u!1 &3325514396901914096
 GameObject:
   m_ObjectHideFlags: 0
@@ -10000,14 +10013,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd7fea91fe63f4e1b884ef1e16a975c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logLevel: 3
-  ignoreGlobalLogLevel: 0
-  playbackOnlyWhenEnabled: 0
-  playDelayMs: -1
-  playbackDelaySettings:
-    MinDelaySoft: 200
-    MaxDelaySoft: 400
-    MaxDelayHard: 1000
+  playDelayConfig:
+    Low: 200
+    High: 200
+    Max: 1000
+    SpeedUpPerc: 5
+  restartOnDeviceChange: 1
 --- !u!1 &7907631179218962596
 GameObject:
   m_ObjectHideFlags: 0
