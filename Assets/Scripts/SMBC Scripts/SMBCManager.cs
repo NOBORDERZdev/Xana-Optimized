@@ -187,15 +187,6 @@ public class SMBCManager : MonoBehaviour
         return _quizData;
     }
 
-
-    internal void BackToEarth()
-    {
-        new Delayed.Action(() =>
-        {
-            GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
-        }, 2f);
-    }
-
     public bool CheckForObjectCollectible(SMBCCollectibleType collectibleType)
     {
         switch (collectibleType)
