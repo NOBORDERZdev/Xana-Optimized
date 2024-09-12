@@ -684,6 +684,10 @@ public class LoadingHandler : MonoBehaviour
             default:
                 break;
         }
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            StartCoroutine(PenpenzLoading(FadeAction.Out));
+        }
         yield return null;
     }
 

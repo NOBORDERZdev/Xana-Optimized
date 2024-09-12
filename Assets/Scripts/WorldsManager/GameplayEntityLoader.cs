@@ -669,6 +669,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void SetPlayerCameraAngle()
     {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            StartCoroutine(setPlayerCamAngle(-0.830f, 0.5572f));
+            return;
+        }
         if (WorldItemView.m_EnvName.Contains("DJ Event") || WorldItemView.m_EnvName.Contains("XANA Festival Stage"))
         {
             mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
@@ -716,7 +721,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             mainPlayer.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
             StartCoroutine(setPlayerCamAngle(0f, 0.5f));
         }
-
         if (WorldItemView.m_EnvName == "TOTTORI METAVERSE")
         {
             mainPlayer.transform.rotation = _spawnTransform.rotation;
@@ -982,8 +986,17 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public IEnumerator setPlayerCamAngle(float xValue, float yValue)
     {
         yield return new WaitForSeconds(0.1f);
-        PlayerCamera.m_XAxis.Value = xValue;
-        PlayerCamera.m_YAxis.Value = yValue;
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            CinemachineFreeLook cam = XanaPartyCamera.GetComponentInChildren<CinemachineFreeLook>();
+            cam.m_XAxis.Value = xValue;
+            cam.m_YAxis.Value = yValue;
+        }
+        else
+        {
+            PlayerCamera.m_XAxis.Value = xValue;
+            PlayerCamera.m_YAxis.Value = yValue;
+        }
     }
 
     //void SetKotoAngle()
@@ -1502,26 +1515,28 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         PositionResetButton.SetActive(false);
         if (ConstantsHolder.xanaConstants.isXanaPartyWorld )
         {
+            ReferencesForGamePlay.instance.SetGameplayForPenpenz();
             if (!ConstantsHolder.xanaConstants.isJoinigXanaPartyGame) // For Spwaning in PENPENZ Lobby
             {
-                ReferencesForGamePlay.instance.XANAPartyWaitingText.SetActive(true);
+                ReferencesForGamePlay.instance.XANAPartyWaitingPanel.SetActive(true);
             }
             else // For Spwaning in PENPENZ GAME
             {
-                ReferencesForGamePlay.instance.XANAPartyWaitingText.SetActive(false);
+                ReferencesForGamePlay.instance.XANAPartyWaitingPanel.SetActive(false);
             }
             player.GetComponent<PartyTimerManager>().enabled = true;
             player.GetComponent<XANAPartyMulitplayer>().enabled = true;
         }
         else
         {
-            ReferencesForGamePlay.instance.XANAPartyWaitingText.SetActive(false);
+            ReferencesForGamePlay.instance.XANAPartyWaitingPanel.SetActive(false);
             player.GetComponent<PartyTimerManager>().enabled = false;
             player.GetComponent<XANAPartyMulitplayer>().enabled = false;
         }
         if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && GamificationComponentData.instance != null && !GamificationComponentData.instance.isRaceStarted && ReferencesForGamePlay.instance != null)
         {
             ReferencesForGamePlay.instance.IsLevelPropertyUpdatedOnlevelLoad = false;
+           
             ReferencesForGamePlay.instance.CheckActivePlayerInCurrentLevel();
         }
     }
@@ -1542,11 +1557,16 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         referenceForPenguin.XanaJumpPotraite.SetActive(true);
         referenceForPenguin.XanaJumpLandsacape.SetActive(true);
 
+        ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(false);
+        ReferencesForGamePlay.instance.XANAPartyWaitingPanel.SetActive(false);
+
         Destroy(penguinJump);
         Destroy(penguinJumpPot);
 
         ConstantsHolder.isFixedHumanoid = false;
         ConstantsHolder.isPenguin = false;
+        ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
+        ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
     }
 
     public void AssignRaffleTickets(int domeID)

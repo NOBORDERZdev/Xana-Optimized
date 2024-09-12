@@ -109,7 +109,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             DownloadQueueData temp = new DownloadQueueData();
             temp.ItemID = BuilderData.mapData.data.json.otherItems[i].ItemID;
             string downloadKey=prefabPrefix + BuilderData.mapData.data.json.otherItems[i].ItemID + prefabSuffix;
-            if (!uniqueDownloadKeys.Contains(downloadKey))
+            if (!uniqueDownloadKeys.Contains(downloadKey) && !XanaWorldDownloader.CheckForVisitedWorlds(ConstantsHolder.xanaConstants.builderMapID.ToString()))
             {
                 uniqueDownloadKeys.Add(downloadKey);
                 XanaWorldDownloader.downloadSize += Addressables.GetDownloadSizeAsync(downloadKey).WaitForCompletion();
@@ -234,7 +234,25 @@ public class BuilderAssetDownloader : MonoBehaviour
             //bool flag = false;
             //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
             //if (!flag)
-            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            AsyncOperationHandle<GameObject> _async;
+            LoadAssetAgain:
+            _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            while (!_async.IsDone)
+            {
+                yield return null;
+            }
+            if (_async.IsValid() && _async.Result != null)
+            {
+
+            }
+            else
+            {
+                Addressables.ClearDependencyCacheAsync(downloadKey);
+                Addressables.ReleaseInstance(_async);
+                Addressables.Release(_async);
+                yield return new WaitForSeconds(1);
+                goto LoadAssetAgain;
+            }
             while (!_async.IsDone)
             {
                 yield return null;
@@ -282,7 +300,25 @@ public class BuilderAssetDownloader : MonoBehaviour
             //bool flag = false;
             //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
             //if (!flag)
-            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            AsyncOperationHandle<GameObject> _async;
+            LoadAssetAgain:
+            _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            while (!_async.IsDone)
+            {
+                yield return null;
+            }
+            if (_async.IsValid() && _async.Result != null)
+            {
+
+            }
+            else
+            {
+                Addressables.ClearDependencyCacheAsync(downloadKey);
+                Addressables.ReleaseInstance(_async);
+                Addressables.Release(_async);
+                yield return new WaitForSeconds(1);
+                goto LoadAssetAgain;
+            }
             while (!_async.IsDone)
             {
                 yield return null;
@@ -325,7 +361,25 @@ public class BuilderAssetDownloader : MonoBehaviour
             //bool flag = false;
             //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
             //if (!flag)
-            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            AsyncOperationHandle<GameObject> _async;
+            LoadAssetAgain:
+            _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            while (!_async.IsDone)
+            {
+                yield return null;
+            }
+            if (_async.IsValid() && _async.Result != null)
+            {
+
+            }
+            else
+            {
+                Addressables.ClearDependencyCacheAsync(downloadKey);
+                Addressables.ReleaseInstance(_async);
+                Addressables.Release(_async);
+                yield return new WaitForSeconds(1);
+                goto LoadAssetAgain;
+            }
             while (!_async.IsDone)
             {
                 yield return null;

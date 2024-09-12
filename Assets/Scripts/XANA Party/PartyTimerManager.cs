@@ -26,9 +26,9 @@ public class PartyTimerManager : MonoBehaviourPunCallbacks
             return;
         }
         if(LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
-            ReferencesForGamePlay.instance.XANAPartyWaitingText.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "他のプレイヤーを待っています... " + "60s";
+            ReferencesForGamePlay.instance.XANAPartyWaitingPanel.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "他のプレイヤーを待っています... " + "60s";
         else
-            ReferencesForGamePlay.instance.XANAPartyWaitingText.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Waiting for other players... " + "60s";
+            ReferencesForGamePlay.instance.XANAPartyWaitingPanel.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Waiting for other players... " + "60s";
 
         if (PhotonNetwork.IsMasterClient && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
         {
@@ -54,9 +54,9 @@ public class PartyTimerManager : MonoBehaviourPunCallbacks
                 StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().ShowLobbyCounter());
             }
             if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
-                ReferencesForGamePlay.instance.XANAPartyWaitingText.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "他のプレイヤーを待っています... " + currentTime.ToString("F0") + "s";
+                ReferencesForGamePlay.instance.XANAPartyWaitingPanel.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "他のプレイヤーを待っています... " + currentTime.ToString("F0") + "s";
             else
-                ReferencesForGamePlay.instance.XANAPartyWaitingText.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Waiting for other players... " + currentTime.ToString("F0") + "s";
+                ReferencesForGamePlay.instance.XANAPartyWaitingPanel.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Waiting for other players... " + currentTime.ToString("F0") + "s";
         }
     }
 
