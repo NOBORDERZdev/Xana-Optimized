@@ -207,6 +207,21 @@ public class SMBCManager : MonoBehaviour
                 return false;
         }
     }
+
+    public bool CheckRocketPartCollectOrNot(string planetName)
+    {
+        switch (planetName)
+        {
+            case "SMBC_Forest_Planet":
+                return _forestRocketPartCollected;
+            case "SMBC_Icy_Planet":
+                return _icyRocketPartCollected;
+            case "SMBC_Volcanic_Planet":
+                return _volcanicRocketPartCollected;
+            default:
+                return false;
+        }
+    }
 }
 
 public enum SMBCCollectibleType
