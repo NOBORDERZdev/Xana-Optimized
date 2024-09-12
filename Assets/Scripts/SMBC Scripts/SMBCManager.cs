@@ -230,7 +230,9 @@ public class SMBCManager : MonoBehaviour
 
     public bool CheckAllRocketPartIsCollected()
     {
-        return _forestRocketPartCollected = _icyRocketPartCollected = _volcanicRocketPartCollected;
+        if (_forestRocketPartCollected && _icyRocketPartCollected && _volcanicRocketPartCollected)
+            return true;
+        return false;
     }
 }
 
