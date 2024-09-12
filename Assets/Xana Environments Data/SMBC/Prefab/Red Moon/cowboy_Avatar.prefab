@@ -2396,6 +2396,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7457860278447611691}
   - component: {fileID: 3575726972004746577}
+  - component: {fileID: 3704820328291565644}
+  - component: {fileID: 3336321181559194441}
+  - component: {fileID: 8718280610964276859}
   m_Layer: 0
   m_Name: cowboy_Avatar
   m_TagString: Untagged
@@ -2410,9 +2413,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7796985241992545681}
-  m_LocalRotation: {x: -0, y: -0.000000014901161, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.745, y: 0.666, z: -10.188}
-  m_LocalScale: {x: 0.091475226, y: 0.091475226, z: 0.091475226}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5432552192892527479}
@@ -2441,6 +2444,45 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3704820328291565644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7796985241992545681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdc8ae965629b9148822af2117205f29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlanetName: REDMoon_Planet
+--- !u!65 &3336321181559194441
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7796985241992545681}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8.507156, y: 20.250204, z: 6.111164}
+  m_Center: {x: 0.028429031, y: 10.474416, z: 0.5113125}
+--- !u!65 &8718280610964276859
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7796985241992545681}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 16.76, y: 20.250204, z: 16.98}
+  m_Center: {x: 0.028429031, y: 10.474416, z: 0.5113125}
 --- !u!1 &7803866451287881631
 GameObject:
   m_ObjectHideFlags: 0

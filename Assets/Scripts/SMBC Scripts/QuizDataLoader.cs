@@ -14,8 +14,12 @@ public class QuizDataLoader : ScriptableObject
     public string IceQuizJsonData;
     public string FireQuizJsonData;
 
+    public List<string> EarthPlanetNPC;
+    public List<string> RedMoonPlanetNPC;
+
     public QuizData GetQuizData(string planetName)
     {
+        Debug.LogError("Avatar enter in => " + planetName);
         switch (planetName)
         {
             case "SMBC_Forest_Planet":
