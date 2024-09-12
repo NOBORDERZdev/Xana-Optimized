@@ -115,7 +115,12 @@ public class SMBCManager : MonoBehaviour
 
     void ResetData(Scene scene, LoadSceneMode mode)
     {
+        if (scene.name == "XANA Summit")
+        {
+            Destroy(gameObject);
+        }
         _quizData = null;
+        _keyCounter = 0;
     }
     public void InitQuizComponent(SMBCQuizComponent quizComponent)
     {
