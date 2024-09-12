@@ -19,7 +19,7 @@ public class SMBCUIManager : MonoBehaviour
         BuilderEventManager.OnDoorKeyCollisionEnter += EnableDoorKeyUI;
         BuilderEventManager.OnSMBCQuizComponentCollisionEnter += EnableQuizComponentUI;
         BuilderEventManager.OnSMBCQuizComponentColse += ResetCredentials;
-        SMBCManager.Instance.OnIntroductryPanelClicked += OnClickIntroductryObject;
+        SMBCManager.OnIntroductryPanelClicked += OnClickIntroductryObject;
         SceneManager.sceneLoaded += ResetData;
     }
 
@@ -29,7 +29,7 @@ public class SMBCUIManager : MonoBehaviour
         BuilderEventManager.OnDoorKeyCollisionEnter -= EnableDoorKeyUI;
         BuilderEventManager.OnSMBCQuizComponentCollisionEnter -= EnableQuizComponentUI;
         BuilderEventManager.OnQuizComponentColse -= ResetCredentials;
-        SMBCManager.Instance.OnIntroductryPanelClicked -= OnClickIntroductryObject;
+        SMBCManager.OnIntroductryPanelClicked -= OnClickIntroductryObject;
         SceneManager.sceneLoaded -= ResetData;
     }
 

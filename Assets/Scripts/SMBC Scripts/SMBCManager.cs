@@ -31,7 +31,7 @@ public class SMBCManager : MonoBehaviour
     int _keyCounter = 0;
     List<string> _npcText;
 
-    public Action OnIntroductryPanelClicked;
+    public static Action OnIntroductryPanelClicked;
 
     private void Awake()
     {

@@ -1032,11 +1032,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!1 &1109336788 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1109336788, guid: 9722e5c58b7989b4f9f6e1e131b4d3b9, type: 3}
-  m_PrefabInstance: {fileID: 263317328}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1139682361
 GameObject:
   m_ObjectHideFlags: 0
@@ -1992,9 +1987,21 @@ PrefabInstance:
       value: ETP_InstructionDisplay
       objectReference: {fileID: 0}
     - target: {fileID: 8884563912839867969, guid: 09223390e764d3f4aa6a0aa77dc1fa4c, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8884563912839867969, guid: 09223390e764d3f4aa6a0aa77dc1fa4c, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1109336788}
+      objectReference: {fileID: 8884563912839867969}
+    - target: {fileID: 8884563912839867969, guid: 09223390e764d3f4aa6a0aa77dc1fa4c, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickIntroductryPanelMethod
+      objectReference: {fileID: 0}
+    - target: {fileID: 8884563912839867969, guid: 09223390e764d3f4aa6a0aa77dc1fa4c, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: OnClickIntroductryPanel, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 8991144956199904257, guid: 09223390e764d3f4aa6a0aa77dc1fa4c, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -2046,3 +2053,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8991144956199904257, guid: 09223390e764d3f4aa6a0aa77dc1fa4c, type: 3}
   m_PrefabInstance: {fileID: 8884563912839867966}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8884563912839867968 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8614583580253191867, guid: 09223390e764d3f4aa6a0aa77dc1fa4c, type: 3}
+  m_PrefabInstance: {fileID: 8884563912839867966}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8884563912839867969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8884563912839867968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ad27d96b2b769740a251b55f62ec57e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
