@@ -11,6 +11,7 @@ public class XANASummitDataContainer : ScriptableObject
 
     public GameObject maleAIAvatar;
     public GameObject femaleAIAvatar;
+    public GameObject penguinAvatar;
     public string[] avatarJson;
     public DomeData summitData=new DomeData();
     public AIData aiData=new AIData();
