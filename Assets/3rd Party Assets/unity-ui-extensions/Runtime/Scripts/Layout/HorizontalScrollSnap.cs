@@ -20,7 +20,10 @@ namespace UnityEngine.UI.Extensions
             _currentPage = StartingScreen;
             panelDimensions = gameObject.GetComponent<RectTransform>().rect;
             UpdateLayout();
-            SetScrollContainerPositionOnStaet();
+            if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                SetScrollContainerPositionOnStaet();
+            }
         }
 
         void Update()
@@ -204,7 +207,6 @@ namespace UnityEngine.UI.Extensions
         }
         public void SetScrollContainerPositionOnStaet()
         {
-           
             _scrollStartPosition = _screensContainer.anchoredPosition.x;
             _scroll_rect.horizontalNormalizedPosition = (float)(10) / (_screens - 1);
             OnCurrentScreenChange(10);
