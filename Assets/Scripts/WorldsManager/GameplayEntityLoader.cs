@@ -472,9 +472,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                     {
                         // Adjust spawn point slightly if occupied
                         spawnPoint = new Vector3(
-                            spawnPoint.x + UnityEngine.Random.Range(-1f, 1f),
+                            spawnPoint.x + UnityEngine.Random.Range(-3f, 3f),
                             spawnPoint.y,
-                            spawnPoint.z + UnityEngine.Random.Range(-1f, 1f)
+                            spawnPoint.z + UnityEngine.Random.Range(-3f, 3f)
                         );
                     }
                     else
