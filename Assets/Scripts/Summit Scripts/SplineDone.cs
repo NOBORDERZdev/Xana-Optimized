@@ -1,4 +1,4 @@
-﻿using Jint.Parser;
+using Jint.Parser;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,6 +31,18 @@ public class SplineDone : MonoBehaviour {
     Dictionary<Vector3, float> _distanceatTpos = new Dictionary<Vector3, float>();
     Dictionary<float, float> _totalDistance = new Dictionary<float, float>();
 
+    public void updateRotation()
+    {
+        Quaternion rotation = transform.localRotation;
+
+        for (int i = 0; i < _anchorList.Count; i++)
+        {
+            _anchorList[i].position = rotation * _anchorList[i].position;
+            _anchorList[i].handleAPosition = rotation * _anchorList[i].handleAPosition;
+            _anchorList[i].handleBPosition = rotation * _anchorList[i].handleBPosition;
+        }
+        transform.localRotation = new Quaternion(0,0,0,0);
+    }
 
     private void Awake() {
         Instance = this;
