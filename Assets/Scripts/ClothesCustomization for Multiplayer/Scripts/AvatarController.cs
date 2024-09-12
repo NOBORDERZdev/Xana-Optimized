@@ -1025,10 +1025,10 @@ public class AvatarController : MonoBehaviour
         }
         if (xanaConstants.isNFTEquiped)
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
-        if (characterBodyParts.head != null && characterBodyParts.body != null)
+        /*if (characterBodyParts.head != null && characterBodyParts.body != null)
         {
             characterBodyParts.head.enabled = characterBodyParts.body.enabled = true;
-        }
+        }*/
         isClothLoaded = true;
     }
 

@@ -132,7 +132,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         otherPlayer = gameObject.GetComponent<AvatarController>();
         otherPlayer.isLoadStaticClothFromJson = true;
         otherPlayer.staticClothJson = ClothJson;
-        otherPlayer.OnEnable();
+        otherPlayer.BuildCharacterFromLocalJson();
     }
     [PunRPC]
     void CheckRpc(object[] Datasend)
