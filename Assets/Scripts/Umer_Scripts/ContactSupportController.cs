@@ -3,38 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using SuperSimple;
 using BestHTTP.JSON.LitJson;
+using System.Drawing;
+using System.Threading.Tasks;
+using UnityEngine.Networking;
+using System;
+using System.Text;
 
 public class ContactSupportController : MonoBehaviour
 {
     public SNSSettingController SettingControllerRef;
+    public SMTPServerInitializationData SmtpServerAuthData = new SMTPServerInitializationData();
 
-    void Start()
+    public async void SendEmail(string _emailSubjectText, string _emailBodyText)
     {
+        SmtpServerAuthData = await GetSMTPServerAuthData();
+        byte[] decodedPassBytes = Convert.FromBase64String(SmtpServerAuthData.data.password);
+
         EmailService.Instance.Initialize(new EmailService.Settings()
         {
             SmtpHost = "smtp.office365.com",
-            SenderEmail = "x-summit@outlook.com",
-            SenderPassword = "Noborderz@12345",
+            SenderEmail = SmtpServerAuthData.data.smtp_host,
+            SenderPassword = Encoding.UTF8.GetString(decodedPassBytes),
             SenderName = "X-Summit"
         });
-    }
 
-
-    void OnDestroy()
-    {
-        EmailService.Instance.Destroy();
-    }
-
-    public void SendEmail(string _emailSubjectText, string _emailBodyText)
-    {
-        EmailService.Instance.SendPlainText("tool@noborderz.com",
-                    _emailSubjectText,
-                    _emailBodyText, (success) =>
-                {
-                    Debug.Log("SSEmail Example 1 sent " + success);
-                    SettingControllerRef.ContactSupportPanelRef.SetActive(false);
-                    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
-                });
+        EmailService.Instance.SendPlainText(SmtpServerAuthData.data.receiver_email,
+_emailSubjectText,
+_emailBodyText, (success) =>
+{
+    Debug.Log("Email sent successfully " + success);
+    SmtpServerAuthData.data = null;
+    EmailService.Instance.Destroy();
+    SettingControllerRef.ContactSupportPanelRef.SetActive(false);
+    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+});
 
         #region Formate to send email with attachments
         //Formate to send email with attachments
@@ -71,4 +73,45 @@ public class ContactSupportController : MonoBehaviour
         //});
         #endregion
     }
+
+    async Task<SMTPServerInitializationData> GetSMTPServerAuthData()
+    {
+        string url;
+        url = ConstantsGod.API_BASEURL + ConstantsGod.SMTPSERVERAUTHDATA;
+
+        using (UnityWebRequest www = UnityWebRequest.Get(url))
+        {
+            www.SetRequestHeader("Authorization", /*ConstantsGod.AUTH_TOKEN*/"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjI0LCJpYXQiOjE3MjYyMjk1NTMsImV4cCI6MTcyNjMxNTk1M30.vNHoLS-ooRliBay9ToCzpxue4GL9TM_s5LNymCLoNJQ");
+            await www.SendWebRequest();
+            if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
+            {
+                www.Dispose();
+                return null;
+            }
+            else
+            {
+                Debug.Log("Received Data: " + www.downloadHandler.text);
+                SMTPServerInitializationData smtpServerAuthData = new SMTPServerInitializationData();
+                smtpServerAuthData = JsonUtility.FromJson<SMTPServerInitializationData>(www.downloadHandler.text);
+                www.Dispose();
+                return smtpServerAuthData;
+            }
+        }
+    }
+
+}
+
+[System.Serializable]
+public class SMTPServerInitializationData
+{
+    public string success;
+    public CredentialsData data;
+    public string msg;
+}
+[System.Serializable]
+public class CredentialsData
+{
+    public string smtp_host;
+    public string password;
+    public string receiver_email;
 }
