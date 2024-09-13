@@ -930,7 +930,7 @@ public class PlayerController : MonoBehaviour
         }
 
         animator.SetBool("IsGrounded", _IsGrounded);
-        if (characterController.velocity.y < 0)
+        if (characterController.velocity.y <= 0)
         {
             animator.SetBool("standJump", false);
         }
