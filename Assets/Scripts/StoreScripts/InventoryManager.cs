@@ -397,7 +397,7 @@ public class InventoryManager : MonoBehaviour
         {
             _storeSaveBtn.onClick.AddListener(OnSaveBtnClicked);
         }
-
+        GameManager.Instance.isTabSwitched = false;
         //}
         //else
         //{

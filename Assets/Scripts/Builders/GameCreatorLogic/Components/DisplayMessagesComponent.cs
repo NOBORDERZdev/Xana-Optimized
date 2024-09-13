@@ -40,7 +40,7 @@ public class DisplayMessagesComponent : ItemComponent
         {
             BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke(displayMessageComponentData.startDisplayMessage, displayMessageComponentData.startTimerCount, true);
         }
-        else
+        if (displayMessageComponentData.isEnd)
         {
             BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke(displayMessageComponentData.endDisplayMessage, 5, false);
         }
