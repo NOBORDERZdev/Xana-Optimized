@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3469287837712580941}
   - component: {fileID: 1711813854991873415}
   - component: {fileID: 2023763292639617590}
+  - component: {fileID: 841739175}
+  - component: {fileID: 841739174}
   m_Layer: 0
   m_Name: TicketBooth
   m_TagString: Untagged
@@ -103,6 +105,31 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -8984604836572433035, guid: eec93ff6477f2e74b876495556e48944, type: 3}
+--- !u!65 &841739175
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147926586450}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1027.5436, y: 667.6167, z: 770.16296}
+  m_Center: {x: -19.322014, y: 331.94775, z: 72.130646}
+--- !u!114 &841739174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147926586450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75e4b789f5692264c8a3f67fbc6ff2cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2523053690671482047
 GameObject:
   m_ObjectHideFlags: 0
