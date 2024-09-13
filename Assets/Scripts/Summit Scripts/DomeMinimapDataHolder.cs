@@ -7,9 +7,12 @@ using UnityEngine.Networking;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Photon.Pun.Demo.PunBasics;
+using static StayTimeTrackerForSummit;
 
 public class DomeMinimapDataHolder : MonoBehaviour
 {
+    [SerializeField]
+    private StayTimeTrackerForSummit _stayTimeTrackerForSummit;
     public Sprite HighlightedSprite;
     public List<DomeDataForMap> MapDomes;
     public List<DomeDataForMap> MapDomes_portrait;
@@ -19,11 +22,12 @@ public class DomeMinimapDataHolder : MonoBehaviour
     public GameObject ConfirmationPopup_Portrait;
 
     public static Action<OnTriggerSceneSwitch> OnInitDome;
-    public static Action<int> OnSetDomeId;
+    public static Action<int,string> OnSetDomeId;
 
     private Dictionary<int, Transform> _allInitDomes = new Dictionary<int, Transform>();
     private Transform _playerTransform;
     private int _clickedDomeID;
+    private string _clickedDomeArea;
     private int _totalDomeCount = 128;
 
 
@@ -163,11 +167,30 @@ public class DomeMinimapDataHolder : MonoBehaviour
         }
 
         TeleportPlayerToSelectedDome(_clickedDomeID, _playerTransform);
+        CallAnalyticsFromMinimapTeleport();
     }
-
-    public void SetDomeID(int DomeId)
+    void CallAnalyticsFromMinimapTeleport()
+    {
+        if (Enum.GetNames(typeof(SummitAreaTrigger)).Any(name => _clickedDomeArea.Contains(name)))
+        {
+            _clickedDomeArea = Enum.GetNames(typeof(SummitAreaTrigger)).FirstOrDefault(name => _clickedDomeArea.Contains(name));
+            if (_stayTimeTrackerForSummit != null)
+            {
+                if (_clickedDomeArea != _stayTimeTrackerForSummit.SummitAreaName)
+                {
+                    _stayTimeTrackerForSummit.SummitAreaName = _clickedDomeArea;
+                    string eventName = "XS_TV_" + _stayTimeTrackerForSummit.SummitAreaName;
+                    GlobalConstants.SendFirebaseEventForSummit(eventName);
+                    _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = true;
+                    _stayTimeTrackerForSummit.StartTrackingTime();
+                }
+            }
+        }
+    }
+    public void SetDomeID(int DomeId, string areaName)
     {
         _clickedDomeID = DomeId;
+        _clickedDomeArea = areaName;
         if (_playerTransform == null)
             _playerTransform = GameplayEntityLoader.instance.mainController.transform;
     }
