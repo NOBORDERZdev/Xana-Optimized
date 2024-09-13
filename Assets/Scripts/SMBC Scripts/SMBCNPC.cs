@@ -1,5 +1,4 @@
 using Photon.Pun;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +17,7 @@ public class SMBCNPC : MonoBehaviour
     {
         foreach (var item in npcText)
         {
-            _npcMsg += "-" + item + "\n";
+            _npcMsg += "- " + TextLocalization.GetLocaliseTextByKey(item) + "\n";
         }
     }
 
@@ -26,7 +25,7 @@ public class SMBCNPC : MonoBehaviour
     {
         if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            BuilderEventManager.OnNarrationCollisionEnter?.Invoke(_npcMsg, true, false);
+            BuilderEventManager.OnNarrationCollisionEnter?.Invoke(_npcMsg, false, false);
         }
     }
 }

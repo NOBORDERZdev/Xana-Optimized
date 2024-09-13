@@ -10,7 +10,7 @@ public class RocketCollectable : MonoBehaviour
         if (other.CompareTag("PhotonLocalPlayer") && other.GetComponent<PhotonView>().IsMine && !alreadyTriggered)
         {
             alreadyTriggered = true;
-            BuilderEventManager.OnDoorKeyCollisionEnter?.Invoke("Rocket part collected, Redirecting to Earth");
+            BuilderEventManager.OnDoorKeyCollisionEnter?.Invoke(TextLocalization.GetLocaliseTextByKey("Rocket part collected, Redirecting to Earth"));
             BuilderEventManager.OnSMBCRocketCollected?.Invoke();
             SMBCManager.Instance.AddRocketPart();
             Destroy(gameObject, 0.1f);

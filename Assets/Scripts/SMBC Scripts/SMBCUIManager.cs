@@ -276,7 +276,7 @@ public class SMBCUIManager : MonoBehaviour
             new Delayed.Action(() =>
             {
                 ResetCredentials();
-                BuilderEventManager.OnDoorKeyCollisionEnter?.Invoke("Incorrect Answer, Redirecting to Earth");
+                BuilderEventManager.OnDoorKeyCollisionEnter?.Invoke(TextLocalization.GetLocaliseTextByKey("Incorrect Answer, Redirecting to Earth"));
                 BuilderEventManager.OnSMBCQuizWrongAnswer?.Invoke();
                 _nextButtonText.text = _confirm;
                 NextButton.interactable = true;

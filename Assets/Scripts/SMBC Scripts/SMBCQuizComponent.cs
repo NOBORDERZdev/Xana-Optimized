@@ -33,10 +33,10 @@ public class SMBCQuizComponent : MonoBehaviour
                 switch (RequireCollectible)
                 {
                     case SMBCCollectibleType.DoorKey:
-                        BuilderEventManager.OnDoorKeyCollisionEnter?.Invoke("Please collect 5 keys first!!");
+                        BuilderEventManager.OnDoorKeyCollisionEnter?.Invoke(TextLocalization.GetLocaliseTextByKey("Please collect 5 keys first!!"));
                         break;
                     case SMBCCollectibleType.Axe:
-                        BuilderEventManager.OnDoorKeyCollisionEnter?.Invoke("Please collect axe first!!");
+                        BuilderEventManager.OnDoorKeyCollisionEnter?.Invoke(TextLocalization.GetLocaliseTextByKey("Please collect axe first!!"));
                         break;
                 }
             }
