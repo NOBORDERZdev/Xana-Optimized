@@ -81,7 +81,7 @@ _emailBodyText, (success) =>
 
         using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
-            www.SetRequestHeader("Authorization", /*ConstantsGod.AUTH_TOKEN*/"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjI0LCJpYXQiOjE3MjYyMjk1NTMsImV4cCI6MTcyNjMxNTk1M30.vNHoLS-ooRliBay9ToCzpxue4GL9TM_s5LNymCLoNJQ");
+            www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             await www.SendWebRequest();
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
