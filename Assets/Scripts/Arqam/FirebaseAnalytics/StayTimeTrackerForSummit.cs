@@ -29,8 +29,8 @@ public class StayTimeTrackerForSummit : MonoBehaviour
     {
         SummitAreaName = SummitAreaTrigger.Central_Area.ToString();
     }
-    private void OnDisable()
-    {
+    //private void OnDisable()
+    //{
         //if (IsTrackingTime && ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
         //{
         //    StopTrackingTime();
@@ -41,7 +41,7 @@ public class StayTimeTrackerForSummit : MonoBehaviour
         //    StopTrackingTime();
         //    CalculateAndLogStayTime();
         //}
-    }
+    //}
     private void FixedUpdate()
     {
         if (IsTrackingTime)
@@ -90,16 +90,16 @@ public class StayTimeTrackerForSummit : MonoBehaviour
     {
         IsTrackingTime = false;
     }
-    public void CalculateAndLogStayTime()
-    {
-        float stayTime = Time.time - _startTime;
-        _startTime = Mathf.Abs(_startTime);
-        int minutes = Mathf.FloorToInt(stayTime / 60f);
+    //public void CalculateAndLogStayTime()
+    //{
+    //    float stayTime = Time.time - _startTime;
+    //    _startTime = Mathf.Abs(_startTime);
+    //    int minutes = Mathf.FloorToInt(stayTime / 60f);
         
-        if (minutes > 0)
-            SendFirebaseEventForSummit("ST_" + (minutes) + SetEventName());
-        else
-            SendFirebaseEventForSummit("ST_1" + SetEventName());
-    }
+    //    if (minutes > 0)
+    //        SendFirebaseEventForSummit("ST_" + (minutes) + SetEventName());
+    //    else
+    //        SendFirebaseEventForSummit("ST_1" + SetEventName());
+    //}
 
 }
