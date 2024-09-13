@@ -24,9 +24,9 @@ public class MapItemName : MonoBehaviour
 
     public void SetItemName(string namePrefix, int ind, bool canUsePrefix = true)
     {
-        ItemIndex = ind;
+        ItemIndex = (ind - 1);
         if (canUsePrefix)
-            ItemName = namePrefix + ItemIndex;
+            ItemName = namePrefix + (ItemIndex + 1);
         else
             ItemName = namePrefix ;
 
