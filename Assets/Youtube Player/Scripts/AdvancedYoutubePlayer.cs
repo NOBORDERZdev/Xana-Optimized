@@ -14,6 +14,7 @@ using ZeelKheni.YoutubePlayer.Models;
 using ZeelKheni.YoutubePlayer;
 using System.Collections;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class AdvancedYoutubePlayer : MonoBehaviour
 {
@@ -63,7 +64,8 @@ public class AdvancedYoutubePlayer : MonoBehaviour
     {
         AvatarSpawnerOnDisconnect.OninternetDisconnect += OnInternetDisconnect;
         AvatarSpawnerOnDisconnect.OninternetConnected += OnInternetConnect;
-        VideoPlayer.errorReceived += (hand, message) => { Debug.Log("Error in video.... "); PrepareVideoUrls(default,true); };
+        VideoPlayer.errorReceived += (hand, message) => { Debug.Log("Error in video.... "); PrepareVideoUrls(default, true); };
+        SetSoundSettingReference();
         //if (IsLive)
         //{
         //    AVProVideoPlayer.gameObject.SetActive(true);
@@ -118,6 +120,27 @@ public class AdvancedYoutubePlayer : MonoBehaviour
             AVProVideoPlayer.Play();
     }
 
+    public void SetSoundSettingReference()
+    {
+        if (SoundSettings.soundManagerSettings == null)
+        {
+            return;
+        }
+        if (SceneManager.GetActiveScene().name == "Builder")
+        {
+            if (VideoPlayer != null)
+            {
+                if (VideoPlayer.GetComponent<AudioSource>())
+                {
+                    SoundSettings.soundManagerSettings.AddVideoSources(VideoPlayer.GetComponent<AudioSource>());
+                }
+            }
+            if (AVProVideoPlayer != null)
+            {
+                SoundSettings.soundManagerSettings.AddLiveVideoSources(AVProVideoPlayer);
+            }
+        }
+    }
     public async Task PrepareVideoAsync(CancellationToken cancellationToken = default)
     {
         // TODO: use destroyCancellationToken in 2022.3
@@ -174,7 +197,9 @@ public class AdvancedYoutubePlayer : MonoBehaviour
             var YoutubeHlsGetter = new FetchHtmlContent();
             StartCoroutine(YoutubeHlsGetter.GetHtmlContent(VideoId, HLSurlLoaded));
         }
+
     }
+
 
     private IEnumerator PlayVideoAndAudio(string video, string audio)
     {
@@ -211,7 +236,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         // Play both video and audio
         VideoPlayer.Play();
         VideoPlayer1.Play();
-       
+
     }
 
     private string GetProxiedUrl(string url, string YoutubeUrl)
@@ -278,14 +303,26 @@ public class AdvancedYoutubePlayer : MonoBehaviour
 #elif UNITY_IOS
             LiveVideoPlayerScreen.mesh = IOSLiveVideoMesh;
 #endif
-            LiveVideoPlayerScreen.gameObject.SetActive(_isLiveVideo);
-            PreRecVideoScreen.SetActive(!_isLiveVideo);
+            if (LiveVideoPlayerScreen != null)
+            {
+                LiveVideoPlayerScreen.gameObject.SetActive(_isLiveVideo);
+            }
+            if (PreRecVideoScreen != null)
+            {
+                PreRecVideoScreen.SetActive(!_isLiveVideo);
+            }
         }
         else
         {
-            VideoPlayer.playOnAwake= false;
-            PreRecVideoScreen.SetActive(!_isLiveVideo);
-            LiveVideoPlayerScreen.gameObject.SetActive(_isLiveVideo);
+            VideoPlayer.playOnAwake = false;
+            if (PreRecVideoScreen != null)
+            {
+                PreRecVideoScreen.SetActive(!_isLiveVideo);
+            }
+            if (LiveVideoPlayerScreen != null)
+            {
+                LiveVideoPlayerScreen.gameObject.SetActive(_isLiveVideo);
+            }
         }
     }
 
