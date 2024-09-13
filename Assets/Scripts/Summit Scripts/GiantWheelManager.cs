@@ -64,7 +64,8 @@ public class GiantWheelManager : MonoBehaviour, IInRoomCallbacks
             if (PhotonNetwork.IsMasterClient && !CarAdded)
             {
               
-                PhotonNetwork.InstantiateRoomObject("Wheel Interior", CarPlacement.position, Quaternion.identity);
+             var obj =   PhotonNetwork.InstantiateRoomObject("Wheel Interior", CarPlacement.position,new Quaternion(0,90,0,0));
+                obj.transform.Rotate(new Vector3(0,-90,0));
                 StartCoroutine(startwheel());
               
 
