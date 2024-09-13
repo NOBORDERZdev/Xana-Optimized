@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -55,6 +55,7 @@ public class SplineEditor : Editor
             spline.SetDirty();
             serializedObject.Update();
         }
+        
 
         if (GUILayout.Button("Remove Last Anchor"))
         {
@@ -64,6 +65,15 @@ public class SplineEditor : Editor
             serializedObject.Update();
         }
 
+
+        if(GUILayout.Button("Update Rotation"))
+        {
+            Undo.RecordObject(spline, "Update Rotation");
+            spline.updateRotation();
+            spline.SetDirty();
+            serializedObject.Update();
+
+        }
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_dots"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_normal"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_closedLoop"));
@@ -113,7 +123,7 @@ public class SplineEditor : Editor
     {
         SplineDone spline = (SplineDone)target;
         Vector3 transformPosition = spline.transform.position;
-        Quaternion rotation = spline.transform.rotation;
+        Quaternion rotation = spline.transform.localRotation;
         List<SplineDone.Anchor> anchorList = spline.GetAnchorList();
 
         if (anchorList != null)
