@@ -314,9 +314,9 @@ public class XANASummitSceneLoading : MonoBehaviour
         {
             GamePlayUIHandler.inst.OnSwitchCameraClick();
         }
-        if (SubWorldsHandlerInstance._isEnteringInSubWorld)
+        if (SubWorldsHandlerInstance.IsEnteringInSubWorld)
         {
-            SubWorldsHandlerInstance._isEnteringInSubWorld = false;
+            SubWorldsHandlerInstance.IsEnteringInSubWorld = false;
             SubWorldsHandlerInstance.CallAnalyticsForSubWorlds();
         }
 

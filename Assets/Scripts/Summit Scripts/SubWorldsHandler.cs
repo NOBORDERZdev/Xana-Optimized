@@ -11,7 +11,7 @@ public class SubWorldsHandler : MonoBehaviour
     private StayTimeTrackerForSummit _stayTimeTrackerForSummit;
     private string _domeID;
     private bool _isBuilderWorld;
-    public bool _isEnteringInSubWorld = false;
+    public bool IsEnteringInSubWorld = false;
     public GameObject SubworldListParent;
     public Transform ContentParent;
     public GameObject SubworldPrefab;
@@ -161,7 +161,7 @@ public class SubWorldsHandler : MonoBehaviour
         worldId = _worldId;
         _isBuilderWorld = isBuilderWorld;
         _domeID = worldDomeId;
-        _isEnteringInSubWorld = true;
+        IsEnteringInSubWorld = true;
         BuilderEventManager.LoadSceneByName?.Invoke(worldId, _playerReturnPosition);
         selectedWold = details;
       

@@ -6,9 +6,9 @@ using static GlobalConstants;
 
 public class StayTimeTrackerForSummit : MonoBehaviour
 {
-    [SerializeField] private float timeRemaining = 60f; // Time in seconds
-    private float timerUpdateInterval = 1f; // Update interval in seconds
-    private float timeSinceLastUpdate = 0f; // Time passed since last UI update
+    [SerializeField] private float _timeRemaining = 60f; // Time in seconds
+    private float _timerUpdateInterval = 1f; // Update interval in seconds
+    private float _timeSinceLastUpdate = 0f; // Time passed since last UI update
 
     private float _startTime;
     public bool IsTrackingTime = false;
@@ -47,25 +47,20 @@ public class StayTimeTrackerForSummit : MonoBehaviour
         if (IsTrackingTime)
         {
             // Accumulate time since last update
-            timeSinceLastUpdate += Time.fixedDeltaTime;
+            _timeSinceLastUpdate += Time.fixedDeltaTime;
 
             // Check if it's time to update the timer
-            if (timeSinceLastUpdate >= timerUpdateInterval)
+            if (_timeSinceLastUpdate >= _timerUpdateInterval)
             {
                 // Update the remaining time and reset the counter
-                timeRemaining -= timerUpdateInterval;
-                timeSinceLastUpdate = 0f;
+                _timeRemaining -= _timerUpdateInterval;
+                _timeSinceLastUpdate = 0f;
 
                 // Check if the timer has finished
-                if (timeRemaining <= 0)
+                if (_timeRemaining <= 0)
                 {
                     SendFirebaseEventForSummit("ST_1" + SetEventName());
-                    timeRemaining = 60;
-                    //TimerFinished();
-                }
-                else
-                {
-                    //UpdateTimerUI();
+                    _timeRemaining = 60;
                 }
             }
         }
@@ -88,7 +83,7 @@ public class StayTimeTrackerForSummit : MonoBehaviour
     {
         SendFirebaseEventForSummit("ST_1" + SetEventName());
         //_startTime = Time.time;
-        timeRemaining = 60;
+        _timeRemaining = 60;
         IsTrackingTime = true;
     }
     public void StopTrackingTime()
