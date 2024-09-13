@@ -23,6 +23,7 @@ public class SummitAIChatHandler : MonoBehaviour
     private string npcURL;
     private bool _NPCInstantiated;
     private bool SummitNPC;
+    private bool ChatActivated;
 
     private void OnEnable()
     {
@@ -136,6 +137,7 @@ public class SummitAIChatHandler : MonoBehaviour
         GetNPCInfo(npcID);
         ClearOldMessages();
         OpenChatBox();
+        ChatActivated = true;
         //foreach (string msg in welcomeMsgs)
            // _CommonChatRef.DisplayMsg_FromSocket(npcName, msg);
     }
@@ -146,6 +148,7 @@ public class SummitAIChatHandler : MonoBehaviour
         ClearOldMessages();
         RemoveAIListenerFromChatField();
         _CommonChatRef.LoadOldChat();
+        ChatActivated = false;
     }
 
     void ClearOldMessages()
@@ -199,16 +202,17 @@ public class SummitAIChatHandler : MonoBehaviour
 
         ClearInputField();
 
-        Debug.LogError(url);
-
         UriBuilder uriBuilder = new UriBuilder(url);
 
         string response = await GetAIResponse(url);
+        if(ChatActivated)
+        {
+            string res = JsonUtility.FromJson<AIResponse>(response).data;
 
-        string res = JsonUtility.FromJson<AIResponse>(response).data;
-
-        //_CommonChatRef.DisplayMsg_FromSocket(npcName, res);
-        ChatSocketManagerInstance.AddNewMsg(npcName, res, "NPC", "NPC", 0);
+            //_CommonChatRef.DisplayMsg_FromSocket(npcName, res);
+            ChatSocketManagerInstance.AddNewMsg(npcName, res, "NPC", "NPC", 0);
+        }
+        
     }
 
     async Task<string> GetAIResponse(string url)
