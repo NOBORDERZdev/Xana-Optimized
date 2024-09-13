@@ -214,6 +214,7 @@ public class PlayerSelfieController : MonoBehaviour
 #endif
 #if UNITY_ANDROID
             if (Input.touchCount != 0 && Input.touchCount <= 1) // to check single touch
+                // Muneeb: Just say: if (Input.touchCount == 1)
             {
 
                 Touch l_Touch = Input.GetTouch(0);
