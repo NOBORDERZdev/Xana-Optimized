@@ -401,7 +401,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
         }
         defaultGroup = XanaVoiceChat.instance.recorder.InterestGroup;
         loader =  GameplayEntityLoader.instance;
-        if (ConstantsHolder.xanaConstants.EnviornmentName != "XANA Summit") { yield return null; }
+        if (ConstantsHolder.xanaConstants.EnviornmentName != "XANA Summit") { yield break; }
         string name = PhotonNetwork.CurrentRoom.CustomProperties["Sector"].ToString();
         if (name == "Wheel")
         {

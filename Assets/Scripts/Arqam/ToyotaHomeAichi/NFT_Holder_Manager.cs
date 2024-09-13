@@ -36,10 +36,11 @@ public class NFT_Holder_Manager : MonoBehaviour
     public ThaMeetingStatusUpdate meetingStatus;
     public VoiceManager voiceManager;
     public ExtendedXanaChatSystem Extended_XCS;
-
+    public int RatioID;
+    public bool IsSummit;
+    public SummitDomeImageHandler handler;
     private XanaChatSystem _chatSystem;
-
-
+    
     private void Awake()
     {
         if (instance == null)
@@ -105,6 +106,20 @@ public class NFT_Holder_Manager : MonoBehaviour
         renderTexture_9x16?.Release();
         renderTexture_1x1?.Release();
         renderTexture_4x3?.Release();
+
+        if (IsSummit)
+        {
+            ratioReferences[RatioID].l_obj.SetActive(false);
+            ratioReferences[RatioID].p_obj.SetActive(false);
+            ratioReferences[RatioID].p_Loader.SetActive(false);
+            ratioReferences[RatioID].l_Loader.SetActive(false);
+            LandscapeObj.SetActive(false);
+            PotraiteObj.SetActive(false);
+            if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
+            {
+                GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
+            }
+        }
     }
 
 
@@ -112,6 +127,16 @@ public class NFT_Holder_Manager : MonoBehaviour
     {
         currentRoom?.EnableControlls();
         if (currentRoom != null) currentRoom = null;
+        if (IsSummit)
+        {
+            LandscapeObj.SetActive(false);
+            PotraiteObj.SetActive(false);
+            if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
+            {
+                GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
+            }
+           handler.EnableControlls();
+        }
     }
 
 }
