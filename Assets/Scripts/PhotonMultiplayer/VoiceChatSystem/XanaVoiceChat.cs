@@ -103,7 +103,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
                     StartCoroutine(SetMic());
                 }
 #elif UNITY_IOS
-                if(PlayerPrefs.GetInt("MicPermission", 0) == 0){
+                if(!Application.HasUserAuthorization(UserAuthorization.Microphone)){
                       PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
                     PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
                     PermissionPopusSystem.Instance.OpenPermissionScreen();
@@ -120,9 +120,12 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
     public void SetMicByBtn()
     {
         PermissionPopusSystem.Instance.onCloseAction -= SetMicByBtn;
+#if UNITY_IOS
+    Application.RequestUserAuthorization(UserAuthorization.Microphone);
+#endif
         StartCoroutine(SetMic());
     }
-    
+
     private IEnumerator SetMic()
     {
 #if UNITY_IOS
@@ -197,7 +200,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
         {
             recorder.TransmitEnabled = true;
             recorder.RecordingEnabled = true;
-           // recorder.enabled = true;
+            // recorder.enabled = true;
 
         }
         //_punVoiceClient.enabled = true;
@@ -225,8 +228,8 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
         //{
         //    _punVoiceClient.Disconnect();
         //}
-       // _punVoiceClient.enabled = false;
-       //  recorder.enabled = false;
+        // _punVoiceClient.enabled = false;
+        //  recorder.enabled = false;
     }
 
     //Overriding methods for push to talk 
@@ -307,11 +310,11 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
 
     private async void VoiceClientStateChanged(ClientState fromState, ClientState toState)
     {
-       // print("!! fromState" + fromState);
-       // print("!! toState" + toState);
+        // print("!! fromState" + fromState);
+        // print("!! toState" + toState);
         if (fromState == ClientState.Joining && toState == ClientState.Joined)
         {
-         //   print("!!!!!!!!  FROCE CALL");
+            //   print("!!!!!!!!  FROCE CALL");
             await Task.Delay(2000);
             // Handle state changes if needed
 #if UNITY_IOS

@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 8991144956199904257}
   - component: {fileID: 5433924066905435044}
   - component: {fileID: 7822148302287724398}
-  - component: {fileID: 8884563911763444712}
+  - component: {fileID: 6288628675594583959}
+  - component: {fileID: 8884563912839867969}
   m_Layer: 0
   m_Name: ETP_InstructionDisplay
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8614583580253191867}
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 19.518, y: 2.208, z: 2.989}
   m_LocalScale: {x: 0.009178468, y: 0.009178468, z: 0.009178468}
   m_ConstrainProportionsScale: 0
@@ -86,8 +87,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8884563911763444712
-MeshCollider:
+--- !u!65 &6288628675594583959
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -96,7 +97,35 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4966993083563047853, guid: 4cbb5b32be7fa184eb852b3e541a9eb1, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 292.4864, y: 186.98148, z: 4.4599285}
+  m_Center: {x: 10.419501, y: -9.684475, z: 1.9576016e-14}
+--- !u!114 &8884563912839867969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8614583580253191867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
