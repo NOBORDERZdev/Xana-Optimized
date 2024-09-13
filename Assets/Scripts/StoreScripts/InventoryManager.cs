@@ -397,7 +397,7 @@ public class InventoryManager : MonoBehaviour
         {
             _storeSaveBtn.onClick.AddListener(OnSaveBtnClicked);
         }
-
+        GameManager.Instance.isTabSwitched = false;
         //}
         //else
         //{
@@ -5173,6 +5173,13 @@ public class InventoryManager : MonoBehaviour
         GameManager.Instance.HomeCameraInputHandler(true);
         GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
     }
+
+    public void OnClickPresetSlctBackBtn()
+    {
+        UserLoginSignupManager.instance.signUpOrloginSelectionPanel.SetActive(true);
+        StartPanel_PresetParentPanel.SetActive(false);
+    }
+
 }
 public class XenyRequestedData
 {

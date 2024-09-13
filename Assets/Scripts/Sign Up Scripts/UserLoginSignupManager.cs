@@ -377,7 +377,6 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void BackFromLoginSelection()
     {
-       
         if (!ConstantsHolder.xanaConstants.openLandingSceneDirectly && ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
         {
 
@@ -386,7 +385,9 @@ public class UserLoginSignupManager : MonoBehaviour
         else {
             
             signUpOrloginSelectionPanel.SetActive(true);
+
         }
+        emailOrWalletLoginPanel.SetActive(false);
     }
 
     public void OnClickLoginWithEmail()

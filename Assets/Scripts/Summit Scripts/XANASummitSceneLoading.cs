@@ -136,7 +136,6 @@ public class XANASummitSceneLoading : MonoBehaviour
         string sceneTobeUnload = WorldItemView.m_EnvName;
 
         XANASummitDataContainer.StackInfoWorld subWorldInfo = new XANASummitDataContainer.StackInfoWorld();
-       
         subWorldInfo.id = ConstantsHolder.xanaConstants.MuseumID;
         subWorldInfo.name = sceneTobeUnload;
         subWorldInfo.isBuilderWorld = ConstantsHolder.xanaConstants.isBuilderScene;
@@ -451,6 +450,12 @@ public class XANASummitSceneLoading : MonoBehaviour
             if (dataContainer.summitData.domes[i].id == domeId)
             {
                 domeGeneralData.id = dataContainer.summitData.domes[i].id;
+
+                if (dataContainer.summitData.domes[i].world.Contains("D + Infinity Labo") || dataContainer.summitData.domes[i].world.Contains("D +  Infinity Labo"))
+                {
+                    dataContainer.summitData.domes[i].world = "D_Infinity_Labo";
+                }
+
                 domeGeneralData.world = dataContainer.summitData.domes[i].world;
                 domeGeneralData.worldType = dataContainer.summitData.domes[i].worldType;
                 domeGeneralData.experienceType = dataContainer.summitData.domes[i].experienceType;
