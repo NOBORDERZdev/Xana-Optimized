@@ -255,6 +255,19 @@ public class UploadPropertyBehaviour : MonoBehaviour
             string videoId = url.Substring(startIndex, endIndex - startIndex);
             return videoId;
         }
+        else if (url.Contains("youtu.be"))
+        {
+            // https://youtu.be/p4Sg5894rUg - To extract ID from Shortened URL like this:
+            startIndex = url.LastIndexOf('/');
+            if (startIndex != -1)
+            {
+                startIndex += 1;
+                int endIndex = url.Length;
+
+                string videoId = url[startIndex..endIndex]; // startIndex, endIndex - startIndex
+                return videoId;
+            }
+        }
 
         // If "v=" parameter is not found, handle accordingly (e.g., return null or an error message)
         return null;

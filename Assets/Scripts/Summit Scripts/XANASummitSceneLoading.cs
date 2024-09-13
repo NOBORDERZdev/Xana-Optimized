@@ -203,23 +203,25 @@ public class XANASummitSceneLoading : MonoBehaviour
             if (_stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea)
             {
                 _stayTimeTrackerForSummit.StopTrackingTime();
-                _stayTimeTrackerForSummit.CalculateAndLogStayTime();
+                //_stayTimeTrackerForSummit.CalculateAndLogStayTime();
                 _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = false;
             }
             _stayTimeTrackerForSummit.DomeId = domeId;
-            if (domeGeneralData.worldType)
-                _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.builderWorldId;
-            else
-                _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.worldId;
             _stayTimeTrackerForSummit.IsBuilderWorld = domeGeneralData.worldType;
+            string eventName;
+            if (domeGeneralData.worldType)
+            {
+                _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.builderWorldId;
+                eventName = "TV_Dome_" + domeId + "_BW_" + domeGeneralData.builderWorldId;
+            }
+            else
+            {
+                _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.worldId;
+                eventName = "TV_Dome_" + domeId + "_XW_" + domeGeneralData.worldId;
+            }
+            GlobalConstants.SendFirebaseEventForSummit(eventName);
             _stayTimeTrackerForSummit.StartTrackingTime();
         }
-        string eventName;
-        if (domeGeneralData.worldType)
-            eventName = "TV_Dome_" + domeId + "_BW_" + domeGeneralData.builderWorldId;
-        else
-            eventName = "TV_Dome_" + domeId + "_XW_" + domeGeneralData.worldId;
-
 
         if (ReferencesForGamePlay.instance.playerControllerNew.isFirstPerson)
         {
@@ -235,10 +237,6 @@ public class XANASummitSceneLoading : MonoBehaviour
             //  EmoteAnimationHandler.Instance.StopAllCoroutines();
         }
         GameplayEntityLoader.instance.AssignRaffleTickets(domeId);
-
-       
-        GlobalConstants.SendFirebaseEventForSummit(eventName);
-    
     }
 
 
@@ -323,6 +321,12 @@ public class XANASummitSceneLoading : MonoBehaviour
         {
             GamePlayUIHandler.inst.OnSwitchCameraClick();
         }
+        if (SubWorldsHandlerInstance.IsEnteringInSubWorld)
+        {
+            SubWorldsHandlerInstance.IsEnteringInSubWorld = false;
+            SubWorldsHandlerInstance.CallAnalyticsForSubWorlds();
+        }
+
         GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
         if (ActionManager.IsAnimRunning)
         {
@@ -374,7 +378,7 @@ public class XANASummitSceneLoading : MonoBehaviour
             if (_stayTimeTrackerForSummit.IsTrackingTime)
             {
                 _stayTimeTrackerForSummit.StopTrackingTime();
-                _stayTimeTrackerForSummit.CalculateAndLogStayTime();
+                //_stayTimeTrackerForSummit.CalculateAndLogStayTime();
                 _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = true;
             }
         }
