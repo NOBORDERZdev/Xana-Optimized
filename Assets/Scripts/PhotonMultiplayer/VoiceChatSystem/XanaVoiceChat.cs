@@ -120,6 +120,9 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
     public void SetMicByBtn()
     {
         PermissionPopusSystem.Instance.onCloseAction -= SetMicByBtn;
+#if UNITY_IOS
+    Application.RequestUserAuthorization(UserAuthorization.Microphone);
+#endif
         StartCoroutine(SetMic());
     }
 
