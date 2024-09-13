@@ -39,6 +39,8 @@ namespace Photon.Pun.Demo.PunBasics
         public NetworkStates internetState = NetworkStates.NotConnectedToInternet;
 
         public static MutiplayerController instance;
+        public static Action onRespawnPlayer;
+
         public ScenesList working;
         #region Private Serializable Fields
 
@@ -67,7 +69,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "Summit20VoiceNew";
+        string gameVersion = "20240912";  // YYYYMMDD
         #endregion
 
         #region Multtisection Fields
@@ -544,6 +546,7 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 playerobjectRoom = new List<GameObject>(playerobjects);
                 playerobjects.Clear();
+                onRespawnPlayer?.Invoke();
                 JoinLobby(CurrLobbyName);
                 CarNavigationManager.CarNavigationInstance.Cars.Clear();
                 LoadingHandler.Instance.DomeLoadingProgess(10);
