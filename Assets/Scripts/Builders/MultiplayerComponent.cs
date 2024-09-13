@@ -8,7 +8,7 @@ public class MultiplayerComponent : MonoBehaviour
     public string RunTimeItemID;
     string _itemID;
     ItemData _itemData;
-    IEnumerator start()
+    IEnumerator Start()
     {
         if (GamificationComponentData.instance != null && GamificationComponentData.instance.withMultiplayer)
         {

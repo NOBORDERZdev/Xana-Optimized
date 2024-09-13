@@ -656,10 +656,16 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     void ResetDisplayDownloadText()
     {
-        assetDownloadingText.text = string.Empty;
-        assetDownloadingTextPotrait.text = string.Empty;
-        assetDownloadingText.transform.parent.gameObject.SetActive(false);
-        assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
+        if (assetDownloadingText)
+        {
+            assetDownloadingText.text = string.Empty;
+            assetDownloadingText.transform.parent.gameObject.SetActive(false);
+        }
+        if (assetDownloadingTextPotrait)
+        {
+            assetDownloadingTextPotrait.text = string.Empty;
+            assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
+        }
     }
 
     public void ResetAll()
