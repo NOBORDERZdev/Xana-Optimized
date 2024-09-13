@@ -69,7 +69,7 @@ public class MoveMaptoCenter : MonoBehaviour
     {
         Debug.Log("Item Clicked: " + ind);
 
-        int arratInd = ind - 1;
+        int arratInd = ind;
         grandChildPing = MapHighlightObjs[arratInd];
         StartCoroutine(MoveChildToCenterOfMainScreen());
         EnableSelectedImage(arratInd);
