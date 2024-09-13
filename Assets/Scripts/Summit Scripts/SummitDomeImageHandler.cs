@@ -58,7 +58,17 @@ public class SummitDomeImageHandler : MonoBehaviour
         ReferencesForGamePlay.instance.eventSystemObj.SetActive(false);
         PlayerCameraController.instance.isReturn = true;
     }
+    public void EnableControlls()
+    {
+      
+        if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
+        {
+            GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
+        }
 
+        ReferencesForGamePlay.instance.eventSystemObj.SetActive(true);
+        PlayerCameraController.instance.isReturn = false;
+    }
     public async void SetInfo(int domeID)
     {
         var domedata = XANASummitDataContainer.GetDomeData(domeID);
@@ -109,7 +119,7 @@ public class SummitDomeImageHandler : MonoBehaviour
                 break;
         }
         int ratioId = (int)PMY_Ratio;
-        if (domedata.mediaType == "PDF")
+        if (domedata.mediaType == "Pdf")
         {
             CommonScreen.pdfViewer_L.FileURL = domedata.mediaUpload;
             CommonScreen.pdfViewer_P.FileURL = domedata.mediaUpload;

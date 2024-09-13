@@ -38,9 +38,9 @@ public class NFT_Holder_Manager : MonoBehaviour
     public ExtendedXanaChatSystem Extended_XCS;
     public int RatioID;
     public bool IsSummit;
+    public SummitDomeImageHandler handler;
     private XanaChatSystem _chatSystem;
     
-
     private void Awake()
     {
         if (instance == null)
@@ -127,6 +127,16 @@ public class NFT_Holder_Manager : MonoBehaviour
     {
         currentRoom?.EnableControlls();
         if (currentRoom != null) currentRoom = null;
+        if (IsSummit)
+        {
+            LandscapeObj.SetActive(false);
+            PotraiteObj.SetActive(false);
+            if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
+            {
+                GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
+            }
+           handler.EnableControlls();
+        }
     }
 
 }
