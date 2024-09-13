@@ -88,6 +88,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
     {
         AvatarSpawnerOnDisconnect.OninternetDisconnect -= OnInternetDisconnect;
         AvatarSpawnerOnDisconnect.OninternetConnected -= OnInternetConnect;
+        RemoveReference();
     }
 
     public async void PlayVideo()
@@ -138,6 +139,31 @@ public class AdvancedYoutubePlayer : MonoBehaviour
             if (AVProVideoPlayer != null)
             {
                 SoundSettings.soundManagerSettings.AddLiveVideoSources(AVProVideoPlayer);
+            }
+        }
+    }
+
+    public void RemoveReference()
+    {
+        if (SoundSettings.soundManagerSettings == null)
+        {
+            return;
+        }
+        if (VideoPlayer != null)
+        {
+            if (VideoPlayer.GetComponent<AudioSource>())
+            {
+                if (SoundSettings.soundManagerSettings.videoSources.Contains(VideoPlayer.GetComponent<AudioSource>()))
+                {
+                    SoundSettings.soundManagerSettings.videoSources.Remove(VideoPlayer.GetComponent<AudioSource>());
+                }
+            }
+        }
+        if (AVProVideoPlayer != null)
+        {
+            if (SoundSettings.soundManagerSettings.livevideoSources.Contains(AVProVideoPlayer))
+            {
+                SoundSettings.soundManagerSettings.livevideoSources.Remove(AVProVideoPlayer);
             }
         }
     }

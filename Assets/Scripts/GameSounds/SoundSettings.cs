@@ -338,7 +338,10 @@ public class SoundSettings : MonoBehaviour
                 {
                     foreach (AudioSource v in videoSources)
                     {
-                        SetAudioSourceSliderVal(v, Vol);
+                        if (v != null)
+                        {
+                            SetAudioSourceSliderVal(v, Vol);
+                        }
                     }
                 }
             }
@@ -352,17 +355,7 @@ public class SoundSettings : MonoBehaviour
 
     public void AddVideoSources(AudioSource audio)
     {
-        for (int i = videoSources.Count - 1; i >= 0; i--)
-        {
-            if (videoSources[i]==null)
-            {
-                videoSources.Remove(videoSources[i]);
-            }
-            else
-            {
-                videoSources[i].volume = PlayerPrefs.GetFloat(ConstantsGod.BGM_VOLUME);
-            }
-        }
+        audio.volume = PlayerPrefs.GetFloat(ConstantsGod.BGM_VOLUME);
         if (!videoSources.Contains(audio))
         {
             videoSources.Add(audio);
@@ -370,17 +363,7 @@ public class SoundSettings : MonoBehaviour
     }
     public void AddLiveVideoSources(MediaPlayer media)
     {
-        for (int i = livevideoSources.Count - 1; i >= 0; i--)
-        {
-            if (livevideoSources[i] == null)
-            {
-                livevideoSources.Remove(livevideoSources[i]);
-            }
-            else
-            {
-                livevideoSources[i].AudioVolume = PlayerPrefs.GetFloat(ConstantsGod.BGM_VOLUME);
-            }
-        }
+        media.AudioVolume = PlayerPrefs.GetFloat(ConstantsGod.BGM_VOLUME);
         if (!livevideoSources.Contains(media))
         {
             livevideoSources.Add(media);
@@ -469,7 +452,10 @@ public class SoundSettings : MonoBehaviour
         }
         foreach (MediaPlayer player in livevideoSources)
         {
-            player.AudioVolume = newClampedSliderValue;
+            if (player != null)
+            {
+                player.AudioVolume = newClampedSliderValue;
+            }
         }
     }
     public void setNewSliderValues()
