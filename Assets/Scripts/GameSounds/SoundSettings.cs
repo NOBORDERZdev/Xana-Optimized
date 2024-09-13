@@ -1,15 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using Cinemachine;
 using Photon.Voice.Unity;
 using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 using RenderHeads.Media.AVProVideo;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.Video;
-using System.Linq;
-using VTabs.Libs;
 
 public class SoundSettings : MonoBehaviour
 {

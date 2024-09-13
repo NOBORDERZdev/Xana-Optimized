@@ -126,9 +126,6 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         }
         clothData = ClothJson;
         AvatarController otherPlayer;
-        SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-        _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(ClothJson.ToString());
-
         otherPlayer = gameObject.GetComponent<AvatarController>();
         otherPlayer.isLoadStaticClothFromJson = true;
         otherPlayer.staticClothJson = ClothJson;
