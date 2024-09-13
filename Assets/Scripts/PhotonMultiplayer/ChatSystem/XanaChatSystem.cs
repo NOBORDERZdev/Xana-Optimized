@@ -269,7 +269,7 @@ public class XanaChatSystem : MonoBehaviour
         ChatScrollRect.verticalNormalizedPosition = 1f;
     }
 
-    protected bool isChatOpen;
+    public bool isChatOpen;
 
     public void OpenCloseChatDialog()
     {
