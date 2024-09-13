@@ -68,7 +68,7 @@ public class ChatSocketManager : MonoBehaviour
     public GameObject MsgPrefab;
     public Transform MsgParentObj;
 
-    private List<ChatMsgDataHolder> allMsgData;
+    private List<ChatMsgDataHolder> allMsgData=new List<ChatMsgDataHolder>();
 
 
     private bool isConnected = false;
@@ -108,13 +108,14 @@ public class ChatSocketManager : MonoBehaviour
         onJoinRoom += UserJoinRoom;
         onSendMsg += SendMsg;
         callApi += CallApiForMessages;
+        BuilderEventManager.AfterPlayerInstantiated += LoadChatAfterPlayerInstantiate;
     }
     private void OnDisable()
     {
         onJoinRoom -= UserJoinRoom;
         onSendMsg -= SendMsg;
         callApi -= CallApiForMessages;
-
+        BuilderEventManager.AfterPlayerInstantiated -= LoadChatAfterPlayerInstantiate;
         // Switch Off This Socket
         Manager.Close();
     }
@@ -168,7 +169,7 @@ public class ChatSocketManager : MonoBehaviour
         //Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
         Manager.Socket.On<ChatUserData>("messagev2", ReceiveMsgs);
 
-        StartCoroutine(FetchOldMessages());
+        // StartCoroutine(FetchOldMessages());
     }
 
     IEnumerator RetryConnection()
@@ -341,6 +342,12 @@ public class ChatSocketManager : MonoBehaviour
 
     #endregion
 
+    void LoadChatAfterPlayerInstantiate()
+    {
+        ClearAllMessages();
+        StartCoroutine(FetchOldMessages());
+    }
+
     //To fetch Old Messages from a server against any world
     public void CallApiForMessages()
     {
@@ -420,7 +427,7 @@ public class ChatSocketManager : MonoBehaviour
         MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = false;
         Invoke("DelayAdded", 0.05f);
         XanaChatSystem.instance.DisplayMsg_FromSocket(userName, msg, _dataHolder.MsgText);
-        
+
 
         // Add to List
         if (allMsgData == null)
@@ -554,10 +561,11 @@ public class ChatSocketManager : MonoBehaviour
 
     public void ClearAllMessages()
     {
-        foreach (var item in allMsgData)
-        {
-            Destroy(item.gameObject);
-        }
+        if (allMsgData.Count > 0)
+            foreach (var item in allMsgData)
+            {
+                Destroy(item.gameObject);
+            }
         allMsgData.Clear();
     }
 }

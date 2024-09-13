@@ -71,11 +71,12 @@ public class MoveMaptoCenter : MonoBehaviour
 
         int arratInd = ind;
         grandChildPing = MapHighlightObjs[arratInd];
+        string areaName=grandChildPing.name;
         StartCoroutine(MoveChildToCenterOfMainScreen());
         EnableSelectedImage(arratInd);
 
         // Get the Thumbnail URL
-        var dome = dataManager.summitData.domes.FirstOrDefault(d => d.id == ind);
+        var dome = dataManager.summitData.domes.FirstOrDefault(d => d.id == (ind + 1));
         if (dome != null)
         {
             if (!string.IsNullOrEmpty(dome.world360Image))
@@ -95,7 +96,7 @@ public class MoveMaptoCenter : MonoBehaviour
         }
 
         goBtn.SetActive(true);
-        DomeMinimapDataHolder.OnSetDomeId?.Invoke(ind);
+        DomeMinimapDataHolder.OnSetDomeId?.Invoke(ind + 1,areaName);
     }
     IEnumerator MoveChildToCenterOfMainScreen()
     {
