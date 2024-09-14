@@ -290,7 +290,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         gameplayEntityLoader.addressableSceneName = worldInfo.data.name;
         ConstantsHolder.userLimit = worldInfo.data.user_limit;
         ConstantsHolder.xanaConstants.MuseumID = worldInfo.data.id;
-        ConstantsHolder.HaveSubWorlds = false;
+        //ConstantsHolder.HaveSubWorlds = false;
         ConstantsHolder.Thumbnail = worldInfo.data.thumbnail;
         ConstantsHolder.xanaConstants.isBuilderScene = worldInfo.data.entityType == "USER_WORLD" ? true : false;
         gameplayEntityLoader.currentEnvironment = null;
@@ -403,6 +403,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         ConstantsHolder.xanaConstants.isBuilderScene = subWorldInfo.isBuilderWorld;
         ConstantsHolder.xanaConstants.MuseumID = subWorldInfo.id;
         ConstantsHolder.isFromXANASummit = subWorldInfo.isFromSummitWorld;
+        Debug.LogError("Back loading..."+ subWorldInfo.haveSubWorlds);
         ConstantsHolder.HaveSubWorlds = subWorldInfo.haveSubWorlds;
         ConstantsHolder.Thumbnail = subWorldInfo.thumbnail;
         ConstantsHolder.isPenguin = false;
