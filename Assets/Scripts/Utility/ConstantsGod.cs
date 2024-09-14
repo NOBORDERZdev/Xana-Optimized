@@ -47,6 +47,8 @@ public class ConstantsGod
     public static string UserPriorityRole = "Guest";
     public static List<string> UserRoles = new List<string>() { "Guest" };
 
+    public static string SMTPSERVERAUTHDATA = "/admin/get-smtp-for-app";
+
     #region World Manager
 
     public static string GETENVIRONMENTSAPI = API + "xanaEvent/getEnvironments";
