@@ -426,7 +426,7 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         // Map Working
         _domeMiniMap.SummitSceneReloaded();
-        SummitMiniMapStatusOnSceneChange(true);
+        //SummitMiniMapStatusOnSceneChange(true);
 
         ConstantsHolder.xanaConstants.comingFrom = ConstantsHolder.ComingFrom.None;
         if (ReferencesForGamePlay.instance.playerControllerNew.isFirstPerson)

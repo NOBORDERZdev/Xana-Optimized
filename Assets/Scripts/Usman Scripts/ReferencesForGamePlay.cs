@@ -178,7 +178,11 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
         }
         else
         {
-            if (ConstantsHolder.xanaConstants.minimap == 1)
+            if (ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit")
+            {
+                GameplayEntityLoader.instance.ForcedMapCloseForSummitScene();
+            }
+            else if (ConstantsHolder.xanaConstants.minimap == 1)
             {
                 minimap.SetActive(true);
                 SumitMapStatus(true);

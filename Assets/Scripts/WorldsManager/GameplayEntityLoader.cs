@@ -141,7 +141,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
         ConstantsHolder.xanaConstants.isGoingForHomeScene = false;
 
-        ForcedMapOpenForSummitScene();
+        //ForcedMapOpenForSummitScene();
     }
 
     void OnEnable()
@@ -177,7 +177,16 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             ReferencesForGamePlay.instance.SumitMapStatus(false);
         }
     }
-
+    public void ForcedMapCloseForSummitScene()
+    {
+        if (ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit")
+        {
+            ReferencesForGamePlay.instance.minimap.SetActive(false);
+            PlayerPrefs.SetInt("minimap", 0);
+            ConstantsHolder.xanaConstants.minimap = 0;
+            ReferencesForGamePlay.instance.SumitMapStatus(false);
+        }
+    }
     public void StartEventTimer()
     {
         eventUnivStartDateTime = DateTime.Parse(XanaEventDetails.eventDetails.startTime);
