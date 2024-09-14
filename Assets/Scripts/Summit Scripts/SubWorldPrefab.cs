@@ -21,7 +21,7 @@ public class SubWorldPrefab : MonoBehaviour
     public TMPro.TextMeshProUGUI WorldName;
     public Vector3 PlayerReturnPosition;
     public OfficialWorldDetails subworlddata;
-
+    public bool IsBuilderWorld;
 
     public void Init()
     {
@@ -30,7 +30,7 @@ public class SubWorldPrefab : MonoBehaviour
 
     public void OnPrefabClicked()
     {
-        SubWorldsHandler.OpenSubWorldDescriptionPanel?.Invoke(WorldImage,WorldId.ToString(),SubWorldName,WorldDescription,CreatorName,WorldType,WorldCategory,WorldDomeId,PlayerReturnPosition,subworlddata);
+        SubWorldsHandler.OpenSubWorldDescriptionPanel?.Invoke(WorldImage,WorldId.ToString(),SubWorldName,WorldDescription,CreatorName,WorldType,WorldCategory,WorldDomeId,PlayerReturnPosition,subworlddata,IsBuilderWorld);
     }
 
     IEnumerator DownloadTexture()
