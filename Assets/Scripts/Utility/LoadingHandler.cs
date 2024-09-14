@@ -145,8 +145,8 @@ public class LoadingHandler : MonoBehaviour
             loadingSlider.DOFillAmount(1, 0.15f);
             JJLoadingSlider.DOFillAmount(1, 0.15f);
             LoadingStatus.DOAnchorMax(new Vector2(1, LoadingStatus.anchorMax.y), 0.15f); ;
-            DomeProgress.text = (100).ToString();
-            loadingPercentageText.text = (100).ToString();
+            DomeProgress.text = " 100%";
+            loadingPercentageText.text = " 100%";
             DomeProgress.text = (100).ToString();
           /*  StartCoroutine(AnimateNumberCoroutine(JJLoadingPercentageText, int.Parse(JJLoadingPercentageText.text), 100, 0.15f));
             StartCoroutine(AnimateNumberCoroutine(loadingPercentageText, int.Parse(loadingPercentageText.text), 100, 0.15f));
