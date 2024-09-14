@@ -51,7 +51,7 @@ public class SectorManager : MonoBehaviour
         {
             StopCoroutine(routine);
         }
-
+        if (MutiplayerController.instance.getSector() == name) { Debug.Log("Discard Sector "); return; }
         routine = WaitBeforeHandover(Name);
         StartCoroutine(routine);
 
