@@ -239,7 +239,7 @@ public class BuildingDetect : MonoBehaviour
         gangsterCharacter = new GameObject("AvatarChange");
         gangsterCharacter.transform.SetParent(this.transform);
         gangsterCharacter.transform.localPosition = Vector3.zero;
-        gangsterCharacter.transform.localEulerAngles = avatarIndex == 2 ? Vector3.up * -180 : curObject.transform.eulerAngles;
+        gangsterCharacter.transform.localEulerAngles = avatarIndex == 2 ? Vector3.up * -180 : Vector3.zero;
         //gangsterCharacter.SetActive(false);
 
         Vector3 pos = gangsterCharacter.transform.position;
