@@ -77,6 +77,12 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
     [PunRPC]
     void MovePlayersToRoom(int gameId, string gameName)
     {
+        MutiplayerController.instance.Disconnect();
+        MutiplayerController.instance.Connect("XANA SummitPenpenz-" + ConstantsHolder.domeId + "-" /*+ worldInfo.data.name*/);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.CurrentRoom.IsVisible = false;
+        }
         XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().isLeaderboardShown = false;
         // Set the game details in the constants holder
         _XanaConstants.isJoinigXanaPartyGame = true;
@@ -88,10 +94,6 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
        
         print("!! move to level");
         // Make the room invisible if the current player is the master client
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.CurrentRoom.IsVisible = false;
-        }
 
         // SceneManager.UnloadScene("GamePlayScene");
         //if (PhotonNetwork.IsMasterClient)
@@ -113,6 +115,7 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
         _XanaConstants.XanaPartyGameName = "";
         _XanaConstants.isBuilderScene = false;
         _XanaConstants.builderMapID = 0;
+        _XanaConstants.GameIsFinished = true;
         // Load the main scene
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.PenpenzLoading(FadeAction.In));
