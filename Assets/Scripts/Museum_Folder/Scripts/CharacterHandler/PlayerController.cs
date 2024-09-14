@@ -190,10 +190,10 @@ public class PlayerController : MonoBehaviour
             if (cinemachineCollider != null)
             {
                 int noPostProcessingLayerIndex = LayerMask.NameToLayer("NoPostProcessing");
-                int characterLayerIndex = LayerMask.NameToLayer("Character");
+                //int characterLayerIndex = LayerMask.NameToLayer("Character");
                 // Remove the layer from the collide against mask
                 cinemachineCollider.m_CollideAgainst &= ~(1 << noPostProcessingLayerIndex);
-                cinemachineCollider.m_CollideAgainst &= ~(1 << characterLayerIndex);
+                //cinemachineCollider.m_CollideAgainst &= ~(1 << characterLayerIndex);
             }
             cinemachineFreeLook = GameplayEntityLoader.instance.PlayerCamera.GetComponent<CinemachineFreeLook>();
             topRigDefaultRadius = cinemachineFreeLook.m_Orbits[0].m_Radius;
