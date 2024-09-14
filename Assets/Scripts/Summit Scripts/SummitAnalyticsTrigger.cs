@@ -32,7 +32,7 @@ public class SummitAnalyticsTrigger : MonoBehaviour
             if (_stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea)
             {
                 _stayTimeTrackerForSummit.StopTrackingTime();
-                _stayTimeTrackerForSummit.CalculateAndLogStayTime();
+                //_stayTimeTrackerForSummit.CalculateAndLogStayTime();
                 _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = false;
             }
             else

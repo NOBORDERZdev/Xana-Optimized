@@ -71,6 +71,7 @@ public class MoveMaptoCenter : MonoBehaviour
 
         int arratInd = ind;
         grandChildPing = MapHighlightObjs[arratInd];
+        string areaName=grandChildPing.name;
         StartCoroutine(MoveChildToCenterOfMainScreen());
         EnableSelectedImage(arratInd);
 
@@ -95,7 +96,7 @@ public class MoveMaptoCenter : MonoBehaviour
         }
 
         goBtn.SetActive(true);
-        DomeMinimapDataHolder.OnSetDomeId?.Invoke(ind + 1);
+        DomeMinimapDataHolder.OnSetDomeId?.Invoke(ind + 1,areaName);
     }
     IEnumerator MoveChildToCenterOfMainScreen()
     {

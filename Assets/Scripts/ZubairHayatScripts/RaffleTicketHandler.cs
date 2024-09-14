@@ -11,9 +11,7 @@ public class RaffleTicketHandler : MonoBehaviour
 
     [Header("*UI References*")]
     [SerializeField] private TextMeshProUGUI _displayTicketCountTextSmallLandScape;
-    [SerializeField] private TextMeshProUGUI _displayTicketCountTextLargeLandScape;
     [SerializeField] private TextMeshProUGUI _displayTicketCountTextSmallPotrait;
-    [SerializeField] private TextMeshProUGUI _displayTicketCountTextLargePotrait;
     [SerializeField] private TextMeshProUGUI _ticketCountTextLandScape;
     [SerializeField] private TextMeshProUGUI _ticketCountTextPotrait;
     [SerializeField] private TextMeshProUGUI _giftTicketsPopUpDescriptionTextLandScape;
@@ -21,6 +19,7 @@ public class RaffleTicketHandler : MonoBehaviour
     [Header("*GameObject References*")]
     [SerializeField] private GameObject _giftTicketsPopUpLandScape;
     [SerializeField] private GameObject _giftTicketsPopUpPotrait;
+    [SerializeField] private GameObject _raffleTicketsInfoPopup;
     [Header("*API Data*")]
     [SerializeField] private Pavilion _summitDomesVisitedByUser;
     [SerializeField] private RaffleTicketsCount _summitRaffleTicketsEranedByUser;
@@ -141,12 +140,19 @@ public class RaffleTicketHandler : MonoBehaviour
             UpdateTicketsData();
         }
     }
+    public void RaffleTciketsInfo()
+    {
+        if (_raffleTicketsInfoPopup.activeSelf)
+            return;
+        else
+            _raffleTicketsInfoPopup.SetActive(true);
+
+    }
     private void UpdateUI()
     {
-        _displayTicketCountTextSmallLandScape.text = "(" + _totalNumberOfTickets + ")";
-        _displayTicketCountTextLargeLandScape.text = "(" + _totalNumberOfTickets + ")";
+        //_displayTicketCountTextSmallLandScape.text = "(" + _totalNumberOfTickets + ")";
+        _displayTicketCountTextSmallLandScape.text =""+ _totalNumberOfTickets ;
         _displayTicketCountTextSmallPotrait.text = "(" + _totalNumberOfTickets + ")";
-        _displayTicketCountTextLargePotrait.text = "(" + _totalNumberOfTickets + ")";
     }
     private void TransferDatatoMainDomeList()
     {
@@ -215,6 +221,8 @@ public class RaffleTicketHandler : MonoBehaviour
         else
             _giftTicketsPopUpLandScape.SetActive(true);
     }
+
+
 
     #endregion
 }
