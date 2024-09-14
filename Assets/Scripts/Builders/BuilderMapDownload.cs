@@ -235,7 +235,7 @@ public class BuilderMapDownload : MonoBehaviour
         }
 
         //Debug.LogError("Map is downloaed");
-        
+
     }
 
     public IEnumerator GemificationObjectLoadWait(float waitTime)
@@ -267,10 +267,10 @@ public class BuilderMapDownload : MonoBehaviour
                 //AsyncOperationHandle loadOp = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key, ref flag);
                 //if (!flag)
                 //{
-                    if (key != "Hiragino-Sans")
-                        loadOp = Addressables.LoadAssetAsync<GameObject>(key);
-                    else
-                        loadOp = Addressables.LoadAssetAsync<TMPro.TMP_FontAsset>(key);
+                if (key != "Hiragino-Sans")
+                    loadOp = Addressables.LoadAssetAsync<GameObject>(key);
+                else
+                    loadOp = Addressables.LoadAssetAsync<TMPro.TMP_FontAsset>(key);
                 //}
                 while (!loadOp.IsDone)
                     yield return null;
@@ -536,7 +536,7 @@ public class BuilderMapDownload : MonoBehaviour
                 //bool flag = false;
                 //loadSkyBox = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(skyboxMatKey, ref flag);
                 //if (!flag)
-                    loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
+                loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
                 while (!loadSkyBox.IsDone)
                 {
                     yield return null;
@@ -556,7 +556,7 @@ public class BuilderMapDownload : MonoBehaviour
                     AddressableDownloader.bundleAsyncOperationHandle.Add(loadSkyBox);
                     Material _mat = loadSkyBox.Result as Material;
                     _mat.shader = Shader.Find(skyBoxItem.shaderName);
-                    if (_mat.GetTexture("_Tex") == null && skyProperties.skyId == 32)
+                    if (skyProperties.skyId == 32 && _mat.GetTexture("_Tex") == null)
                     {
                         //Set texture when getting null from addressable
                         _mat.SetTexture("_Tex", GamificationComponentData.instance.defaultSkyTex);
@@ -581,7 +581,7 @@ public class BuilderMapDownload : MonoBehaviour
                     //Remove texture downloading code
                     yield return StartCoroutine(AISkyTextureDownload());
                 }
-                GamificationComponentData.instance.aiSkyMaterial.mainTexture =skyBoxItem.texture;
+                GamificationComponentData.instance.aiSkyMaterial.mainTexture = skyBoxItem.texture;
                 RenderSettings.skybox = GamificationComponentData.instance.aiSkyMaterial;
                 directionalLight.intensity = skyBoxItem.lightPPData.directionalLightData.lightIntensity;
                 characterLight.intensity = skyBoxItem.lightPPData.directionalLightData.character_directionLightIntensity;
