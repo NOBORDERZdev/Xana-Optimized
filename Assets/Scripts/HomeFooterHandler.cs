@@ -857,7 +857,7 @@ public class HomeFooterHandler : MonoBehaviour
             if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
             {
                     Screen.orientation = ScreenOrientation.LandscapeLeft;
-                    UserLoginSignupManager.instance.LoginRegisterScreen.SetActive(true);
+                    UserLoginSignupManager.instance.signUpOrloginSelectionPanel.SetActive(true);
             }
             else
             {
@@ -891,7 +891,7 @@ public class HomeFooterHandler : MonoBehaviour
             additiveScenesManager.SNSmodule.SetActive(true);
             // additiveScenesManager.SNSMessage.SetActive(false);
             gameManager.defaultSelection = 4;
-            FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnSelectedClick(4);
+            FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnSelectedClick(3);
         }
         else
         {

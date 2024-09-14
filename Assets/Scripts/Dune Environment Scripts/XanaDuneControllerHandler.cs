@@ -1,25 +1,7 @@
-using Cinemachine;
-using Photon.Realtime;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class XanaDuneControllerHandler : MonoBehaviour
 {
-    //public Transform Player34;
-
-    [SerializeField]
-    private GameObject _skateBoardPrefab;
-
-    [SerializeField]
-    private GameObject _markPrefab;
-
-    [HideInInspector]
-    public GameObject _spawnedSkateBoard;
-
-    [HideInInspector]
-    public GameObject _spawnedMarkObject;
-
     private Animator animator;
 
     //Collider Properties
@@ -65,8 +47,6 @@ public class XanaDuneControllerHandler : MonoBehaviour
 
         _capsuleCollider.material = _maxFrictionPhysics;
         EnableDisableUI(false);
-        //EmoteAnimationHandler.Instance.StopAnimation();
-
     }
     public void DisableSkating()
     {

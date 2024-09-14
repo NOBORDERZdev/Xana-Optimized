@@ -50,6 +50,9 @@ public class PlayerSelfieController : MonoBehaviour
     public GameObject Exit;
     [HideInInspector]
     public bool isReconnecting;
+    [Space(5)]
+    public GameObject permissionPopupLandscape;
+    public GameObject permissionPopupPotrait;
 
     public static event Action OnSelfieButtonPressed;
 
@@ -211,6 +214,7 @@ public class PlayerSelfieController : MonoBehaviour
 #endif
 #if UNITY_ANDROID
             if (Input.touchCount != 0 && Input.touchCount <= 1) // to check single touch
+                // Muneeb: Just say: if (Input.touchCount == 1)
             {
 
                 Touch l_Touch = Input.GetTouch(0);
@@ -674,8 +678,49 @@ public class PlayerSelfieController : MonoBehaviour
 
     public int picCount;
 
+    public void CheckPermissionStatus()
+    {
+        if (Application.isEditor)
+        {
+            PermissionPopusSystem.Instance.onCloseAction += SaveImageLocally;
+            PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+            PermissionPopusSystem.Instance.OpenPermissionScreen();
+        }
+        else
+        {
+            NativeGallery.Permission permission = NativeGallery.CheckPermission(NativeGallery.PermissionType.Read, NativeGallery.MediaType.Image);
+#if UNITY_ANDROID
+            if (permission == NativeGallery.Permission.ShouldAsk)
+            {
+                PermissionPopusSystem.Instance.onCloseAction += SaveImageLocally;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+                PermissionPopusSystem.Instance.OpenPermissionScreen();
+            }
+            else
+            {
+                SaveImageLocally();
+            }
+#elif UNITY_IOS
+                if(PlayerPrefs.GetInt("SavePic", 0) == 0){
+                     PermissionPopusSystem.Instance.onCloseAction += SaveImageLocally;
+            PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+            PermissionPopusSystem.Instance.OpenPermissionScreen();
+                }
+                else
+                {
+                    SaveImageLocally();
+                }
+#endif
+        }
+    }
+
     public void SaveImageLocally()
     {
+        PermissionPopusSystem.Instance.onCloseAction -= SaveImageLocally;
+#if UNITY_IOS
+        PlayerPrefs.SetInt("SavePic", 1);
+#endif
+
         byte[] l_Bytes = m_Texture2D.EncodeToPNG();
 
 #if UNITY_EDITOR

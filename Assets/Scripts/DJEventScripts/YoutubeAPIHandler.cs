@@ -461,7 +461,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                 if (www.isHttpError || www.isNetworkError)
                 {
                     _apiResponse = null;
-                    Debug.Log("Youtube API returned no result");
+                //    Debug.Log("Youtube API returned no result");
                 }
                 else
                 {
@@ -479,6 +479,10 @@ public class YoutubeAPIHandler : MonoBehaviour
                             }
                             else//For AWS Video playing
                             {
+                                if (OldAWSURL != _apiResponse.videoData.url)
+                                {
+                                    _response = null;
+                                }
                                 if (_response == null)
                                 {
                                     _response = new StreamResponse();
@@ -493,7 +497,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                         }
                         else
                         {
-                            Debug.Log("No Link Found Turning off player");
+                         //   Debug.Log("No Link Found Turning off player");
                             Data = null;
                         }
                     }

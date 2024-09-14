@@ -13,15 +13,17 @@ public class SummitAIChatHandler : MonoBehaviour
     public XanaChatSystem LandscapeChatRef;
     public XanaChatSystem PortraitChatRef;
     private XanaChatSystem _CommonChatRef;
-
+    public ChatSocketManager ChatSocketManagerInstance;
     [Header("This Class variables")]
     public XANASummitDataContainer XANASummitDataContainer;
 
-    private List<GameObject> aiNPC=new List<GameObject>();
+    private List<GameObject> aiNPC = new List<GameObject>();
 
     private string npcName;
     private string npcURL;
     private bool _NPCInstantiated;
+    private bool SummitNPC;
+    private bool ChatActivated;
 
     private void OnEnable()
     {
@@ -43,7 +45,7 @@ public class SummitAIChatHandler : MonoBehaviour
 
     void UpdateChatInstance(bool IsPortrait)
     {
-        if(IsPortrait)
+        if (IsPortrait)
             _CommonChatRef = PortraitChatRef;
         else
             _CommonChatRef = PortraitChatRef;
@@ -62,12 +64,21 @@ public class SummitAIChatHandler : MonoBehaviour
             _NPCInstantiated = true;
             GetNPCDATA(ConstantsHolder.domeId);
         }
+
+        if (WorldItemView.m_EnvName == "XANA Summit")
+        {
+            SummitNPC = true;
+            _NPCInstantiated = true;
+            GetNPCDATA(170);
+        }
     }
 
     async void GetNPCDATA(int domeId)
     {
         bool flag = await XANASummitDataContainer.GetAIData(domeId);
-        if (flag)
+        if (flag && SummitNPC)
+            InstantiateSummitAINPC();
+        else if (flag)
             InstantiateAINPC();
     }
 
@@ -76,7 +87,7 @@ public class SummitAIChatHandler : MonoBehaviour
         for (int i = 0; i < XANASummitDataContainer.aiData.npcData.Count; i++)
         {
             GameObject AINPCAvatar;
-            if (XANASummitDataContainer.aiData.npcData[i].avatarId>10)
+            if (XANASummitDataContainer.aiData.npcData[i].avatarId > 10)
                 AINPCAvatar = Instantiate(XANASummitDataContainer.femaleAIAvatar);
             else
                 AINPCAvatar = Instantiate(XANASummitDataContainer.maleAIAvatar);
@@ -85,9 +96,25 @@ public class SummitAIChatHandler : MonoBehaviour
             AINPCAvatar.transform.position = new Vector3(XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[0], XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[1], XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[2]);
             AINPCAvatar.name = XANASummitDataContainer.aiData.npcData[i].name;
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().npcName.text = XANASummitDataContainer.aiData.npcData[i].name;
-            int avatarPresetId= XANASummitDataContainer.aiData.npcData[i].avatarId;
-            AINPCAvatar.GetComponent<SummitNPCAssetLoader>().json = XANASummitDataContainer.avatarJson[avatarPresetId-1];
+            int avatarPresetId = XANASummitDataContainer.aiData.npcData[i].avatarId;
+            AINPCAvatar.GetComponent<SummitNPCAssetLoader>().json = XANASummitDataContainer.avatarJson[avatarPresetId - 1];
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().Init();
+            AINPCAvatar.GetComponent<AINPCTrigger>().npcID = XANASummitDataContainer.aiData.npcData[i].id;
+        }
+    }
+
+    void InstantiateSummitAINPC()
+    {
+        SummitNPC = false;
+        for (int i = 0; i < XANASummitDataContainer.aiData.npcData.Count; i++)
+        {
+            GameObject AINPCAvatar;
+            AINPCAvatar = Instantiate(XANASummitDataContainer.penguinAvatar);
+            aiNPC.Add(AINPCAvatar);
+            AINPCAvatar.transform.position = new Vector3(XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[0], XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[1], XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[2]);
+            AINPCAvatar.name = XANASummitDataContainer.aiData.npcData[i].name;
+            AINPCAvatar.GetComponent<SetPenguinAIName>().NameText.text = XANASummitDataContainer.aiData.npcData[i].name;
+            int avatarPresetId = XANASummitDataContainer.aiData.npcData[i].avatarId;
             AINPCAvatar.GetComponent<AINPCTrigger>().npcID = XANASummitDataContainer.aiData.npcData[i].id;
         }
     }
@@ -110,21 +137,25 @@ public class SummitAIChatHandler : MonoBehaviour
         GetNPCInfo(npcID);
         ClearOldMessages();
         OpenChatBox();
-        foreach (string msg in welcomeMsgs)
-            _CommonChatRef.DisplayMsg_FromSocket(npcName, msg);
+        ChatActivated = true;
+        //foreach (string msg in welcomeMsgs)
+           // _CommonChatRef.DisplayMsg_FromSocket(npcName, msg);
     }
 
     void RemoveAIChat(int npcId)
     {
+        CloseChatBox();
         ClearOldMessages();
         RemoveAIListenerFromChatField();
         _CommonChatRef.LoadOldChat();
+        ChatActivated = false;
     }
 
     void ClearOldMessages()
     {
-        _CommonChatRef.CurrentChannelText.text = string.Empty;
-        _CommonChatRef.PotriatCurrentChannelText.text = string.Empty;
+        ChatSocketManagerInstance.ClearAllMessages();
+        //_CommonChatRef.CurrentChannelText.text = string.Empty;
+        //_CommonChatRef.PotriatCurrentChannelText.text = string.Empty;
     }
 
     void ClearInputField()
@@ -134,16 +165,20 @@ public class SummitAIChatHandler : MonoBehaviour
 
     void OpenChatBox()
     {
-        _CommonChatRef.chatDialogBox.SetActive(true);
-        _CommonChatRef.chatNotificationIcon.SetActive(false);
-        _CommonChatRef.chatButton.GetComponent<Image>().enabled = true;
+        _CommonChatRef.isChatOpen = false;   //it will always open chat panel if collider with NPC
+        _CommonChatRef.OpenCloseChatDialog();
+        //_CommonChatRef.chatDialogBox.SetActive(true);
+        //_CommonChatRef.chatNotificationIcon.SetActive(false);
+        //_CommonChatRef.chatButton.GetComponent<Image>().enabled = true;
     }
 
     void CloseChatBox()
     {
-        _CommonChatRef.chatDialogBox.SetActive(false);
-        _CommonChatRef.chatNotificationIcon.SetActive(false);
-        _CommonChatRef.chatButton.GetComponent<Image>().enabled = false;
+        _CommonChatRef.isChatOpen = true;  //it will always close chat panel
+        _CommonChatRef.OpenCloseChatDialog();
+        //_CommonChatRef.chatDialogBox.SetActive(false);
+        //_CommonChatRef.chatNotificationIcon.SetActive(false);
+        //_CommonChatRef.chatButton.GetComponent<Image>().enabled = false;
     }
 
 
@@ -161,21 +196,23 @@ public class SummitAIChatHandler : MonoBehaviour
 
     async void SendMessageFromAI(string s)
     {
-        _CommonChatRef.DisplayMsg_FromSocket(ConstantsHolder.userName, _CommonChatRef.InputFieldChat.text);
-
-        string url = npcURL + "&usr_id="+ConstantsHolder.userId + "&input_string=" + _CommonChatRef.InputFieldChat.text;
+        //_CommonChatRef.DisplayMsg_FromSocket(ConstantsHolder.userName, _CommonChatRef.InputFieldChat.text);
+        ChatSocketManagerInstance.AddNewMsg(ConstantsHolder.userName, _CommonChatRef.InputFieldChat.text, "NPC", "NPC", 0);
+        string url = npcURL + "&usr_id=" + ConstantsHolder.userId + "&input_string=" + _CommonChatRef.InputFieldChat.text;
 
         ClearInputField();
-
-        Debug.LogError(url);
 
         UriBuilder uriBuilder = new UriBuilder(url);
 
         string response = await GetAIResponse(url);
+        if(ChatActivated)
+        {
+            string res = JsonUtility.FromJson<AIResponse>(response).data;
 
-        string res = JsonUtility.FromJson<AIResponse>(response).data;
-
-        _CommonChatRef.DisplayMsg_FromSocket(npcName, res);
+            //_CommonChatRef.DisplayMsg_FromSocket(npcName, res);
+            ChatSocketManagerInstance.AddNewMsg(npcName, res, "NPC", "NPC", 0);
+        }
+        
     }
 
     async Task<string> GetAIResponse(string url)
@@ -203,7 +240,7 @@ public class SummitAIChatHandler : MonoBehaviour
 
     void DestroyNPC()
     {
-        for(int i = 0;i<aiNPC.Count;i++)
+        for (int i = 0; i < aiNPC.Count; i++)
         {
             if (aiNPC[i] != null)
                 Destroy(aiNPC[i]);

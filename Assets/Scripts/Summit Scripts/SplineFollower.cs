@@ -109,7 +109,7 @@ public class SplineFollower : MonoBehaviour, IPunObservable, IInRoomCallbacks
 
         PrivateRoomName = Room;
 
-        transform.position = new Vector3(transform.position.x, .5f, transform.position.z);
+        transform.position = new Vector3(transform.position.x, 1.5f, transform.position.z);
     }
 
     private void Update()

@@ -16,6 +16,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     private string mainScene = "Home";
     bool exitOnce = true;
     GameManager gameManager;
+    public Button Onfreecam, OffFreecam;
     private void Awake()
     {
         gameManager = GameManager.Instance;
@@ -166,7 +167,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
             Addressables.Release(async);
         }
         AddressableDownloader.bundleAsyncOperationHandle.Clear();
-        Caching.ClearCache();
+        //Caching.ClearCache();
         AssetBundle.UnloadAllAssetBundles(true);
         await Resources.UnloadUnusedAssets();
 

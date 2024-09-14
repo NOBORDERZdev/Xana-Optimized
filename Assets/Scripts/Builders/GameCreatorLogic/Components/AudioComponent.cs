@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using System;
@@ -16,26 +15,43 @@ public class AudioComponent : ItemComponent
     {
         this.audioComponentData = audioComponentData;
         if (this.audioComponentData.audioPath != "")
-            StartCoroutine(setAudioFromUrl(this.audioComponentData.audioPath));
+            StartCoroutine(SetAudioFromUrl(this.audioComponentData.audioPath));
     }
 
     private void OnCollisionEnter(Collision _other)
     {
-        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine && audioClip != null)
+        if (_other.gameObject.CompareTag("PhotonLocalPlayer") && _other.gameObject.GetComponent<PhotonView>().IsMine && audioClip != null)
         {
             GamificationComponentData.instance.audioSource.clip = audioClip;
             GamificationComponentData.instance.audioSource.Play();
         }
     }
 
-    IEnumerator setAudioFromUrl(string file_name)
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("PhotonLocalPlayer") && collision.gameObject.GetComponent<PhotonView>().IsMine)
+        {
+            float stopAudioAfterSeconds = audioClip.length;
+            if (stopAudioAfterSeconds > 3) stopAudioAfterSeconds = 3; // Some clips are too long (up to 130 seconds)
+            Invoke(nameof(StopAudio), stopAudioAfterSeconds);
+        }
+    }
+
+    private void StopAudio()
+    {
+        GamificationComponentData.instance.audioSource.Stop();
+    }
+
+
+    private IEnumerator SetAudioFromUrl(string file_name)
     {
         string[] parts = file_name.Split('_');
         int channels = int.Parse(parts[1]);
         int frequency = int.Parse(parts[2]);
         string name = parts[3];
         string extension = Path.GetExtension(file_name);
-        Debug.Log("Channels: " + channels + " ,Frequency: " + frequency + " ,Name: " + name + " ,Extension: " + extension);
+        Debug.Log($"Channels: {channels} ,Frequency: {frequency} ,Name: {name} ,Extension: {extension}");
 
         using (UnityWebRequest www = UnityWebRequest.Get(file_name))
         {
