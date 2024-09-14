@@ -85,10 +85,15 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
         _XanaConstants.isBuilderScene = true;
         _XanaConstants.builderMapID = gameId;
         _XanaConstants.isMasterOfGame = PhotonNetwork.IsMasterClient;
+       
         print("!! move to level");
-        
-      
-       // SceneManager.UnloadScene("GamePlayScene");
+        // Make the room invisible if the current player is the master client
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.CurrentRoom.IsVisible = false;
+        }
+
+        // SceneManager.UnloadScene("GamePlayScene");
         //if (PhotonNetwork.IsMasterClient)
         //{
         //    Photon.Pun.PhotonHandler.levelName = "Builder";
