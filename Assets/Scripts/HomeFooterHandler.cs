@@ -132,7 +132,7 @@ public class HomeFooterHandler : MonoBehaviour
             //{
             //    break;
             //}
-            if (i == index)
+            if (i == index && index != 1)
             {
                 allButtonIcon[i].sprite = allButtonSelected[i];
                 AllTitleText[i].color = ActiveButtonColor;
@@ -142,7 +142,7 @@ public class HomeFooterHandler : MonoBehaviour
                 //    allButtonIcon[i].transform.GetChild(0).GetComponent<Image>().color = ActiveButtonColor;
                 //}
             }
-            else
+            else if(i != 1)
             {
                 allButtonIcon[i].transform.GetComponent<Image>().color = unSellectedColor;
                 AllTitleText[i].color = unSellectedColor;
