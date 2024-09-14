@@ -85,6 +85,8 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         {
             if (ConstantsHolder.xanaConstants.isBuilderScene)
                 GamificationComponentData.instance.nameCanvas = PhotonUserName.GetComponentInParent<Canvas>();
+            if(SMBCManager.Instance)
+                SMBCManager.Instance.NameCanvas= PhotonUserName.GetComponentInParent<Canvas>();
             if (AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer == null)
             {
                 if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)

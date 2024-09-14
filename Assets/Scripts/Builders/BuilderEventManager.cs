@@ -143,6 +143,11 @@ public static class BuilderEventManager
     public static Action StopBGM;
     public static Action ResetSummit;
 
+    //SMBC specific events
+    public static Action<SMBCQuizComponent, QuizComponentData> OnSMBCQuizComponentCollisionEnter;
+    public static Action OnSMBCQuizComponentColse;
+    public static Action OnSMBCRocketCollected;
+    public static Action OnSMBCQuizWrongAnswer;
 
     #region XANA PARTY WORLD
     public static Action XANAPartyRaceStart;
