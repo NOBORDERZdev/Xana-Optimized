@@ -100,6 +100,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         {
             ConstantsHolder.domeId = domeId;
             ConstantsHolder.isFromXANASummit = true;
+            ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
             LoadingHandler.Instance.DisableDomeLoading();
             bool Success = await SubWorldsHandlerInstance.CreateSubWorldList(domeGeneralData, playerPos);
             if (Success)
@@ -171,6 +172,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         multiplayerController.isConnecting = false;
         gameplayEntityLoader.isEnvLoaded = false;
         gameplayEntityLoader.isAlreadySpawned = true;
+        ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
         ConstantsHolder.isFromXANASummit = true;
 
         XanaWorldDownloader.ResetAll();
@@ -220,7 +222,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         {
             GamePlayUIHandler.inst.OnSwitchCameraClick();
         }
-        GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
+        //GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
 
         if (ActionManager.IsAnimRunning)
         {
@@ -320,7 +322,7 @@ public class XANASummitSceneLoading : MonoBehaviour
             SubWorldsHandlerInstance.CallAnalyticsForSubWorlds();
         }
 
-        GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
+        //GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
         if (ActionManager.IsAnimRunning)
         {
             ActionManager.StopActionAnimation?.Invoke();
@@ -433,7 +435,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         {
             GamePlayUIHandler.inst.OnSwitchCameraClick();
         }
-        GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
+        //GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
         if (ActionManager.IsAnimRunning)
         {
             ActionManager.StopActionAnimation?.Invoke();
@@ -513,6 +515,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (WorldItemView.m_EnvName == "XANA Summit")
         {
             ConstantsHolder.isFromXANASummit = false;
+            ReferencesForGamePlay.instance.ChangeExitBtnImage(true);
         }
         setPlayerPositionDelegate = null;
     }
