@@ -30,7 +30,7 @@ public class RaffleTicketHandler : MonoBehaviour
     private int _earnTicketsInOneCycle;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         GetAllvisitedDomeIds();
     }
@@ -151,7 +151,7 @@ public class RaffleTicketHandler : MonoBehaviour
     private void UpdateUI()
     {
         //_displayTicketCountTextSmallLandScape.text = "(" + _totalNumberOfTickets + ")";
-        _displayTicketCountTextSmallLandScape.text =""+ _totalNumberOfTickets ;
+        _displayTicketCountTextSmallLandScape.text ="" + _totalNumberOfTickets ;
         _displayTicketCountTextSmallPotrait.text = "(" + _totalNumberOfTickets + ")";
     }
     private void TransferDatatoMainDomeList()
