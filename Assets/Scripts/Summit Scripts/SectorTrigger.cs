@@ -23,25 +23,12 @@ public class SectorTrigger : MonoBehaviour
     IEnumerator routine;
     private void OnTriggerExit(Collider other)
     {
-        if (PhotonNetwork.InRoom)
-        {
-            if (other.gameObject.tag == "PhotonLocalPlayer")
-            {   if(routine != null)
-                {
-                    StopCoroutine(routine);
-                }
-                routine = waitforPhotonview(other);
-                StartCoroutine(routine);
-            }
-        }
-    }
-    IEnumerator waitforPhotonview(Collider other)
-    {
-        yield return new WaitUntil(() => other.GetComponent<PhotonView>());
-        if (other.GetComponent<PhotonView>().IsMine)
+        
+            if (other.gameObject.tag == "Player")
         {
             SectorManager.Instance.TriggeredExit(gameObject.name);
         }
-        routine = null;
+        
     }
+   
 }
