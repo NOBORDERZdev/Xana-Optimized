@@ -172,7 +172,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         gameplayEntityLoader.isEnvLoaded = false;
         gameplayEntityLoader.isAlreadySpawned = true;
         ConstantsHolder.isFromXANASummit = true;
-
+       if(!domeGeneralData.isSubWorld) LoadingHandler.Instance.startLoading();
         XanaWorldDownloader.ResetAll();
         BuilderEventManager.ResetSummit?.Invoke();
 
@@ -275,6 +275,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         subWorldInfo.domeId = ConstantsHolder.domeId;
         subWorldInfo.haveSubWorlds = ConstantsHolder.HaveSubWorlds;
         subWorldInfo.isFromSummitWorld = ConstantsHolder.isFromXANASummit;
+        subWorldInfo.thumbnail = ConstantsHolder.Thumbnail;
         subWorldInfo.playerTrasnform = currentPlayerPos;
         XANASummitDataContainer.LoadedScenesInfo.Push(subWorldInfo);
 
@@ -290,7 +291,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         multiplayerController.isConnecting = false;
         gameplayEntityLoader.isEnvLoaded = false;
         gameplayEntityLoader.isAlreadySpawned = true;
-
+        LoadingHandler.Instance.startLoading();
         ReferencesForGamePlay.instance.m_34player.transform.localScale = new Vector3(0, 0, 0);
 
         multiplayerController.Disconnect();
