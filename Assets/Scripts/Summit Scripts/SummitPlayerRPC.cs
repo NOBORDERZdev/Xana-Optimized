@@ -137,7 +137,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                     
                     CarNavigationManager.CarNavigationInstance.OnExitpress += Exit;
                     CarNavigationManager.CarNavigationInstance.OnCancelPress += CancelExit;
-
+                    SummitMiniMapStatusOnSceneChange(false);
                 }
                 else
                 {
@@ -198,7 +198,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 
                     if (voiceNetwork == null) { voiceNetwork = PunVoiceClient.Instance; }
                     Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { defaultGroup }, new byte[] { car.PrivateRoomName }));
-
+                    SummitMiniMapStatusOnSceneChange(false);
                 }
                 else
                 {
@@ -272,7 +272,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                charcontroller.enabled = true;
                arrowManager.enabled = true;
                 Transformview.enabled = true;
-              
+                SummitMiniMapStatusOnSceneChange(true);
                 if (voiceNetwork == null) { voiceNetwork = PunVoiceClient.Instance; }
 
                 Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { car.PrivateRoomName }, new byte[] { defaultGroup }));
@@ -311,7 +311,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 Transformview.enabled = true;
                 PlayerCameraController.instance.DisableCameraRecenter();
                 if (voiceNetwork == null) { voiceNetwork = PunVoiceClient.Instance; }
-             
+                SummitMiniMapStatusOnSceneChange(true);
 
             }
             else
@@ -698,6 +698,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 GameplayEntityLoader.instance._uiReferences.Onfreecam.interactable = false;
                 GameplayEntityLoader.instance._uiReferences.OffFreecam.interactable = false;
             }
+            SummitMiniMapStatusOnSceneChange(false);
         }
         isInsideWheel = true;
         LoadingHandler.Instance.DisableDomeLoading();
@@ -922,7 +923,25 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 
 
     }
+    void SummitMiniMapStatusOnSceneChange(bool makeActive)
+    {
+        if(makeActive) 
+            ConstantsHolder.xanaConstants.minimap = 1;
+        else
+            ConstantsHolder.xanaConstants.minimap = 0;
 
+        if (makeActive && ConstantsHolder.xanaConstants.minimap == 1)
+        {
+            ReferencesForGamePlay.instance.minimap.SetActive(true);
+            ReferencesForGamePlay.instance.SumitMapStatus(true);
+        }
+        else
+        {
+            ReferencesForGamePlay.instance.SumitMapStatus(false);
+            ReferencesForGamePlay.instance.minimap.SetActive(false);
+        }
+        
+    }
 
     [PunRPC]
     void ExitWheelCar(int pos)
@@ -962,6 +981,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             GamePlayButtonEvents.inst.OnSwitchCameraClick();
             StartCoroutine(ExitSectorAfterDelay(1));
             MyPlayerPos = 0;
+            SummitMiniMapStatusOnSceneChange(true);
         }
         else
         {
@@ -1013,24 +1033,24 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
         if (!isInsideWheel && view.IsMine)
         {
             var car = GiantWheelManager.Instance.car;
-            /*  if (car.isfirstPlayerEmpty)
-              {
-                  MyPlayerPos = 1;
-              }
-              else if (car.issecondPlayerEmpty)
-              {
-                  MyPlayerPos = 2;
-              }
-              else if (car.isThirdPlayerEmpty)
-              {
-                  MyPlayerPos = 3;
-              }
-              else if (car.isThirdPlayerEmpty)
-              {
-                  MyPlayerPos = 4;
-              }
-              else return;*/
-            MyPlayerPos = 1;
+            if (car.isfirstPlayerEmpty)
+            {
+                MyPlayerPos = 1;
+            }
+            else if (car.issecondPlayerEmpty)
+            {
+                MyPlayerPos = 2;
+            }
+            else if (car.isThirdPlayerEmpty)
+            {
+                MyPlayerPos = 3;
+            }
+            else if (car.isThirdPlayerEmpty)
+            {
+                MyPlayerPos = 4;
+            }
+            else return;
+         //   MyPlayerPos = 1;
 
             LoadingHandler.Instance.DomeLoadingProgess(100);
             Debug.Log("Calling  RPC");

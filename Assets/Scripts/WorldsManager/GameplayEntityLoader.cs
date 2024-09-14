@@ -232,6 +232,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
         else
         {
+            LoadingHandler.CompleteSlider?.Invoke();
             StartCoroutine(SpawnPlayer());
         }
 
@@ -518,7 +519,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         SetAddressableSceneActive();
         CharacterLightCulling();
-        if (!ConstantsHolder.xanaConstants.isCameraMan)
+        if (!ConstantsHolder.xanaConstants.isCameraMan && LoadingHandler.Instance.isFirstTime)  // Added due to slider not going to 100
         {
             LoadingHandler.Instance.HideLoading();
             // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
@@ -1058,13 +1059,22 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                     XanaWorldDownloader.DownloadedWorldNames.Add(ConstantsHolder.xanaConstants.EnviornmentName);
                 bool permission = await DownloadPopupHandlerInstance.ShowDialogAsync();
                 LoadingHandler.StopLoader = false;
+                LoadingHandler.CompleteSlider?.Invoke();
                 if (!permission)
                 {
                     return;
                 }
             }
             else
+            {
                 LoadingHandler.StopLoader = false;
+
+                LoadingHandler.CompleteSlider?.Invoke();
+            }
+        }
+        else
+        {
+            LoadingHandler.CompleteSlider?.Invoke();
         }
         StartCoroutine(DownloadAssets());
     }
@@ -1113,6 +1123,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             spawnPoint = newobject.transform.position;
         }
         BuilderAssetDownloader.initialPlayerPos = tempSpawnPoint.localPosition;
+        LoadingHandler.CompleteSlider?.Invoke();
         if (tempSpawnPoint)
         {
             if (XanaEventDetails.eventDetails.DataIsInitialized)
