@@ -1033,24 +1033,24 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
         if (!isInsideWheel && view.IsMine)
         {
             var car = GiantWheelManager.Instance.car;
-            /*  if (car.isfirstPlayerEmpty)
-              {
-                  MyPlayerPos = 1;
-              }
-              else if (car.issecondPlayerEmpty)
-              {
-                  MyPlayerPos = 2;
-              }
-              else if (car.isThirdPlayerEmpty)
-              {
-                  MyPlayerPos = 3;
-              }
-              else if (car.isThirdPlayerEmpty)
-              {
-                  MyPlayerPos = 4;
-              }
-              else return;*/
-            MyPlayerPos = 1;
+            if (car.isfirstPlayerEmpty)
+            {
+                MyPlayerPos = 1;
+            }
+            else if (car.issecondPlayerEmpty)
+            {
+                MyPlayerPos = 2;
+            }
+            else if (car.isThirdPlayerEmpty)
+            {
+                MyPlayerPos = 3;
+            }
+            else if (car.isThirdPlayerEmpty)
+            {
+                MyPlayerPos = 4;
+            }
+            else return;
+         //   MyPlayerPos = 1;
 
             LoadingHandler.Instance.DomeLoadingProgess(100);
             Debug.Log("Calling  RPC");
