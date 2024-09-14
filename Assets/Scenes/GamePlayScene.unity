@@ -3300,7 +3300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: debd8ed692439454db363aa7319fff70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeRemaining: 60
+  _timeRemaining: 60
   IsTrackingTime: 0
   IsTrackingTimeForExteriorArea: 0
   SummitAreaName: 
@@ -11254,6 +11254,11 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 29423354}
+--- !u!1 &1702267488 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6608087319029780814, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+  m_PrefabInstance: {fileID: 9067209682325055448}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1752314744 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8038047290230693639, guid: 242317b0759fc984886e9b5d29b71c3f, type: 3}
@@ -13078,7 +13083,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.06806946, y: -0.00089046825, z: 0.000060756494, w: 0.99768025}
+  m_LocalRotation: {x: 0.06806946, y: -0.00089046813, z: 0.000060756487, w: 0.99768025}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13529,7 +13534,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010641632, y: -0.0008924953, z: 0.00000950001, w: 0.999943}
+  m_LocalRotation: {x: 0.0106416205, y: -0.00089249463, z: 0.000009499992, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14805,6 +14810,10 @@ PrefabInstance:
       propertyPath: PenpenzDisableUi.Array.data[3]
       value: 
       objectReference: {fileID: 466089225}
+    - target: {fileID: 5112787733255262738, guid: 4a550f84130244340a5ef43e2a1fa849, type: 3}
+      propertyPath: PenpenzDisableUi.Array.data[4]
+      value: 
+      objectReference: {fileID: 1702267488}
     - target: {fileID: 5112787733255262738, guid: 4a550f84130244340a5ef43e2a1fa849, type: 3}
       propertyPath: hiddenBtnObjects.Array.data[0]
       value: 
