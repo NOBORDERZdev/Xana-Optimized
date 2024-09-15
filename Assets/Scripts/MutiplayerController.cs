@@ -226,7 +226,7 @@ namespace Photon.Pun.Demo.PunBasics
                 SectorManager.Instance.UpdateMultisector();
             }
             CheckRoomAvailability();
-            if(isShifting)
+            if(isShifting && isWheel)
             {
                 LoadingHandler.Instance.DomeLoadingProgess(25);
             }
@@ -408,12 +408,17 @@ namespace Photon.Pun.Demo.PunBasics
             CurrRoomName = PhotonNetwork.CurrentRoom.Name;
             if (!isShifting)
             {
+                
                 LFF.LoadFile();
+              
 
             }
-            else {
-               LoadingHandler.Instance.DomeLoadingProgess(90);
-               GameplayEntityLoader.instance.SetPlayer(); DestroyPlayerDelay(); 
+            else  {
+                if (isWheel)
+                {
+                    LoadingHandler.Instance.DomeLoadingProgess(90);
+                }
+                GameplayEntityLoader.instance.SetPlayer(); DestroyPlayerDelay(); 
             }
         }
         public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -549,7 +554,10 @@ namespace Photon.Pun.Demo.PunBasics
                 onRespawnPlayer?.Invoke();
                 JoinLobby(CurrLobbyName);
                 CarNavigationManager.CarNavigationInstance.Cars.Clear();
-                LoadingHandler.Instance.DomeLoadingProgess(10);
+                if (isWheel)
+                {
+                    LoadingHandler.Instance.DomeLoadingProgess(10);
+                }
             }
         }
 

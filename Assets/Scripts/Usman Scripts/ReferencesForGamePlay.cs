@@ -44,6 +44,12 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
     public int moveWhileDanceCheck;
     public QualityManager QualityManager;
     public XanaChatSystem ChatSystemRef;
+
+    public Image ExitBtnGameplay;
+    public Sprite backBtnSprite,HomeBtnSprite;
+
+
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -178,7 +184,11 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
         }
         else
         {
-            if (ConstantsHolder.xanaConstants.minimap == 1)
+            if (ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit")
+            {
+                GameplayEntityLoader.instance.ForcedMapCloseForSummitScene();
+            }
+            else if (ConstantsHolder.xanaConstants.minimap == 1)
             {
                 minimap.SetActive(true);
                 SumitMapStatus(true);
@@ -202,7 +212,17 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
         }
     }
 
-
+    public void ChangeExitBtnImage(bool _Status)
+    {
+        if (_Status)
+        {
+            ExitBtnGameplay.sprite = backBtnSprite;
+        }
+        else
+        {
+            ExitBtnGameplay.sprite = HomeBtnSprite;
+        }
+    }
     public void forcetodisable()
     {
         foreach (GameObject go in disableObjects)
