@@ -43,7 +43,7 @@ public class XANASummitDataContainer : ScriptableObject
         summitData=JsonUtility.FromJson<DomeData>(result);
 
         // Activate Map
-        ReferencesForGamePlay.instance.FullScreenMapStatus(true);
+        //ReferencesForGamePlay.instance.FullScreenMapStatus(true);
     }
 
     public async Task<bool> GetAIData(int domeId)

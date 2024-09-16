@@ -400,6 +400,9 @@ public class XanaWorldDownloader : MonoBehaviour
         if (totalAssetCount == downloadedTillNow)
         {
             BuilderEventManager.AfterWorldOffcialWorldsInatantiated?.Invoke();
+            
+            // Force Enable Map When all Data is Download
+            GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
         }
     }
 
