@@ -14227,6 +14227,65 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 11.845}
   m_SizeDelta: {x: 469.38, y: 163.93}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1443858525
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1443858526}
+  - component: {fileID: 1443858527}
+  m_Layer: 0
+  m_Name: XanaliaSocketHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1443858526
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443858525}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 49
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1443858527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443858525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 704e45ecdb2c5f54d855d10d148be1ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  socketAddress: 
+  telegramdataRoot:
+    data:
+      access_token: 
+      xanaToken: 
+      nftDuelToken: 
+      refresh_token: 
+      user:
+        id: 0
+        username: 
+        email: 
+        walletAddress: 
+      restrict: 0
+      new_login: 0
+      builderLoginHash: 
 --- !u!1 &1458086204
 GameObject:
   m_ObjectHideFlags: 0
@@ -21292,7 +21351,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2090902525, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: IsXanaLive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2090902525, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: screenSpace

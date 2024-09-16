@@ -54,8 +54,9 @@ public class APIBasepointManager : MonoBehaviour
         if (IsXanaLive)
         {
             ConstantsGod.API_BASEURL = "https://app-api.xana.net";
-            ConstantsGod.API_BASEURL_XANALIA = "https://api.xanalia.com";    
-
+            ConstantsGod.API_BASEURL_XANALIA = "https://api.xanalia.com";
+            ConstantsGod.XANALIA_SOCKET_ADDRESS = "http://prod-socket.xanalia.com/";
+            ConstantsGod.TELEGRAM_LOGIN_URL = "https://event-test.xana.net/app?builderLoginHash=";
             //_moralisServerSettings.DappIconUrl = MainDappURL;
             //_moralisServerSettings.DappId = MainAppID;
         }
@@ -63,6 +64,8 @@ public class APIBasepointManager : MonoBehaviour
         {
             ConstantsGod.API_BASEURL = "https://api-test.xana.net";
             ConstantsGod.API_BASEURL_XANALIA = "https://testapi.xanalia.com";
+            ConstantsGod.XANALIA_SOCKET_ADDRESS = "https://socket.xanalia.com/";
+            ConstantsGod.TELEGRAM_LOGIN_URL = "https://event-test.xana.net/app?builderLoginHash=";
 
             //_moralisServerSettings.DappIconUrl = testDappURL;
             //_moralisServerSettings.DappId = TestAppID;
