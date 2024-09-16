@@ -77,12 +77,7 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
     [PunRPC]
     void MovePlayersToRoom(int gameId, string gameName)
     {
-        MutiplayerController.instance.Disconnect();
-        MutiplayerController.instance.Connect("XANA SummitPenpenz-" + ConstantsHolder.domeId + "-" /*+ worldInfo.data.name*/);
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.CurrentRoom.IsVisible = false;
-        }
+        
         XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().isLeaderboardShown = false;
         // Set the game details in the constants holder
         _XanaConstants.isJoinigXanaPartyGame = true;
