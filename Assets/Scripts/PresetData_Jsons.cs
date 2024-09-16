@@ -175,7 +175,7 @@ public class PresetData_Jsons : MonoBehaviour
             //Store selected preset data when signup
             GameManager.Instance.selectedPresetData = JsonUtility.ToJson(_CharacterData);
 
-            CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);
+            //CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);
             //GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>().SetAvatarByGender(_CharacterData.gender);
 
 

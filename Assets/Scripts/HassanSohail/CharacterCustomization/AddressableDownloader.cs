@@ -157,7 +157,15 @@ public class AddressableDownloader : MonoBehaviour
                                 {
                                     GameObject downloadedHair = loadOp.Result as GameObject;
                                     Color hairDefaultColor = GetHairDefaultColorFromDownloadedHair(downloadedHair);
-                                    applyOn.StichHairWithColor(itemId, downloadedHair, type, applyOn.gameObject, hairDefaultColor, callFromMultiplayer);
+
+                                    if (ConstantsHolder.xanaConstants.currentButtonIndex == 4 || ConstantsHolder.xanaConstants.currentButtonIndex == 10)
+                                    {
+                                        // Preset Panel 
+                                        // Each Preset has its own color store in its Json implemet that color
+                                        hairDefaultColor = hairColor;
+                                    }
+
+                                        applyOn.StichHairWithColor(itemId, downloadedHair, type, applyOn.gameObject, hairDefaultColor, callFromMultiplayer);
                                 }
                                 else 
                                     applyOn.StichHairWithColor(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, hairColor,callFromMultiplayer);
