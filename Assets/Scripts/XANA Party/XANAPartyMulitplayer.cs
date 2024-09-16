@@ -58,11 +58,22 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
     {
         if (GetComponent<PhotonView>().IsMine && PhotonNetwork.IsMasterClient)
         {
+
+            MutiplayerController.instance.MakeRoomPrivate();
+            // Loop until the room visibility is set to true
+            //while (PhotonNetwork.CurrentRoom.IsVisible)
+            //{
+            //    MutiplayerController.instance.MakeRoomPrivate();
+            //    //PhotonNetwork.CurrentRoom.IsVisible = false;
+            //    yield return new WaitForSeconds(0.1f); // Adjust the delay as needed
+            //}
+
             ReferencesForGamePlay.instance.isCounterStarted = true;
             if (!ReferencesForGamePlay.instance.isMatchingTimerFinished)
-                yield return new WaitForSeconds(10f);                     // wait to show that other player spwan and then lobby full
+                yield return new WaitForSeconds(10f); // wait to show that other player spawns and then lobby full
             else
                 yield return new WaitForSeconds(0f);
+
             GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC(nameof(StartLobbyCounter), RpcTarget.AllBuffered);
         }
     }

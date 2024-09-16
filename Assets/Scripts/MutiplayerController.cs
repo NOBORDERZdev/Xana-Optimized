@@ -183,6 +183,8 @@ namespace Photon.Pun.Demo.PunBasics
                 {
                     PhotonNetwork.NickName = "Guest";
                 }
+
+            print("print lobby name " + CurrLobbyName /*+ "Room name "+ PhotonNetwork.CurrentRoom.Name*/);
         }
 
         public string getSector()
@@ -425,6 +427,8 @@ namespace Photon.Pun.Demo.PunBasics
                 }
                 GameplayEntityLoader.instance.SetPlayer(); DestroyPlayerDelay(); 
             }
+            print("print lobby name " + CurrLobbyName + "Room name " + PhotonNetwork.CurrentRoom.Name);
+
         }
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
@@ -605,6 +609,41 @@ namespace Photon.Pun.Demo.PunBasics
                 {
                     LoadingHandler.Instance.DomeLoadingProgess(10);
                 }
+            }
+        }
+
+        #endregion
+
+        #region XANA Party
+
+        public void MakeRoomPrivate()
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                StartCoroutine(ChangeRoomVisibilityAfterDelay(0.1f));
+            }
+        }
+
+        private IEnumerator ChangeRoomVisibilityAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                ExitGames.Client.Photon.Hashtable roomProperties = new ExitGames.Client.Photon.Hashtable();
+                roomProperties.Add("IsVisible", false);
+                PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
+                Debug.Log("Room visibility changed to private");
+            }
+        }
+
+        public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+        {
+            if (propertiesThatChanged.ContainsKey("IsVisible"))
+            {
+                bool isVisible = (bool)propertiesThatChanged["IsVisible"];
+                PhotonNetwork.CurrentRoom.IsVisible = isVisible;
+                Debug.Log("Room visibility updated: " + isVisible);
             }
         }
 

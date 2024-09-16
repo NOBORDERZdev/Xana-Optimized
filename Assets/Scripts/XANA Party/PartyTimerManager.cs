@@ -48,14 +48,11 @@ public class PartyTimerManager : MonoBehaviourPunCallbacks
             float currentTime = (float)(timerDuration - elapsedTime);
             if (currentTime <= 0 && !ReferencesForGamePlay.instance.isMatchingTimerFinished)
             {
+               
                 currentTime = 0;
                 isTimerRunning = false;
                 ReferencesForGamePlay.instance.isMatchingTimerFinished = true;
                 StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().ShowLobbyCounter());
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    PhotonNetwork.CurrentRoom.IsVisible = false;
-                }
             }
             if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
                 ReferencesForGamePlay.instance.XANAPartyWaitingPanel.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "他のプレイヤーを待っています... " + currentTime.ToString("F0") + "s";
