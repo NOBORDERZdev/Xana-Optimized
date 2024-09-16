@@ -67,7 +67,7 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
             //    //PhotonNetwork.CurrentRoom.IsVisible = false;
             //    yield return new WaitForSeconds(0.1f); // Adjust the delay as needed
             //}
-
+            yield return new WaitForSeconds(1f); 
             ReferencesForGamePlay.instance.isCounterStarted = true;
             if (!ReferencesForGamePlay.instance.isMatchingTimerFinished)
                 yield return new WaitForSeconds(10f); // wait to show that other player spawns and then lobby full
