@@ -100,6 +100,7 @@ public class AddressableDownloader : MonoBehaviour
             }
             while (true)
             {
+                LoadAssetAgain:
                 AsyncOperationHandle loadOp;
                 // Debug.LogError("key :- "+key.ToLower());
                 //bool flag = false;
@@ -111,7 +112,7 @@ public class AddressableDownloader : MonoBehaviour
                 yield return loadOp;
                 if (loadOp.Status == AsyncOperationStatus.Failed)
                 {
-                    Debug.Log("Fail To load");
+                    Debug.LogError("rik Fail To load: "+ key);
                     if (InventoryManager.instance && InventoryManager.instance.loaderForItems && InventoryManager.instance != null)
                         InventoryManager.instance.loaderForItems.SetActive(false);
                     if (GameManager.Instance != null)
@@ -123,6 +124,7 @@ public class AddressableDownloader : MonoBehaviour
                 {
                     if (loadOp.Result == null || loadOp.Result.Equals(null))  // Added by Ali Hamza to resolve avatar naked issue 
                     {
+                        Debug.LogError("rik result is null: " + key);
                         //_counter++;
                         //if (_counter < 5)
                         //{
@@ -131,13 +133,18 @@ public class AddressableDownloader : MonoBehaviour
                         //}
                         //else
                         //{
-                            AddressableDownloader.bundleAsyncOperationHandle.Add(loadOp);
+                        Addressables.ClearDependencyCacheAsync(key);
+                        Addressables.ReleaseInstance(loadOp);
+                        Addressables.Release(loadOp);
+                        yield return new WaitForSeconds(1);
+                        goto LoadAssetAgain;
                             applyOn.WearDefaultItem(type, applyOn.gameObject, _gender);
                             yield break;
                         //}
                     }
                     else
                     {
+                        AddressableDownloader.bundleAsyncOperationHandle.Add(loadOp);
                         if (SceneManager.GetActiveScene().name != "Home")
                         {
                             applyOn.isWearOrNot = true;

@@ -287,107 +287,101 @@ public class AvatarController : MonoBehaviour
     public IEnumerator IECheckClothsStitchedOrNot(string cJson)
     {
         float timeWithoutCloth = 0f;
-        if (characterBodyParts.eyeShadow != null)
-        {
-            characterBodyParts.eyeShadow.enabled = false;
-        }
-        characterBodyParts.head.enabled = characterBodyParts.body.enabled = false;
+        HandleCharacterParts(false);
         clothJson = cJson;
         if (!string.IsNullOrEmpty(clothJson))
         {
             clothsList.Clear();
             isStitchedSuccessfully = false;
             SavingCharacterDataClass clothDataClass = JsonUtility.FromJson<SavingCharacterDataClass>(clothJson);
-            if (clothDataClass.gender == "Male")
+            if (clothDataClass.myItemObj.Count == 0)
             {
-                for (int i = 0; i < 3; i++)
+                HandleCloths(true);
+                HandleCharacterParts(true);
+            }
+            else
+            {
+                if (clothDataClass.gender == "Male")
                 {
-                    if (i < clothDataClass.myItemObj.Count)
+                    for (int i = 0; i < 3; i++)
                     {
-                        clothsList.Add(clothDataClass.myItemObj[i].ItemName);
+                        if (i < clothDataClass.myItemObj.Count)
+                        {
+                            clothsList.Add(clothDataClass.myItemObj[i].ItemName);
+                        }
                     }
                 }
-            }
-            else if (clothDataClass.gender == "Female")
-            {
-                for (int i = 0; i < 3; i++)
+                else if (clothDataClass.gender == "Female")
                 {
-                    if (i < clothDataClass.myItemObj.Count)
+                    for (int i = 0; i < 3; i++)
                     {
-                        clothsList.Add(clothDataClass.myItemObj[i].ItemName);
+                        if (i < clothDataClass.myItemObj.Count)
+                        {
+                            clothsList.Add(clothDataClass.myItemObj[i].ItemName);
+                        }
                     }
                 }
-            }
 
-            while (!ConstantsHolder.isAddressableCatalogDownload)
-            {
-                yield return new WaitForSeconds(1f);
-            }
-            while (!isClothStichedOrNot(clothsList, this))
-            {
-                if (wornHair != null)
+                while (!ConstantsHolder.isAddressableCatalogDownload)
                 {
-                    wornHair.SetActive(false);
+                    yield return new WaitForSeconds(1f);
                 }
-                if (wornShirt != null)
+                while (!isClothStichedOrNot(clothsList, this))
                 {
-                    wornShirt.SetActive(false);
-                }
-                if (wornPant != null)
-                {
-                    wornPant.SetActive(false);
-                }
-                if (wornShoes != null)
-                {
-                    wornShoes.SetActive(false);
-                }
-                yield return new WaitForSeconds(.5f);
+                    HandleCloths(false);
+                    yield return new WaitForSeconds(1);
 
-                timeWithoutCloth += .5f;
-                if (timeWithoutCloth > 10)
-                {
-                    Custom_InitializeAvatar();
-                    yield break;
+                    timeWithoutCloth += 1;
+                    if (timeWithoutCloth > 10)
+                    {
+                        Custom_InitializeAvatar();
+                        yield break;
+                    }
                 }
-            }
 
-            if (isClothStichedOrNot(clothsList, this))
-            {
-                if (wornHair != null)
+                if (isClothStichedOrNot(clothsList, this))
                 {
-                    wornHair.SetActive(true);
+                    HandleCloths(true);
+                    HandleCharacterParts(true);
+                    isStitchedSuccessfully = true;
                 }
-                if (wornShirt != null)
-                {
-                    wornShirt.SetActive(true);
-                }
-                if (wornPant != null)
-                {
-                    wornPant.SetActive(true);
-                }
-                if (wornShoes != null)
-                {
-                    wornShoes.SetActive(true);
-                }
-                if (characterBodyParts.eyeShadow != null)
-                {
-                    characterBodyParts.eyeShadow.enabled = true;
-                }
-                characterBodyParts.head.enabled = characterBodyParts.body.enabled = true;
-                isStitchedSuccessfully = true;
             }
         }
         else
         {
-            if (characterBodyParts.eyeShadow != null)
-            {
-                characterBodyParts.eyeShadow.enabled = true;
-            }
-            characterBodyParts.head.enabled = characterBodyParts.body.enabled = true;
+            HandleCharacterParts(true);
         }
         clothsStichedOrNotCoroutine = null;
     }
 
+    public void HandleCharacterParts(bool active)
+    {
+        if (characterBodyParts.eyeShadow != null)
+        {
+            characterBodyParts.eyeShadow.enabled = active;
+        }
+        characterBodyParts.head.enabled = characterBodyParts.body.enabled = active;
+    }
+
+    public void HandleCloths(bool active)
+    {
+        if (wornHair != null)
+        {
+            wornHair.SetActive(active);
+        }
+        if (wornShirt != null)
+        {
+            wornShirt.SetActive(active);
+        }
+        if (wornPant != null)
+        {
+            wornPant.SetActive(active);
+        }
+        if (wornShoes != null)
+        {
+            wornShoes.SetActive(active);
+        }
+    }
     public bool isClothStichedOrNot(List<string> clothsList, AvatarController avatar)
     {
         if (clothsList.Count == 0)
@@ -591,7 +585,7 @@ public class AvatarController : MonoBehaviour
                 _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(folderPath));
                 clothJson = File.ReadAllText(folderPath);
             }
-            CheckClothsStitchedOrNot(clothJson);
+            //CheckClothsStitchedOrNot(clothJson);
             _PCharacterData = _CharacterData;
 
             var gender = _CharacterData.gender ?? "Male";
@@ -1047,6 +1041,7 @@ public class AvatarController : MonoBehaviour
             return;
         else if (ConstantsHolder.isFixedHumanoid)
         {
+            Debug.Log("RikTest is humanoid");
             _CharacterData = _CharacterData.CreateFromJSON(XANASummitDataContainer.FixedAvatarJson);
             clothJson = XANASummitDataContainer.FixedAvatarJson;
         }
@@ -1125,12 +1120,14 @@ public class AvatarController : MonoBehaviour
                             else
                             {
                                 WearDefaultItem(type, this.gameObject, gender);
+                                Debug.LogError("WearDefaultItem 1");
                             }
                         }
                     }
                     else
                     {
                         WearDefaultItem(type, this.gameObject, gender);
+                        Debug.LogError("WearDefaultItem 2");
                     }
                 }
                 else // wear the default item of that specific part.
@@ -1152,6 +1149,7 @@ public class AvatarController : MonoBehaviour
                         else
                         {
                             WearDefaultItem(type, this.gameObject, gender);
+                            Debug.LogError("WearDefaultItem 3");
                         }
                     }
                 }
@@ -1482,7 +1480,7 @@ public class AvatarController : MonoBehaviour
     public void WearDefaultItem(string type, GameObject applyOn, string gender)
     {
         CharacterBodyParts bodyParts = characterBodyParts;
-
+        Debug.LogError("WearDefaultItem original");
         //Debug.Log("Item: " + type + " --- Gender: " + gender);
 
         if (gender.IsNullOrEmpty())

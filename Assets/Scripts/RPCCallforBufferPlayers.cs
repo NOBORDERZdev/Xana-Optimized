@@ -86,7 +86,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
     {
         GetPlayerInfo();
         return;
-        this.GetComponent<PhotonView>().RPC(nameof(CheckRpc), RpcTarget.AllBuffered, _mydatatosend as object);
+        //this.GetComponent<PhotonView>().RPC(nameof(CheckRpc), RpcTarget.AllBuffered, _mydatatosend as object);
     }
     public void GetPlayerInfo()
     {
@@ -124,6 +124,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             NFTEquiped = (bool)properties["NFTEquiped"];
             Debug.Log("NFTEquiped: " + NFTEquiped);
         }
+        Debug.Log("Rik: " + GetComponent<PhotonView>().Owner.NickName + "  " + ClothJson);
         clothData = ClothJson;
         AvatarController otherPlayer;
         otherPlayer = gameObject.GetComponent<AvatarController>();
