@@ -632,8 +632,9 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 ExitGames.Client.Photon.Hashtable roomProperties = new ExitGames.Client.Photon.Hashtable();
                 roomProperties.Add("IsVisible", false);
+                roomProperties.Add("IsOpen", false); // Add this line to close the room
                 PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
-                Debug.Log("Room visibility changed to private");
+                Debug.Log("Room visibility changed to private and room is closed");
             }
         }
 
@@ -644,6 +645,13 @@ namespace Photon.Pun.Demo.PunBasics
                 bool isVisible = (bool)propertiesThatChanged["IsVisible"];
                 PhotonNetwork.CurrentRoom.IsVisible = isVisible;
                 Debug.Log("Room visibility updated: " + isVisible);
+            }
+
+            if (propertiesThatChanged.ContainsKey("IsOpen"))
+            {
+                bool isOpen = (bool)propertiesThatChanged["IsOpen"];
+                PhotonNetwork.CurrentRoom.IsOpen = isOpen;
+                Debug.Log("Room open status updated: " + isOpen);
             }
         }
 
