@@ -154,17 +154,21 @@ public class RaffleTicketHandler : MonoBehaviour
         _displayTicketCountTextSmallLandScape.text ="" + _totalNumberOfTickets ;
         _displayTicketCountTextSmallPotrait.text = "(" + _totalNumberOfTickets + ")";
     }
+
     private void TransferDatatoMainDomeList()
     {
+        _totalNumberOfTickets = _summitRaffleTicketsEranedByUser.tickets;
+        UpdateUI();
+
         if (_summitDomesVisitedByUser.domeVisits == null || _summitDomesVisitedByUser.domeVisits.Count == 0)
+        {
             return;
+        }
 
         foreach (var item in _summitDomesVisitedByUser.domeVisits)
         {
             _allVisitedDomeIds.Add(item.domeId);
         }
-        _totalNumberOfTickets = _summitRaffleTicketsEranedByUser.tickets;
-        UpdateUI();
     }
     private void UpdateTicketsData()
     {

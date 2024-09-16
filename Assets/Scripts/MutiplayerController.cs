@@ -160,29 +160,32 @@ namespace Photon.Pun.Demo.PunBasics
                 string deepLinkLobbyName = $"{XanaEventDetails.eventDetails.eventType}{XanaEventDetails.eventDetails.id}";
                 CurrLobbyName = deepLinkLobbyName;
             }
+
             if (PhotonNetwork.IsConnected)
             {
                 JoinLobby(CurrLobbyName);
             }
             else
             {
-                //Once it connected to server OnConnectedToMaster callback it sent from their we can join lobby.
-                bool isConnected = PhotonNetwork.ConnectUsingSettings();
+                connectionState = ServerConnectionStates.ConnectingToServer;
                 PhotonNetwork.GameVersion = this.gameVersion;
-                JoinLobby(CurrLobbyName);
+                PhotonNetwork.ConnectUsingSettings();
             }
 
             if (PhotonNetwork.NetworkingClient.State.ToString() != "Leaving")
-                if (!PlayerPrefs.GetString(ConstantsGod.PLAYERNAME).Contains("ゲスト") &&
-                       !PlayerPrefs.GetString(ConstantsGod.PLAYERNAME).Contains("Guest") && !string.IsNullOrEmpty(PlayerPrefs.GetString(ConstantsGod.PLAYERNAME)))
+            {
+                string playerName = PlayerPrefs.GetString(ConstantsGod.PLAYERNAME);
+                if (!playerName.Contains("ゲスト") && !playerName.Contains("Guest") && !string.IsNullOrEmpty(playerName))
                 {
-                    string guidAsString = PlayerPrefs.GetString(ConstantsGod.PLAYERNAME);
-                    PhotonNetwork.NickName = guidAsString;
+                    PhotonNetwork.NickName = playerName;
                 }
                 else
                 {
                     PhotonNetwork.NickName = "Guest";
                 }
+            }
+
+           // print("print lobby name " + CurrLobbyName);
         }
 
         public string getSector()
@@ -204,10 +207,11 @@ namespace Photon.Pun.Demo.PunBasics
         /// </summary>
         public override void OnConnectedToMaster()
         {
-
             connectionState = ServerConnectionStates.ConnectedToServer;
-            if (working == ScenesList.MainMenu)
-                return;
+            if (working != ScenesList.MainMenu)
+            {
+                JoinLobby(CurrLobbyName);
+            }
         }
 
         private async void JoinLobby(String lobbyName)
@@ -303,8 +307,43 @@ namespace Photon.Pun.Demo.PunBasics
 
         private void JoinRoomCustom()
         {
+            //print("join room custom call");
+
+            // Ensure the client is connected to the game server
+            if (!PhotonNetwork.IsConnectedAndReady)
+            {
+                Debug.LogError("Client is not connected and ready.");
+                return;
+            }
+
+            // Ensure the client is not already in a room
+            if (PhotonNetwork.InRoom)
+            {
+                Debug.LogError("Client is already in a room. Leaving the current room...");
+                StartCoroutine(LeaveRoomAndJoin());
+                return;
+            }
+
+            TryJoinOrCreateRoom();
+        }
+
+        private IEnumerator LeaveRoomAndJoin()
+        {
+            PhotonNetwork.LeaveRoom();
+            while (PhotonNetwork.InRoom)
+            {
+                yield return null;
+            }
+            TryJoinOrCreateRoom();
+        }
+
+        private void TryJoinOrCreateRoom()
+        {
             bool joinedRoom = false;
             if (availableRoomList.Count > 0)
+            {
+               // print("availableRoomList COUNT ABOVE");
+
                 foreach (RoomInfo info in availableRoomList)
                 {
                     roomNames.Add(info.Name);
@@ -318,49 +357,69 @@ namespace Photon.Pun.Demo.PunBasics
                                 object sector;
                                 if (info.CustomProperties.TryGetValue("Sector", out sector))
                                 {
-
-
                                     if (((string)sector) != SectorName) { continue; }
                                 }
                                 else { continue; }
                             }
-
+                            object IsVisible;
+                            if (info.CustomProperties.TryGetValue("IsVisible", out IsVisible))
+                            {
+                              //  print("~~~~~~~IsVisible" + IsVisible);
+                                if (((bool)IsVisible) != true) { continue; }
+                            }
+                            else { continue; }
                             CurrRoomName = info.Name;
-                            Debug.LogError("Joining room   " + " Shifting " + isShifting+"  " +SectorName);
+                            Debug.LogError("Joining room   " + " Shifting " + isShifting + "  " + SectorName);
+
                             joinedRoom = PhotonNetwork.JoinRoom(CurrRoomName);
                             return;
                         }
                     }
                 }
+            }
             if (joinedRoom == false)
             {
+               // print("joinedRoom" + joinedRoom);
                 int x = 1;
                 string roomName;
                 do
                 {
                     if (ConstantsHolder.MultiSectionPhoton)
                     {
-                        roomName = PhotonNetwork.CurrentLobby.Name +" "+ SectorName + "-Room:" + x.ToString(); //Prevents Race Condition.
+                        roomName = PhotonNetwork.CurrentLobby.Name + " " + SectorName + "-Room:" + x.ToString(); //Prevents Race Condition.
                     }
                     else
                     {
                         roomName = PhotonNetwork.CurrentLobby.Name + "-Room:" + x.ToString();
                     }
-                        x++;
+                    x++;
                 }
                 while (roomNames.Contains(roomName));
 
                 if (!isWheel)
                 {
+                   // print("JOIN OR CRATE CALL if");
+                   // print("");
                     PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(ConstantsHolder.userLimit, ConstantsHolder.MultiSectionPhoton), new TypedLobby(CurrLobbyName, LobbyType.Default));
                 }
                 else
                 {
-                    Debug.LogError("Joining room   " + " Shifting " + isShifting+" " +SectorName);
+                  //  print("JOIN OR CRATE CALL else");
+                    Debug.LogError("Joining room   " + " Shifting " + isShifting + " " + SectorName);
                     PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(4, ConstantsHolder.MultiSectionPhoton), new TypedLobby(CurrLobbyName, LobbyType.Default));
                 }
-                //   PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(CurrLobbyName, LobbyType.Default));
             }
+        }
+
+        private IEnumerator WaitForRoomLeaveAndJoin()
+        {
+            while (PhotonNetwork.InRoom)
+            {
+                yield return null;
+            }
+
+            // Retry joining the room after leaving the current room
+            JoinRoomCustom();
         }
 
         private void JoinRoomSeperateSingleRoom()
@@ -391,11 +450,12 @@ namespace Photon.Pun.Demo.PunBasics
 
             if (MultiSectionPhoton)
             {
-                roomOptions.CustomRoomPropertiesForLobby = new string[] { "Sector" };
+                roomOptions.CustomRoomPropertiesForLobby = new string[] { "Sector" , "IsVisible" };
                 Debug.Log("Joining Sector  " + SectorName);
-                roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable { { "Sector", SectorName } };
+                roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable { { "Sector", SectorName }, { "IsVisible", true } };
             }
-
+           // roomOptions.CustomRoomPropertiesForLobby= new string[] { "IsVisible" };
+            //roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable { { "IsVisible", true } };
             roomOptions.PublishUserId = true;
             roomOptions.CleanupCacheOnLeave = true;
             return roomOptions;
@@ -403,7 +463,6 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnCreatedRoom()
         {
-
             print("OnCreatedRoom called");
         }
 
@@ -425,6 +484,8 @@ namespace Photon.Pun.Demo.PunBasics
                 }
                 GameplayEntityLoader.instance.SetPlayer(); DestroyPlayerDelay(); 
             }
+            print("print lobby name " + CurrLobbyName + "Room name " + PhotonNetwork.CurrentRoom.Name);
+
         }
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
@@ -479,12 +540,13 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
-
+            print("on room joined failed : message " + message);
             //GameplayEntityLoader.instance._uiReferences.LoadMain(true);
         }
 
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
+            print("on room random joined failed : message " + message);
 
         }
 
@@ -508,9 +570,14 @@ namespace Photon.Pun.Demo.PunBasics
 
         public void Disconnect()
         {
-
-            PhotonNetwork.LeaveRoom();
-            PhotonNetwork.LeaveLobby();
+            if (PhotonNetwork.InRoom)
+            {
+                PhotonNetwork.LeaveRoom();
+            }
+            if (PhotonNetwork.InLobby)
+            {
+                PhotonNetwork.LeaveLobby();
+            }
             UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
         }
 
@@ -587,13 +654,11 @@ namespace Photon.Pun.Demo.PunBasics
         public override void OnLeftRoom()
         {
             Debug.Log("OnLeftRoom  ..... " + PhotonNetwork.IsConnectedAndReady + "Is Shifting" + isShifting);
-            Debug.Log("OnLeftRoom  ..... " + PhotonNetwork.IsConnectedAndReady);
             if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
             {
                 ReferencesForGamePlay.instance.ResetActivePlayerStatusInCurrentLevel();
             }
 
-            // PhotonNetwork.ConnectUsingSettings();
             if (isShifting)
             {
                 playerobjectRoom = new List<GameObject>(playerobjects);
@@ -605,6 +670,29 @@ namespace Photon.Pun.Demo.PunBasics
                 {
                     LoadingHandler.Instance.DomeLoadingProgess(10);
                 }
+            }
+        }
+
+        #endregion
+
+        #region XANA Party
+
+        public void MakeRoomPrivate()
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                StartCoroutine(ChangeRoomVisibilityAfterDelay(0.1f));
+            }
+        }
+
+        private IEnumerator ChangeRoomVisibilityAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+             
+                PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "IsVisible", false } });
             }
         }
 
