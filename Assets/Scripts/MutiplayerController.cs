@@ -185,7 +185,7 @@ namespace Photon.Pun.Demo.PunBasics
                 }
             }
 
-            print("print lobby name " + CurrLobbyName);
+           // print("print lobby name " + CurrLobbyName);
         }
 
         public string getSector()
@@ -307,7 +307,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         private void JoinRoomCustom()
         {
-            print("join room custom call");
+            //print("join room custom call");
 
             // Ensure the client is connected to the game server
             if (!PhotonNetwork.IsConnectedAndReady)
@@ -342,7 +342,7 @@ namespace Photon.Pun.Demo.PunBasics
             bool joinedRoom = false;
             if (availableRoomList.Count > 0)
             {
-                print("availableRoomList COUNT ABOVE");
+               // print("availableRoomList COUNT ABOVE");
 
                 foreach (RoomInfo info in availableRoomList)
                 {
@@ -364,7 +364,7 @@ namespace Photon.Pun.Demo.PunBasics
                             object IsVisible;
                             if (info.CustomProperties.TryGetValue("IsVisible", out IsVisible))
                             {
-                                print("~~~~~~~IsVisible" + IsVisible);
+                              //  print("~~~~~~~IsVisible" + IsVisible);
                                 if (((bool)IsVisible) != true) { continue; }
                             }
                             else { continue; }
@@ -379,7 +379,7 @@ namespace Photon.Pun.Demo.PunBasics
             }
             if (joinedRoom == false)
             {
-                print("joinedRoom" + joinedRoom);
+               // print("joinedRoom" + joinedRoom);
                 int x = 1;
                 string roomName;
                 do
@@ -398,13 +398,13 @@ namespace Photon.Pun.Demo.PunBasics
 
                 if (!isWheel)
                 {
-                    print("JOIN OR CRATE CALL if");
-                    print("");
+                   // print("JOIN OR CRATE CALL if");
+                   // print("");
                     PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(ConstantsHolder.userLimit, ConstantsHolder.MultiSectionPhoton), new TypedLobby(CurrLobbyName, LobbyType.Default));
                 }
                 else
                 {
-                    print("JOIN OR CRATE CALL else");
+                  //  print("JOIN OR CRATE CALL else");
                     Debug.LogError("Joining room   " + " Shifting " + isShifting + " " + SectorName);
                     PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(4, ConstantsHolder.MultiSectionPhoton), new TypedLobby(CurrLobbyName, LobbyType.Default));
                 }
@@ -463,7 +463,6 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnCreatedRoom()
         {
-
             print("OnCreatedRoom called");
         }
 
@@ -692,31 +691,9 @@ namespace Photon.Pun.Demo.PunBasics
 
             if (PhotonNetwork.IsMasterClient)
             {
-                //ExitGames.Client.Photon.Hashtable roomProperties = new ExitGames.Client.Photon.Hashtable();
-                //roomProperties.Add("IsVisible", false);
-                //roomProperties.Add("IsOpen", false); // Add this line to close the room
-                //PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
-                //Debug.Log("Room visibility changed to private and room is closed");
-                //PhotonNetwork.CurrentRoom.SetCustomProperties["IsVisible",false] = isVisible;
+             
                 PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "IsVisible", false } });
             }
-        }
-
-        public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
-        {
-            //if (propertiesThatChanged.ContainsKey("IsVisible"))
-            //{
-            //    bool isVisible = (bool)propertiesThatChanged["IsVisible"];
-            //    PhotonNetwork.CurrentRoom.IsVisible = isVisible;
-            //    Debug.Log("Room visibility updated: " + isVisible);
-            //}
-
-            //if (propertiesThatChanged.ContainsKey("IsOpen"))
-            //{
-            //    bool isOpen = (bool)propertiesThatChanged["IsOpen"];
-            //    PhotonNetwork.CurrentRoom.IsOpen = isOpen;
-            //    Debug.Log("Room open status updated: " + isOpen);
-            //}
         }
 
         #endregion
