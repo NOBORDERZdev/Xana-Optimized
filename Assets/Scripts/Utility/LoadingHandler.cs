@@ -123,12 +123,12 @@ public class LoadingHandler : MonoBehaviour
 
         loadingText.text = "";
         manualRoomController = gameObject.GetComponent<ManualRoomController>();
+        //Debug.unityLogger.logEnabled = true;
+#if UNITY_EDITOR
         Debug.unityLogger.logEnabled = true;
-//#if UNITY_EDITOR
-//        Debug.unityLogger.logEnabled = true;
-//#else
-//                        Debug.unityLogger.filterLogType = LogType.Error;
-//#endif
+#else
+                        Debug.unityLogger.filterLogType = LogType.Error;
+#endif
 
         if (LoadingStatus != null)
         {
