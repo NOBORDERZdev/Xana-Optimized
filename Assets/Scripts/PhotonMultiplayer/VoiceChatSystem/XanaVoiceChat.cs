@@ -103,7 +103,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
                     StartCoroutine(SetMic());
                 }
 #elif UNITY_IOS
-                if(!Application.HasUserAuthorization(UserAuthorization.Microphone)){
+                if(PlayerPrefs.GetInt("MicPermission", 0) == 0){
                       PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
                     PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
                     PermissionPopusSystem.Instance.OpenPermissionScreen();
