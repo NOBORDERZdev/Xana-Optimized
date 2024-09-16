@@ -11637,12 +11637,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 972083438420951596}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: Raffle Tickets
+  key: 
   LocalizeText: {fileID: 0}
   LocalizeTextTMP: {fileID: 3517117473014640982}
 --- !u!1 &975419203667987957
@@ -31723,6 +31723,7 @@ GameObject:
   - component: {fileID: 2290067853473701631}
   - component: {fileID: 7948063456447533620}
   - component: {fileID: 9048486253827008421}
+  - component: {fileID: 2378439997737825185}
   m_Layer: 23
   m_Name: popupText
   m_TagString: Untagged
@@ -31747,8 +31748,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 50}
-  m_SizeDelta: {x: -29.999996, y: 50}
+  m_AnchoredPosition: {x: 0, y: 21.4052}
+  m_SizeDelta: {x: -30, y: 107.1895}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2290067853473701631
 CanvasRenderer:
@@ -31845,7 +31846,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: -80.67194}
+  m_margin: {x: 0, y: 0, z: 0, w: -0.0017930269}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -31866,6 +31867,35 @@ MonoBehaviour:
   key: Raffle Info
   LocalizeText: {fileID: 0}
   LocalizeTextTMP: {fileID: 7948063456447533620}
+--- !u!114 &2378439997737825185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353315948140032864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d922ab0eb4196b34ba9f24d8512fc4c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  linkType: 2
+  hoveredColor:
+    serializedVersion: 2
+    rgba: 4294938368
+  pressedColor:
+    serializedVersion: 2
+    rgba: 4294938368
+  usedColor:
+    serializedVersion: 2
+    rgba: 4294938368
+  usedHoveredColor:
+    serializedVersion: 2
+    rgba: 4294938368
+  usedPressedColor:
+    serializedVersion: 2
+    rgba: 4294938368
+  nftManager: {fileID: 0}
 --- !u!1 &1358226290292920087
 GameObject:
   m_ObjectHideFlags: 0
