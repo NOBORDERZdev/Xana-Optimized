@@ -32,6 +32,8 @@ public class PartyTimerManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
         {
+            XANAPartyManager.Instance.GameIndex = 0;
+            XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().RaceID = 0;
             if (startTime <= -1)
             {
                 startTime = PhotonNetwork.Time;
