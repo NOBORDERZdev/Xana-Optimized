@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,6 +19,7 @@ public class SpaceXHandler : MonoBehaviour
 
     private bool _WaitForRestart;
     private Vector3 _ReturnPlayerPos;
+    private CancellationTokenSource _cancellationTokenSource; // Add a cancellation token source
 
     private void OnEnable()
     {
@@ -40,6 +42,18 @@ public class SpaceXHandler : MonoBehaviour
         {
             return;
         }
+        _cancellationTokenSource = new CancellationTokenSource(); // Initialize the cancellation token source
+
+        try
+        {
+            await ShowCounter(_cancellationTokenSource.Token); // Pass the cancellation token
+        }
+        catch (TaskCanceledException)
+        {
+            //Debug.Log("ShowCounter was cancelled.");
+            return;
+        }
+
         _ReturnPlayerPos = ReturnPlayerPos;
         VideoPlayer.gameObject.SetActive(true);
         VideoPlayer.targetTexture.Release();
@@ -48,7 +62,7 @@ public class SpaceXHandler : MonoBehaviour
         VideoPlayer.loopPointReached += VideoPlayer_loopPointReached;
     }
 
-    async Task ShowCounter()
+    async Task ShowCounter(CancellationToken token)
     {
         LaunchCounter.GetComponent<Animator>().enabled = true;
         _WaitForRestart = true;
@@ -62,12 +76,19 @@ public class SpaceXHandler : MonoBehaviour
             }
             LaunchCounter.text = x.ToString();
             await Task.Delay(1000);
+            if (token.IsCancellationRequested)
+            {
+                break; // Exit the loop if cancellation is requested
+            }
+
+            LaunchCounter.text = x.ToString();
+            await Task.Delay(1000, token); // Pass the cancellation token to Task.Delay
             x--;
         }
         LaunchCounter.GetComponent<Animator>().enabled = false;
         LaunchCounter.gameObject.SetActive(false);
-        await Task.Delay(1000);
         //launchCountingAudioSource.clip=audioClip;
+        await Task.Delay(1000, token); // Delay before proceeding, also cancellable
     }
 
 
@@ -106,10 +127,7 @@ public class SpaceXHandler : MonoBehaviour
         ConstantsHolder.isFromXANASummit = true;
         ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
         SummitSceneLoading.LoadingSceneByIDOrName(SceneId, _ReturnPlayerPos);
-        Destroy(VideoPlayer.clip);
-        DisableVideoPlayer();
-        DisablePlanetOptionScreen();
-        _WaitForRestart = false;
+        DisableObjects();
         // SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
     }
 
@@ -118,4 +136,24 @@ public class SpaceXHandler : MonoBehaviour
     //    StartCoroutine(LoadingHandler.Instance.FadeOut());
     //}
 
+
+    // Method to cancel the async task
+    void SpaceXDeactivated()
+    {
+        if (_cancellationTokenSource != null)
+        {
+            _cancellationTokenSource.Cancel(); // Cancel the async task
+            DisableObjects();
+        }
+    }
+
+    void DisableObjects()
+    {
+        Destroy(VideoPlayer.clip);
+        DisableVideoPlayer();
+        DisablePlanetOptionScreen();
+        LaunchCounter.GetComponent<Animator>().enabled = false;
+        LaunchCounter.gameObject.SetActive(false);
+        _WaitForRestart = false;
+    }
 }
