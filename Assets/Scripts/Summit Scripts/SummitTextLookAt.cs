@@ -20,6 +20,9 @@ public class SummitTextLookAt : MonoBehaviour
         if (target)
             localTrans.LookAt(2 * localTrans.position - target.position);
         else
-            target = XANAPartyCameraController.instance?.cinemachine.transform;
+        {
+            if (XANAPartyCameraController.instance)
+                target = XANAPartyCameraController.instance.cinemachine.transform;
+        }
     }
 }
