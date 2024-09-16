@@ -274,7 +274,7 @@ public class Web3AuthCustom : MonoBehaviour
 
             }
         }
-
+        ConstantsHolder.isWalletLogin = true;
         PlayerPrefs.SetString("publicID", telegramData.data.user.walletAddress);
         Web3AuthSociallogin type = Web3AuthSociallogin.None;
         try

@@ -68,6 +68,7 @@ public class ServerSideUserDataHandler : MonoBehaviour
                     string jsonbody = JsonUtility.ToJson(getdata.data.rows[0].json);
                     LoadPlayerAvatar.avatarId = getdata.data.rows[0].id.ToString();
                     LoadPlayerAvatar.avatarName = getdata.data.rows[0].name;
+                    Debug.Log("avatarName: " + jsonbody);
                     LoadPlayerAvatar.avatarThumbnailUrl = getdata.data.rows[0].thumbnail;
                     ConstantsHolder.userId = getdata.data.rows[0].createdBy.ToString();
                     File.WriteAllText(GetStringFolderPath(), jsonbody);
@@ -82,6 +83,7 @@ public class ServerSideUserDataHandler : MonoBehaviour
                     }
                     if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
                     {
+                        GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
                         // assign gender to save character properties
                         // This gander is use for character initialization 
                         SaveCharacterProperties.instance.SaveItemList.gender = getdata.data.rows[0].json.gender;
