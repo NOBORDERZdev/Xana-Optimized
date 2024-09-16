@@ -8,6 +8,7 @@ using UnityEngine.Video;
 public class NFT_Holder_Manager : MonoBehaviour
 {
     public static NFT_Holder_Manager instance;
+    public ZeelKheni.YoutubePlayer.Components.YoutubeInstance youTubeInstance;
     public bool worldPlayingVideos;
     [NonReorderable]
     public List<RatioRef> ratioReferences;

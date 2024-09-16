@@ -563,13 +563,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NFT: 0
-  isAddBtnCompOnScreen: 1
   id: 7
   imgVideo16x9: {fileID: 2504403680393450957}
   imgVideo9x16: {fileID: 7240726147611066600}
   imgVideo1x1: {fileID: 2702366470948586333}
   imgVideo4x3: {fileID: 5859734248787137034}
-  liveVideoPlayer: {fileID: 1603082666789583985}
+  videoParent: {fileID: 0}
   videoLink: 
   imageLink: 
   _videoType: 0
@@ -583,7 +582,6 @@ MonoBehaviour:
   imgVideoFrame9x16: {fileID: 0}
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
-  isMultipleScreen: 0
   roomType: 3
   nftStartAction:
     m_PersistentCalls:
@@ -6008,13 +6006,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NFT: 0
-  isAddBtnCompOnScreen: 1
   id: 4
   imgVideo16x9: {fileID: 1230665100628666062}
   imgVideo9x16: {fileID: 8858595643281841517}
   imgVideo1x1: {fileID: 6679135455910540343}
   imgVideo4x3: {fileID: 2893192730846600687}
-  liveVideoPlayer: {fileID: 8770899804635050419}
+  videoParent: {fileID: 0}
   videoLink: 
   imageLink: 
   _videoType: 0
@@ -6028,7 +6025,6 @@ MonoBehaviour:
   imgVideoFrame9x16: {fileID: 0}
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
-  isMultipleScreen: 0
   roomType: 1
   nftStartAction:
     m_PersistentCalls:
@@ -6801,10 +6797,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2618462177799091639}
-  - {fileID: 3352185233278213324}
   - {fileID: 7001210020217260106}
   - {fileID: 5026257661413201835}
+  - {fileID: 2618462177799091639}
+  - {fileID: 3352185233278213324}
   - {fileID: 3179879220131695972}
   - {fileID: 9071195721800993161}
   - {fileID: 2000596138972604132}
@@ -8576,7 +8572,7 @@ Transform:
   - {fileID: 4800102305002513673}
   - {fileID: 1863698928772346509}
   m_Father: {fileID: 4782955470898952644}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 161.632, z: 0}
 --- !u!114 &5190627044484396098
 MonoBehaviour:
@@ -8591,13 +8587,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NFT: 0
-  isAddBtnCompOnScreen: 1
   id: 3
   imgVideo16x9: {fileID: 7855809191213857397}
   imgVideo9x16: {fileID: 96882464630968517}
   imgVideo1x1: {fileID: 8550141001658258278}
   imgVideo4x3: {fileID: 1079176688765785501}
-  liveVideoPlayer: {fileID: 3959996119721727368}
+  videoParent: {fileID: 0}
   videoLink: 
   imageLink: 
   _videoType: 0
@@ -8611,7 +8606,6 @@ MonoBehaviour:
   imgVideoFrame9x16: {fileID: 0}
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
-  isMultipleScreen: 0
   roomType: 0
   nftStartAction:
     m_PersistentCalls:
@@ -9819,6 +9813,7 @@ GameObject:
   - component: {fileID: 1421784742835720370}
   - component: {fileID: 4192378118116164945}
   - component: {fileID: 5228478994173219951}
+  - component: {fileID: 2149462139532667590}
   m_Layer: 23
   m_Name: Video_Parent
   m_TagString: Untagged
@@ -9890,6 +9885,26 @@ MonoBehaviour:
   updateInterval: 0.5
   activePlayer: {fileID: 2507505394166159395}
   audioSource: {fileID: 5026257661121069021}
+--- !u!114 &2149462139532667590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026257660853740473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673ebe6b1ddeec24e90406ca14165962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  YoutubeInstance: {fileID: 0}
+  IsLive: 0
+  VideoId: 
+  PreferedQuality: 136
+  VideoPlayer: {fileID: 5026257661121068993}
+  VideoPlayer1: {fileID: 1985157994909571475}
+  audioSource: {fileID: 5026257661121069021}
+  AVProVideoPlayer: {fileID: 2507505394166159395}
 --- !u!1 &5026257660917194773
 GameObject:
   m_ObjectHideFlags: 0
@@ -10109,6 +10124,7 @@ GameObject:
   - component: {fileID: 5026257661121068992}
   - component: {fileID: 5026257661121068993}
   - component: {fileID: 5026257661121069021}
+  - component: {fileID: 1985157994909571475}
   m_Layer: 23
   m_Name: '16 : 9'
   m_TagString: Untagged
@@ -10302,6 +10318,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!328 &1985157994909571475
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026257661121068995}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 0}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: cf8db7ef58bd3ce4f928564026c9d056, type: 2}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 2
+  m_AspectRatio: 5
+  m_DataSource: 1
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 1
+  m_TargetAudioSources:
+  - {fileID: 5026257661121069021}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 0
+  m_SkipOnDrop: 1
+  m_Looping: 1
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
 --- !u!1 &5026257661413201836
 GameObject:
   m_ObjectHideFlags: 0
@@ -10335,7 +10386,7 @@ Transform:
   - {fileID: 5026257659777904439}
   - {fileID: 5026257660853740472}
   m_Father: {fileID: 4782955470898952644}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -0.023, y: 151.366, z: -0.325}
 --- !u!114 &5993596980157930893
 MonoBehaviour:
@@ -10350,13 +10401,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NFT: 1
-  isAddBtnCompOnScreen: 0
   id: 1
   imgVideo16x9: {fileID: 5026257661121068995}
   imgVideo9x16: {fileID: 5026257660917194773}
   imgVideo1x1: {fileID: 5026257659810509574}
   imgVideo4x3: {fileID: 5026257660549182773}
-  liveVideoPlayer: {fileID: 2507505394166159384}
+  videoParent: {fileID: 5026257660853740473}
   videoLink: 
   imageLink: 
   _videoType: 0
@@ -10370,7 +10420,6 @@ MonoBehaviour:
   imgVideoFrame9x16: {fileID: 0}
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
-  isMultipleScreen: 0
   roomType: 0
   nftStartAction:
     m_PersistentCalls:
@@ -10396,6 +10445,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
   mediaPlayer: {fileID: 2507505394166159395}
   videoPlayer: {fileID: 5026257661121068993}
   liveVideoPlay:
@@ -11288,13 +11340,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NFT: 0
-  isAddBtnCompOnScreen: 1
   id: 5
   imgVideo16x9: {fileID: 2744202428173100980}
   imgVideo9x16: {fileID: 7505130978551418493}
   imgVideo1x1: {fileID: 6059044073348989903}
   imgVideo4x3: {fileID: 8442945374493477524}
-  liveVideoPlayer: {fileID: 979360093686545003}
+  videoParent: {fileID: 0}
   videoLink: 
   imageLink: 
   _videoType: 0
@@ -11308,7 +11359,6 @@ MonoBehaviour:
   imgVideoFrame9x16: {fileID: 0}
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
-  isMultipleScreen: 0
   roomType: 2
   nftStartAction:
     m_PersistentCalls:
@@ -11859,7 +11909,7 @@ Transform:
   - {fileID: 7467497425012353565}
   - {fileID: 6596964237447980570}
   m_Father: {fileID: 4782955470898952644}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 204.804, z: 0}
 --- !u!114 &4214529983337861885
 MonoBehaviour:
@@ -11874,13 +11924,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NFT: 0
-  isAddBtnCompOnScreen: 1
   id: 2
   imgVideo16x9: {fileID: 6444771116353898451}
   imgVideo9x16: {fileID: 1782227948418931345}
   imgVideo1x1: {fileID: 1423443136834362767}
   imgVideo4x3: {fileID: 8856469129738976116}
-  liveVideoPlayer: {fileID: 3420054558229560270}
+  videoParent: {fileID: 0}
   videoLink: 
   imageLink: 
   _videoType: 0
@@ -11894,7 +11943,6 @@ MonoBehaviour:
   imgVideoFrame9x16: {fileID: 0}
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
-  isMultipleScreen: 0
   roomType: 0
   nftStartAction:
     m_PersistentCalls:
@@ -12909,7 +12957,7 @@ Transform:
   - {fileID: 386167477752912302}
   - {fileID: 1863698930163072037}
   m_Father: {fileID: 4782955470898952644}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 184.729, z: 0}
 --- !u!114 &5034833307150129062
 MonoBehaviour:
@@ -12924,13 +12972,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NFT: 0
-  isAddBtnCompOnScreen: 1
   id: 0
   imgVideo16x9: {fileID: 5769877842880492678}
   imgVideo9x16: {fileID: 3271314702293262456}
   imgVideo1x1: {fileID: 2047392342286428882}
   imgVideo4x3: {fileID: 5539328766498108109}
-  liveVideoPlayer: {fileID: 2423456058830390271}
+  videoParent: {fileID: 0}
   videoLink: 
   imageLink: 
   _videoType: 0
@@ -12944,7 +12991,6 @@ MonoBehaviour:
   imgVideoFrame9x16: {fileID: 0}
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
-  isMultipleScreen: 0
   roomType: 0
   nftStartAction:
     m_PersistentCalls:
@@ -13919,13 +13965,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NFT: 0
-  isAddBtnCompOnScreen: 1
   id: 6
   imgVideo16x9: {fileID: 7897563328296300845}
   imgVideo9x16: {fileID: 7085359106430627684}
   imgVideo1x1: {fileID: 4272797479260277985}
   imgVideo4x3: {fileID: 8857387404739678545}
-  liveVideoPlayer: {fileID: 3856087704039233167}
+  videoParent: {fileID: 0}
   videoLink: 
   imageLink: 
   _videoType: 0
@@ -13939,7 +13984,6 @@ MonoBehaviour:
   imgVideoFrame9x16: {fileID: 0}
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
-  isMultipleScreen: 0
   roomType: 4
   nftStartAction:
     m_PersistentCalls:

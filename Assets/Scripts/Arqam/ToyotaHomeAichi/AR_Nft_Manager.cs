@@ -332,8 +332,8 @@ namespace Toyota
                 // Setting Landscape Data
                 nftHolder.ratioReferences[ratioId].l_image.gameObject.SetActive(true);
                 nftHolder.ratioReferences[ratioId].p_image.gameObject.SetActive(true);
-                nftHolder.ratioReferences[ratioId].p_videoPlayer.gameObject.SetActive(true);
-                nftHolder.ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(true);
+                nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.gameObject.SetActive(true);
+                nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.gameObject.SetActive(true);
                 if (ratioId < 4)
                 {
                     nftHolder.ratioReferences[ratioId].l_Title.text = title;
@@ -343,12 +343,12 @@ namespace Toyota
                 if (type == PMY_DataType.Image)
                 {
                     nftHolder.ratioReferences[ratioId].l_image.texture = image;
-                    nftHolder.ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(false);
+                    nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.gameObject.SetActive(false);
                 }
                 else
                 {
                     nftHolder.ratioReferences[ratioId].l_image.gameObject.SetActive(false);
-                    nftHolder.ratioReferences[ratioId].l_videoPlayer.url = videoLink;
+                    nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.url = videoLink;
                 }
 
                 // Setting Potraite Data
@@ -362,12 +362,12 @@ namespace Toyota
                 if (type == PMY_DataType.Image)
                 {
                     nftHolder.ratioReferences[ratioId].p_image.texture = image;
-                    nftHolder.ratioReferences[ratioId].p_videoPlayer.gameObject.SetActive(false);
+                    nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.gameObject.SetActive(false);
                 }
                 else
                 {
                     nftHolder.ratioReferences[ratioId].p_image.gameObject.SetActive(false);
-                    nftHolder.ratioReferences[ratioId].p_videoPlayer.url = videoLink;
+                    nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.url = videoLink;
                 }
 
                 if (!ScreenOrientationManager._instance.isPotrait) // for Landscape
@@ -383,33 +383,36 @@ namespace Toyota
 
                         if (videoType == PMY_VideoTypeRes.islive)
                         {
-                            nftHolder.ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = false;
-                            nftHolder.ratioReferences[ratioId].l_videoPlayer.enabled = false;
-                            nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
-                            nftHolder.ratioReferences[ratioId].l_LivePlayer.SetActive(true);
+                            //nftHolder.ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = false;
+                            //nftHolder.ratioReferences[ratioId].l_videoPlayer.enabled = false;
+                            //nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
+                            //nftHolder.ratioReferences[ratioId].l_LivePlayer.SetActive(true);
 
-                            nftHolder.ratioReferences[ratioId].l_LivePlayer.GetComponent<StreamYoutubeVideo>().StreamYtVideo(videoLink, true);
+                            //nftHolder.ratioReferences[ratioId].l_LivePlayer.GetComponent<StreamYoutubeVideo>().StreamYtVideo(videoLink, true);
+                            nftHolder.ratioReferences[ratioId].l_obj.GetComponent<AdvancedYoutubePlayer>().StreamYtVideo(videoLink, true);
                         }
                         else if (videoType == PMY_VideoTypeRes.prerecorded)
                         {
-                            nftHolder.ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = true;
-                            nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(true);
-                            nftHolder.ratioReferences[ratioId].l_LivePlayer.SetActive(false);
+                            //nftHolder.ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = true;
+                            //nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(true);
+                            //nftHolder.ratioReferences[ratioId].l_LivePlayer.SetActive(false);
 
-                            nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<StreamYoutubeVideo>().StreamYtVideo(videoLink, false);
+                            //nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<StreamYoutubeVideo>().StreamYtVideo(videoLink, false);
+                            nftHolder.ratioReferences[ratioId].l_obj.GetComponent<AdvancedYoutubePlayer>().StreamYtVideo(videoLink, false);
                         }
                         else if (videoType == PMY_VideoTypeRes.aws)
                         {
-                            if (nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer)
-                                nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
+                            //if (nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer)
+                            //    nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
 
-                            if (nftHolder.ratioReferences[ratioId].l_LivePlayer)
-                                nftHolder.ratioReferences[ratioId].l_LivePlayer.SetActive(false);
+                            //if (nftHolder.ratioReferences[ratioId].l_LivePlayer)
+                            //    nftHolder.ratioReferences[ratioId].l_LivePlayer.SetActive(false);
 
-                            nftHolder.ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = true;
-                            nftHolder.ratioReferences[ratioId].l_videoPlayer.enabled = true;
-                            nftHolder.ratioReferences[ratioId].l_videoPlayer.url = videoLink;
-                            nftHolder.ratioReferences[ratioId].l_videoPlayer.Play();
+                            //nftHolder.ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = true;
+                            //nftHolder.ratioReferences[ratioId].l_videoPlayer.enabled = true;
+                            nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.gameObject.SetActive(true);
+                            nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.url = videoLink;
+                            nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.Play();
                         }
 
                         OnVideoEnlargeAction?.Invoke();
@@ -428,29 +431,31 @@ namespace Toyota
 
                         if (videoType == PMY_VideoTypeRes.islive)
                         {
-                            nftHolder.ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = false;
-                            nftHolder.ratioReferences[ratioId].p_videoPlayer.enabled = false;
-                            nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(false);
-                            nftHolder.ratioReferences[ratioId].p_LivePlayer.SetActive(true);
+                            //nftHolder.ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = false;
+                            //nftHolder.ratioReferences[ratioId].p_videoPlayer.enabled = false;
+                            //nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(false);
+                            //nftHolder.ratioReferences[ratioId].p_LivePlayer.SetActive(true);
 
-                            nftHolder.ratioReferences[ratioId].p_LivePlayer.GetComponent<StreamYoutubeVideo>().StreamYtVideo(videoLink, true);
+                            //nftHolder.ratioReferences[ratioId].p_LivePlayer.GetComponent<StreamYoutubeVideo>().StreamYtVideo(videoLink, true);
+                            nftHolder.ratioReferences[ratioId].p_obj.GetComponent<AdvancedYoutubePlayer>().StreamYtVideo(videoLink, true);
                         }
                         else if (videoType == PMY_VideoTypeRes.prerecorded)
                         {
-                            nftHolder.ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = true;
-                            nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(true);
-                            nftHolder.ratioReferences[ratioId].p_LivePlayer.SetActive(false);
+                            //nftHolder.ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = true;
+                            //nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(true);
+                            //nftHolder.ratioReferences[ratioId].p_LivePlayer.SetActive(false);
 
-                            nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.GetComponent<StreamYoutubeVideo>().StreamYtVideo(videoLink, false);
+                            //nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.GetComponent<StreamYoutubeVideo>().StreamYtVideo(videoLink, false);
+                            nftHolder.ratioReferences[ratioId].p_obj.GetComponent<AdvancedYoutubePlayer>().StreamYtVideo(videoLink, false);
                         }
                         else if (videoType == PMY_VideoTypeRes.aws)
                         {
-                            nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(false);
-                            nftHolder.ratioReferences[ratioId].p_LivePlayer.SetActive(false);
-                            nftHolder.ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = true;
-                            nftHolder.ratioReferences[ratioId].p_videoPlayer.enabled = true;
-                            nftHolder.ratioReferences[ratioId].p_videoPlayer.url = videoLink;
-                            nftHolder.ratioReferences[ratioId].p_videoPlayer.Play();
+                            nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.gameObject.SetActive(true);
+                            //nftHolder.ratioReferences[ratioId].p_LivePlayer.SetActive(false);
+                            //nftHolder.ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = true;
+                            //nftHolder.ratioReferences[ratioId].p_videoPlayer.enabled = true;
+                            nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.url = videoLink;
+                            nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.Play();
 
                         }
 
@@ -514,6 +519,31 @@ namespace Toyota
             if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
             {
                 GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
+            }
+
+            try
+            {
+                if (nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer)
+                {
+                    nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.Stop();
+                    nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.targetTexture.Release();
+                    nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.gameObject.SetActive(false);
+                }
+                if (nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer)
+                {
+                    nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.Stop();
+                    nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.targetTexture.Release();
+                    nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.gameObject.SetActive(false);
+                }
+                nftHolder.renderTexture_16x9.Release();
+                nftHolder.renderTexture_1x1.Release();
+                nftHolder.renderTexture_4x3.Release();
+                nftHolder.renderTexture_9x16.Release();
+                GC.Collect();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError(ex.Message);
             }
         }
 
@@ -630,9 +660,9 @@ namespace Toyota
         public TMP_Text l_Aurthur;
         public TMP_Text l_Description;
         public RawImage l_image;
-        public VideoPlayer l_videoPlayer;
+        [Space(5)]
         public GameObject l_LivePlayer;
-        public GameObject l_PrerecordedPlayer;
+        public VideoPlayer l_PrerecordedPlayer;
         public GameObject l_Loader;
 
         public GameObject p_obj;
@@ -640,9 +670,9 @@ namespace Toyota
         public TMP_Text p_Aurthur;
         public TMP_Text p_Description;
         public RawImage p_image;
-        public VideoPlayer p_videoPlayer;
+        [Space(5)]
         public GameObject p_LivePlayer;
-        public GameObject p_PrerecordedPlayer;
+        public VideoPlayer p_PrerecordedPlayer;
         public GameObject p_Loader;
     }
     public class PMY_Json
