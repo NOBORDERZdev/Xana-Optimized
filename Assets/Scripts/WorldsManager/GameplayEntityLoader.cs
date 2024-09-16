@@ -1526,9 +1526,12 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         // Landscape
         referenceForPenguin.XanaFeaturesLandsacape.SetActive(false);
         referenceForPenguin.EmoteFavLandsacape.SetActive(false);
+        referenceForPenguin.EmotePanelsLandsacape.SetActive(false);
 
         referenceForPenguin.XanaFeaturesPotraite.SetActive(false);
         referenceForPenguin.EmoteFavPotraite.SetActive(false);
+        referenceForPenguin.EmotePanelsPotraite.SetActive(false);
+
 
         penguinJump = Instantiate(referenceForPenguin.XanaJumpLandsacape, referenceForPenguin.XanaJumpLandsacape.transform.parent);
         penguinJumpPot = Instantiate(referenceForPenguin.XanaJumpPotraite, referenceForPenguin.XanaJumpPotraite.transform.parent);
@@ -1576,9 +1579,13 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         referenceForPenguin.XanaFeaturesLandsacape.SetActive(true);
         referenceForPenguin.EmoteFavLandsacape.SetActive(true);
+        referenceForPenguin.EmotePanelsLandsacape.SetActive(true);
+
 
         referenceForPenguin.XanaFeaturesPotraite.SetActive(true);
         referenceForPenguin.EmoteFavPotraite.SetActive(true);
+        referenceForPenguin.EmotePanelsPotraite.SetActive(true);
+
 
         referenceForPenguin.XanaJumpPotraite.SetActive(true);
         referenceForPenguin.XanaJumpLandsacape.SetActive(true);
