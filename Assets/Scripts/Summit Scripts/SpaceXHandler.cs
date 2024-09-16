@@ -15,7 +15,6 @@ public class SpaceXHandler : MonoBehaviour
     //public AudioSource launchCountingAudioSource;
     //public AudioClip countingAudioClip;
 
-    public bool spaceXactivated;
 
     private bool _WaitForRestart;
     private Vector3 _ReturnPlayerPos;
@@ -24,24 +23,19 @@ public class SpaceXHandler : MonoBehaviour
     private void OnEnable()
     {
         BuilderEventManager.spaceXActivated += StartVideoPlayer;
-        BuilderEventManager.spaceXDeactivated += OnspaceXDeactivated;
+        BuilderEventManager.spaceXDeactivated += SpaceXDeactivated;
     }
     private void OnDisable()
     {
         BuilderEventManager.spaceXActivated -= StartVideoPlayer;
-        BuilderEventManager.spaceXDeactivated -= OnspaceXDeactivated;
+        BuilderEventManager.spaceXDeactivated -= SpaceXDeactivated;
     }
 
     async void StartVideoPlayer(VideoClip VideoClip, Vector3 ReturnPlayerPos)
     {
-        spaceXactivated = true;
         if (_WaitForRestart)
             return;
-        await ShowCounter();
-        if (!spaceXactivated)
-        {
-            return;
-        }
+
         _cancellationTokenSource = new CancellationTokenSource(); // Initialize the cancellation token source
 
         try
@@ -70,12 +64,6 @@ public class SpaceXHandler : MonoBehaviour
         LaunchCounter.gameObject.SetActive(true);
         while (x > 0)
         {
-            if (!spaceXactivated)
-            {
-                break;
-            }
-            LaunchCounter.text = x.ToString();
-            await Task.Delay(1000);
             if (token.IsCancellationRequested)
             {
                 break; // Exit the loop if cancellation is requested
@@ -104,13 +92,6 @@ public class SpaceXHandler : MonoBehaviour
 
     void DisablePlanetOptionScreen()
     {
-        PlanetOptions.SetActive(false);
-    }
-
-    public void OnspaceXDeactivated()
-    {
-        _WaitForRestart = spaceXactivated = false;
-        VideoPlayer.gameObject.SetActive(false);
         PlanetOptions.SetActive(false);
     }
 
