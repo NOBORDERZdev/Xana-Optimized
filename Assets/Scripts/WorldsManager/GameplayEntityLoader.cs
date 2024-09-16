@@ -139,6 +139,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         GameObject _updatedSpawnPoint = new GameObject();
         updatedSpawnpoint = _updatedSpawnPoint.transform;
+        SceneManager.MoveGameObjectToScene(updatedSpawnpoint.gameObject, SceneManager.GetSceneByName("GamePlayScene"));
         BuilderSpawnPoint = false;
 
 
