@@ -33,7 +33,7 @@ namespace ZeelKheni.YoutubePlayer
             catch (Exception exception)
             {
                 Debug.Log(exception  + "   " + requestUrl);
-                if (urlslist != null)
+                if (urlslist != null&& urlslist.Count > 0)
                 {
                     urlslist.RemoveAt(0);
                     if(urlslist.Count >0) 

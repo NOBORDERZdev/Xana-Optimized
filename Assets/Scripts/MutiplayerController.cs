@@ -449,7 +449,8 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
-
+            Debug.LogError("Failed to join ");
+            AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
             //GameplayEntityLoader.instance._uiReferences.LoadMain(true);
         }
 
@@ -461,6 +462,8 @@ namespace Photon.Pun.Demo.PunBasics
         {
 
             playerobjects.Clear();
+            Resources.UnloadUnusedAssets();
+            GC.Collect();
         }
 
         public void Disconnect()
@@ -537,7 +540,10 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 XANASummitSceneLoading.OnJoinSubItem?.Invoke(ConstantsHolder.xanaConstants.minimap == 1);
             }
-            PhotonNetwork.LeaveRoom();
+            if (PhotonNetwork.InRoom)
+            {
+                PhotonNetwork.LeaveRoom();
+            }
 
         }
 
