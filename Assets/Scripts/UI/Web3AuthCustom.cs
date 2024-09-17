@@ -233,7 +233,7 @@ public class Web3AuthCustom : MonoBehaviour
 
 #endif
         GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
-        UserLoginSignupManager.instance.StartCoroutine(UserLoginSignupManager.instance.LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
+        //UserLoginSignupManager.instance.StartCoroutine(UserLoginSignupManager.instance.LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
         ConstantsHolder.xanaConstants.LoggedInAsGuest = false;
         Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
         if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
