@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7661604462295835959}
   - component: {fileID: 6772471829333273234}
   - component: {fileID: 8797870343238655576}
+  - component: {fileID: 7915575349363733383}
   m_Layer: 0
   m_Name: HRZ_Window
   m_TagString: Untagged
@@ -25,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6996531167084199821}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -40,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6996531167084199821}
-  m_Mesh: {fileID: 4657031795699958617, guid: 6855d874a6e50b944b66b6fbba6dd557, type: 3}
+  m_Mesh: {fileID: 4657031795699958617, guid: ee83b2f444ae97d4fbc738e01ae97566, type: 3}
 --- !u!23 &8797870343238655576
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -83,3 +84,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7915575349363733383
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6996531167084199821}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4657031795699958617, guid: ee83b2f444ae97d4fbc738e01ae97566, type: 3}
