@@ -118,7 +118,8 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
 
             if (loadOp.Status == AsyncOperationStatus.Succeeded)
             {
-                     AnimationPlaying = true;
+                AddressableDownloader.bundleAsyncOperationHandle.Add(loadOp);
+                AnimationPlaying = true;
                     SyncDataWithPlayers(label);
                     StartCoroutine(ApplyAnimationToAnimatorSet(loadOp.Result as AnimationClip, playerId));
                 
@@ -162,7 +163,7 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
                 }
                 else
                 {
-                   
+                    AddressableDownloader.bundleAsyncOperationHandle.Add(loadOp);
                     StartCoroutine(ApplyAnimationToAnimatorSet(loadOp.Result as AnimationClip, playerID));
                 }
             }
