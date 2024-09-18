@@ -1077,124 +1077,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1425977857
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1425977861}
-  - component: {fileID: 1425977860}
-  - component: {fileID: 1425977859}
-  - component: {fileID: 1425977858}
-  m_Layer: 0
-  m_Name: Camera
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1425977858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1425977857}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
-  m_ClearDepth: 1
-  m_AllowXRRendering: 1
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2
---- !u!81 &1425977859
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1425977857}
-  m_Enabled: 1
---- !u!20 &1425977860
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1425977857}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!4 &1425977861
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1425977857}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 118.94775, y: -37.20504, z: -41.91626}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1455276764
 GameObject:
   m_ObjectHideFlags: 0
@@ -2167,7 +2049,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldJson: '{"SceneObjects":[{"addressableKey":"RFK_Stage_Logo","name":"RFK_Stage_Logo","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":2.1855694143368966e-8,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":2.4800002574920656,"y":2.0099997520446779,"z":-10.140000343322754},"m_Extent":{"x":5.0,"y":2.18556948539117e-7,"z":5.0}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RFK_Fence","name":"RFK_Fence","position":{"x":1.2799997329711915,"y":-0.8059996366500855,"z":2.8170008659362795},"rotation":{"x":-3.774895063202166e-8,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":2.0,"y":2.0,"z":2.0},"objectBound":{"m_Center":{"x":3.7599995136260988,"y":1.2039999961853028,"z":-7.322999954223633},"m_Extent":{"x":12.29232406616211,"y":0.7300018072128296,"z":9.825325012207032}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RFK_Main
-    Stage","name":"RFK_Main Stage","position":{"x":-11.993487358093262,"y":0.7458877563476563,"z":-19.235103607177736},"rotation":{"x":5.760116295050466e-8,"y":0.7071067094802856,"z":-5.76011558450773e-8,"w":0.7071068286895752},"scale":{"x":1.450799822807312,"y":1.4507999420166016,"z":1.450799822807312},"objectBound":{"m_Center":{"x":-9.513486862182618,"y":2.755887746810913,"z":-29.375102996826173},"m_Extent":{"x":40.343482971191409,"y":2.2881016731262209,"z":4.6649169921875}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RFK_Mid_Stage","name":"RFK_Mid_Stage","position":{"x":1.310009479522705,"y":-1.2791268825531006,"z":-2.5620431900024416},"rotation":{"x":-0.7071068286895752,"y":0.0,"z":0.0,"w":0.7071068286895752},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":3.7900097370147707,"y":0.7308728694915772,"z":-12.702042579650879},"m_Extent":{"x":12.235273361206055,"y":1.2291276454925538,"z":10.072043418884278}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RFK_Screens","name":"RFK_Screens","position":{"x":1.217094898223877,"y":6.0408148765563969,"z":-17.569435119628908},"rotation":{"x":1.5454311608209538e-8,"y":-0.7071068286895752,"z":1.5454311608209538e-8,"w":0.7071068286895752},"scale":{"x":0.029999999329447748,"y":0.07265599817037583,"z":0.07265599817037583},"objectBound":{"m_Center":{"x":3.6970956325531008,"y":8.050814628601075,"z":-27.709434509277345},"m_Extent":{"x":10.249032974243164,"y":5.44920015335083,"z":1.1605664491653443}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RFK_Stairs","name":"RFK_Stairs","position":{"x":1.3099849224090577,"y":-1.949102520942688,"z":-12.941189765930176},"rotation":{"x":1.5734872249595356e-7,"y":-0.7071047425270081,"z":-4.214697568727388e-8,"w":0.7071088552474976},"scale":{"x":1.0,"y":0.949999988079071,"z":1.0500010251998902},"objectBound":{"m_Center":{"x":3.789985179901123,"y":0.060897231101989749,"z":-23.08119010925293},"m_Extent":{"x":12.21003532409668,"y":3.3371081352233888,"z":4.048951148986816}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RFK_Truss","name":"RFK_Truss","position":{"x":0.8707034587860107,"y":10.879999160766602,"z":1.3700008392333985},"rotation":{"x":-0.0000014682603932669736,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":3.350703716278076,"y":12.889999389648438,"z":-8.769999504089356},"m_Extent":{"x":10.549296379089356,"y":1.000029444694519,"z":10.032979965209961}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RKF_Gallery","name":"RKF_Gallery","position":{"x":0.9500100612640381,"y":1.3299994468688965,"z":3.1800074577331545},"rotation":{"x":-0.5000001788139343,"y":-0.4999998211860657,"z":-0.49999985098838808,"w":0.5000001192092896},"scale":{"x":0.5,"y":0.03125,"z":0.28125},"objectBound":{"m_Center":{"x":3.4300103187561037,"y":3.339999198913574,"z":-6.9599928855896},"m_Extent":{"x":20.210012435913087,"y":1.4062550067901612,"z":16.050033569335939}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}}]}'
+    Stage","name":"RFK_Main Stage","position":{"x":-11.993487358093262,"y":0.7458877563476563,"z":-19.235103607177736},"rotation":{"x":5.760116295050466e-8,"y":0.7071067094802856,"z":-5.76011558450773e-8,"w":0.7071068286895752},"scale":{"x":1.450799822807312,"y":1.4507999420166016,"z":1.450799822807312},"objectBound":{"m_Center":{"x":-9.513486862182618,"y":2.755887746810913,"z":-29.375102996826173},"m_Extent":{"x":40.343482971191409,"y":2.2881016731262209,"z":4.6649169921875}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RFK_Mid_Stage","name":"RFK_Mid_Stage","position":{"x":1.310009479522705,"y":-1.2791268825531006,"z":-2.5620431900024416},"rotation":{"x":-0.7071068286895752,"y":0.0,"z":0.0,"w":0.7071068286895752},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":3.7900097370147707,"y":0.7308728694915772,"z":-12.702042579650879},"m_Extent":{"x":12.235273361206055,"y":1.2291276454925538,"z":10.072043418884278}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RFK_Screens","name":"RFK_Screens","position":{"x":1.217094898223877,"y":6.0408148765563969,"z":-17.569435119628908},"rotation":{"x":1.5454311608209538e-8,"y":-0.7071068286895752,"z":1.5454311608209538e-8,"w":0.7071068286895752},"scale":{"x":0.029999999329447748,"y":0.07265599817037583,"z":0.07265599817037583},"objectBound":{"m_Center":{"x":3.6970956325531008,"y":8.050814628601075,"z":-27.709434509277345},"m_Extent":{"x":10.249032974243164,"y":5.44920015335083,"z":1.1605664491653443}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RFK_Stairs","name":"RFK_Stairs","position":{"x":1.3099849224090577,"y":-1.949102520942688,"z":-12.941189765930176},"rotation":{"x":1.5734872249595356e-7,"y":-0.7071047425270081,"z":-4.214697568727388e-8,"w":0.7071088552474976},"scale":{"x":1.0,"y":0.949999988079071,"z":1.0500010251998902},"objectBound":{"m_Center":{"x":3.789985179901123,"y":0.060897231101989749,"z":-23.08119010925293},"m_Extent":{"x":12.21003532409668,"y":3.3371081352233888,"z":4.048951148986816}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RFK_Truss","name":"RFK_Truss","position":{"x":0.8707034587860107,"y":10.879999160766602,"z":1.3700008392333985},"rotation":{"x":-0.0000014682603932669736,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":3.350703716278076,"y":12.889999389648438,"z":-8.769999504089356},"m_Extent":{"x":10.549296379089356,"y":1.000029444694519,"z":10.032979965209961}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RKF_Gallery","name":"RKF_Gallery","position":{"x":0.9500100612640381,"y":1.3299994468688965,"z":3.1800074577331545},"rotation":{"x":-0.5000001788139343,"y":-0.4999998211860657,"z":-0.49999985098838808,"w":0.5000001192092896},"scale":{"x":0.5,"y":0.03125,"z":0.28125},"objectBound":{"m_Center":{"x":3.4300103187561037,"y":3.339999198913574,"z":-6.9599928855896},"m_Extent":{"x":20.210012435913087,"y":1.4062550067901612,"z":16.050033569335939}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RFK_Image
+    Place Holder","name":"RFK_Image Place Holder","position":{"x":-2.4800002574920656,"y":-2.0099997520446779,"z":10.140000343322754},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":3.401002883911133,"y":2.316401243209839,"z":-6.619392395019531},"m_Extent":{"x":20.268733978271486,"y":2.316401243209839,"z":15.730133056640625}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}}]}'
   assetsParent: {fileID: 2108933982}
 --- !u!1 &1073660890306130
 GameObject:
