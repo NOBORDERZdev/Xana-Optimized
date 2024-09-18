@@ -993,6 +993,7 @@ public class LoadingHandler : MonoBehaviour
         DomeLodingUI.SetActive(true);
 
         EnterWheel?.Invoke(true);
+        BuilderEventManager.SpaceXDeactivated?.Invoke();
        
 
     }

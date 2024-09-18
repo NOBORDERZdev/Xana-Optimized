@@ -350,6 +350,10 @@ public class ConstantsGod
     public static string GetUserVisitedDomes = "/domes/getvisitedomes";
     #endregion
 
+    #region Bundle Update Api
+    public static string BUNDLEUPDATEAPI = "";
+    #endregion
+
     #region XANA PARTY WORLD Api's
     public static string API_BASEURL_Penpenz = "https://penpenz-prod.xana.net/";
     public static string GetXanaPartyWorlds = "/item/v1/get-world-by-world-type/1"; // 1 for xana party and 0 for simple builder  

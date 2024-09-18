@@ -34,7 +34,9 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
 
     public void LoadAnimationAccrossInstance(string label)//, Action downloadCompleteCallBack
     {
-        StartCoroutine(DownloadAddressableActionAnimation(label));//,downloadCompleteCallBack
+        // StartCoroutine(DownloadAddressableActionAnimation(label));//,downloadCompleteCallBack Not Needed for network animation
+        if(!label.IsNullOrEmpty())
+        SyncDataWithPlayers(label);
     }
 
     public void StopAnimation()
@@ -84,23 +86,43 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
         if (label != "" && Application.internetReachability != NetworkReachability.NotReachable)
         {
             int playerId = ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID;
-            AsyncOperationHandle<AnimationClip> loadOp;
-            loadOp = Addressables.LoadAssetAsync<AnimationClip>("Action_" + label);
+            AsyncOperationHandle loadOp;
+            
+            bool flag = false;
+            LoadAssetAgain:
+          
+                loadOp = Addressables.LoadAssetAsync<AnimationClip>("Action_" + label);
             while (!loadOp.IsDone)
-                yield return loadOp;
+            {
+                yield return null;
+            }
+            if (loadOp.IsValid() && loadOp.Result != null)
+            {
+
+            }
+            else
+            {
+                Addressables.ClearDependencyCacheAsync("Action_" + label);
+                Addressables.ReleaseInstance(loadOp);
+                Addressables.Release(loadOp);
+                yield return new WaitForSeconds(1);
+                goto LoadAssetAgain;
+            }
+           
+            Debug.LogError("Playing Action " + label +"Flag  "+flag);
+
+          
+
+            //loadOp = Addressables.LoadAssetAsync<AnimationClip>("Action_" + label);
+          
 
             if (loadOp.Status == AsyncOperationStatus.Succeeded)
             {
-                if (loadOp.Result == null || loadOp.Result.Equals(null))
-                {
-                    Debug.LogError("NULLLLLL");
-                }
-                else
-                {
-                    AnimationPlaying = true;
+                AddressableDownloader.bundleAsyncOperationHandle.Add(loadOp);
+                AnimationPlaying = true;
                     SyncDataWithPlayers(label);
-                   StartCoroutine( ApplyAnimationToAnimatorSet(loadOp.Result, playerId));
-                }
+                    StartCoroutine(ApplyAnimationToAnimatorSet(loadOp.Result as AnimationClip, playerId));
+                
             }
         }
     }
@@ -108,24 +130,40 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
     {
         if (label != "" && Application.internetReachability != NetworkReachability.NotReachable)
         {
-            AsyncOperationHandle loadOp;
+            AsyncOperationHandle<AnimationClip> loadOp;
             bool flag = false;
-            loadOp = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(label, ref flag);
-            if (!flag)
-                loadOp = Addressables.LoadAssetAsync<AnimationClip>("Action_" + label);
-            while (!loadOp.IsDone)
-                yield return loadOp;
-
-            if (loadOp.Status == AsyncOperationStatus.Succeeded)
+            while (true)
             {
+                loadOp = Addressables.LoadAssetAsync<AnimationClip>("Action_" + label);
 
-                if (loadOp.Result == null || loadOp.Result.Equals(null))
+                while (!loadOp.IsDone)
                 {
-                    Debug.LogError("DownloadAddressableActionAnimation -> "+ label);
+                    yield return null;
+                }
+
+                if (loadOp.IsValid() && loadOp.Result != null)
+                {
+                    break; // Exit loop when the asset is loaded successfully.
                 }
                 else
                 {
-                    AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadOp, label);
+                    Debug.LogError($"Failed to load asset: Action_{label}. Error: {loadOp.Status.ToString()}");
+                    Addressables.ClearDependencyCacheAsync("Action_" + label);
+                    Addressables.ReleaseInstance(loadOp);
+                    Addressables.Release(loadOp);
+                    yield return new WaitForSeconds(1);
+                }
+            }
+
+            if (loadOp.Status == AsyncOperationStatus.Succeeded)
+            {
+                if (loadOp.Result == null)
+                {
+                    Debug.LogError("Network null.....");
+                }
+                else
+                {
+                    AddressableDownloader.bundleAsyncOperationHandle.Add(loadOp);
                     StartCoroutine(ApplyAnimationToAnimatorSet(loadOp.Result as AnimationClip, playerID));
                 }
             }
@@ -155,6 +193,7 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
                 animator = photonplayerObjects[i].gameObject.GetComponent<Animator>();
                 if (photonplayerObjects[i].GetComponent<PhotonView>().ViewID == playerId)
                 {
+                    Debug.LogError("Player Found");
                     if (!PlayerSelfieController.Instance.selfiePanel.activeInHierarchy)
                     {
                         if (animator.GetBool("EtcAnimStart"))
@@ -170,14 +209,17 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
                         foreach (var clip in overrideController.animationClips)
                         {
                             if (clip.name == "emaotedefault")
+                            {
+                                Debug.LogError("Setting Clip");
                                 keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, animationClip));
+                            }
                             else
                                 keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
                         }
                         overrideController.ApplyOverrides(keyValuePairs);
 
                         animator.runtimeAnimatorController = overrideController;
-
+                        Debug.LogError("Play Clip");
                         animator.SetBool("IsEmote", true);
                     }
                 }
