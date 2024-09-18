@@ -205,7 +205,7 @@ public class AddressableDownloader : MonoBehaviour
     public Color GetHairDefaultColorFromDownloadedHair(GameObject downloadedHair)
     {
         string Hair_ColorName = "_BaseColor";
-        SkinnedMeshRenderer skinnedMeshRenderer = downloadedHair.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>();
+        SkinnedMeshRenderer skinnedMeshRenderer = downloadedHair.transform.GetComponentInChildren<SkinnedMeshRenderer>();
         if (skinnedMeshRenderer.sharedMaterials.Length > 1) // In case Of Hat there is 2 material
         {
             if (skinnedMeshRenderer.sharedMaterials[0].name.Contains("Cap") || skinnedMeshRenderer.sharedMaterials[0].name.Contains("Hat") || skinnedMeshRenderer.sharedMaterials[0].name.Contains("Pins"))
