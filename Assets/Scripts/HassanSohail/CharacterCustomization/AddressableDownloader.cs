@@ -61,7 +61,7 @@ public class AddressableDownloader : MonoBehaviour
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-           // await DeleteCachedAddressables();
+            await DeleteCachedAddressables();
             StartCoroutine(CheckCatalogs());
         }
         else
@@ -108,7 +108,7 @@ public class AddressableDownloader : MonoBehaviour
                 //bool flag = false;
                 //loadOp = MemoryManager.GetReferenceIfExist(key.ToLower(), ref flag);
                 //if (!flag)
-                    loadOp = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
+                loadOp = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
 
                 SwitchToShoesHirokoKoshino.Instance?.SwitchLightFor_HirokoKoshino(key.ToLower());
                 yield return loadOp;
@@ -134,9 +134,9 @@ public class AddressableDownloader : MonoBehaviour
                         //}
                         //else
                         //{
-                            AddressableDownloader.bundleAsyncOperationHandle.Add(loadOp);
-                            applyOn.WearDefaultItem(type, applyOn.gameObject, _gender);
-                            yield break;
+                        AddressableDownloader.bundleAsyncOperationHandle.Add(loadOp);
+                        applyOn.WearDefaultItem(type, applyOn.gameObject, _gender);
+                        yield break;
                         //}
                     }
                     else
@@ -154,16 +154,24 @@ public class AddressableDownloader : MonoBehaviour
                             //{
                             //    applyOn.StichItem(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, mulitplayerHairColor);
                             //}
-                            if(type == "Hair")
+                            if (type == "Hair")
                             {
                                 if (ConstantsHolder.xanaConstants.isStoreActive)
                                 {
                                     GameObject downloadedHair = loadOp.Result as GameObject;
                                     Color hairDefaultColor = GetHairDefaultColorFromDownloadedHair(downloadedHair);
-                                    applyOn.StichHairWithColor(itemId, downloadedHair, type, applyOn.gameObject, hairDefaultColor, callFromMultiplayer);
+
+                                    if (ConstantsHolder.xanaConstants.currentButtonIndex == 4 || ConstantsHolder.xanaConstants.currentButtonIndex == 10)
+                                    {
+                                        // Preset Panel 
+                                        // Each Preset has its own color store in its Json implemet that color
+                                        hairDefaultColor = hairColor;
+                                    }
+
+                                        applyOn.StichHairWithColor(itemId, downloadedHair, type, applyOn.gameObject, hairDefaultColor, callFromMultiplayer);
                                 }
-                                else 
-                                    applyOn.StichHairWithColor(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, hairColor,callFromMultiplayer);
+                                else
+                                    applyOn.StichHairWithColor(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, hairColor, callFromMultiplayer);
                             }
                             else
                             {
@@ -197,7 +205,7 @@ public class AddressableDownloader : MonoBehaviour
     public Color GetHairDefaultColorFromDownloadedHair(GameObject downloadedHair)
     {
         string Hair_ColorName = "_BaseColor";
-        SkinnedMeshRenderer skinnedMeshRenderer = downloadedHair.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>();
+        SkinnedMeshRenderer skinnedMeshRenderer = downloadedHair.transform.GetComponentInChildren<SkinnedMeshRenderer>();
         if (skinnedMeshRenderer.sharedMaterials.Length > 1) // In case Of Hat there is 2 material
         {
             if (skinnedMeshRenderer.sharedMaterials[0].name.Contains("Cap") || skinnedMeshRenderer.sharedMaterials[0].name.Contains("Hat") || skinnedMeshRenderer.sharedMaterials[0].name.Contains("Pins"))
@@ -304,7 +312,7 @@ public class AddressableDownloader : MonoBehaviour
                 GameManager.Instance.isStoreAssetDownloading = false;
                 yield return null;
             }
-            if (InventoryManager.instance != null && InventoryManager.instance.loaderForItems  && PlayerPrefs.GetInt("presetPanel") != 1)
+            if (InventoryManager.instance != null && InventoryManager.instance.loaderForItems && PlayerPrefs.GetInt("presetPanel") != 1)
                 InventoryManager.instance.loaderForItems.SetActive(true);
             while (true)
             {
@@ -314,7 +322,7 @@ public class AddressableDownloader : MonoBehaviour
 
                 //loadOp = MemoryManager.GetReferenceIfExist(key, ref flag);
                 //if (!flag)
-                    loadOp = Addressables.LoadAssetAsync<Texture>(key);
+                loadOp = Addressables.LoadAssetAsync<Texture>(key);
 
                 while (!loadOp.IsDone)
                     yield return loadOp;
@@ -346,7 +354,7 @@ public class AddressableDownloader : MonoBehaviour
                         //{
                         AddressableDownloader.bundleAsyncOperationHandle.Add(loadOp);
                         applyOn.GetComponent<CharacterBodyParts>().SetTextureDefault(type, applyOn);
-                            yield break;
+                        yield break;
                         //}
                     }
                     else
@@ -413,7 +421,7 @@ public class AddressableDownloader : MonoBehaviour
             //bool flag = false;
             //loadOp = MemoryManager.GetReferenceIfExist(address, ref flag);
             //if (!flag)
-                loadOp = Addressables.LoadAssetAsync<Texture>(address);
+            loadOp = Addressables.LoadAssetAsync<Texture>(address);
 
             while (!loadOp.IsDone)
             {
@@ -454,21 +462,22 @@ public class AddressableDownloader : MonoBehaviour
             DefaultClothDatabase.instance.GetComponent<SaveCharacterProperties>().SavePlayerProperties();
         }
     }
-    
+
     async Task DeleteCachedAddressables()
     {
-        string res=await GetAsyncRequest(ConstantsGod.BUNDLEUPDATEAPI);
+        string res = await GetAsyncRequest(ConstantsGod.API_BASEURL + ConstantsGod.BUNDLEUPDATEAPI);
         BundleUpdateInfo bundleUpdateInfo = JsonUtility.FromJson<BundleUpdateInfo>(res);
-        if(!PlayerPrefs.HasKey(bundleUpdateInfo.version))
-        {
-            PlayerPrefs.SetString(bundleUpdateInfo.version,"0");
-            for(int i=0;i<bundleUpdateInfo.bundlesNames.Length;i++)
+        if (bundleUpdateInfo.success)
+            if (!PlayerPrefs.HasKey(bundleUpdateInfo.data.version))
             {
-                Addressables.ClearDependencyCacheAsync(bundleUpdateInfo.bundlesNames[i]);
-                Caching.ClearAllCachedVersions(bundleUpdateInfo.bundlesNames[i]);
-                await Task.Delay(400);
+                PlayerPrefs.SetString(bundleUpdateInfo.data.version, "0");
+                for (int i = 0; i < bundleUpdateInfo.data.bundles_list.Length; i++)
+                {
+                    Addressables.ClearDependencyCacheAsync(bundleUpdateInfo.data.bundles_list[i]);
+                    Caching.ClearAllCachedVersions(bundleUpdateInfo.data.bundles_list[i]);
+                    await Task.Delay(400);
+                }
             }
-        }
     }
 
     async Task<string> GetAsyncRequest(string url)
@@ -490,8 +499,14 @@ public class AddressableDownloader : MonoBehaviour
     [System.Serializable]
     public class BundleUpdateInfo
     {
+        public bool success;
+        public BundleList data;
+    }
+    [System.Serializable]
+    public class BundleList
+    {
         public string version;
-        public string[] bundlesNames;
+        public string[] bundles_list;
     }
 }
 

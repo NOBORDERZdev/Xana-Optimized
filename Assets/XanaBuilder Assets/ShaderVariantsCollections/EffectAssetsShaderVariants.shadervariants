@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!200 &20000000
+ShaderVariantCollection:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EffectAssetsShaderVariants
+  m_Shaders:
+  - first: {fileID: 4800000, guid: e198026df304af84a85675be636192ea, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
+      - keywords: CFXR_URP PASS_SHADOW_CASTER SHADOWS_DEPTH
+        passType: 8
+      - keywords: CFXR_URP PASS_SHADOW_CASTER SHADOWS_DEPTH _ALPHABLEND_ON
+        passType: 8
+      - keywords: _ALPHABLEND_ON
+        passType: 8
+      - keywords: _ALPHABLEND_ON _ALPHATEST_ON _CFXR_SINGLE_CHANNEL _CFXR_UV_DISTORTION
+        passType: 8
+      - keywords: _ALPHABLEND_ON _CFXR_DISSOLVE _CFXR_DITHERED_SHADOWS_ON
+        passType: 8
+      - keywords: _ALPHABLEND_ON _CFXR_DITHERED_SHADOWS_ON _CFXR_SINGLE_CHANNEL
+        passType: 8
+      - keywords: _ALPHABLEND_ON _CFXR_DITHERED_SHADOWS_ON _CFXR_SINGLE_CHANNEL _FLIPBOOK_BLENDING
+        passType: 8
+      - keywords: _ALPHABLEND_ON _CFXR_SINGLE_CHANNEL
+        passType: 8
+      - keywords: CFXR_URP _ALPHABLEND_ON
+        passType: 13
+      - keywords: _ALPHABLEND_ON
+        passType: 13
+      - keywords: _ALPHABLEND_ON _ALPHATEST_ON _CFXR_HDR_BOOST _CFXR_SINGLE_CHANNEL
+          _CFXR_UV_DISTORTION _FADING_ON
+        passType: 13
+      - keywords: _ALPHABLEND_ON _CFXR_DISSOLVE _FADING_ON
+        passType: 13
+      - keywords: _ALPHABLEND_ON _CFXR_EDGE_FADING _CFXR_HDR_BOOST _CFXR_SINGLE_CHANNEL
+          _FADING_ON
+        passType: 13
+      - keywords: _ALPHABLEND_ON _CFXR_HDR_BOOST _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 13
+      - keywords: _ALPHABLEND_ON _CFXR_SINGLE_CHANNEL
+        passType: 13
+      - keywords: _ALPHABLEND_ON _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 13
+      - keywords: _ALPHABLEND_ON _CFXR_SINGLE_CHANNEL _FADING_ON _FLIPBOOK_BLENDING
+        passType: 13
+  - first: {fileID: 4800000, guid: 3dda44a7d9cec71439b5b8e20fcbccfb, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
+      - keywords: _ALPHABLEND_ON _CFXR_SINGLE_CHANNEL
+        passType: 8
+      - keywords: _CFXR_DISSOLVE _CFXR_WORLD_SPACE_RING
+        passType: 8
+      - keywords: _CFXR_SINGLE_CHANNEL
+        passType: 8
+      - keywords: 
+        passType: 13
+      - keywords: CFXR_URP
+        passType: 13
+      - keywords: _ALPHABLEND_ON _CFXR_HDR_BOOST _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 13
+      - keywords: _ALPHABLEND_ON _CFXR_SINGLE_CHANNEL
+        passType: 13
+      - keywords: _CFXR_DISSOLVE _CFXR_WORLD_SPACE_RING
+        passType: 13
+      - keywords: _CFXR_HDR_BOOST _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 13
+      - keywords: _FADING_ON
+        passType: 13
+  - first: {fileID: 4800000, guid: 714e760b98304b44292e04841e05f258, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
+      - keywords: _ALPHABLEND_ON _FADING_ON
+        passType: 8
+      - keywords: _FADING_ON
+        passType: 8
+      - keywords: 
+        passType: 13
+      - keywords: _ALPHABLEND_ON _CFXR_HDR_BOOST _FADING_ON
+        passType: 13
+      - keywords: _CFXR_HDR_BOOST _FADING_ON
+        passType: 13
+      - keywords: _FADING_ON
+        passType: 13
+  - first: {fileID: 4800000, guid: bccaaca1f83315c4aad8d95e28fd9149, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: d09abe9036011f94a9e27ccc73cea0ac, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 9f1e1c035a8fc0b4cab1d282789b282b, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 13
+      - keywords: CFXR_URP
+        passType: 13
