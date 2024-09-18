@@ -41,6 +41,7 @@ namespace ZeelKheni.YoutubePlayer.Models
         [JsonProperty("adaptiveFormats")]
         public List<FormatInfo> AdaptiveFormats { get; set;}
         public string hlsUrl;
+       public string baseUrl;
 
         public override string ToString()
         {

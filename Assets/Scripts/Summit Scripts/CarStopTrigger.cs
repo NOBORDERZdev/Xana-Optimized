@@ -24,7 +24,7 @@ public class CarStopTrigger : MonoBehaviour
             var summitrpc = other.gameObject.GetComponent<SummitPlayerRPC>();
             if (summitrpc.isInsideCAr)
             {
-                summitrpc.checkforExit();
+               
                 return;
             }
             
