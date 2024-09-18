@@ -2,10 +2,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
+using UnityEngine.Networking;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 
@@ -55,10 +57,11 @@ public class AddressableDownloader : MonoBehaviour
 #endif
         }
     }
-    void OnCatalogDownload(AsyncOperationHandle handle)
+    async void OnCatalogDownload(AsyncOperationHandle handle)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
+           // await DeleteCachedAddressables();
             StartCoroutine(CheckCatalogs());
         }
         else
@@ -457,6 +460,45 @@ public class AddressableDownloader : MonoBehaviour
             PlayerPrefs.Save();
             DefaultClothDatabase.instance.GetComponent<SaveCharacterProperties>().SavePlayerProperties();
         }
+    }
+    
+    async Task DeleteCachedAddressables()
+    {
+        string res=await GetAsyncRequest(ConstantsGod.BUNDLEUPDATEAPI);
+        BundleUpdateInfo bundleUpdateInfo = JsonUtility.FromJson<BundleUpdateInfo>(res);
+        if(!PlayerPrefs.HasKey(bundleUpdateInfo.version))
+        {
+            PlayerPrefs.SetString(bundleUpdateInfo.version,"0");
+            for(int i=0;i<bundleUpdateInfo.bundlesNames.Length;i++)
+            {
+                Addressables.ClearDependencyCacheAsync(bundleUpdateInfo.bundlesNames[i]);
+                Caching.ClearAllCachedVersions(bundleUpdateInfo.bundlesNames[i]);
+                await Task.Delay(400);
+            }
+        }
+    }
+
+    async Task<string> GetAsyncRequest(string url)
+    {
+        UnityWebRequest www = UnityWebRequest.Get(url);
+        await www.SendWebRequest();
+        while (!www.isDone)
+            await System.Threading.Tasks.Task.Yield();
+
+        if (www.result == UnityWebRequest.Result.ConnectionError)
+        {
+            return www.error;
+        }
+        else
+            return www.downloadHandler.text;
+
+    }
+
+    [System.Serializable]
+    public class BundleUpdateInfo
+    {
+        public string version;
+        public string[] bundlesNames;
     }
 }
 

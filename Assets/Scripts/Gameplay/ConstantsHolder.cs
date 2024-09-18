@@ -116,14 +116,16 @@ public class ConstantsHolder : MonoBehaviour
     {
         get
         {
-            if (EnviornmentName.Contains("DUNE") || EnviornmentName == "TOTTORI METAVERSE" || EnviornmentName.Contains("Daisen"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (!string.IsNullOrEmpty(EnviornmentName))
+                if (EnviornmentName.Contains("DUNE") || EnviornmentName == "TOTTORI METAVERSE" || EnviornmentName.Contains("Daisen"))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            return false;
         }
     }
 
