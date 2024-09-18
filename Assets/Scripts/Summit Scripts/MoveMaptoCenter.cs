@@ -69,6 +69,12 @@ public class MoveMaptoCenter : MonoBehaviour
     {
         Debug.Log("Item Clicked: " + ind);
 
+        if (ind >= 170)
+        {
+            ind -= 3;
+            Debug.Log("Modify Item Clicked: " + ind);
+        }
+
         int arratInd = ind;
         grandChildPing = MapHighlightObjs[arratInd];
         string areaName=grandChildPing.name;
