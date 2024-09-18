@@ -6,13 +6,9 @@ public class ConstantsGod
 
 {
     public static string AUTH_TOKEN = "AUTH_TOKEN";
-    public static string WALLET_ADDRESS = "WALLET_ADDRESS";
     public static string ANIMATIONNAME = "animation name";
     public static string PLAYERNAME = "player name";
     public static string API_BASEURL = "https://app-api.xana.net";
-    public static string XANALIA_SOCKET_ADDRESS = "https://socket.xanalia.com/";
-    public static string TELEGRAM_LOGIN_URL = "https://event-test.xana.net/app?builderLoginHash=";
-    public static string SAVE_DEVICE_XANALIA = "https://app-api.xana.net";
     public static string ANDROIDPATH = "path";
     public static readonly string UPLOADVIDEOPATH = "uploadVideo";
     public static readonly string VIDEOPATH = "Video Path";
@@ -352,5 +348,9 @@ public class ConstantsGod
     public static string UpdateUserRaffleTickets = "/domes/updatetickets";
     public static string GetUserRaffleTickets = "/domes/getusertickets";
     public static string GetUserVisitedDomes = "/domes/getvisitedomes";
+    #endregion
+
+    #region Bundle Update Api
+    public static string BUNDLEUPDATEAPI = "";
     #endregion
 }
