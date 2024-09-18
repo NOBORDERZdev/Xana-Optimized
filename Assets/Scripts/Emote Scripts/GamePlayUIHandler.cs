@@ -259,9 +259,12 @@ public class GamePlayUIHandler : MonoBehaviour
         XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().RaceFinishTime.Clear();
         XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().isLeaderboardShown = false;
         XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().ResetGame();
-        GamePlayButtonEvents.inst.OnExitButtonClick();
+        ReferencesForGamePlay.instance.SetGameplayForPenpenz(true);
+        ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
+        ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
         //StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().MoveToLobby());
         LeaderboardPanel.SetActive(false);
+        GamePlayButtonEvents.inst.OnExitButtonClick();
     }
 
     public void OnSignInBtnClick()
