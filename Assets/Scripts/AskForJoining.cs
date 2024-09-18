@@ -11,6 +11,8 @@ public class AskForJoining : MonoBehaviour
 {
     [SerializeField]
     private GameObject _panel;
+    public float reconnectionTimeLimit = 15f; 
+    public bool hasTimePassed = false;
     //  public GameObject ss;
     // Start is called before the first frame update
     // Start is called before the first frame update
@@ -60,6 +62,35 @@ public class AskForJoining : MonoBehaviour
     //    LoadingHandler.Instance.UpdateLoadingSlider(asyncLoading.progress * 1.1f);
     //}
 
+    void  OnEnable()
+    {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            hasTimePassed = false;
+            StartCoroutine(CheckReconnection());
+        }
+    }
+    void OnDisable()
+    {
+        if(ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            StopCoroutine(CheckReconnection());
+    }
+
+    IEnumerator CheckReconnection()
+    {
+        float elapsedTime = 0f;
+
+        // Wait for the player to reconnect within the time limit
+        while (elapsedTime < reconnectionTimeLimit)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        hasTimePassed = true;
+        // If not reconnected within time, move to RoofTopParty scene
+
+    }
+
     public void GoToMainMenu()
     {
         if (Application.internetReachability != NetworkReachability.NotReachable)
@@ -93,7 +124,12 @@ public class AskForJoining : MonoBehaviour
             if (ReferencesForGamePlay.instance != null)
                 ReferencesForGamePlay.instance.workingCanvas.SetActive(false);
 
-            if (!GameplayEntityLoader.instance.mainController)
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld && hasTimePassed)
+            {
+                PhotonNetwork.Disconnect();
+                ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
+            }
+            if (!GameplayEntityLoader.instance.mainController && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
             {
                 XanaWorldDownloader.ResetAll();
                 BuilderEventManager.ResetSummit?.Invoke();
@@ -123,7 +159,9 @@ public class AskForJoining : MonoBehaviour
             BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none, false);
             TurnCameras(true);
             _panel.SetActive(false);
+
             
+
             if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame
             && XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().isLeaderboardShown)
             {
@@ -131,6 +169,11 @@ public class AskForJoining : MonoBehaviour
             }
             else
             {
+                if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+                {
+                    LoadingHandler.Instance.LoadSceneByIndex("Builder");
+                }
+
                 Destroy(this.gameObject, 5f);
             }
         }

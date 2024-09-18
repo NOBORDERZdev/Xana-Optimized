@@ -54,7 +54,7 @@ public class PermissionPopusSystem : MonoBehaviour
     public void OpenPermissionScreen(int ActionParam = 0)
     {
         actionParameter = ActionParam;
-        if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld || ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
         {
             return;
         }
