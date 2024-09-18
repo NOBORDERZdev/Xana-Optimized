@@ -462,8 +462,7 @@ namespace Photon.Pun.Demo.PunBasics
         {
 
             playerobjects.Clear();
-            Resources.UnloadUnusedAssets();
-            GC.Collect();
+            
         }
 
         public void Disconnect()
