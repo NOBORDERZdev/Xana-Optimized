@@ -62,6 +62,7 @@ public class SummitAIChatHandler : MonoBehaviour
         if (ConstantsHolder.isFromXANASummit && !_NPCInstantiated)
         {
             _NPCInstantiated = true;
+            SummitNPC = false;
             GetNPCDATA(ConstantsHolder.domeId);
         }
 
@@ -97,7 +98,8 @@ public class SummitAIChatHandler : MonoBehaviour
             AINPCAvatar.name = XANASummitDataContainer.aiData.npcData[i].name;
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().npcName.text = XANASummitDataContainer.aiData.npcData[i].name;
             int avatarPresetId = XANASummitDataContainer.aiData.npcData[i].avatarId;
-            AINPCAvatar.GetComponent<SummitNPCAssetLoader>().json = XANASummitDataContainer.avatarJson[avatarPresetId - 1];
+            //AINPCAvatar.GetComponent<SummitNPCAssetLoader>().json = XANASummitDataContainer.avatarJson[avatarPresetId - 1];
+            AINPCAvatar.GetComponent<SummitNPCAssetLoader>().json = XANASummitDataContainer.aiData.npcData[i].avatarCategory;
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().Init();
             AINPCAvatar.GetComponent<AINPCTrigger>().npcID = XANASummitDataContainer.aiData.npcData[i].id;
         }
