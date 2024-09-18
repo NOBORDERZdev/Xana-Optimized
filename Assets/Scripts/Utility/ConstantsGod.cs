@@ -325,6 +325,7 @@ public class ConstantsGod
     public static string GETVISITDOMES = "/domes/getvisitedomes";
     public static string SETVISITDOMEWITHID = "/domes/domesvisits/";
     public static string GETUSERDETAIL = "/users/get-custom-intro";
+    public static string VISITORCOUNT = "/world/get-total-visit/";  //:world_id
     #endregion
     #region Toyota Email Api's
     public static string toyotaEmailApi = "/toyotaAichiWorlds/get-all-space-email-public/";
@@ -351,7 +352,7 @@ public class ConstantsGod
     #endregion
 
     #region Bundle Update Api
-    public static string BUNDLEUPDATEAPI = "";
+    public static string BUNDLEUPDATEAPI = "/app-bundles/get";
     #endregion
 
     #region XANA PARTY WORLD Api's
