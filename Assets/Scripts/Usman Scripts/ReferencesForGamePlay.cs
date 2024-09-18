@@ -609,11 +609,11 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
        
     }
 
-    public void SetGameplayForPenpenz()
+    public void SetGameplayForPenpenz(bool flag)
     {
         foreach (var item in PenpenzDisableUi)
         {
-            item.SetActive(false);
+            item.SetActive(flag);
         }
     }
 }
