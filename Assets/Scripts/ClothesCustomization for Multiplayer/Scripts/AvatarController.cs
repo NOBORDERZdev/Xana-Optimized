@@ -1120,14 +1120,12 @@ public class AvatarController : MonoBehaviour
                             else
                             {
                                 WearDefaultItem(type, this.gameObject, gender);
-                                Debug.LogError("WearDefaultItem 1");
                             }
                         }
                     }
                     else
                     {
                         WearDefaultItem(type, this.gameObject, gender);
-                        Debug.LogError("WearDefaultItem 2");
                     }
                 }
                 else // wear the default item of that specific part.
@@ -1149,7 +1147,6 @@ public class AvatarController : MonoBehaviour
                         else
                         {
                             WearDefaultItem(type, this.gameObject, gender);
-                            Debug.LogError("WearDefaultItem 3");
                         }
                     }
                 }
@@ -1480,7 +1477,6 @@ public class AvatarController : MonoBehaviour
     public void WearDefaultItem(string type, GameObject applyOn, string gender)
     {
         CharacterBodyParts bodyParts = characterBodyParts;
-        Debug.LogError("WearDefaultItem original");
         //Debug.Log("Item: " + type + " --- Gender: " + gender);
 
         if (gender.IsNullOrEmpty())
