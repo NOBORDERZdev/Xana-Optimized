@@ -126,7 +126,12 @@ public class AskForJoining : MonoBehaviour
 
             if (ConstantsHolder.xanaConstants.isXanaPartyWorld && hasTimePassed)
             {
-                PhotonNetwork.Disconnect();
+                if(PhotonNetwork.InRoom)
+                    PhotonNetwork.LeaveRoom();
+                if (PhotonNetwork.InLobby)
+                    PhotonNetwork.LeaveLobby();
+                if (PhotonNetwork.InRoom)
+                    PhotonNetwork.Disconnect();
                 ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
             }
             if (!GameplayEntityLoader.instance.mainController && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
