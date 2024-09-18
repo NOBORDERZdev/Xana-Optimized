@@ -27,7 +27,7 @@ public class WheelTrigger : MonoBehaviour
                     }
                     else
                     {
-                        other.GetComponent<SummitPlayerRPC>().CheckForExitWheel();
+                      //  other.GetComponent<SummitPlayerRPC>().CheckForExitWheel();
                     }
                 }
             }

@@ -110,7 +110,7 @@ public class PlayerDashHandler : MonoBehaviour
         if (_playerController.animator)
             _playerController.animator.SetBool("IsDashing", false);
 
-        if (_playerController.desiredMoveDirection != Vector3.zero)
+        if (_playerController.desiredMoveDirection != Vector3.zero || _playerController.desiredMoveDirectionFPP != Vector3.zero)
         {
             StartCoroutine(DashEndRoutine());
         }
