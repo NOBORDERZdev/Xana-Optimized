@@ -160,7 +160,15 @@ public class AddressableDownloader : MonoBehaviour
                                 {
                                     GameObject downloadedHair = loadOp.Result as GameObject;
                                     Color hairDefaultColor = GetHairDefaultColorFromDownloadedHair(downloadedHair);
-                                    applyOn.StichHairWithColor(itemId, downloadedHair, type, applyOn.gameObject, hairDefaultColor, callFromMultiplayer);
+
+                                    if (ConstantsHolder.xanaConstants.currentButtonIndex == 4 || ConstantsHolder.xanaConstants.currentButtonIndex == 10)
+                                    {
+                                        // Preset Panel 
+                                        // Each Preset has its own color store in its Json implemet that color
+                                        hairDefaultColor = hairColor;
+                                    }
+
+                                        applyOn.StichHairWithColor(itemId, downloadedHair, type, applyOn.gameObject, hairDefaultColor, callFromMultiplayer);
                                 }
                                 else 
                                     applyOn.StichHairWithColor(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, hairColor,callFromMultiplayer);
@@ -197,7 +205,7 @@ public class AddressableDownloader : MonoBehaviour
     public Color GetHairDefaultColorFromDownloadedHair(GameObject downloadedHair)
     {
         string Hair_ColorName = "_BaseColor";
-        SkinnedMeshRenderer skinnedMeshRenderer = downloadedHair.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>();
+        SkinnedMeshRenderer skinnedMeshRenderer = downloadedHair.transform.GetComponentInChildren<SkinnedMeshRenderer>();
         if (skinnedMeshRenderer.sharedMaterials.Length > 1) // In case Of Hat there is 2 material
         {
             if (skinnedMeshRenderer.sharedMaterials[0].name.Contains("Cap") || skinnedMeshRenderer.sharedMaterials[0].name.Contains("Hat") || skinnedMeshRenderer.sharedMaterials[0].name.Contains("Pins"))
