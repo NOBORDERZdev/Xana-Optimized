@@ -2064,17 +2064,16 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.xanaConstants.isCameraMan = false;
         ConstantsHolder.xanaConstants.IsDeemoNFT = false;
         InventoryManager.instance.CheckWhenUserLogin();
+        GameManager.Instance.bottomTabManagerInstance.CheckLoginOrNotForFooterButton();
         if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
         {
             Screen.orientation = ScreenOrientation.LandscapeLeft;
-            LoginRegisterScreen.SetActive(true);
-           // signUpOrloginSelectionPanel.SetActive(true);
+            signUpOrloginSelectionPanel.SetActive(true);
         }
         else
         {
             signUpOrloginSelectionPanel.SetActive(true);
         }
-        //signUpOrloginSelectionPanel.SetActive(true);
         if (_web3APIforWeb2._OwnedNFTDataObj != null)
         {
             _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();

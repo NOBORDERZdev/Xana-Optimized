@@ -64,6 +64,8 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to Open Setting Screen.......
     public void OnClickSettingOpen()
     {
+
+        FeedUIController.Instance.footerCan.SetActive(false);
         settingScreen.SetActive(true);
         SettingScreenSetup();
         OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.MainSetting);
@@ -78,6 +80,8 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to Close Setting Screen......
     public void OnClickSettingClose()
     {
+
+        FeedUIController.Instance.footerCan.SetActive(true);
         settingScreen.SetActive(false);
         OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Othertabs);
     }
@@ -333,6 +337,7 @@ public class SNSSettingController : MonoBehaviour
 
     public void OnClickContactSupportBtn()
     {
+
         UserEmailInputField.Clear();
         EmailSubjectInputField.Clear();
         EmailBodyInputField.Clear();
