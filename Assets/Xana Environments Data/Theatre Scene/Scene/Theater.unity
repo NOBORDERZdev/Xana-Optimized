@@ -655,6 +655,14 @@ PrefabInstance:
       propertyPath: videoPlayerAudioSource
       value: 
       objectReference: {fileID: 306602887}
+    - target: {fileID: 2609470930501225634, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 306602887}
+    - target: {fileID: 2609470930501225634, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: activePlayer
+      value: 
+      objectReference: {fileID: 1354196456}
     - target: {fileID: 3141503287995704522, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: IOSLiveVideoMesh
       value: 
@@ -2125,7 +2133,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 978186181}
-  m_Mesh: {fileID: 4300000, guid: dfb61840dac0cbe449e051792734e64e, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 4d5df18ac3562db42a15f8bc7ad43465, type: 3}
 --- !u!114 &978186186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2738,6 +2746,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.3269386, y: 0.19370437, z: 0.8548031}
   m_Center: {x: -8.735513, y: 1.4924744, z: -2.7312565}
+--- !u!114 &1354196456 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5226123731516465621, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+  m_PrefabInstance: {fileID: 306602884}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306602886}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 638c870cac4da414fba921606d504407, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1366237966
 GameObject:
   m_ObjectHideFlags: 0
