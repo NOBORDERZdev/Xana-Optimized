@@ -93,7 +93,7 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
         // Set the game details in the constants holder
         _XanaConstants.isJoinigXanaPartyGame = true;
         _XanaConstants.XanaPartyGameId = gameId;
-        _XanaConstants.XanaPartyGameName = gameName;
+        //_XanaConstants.XanaPartyGameName = gameName;
         _XanaConstants.isBuilderScene = true;
         _XanaConstants.builderMapID = gameId;
         _XanaConstants.isMasterOfGame = PhotonNetwork.IsMasterClient;
@@ -118,7 +118,7 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
         // Reset the game details in the constants holder
         _XanaConstants.isJoinigXanaPartyGame = false;
         _XanaConstants.XanaPartyGameId = 0;
-        _XanaConstants.XanaPartyGameName = "";
+        //_XanaConstants.XanaPartyGameName = "";
         _XanaConstants.isBuilderScene = false;
         _XanaConstants.builderMapID = 0;
         _XanaConstants.GameIsFinished = true;
@@ -143,7 +143,7 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
     {
         _XanaConstants.isJoinigXanaPartyGame = false;
         _XanaConstants.XanaPartyGameId = 0;
-        _XanaConstants.XanaPartyGameName = "";
+        //_XanaConstants.XanaPartyGameName = "";
         _XanaConstants.isBuilderScene = false;
         _XanaConstants.builderMapID = 0;
     }

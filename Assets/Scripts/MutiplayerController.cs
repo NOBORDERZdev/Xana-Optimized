@@ -214,6 +214,10 @@ namespace Photon.Pun.Demo.PunBasics
 
         private async void JoinLobby(String lobbyName)
         {
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            {
+                lobbyName = ConstantsHolder.xanaConstants.XanaPartyGameName;
+            }
             while (!PhotonNetwork.IsConnectedAndReady)
                 await Task.Delay(1);
 
