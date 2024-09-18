@@ -316,7 +316,7 @@ public class XanaChatSystem : MonoBehaviour
 
             if (PlayerPrefs.GetInt("minimap") == 1)
             {
-                if (ConstantsHolder.xanaConstants.IsMetabuzzEnvironment)
+                if (ConstantsHolder.xanaConstants.IsMetabuzzEnvironment || ConstantsHolder.xanaConstants.isXanaPartyWorld)
                     return;
                 ReferencesForGamePlay.instance.minimap.SetActive(true);
                 ReferencesForGamePlay.instance.SumitMapStatus(true);
