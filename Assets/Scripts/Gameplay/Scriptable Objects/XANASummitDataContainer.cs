@@ -220,6 +220,7 @@ public class XANASummitDataContainer : ScriptableObject
         public string language;
         public string name;
         public int avatarId;
+        public string avatarCategory;
         public string personalityURL;
         public int[] spawnPositionArray;
     }

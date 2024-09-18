@@ -14,6 +14,7 @@ namespace ZeelKheni.YoutubePlayer.Api
         {
             var requestUrl = $"{YoutubeUrl}/api/v1/videos/{videoId}";
             var videoInfo = await WebRequest.GetAsync<VideoInfo>(requestUrl, cancellationToken, urls, videoId,skipPrevious);
+           // videoInfo.baseUrl = urls[0].Uri;
             if (videoInfo?.VideoThumbnails != null)
             {
                 foreach (var thumbnail in videoInfo.VideoThumbnails)
