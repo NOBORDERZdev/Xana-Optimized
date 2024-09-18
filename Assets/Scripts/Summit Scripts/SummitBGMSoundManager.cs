@@ -1,4 +1,4 @@
-using CSCore;
+//using CSCore;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -34,6 +34,12 @@ public class SummitBGMSoundManager : MonoBehaviour
         if (ConstantsHolder.isFromXANASummit)
         {
             string audioUrl=summitDataContainer.GetAudioFile(ConstantsHolder.domeId);
+            StartCoroutine(SetAudioFromUrl(audioUrl));
+        }
+
+        if (WorldItemView.m_EnvName == "XANA Summit")
+        {
+            string audioUrl = summitDataContainer.GetAudioFile(170);
             StartCoroutine(SetAudioFromUrl(audioUrl));
         }
     }

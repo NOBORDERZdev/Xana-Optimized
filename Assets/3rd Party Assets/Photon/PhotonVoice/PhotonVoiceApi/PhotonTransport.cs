@@ -40,56 +40,49 @@ namespace Photon.Voice
             this.logger = logger;
         }
 
-        internal object[] buildVoicesInfo(IEnumerable<LocalVoice> voicesToSend, bool logInfo)
+        internal object[] buildVoicesInfo(LocalVoice v)
         {
-            object[] infos = new object[voicesToSend.Count()];
+            object[] infos = new object[1];
 
             object[] content = new object[] { (byte)0, EventSubcode.VoiceInfo, infos };
-            int i = 0;
-            foreach (var v in voicesToSend)
-            {
-                infos[i] = new Dictionary<byte, object>() {
-                    { (byte)EventParam.VoiceId, v.id },
-                    { (byte)EventParam.Codec, v.Info.Codec },
-                    { (byte)EventParam.SamplingRate, v.Info.SamplingRate },
-                    { (byte)EventParam.Channels, v.Info.Channels },
-                    { (byte)EventParam.FrameDurationUs, v.Info.FrameDurationUs },
-                    { (byte)EventParam.Bitrate, v.Info.Bitrate },
-                    { (byte)EventParam.Width, v.Info.Width },
-                    { (byte)EventParam.Height, v.Info.Height },
-                    { (byte)EventParam.FPS, v.Info.FPS },
-                    { (byte)EventParam.KeyFrameInt, v.Info.KeyFrameInt },
-                    { (byte)EventParam.UserData, v.Info.UserData },
-                    { (byte)EventParam.EventNumber, v.evNumber }
-
-                };
-                i++;
-
-                if (logInfo)
-                {
-                    logger.LogInfo(v.LogPrefix + " Sending info: " + v.Info.ToString() + " ev=" + v.evNumber);
-                }
-            }
+            infos[0] = new Dictionary<byte, object>() {
+                { (byte)EventParam.VoiceId, v.ID },
+                { (byte)EventParam.Codec, v.Info.Codec },
+                { (byte)EventParam.SamplingRate, v.Info.SamplingRate },
+                { (byte)EventParam.Channels, v.Info.Channels },
+                { (byte)EventParam.FrameDurationUs, v.Info.FrameDurationUs },
+                { (byte)EventParam.Bitrate, v.Info.Bitrate },
+                { (byte)EventParam.Width, v.Info.Width },
+                { (byte)EventParam.Height, v.Info.Height },
+                { (byte)EventParam.FPS, v.Info.FPS },
+                { (byte)EventParam.KeyFrameInt, v.Info.KeyFrameInt },
+                { (byte)EventParam.UserData, v.Info.UserData },
+                { (byte)EventParam.EventNumber, v.EvNumber }
+            };
             return content;
         }
 
         internal object[] buildVoiceRemoveMessage(LocalVoice v)
         {
-            byte[] ids = new byte[] { v.id };
-
+            byte[] ids = new byte[] { v.ID };
             object[] content = new object[] { (byte)0, EventSubcode.VoiceRemove, ids };
-
-            logger.LogInfo(v.LogPrefix + " remove sent");
-
             return content;
         }
 
-        internal object[] buildFrameMessage(byte voiceId, byte evNumber, ArraySegment<byte> data, FrameFlags flags)
+        internal object[] buildFrameMessage(byte voiceId, byte evNumber, byte frNumber, ArraySegment<byte> data, FrameFlags flags)
         {
-            return new object[] { voiceId, evNumber, data, (byte)flags };
+            if (evNumber != frNumber)
+            {
+                return new object[] { voiceId, evNumber, data, (byte)flags, frNumber };
+            }
+            else
+            {
+                return new object[] { voiceId, evNumber, data, (byte)flags }; // save 1 byte if numbers match
+            }
         }
 
-        internal void onVoiceEvent(object content0, int channelId, int playerId, int localPlayerId)
+        // isLocalPlayer is required only for VoiceClient.RoundTripTime calculation
+        internal void onVoiceEvent(object content0, int channelId, int playerId, bool isLocalPlayer)
         {
             object[] content = (object[])content0;
             if ((byte)content[0] == (byte)0)
@@ -103,7 +96,7 @@ namespace Photon.Voice
                         this.onVoiceRemove(channelId, playerId, content[2]);
                         break;
                     default:
-                        logger.LogError("[PV] Unknown sevent subcode " + content[1]);
+                        logger.Log(LogLevel.Error, "[PV] Unknown sevent subcode " + content[1]);
                         break;
                 }
             }
@@ -117,7 +110,14 @@ namespace Photon.Voice
                 {
                     flags = (FrameFlags)content[3];
                 }
-                this.voiceClient.onFrame(channelId, playerId, voiceId, evNumber, new FrameBuffer(receivedBytes, flags), playerId == localPlayerId);
+                byte frNumber = evNumber;
+                if (content.Length  > 4)
+                {
+                    frNumber = (byte)content[4];
+                }
+                var buffer = new FrameBuffer(receivedBytes, flags, frNumber);
+                this.voiceClient.onFrame( playerId, voiceId, evNumber, ref buffer, isLocalPlayer);
+                buffer.Release();
             }
         }
 
@@ -136,7 +136,7 @@ namespace Photon.Voice
         private void onVoiceRemove(int channelId, int playerId, object payload)
         {
             var voiceIds = (byte[])payload;
-            voiceClient.onVoiceRemove(channelId, playerId, voiceIds);
+            voiceClient.onVoiceRemove(playerId, voiceIds);
         }
 
         private VoiceInfo createVoiceInfoFromEventPayload(Dictionary<byte, object> h)

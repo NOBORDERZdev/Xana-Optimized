@@ -17,10 +17,11 @@ public class SummitDomeShaderApply : MonoBehaviour
     public MeshRenderer DomeMeshRenderer;
     public MeshRenderer LogoMeshRenderer;
     public SpriteRenderer LogoSpriteRenderer;
-
+    public DomeBannerClick clickListener;
     public async void Init()
     {
         DomeBannerParent.SetActive(true);
+        clickListener.DomeId = DomeId;
         if (!string.IsNullOrEmpty(ImageUrl))
         {
             Texture2D texture=await DownloadDomeTexture(ImageUrl);
@@ -81,4 +82,6 @@ public class SummitDomeShaderApply : MonoBehaviour
         request.Dispose();
         return null;
     }
+
+ 
 }

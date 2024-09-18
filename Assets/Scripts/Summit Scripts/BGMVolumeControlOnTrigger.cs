@@ -3,10 +3,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class BGMVolumeControlOnTrigger : MonoBehaviour
 {
     public AdvancedYoutubePlayer VideoPlayerController;
+    public AudioSource PrePrecordered;
     public bool IsPlayerCollided = false;
 
     private void Start()
@@ -25,6 +27,16 @@ public class BGMVolumeControlOnTrigger : MonoBehaviour
             {
                 IsPlayerCollided = true;
                 SetBGMAudioOnTrigger(true);
+                if (PrePrecordered && PrePrecordered.isActiveAndEnabled)
+                {
+                    SoundSettings.soundManagerSettings.videoSource = PrePrecordered;
+                    //if(IsPlayerCollided)
+                    // SoundSettings.soundManagerSettings.SetBgmVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
+                    SoundSettings.soundManagerSettings.SetAudioSourceSliderVal(PrePrecordered, PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
+
+                    PrePrecordered.mute = false;
+                }
+
             }
         }
     }
@@ -37,9 +49,15 @@ public class BGMVolumeControlOnTrigger : MonoBehaviour
             {
                 IsPlayerCollided = false;
                 SetBGMAudioOnTrigger(false);
+                if (PrePrecordered && PrePrecordered.isActiveAndEnabled)
+                {
+                    SoundSettings.soundManagerSettings.videoSource = null;
+                    PrePrecordered.mute = true;
+                }
             }
         }
     }
+
 
     public void SetBGMAudioOnTrigger(bool _mute)
     {

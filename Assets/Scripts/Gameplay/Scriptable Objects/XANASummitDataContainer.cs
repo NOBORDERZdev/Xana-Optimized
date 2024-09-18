@@ -11,6 +11,7 @@ public class XANASummitDataContainer : ScriptableObject
 
     public GameObject maleAIAvatar;
     public GameObject femaleAIAvatar;
+    public GameObject penguinAvatar;
     public string[] avatarJson;
     public DomeData summitData=new DomeData();
     public AIData aiData=new AIData();
@@ -41,7 +42,7 @@ public class XANASummitDataContainer : ScriptableObject
         summitData=JsonUtility.FromJson<DomeData>(result);
 
         // Activate Map
-        ReferencesForGamePlay.instance.FullScreenMapStatus(true);
+        //ReferencesForGamePlay.instance.FullScreenMapStatus(true);
     }
 
     public async Task<bool> GetAIData(int domeId)
@@ -107,6 +108,18 @@ public class XANASummitDataContainer : ScriptableObject
         return new[] { string.Empty, string.Empty,string.Empty };
     }
 
+    public DomeGeneralData GetDomeData(int DomeId)
+    {
+        for (int i = 0; i < summitData.domes.Count; i++)
+        {
+            if (DomeId == summitData.domes[i].id)
+            {
+                return summitData.domes[i];
+            }
+        }
+        return null;
+    }
+
     #region DomeInfo
 
     [System.Serializable]
@@ -138,7 +151,15 @@ public class XANASummitDataContainer : ScriptableObject
         public int maxPlayer;
         public List<SubWorldInfo> SubWorlds;
         public bool isSubWorld;
+        public string domeType ;
+        public string domeCategory ;
+        public string mediaType ;
+        public string proportionType ;
+        public bool isYoutubeUrl ;
+        public string videoType ;
+        public string mediaUpload ;
     }
+
 
     [System.Serializable]
     public class SubWorldInfo
@@ -199,6 +220,7 @@ public class XANASummitDataContainer : ScriptableObject
         public string language;
         public string name;
         public int avatarId;
+        public string avatarCategory;
         public string personalityURL;
         public int[] spawnPositionArray;
     }

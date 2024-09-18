@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 1}
+  m_AmbientSkyColor: {r: 0.9411765, g: 0.9411765, b: 0.9411765, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -318,7 +318,7 @@ Transform:
   m_Children:
   - {fileID: 8938996124493968789}
   - {fileID: 3343461059855189256}
-  - {fileID: 3738884554603832630}
+  - {fileID: 1185345891}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -334,7 +334,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd617247844f1b447a0320228ca36a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldJson: '{"SceneObjects":[{"addressableKey":"ULM_Hanging_Pictures","name":"ULM_Hanging_Pictures","position":{"x":0.0,"y":4.697647571563721,"z":0.0},"rotation":{"x":-0.7071068286895752,"y":0.0,"z":0.0,"w":0.7071068286895752},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.0,"y":5.961774826049805,"z":0.0},"m_Extent":{"x":16.79007339477539,"y":4.26871919631958,"z":16.8712158203125}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ULM_Skybox","name":"ULM_Skybox","position":{"x":0.0,"y":-1.264127254486084,"z":0.0},"rotation":{"x":-0.7069847583770752,"y":0.0,"z":0.0,"w":0.7072287797927856},"scale":{"x":50000.0,"y":50000.00390625,"z":50000.00390625},"objectBound":{"m_Center":{"x":-0.000046566128730773926,"y":2.410572008670897e-8,"z":-0.00006984919309616089},"m_Extent":{"x":499.9999084472656,"y":500.17254638671877,"z":500.1724548339844}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ULM_Wall_Pictures","name":"ULM_Wall_Pictures","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":-0.0000011492035127957934,"y":0.7071068286895752,"z":0.7071068286895752,"w":0.0000011492030580484425},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.004031669814139605,"y":2.417008399963379,"z":-0.0032769497483968736},"m_Extent":{"x":13.176725387573243,"y":0.7456938624382019,"z":13.175824165344239}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}}]}'
+  worldJson: '{"SceneObjects":[{"addressableKey":"ULM_Hanging_Pictures","name":"ULM_Hanging_Pictures","position":{"x":0.0,"y":4.697647571563721,"z":0.0},"rotation":{"x":-0.7071068286895752,"y":0.0,"z":0.0,"w":0.7071068286895752},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.0,"y":5.961774826049805,"z":0.0},"m_Extent":{"x":16.79007339477539,"y":4.26871919631958,"z":16.8712158203125}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ULM_Skybox","name":"ULM_Skybox","position":{"x":0.0,"y":-1.264127254486084,"z":0.0},"rotation":{"x":-0.7069847583770752,"y":0.0,"z":0.0,"w":0.7072287797927856},"scale":{"x":50000.0,"y":50000.00390625,"z":50000.00390625},"objectBound":{"m_Center":{"x":-0.000046566128730773926,"y":2.410572008670897e-8,"z":-0.00006984919309616089},"m_Extent":{"x":499.9999084472656,"y":500.17254638671877,"z":500.1724548339844}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ULM
+    Image Holder","name":"ULM Image Holder","position":{"x":0.0,"y":-1.264127254486084,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.004021644592285156,"y":1.5267210006713868,"z":-0.007465362548828125},"m_Extent":{"x":13.06685733795166,"y":1.5267210006713868,"z":13.055761337280274}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}}]}'
   assetsParent: {fileID: 903830213}
 --- !u!1001 &1014264061
 PrefabInstance:
@@ -532,6 +533,11 @@ Transform:
   m_Father: {fileID: 287902778}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1185345891 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8645120974932150046, guid: b869de9fb8a15fe40a1563fe5300a001, type: 3}
+  m_PrefabInstance: {fileID: 8645120975915644541}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1466450090
 GameObject:
   m_ObjectHideFlags: 0
@@ -808,63 +814,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 855271436342301619, guid: 6b82d16117246414a8e98068f44fddec, type: 3}
   m_PrefabInstance: {fileID: 2718156337501279931}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3443941522500052300
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 903830213}
-    m_Modifications:
-    - target: {fileID: 1685377106948528832, guid: 0571529e2d3ea0748ba359076dbce299, type: 3}
-      propertyPath: m_Name
-      value: ULM_Wall_Pictures
-      objectReference: {fileID: 0}
-    - target: {fileID: 2029004810586308730, guid: 0571529e2d3ea0748ba359076dbce299, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2029004810586308730, guid: 0571529e2d3ea0748ba359076dbce299, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2029004810586308730, guid: 0571529e2d3ea0748ba359076dbce299, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2029004810586308730, guid: 0571529e2d3ea0748ba359076dbce299, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2029004810586308730, guid: 0571529e2d3ea0748ba359076dbce299, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.0000011492031
-      objectReference: {fileID: 0}
-    - target: {fileID: 2029004810586308730, guid: 0571529e2d3ea0748ba359076dbce299, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.0000011492035
-      objectReference: {fileID: 0}
-    - target: {fileID: 2029004810586308730, guid: 0571529e2d3ea0748ba359076dbce299, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 2029004810586308730, guid: 0571529e2d3ea0748ba359076dbce299, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 2029004810586308730, guid: 0571529e2d3ea0748ba359076dbce299, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2029004810586308730, guid: 0571529e2d3ea0748ba359076dbce299, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2029004810586308730, guid: 0571529e2d3ea0748ba359076dbce299, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0571529e2d3ea0748ba359076dbce299, type: 3}
 --- !u!1001 &3580448203586167872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -920,13 +869,69 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6770832092484987578, guid: 5e78596cd74596440bd844e21b1704ff, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e78596cd74596440bd844e21b1704ff, type: 3}
---- !u!4 &3738884554603832630 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2029004810586308730, guid: 0571529e2d3ea0748ba359076dbce299, type: 3}
-  m_PrefabInstance: {fileID: 3443941522500052300}
-  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8645120975915644541
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 903830213}
+    m_Modifications:
+    - target: {fileID: 8645120974932150046, guid: b869de9fb8a15fe40a1563fe5300a001, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645120974932150046, guid: b869de9fb8a15fe40a1563fe5300a001, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645120974932150046, guid: b869de9fb8a15fe40a1563fe5300a001, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2641273
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645120974932150046, guid: b869de9fb8a15fe40a1563fe5300a001, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645120974932150046, guid: b869de9fb8a15fe40a1563fe5300a001, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645120974932150046, guid: b869de9fb8a15fe40a1563fe5300a001, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645120974932150046, guid: b869de9fb8a15fe40a1563fe5300a001, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645120974932150046, guid: b869de9fb8a15fe40a1563fe5300a001, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645120974932150046, guid: b869de9fb8a15fe40a1563fe5300a001, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645120974932150046, guid: b869de9fb8a15fe40a1563fe5300a001, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645120974932150046, guid: b869de9fb8a15fe40a1563fe5300a001, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645120974932150047, guid: b869de9fb8a15fe40a1563fe5300a001, type: 3}
+      propertyPath: m_Name
+      value: ULM Image Holder
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b869de9fb8a15fe40a1563fe5300a001, type: 3}
 --- !u!4 &8938996124493968789 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5601914121168490965, guid: 5e78596cd74596440bd844e21b1704ff, type: 3}

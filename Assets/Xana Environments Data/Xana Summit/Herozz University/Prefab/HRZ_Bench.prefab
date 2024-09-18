@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5580436479324667947}
   - component: {fileID: 8853631548554497934}
   - component: {fileID: 6717855199015779140}
+  - component: {fileID: 5402921061069758026}
   m_Layer: 0
   m_Name: HRZ_Bench
   m_TagString: Untagged
@@ -25,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5060464633319987857}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -40,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5060464633319987857}
-  m_Mesh: {fileID: 649704437669732269, guid: f8aa5646a21004a479b50bb661e3593d, type: 3}
+  m_Mesh: {fileID: 649704437669732269, guid: 6547ca79ffc45bf459c76ae0cbc4248e, type: 3}
 --- !u!23 &6717855199015779140
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -83,3 +84,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5402921061069758026
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5060464633319987857}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 649704437669732269, guid: 6547ca79ffc45bf459c76ae0cbc4248e, type: 3}

@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,20 +11,25 @@ public class CarStopTrigger : MonoBehaviour
     private bool StopCar = false;
 
     private List<GameObject> Players= new List<GameObject>();
-
+    private void OnEnable()
+    {
+        MutiplayerController.onRespawnPlayer += () => { Players.Clear(); StopCar = false; };
+    }
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "PhotonLocalPlayer")
         {
+            if(MutiplayerController.instance.isShifting) { return; }
+
             var summitrpc = other.gameObject.GetComponent<SummitPlayerRPC>();
             if (summitrpc.isInsideCAr)
             {
-                summitrpc.checkforExit();
+               
                 return;
             }
             
-
-           Players.Add(other.gameObject);
+           if(! Players.Contains(other.gameObject) )
+            Players.Add(other.gameObject);
             StopCar = true;
           
         }
@@ -39,7 +45,9 @@ public class CarStopTrigger : MonoBehaviour
                     if (player != null)
                     {
                         StartCoroutine(CarNavigationManager.CarNavigationInstance.TPlayer(other.gameObject, player, this));
+                        break;
                     }
+                    
                 }
             }
         }

@@ -122,6 +122,7 @@ public class Web3Auth : MonoBehaviour
     {
         if (url.Contains("ENV"))
         {
+            PlayerPrefs.SetString("DeeplinkDome", url);
             return;
         }
         else if (url.Contains("web3auth"))

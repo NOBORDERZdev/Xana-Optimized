@@ -37,8 +37,11 @@ public class GamePlayUIHandler : MonoBehaviour
     public LoadEmoteAnimations ref_LoadEmoteAnimations;
 
     public GameObject portraitJoystick;
-
     public GameObject jumpBtn;
+    public GameObject JumpUI;
+    public GameObject ChatSystem;
+    //Summit related UI References
+    public EmailEntryUIController SummitCXOEmailAuthUIHandle;
 
     public GameObject JJPortalPopup;
     public GameObject currentPortalObject;
@@ -74,6 +77,8 @@ public class GamePlayUIHandler : MonoBehaviour
     public void OnHelpButtonClick(bool isOn)
     {
         gamePlayUIParent.SetActive(!isOn);//rik.......
+        JumpUI.SetActive(!isOn);
+        ChatSystem.SetActive(!isOn);
         GamePlayButtonEvents.inst.UpdateHelpObjects(isOn);
     }
 

@@ -1,6 +1,8 @@
 using UnityEngine;
 using RenderHeads.Media.AVProVideo;
 using UnityEngine.Video;
+using System;
+using System.Linq;
 
 public class UploadPropertyBehaviour : MonoBehaviour
 {
@@ -240,6 +242,11 @@ public class UploadPropertyBehaviour : MonoBehaviour
 
     public string ExtractVideoIdFromUrl(string url)
     {
+
+        Uri uri = new Uri(url);
+        if (!url.Contains("v="))
+            return uri.Segments.Last();
+
         // Find the position of the "v=" parameter
         int startIndex = url.IndexOf("v=");
 
@@ -254,6 +261,19 @@ public class UploadPropertyBehaviour : MonoBehaviour
             // Get the video ID
             string videoId = url.Substring(startIndex, endIndex - startIndex);
             return videoId;
+        }
+        else if (url.Contains("youtu.be"))
+        {
+            // https://youtu.be/p4Sg5894rUg - To extract ID from Shortened URL like this:
+            startIndex = url.LastIndexOf('/');
+            if (startIndex != -1)
+            {
+                startIndex += 1;
+                int endIndex = url.Length;
+
+                string videoId = url[startIndex..endIndex]; // startIndex, endIndex - startIndex
+                return videoId;
+            }
         }
 
         // If "v=" parameter is not found, handle accordingly (e.g., return null or an error message)

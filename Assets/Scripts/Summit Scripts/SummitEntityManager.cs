@@ -37,7 +37,7 @@ public class SummitEntityManager : MonoBehaviour, IMatchmakingCallbacks
 
     public async Task InstantiateCAR()
     {
-        if(!PhotonNetwork.IsMasterClient) { return; }
+        if(!PhotonNetwork.IsMasterClient || CarNavigationManager.CarNavigationInstance.Cars.Count>0) { return; }
             CarSpline = SplineDone.Instance;
         var length = CarSpline.GetSplineLength(.0005f);
        var distancebetweencar = length / 12;
@@ -50,7 +50,7 @@ public class SummitEntityManager : MonoBehaviour, IMatchmakingCallbacks
             var splineFollow = obje.GetComponent<SplineFollower>();
             
             splineFollow.MoveAmount = firstSpawn;
-            firstSpawn = (firstSpawn + distancebetweencar) % length;
+            firstSpawn = (firstSpawn + distancebetweencar +Random.Range(0,20)) % length;
             splineFollow.Setup((byte)(80 +i));
             splineFollow.Spline = CarSpline;
             await Task.Delay(100);

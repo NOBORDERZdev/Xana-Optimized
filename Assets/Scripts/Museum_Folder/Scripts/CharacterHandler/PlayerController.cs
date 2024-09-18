@@ -107,6 +107,8 @@ public class PlayerController : MonoBehaviour
 
     internal float animationBlendValue = 0;
     internal Vector3 desiredMoveDirection;
+    internal Vector3 desiredMoveDirectionFPP;
+
     private void OnEnable()
     {
         BuilderEventManager.OnHideOpenSword += HideorOpenSword;
@@ -190,10 +192,10 @@ public class PlayerController : MonoBehaviour
             if (cinemachineCollider != null)
             {
                 int noPostProcessingLayerIndex = LayerMask.NameToLayer("NoPostProcessing");
-                int characterLayerIndex = LayerMask.NameToLayer("Character");
+                //int characterLayerIndex = LayerMask.NameToLayer("Character");
                 // Remove the layer from the collide against mask
                 cinemachineCollider.m_CollideAgainst &= ~(1 << noPostProcessingLayerIndex);
-                cinemachineCollider.m_CollideAgainst &= ~(1 << characterLayerIndex);
+                //cinemachineCollider.m_CollideAgainst &= ~(1 << characterLayerIndex);
             }
             cinemachineFreeLook = GameplayEntityLoader.instance.PlayerCamera.GetComponent<CinemachineFreeLook>();
             topRigDefaultRadius = cinemachineFreeLook.m_Orbits[0].m_Radius;
@@ -541,6 +543,7 @@ public class PlayerController : MonoBehaviour
         Vector2 movementInput = new Vector2(horizontal, vertical);
 
         Vector3 move = transform.right * movementInput.x + transform.forward * movementInput.y;
+        desiredMoveDirectionFPP = move;
         _IsGrounded = characterController.isGrounded;
         animator.SetBool("IsGrounded", _IsGrounded);
         if (characterController.velocity.y < 0)
@@ -1287,6 +1290,17 @@ public class PlayerController : MonoBehaviour
             //  EmoteAnimationHandler.Instance.StopAllCoroutines();
         }
 
+    }
+
+    public void StopAnimationEmote()
+    {
+        if (ActionManager.IsAnimRunning)
+        {
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            //  EmoteAnimationHandler.Instance.StopAllCoroutines();
+        }
     }
 
     public void JumpNotAllowed()

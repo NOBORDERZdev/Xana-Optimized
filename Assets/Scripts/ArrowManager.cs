@@ -11,6 +11,7 @@ using UnityEngine.Networking;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using Photon.Voice.PUN;
+using UnityEngine.Animations.Rigging;
 
 public class ArrowManager : MonoBehaviourPunCallbacks
 {
@@ -37,8 +38,8 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     public delegate void CommentDelegate(string iconUrl);
     public static event ReactionDelegate ReactionDelegateButtonClickEvent;
     public static event CommentDelegate CommentDelegateButtonClickEvent;
-    public delegate void UserNameToggleDeligate(int userNameToggleConstant);
-    public static event UserNameToggleDeligate userNameToggleDelegate;
+
+
     public static int viewID;
     public static string parentTransform;
 
@@ -85,6 +86,8 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         {
             if (ConstantsHolder.xanaConstants.isBuilderScene)
                 GamificationComponentData.instance.nameCanvas = PhotonUserName.GetComponentInParent<Canvas>();
+            if(SMBCManager.Instance)
+                SMBCManager.Instance.NameCanvas= PhotonUserName.GetComponentInParent<Canvas>();
             if (AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer == null)
             {
                 AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = this.gameObject;
@@ -130,10 +133,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     {
         ReactionDelegateButtonClickEvent?.Invoke(url);
     }
-    public static void OnInvokeUsername(int userNameToggle)
-    {
-        userNameToggleDelegate?.Invoke(userNameToggle);
-    }
+   
     public static void OnInvokeCommentButtonClickEvent(string text)
     {
 
@@ -141,19 +141,22 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     }
 
 
-    private void OnEnable()
+    public override void OnEnable()
     {
         ReactionDelegateButtonClickEvent += OnChangeReactionIcon;
         CommentDelegateButtonClickEvent += OnChangeText;
-        userNameToggleDelegate += OnChangeUsernameToggle;
+        ConstantsHolder.userNameToggleDelegate += OnChangeUsernameToggle;
+        OnChangeUsernameToggle(ConstantsHolder.xanaConstants.userNameVisibilty);
+        base.OnEnable();
 
     }
 
-    private void OnDisable()
+    public override void OnDisable ()
     {
         ReactionDelegateButtonClickEvent -= OnChangeReactionIcon;
         CommentDelegateButtonClickEvent -= OnChangeText;
-        userNameToggleDelegate -= OnChangeUsernameToggle;
+        ConstantsHolder.userNameToggleDelegate -= OnChangeUsernameToggle;
+        base.OnDisable();
 
     }
 
@@ -167,7 +170,19 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     }
     private void OnChangeUsernameToggle(int userNameToggleConstant)
     {
-        gameObject.GetComponent<PhotonView>().RPC("sendDataUserNAmeToggle", RpcTarget.All, userNameToggleConstant, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
+        if (userNameToggleConstant == 1)
+        {
+            Debug.Log("Onbtn:" + ReferencesForGamePlay.instance.onBtnUsername);
+            PhotonUserName.enabled = true;
+
+        }
+        else
+        {
+            Debug.Log("Offbtn:" + ReferencesForGamePlay.instance.onBtnUsername);
+            PhotonUserName.enabled = false;
+        }
+
+        //  gameObject.GetComponent<PhotonView>().RPC("sendDataUserNAmeToggle", RpcTarget.All, userNameToggleConstant, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);  Zeel Commented We have to disable for our side oly why we are disabling for all other players as well
     }
     private void OnChangeText(string text)
     {

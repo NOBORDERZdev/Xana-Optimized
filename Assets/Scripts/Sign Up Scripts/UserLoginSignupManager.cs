@@ -59,6 +59,9 @@ public class UserLoginSignupManager : MonoBehaviour
     public RawImage AiPresetImageforEditProfil;
     public Button NameScreenNextButton;
     public Button ProfilePicNextButton;
+    public Sprite NameFeildSelectedSprite;
+    public Sprite NameFeildUnSelectedSprite;
+    public Image NameScreenNextButtonImage;
     public GameObject NameScreenLoader;
     public GameObject ProfilePicScreenLoader;
     public Image EditProfileImage;
@@ -91,6 +94,10 @@ public class UserLoginSignupManager : MonoBehaviour
     EyesBlinking ref_EyesBlinking;
     [Header("Bools Fields")]
     private bool _isUserClothDataFetched = false;
+
+    public float DisplayNameFieldMoveUpValue = 500f; // Distance to move the input field up
+    Vector2 _originalPosition;
+    AdvancedInputField _displayNameInputField;
     //public bool LoggedInAsGuest = false;
 
     private void OnEnable()
@@ -117,12 +124,39 @@ public class UserLoginSignupManager : MonoBehaviour
         {
             Directory.CreateDirectory(saveDir);
         }
+
+        _displayNameInputField = displayrNameField.GetComponent<AdvancedInputField>();
+
+        _originalPosition = _displayNameInputField.GetComponent<RectTransform>().anchoredPosition;
+
+        
+        if (_displayNameInputField != null)
+        {
+            _displayNameInputField.OnBeginEdit.AddListener(MoveInputFieldUp);
+            _displayNameInputField.OnEndEdit.AddListener(MoveInputFieldDown);
+        }
     }
 
     private void OnDisable()
     {
         verficationPlaceHolder.OnValueChanged.RemoveListener(delegate { ValueChangeCheck(); });
         Web3Web2Handler.AllDataFetchedfromServer -= Web3EventForNFTData;
+    }
+
+
+    private void MoveInputFieldUp(BeginEditReason reason)
+    {
+        // Move the input field up by a certain distance
+        _displayNameInputField.GetComponent<RectTransform>().anchoredPosition = new Vector2(
+            _originalPosition.x,
+            _originalPosition.y + DisplayNameFieldMoveUpValue
+        );
+    }
+
+    private void MoveInputFieldDown(string text, EndEditReason reason)
+    {
+        // Move the input field back to its original position
+        _displayNameInputField.GetComponent<RectTransform>().anchoredPosition = _originalPosition;
     }
 
 
@@ -259,10 +293,18 @@ public class UserLoginSignupManager : MonoBehaviour
                 DefaultClothDatabase.instance.GetComponent<SaveCharacterProperties>().SavePlayerProperties();
                 InventoryManager.instance.OnSaveBtnClicked();  // reg complete go home
             }
+            if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit && !ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+            {
+                if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                {
+                    Screen.orientation = ScreenOrientation.Portrait;
+                    signUpOrloginSelectionPanel.SetActive(false);
+                }
+
+            }
         }
         else
         {
-
             signUpOrloginSelectionPanel.SetActive(false);
 
             if (!PlayerPrefs.HasKey("shownWelcome"))
@@ -275,8 +317,6 @@ public class UserLoginSignupManager : MonoBehaviour
                 {
                     InventoryManager.instance.StartPanel_PresetParentPanelSummit.SetActive(true);
                 }
-               
-               
             }
         }
 
@@ -337,16 +377,17 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void BackFromLoginSelection()
     {
-       
         if (!ConstantsHolder.xanaConstants.openLandingSceneDirectly && ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
         {
-           
-            LoginRegisterScreen.SetActive(true);
+
+            signUpOrloginSelectionPanel.SetActive(true);
         }
         else {
             
             signUpOrloginSelectionPanel.SetActive(true);
+
         }
+        emailOrWalletLoginPanel.SetActive(false);
     }
 
     public void OnClickLoginWithEmail()
@@ -1010,6 +1051,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
         }
         else if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit) {
+
             if (displayrname == "")
             {
                 keytoLocalize = TextLocalization.GetLocaliseTextByKey("Display name or username should not be empty.");
@@ -1099,7 +1141,17 @@ public class UserLoginSignupManager : MonoBehaviour
             PlayerPrefs.SetInt("IsProcessComplete", 1);// user is registered as guest/register.
             GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
             if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
-            LoadSummit();
+            {
+                LoadSummit();
+            }
+            else {
+                if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                    if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                {
+                    Screen.orientation = ScreenOrientation.Portrait;
+                }
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+            }
             return;
         }
         ConstantsHolder.uniqueUserName = userUsername;
@@ -1158,6 +1210,21 @@ public class UserLoginSignupManager : MonoBehaviour
         errorHandler.ShowErrorMessage(errorMSg, errorTextMsg);
         NameScreenLoader.SetActive(false);
         NameScreenNextButton.interactable = true;
+
+    }
+    public void OnValueChangedSprite() {
+        if (NameFeildSelectedSprite != null && NameFeildUnSelectedSprite != null)
+        {
+            if (!string.IsNullOrEmpty(displayrNameField.Text))
+            {
+                NameScreenNextButtonImage.sprite = NameFeildSelectedSprite;
+            }
+            else
+            {
+                NameScreenNextButtonImage.sprite = NameFeildUnSelectedSprite;
+            }
+        }
+
 
     }
     IEnumerator RegisterUserWithNewTechnique(string url, string Jsondata, string JsonOfName, String NameofUser, Action<bool> CallBack)
@@ -1922,17 +1989,16 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.xanaConstants.isCameraMan = false;
         ConstantsHolder.xanaConstants.IsDeemoNFT = false;
         InventoryManager.instance.CheckWhenUserLogin();
+        GameManager.Instance.bottomTabManagerInstance.CheckLoginOrNotForFooterButton();
         if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
         {
             Screen.orientation = ScreenOrientation.LandscapeLeft;
-            LoginRegisterScreen.SetActive(true);
-           // signUpOrloginSelectionPanel.SetActive(true);
+            signUpOrloginSelectionPanel.SetActive(true);
         }
         else
         {
             signUpOrloginSelectionPanel.SetActive(true);
         }
-        //signUpOrloginSelectionPanel.SetActive(true);
         if (_web3APIforWeb2._OwnedNFTDataObj != null)
         {
             _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();

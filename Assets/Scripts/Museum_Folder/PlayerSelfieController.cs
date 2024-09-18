@@ -214,6 +214,7 @@ public class PlayerSelfieController : MonoBehaviour
 #endif
 #if UNITY_ANDROID
             if (Input.touchCount != 0 && Input.touchCount <= 1) // to check single touch
+                // Muneeb: Just say: if (Input.touchCount == 1)
             {
 
                 Touch l_Touch = Input.GetTouch(0);
@@ -700,7 +701,7 @@ public class PlayerSelfieController : MonoBehaviour
                 SaveImageLocally();
             }
 #elif UNITY_IOS
-                if(PlayerPrefs.GetInt("PicPermission", 0) == 0){
+                if(PlayerPrefs.GetInt("SavePic", 0) == 0){
                      PermissionPopusSystem.Instance.onCloseAction += SaveImageLocally;
             PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
             PermissionPopusSystem.Instance.OpenPermissionScreen();
@@ -717,7 +718,7 @@ public class PlayerSelfieController : MonoBehaviour
     {
         PermissionPopusSystem.Instance.onCloseAction -= SaveImageLocally;
 #if UNITY_IOS
-        PlayerPrefs.SetInt("PicPermission", 1);
+        PlayerPrefs.SetInt("SavePic", 1);
 #endif
 
         byte[] l_Bytes = m_Texture2D.EncodeToPNG();

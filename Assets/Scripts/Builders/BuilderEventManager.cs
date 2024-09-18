@@ -139,8 +139,14 @@ public static class BuilderEventManager
     public static Action<int> AINPCDeactivated;
 
     public static Action<VideoClip, Vector3> spaceXActivated;
+    public static Action SpaceXDeactivated;
     public static Action<string> loadBGMDirectly;
     public static Action StopBGM;
     public static Action ResetSummit;
 
+    //SMBC specific events
+    public static Action<SMBCQuizComponent, QuizComponentData> OnSMBCQuizComponentCollisionEnter;
+    public static Action OnSMBCQuizComponentColse;
+    public static Action OnSMBCRocketCollected;
+    public static Action OnSMBCQuizWrongAnswer;
 }

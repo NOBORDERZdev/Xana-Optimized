@@ -9,7 +9,7 @@ using DG.Tweening;
 using UnityEngine.Video;
 using System.Threading.Tasks;
 using SuperStar.Helpers;
-using Unity.VisualScripting;
+using UnityEngine.Events;
 
 public class LoadingHandler : MonoBehaviour
 {
@@ -32,7 +32,7 @@ public class LoadingHandler : MonoBehaviour
     public Sprite[] loadingSprites;
 
     public float fadeTimer;
-    bool isFirstTime = true;
+    public bool isFirstTime = true;
     
     /// <summary>
     /// Help Screen Arrays for 2 scenarios.
@@ -92,6 +92,8 @@ public class LoadingHandler : MonoBehaviour
     public TextMeshProUGUI DomeID;
     public RectTransform LoadingStatus;
 
+    public System.Action<bool> EnterWheel;
+
     public ManualRoomController manualRoomController;
     public StreamingLoadingText streamingLoading;
     public string Aalternate;
@@ -103,10 +105,12 @@ public class LoadingHandler : MonoBehaviour
     private float sliderFinalValue = 0;
     private float sliderCompleteValue = 0f;
     private float originalWidth;
+    public static System.Action CompleteSlider;
 
     public GameObject SearchLoadingCanvas;
     private CanvasGroup canvasGroup;
     bool Autostartslider = false;
+    bool completed;
     private void Awake()
     {
         if (Instance == null)
@@ -133,10 +137,28 @@ public class LoadingHandler : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        CompleteSlider += () => {
+            Debug.Log("Complete   ");
+            completed = true;
+            loadingSlider.DOFillAmount(1, 0.15f);
+            JJLoadingSlider.DOFillAmount(1, 0.15f);
+            LoadingStatus.DOAnchorMax(new Vector2(1, LoadingStatus.anchorMax.y), 0.15f); ;
+            DomeProgress.text = " 100%";
+            loadingPercentageText.text = " 100%";
+            DomeProgress.text = (100).ToString();
+          /*  StartCoroutine(AnimateNumberCoroutine(JJLoadingPercentageText, int.Parse(JJLoadingPercentageText.text), 100, 0.15f));
+            StartCoroutine(AnimateNumberCoroutine(loadingPercentageText, int.Parse(loadingPercentageText.text), 100, 0.15f));
+            StartCoroutine(AnimateNumberCoroutine(DomeProgress, int.Parse(DomeProgress.text), 100, 0.15f));*/
+
+        };
+    }
+
     private void Start()
     {
         sliderFinalValue = Random.Range(80f, 95f);
-        sliderCompleteValue = 100;// Random.Range(96f, 99f);
+        sliderCompleteValue = Random.Range(96f, 99f);
         StartCoroutine(StartBGChange());
         canvasGroup = GetComponent<CanvasGroup>();
     }
@@ -316,6 +338,7 @@ public class LoadingHandler : MonoBehaviour
 
     public void HideLoading()
     {
+        Debug.Log("Hide");
         if (isFirstTime || teleportFeader.gameObject.activeInHierarchy)
         {
             isFirstTime = false;
@@ -560,14 +583,16 @@ public class LoadingHandler : MonoBehaviour
 
     public IEnumerator IncrementSliderValue(float speed, bool loadMainScene = false)
     {
-      
+      completed = false;
      
         while (currentValue < sliderCompleteValue)  
         {
+            
             while(StopLoader && currentValue>30)
             {
                 yield return null;
             }
+            if (completed) yield break;
             timer += Time.deltaTime;
             currentValue = Mathf.Lerp(0, sliderFinalValue, timer / speed);
             if ((ConstantsHolder.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
@@ -614,29 +639,56 @@ public class LoadingHandler : MonoBehaviour
                 if ((ConstantsHolder.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
                     teleportFeader.gameObject.activeInHierarchy || ConstantsHolder.xanaConstants.isFromTottoriWorld)
                 {
-                    JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
+                    JJLoadingSlider.DOFillAmount(currentValue / 100, 0.15f);
+                    // StartCoroutine(AnimateNumberCoroutine(JJLoadingPercentageText, int.Parse(JJLoadingPercentageText.text), (int)currentValue, 0.15f));
+
                     JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
-                   // yield return new WaitForSeconds(1f);
+                    // yield return new WaitForSeconds(1f);
                     //HideLoading(ScreenOrientation.Portrait);
                 }
                 if (ConstantsHolder.isFromXANASummit)
                 {
                     LoadingStatus.DOAnchorMax(new Vector2(currentValue / 100, LoadingStatus.anchorMax.y), 0.15f); ;
+                  //  StartCoroutine(AnimateNumberCoroutine(DomeProgress, int.Parse(DomeProgress.text), (int)currentValue, 0.15f));
                     DomeProgress.text = ((int)(currentValue)).ToString();
                 }
                 else
                 {
                     loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
-                    loadingPercentageText.text = " " + ((int)(currentValue)).ToString() + "%";
+                       loadingPercentageText.text = " " + ((int)(currentValue)).ToString() + "%";
+                    //StartCoroutine(AnimateNumberCoroutine(loadingPercentageText, int.Parse(loadingPercentageText.text), (int)currentValue, 0.15f));
+
                     //yield return new WaitForSeconds(1f);
-                 
+
                     //HideLoading(ScreenOrientation.Portrait);
                 }
             }
             yield return null;
         }
     }
+    private IEnumerator AnimateNumberCoroutine(TextMeshProUGUI text,int startValue, int endValue, float time)
+    {
+        float elapsedTime = 0.0f; // Time elapsed since the start of the animation
 
+        while (elapsedTime < time)
+        {
+            // Calculate the current value based on the elapsed time and linear interpolation
+            float t = elapsedTime / time;
+            int currentValue = Mathf.RoundToInt(Mathf.Lerp(startValue, endValue, t));
+
+            // Update the TextMeshPro text with the current value
+            text.text = currentValue.ToString();
+
+            // Increment the elapsed time
+            elapsedTime += Time.deltaTime;
+
+            // Wait for the next frame
+            yield return null;
+        }
+
+        // Ensure the final value is set at the end of the animation
+        text.text = endValue.ToString();
+    }
     public IEnumerator TeleportFader(FadeAction action)
     {
         // teleportFeader.gameObject.SetActive(true);
@@ -864,20 +916,43 @@ public class LoadingHandler : MonoBehaviour
         DomeLodingUI.SetActive(false);
         if (info.data.entityType == "USER_WORLD") { Autostartslider = false; } else { Autostartslider = true; }
     }
-    public async  void EnterDome()
+    public void showApprovalWheelloading()
     {
+        ResetLoadingValues();
+        DomeThumbnail.gameObject.SetActive(false);
+        DomeLoading.SetActive(true);
+        DomeName.text = "Giant Wheel";
+        DomeDescription.text = "Giant Wheel";
+        DomeCreator.text = "XANA";
+        DomeType.text = "Entertainment";
+        DomeCategory.text = "Entertainment";
+ 
+        ApprovalUI.SetActive(true);
+        DomeLodingUI.SetActive(false);
+
+    }
+    public   void EnterDome()
+    {
+        ResetLoadingValues();
         enter = true;
         WaitForInput = false;
         ApprovalUI.SetActive(false);
         DomeLodingUI.SetActive(true);
-        await Task.Delay(500);
-        StartCoroutine(IncrementSliderValue(Random.Range(0f, 5f)));
 
+        EnterWheel?.Invoke(true);
+        BuilderEventManager.SpaceXDeactivated?.Invoke();
+       
+
+    }
+    public void startLoading()
+    {
+        StartCoroutine(IncrementSliderValue(Random.Range(0f, 5f)));
     }
     public void ReturnDome()
     {
         enter = false;
         WaitForInput = false;
+        EnterWheel?.Invoke(false);
         DomeLoading.SetActive(false);
     }
 
@@ -894,8 +969,9 @@ public class LoadingHandler : MonoBehaviour
     public void DomeLoadingProgess(float progress)
     {
         Debug.Log("Loading progress...");
-        LoadingStatus.DOAnchorMax(new Vector2(currentValue / 100, LoadingStatus.anchorMax.y), 0.15f); ;
+        LoadingStatus.DOAnchorMax(new Vector2(progress / 100, LoadingStatus.anchorMax.y), 0.15f); ;
         DomeProgress.text = ((int)progress).ToString("D2");
+       
     }
 }
 

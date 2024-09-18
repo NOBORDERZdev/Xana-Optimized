@@ -37,7 +37,14 @@ namespace Photon.Realtime
     {
         /// <summary>Stores a flag which tells Editor scripts if the PhotonEditor.OnProjectChanged got called since initialization.</summary>
         /// <remarks>If not, the AssetDatabase is likely not usable yet and instances of ScriptableObject can't be loaded.</remarks>
-        public static bool ProjectChangedWasCalled;
+        [Obsolete("Directly check EditorApplication.isUpdating to figure out if assets are being imported at the given time.")]
+        public static bool ProjectChangedWasCalled 
+        {
+            get
+            {
+                return UnityEditor.EditorApplication.isUpdating;
+            }
+        } 
 
 
         /// <summary>True if the ChatClient of the Photon Chat API is available. If so, the editor may (e.g.) show additional options in settings.</summary>
@@ -203,8 +210,10 @@ namespace Photon.Realtime
 		/// <param name="go">The GameObject to check</param>
 		public static bool IsPrefab(GameObject go)
 		{
-            #if UNITY_2018_3_OR_NEWER
-             return UnityEditor.SceneManagement.PrefabStageUtility.GetPrefabStage(go) != null || EditorUtility.IsPersistent(go);
+            #if UNITY_2021_2_OR_NEWER
+            return UnityEditor.SceneManagement.PrefabStageUtility.GetPrefabStage(go) != null || EditorUtility.IsPersistent(go);
+            #elif UNITY_2018_3_OR_NEWER
+            return UnityEditor.Experimental.SceneManagement.PrefabStageUtility.GetPrefabStage(go) != null || EditorUtility.IsPersistent(go);
             #else
             return EditorUtility.IsPersistent(go);
 			#endif

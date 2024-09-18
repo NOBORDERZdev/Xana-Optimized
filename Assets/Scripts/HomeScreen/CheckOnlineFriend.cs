@@ -10,7 +10,7 @@ public class CheckOnlineFriend : MonoBehaviour
     public SavingCharacterDataClass json;
     [HideInInspector]
     public string randomPresetGender;
-    [HideInInspector]  
+    [HideInInspector]
     public int randomPreset;
     [SerializeField]
     GameObject offlineFriendName, onlineFriendName;
@@ -28,14 +28,14 @@ public class CheckOnlineFriend : MonoBehaviour
     private void Start()
     {
         worldItemView = GetComponent<WorldItemView>();
-        if(offlineFriendName)
+        if (offlineFriendName)
             offlineFriendName.GetComponent<Button>().onClick.AddListener(onclickFriendNameButton);
         if (onlineFriendName)
             onlineFriendName.GetComponent<Button>().onClick.AddListener(GotoSpace);
     }
     public void SpaceJoinedFriend(FriendOnlineStatus friendOnlineStatus)
     {
-        if(friendOnlineStatus.userId==friendId)
+        if (friendOnlineStatus.userId == friendId)
         {
             ToggleOnlineStatus(friendOnlineStatus.isOnline);
             WorldManager.instance.SetFriendsJoinedWorldInfo(friendOnlineStatus.worldDetails, worldItemView);
@@ -50,7 +50,8 @@ public class CheckOnlineFriend : MonoBehaviour
     }
     public void ToggleOnlineStatus(bool toggle)
     {
-        if (toggle) {
+        if (toggle)
+        {
             onlineFriendName.SetActive(true);
             offlineFriendName.SetActive(false);
         }
@@ -68,18 +69,34 @@ public class CheckOnlineFriend : MonoBehaviour
     }
     public void onclickFriendNameButton()
     {
-        GameManager.Instance.bottomTabManagerInstance.InitProfileData();
-        FeedUIController.Instance.ShowLoader(true);
-        //print("Getting Click here" + _data.user_id);
-        if(friendId!= 0)
-            SNS_APIManager.Instance.GetHomeFriendProfileData<CheckOnlineFriend>(friendId, this);
-        else
-            GameManager.Instance.bottomTabManagerInstance.OnClickProfileButton();
-
-        if (MyProfileDataManager.Instance)
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            MyProfileDataManager.Instance.UpdateBackButtonAction(GameManager.Instance.bottomTabManagerInstance.OnClickHomeButton);
+            if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                Screen.orientation = ScreenOrientation.LandscapeLeft;
+                UserLoginSignupManager.instance.signUpOrloginSelectionPanel.SetActive(true);
+            }
+            else
+            {
+                UserLoginSignupManager.instance.LoginRegisterScreen.SetActive(true);
+            }
         }
+        else
+        {
+            GameManager.Instance.bottomTabManagerInstance.InitProfileData();
+            FeedUIController.Instance.ShowLoader(true);
+            //print("Getting Click here" + _data.user_id);
+            if (friendId != 0)
+                SNS_APIManager.Instance.GetHomeFriendProfileData<CheckOnlineFriend>(friendId, this);
+            else
+                GameManager.Instance.bottomTabManagerInstance.OnClickProfileButton();
+
+            if (MyProfileDataManager.Instance)
+            {
+                MyProfileDataManager.Instance.UpdateBackButtonAction(GameManager.Instance.bottomTabManagerInstance.OnClickHomeButton);
+            }
+        }
+
     }
     public void SetupHomeFriendProfile(SearchUserRow searchUserRow)
     {

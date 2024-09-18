@@ -12,7 +12,7 @@ namespace ZeelKheni.YoutubePlayer
 {
     public class WebRequest
     {
-        static string previousBase;
+       public static string previousBase;
         public static async Task<T> GetAsync<T>(string requestUrl, CancellationToken cancellationToken = default, List<Models.YoutubeVideoInfo> urlslist = null, string videoid = null, bool skipPrevious = false)
         {
             var request = UnityWebRequest.Get(requestUrl);
@@ -20,20 +20,23 @@ namespace ZeelKheni.YoutubePlayer
             try
             {
                 await request.SendWebRequestAsync(cancellationToken);
-                Debug.Log("<color=red>Response .... " + request.result.ToString() + "  \n " + request.downloadHandler.text + "    \n    </color>");
+               Debug.Log("<color=red>Response .... " + request.result.ToString() + "  \n " + request.downloadHandler.text + "    \n    </color>");
                 var text = request.downloadHandler.text;
                 if (string.IsNullOrEmpty(text)) { throw new NullReferenceException(); }
                if(skipPrevious && previousBase == requestUrl) { throw new NullReferenceException(); }
                 GameObject.FindObjectOfType<YoutubeInstance>().VideoJson = text;
                 previousBase = requestUrl;
-                return JsonConvert.DeserializeObject<T>(text, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
+                var video = JsonConvert.DeserializeObject<T>(text, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
+
+                return video;
             }
             catch (Exception exception)
             {
                 Debug.Log(exception  + "   " + requestUrl);
-                if (urlslist != null)
+                if (urlslist != null&& urlslist.Count > 0)
                 {
                     urlslist.RemoveAt(0);
+                    if(urlslist.Count >0) 
                     return await GetAsync<T>($"{urlslist[0].Uri}/api/v1/videos/{videoid}", cancellationToken, urlslist, videoid);
                 }
                 return JsonConvert.DeserializeObject<T>("", new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore});

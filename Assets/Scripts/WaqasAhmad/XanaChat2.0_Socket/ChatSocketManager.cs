@@ -1,20 +1,19 @@
 using System;
-using System.IO;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
-using TMPro;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 using BestHTTP.SocketIO3;
 using BestHTTP.SocketIO3.Events;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json.Linq;
+using SimpleJSON;
+using UnityEngine.UI;
+using Unity.Mathematics;
+
 
 public enum CallBy { User, UserNpc, FreeSpeechNpc, NpcToNpc };
 public class ChatSocketManager : MonoBehaviour
@@ -43,7 +42,12 @@ public class ChatSocketManager : MonoBehaviour
     string apiGusetNameMainnet = "https://chat-prod.xana.net/api/v1/set-device-id-against-socketId";
 
 
-    string fetchApi = "api/v1/fetch-world-chat-byEventId/";
+    //string fetchApi = "api/v1/fetch-world-chat-byEventId/";
+    string fetchApi = "api/v3/fetch-world-chat-byEventId/";
+
+    string blockMsgApi = "api/v1/block-message/"; // --- /api/v1/block-message/:messageId/:loginUserId
+    string blockUserApi = "api/v1/block-user/"; //--- /api/v1/block-user/:blockUserId/:loginUserId
+
 
     public SocketManager Manager;
 
@@ -61,6 +65,10 @@ public class ChatSocketManager : MonoBehaviour
     bool isJoinRoom = false;
 
     public static ChatSocketManager instance;
+    public GameObject MsgPrefab;
+    public Transform MsgParentObj;
+
+    private List<ChatMsgDataHolder> allMsgData=new List<ChatMsgDataHolder>();
 
 
     private bool isConnected = false;
@@ -100,13 +108,14 @@ public class ChatSocketManager : MonoBehaviour
         onJoinRoom += UserJoinRoom;
         onSendMsg += SendMsg;
         callApi += CallApiForMessages;
+        BuilderEventManager.AfterPlayerInstantiated += LoadChatAfterPlayerInstantiate;
     }
     private void OnDisable()
     {
         onJoinRoom -= UserJoinRoom;
         onSendMsg -= SendMsg;
         callApi -= CallApiForMessages;
-
+        BuilderEventManager.AfterPlayerInstantiated -= LoadChatAfterPlayerInstantiate;
         // Switch Off This Socket
         Manager.Close();
     }
@@ -157,9 +166,10 @@ public class ChatSocketManager : MonoBehaviour
             eventId = XanaEventDetails.eventDetails.id;
         }
         // Custom Method
-        Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
+        //Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
+        Manager.Socket.On<ChatUserData>("messagev2", ReceiveMsgs);
 
-        StartCoroutine(FetchOldMessages());
+        // StartCoroutine(FetchOldMessages());
     }
 
     IEnumerator RetryConnection()
@@ -316,7 +326,8 @@ public class ChatSocketManager : MonoBehaviour
             //tempUser = msg.socket_id;
             tempUser = "XanaUser-(" + msg.socket_id + ")";//XanaUser-(userId)
         }
-        XanaChatSystem.instance.DisplayMsg_FromSocket(tempUser, msg.message);
+        //XanaChatSystem.instance.DisplayMsg_FromSocket(tempUser, msg.message);
+        AddNewMsg(tempUser, msg.message, msg.message_id.ToString(), msg.userId, 0);
     }
     bool CheckUserNameIsValid(string _UserName)
     {
@@ -331,6 +342,12 @@ public class ChatSocketManager : MonoBehaviour
 
     #endregion
 
+    void LoadChatAfterPlayerInstantiate()
+    {
+        ClearAllMessages();
+        StartCoroutine(FetchOldMessages());
+    }
+
     //To fetch Old Messages from a server against any world
     public void CallApiForMessages()
     {
@@ -343,8 +360,8 @@ public class ChatSocketManager : MonoBehaviour
         string token = ConstantsGod.AUTH_TOKEN;
         WWWForm form = new WWWForm();
 
-        string api = fetchAllMsgApi + ConstantsHolder.xanaConstants.MuseumID + "/" + eventId + "/" + socketId + "/" + pageNumber + "/" + dataLimit;
-        //Debug.Log("<color=red> XanaChat -- API : " + api + "</color>");
+        string api = fetchAllMsgApi + ConstantsHolder.xanaConstants.MuseumID + "/" + eventId + "/" + socketId + "/" + pageNumber + "/" + dataLimit + "/" + ConstantsHolder.userId;
+        Debug.Log("<color=red> XanaChat -- API : " + api + "</color>");
 
         UnityWebRequest www;
         www = UnityWebRequest.Get(api);
@@ -391,11 +408,39 @@ public class ChatSocketManager : MonoBehaviour
                     tempUser = tempUser = "XanaUser-(" + socketId + ")";//XanaUser-(userId)
                 }
 
-                XanaChatSystem.instance.DisplayMsg_FromSocket(tempUser, rootData.data[i].message);
+                AddNewMsg(tempUser, rootData.data[i].message, rootData.data[i].id, rootData.data[i].user_id, rootData.data[i].block_message);
             }
         }
     }
 
+    public void AddNewMsg(string userName, string msg, string msgId, string userId, int blockMessage)
+    {
+        GameObject _newMsg = Instantiate(MsgPrefab, MsgParentObj);
+        ChatMsgDataHolder _dataHolder = _newMsg.GetComponent<ChatMsgDataHolder>();
+        _dataHolder.SetRequireData(msg, msgId, userId, blockMessage);
+
+        if (userId.Equals(ConstantsHolder.userId))
+        {
+            // That My msg, and i cannot flag or block it
+            _dataHolder.DotedBtn.SetActive(false);
+        }
+        MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = false;
+        Invoke("DelayAdded", 0.05f);
+        XanaChatSystem.instance.DisplayMsg_FromSocket(userName, msg, _dataHolder.MsgText);
+
+
+        // Add to List
+        if (allMsgData == null)
+            allMsgData = new List<ChatMsgDataHolder>();
+        allMsgData.Add(_dataHolder);
+    }
+
+    void DelayAdded()
+    {
+        MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = true;
+    }
+
+    // Submit Guest User Name
     private IEnumerator SubmitGuestUserNameWithJson()
     {
         // Create a data object and serialize it to JSON
@@ -420,6 +465,109 @@ public class ChatSocketManager : MonoBehaviour
             yield return request.SendWebRequest();
         }
     }
+
+    // Flag Message
+    public void FlagMessages(string msgID, Action<bool> callback)
+    {
+        StartCoroutine(FlagMessagesRoutine(msgID, callback));
+    }
+    IEnumerator FlagMessagesRoutine(string msgID, Action<bool> callback)
+    {
+        string token = ConstantsGod.AUTH_TOKEN;
+        string api = address + blockMsgApi + msgID + "/" + ConstantsHolder.userId;
+
+        UnityWebRequest www;
+        www = UnityWebRequest.Post(api, "");
+
+        www.SetRequestHeader("Authorization", token);
+        www.SendWebRequest();
+
+        while (!www.isDone)
+        {
+            yield return null;
+        }
+
+
+        if (!www.isHttpError && !www.isNetworkError)
+        {
+            Debug.Log("<color=green> XanaChat -- FlagMsg : " + www.downloadHandler.text + "</color>");
+            JObject jsonObject = JObject.Parse(www.downloadHandler.text);
+            string dataValue = "";
+
+            if (jsonObject.ContainsKey("data"))
+                dataValue = jsonObject["data"].ToString();
+
+
+            if (dataValue.Equals("message blocked"))
+                callback(true);
+            else
+            {
+                callback(false);
+            }
+        }
+        else
+        {
+            Debug.Log("<color=red> XanaChat -- FlagMsg -- NetWorkissue </color>");
+            callback(false);
+        }
+
+        www.Dispose();
+    }
+
+    // Block Message
+    public void BlockUser(string userId, Action<bool> callback)
+    {
+        StartCoroutine(BlockUserRoutine(userId, callback));
+    }
+    IEnumerator BlockUserRoutine(string blockUserId, Action<bool> callback)
+    {
+        string token = ConstantsGod.AUTH_TOKEN;
+        string api = address + blockUserApi + blockUserId + "/" + ConstantsHolder.userId;
+
+        UnityWebRequest www;
+        www = UnityWebRequest.Post(api, "");
+
+        www.SetRequestHeader("Authorization", token);
+        www.SendWebRequest();
+
+        while (!www.isDone)
+        {
+            yield return null;
+        }
+
+
+        if (!www.isHttpError && !www.isNetworkError)
+        {
+            //oldMsgRec.text = www.downloadHandler.text;
+            Debug.Log("<color=green> XanaChat -- BlockUser : " + www.downloadHandler.text + "</color>");
+            callback(true);
+        }
+        else
+        {
+            Debug.Log("<color=red> XanaChat -- BlockUser -- NetWorkissue </color>");
+            callback(false);
+        }
+
+        www.Dispose();
+    }
+
+    public void DisableAllBtn()
+    {
+        foreach (var item in allMsgData)
+        {
+            item.BtnForcedStatus(false);
+        }
+    }
+
+    public void ClearAllMessages()
+    {
+        if (allMsgData.Count > 0)
+            foreach (var item in allMsgData)
+            {
+                Destroy(item.gameObject);
+            }
+        allMsgData.Clear();
+    }
 }
 
 
@@ -427,6 +575,8 @@ public class ChatSocketManager : MonoBehaviour
 public class ChatUserData
 {
     public string userId;
+    public string id; // MessageID
+    public int message_id;
     public string socket_id;
     public string username;
     public string name;
@@ -487,6 +637,9 @@ public class MessageData
     public DateTime createdAt;
     public bool guest;
     public string guest_username;
+    public string id; // messageID
+    public string user_id;
+    public int block_message;
 }
 [System.Serializable]
 public class RootData

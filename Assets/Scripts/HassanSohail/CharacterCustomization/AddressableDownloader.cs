@@ -2,10 +2,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
+using UnityEngine.Networking;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 
@@ -55,10 +57,11 @@ public class AddressableDownloader : MonoBehaviour
 #endif
         }
     }
-    void OnCatalogDownload(AsyncOperationHandle handle)
+    async void OnCatalogDownload(AsyncOperationHandle handle)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
+           // await DeleteCachedAddressables();
             StartCoroutine(CheckCatalogs());
         }
         else
@@ -157,7 +160,15 @@ public class AddressableDownloader : MonoBehaviour
                                 {
                                     GameObject downloadedHair = loadOp.Result as GameObject;
                                     Color hairDefaultColor = GetHairDefaultColorFromDownloadedHair(downloadedHair);
-                                    applyOn.StichHairWithColor(itemId, downloadedHair, type, applyOn.gameObject, hairDefaultColor, callFromMultiplayer);
+
+                                    if (ConstantsHolder.xanaConstants.currentButtonIndex == 4 || ConstantsHolder.xanaConstants.currentButtonIndex == 10)
+                                    {
+                                        // Preset Panel 
+                                        // Each Preset has its own color store in its Json implemet that color
+                                        hairDefaultColor = hairColor;
+                                    }
+
+                                        applyOn.StichHairWithColor(itemId, downloadedHair, type, applyOn.gameObject, hairDefaultColor, callFromMultiplayer);
                                 }
                                 else 
                                     applyOn.StichHairWithColor(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, hairColor,callFromMultiplayer);
@@ -194,7 +205,7 @@ public class AddressableDownloader : MonoBehaviour
     public Color GetHairDefaultColorFromDownloadedHair(GameObject downloadedHair)
     {
         string Hair_ColorName = "_BaseColor";
-        SkinnedMeshRenderer skinnedMeshRenderer = downloadedHair.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>();
+        SkinnedMeshRenderer skinnedMeshRenderer = downloadedHair.transform.GetComponentInChildren<SkinnedMeshRenderer>();
         if (skinnedMeshRenderer.sharedMaterials.Length > 1) // In case Of Hat there is 2 material
         {
             if (skinnedMeshRenderer.sharedMaterials[0].name.Contains("Cap") || skinnedMeshRenderer.sharedMaterials[0].name.Contains("Hat") || skinnedMeshRenderer.sharedMaterials[0].name.Contains("Pins"))
@@ -450,6 +461,45 @@ public class AddressableDownloader : MonoBehaviour
             PlayerPrefs.Save();
             DefaultClothDatabase.instance.GetComponent<SaveCharacterProperties>().SavePlayerProperties();
         }
+    }
+    
+    async Task DeleteCachedAddressables()
+    {
+        string res=await GetAsyncRequest(ConstantsGod.BUNDLEUPDATEAPI);
+        BundleUpdateInfo bundleUpdateInfo = JsonUtility.FromJson<BundleUpdateInfo>(res);
+        if(!PlayerPrefs.HasKey(bundleUpdateInfo.version))
+        {
+            PlayerPrefs.SetString(bundleUpdateInfo.version,"0");
+            for(int i=0;i<bundleUpdateInfo.bundlesNames.Length;i++)
+            {
+                Addressables.ClearDependencyCacheAsync(bundleUpdateInfo.bundlesNames[i]);
+                Caching.ClearAllCachedVersions(bundleUpdateInfo.bundlesNames[i]);
+                await Task.Delay(400);
+            }
+        }
+    }
+
+    async Task<string> GetAsyncRequest(string url)
+    {
+        UnityWebRequest www = UnityWebRequest.Get(url);
+        await www.SendWebRequest();
+        while (!www.isDone)
+            await System.Threading.Tasks.Task.Yield();
+
+        if (www.result == UnityWebRequest.Result.ConnectionError)
+        {
+            return www.error;
+        }
+        else
+            return www.downloadHandler.text;
+
+    }
+
+    [System.Serializable]
+    public class BundleUpdateInfo
+    {
+        public string version;
+        public string[] bundlesNames;
     }
 }
 

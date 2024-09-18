@@ -47,6 +47,8 @@ public class ConstantsGod
     public static string UserPriorityRole = "Guest";
     public static List<string> UserRoles = new List<string>() { "Guest" };
 
+    public static string SMTPSERVERAUTHDATA = "/admin/get-smtp-for-app";
+
     #region World Manager
 
     public static string GETENVIRONMENTSAPI = API + "xanaEvent/getEnvironments";
@@ -318,6 +320,7 @@ public class ConstantsGod
     #region XANA Summit Api's
     public static string GETDOMENPCINFO = "/domes/getDomeNPCInfo/";  //:domeId/:type
     public static string GETALLDOMES = "/domes/getcreatedDomes";
+    public static string GETSINGLEDOMEAUTHEMAILS = "/domes/get-domes-participants/";
     public static string GETSINGLEDOME = "/domes/getDomeGeneralInfoById/";  //:domeId
     public static string GETVISITDOMES = "/domes/getvisitedomes";
     public static string SETVISITDOMEWITHID = "/domes/domesvisits/";
@@ -345,5 +348,9 @@ public class ConstantsGod
     public static string UpdateUserRaffleTickets = "/domes/updatetickets";
     public static string GetUserRaffleTickets = "/domes/getusertickets";
     public static string GetUserVisitedDomes = "/domes/getvisitedomes";
+    #endregion
+
+    #region Bundle Update Api
+    public static string BUNDLEUPDATEAPI = "";
     #endregion
 }

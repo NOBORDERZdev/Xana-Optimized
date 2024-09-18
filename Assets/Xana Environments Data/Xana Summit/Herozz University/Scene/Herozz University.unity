@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
+  m_AmbientSkyColor: {r: 0.9411765, g: 0.9411765, b: 0.9411765, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -2576,13 +2576,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1356348235}
     m_Modifications:
-    - target: {fileID: 1093165676429160367, guid: 6b9f801847a8f024ca61da7a7d5e5ad2, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 6026125434368459451, guid: c1d7f061d66057448a525252f6124bf9, type: 3}
     - target: {fileID: 3733413025697954480, guid: 6b9f801847a8f024ca61da7a7d5e5ad2, type: 3}
       propertyPath: m_Name
       value: HRZ_Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733413025697954480, guid: 6b9f801847a8f024ca61da7a7d5e5ad2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4072503045374255114, guid: 6b9f801847a8f024ca61da7a7d5e5ad2, type: 3}
       propertyPath: m_RootOrder
@@ -2630,22 +2630,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b9f801847a8f024ca61da7a7d5e5ad2, type: 3}
---- !u!1 &4543804971705650231 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3733413025697954480, guid: 6b9f801847a8f024ca61da7a7d5e5ad2, type: 3}
-  m_PrefabInstance: {fileID: 4543804971705650230}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &4543804971705650232
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4543804971705650231}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6026125434368459451, guid: c1d7f061d66057448a525252f6124bf9, type: 3}

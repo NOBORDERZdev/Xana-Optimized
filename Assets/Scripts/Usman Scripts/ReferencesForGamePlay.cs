@@ -1,12 +1,13 @@
 ﻿using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ReferencesForGamePlay : MonoBehaviour
+public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmakingCallbacks
 {
     public GameObject eventSystemObj;
     [Space(5)]
@@ -43,6 +44,12 @@ public class ReferencesForGamePlay : MonoBehaviour
     public int moveWhileDanceCheck;
     public QualityManager QualityManager;
     public XanaChatSystem ChatSystemRef;
+
+    public Image ExitBtnGameplay;
+    public Sprite backBtnSprite,HomeBtnSprite;
+
+
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -104,7 +111,7 @@ public class ReferencesForGamePlay : MonoBehaviour
     private void OnEnable()
     {
         instance = this;
-
+        PhotonNetwork.AddCallbackTarget(this);
         if(m_34player==null)
         {
             m_34player=GameplayEntityLoader.instance.player;
@@ -153,17 +160,17 @@ public class ReferencesForGamePlay : MonoBehaviour
                 m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat.SetActive(true);
             }
         }
-        if (counterCoroutine == null)
+        /*if (counterCoroutine == null)
         {
-            counterCoroutine = SetPlayerCounter();
-            StartCoroutine(counterCoroutine);
+           SetPlayerCounter();
+           // StartCoroutine(counterCoroutine);
         }
         else
         {
-            StopCoroutine(counterCoroutine);
-            StartCoroutine(counterCoroutine);
-        }
-
+           *//* StopCoroutine(counterCoroutine);
+            StartCoroutine(counterCoroutine);*//*
+        }*/
+        SetPlayerCounter();
         if (WorldItemView.m_EnvName.Contains("AfterParty") || ConstantsHolder.xanaConstants.IsMuseum)
         {
             if (WorldItemView.m_EnvName.Contains("J&J WORLD_5"))
@@ -177,7 +184,11 @@ public class ReferencesForGamePlay : MonoBehaviour
         }
         else
         {
-            if (ConstantsHolder.xanaConstants.minimap == 1)
+            if (ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit")
+            {
+                GameplayEntityLoader.instance.ForcedMapCloseForSummitScene();
+            }
+            else if (ConstantsHolder.xanaConstants.minimap == 1)
             {
                 minimap.SetActive(true);
                 SumitMapStatus(true);
@@ -201,7 +212,17 @@ public class ReferencesForGamePlay : MonoBehaviour
         }
     }
 
-
+    public void ChangeExitBtnImage(bool _Status)
+    {
+        if (_Status)
+        {
+            ExitBtnGameplay.sprite = backBtnSprite;
+        }
+        else
+        {
+            ExitBtnGameplay.sprite = HomeBtnSprite;
+        }
+    }
     public void forcetodisable()
     {
         foreach (GameObject go in disableObjects)
@@ -234,7 +255,7 @@ public class ReferencesForGamePlay : MonoBehaviour
             }
             go.GetComponent<CanvasGroup>().alpha = 0;
         }
-
+        ActionManager.DisableCircleDialog?.Invoke();
         //To disable Buttons  
         foreach (GameObject go in disableBtnObjects)
         {
@@ -274,6 +295,10 @@ public class ReferencesForGamePlay : MonoBehaviour
                 go.SetActive(true);
         }
 
+    }
+    private void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this);
     }
     public void potraithiddenButtonDisable()
     {
@@ -330,9 +355,9 @@ public class ReferencesForGamePlay : MonoBehaviour
     //    StartCoroutine(SetPlayerCounter());
     //}
 
-    IEnumerator SetPlayerCounter()
+    void SetPlayerCounter()
     {
-    CheckAgain:
+    //CheckAgain:
         try
         {
             if (totalCounter != null)
@@ -385,8 +410,8 @@ public class ReferencesForGamePlay : MonoBehaviour
 
         }
 
-        yield return new WaitForSeconds(2f);
-        goto CheckAgain;
+      /*  yield return new WaitForSeconds(2f);
+        goto CheckAgain;*/
     }
     public void SumitMapStatus(bool _status)
     {
@@ -397,8 +422,8 @@ public class ReferencesForGamePlay : MonoBehaviour
             minimap.transform.parent.GetComponent<RawImage>().enabled = true;
             minimap.transform.parent.GetComponent<Mask>().enabled = true;
 
-            if (!ScreenOrientationManager._instance.isPotrait)
-                minimap.GetComponent<RectTransform>().sizeDelta = new Vector2(530, 300);
+           /* if (!ScreenOrientationManager._instance.isPotrait)
+                minimap.GetComponent<RectTransform>().sizeDelta = new Vector2(530, 300);*/
         }
         else
         {
@@ -408,6 +433,8 @@ public class ReferencesForGamePlay : MonoBehaviour
 
     public void FullScreenMapStatus (bool _enable)
     {
+        if(ConstantsHolder.DisableFppRotation) { return; }
+
         if (_enable)
         {
             Input.multiTouchEnabled = false;
@@ -418,6 +445,65 @@ public class ReferencesForGamePlay : MonoBehaviour
         }
 
         FullscreenMapSummit.SetActive(_enable);
+    }
+
+    public void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        SetPlayerCounter();
+    }
+
+    public void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        SetPlayerCounter();
+    }
+
+    public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+      
+    }
+
+    public void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+       
+    }
+
+    public void OnMasterClientSwitched(Player newMasterClient)
+    {
+       
+    }
+
+    public void OnFriendListUpdate(List<FriendInfo> friendList)
+    {
+       
+    }
+
+    public void OnCreatedRoom()
+    {
+        
+    }
+
+    public void OnCreateRoomFailed(short returnCode, string message)
+    {
+    }
+
+    public void OnJoinedRoom()
+    {
+        SetPlayerCounter();
+    }
+
+    public void OnJoinRoomFailed(short returnCode, string message)
+    {
+       
+    }
+
+    public void OnJoinRandomFailed(short returnCode, string message)
+    {
+        
+    }
+
+    public void OnLeftRoom()
+    {
+       
     }
 }
 

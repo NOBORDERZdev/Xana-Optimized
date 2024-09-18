@@ -43,14 +43,14 @@ public class userNameOnOff : MonoBehaviour
         if (ConstantsHolder.xanaConstants.userNameVisibilty == 1)
         {
 
-            ArrowManager.OnInvokeUsername(0);
+            ConstantsHolder.OnInvokeUsername(0);
            ConstantsHolder.xanaConstants.userNameVisibilty = 0;
             ReferencesForGamePlay.instance.onBtnUsername.SetActive(true);
             ReferencesForGamePlay.instance.offBtnUsername.SetActive(false);
         }
         else
         {
-            ArrowManager.OnInvokeUsername(1);
+            ConstantsHolder.OnInvokeUsername(1);
            
             ConstantsHolder.xanaConstants.userNameVisibilty = 1;
             ReferencesForGamePlay.instance.offBtnUsername.SetActive(true);

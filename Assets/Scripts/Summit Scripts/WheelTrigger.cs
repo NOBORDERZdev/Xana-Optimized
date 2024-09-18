@@ -6,6 +6,11 @@ using UnityEngine;
 
 public class WheelTrigger : MonoBehaviour
 {
+    bool waitforresponce = false;
+    private void Start()
+    {
+        LoadingHandler.Instance.EnterWheel += ((bo) => { if (waitforresponce && bo) { waitforresponce = false; ChangeSector(); } });
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (PhotonNetwork.InRoom)
@@ -15,13 +20,14 @@ public class WheelTrigger : MonoBehaviour
             {
                 if (other.GetComponent<PhotonView>().IsMine)
                 {
-                    if (name != "Wheel")
+                    if (name != "Wheel"&& !other.GetComponent<SummitPlayerRPC>().isInsideCAr)
                     {
-                        ChangeSector();
+                       waitforresponce=true;
+                        LoadingHandler.Instance.showApprovalWheelloading();
                     }
                     else
                     {
-                        other.GetComponent<SummitPlayerRPC>().CheckForExitWheel();
+                      //  other.GetComponent<SummitPlayerRPC>().CheckForExitWheel();
                     }
                 }
             }
