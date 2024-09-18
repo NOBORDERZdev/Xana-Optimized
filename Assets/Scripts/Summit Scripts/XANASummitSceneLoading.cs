@@ -31,7 +31,7 @@ public class XANASummitSceneLoading : MonoBehaviour
     public delegate void SetPlayerOnSubworldBack();
     public static event SetPlayerOnSubworldBack setPlayerPositionDelegate;
 
-    
+    int prevstate;
 
     private void OnEnable()
     {
@@ -73,6 +73,12 @@ public class XANASummitSceneLoading : MonoBehaviour
     void SummitMiniMapStatusOnSceneChange(bool makeActive)
     {
         GameplayEntityLoader.instance.IsJoinSummitWorld = !makeActive;
+        if (!makeActive)
+        {
+            prevstate = ConstantsHolder.xanaConstants.minimap;
+            ConstantsHolder.xanaConstants.minimap = 0;
+        }
+        else { ConstantsHolder.xanaConstants.minimap = prevstate; }
 
         if (makeActive && ConstantsHolder.xanaConstants.minimap == 1)
         {

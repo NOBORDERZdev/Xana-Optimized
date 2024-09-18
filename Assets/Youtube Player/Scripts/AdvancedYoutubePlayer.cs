@@ -194,7 +194,15 @@ public class AdvancedYoutubePlayer : MonoBehaviour
             }
 
             var instanceUrl = await YoutubeInstance.GetInstanceUrl(cancellationToken);
-            var videoInfo = await YoutubeApi.GetVideoInfo(instanceUrl, VideoId, cancellationToken, YoutubeInstance.YoutubeInstanceInfos, skipPrevious);
+            VideoInfo videoInfo = null;
+            var lst =new List<YoutubeVideoInfo>( YoutubeInstance.YoutubeInstanceInfos);
+            foreach (var item in lst)
+            {
+                instanceUrl = item.Uri;
+
+                 videoInfo = await YoutubeApi.GetVideoInfo(instanceUrl, VideoId, cancellationToken, YoutubeInstance.YoutubeInstanceInfos, skipPrevious);
+                if (videoInfo!=null) { break; }
+            }
             var videoformat = GetCompatibleFormat(videoInfo, ((int)PreferedQuality).ToString());
             var audioformat = GetCompatibleFormat(videoInfo, "18");
             Debug.Log("<color=red>instance url " + instanceUrl + " our url " + videoformat.Url + "</color>");

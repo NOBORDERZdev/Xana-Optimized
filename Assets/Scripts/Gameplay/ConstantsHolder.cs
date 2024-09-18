@@ -11,6 +11,9 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class ConstantsHolder : MonoBehaviour
 {
     public static ConstantsHolder xanaConstants;
+    public delegate void UserNameToggleDeligate(int userNameToggleConstant);
+    public static event UserNameToggleDeligate userNameToggleDelegate;
+
 
     public bool pushToTalk;
     public bool openLandingSceneDirectly;
@@ -378,4 +381,8 @@ public class ConstantsHolder : MonoBehaviour
 
     //////constant string variables 
     public const string collectibleMsg = "Item Collected...";
+    public static void OnInvokeUsername(int userNameToggle)
+    {
+        userNameToggleDelegate?.Invoke(userNameToggle);
+    }
 }

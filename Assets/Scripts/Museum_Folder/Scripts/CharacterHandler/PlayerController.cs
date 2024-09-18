@@ -107,6 +107,8 @@ public class PlayerController : MonoBehaviour
 
     internal float animationBlendValue = 0;
     internal Vector3 desiredMoveDirection;
+    internal Vector3 desiredMoveDirectionFPP;
+
     private void OnEnable()
     {
         BuilderEventManager.OnHideOpenSword += HideorOpenSword;
@@ -541,6 +543,7 @@ public class PlayerController : MonoBehaviour
         Vector2 movementInput = new Vector2(horizontal, vertical);
 
         Vector3 move = transform.right * movementInput.x + transform.forward * movementInput.y;
+        desiredMoveDirectionFPP = move;
         _IsGrounded = characterController.isGrounded;
         animator.SetBool("IsGrounded", _IsGrounded);
         if (characterController.velocity.y < 0)
