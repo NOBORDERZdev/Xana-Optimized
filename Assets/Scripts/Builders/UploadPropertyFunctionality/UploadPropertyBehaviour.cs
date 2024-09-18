@@ -1,6 +1,8 @@
 using UnityEngine;
 using RenderHeads.Media.AVProVideo;
 using UnityEngine.Video;
+using System;
+using System.Linq;
 
 public class UploadPropertyBehaviour : MonoBehaviour
 {
@@ -240,6 +242,11 @@ public class UploadPropertyBehaviour : MonoBehaviour
 
     public string ExtractVideoIdFromUrl(string url)
     {
+
+        Uri uri = new Uri(url);
+        if (!url.Contains("v="))
+            return uri.Segments.Last();
+
         // Find the position of the "v=" parameter
         int startIndex = url.IndexOf("v=");
 

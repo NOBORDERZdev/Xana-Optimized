@@ -36,6 +36,12 @@ public class SummitBGMSoundManager : MonoBehaviour
             string audioUrl=summitDataContainer.GetAudioFile(ConstantsHolder.domeId);
             StartCoroutine(SetAudioFromUrl(audioUrl));
         }
+
+        if (WorldItemView.m_EnvName == "XANA Summit")
+        {
+            string audioUrl = summitDataContainer.GetAudioFile(170);
+            StartCoroutine(SetAudioFromUrl(audioUrl));
+        }
     }
 
     IEnumerator SetAudioFromUrl(string file_name)
