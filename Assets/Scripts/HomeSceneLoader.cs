@@ -108,7 +108,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
                 {
                     ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
                     ConstantsHolder.xanaConstants.XanaPartyGameId = 0;
-                    //ConstantsHolder.xanaConstants.XanaPartyGameName = "";
+                    ConstantsHolder.xanaConstants.XanaPartyGameName = "";
                     ConstantsHolder.xanaConstants.isBuilderScene = false;
                     ConstantsHolder.xanaConstants.builderMapID = 0;
                     // Load the main scene
