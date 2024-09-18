@@ -281,7 +281,7 @@ public class XanaChatSystem : MonoBehaviour
 
             if (!oneTime)
             {
-                oneTime = true;
+                //oneTime = true;
                 StartCoroutine(ChatOpenDelay());
             }
             
@@ -319,11 +319,17 @@ public class XanaChatSystem : MonoBehaviour
         
     }
     bool oneTime = false;
+    VerticalLayoutGroup verticalLayoutGroup;
     IEnumerator ChatOpenDelay()
     {
-        ChatSocketManager.instance.MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = false;   
-        yield return new WaitForSeconds(0.1f);
-        ChatSocketManager.instance.MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = true;
+        if (verticalLayoutGroup == null)
+            verticalLayoutGroup = ChatSocketManager.instance.MsgParentObj.GetComponent<VerticalLayoutGroup>();
+        verticalLayoutGroup.enabled = false;
+        yield return new WaitForSeconds(0.05f);
+        verticalLayoutGroup.enabled = true;
+        if (ChatSocketManager.instance.MsgParentObjScrollRect)
+            ChatSocketManager.instance.MsgParentObjScrollRect.verticalNormalizedPosition = 1;
+
     }
     public void OpenCloseChatDialog(bool _state)
     {
