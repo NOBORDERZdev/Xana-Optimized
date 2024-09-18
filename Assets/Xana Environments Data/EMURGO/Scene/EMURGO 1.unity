@@ -792,6 +792,51 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 3.6222672, z: 1}
   m_Center: {x: 0, y: 1.7895024, z: 0}
+--- !u!1 &576004165
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 576004166}
+  - component: {fileID: 576004167}
+  m_Layer: 0
+  m_Name: 'Skybox Apply '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &576004166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576004165}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &576004167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576004165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f589e1024ae90b4499ca4611f35e15c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skyBoxShader: Skybox/Cubemap
 --- !u!1 &576564447
 GameObject:
   m_ObjectHideFlags: 0
@@ -1975,6 +2020,37 @@ ReflectionProbe:
   m_UseOcclusionCulling: 1
   m_Importance: 1
   m_CustomBakedTexture: {fileID: 0}
+--- !u!1 &1233590175
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1233590176}
+  m_Layer: 0
+  m_Name: Spawn Point
+  m_TagString: SpawnPoint
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1233590176
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233590175}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.95, y: 1.6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1430014858}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1281891916
 GameObject:
   m_ObjectHideFlags: 0
@@ -2027,8 +2103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd617247844f1b447a0320228ca36a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldJson: 
-  assetsParent: {fileID: 0}
+  worldJson: '{"SceneObjects":[{"addressableKey":"EMG_Cardano_logo","name":"EMG_Cardano_logo","position":{"x":7.644000053405762,"y":3.013000011444092,"z":-2.8510000705718996},"rotation":{"x":-0.000001432994849892566,"y":-0.0000014224542610463687,"z":-0.0000015497205367864809,"w":1.0},"scale":{"x":9.45081615447998,"y":1.3888862133026124,"z":1.5395257472991944},"objectBound":{"m_Center":{"x":7.644000053405762,"y":3.072999954223633,"z":-2.8510000705718996},"m_Extent":{"x":1.5856719017028809,"y":0.29899168014526369,"z":0.000005367987796489615}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":1,"lightmapScaleOffset":{"x":0.06640625,"y":0.06640625,"z":0.333984375,"w":0.26569101214408877}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"EMG_Frames","name":"EMG_Frames","position":{"x":7.693999767303467,"y":1.7760000228881837,"z":0.7990000247955322},"rotation":{"x":2.1855694143368966e-8,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.7546499967575074,"y":1.4577569961547852,"z":1.7546499967575074},"objectBound":{"m_Center":{"x":7.693999290466309,"y":1.8359999656677247,"z":0.7990000247955322},"m_Extent":{"x":3.7117552757263185,"y":1.4665223360061646,"z":3.6463754177093508}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":1,"lightmapScaleOffset":{"x":0.33203125,"y":0.33203125,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"EMG_Ceiling_lamp","name":"EMG_Ceiling_lamp","position":{"x":8.7271146774292,"y":2.8134636878967287,"z":0.27648255228996279},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":8.7271146774292,"y":2.8734638690948488,"z":0.27648255228996279},"m_Extent":{"x":3.6918818950653078,"y":0.663272500038147,"z":2.670444965362549}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"EMG_Door_stand","name":"EMG_Door_stand","position":{"x":11.405430793762207,"y":2.9554967880249025,"z":-1.9203611612319947},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":12.178303718566895,"y":3.0154967308044435,"z":0.7674845457077026},"m_Extent":{"x":0.6955450177192688,"y":3.039334535598755,"z":3.6727705001831056}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":1,"lightmapScaleOffset":{"x":0.2400599867105484,"y":0.2400599867105484,"z":0.5977615118026733,"w":-0.0038009609561413528}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"EMG_Logo","name":"EMG_Logo","position":{"x":12.773510932922364,"y":4.629823684692383,"z":0.8100000023841858},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":12.773510932922364,"y":4.689823627471924,"z":0.8100001215934753},"m_Extent":{"x":0.26450926065444949,"y":1.1177380084991456,"z":2.538455009460449}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":1,"lightmapScaleOffset":{"x":0.27452731132507326,"y":0.27452731132507326,"z":0.3301941454410553,"w":-0.00379023514688015}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"EMg_Plants","name":"EMg_Plants","position":{"x":7.925060749053955,"y":0.5114457607269287,"z":0.4219549596309662},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":11.895899772644043,"y":0.5750691294670105,"z":1.2694549560546876},"m_Extent":{"x":0.3625067472457886,"y":0.48664090037345889,"z":2.936112403869629}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":1,"lightmapScaleOffset":{"x":0.08485500514507294,"y":0.08485500514507294,"z":0.5996755957603455,"w":0.22930841147899629}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"EMG_Screen","name":"EMG_Screen","position":{"x":3.8299999237060549,"y":0.3370000123977661,"z":0.671999990940094},"rotation":{"x":0.0,"y":-0.7071057558059692,"z":0.0,"w":0.7071079015731812},"scale":{"x":2.487312078475952,"y":2.487312078475952,"z":2.487312078475952},"objectBound":{"m_Center":{"x":3.829117774963379,"y":1.8261001110076905,"z":0.6719998717308044},"m_Extent":{"x":0.000007038559488137253,"y":1.3097343444824219,"z":2.35569167137146}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":1,"lightmapScaleOffset":{"x":0.1708984375,"y":0.1708984375,"z":0.0,"w":0.333984375}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"EMG_Wall_triangle","name":"EMG_Wall_triangle","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":9.307231903076172,"y":1.8485232591629029,"z":0.8304324150085449},"m_Extent":{"x":2.216769218444824,"y":1.698611855506897,"z":3.5785675048828127}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}}]}'
+  assetsParent: {fileID: 1281891917}
 --- !u!1001 &1334561920
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2299,6 +2375,7 @@ Transform:
   - {fileID: 600898116}
   - {fileID: 1962105851}
   - {fileID: 1334561921}
+  - {fileID: 1233590176}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

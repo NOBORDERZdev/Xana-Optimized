@@ -32,7 +32,9 @@ public class EmoteReactionItemBtnHandler : MonoBehaviour
 
         if(TypeOfAction == ItemType.Emote)
         {
-            NameTxt.text = ""+ ActionName;
+            //NameTxt.text = ""+ ActionName;
+            NameTxt.text = ItemNameLocalization(ActionName);
+
         }
         else
         {
@@ -40,7 +42,36 @@ public class EmoteReactionItemBtnHandler : MonoBehaviour
         }
         GetImageFromServer();
     }
+    string ItemNameLocalization(string _itemName)
+    {
+        string itemName = _itemName;
 
+        // Check if the last character is a digit
+        if (char.IsDigit(itemName[itemName.Length - 1]))
+        {
+            // Find the position where the digits start from the end
+            int digitStartIndex = itemName.Length - 1;
+
+            // Loop backwards until a non-digit character is found
+            while (digitStartIndex >= 0 && char.IsDigit(itemName[digitStartIndex]))
+            {
+                digitStartIndex--;
+            }
+
+            // Separate the name and the number
+            string namePart = itemName.Substring(0, digitStartIndex + 1);
+            string digitPart = itemName.Substring(digitStartIndex + 1);
+
+            // Output the result
+            //Debug.Log($"Name: {namePart}, Digit: {digitPart}");
+            return TextLocalization.GetLocaliseTextByKey(namePart) + digitPart;
+        }
+        else
+        {
+            //Debug.Log("The last character is not a digit.");
+            return TextLocalization.GetLocaliseTextByKey(itemName);
+        }
+    }
     public void ApplyAction()
     {
         ActionData dataObj = new ActionData();

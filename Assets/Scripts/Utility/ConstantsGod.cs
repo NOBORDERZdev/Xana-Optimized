@@ -349,4 +349,8 @@ public class ConstantsGod
     public static string GetUserRaffleTickets = "/domes/getusertickets";
     public static string GetUserVisitedDomes = "/domes/getvisitedomes";
     #endregion
+
+    #region Bundle Update Api
+    public static string BUNDLEUPDATEAPI = "";
+    #endregion
 }
