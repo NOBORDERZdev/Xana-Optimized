@@ -18,7 +18,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool SwitchXanaToXSummit = false;
     public static bool IsXSummitApp;
     public bool OpenSpaceScreen_fromSummit = false;
-   
+
 
     //Login Info
     public static bool isAdmin;
@@ -105,24 +105,28 @@ public class ConstantsHolder : MonoBehaviour
     public String MuseumID;
 
     //For Metabuzz Environments
-    public enum ComingFrom{
+    public enum ComingFrom
+    {
         None,
         Dune,
         Daisen
     }
     public ComingFrom comingFrom = ComingFrom.None;
 
-    public bool IsMetabuzzEnvironment{
+    public bool IsMetabuzzEnvironment
+    {
         get
         {
-            if (EnviornmentName.Contains("DUNE") || EnviornmentName == "TOTTORI METAVERSE" || EnviornmentName.Contains("Daisen"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (!string.IsNullOrEmpty(EnviornmentName))
+                if (EnviornmentName.Contains("DUNE") || EnviornmentName == "TOTTORI METAVERSE" || EnviornmentName.Contains("Daisen"))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            return false;
         }
     }
 
@@ -176,7 +180,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool IsChatUseByOther = false;
 
     //XANA Summit 
-    public static bool isFromXANASummit=false;
+    public static bool isFromXANASummit = false;
     public static bool MultiSectionPhoton = false;
     public static bool TempDiasableMultiPartPhoton = false;
     public static bool DiasableMultiPartPhoton = false;
