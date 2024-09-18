@@ -1546,7 +1546,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         PositionResetButton.SetActive(false);
         if (ConstantsHolder.xanaConstants.isXanaPartyWorld )
         {
-            ReferencesForGamePlay.instance.SetGameplayForPenpenz();
+            ReferencesForGamePlay.instance.SetGameplayForPenpenz(false);
             if (!ConstantsHolder.xanaConstants.isJoinigXanaPartyGame) // For Spwaning in PENPENZ Lobby
             {
                 ReferencesForGamePlay.instance.XANAPartyWaitingPanel.SetActive(true);
@@ -1597,7 +1597,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         Destroy(penguinJump);
         Destroy(penguinJumpPot);
-
+        ReferencesForGamePlay.instance.SetGameplayForPenpenz(true);
         ConstantsHolder.isFixedHumanoid = false;
         ConstantsHolder.isPenguin = false;
         ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
