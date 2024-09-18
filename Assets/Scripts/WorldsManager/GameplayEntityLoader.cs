@@ -93,6 +93,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     [Header("XANA Summit Performer AI")]
     public GameObject[] AIAvatarPrefab;
 
+    public XANASummitDataContainer XanaSummitDataContainerObject;
     public DownloadPopupHandler DownloadPopupHandlerInstance;
     private void Awake()
     {
