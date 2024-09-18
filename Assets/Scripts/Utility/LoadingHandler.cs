@@ -931,19 +931,21 @@ public class LoadingHandler : MonoBehaviour
         DomeLodingUI.SetActive(false);
 
     }
-    public   void EnterDome()
+
+    public void EnterDome()
     {
         ResetLoadingValues();
         enter = true;
         WaitForInput = false;
         ApprovalUI.SetActive(false);
         DomeLodingUI.SetActive(true);
-
         EnterWheel?.Invoke(true);
         BuilderEventManager.SpaceXDeactivated?.Invoke();
-       
 
+        ConstantsHolder.isFromXANASummit = true;
+        ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
     }
+
     public void startLoading()
     {
         StartCoroutine(IncrementSliderValue(Random.Range(0f, 5f)));

@@ -105,8 +105,8 @@ public class SpaceXHandler : MonoBehaviour
         else
             SceneId = PlanetWorldId_Testnet[x];
 
-        ConstantsHolder.isFromXANASummit = true;
-        ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
+        //ConstantsHolder.isFromXANASummit = true; // set these after user clicks Yes
+        //ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
         SummitSceneLoading.LoadingSceneByIDOrName(SceneId, _ReturnPlayerPos);
         DisableObjects();
         // SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
