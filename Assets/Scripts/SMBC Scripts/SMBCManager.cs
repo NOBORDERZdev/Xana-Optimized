@@ -1,6 +1,4 @@
-using DG.Tweening;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,8 +8,8 @@ public class SMBCManager : MonoBehaviour
     public static SMBCManager Instance;
 
     //Orientation Changer
-    public CanvasGroup LandscapeCanvas;
-    public CanvasGroup PotraitCanvas;
+    //public CanvasGroup LandscapeCanvas;
+    //public CanvasGroup PotraitCanvas;
     [HideInInspector]
     public string CurrentPlanetName;
     public QuizDataLoader QuizDataLoader;
@@ -32,6 +30,7 @@ public class SMBCManager : MonoBehaviour
     List<string> _npcText;
 
     public static Action OnIntroductryPanelClicked;
+    public static Action AssignPlayerCanvasRef;
 
     private void Awake()
     {
@@ -49,16 +48,16 @@ public class SMBCManager : MonoBehaviour
 
     private void OnEnable()
     {
-        BuilderEventManager.BuilderSceneOrientationChange += OrientationChange;
+        //BuilderEventManager.BuilderSceneOrientationChange += OrientationChange;
         BuilderEventManager.OnSMBCRocketCollected += BackToEarthWithDelay;
         BuilderEventManager.OnSMBCQuizWrongAnswer += BackToEarthWithDelay;
         SceneManager.sceneLoaded += ResetData;
-        OrientationChange(false);
+        //OrientationChange(false);
     }
 
     private void OnDisable()
     {
-        BuilderEventManager.BuilderSceneOrientationChange -= OrientationChange;
+        //BuilderEventManager.BuilderSceneOrientationChange -= OrientationChange;
         BuilderEventManager.OnSMBCRocketCollected -= BackToEarthWithDelay;
         BuilderEventManager.OnSMBCQuizWrongAnswer -= BackToEarthWithDelay;
         SceneManager.sceneLoaded -= ResetData;
@@ -67,60 +66,60 @@ public class SMBCManager : MonoBehaviour
     }
 
     #region OrientationChange
-    void OrientationChange(bool orientation)
-    {
-        StartCoroutine(ChangeOrientation(orientation));
-    }
+    //void OrientationChange(bool orientation)
+    //{
+    //    StartCoroutine(ChangeOrientation(orientation));
+    //}
 
-    IEnumerator ChangeOrientation(bool orientation)
-    {
-        _isPotrait = orientation;
-        DisableUICanvas();
-        yield return new WaitForSeconds(0.1f);
-        if (_isPotrait)
-        {
-            PotraitCanvas.DOFade(1, 0.5f);
-            PotraitCanvas.blocksRaycasts = true;
-            PotraitCanvas.interactable = true;
-        }
-        else
-        {
-            LandscapeCanvas.DOFade(1, 0.5f);
-            LandscapeCanvas.blocksRaycasts = true;
-            LandscapeCanvas.interactable = true;
-        }
+    //IEnumerator ChangeOrientation(bool orientation)
+    //{
+    //    _isPotrait = orientation;
+    //    DisableUICanvas();
+    //    yield return new WaitForSeconds(0.1f);
+    //    if (_isPotrait)
+    //    {
+    //        PotraitCanvas.DOFade(1, 0.5f);
+    //        PotraitCanvas.blocksRaycasts = true;
+    //        PotraitCanvas.interactable = true;
+    //    }
+    //    else
+    //    {
+    //        LandscapeCanvas.DOFade(1, 0.5f);
+    //        LandscapeCanvas.blocksRaycasts = true;
+    //        LandscapeCanvas.interactable = true;
+    //    }
 
-        yield return new WaitForSeconds(0.5f);
+    //    yield return new WaitForSeconds(0.5f);
 
-        BuilderEventManager.PositionUpdateOnOrientationChange?.Invoke();
-    }
+    //    BuilderEventManager.PositionUpdateOnOrientationChange?.Invoke();
+    //}
 
-    void UICanvasToggle(bool state)
-    {
-        if (state)
-        {
-            DisableUICanvas();
-        }
-        else
-            StartCoroutine(ChangeOrientation(_isPotrait));
-    }
+    //void UICanvasToggle(bool state)
+    //{
+    //    if (state)
+    //    {
+    //        DisableUICanvas();
+    //    }
+    //    else
+    //        StartCoroutine(ChangeOrientation(_isPotrait));
+    //}
 
-    void DisableUICanvas()
-    {
-        LandscapeCanvas.DOKill();
-        LandscapeCanvas.alpha = 0;
-        LandscapeCanvas.blocksRaycasts = false;
-        LandscapeCanvas.interactable = false;
-        PotraitCanvas.DOKill();
-        PotraitCanvas.alpha = 0;
-        PotraitCanvas.blocksRaycasts = false;
-        PotraitCanvas.interactable = false;
-    }
+    //void DisableUICanvas()
+    //{
+    //    LandscapeCanvas.DOKill();
+    //    LandscapeCanvas.alpha = 0;
+    //    LandscapeCanvas.blocksRaycasts = false;
+    //    LandscapeCanvas.interactable = false;
+    //    PotraitCanvas.DOKill();
+    //    PotraitCanvas.alpha = 0;
+    //    PotraitCanvas.blocksRaycasts = false;
+    //    PotraitCanvas.interactable = false;
+    //}
     #endregion
 
     void ResetData(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "XANA Summit")
+        if (scene.name == "XANA Summit" || scene.name == "Home")
         {
             Destroy(gameObject);
         }
@@ -210,7 +209,14 @@ public class SMBCManager : MonoBehaviour
     void AddKeyObjectOnPlayerHead()
     {
         if (_keyObject == null)
+        {
+            if (PlayerCanvas == null)
+            {
+                AssignPlayerCanvasRef?.Invoke();
+            }
             _keyObject = Instantiate(PlayerCanvas);
+        }
+
 
         if (_keyObject.transform.parent != NameCanvas)
         {
