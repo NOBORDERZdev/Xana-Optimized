@@ -113,6 +113,7 @@ public class UserLoginSignupManager : MonoBehaviour
             Screen.orientation = ScreenOrientation.LandscapeLeft;
             yield return null;
         }
+        Screen.orientation = ScreenOrientation.Portrait;
     }
 
     private void OnEnable()
