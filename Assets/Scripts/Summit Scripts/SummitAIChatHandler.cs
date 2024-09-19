@@ -120,6 +120,7 @@ public class SummitAIChatHandler : MonoBehaviour
 
     void InstantiateSummitAINPC()
     {
+        NPCCount = 0;
         SummitNPC = false;
         for (int i = 0; i < XANASummitDataContainer.aiData.npcData.Count; i++)
         {
@@ -131,6 +132,16 @@ public class SummitAIChatHandler : MonoBehaviour
             AINPCAvatar.GetComponent<SetPenguinAIName>().NameText.text = XANASummitDataContainer.aiData.npcData[i].name;
             int avatarPresetId = XANASummitDataContainer.aiData.npcData[i].avatarId;
             AINPCAvatar.GetComponent<AINPCTrigger>().npcID = XANASummitDataContainer.aiData.npcData[i].id;
+            NPCCount++;
+        }
+
+        try
+        {
+            ReferencesForGamePlay.instance.SetPlayerCounter();
+        }
+        catch (Exception e)
+        {
+
         }
     }
 
