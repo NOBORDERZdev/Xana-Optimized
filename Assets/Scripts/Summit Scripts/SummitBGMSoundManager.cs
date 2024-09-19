@@ -29,17 +29,17 @@ public class SummitBGMSoundManager : MonoBehaviour
 
     }
 
-    void StartBGMSound()
+    async void StartBGMSound()
     {
         if (ConstantsHolder.isFromXANASummit)
         {
-            string audioUrl=summitDataContainer.GetAudioFile(ConstantsHolder.domeId);
+            string audioUrl=await summitDataContainer.GetAudioFile(ConstantsHolder.domeId);
             StartCoroutine(SetAudioFromUrl(audioUrl));
         }
 
         if (WorldItemView.m_EnvName == "XANA Summit")
         {
-            string audioUrl = summitDataContainer.GetAudioFile(170);
+            string audioUrl = await summitDataContainer.GetAudioFile(170);
             StartCoroutine(SetAudioFromUrl(audioUrl));
         }
     }
