@@ -1579,7 +1579,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
     }
 
-    void ResetOnBackFromSummit()
+    public void ResetOnBackFromSummit()
     {
         if (YoutubeStreamPlayer)
             Destroy(YoutubeStreamPlayer);

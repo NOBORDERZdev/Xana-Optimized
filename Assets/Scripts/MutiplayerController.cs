@@ -122,10 +122,15 @@ namespace Photon.Pun.Demo.PunBasics
         }
         private void Start()
         {
-            if (!string.IsNullOrEmpty(ConstantsHolder.xanaConstants.LastLobbyName))
-                Connect(ConstantsHolder.xanaConstants.LastLobbyName);
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            {
+                if(!ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && !string.IsNullOrEmpty(ConstantsHolder.xanaConstants.LastLobbyName))
+                    Connect(ConstantsHolder.xanaConstants.LastLobbyName);
+            }
             else
+            {
                 Connect(ConstantsHolder.xanaConstants.EnviornmentName);
+            }
         }
         /// <summary>
         /// MonoBehaviour method called on GameObject by Unity during early initialization phase.
