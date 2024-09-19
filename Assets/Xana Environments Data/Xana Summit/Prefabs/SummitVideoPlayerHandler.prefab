@@ -66,11 +66,12 @@ MonoBehaviour:
     IsLive: 0
     isPlaying: 0
     isYoutubeURL: 0
+    quality: 
   OldAWSURL: xyz
   summitAreaID: 6
   SummitVideoIndex: 0
-  VideoPlayerRef: {fileID: 0}
-  ProxyIsYoutubeURL: 1
+  VideoPlayerRef: {fileID: 3141503287995704522}
+  IsSummitDomeWorld: 1
 --- !u!114 &2286232385020354246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,11 +84,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd50903762eed0c49b6d6ae0b4d31f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LiveStreamPlayer: {fileID: 5394966947064848480}
-  NormalPlayer: {fileID: 2099397830385648845}
+  LiveStreamPlayer: {fileID: 5226123731516465617}
+  NormalPlayer: {fileID: 5226123732534829229}
   APIHandler: {fileID: 8485164774061021887}
-  videoPlayerAudioSource: {fileID: 8117263461359333614}
-  mediaPlayerAudioSource: {fileID: 892990331988367870}
+  videoPlayerAudioSource: {fileID: 5226123732534829227}
+  mediaPlayerAudioSource: {fileID: 5226123731516465619}
   streamYoutubeVideo: {fileID: 3141503287995704522}
 --- !u!114 &3141503287995704522
 MonoBehaviour:
@@ -103,6 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsLive: 0
   PlayOnAwake: 1
+  UploadFeatureVideoID: 
   YoutubeInstance: {fileID: 5226123732447689054}
   VideoId: 
   PreferedQuality: 135
@@ -110,6 +112,11 @@ MonoBehaviour:
   VideoPlayer1: {fileID: 5226123732534829229}
   audioSource: {fileID: 5226123731516465619}
   AVProVideoPlayer: {fileID: 5226123731516465621}
+  PreRecVideoScreen: {fileID: 0}
+  LiveVideoPlayerScreen: {fileID: 0}
+  AndroidLiveVideoMesh: {fileID: 4300000, guid: 4d5df18ac3562db42a15f8bc7ad43465, type: 3}
+  IOSLiveVideoMesh: {fileID: 4300000, guid: dfb61840dac0cbe449e051792734e64e, type: 3}
+  IsInternetDisconnected: 0
 --- !u!114 &2609470930501225634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,8 +133,8 @@ MonoBehaviour:
   minDistance: 7
   updateInterval: 0.5
   playerCam: {fileID: 0}
-  activePlayer: {fileID: 1689215386332057433}
-  audioSource: {fileID: 8117263461359333614}
+  activePlayer: {fileID: 5226123731516465621}
+  audioSource: {fileID: 5226123732534829227}
   PlayerTriggerCheck: {fileID: 0}
 --- !u!114 &5819901891346889974
 MonoBehaviour:
@@ -143,10 +150,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerTriggerChecker: {fileID: 0}
   DirectionalSoundController: {fileID: 2609470930501225634}
-  PreRecVideoScreen: {fileID: 0}
-  LiveVideoPlayerScreen: {fileID: 0}
-  AndroidLiveVideoMesh: {fileID: 3941715523697911101, guid: 21e9cb7cf15aec04183b2a8f91112f81, type: 3}
-  IOSLiveVideoMesh: {fileID: 3941715523697911101, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
 --- !u!1 &2785865629739442305
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,7 +520,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6001025172511641292
 Transform:
   m_ObjectHideFlags: 0
@@ -857,7 +860,7 @@ MonoBehaviour:
   _overrideStereoPacking: 0
   _stereoRedGreenTint: 0
   _defaultTexture: {fileID: 0}
-  _renderer: {fileID: 1015366577673141472}
+  _renderer: {fileID: 0}
   _materialIndex: -1
   _texturePropertyName: _MainTex
   _offset: {x: 0, y: 0}
@@ -1658,7 +1661,7 @@ VideoPlayer:
   m_TargetCamera: {fileID: 0}
   m_TargetTexture: {fileID: 0}
   m_TimeReference: 0
-  m_TargetMaterialRenderer: {fileID: 3948089028451957462}
+  m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 3
   m_AspectRatio: 2
@@ -1675,7 +1678,7 @@ VideoPlayer:
   m_ControlledAudioTrackCount: 1
   m_PlayOnAwake: 0
   m_SkipOnDrop: 1
-  m_Looping: 0
+  m_Looping: 1
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
@@ -2285,7 +2288,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4594165639781970728
 Transform:
   m_ObjectHideFlags: 0
@@ -2752,7 +2755,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2737736166227382788
 Transform:
   m_ObjectHideFlags: 0
