@@ -11,10 +11,12 @@ public class ActionCircleBtnHighlightHandler : MonoBehaviour
     private void OnEnable()
     {
         ActivateHighlightsByIndex += ActivateHighlights;
+        ActionManager.DisableFavoriteCircleHighlighter += DisableHighlights;
     }
     private void OnDisable()
     {
         ActivateHighlightsByIndex -= ActivateHighlights;
+        ActionManager.DisableFavoriteCircleHighlighter -= DisableHighlights;
         DisableHighlights();
     }
 
