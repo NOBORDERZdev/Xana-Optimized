@@ -81,7 +81,7 @@ public class PlayerDashHandler : MonoBehaviour
 
     public void DashButton()
     {
-        if (_playerController == null || !_canDash || IsPlayerInOtherState)
+        if (_playerController == null || !_canDash || IsPlayerInOtherState || _playerController.animator.GetFloat("Blend") == 0)
             return;
 
         StartCoroutine(DashRoutine());

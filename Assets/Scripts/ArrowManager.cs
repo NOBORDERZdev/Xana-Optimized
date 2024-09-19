@@ -96,6 +96,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
                 if(!ConstantsHolder.isPenguin)
                 {
                     AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().animator = this.GetComponent<Animator>();
+                    ActionAnimationApplyToPlayer.PlayerAnimatorInitializer?.Invoke(this.GetComponent<Animator>().runtimeAnimatorController);
                     AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().playerRig = GetComponent<FirstPersonJump>().jumpRig;
                 }
             }
