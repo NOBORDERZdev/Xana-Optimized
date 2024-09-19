@@ -159,7 +159,10 @@ public class AskForJoining : MonoBehaviour
             }
 
             //LoadingHandler.Instance.UpdateLoadingSlider(0.5f);
-            MutiplayerController.instance.Connect(WorldItemView.m_EnvName);
+            if (!string.IsNullOrEmpty(ConstantsHolder.xanaConstants.LastLobbyName))
+                MutiplayerController.instance.Connect(ConstantsHolder.xanaConstants.LastLobbyName);
+            else
+                MutiplayerController.instance.Connect(WorldItemView.m_EnvName);
             //AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
             BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none, false);
             TurnCameras(true);
