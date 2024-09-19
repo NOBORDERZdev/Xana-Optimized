@@ -734,7 +734,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4022340374516288201}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4022340373934515394}
+        m_TargetAssemblyTypeName: RedirectionPopupHandler, Assembly-CSharp
+        m_MethodName: OnContinue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4022340374569330120
 GameObject:
   m_ObjectHideFlags: 0
@@ -856,7 +868,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4022340374569330103}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4022340373934515394}
+        m_TargetAssemblyTypeName: RedirectionPopupHandler, Assembly-CSharp
+        m_MethodName: OnCancel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4022340374594042352
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,7 +1030,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: To enhance your gameplay, additional assets are required.
+  key: "You\u2019re being redirected to a company's website. Confirm your choice
+    to continue."
   LocalizeText: {fileID: 0}
   LocalizeTextTMP: {fileID: 4022340374594042367}
 --- !u!1 &4022340374775407281
