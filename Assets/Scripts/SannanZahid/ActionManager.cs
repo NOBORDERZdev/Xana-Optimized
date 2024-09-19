@@ -9,6 +9,7 @@ public class ActionManager : MonoBehaviour
     public static Action<ActionData> ActionBtnClick;
     public static Action<bool> OpenActionFavouritPanel;
     public static Action DisableCircleDialog;
+    public static Action DisableFavoriteCircleHighlighter;
     public static Action<EmoteReactionItemBtnHandler.ItemType, int> OpenActionCategoryTab;
     public static Action StopActionAnimation;
     public static bool IsAnimRunning = default;
@@ -82,12 +83,18 @@ public class ActionManager : MonoBehaviour
             if(dataObj.TypeOfAction == EmoteReactionItemBtnHandler.ItemType.Emote)
             {
                 this.transform.GetComponent<ActionAnimationApplyToPlayer>().LoadAnimationAccrossInstance(dataObj.AnimationName);
+                if(!GamePlayUIHandler.inst.AnimationBtnClose.activeInHierarchy)
+                    GamePlayUIHandler.inst.AnimationBtnClose.SetActive(true);
                 IsAnimRunning = true;
             }
             else
             {
                 PlayerPrefs.SetString(ConstantsGod.ReactionThumb, dataObj.ThumbnailURL);
                 ArrowManager.OnInvokeReactionButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.ReactionThumb));
+                new Delayed.Action(() => 
+                {
+                    ActionManager.DisableFavoriteCircleHighlighter?.Invoke();
+                },5f);
             }
         }
     }
@@ -111,6 +118,7 @@ public class ActionManager : MonoBehaviour
 
         //Remove emote highlighter when animation stop
         EmoteReactionUIHandler.ActivateHeighlightOfPanelBtn?.Invoke("");
+        ActionManager.DisableFavoriteCircleHighlighter?.Invoke();
     }
 }
 
