@@ -104,7 +104,6 @@ public class ConstantsHolder : MonoBehaviour
     public bool isBackFromWorld = false;
     public String MuseumID;
 
-    public bool isXanaPartyWorld = false;
     //For Metabuzz Environments
     public enum ComingFrom
     {
