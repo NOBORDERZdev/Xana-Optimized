@@ -356,16 +356,16 @@ public class AvatarController : MonoBehaviour
 
     public void HandleCharacterParts(bool active)
     {
-        if (characterBodyParts.eyeShadow != null)
+        /*if (characterBodyParts.eyeShadow != null)
         {
             characterBodyParts.eyeShadow.enabled = active;
         }
-        characterBodyParts.head.enabled = characterBodyParts.body.enabled = active;
+        characterBodyParts.head.enabled = characterBodyParts.body.enabled = active;*/
     }
 
     public void HandleCloths(bool active)
     {
-        if (wornHair != null)
+        /*if (wornHair != null)
         {
             wornHair.SetActive(active);
         }
@@ -380,7 +380,7 @@ public class AvatarController : MonoBehaviour
         if (wornShoes != null)
         {
             wornShoes.SetActive(active);
-        }
+        }*/
     }
     public bool isClothStichedOrNot(List<string> clothsList, AvatarController avatar)
     {
@@ -559,6 +559,7 @@ public class AvatarController : MonoBehaviour
     /// </summary>
     async void Custom_InitializeAvatar(SavingCharacterDataClass _data = null)
     {
+        masks.Clear();
         await Task.Delay(200);
         if (isLoadStaticClothFromJson)
         {
