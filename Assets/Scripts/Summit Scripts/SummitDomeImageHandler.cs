@@ -15,6 +15,8 @@ public class SummitDomeImageHandler : MonoBehaviour
     public NFT_Holder_Manager CommonScreen;
 
     public static Action<int> ShowNftData;
+    
+    private Dictionary<string, Texture> _textureCache = new Dictionary<string, Texture>();
     void OnEnable()
     {
         BuilderEventManager.AfterWorldOffcialWorldsInatantiated += ApplyDomeShader;
@@ -69,58 +71,36 @@ public class SummitDomeImageHandler : MonoBehaviour
         ReferencesForGamePlay.instance.eventSystemObj.SetActive(true);
         PlayerCameraController.instance.isReturn = false;
     }
+
+    private PMY_Ratio DetermineRatio(string proportionType, string mediaType)
+    {
+        switch (proportionType)
+        {
+            case "1:1":
+                return mediaType == "VIDEO" || mediaType == "LIVE" ? PMY_Ratio.OneXOneWithoutDes : PMY_Ratio.OneXOneWithDes;
+            case "16:9":
+                return mediaType == "VIDEO" || mediaType == "LIVE" ? PMY_Ratio.SixteenXNineWithoutDes : PMY_Ratio.SixteenXNineWithDes;
+            case "9:16":
+                return mediaType == "VIDEO" || mediaType == "LIVE" ? PMY_Ratio.NineXSixteenWithoutDes : PMY_Ratio.NineXSixteenWithDes;
+            case "4:3":
+                return mediaType == "VIDEO" || mediaType == "LIVE" ? PMY_Ratio.FourXThreeWithoutDes : PMY_Ratio.FourXThreeWithDes;
+            default:
+                return mediaType == "VIDEO" || mediaType == "LIVE" ? PMY_Ratio.OneXOneWithoutDes : PMY_Ratio.OneXOneWithDes;
+        }
+    }
+
     public async void SetInfo(int domeID)
     {
         var domedata = XANASummitDataContainer.GetDomeData(domeID);
         string compersionPrfex;
-        PMY_Ratio PMY_Ratio;
+        PMY_Ratio PMY_Ratio = DetermineRatio(domedata.proportionType, domedata.mediaType);
 
-        switch (domedata.proportionType)
-        {
-            case "1:1":
-             
-                if (domedata.mediaType == "VIDEO" || domedata.mediaType == "LIVE")
-                    PMY_Ratio = PMY_Ratio.OneXOneWithoutDes;
-                else
-                    PMY_Ratio = PMY_Ratio.OneXOneWithDes;
-       
-                break;
-            case "16:9":
-              
-                if (domedata.mediaType == "VIDEO" || domedata.mediaType == "LIVE")
-                    PMY_Ratio = PMY_Ratio.SixteenXNineWithoutDes;
-                else
-                    PMY_Ratio = PMY_Ratio.SixteenXNineWithDes;
-     
-                break;
-            case "9:16":
-           
-                if (domedata.mediaType == "VIDEO" || domedata.mediaType == "LIVE")
-                    PMY_Ratio = PMY_Ratio.NineXSixteenWithoutDes;
-                else
-                    PMY_Ratio = PMY_Ratio.NineXSixteenWithDes;
-   
-                break;
-            case "4:3":
-                
-                if (domedata.mediaType == "VIDEO" || domedata.mediaType == "LIVE")
-                    PMY_Ratio = PMY_Ratio.FourXThreeWithoutDes;
-                else
-                    PMY_Ratio = PMY_Ratio.FourXThreeWithDes;
-            
-                break;
-            default:
-               
-                if (domedata.mediaType == "VIDEO" || domedata.mediaType == "LIVE")
-                    PMY_Ratio = PMY_Ratio.OneXOneWithoutDes;
-                else
-                    PMY_Ratio = PMY_Ratio.OneXOneWithDes;
-               
-                break;
-        }
         int ratioId = (int)PMY_Ratio;
         if (domedata.mediaType == "Pdf")
         {
+            if (string.IsNullOrEmpty(domedata.mediaUpload))
+                return;
+
             CommonScreen.pdfViewer_L.FileURL = domedata.mediaUpload;
             CommonScreen.pdfViewer_P.FileURL = domedata.mediaUpload;
             Enable_PDF_Panel();
@@ -275,13 +255,18 @@ public class SummitDomeImageHandler : MonoBehaviour
 
         async Task<Texture> DownloadDomeTexture(string url)
         {
+            if (_textureCache.ContainsKey(url))
+                return _textureCache[url];
+
             UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
             await request.SendWebRequest();
             if ((request.result == UnityWebRequest.Result.ConnectionError) || (request.result == UnityWebRequest.Result.ProtocolError))
                 Debug.Log(request.error);
             else
             {
-                return DownloadHandlerTexture.GetContent(request);
+                var texture = DownloadHandlerTexture.GetContent(request);
+                _textureCache[url] = texture;
+                return texture;
             }
             request.Dispose();
             return null;

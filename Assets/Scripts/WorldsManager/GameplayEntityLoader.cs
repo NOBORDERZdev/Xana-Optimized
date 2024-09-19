@@ -93,6 +93,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     [Header("XANA Summit Performer AI")]
     public GameObject[] AIAvatarPrefab;
 
+    public XANASummitDataContainer XanaSummitDataContainerObject;
     public DownloadPopupHandler DownloadPopupHandlerInstance;
     private void Awake()
     {
@@ -1023,6 +1024,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void ResetPlayerPosition()
     {
+        //Stop selfi functionality when respawn after fall down
+        PlayerSelfieController.Instance.DisableSelfieFeature();
+
         if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
             //Player respawn at spawn point after jump down from world
