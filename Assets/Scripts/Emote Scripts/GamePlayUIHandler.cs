@@ -271,7 +271,8 @@ public class GamePlayUIHandler : MonoBehaviour
 
     public void OnSignInBtnClick()
     {
-        LoadingHandler.Instance.ShowLoading();
+        LoadingHandler.Instance.ShowLoading(); 
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
         ConstantsHolder.xanaConstants.EnableSignInPanelByDefault = true;
         GameplayEntityLoader.instance._uiReferences.LoadMain(false);
         SignInPopupForGuestUser.SetActive(false);

@@ -1101,8 +1101,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
    public void ResetPlayerPosition()
     {
         //Stop selfi functionality when respawn after fall down
-        PlayerSelfieController.Instance.DisableSelfieFeature();
-
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            PlayerSelfieController.Instance.DisableSelfieFeature();
+        }
         if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
             //Player respawn at spawn point after jump down from world
