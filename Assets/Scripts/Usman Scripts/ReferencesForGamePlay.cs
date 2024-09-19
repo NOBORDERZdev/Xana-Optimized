@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmakingCallbacks
+public class ReferencesForGamePlay : MonoBehaviour, IInRoomCallbacks, IMatchmakingCallbacks
 {
     public GameObject eventSystemObj;
     [Space(5)]
@@ -48,7 +48,7 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
     public XanaChatSystem ChatSystemRef;
 
     public Image ExitBtnGameplay;
-    public Sprite backBtnSprite,HomeBtnSprite;
+    public Sprite backBtnSprite, HomeBtnSprite;
 
 
 
@@ -129,9 +129,9 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
     {
         instance = this;
         PhotonNetwork.AddCallbackTarget(this);
-        if(m_34player==null)
+        if (m_34player == null)
         {
-            m_34player=GameplayEntityLoader.instance.player;
+            m_34player = GameplayEntityLoader.instance.player;
         }
         if (WorldItemView.m_EnvName.Contains("Xana Festival")) // for Xana Festival
         {
@@ -159,15 +159,15 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
                 totalCounter.text = totalCounter.text = PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers /*ConstantsHolder.xanaConstants.userLimit*/;
             }
         }
-      
+
         if (ReferenceObject.activeInHierarchy && m_34player != null && !ConstantsHolder.isPenguin)
         {
-            if(m_34player.GetComponent<MyBeachSelfieCam>())
+            if (m_34player.GetComponent<MyBeachSelfieCam>())
             {
                 m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat.SetActive(false);
                 m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRender.SetActive(true);
             }
-            
+
         }
         if (ReferenceObjectPotrait.activeInHierarchy && m_34player != null && !ConstantsHolder.isPenguin)
         {
@@ -297,7 +297,7 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
                 if (!go.GetComponent<CanvasGroup>())
                 {
                     go.AddComponent<CanvasGroup>();
-                    
+
                 }
                 go.GetComponent<CanvasGroup>().alpha = 1;
             }
@@ -374,14 +374,13 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
     //    StartCoroutine(SetPlayerCounter());
     //}
 
-    void SetPlayerCounter()
+    public void SetPlayerCounter()
     {
-    //CheckAgain:
         try
         {
-            if (totalCounter != null)
+            if(ConstantsHolder.xanaConstants.isXanaPartyWorld)
             {
-                if (/*FeedEventPrefab.m_EnvName.Contains("Xana Festival")*/ true) // for Xana Festival
+                if (totalCounter != null)
                 {
                     if (ConstantsHolder.xanaConstants.isCameraManInRoom || ConstantsHolder.xanaConstants.isCameraMan)
                     {
@@ -393,29 +392,34 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
                     }
                     totalCounter.text = PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers /*ConstantsHolder.xanaConstants.userLimit*/;
 
-                    //if (ConstantsHolder.xanaConstants.isCameraMan)
-                    //{
-                    //    print("NAMES ARE " + PhotonNetwork.CurrentRoom.Name);
-                    //    if (false)
-                    //    {
-                    //        PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) - 2;
-
-                    //    }
-                    //    else
-                    //    {
-                    //        PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) - 1;
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
-                    //}
-                    // print("!!! PlayerCount"+ PlayerCount);
+                    if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
+                    {
+                        PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + NpcSpawner.npcSpawner.npcCounter;
+                        totalCounter.text = PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers + 5;
+                        
+                    }
                 }
-                if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
+            }
+            else
+            {
+                if (totalCounter != null)
                 {
-                    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + NpcSpawner.npcSpawner.npcCounter;
-                    totalCounter.text = PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers + 5;
+                    if (ConstantsHolder.xanaConstants.isCameraManInRoom || ConstantsHolder.xanaConstants.isCameraMan)
+                    {
+                        PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount - 1)+SummitAIChatHandler.NPCCount;
+                    }
+                    else
+                    {
+                        PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + SummitAIChatHandler.NPCCount;
+                    }
+                    totalCounter.text = PlayerCount + "/" + (PhotonNetwork.CurrentRoom.MaxPlayers+ SummitAIChatHandler.NPCCount);
+                    
+                    if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
+                    {
+                        PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + NpcSpawner.npcSpawner.npcCounter + SummitAIChatHandler.NPCCount;
+                        totalCounter.text = PlayerCount + "/" + (PhotonNetwork.CurrentRoom.MaxPlayers + 5 + SummitAIChatHandler.NPCCount); ;
+                    
+                    }
                 }
 
                 if (((PlayerCount == ConstantsHolder.XanaPartyMaxPlayers && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame) || isMatchingTimerFinished) && !isCounterStarted)
@@ -433,9 +437,6 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
         {
 
         }
-
-      /*  yield return new WaitForSeconds(2f);
-        goto CheckAgain;*/
     }
 
     #region XANA PARTY WORLD
@@ -525,8 +526,8 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
             minimap.transform.parent.GetComponent<RawImage>().enabled = true;
             minimap.transform.parent.GetComponent<Mask>().enabled = true;
 
-           /* if (!ScreenOrientationManager._instance.isPotrait)
-                minimap.GetComponent<RectTransform>().sizeDelta = new Vector2(530, 300);*/
+            /* if (!ScreenOrientationManager._instance.isPotrait)
+                 minimap.GetComponent<RectTransform>().sizeDelta = new Vector2(530, 300);*/
         }
         else
         {
@@ -534,9 +535,9 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
         }
     }
 
-    public void FullScreenMapStatus (bool _enable)
+    public void FullScreenMapStatus(bool _enable)
     {
-        if(ConstantsHolder.DisableFppRotation) { return; }
+        if (ConstantsHolder.DisableFppRotation) { return; }
 
         if (_enable)
         {
@@ -562,27 +563,27 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
 
     public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
-      
+
     }
 
     public void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
-       
+
     }
 
     public void OnMasterClientSwitched(Player newMasterClient)
     {
-       
+
     }
 
     public void OnFriendListUpdate(List<FriendInfo> friendList)
     {
-       
+
     }
 
     public void OnCreatedRoom()
     {
-        
+
     }
 
     public void OnCreateRoomFailed(short returnCode, string message)
@@ -596,12 +597,12 @@ public class ReferencesForGamePlay : MonoBehaviour,IInRoomCallbacks,IMatchmaking
 
     public void OnJoinRoomFailed(short returnCode, string message)
     {
-       
+
     }
 
     public void OnJoinRandomFailed(short returnCode, string message)
     {
-        
+
     }
 
     public void OnLeftRoom()
