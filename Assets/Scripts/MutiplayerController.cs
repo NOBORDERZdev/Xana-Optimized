@@ -214,10 +214,10 @@ namespace Photon.Pun.Demo.PunBasics
 
         private async void JoinLobby(String lobbyName)
         {
-            if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
-            {
-                lobbyName = ConstantsHolder.xanaConstants.XanaPartyGameName;
-            }
+            //if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            //{
+            //    lobbyName = ConstantsHolder.xanaConstants.XanaPartyGameName;
+            //}
             while (!PhotonNetwork.IsConnectedAndReady)
                 await Task.Delay(1);
 
@@ -334,7 +334,7 @@ namespace Photon.Pun.Demo.PunBasics
                             print(" ~~~~~~~same room found : " + PhotonNetwork.CurrentLobby.Name);
                             print(" ~~~~~~~ConstantsHolder.MultiSectionPhoton : " + ConstantsHolder.MultiSectionPhoton);
 
-                            if (ConstantsHolder.MultiSectionPhoton)
+                            if (ConstantsHolder.MultiSectionPhoton && !ConstantsHolder.xanaConstants.isXanaPartyWorld)
                             {
                                 print(" ~~~~~~~multi selection is true");
                                
@@ -360,7 +360,8 @@ namespace Photon.Pun.Demo.PunBasics
                             }
                             else {
                                 print("~~~~~~~ no found IsVisible");
-                                continue; }
+                                continue; 
+                                }
                             CurrRoomName = info.Name;
                             Debug.LogError(" ~~~~~~~ Joining room   " + " Shifting " + isShifting + "  " + SectorName);
                             joinedRoom = PhotonNetwork.JoinRoom(CurrRoomName);
@@ -437,6 +438,7 @@ namespace Photon.Pun.Demo.PunBasics
             }
             else
             {
+                print("~~~ IsVisible add in room properties");
                 roomOptions.CustomRoomPropertiesForLobby = new string[] { "IsVisible" };
             }
 
