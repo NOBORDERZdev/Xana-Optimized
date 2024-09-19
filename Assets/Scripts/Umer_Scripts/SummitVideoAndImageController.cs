@@ -161,14 +161,14 @@ public class SummitVideoAndImageController : MonoBehaviour
                     imgVideo16x9.SetActive(true);
                     imgVideo16x9.GetComponent<RawImage>().texture = response;
                     imgVideo16x9.GetComponent<VideoPlayer>().enabled = false;
-                    if (imgVideo16x9.transform.childCount > 0)
-                    {
-                        foreach (Transform g in imgVideo16x9.transform)
-                        {
-                            g.gameObject.GetComponent<RawImage>().texture = response;
-                            g.gameObject.SetActive(true);
-                        }
-                    }
+                    //if (imgVideo16x9.transform.childCount > 0)
+                    //{
+                    //    foreach (Transform g in imgVideo16x9.transform)
+                    //    {
+                    //        g.gameObject.GetComponent<RawImage>().texture = response;
+                    //        g.gameObject.SetActive(true);
+                    //    }
+                    //}
                 }
             }
             else if (_imgVideoRatio == JjRatio.NineXSixteenWithDes || _imgVideoRatio == JjRatio.NineXSixteenWithoutDes)
@@ -182,14 +182,14 @@ public class SummitVideoAndImageController : MonoBehaviour
                     imgVideo9x16.SetActive(true);
                     imgVideo9x16.GetComponent<RawImage>().texture = response;
                     imgVideo9x16.GetComponent<VideoPlayer>().enabled = false;
-                    if (imgVideo9x16.transform.childCount > 0)
-                    {
-                        foreach (Transform g in imgVideo9x16.transform)
-                        {
-                            g.gameObject.GetComponent<RawImage>().texture = response;
-                            g.gameObject.SetActive(true);
-                        }
-                    }
+                    //if (imgVideo9x16.transform.childCount > 0)
+                    //{
+                    //    foreach (Transform g in imgVideo9x16.transform)
+                    //    {
+                    //        g.gameObject.GetComponent<RawImage>().texture = response;
+                    //        g.gameObject.SetActive(true);
+                    //    }
+                    //}
                 }
             }
             else if (_imgVideoRatio == JjRatio.OneXOneWithDes || _imgVideoRatio == JjRatio.OneXOneWithoutDes)
@@ -203,14 +203,14 @@ public class SummitVideoAndImageController : MonoBehaviour
                     imgVideo1x1.SetActive(true);
                     imgVideo1x1.GetComponent<RawImage>().texture = response;
                     imgVideo1x1.GetComponent<VideoPlayer>().enabled = false;
-                    if (imgVideo1x1.transform.childCount > 0)
-                    {
-                        foreach (Transform g in imgVideo1x1.transform)
-                        {
-                            g.gameObject.GetComponent<RawImage>().texture = response;
-                            g.gameObject.SetActive(true);
-                        }
-                    }
+                    //if (imgVideo1x1.transform.childCount > 0)
+                    //{
+                    //    foreach (Transform g in imgVideo1x1.transform)
+                    //    {
+                    //        g.gameObject.GetComponent<RawImage>().texture = response;
+                    //        g.gameObject.SetActive(true);
+                    //    }
+                    //}
                 }
             }
             else if (_imgVideoRatio == JjRatio.FourXThreeWithDes || _imgVideoRatio == JjRatio.FourXThreeWithoutDes)
@@ -224,14 +224,14 @@ public class SummitVideoAndImageController : MonoBehaviour
                     imgVideo4x3.SetActive(true);
                     imgVideo4x3.GetComponent<RawImage>().texture = response;
                     imgVideo4x3.GetComponent<VideoPlayer>().enabled = false;
-                    if (imgVideo4x3.transform.childCount > 0)
-                    {
-                        foreach (Transform g in imgVideo4x3.transform)
-                        {
-                            g.gameObject.GetComponent<RawImage>().texture = response;
-                            g.gameObject.SetActive(true);
-                        }
-                    }
+                    //if (imgVideo4x3.transform.childCount > 0)
+                    //{
+                    //    foreach (Transform g in imgVideo4x3.transform)
+                    //    {
+                    //        g.gameObject.GetComponent<RawImage>().texture = response;
+                    //        g.gameObject.SetActive(true);
+                    //    }
+                    //}
                 }
             }
         }));
