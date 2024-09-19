@@ -209,6 +209,7 @@ public class ConstantsHolder : MonoBehaviour
     public static int XanaPartyMaxPlayers = 25;
     public bool EnableSignInPanelByDefault = false;
     public bool GameIsFinished = false;
+    public string LastLobbyName;
     #endregion
 
 

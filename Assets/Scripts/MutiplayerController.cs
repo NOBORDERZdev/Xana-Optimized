@@ -70,8 +70,8 @@ namespace Photon.Pun.Demo.PunBasics
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
         string gameVersion = "Lahore";  // YYYYMMDD
-        #endregion
 
+        #endregion
         #region Multtisection Fields
         /// <summary>
         /// True when player is changhing section.
@@ -122,7 +122,10 @@ namespace Photon.Pun.Demo.PunBasics
         }
         private void Start()
         {
-            Connect(ConstantsHolder.xanaConstants.EnviornmentName);
+            if (!string.IsNullOrEmpty(ConstantsHolder.xanaConstants.LastLobbyName))
+                Connect(ConstantsHolder.xanaConstants.LastLobbyName);
+            else
+                Connect(ConstantsHolder.xanaConstants.EnviornmentName);
         }
         /// <summary>
         /// MonoBehaviour method called on GameObject by Unity during early initialization phase.

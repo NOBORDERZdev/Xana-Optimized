@@ -182,7 +182,7 @@ public class XANAPartyManager : MonoBehaviour
         }
         else
         {
-            MutiplayerController.CurrLobbyName = ConstantsHolder.xanaConstants.XanaPartyGameName;
+            //MutiplayerController.CurrLobbyName = ConstantsHolder.xanaConstants.XanaPartyGameName;
 
             if (!ConstantsHolder.xanaConstants.isMasterOfGame) // is not master client
             {
