@@ -188,11 +188,13 @@ public class ConstantsHolder : MonoBehaviour
     public static bool DiasableMultiPartPhoton = false;
     public static bool DisableFppRotation = false;
     public static int domeId;
+    public static int visitorCount;
     public static bool isPenguin;
     public static bool isFixedHumanoid;
     public static int AvatarIndex;
     public static bool HaveSubWorlds;
     public static string Thumbnail;
+   
 
     public List<string> presetClothsJsonList =new List<string>();
 

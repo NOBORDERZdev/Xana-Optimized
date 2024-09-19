@@ -88,7 +88,7 @@ public class LoadingHandler : MonoBehaviour
     public TextMeshProUGUI DomeCreator;
     public TextMeshProUGUI DomeType;
     public TextMeshProUGUI DomeCategory;
-    public TextMeshProUGUI DomeEstimateTime;
+    public TextMeshProUGUI DomeVisitedCount;
     public TextMeshProUGUI DomeID;
     public RectTransform LoadingStatus;
 
@@ -772,7 +772,8 @@ public class LoadingHandler : MonoBehaviour
         DomeName.text = info.name;
         DomeDescription.text = info.description;
         DomeCreator.text = info.creator;
-      
+
+        info.id = info.domeId.ToString();
         Debug.Log("Dome id " + info.domeId);
         if (info.domeId > 0 && info.domeId < 9)
         {
@@ -807,7 +808,7 @@ public class LoadingHandler : MonoBehaviour
             DomeCategory.text = "Entertainmnent";
             DomeID.text = "MD   -" + info.domeId;
         }
-        DomeEstimateTime.text = "1 min.";
+        DomeVisitedCount.text = ConstantsHolder.visitorCount.ToString();
         ApprovalUI.SetActive(false);
         DomeLodingUI.SetActive(true);
         StartCoroutine(IncrementSliderValue(Random.Range(0f, 5f)));
@@ -841,42 +842,44 @@ public class LoadingHandler : MonoBehaviour
         DomeName.text = info.name;
         DomeDescription.text = info.description;
         DomeCreator.text = info.creatorName;
-        DomeType.text = info.experienceType;
+        DomeType.text = info.domeType;
+        DomeCategory.text = info.domeCategory;
         Debug.Log("Dome id " + info.id);
+        
         if(info.id>0 && info.id < 9)
         {
-            DomeCategory.text = "Center";
+            //DomeCategory.text = "Center";
             DomeID.text = "CA-"+ info.id;
         }
 
         if (info.id > 8 && info.id < 39)
         {
-            DomeCategory.text = "Business";
+            //DomeCategory.text = "Business";
             DomeID.text = "BA-" + info.id;
         }
 
         if (info.id > 38 && info.id < 69)
         {
-            DomeCategory.text = "Web 3";
+            //DomeCategory.text = "Web 3";
             DomeID.text = "WA-" + info.id;
         }
 
         if (info.id > 68 && info.id < 99)
         {
-            DomeCategory.text = "Game";
+            //DomeCategory.text = "Game";
             DomeID.text = "GA-" + info.id;
         }
         if (info.id > 98 && info.id < 129)
         {
-            DomeCategory.text = "Entertainmnent";
+            //DomeCategory.text = "Entertainmnent";
             DomeID.text = "EA-" + info.id;
         }
         if (info.id > 128 && info.id < 161)
         {
-            DomeCategory.text = "Entertainmnent";
+            //DomeCategory.text = "Entertainmnent";
             DomeID.text = "MD   -" + info.id;
         }
-        DomeEstimateTime.text = "1 min.";
+        DomeVisitedCount.text = ConstantsHolder.visitorCount.ToString();
         ApprovalUI.SetActive(true);
         DomeLodingUI.SetActive(false);
         if (info.worldType) { Autostartslider = false; } else { Autostartslider = true; }
@@ -912,6 +915,41 @@ public class LoadingHandler : MonoBehaviour
         DomeCreator.text = selectedWold.creatorName;
         DomeType.text = selectedWold.subWorldType;
         DomeCategory.text = selectedWold.subWorldCategory;
+        DomeVisitedCount.text = ConstantsHolder.visitorCount.ToString();
+        
+        if (ConstantsHolder.domeId > 0 && ConstantsHolder.domeId < 9)
+        {
+            //DomeCategory.text = "Center";
+            DomeID.text = "CA-" + ConstantsHolder.domeId;
+        }
+
+        if (ConstantsHolder.domeId > 8 && ConstantsHolder.domeId < 39)
+        {
+            //DomeCategory.text = "Business";
+            DomeID.text = "BA-" + ConstantsHolder.domeId;
+        }
+
+        if (ConstantsHolder.domeId > 38 && ConstantsHolder.domeId < 69)
+        {
+            //DomeCategory.text = "Web 3";
+            DomeID.text = "WA-" + ConstantsHolder.domeId;
+        }
+
+        if (ConstantsHolder.domeId > 68 && ConstantsHolder.domeId < 99)
+        {
+            //DomeCategory.text = "Game";
+            DomeID.text = "GA-" + ConstantsHolder.domeId;
+        }
+        if (ConstantsHolder.domeId > 98 && ConstantsHolder.domeId < 129)
+        {
+            //DomeCategory.text = "Entertainmnent";
+            DomeID.text = "EA-" + ConstantsHolder.domeId;
+        }
+        if (ConstantsHolder.domeId > 128 && ConstantsHolder.domeId < 161)
+        {
+            //DomeCategory.text = "Entertainmnent";
+            DomeID.text = "MD   -" + ConstantsHolder.domeId;
+        }
         ApprovalUI.SetActive(true);
         DomeLodingUI.SetActive(false);
         if (info.data.entityType == "USER_WORLD") { Autostartslider = false; } else { Autostartslider = true; }
