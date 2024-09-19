@@ -202,7 +202,10 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (domeGeneralData.worldType)
             LoadBuilderSceneLoading(domeGeneralData.builderWorldId);
         else
-            multiplayerController.Connect("XANA Summit-" + ConstantsHolder.domeId+"-"+domeGeneralData.world);
+        {
+            ConstantsHolder.xanaConstants.LastLobbyName = "XANA Summit-" + ConstantsHolder.domeId + "-" + domeGeneralData.world;
+            multiplayerController.Connect("XANA Summit-" + ConstantsHolder.domeId + "-" + domeGeneralData.world);
+        }
 
         // Summit Analytics Part
         if (_stayTimeTrackerForSummit != null)
@@ -324,7 +327,10 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (ConstantsHolder.xanaConstants.isBuilderScene)
             LoadBuilderSceneLoading(int.Parse(worldInfo.data.id));
         else
+        {
+            ConstantsHolder.xanaConstants.LastLobbyName = "XANA Summit-" + ConstantsHolder.domeId + "-" + worldInfo.data.name;
             multiplayerController.Connect("XANA Summit-" + ConstantsHolder.domeId + "-" + worldInfo.data.name);
+        }
 
         if (ReferencesForGamePlay.instance.playerControllerNew.isFirstPerson)
         {
