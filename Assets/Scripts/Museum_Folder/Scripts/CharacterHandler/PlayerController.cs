@@ -174,7 +174,6 @@ public class PlayerController : MonoBehaviour
         //BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
 
         RemoveLayerFromCameraCollider();
-        ActionAnimationApplyToPlayer.PlayerAnimatorInitializer?.Invoke(animator.runtimeAnimatorController);
     }
     private void OnCollisionEnter(Collision collision)
     {
