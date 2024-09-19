@@ -64,7 +64,7 @@ namespace Toyota
         [Range(1, 5)]
         public int roomNumber = 1;
         private StreamYoutubeVideo streamYoutubeVideo;
-
+        public AdvancedYoutubePlayer AdvancedYoutubePlayer;
         private void Awake()
         {
             imgVideo16x9.gameObject.SetActive(false);
@@ -341,8 +341,11 @@ namespace Toyota
                     if (liveVideoPlayer)
                         liveVideoPlayer.SetActive(true);
 
-                    if (streamYoutubeVideo != null)
-                        streamYoutubeVideo.StreamYtVideo(videoLink, true);
+                    //if (streamYoutubeVideo != null)
+                    //    streamYoutubeVideo.StreamYtVideo(videoLink, true);
+                    AdvancedYoutubePlayer.IsLive = true;
+                    AdvancedYoutubePlayer.VideoId = videoLink;//UploadPropertyBehaviour.ExtractVideoIdFromUrl(videoLink);
+                    AdvancedYoutubePlayer.PlayVideo();
                 }
                 else if (_videoType == PMY_VideoTypeRes.prerecorded)
                 {
@@ -366,8 +369,12 @@ namespace Toyota
                         }
                     }
 
-                    if (streamYoutubeVideo != null)
-                        streamYoutubeVideo.StreamYtVideo(videoLink, false);
+                    //if (streamYoutubeVideo != null)
+                    //    streamYoutubeVideo.StreamYtVideo(videoLink, false);
+                    AdvancedYoutubePlayer.IsLive = false;
+                    AdvancedYoutubePlayer.VideoId = UploadPropertyBehaviour.ExtractVideoIdFromUrl(videoLink);
+                    AdvancedYoutubePlayer.PlayVideo();
+
                     imgVideo16x9.GetComponent<VideoPlayer>().playOnAwake = true;
                     imgVideo16x9.SetActive(true);
                     if (imgVideoFrame16x9)
