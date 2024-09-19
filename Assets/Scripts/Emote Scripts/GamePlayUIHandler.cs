@@ -103,6 +103,7 @@ public class GamePlayUIHandler : MonoBehaviour
 
     public void OnExitButtonClick()
     {
+        ConstantsHolder.xanaConstants.LastLobbyName = "";
         GamePlayButtonEvents.inst.OnExitButtonClick();
     }
 
@@ -262,6 +263,7 @@ public class GamePlayUIHandler : MonoBehaviour
         ReferencesForGamePlay.instance.SetGameplayForPenpenz(true);
         ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
         ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
+        ConstantsHolder.xanaConstants.LastLobbyName = "";
         //StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().MoveToLobby());
         LeaderboardPanel.SetActive(false);
         GamePlayButtonEvents.inst.OnExitButtonClick();
