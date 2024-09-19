@@ -99,8 +99,12 @@ public class XANASummitDataContainer : ScriptableObject
     }
 
 
-    public string GetAudioFile(int domeId)
+    public async Task<string> GetAudioFile(int domeId)
     {
+        if (summitData.domes.Count == 0)
+        {
+            await Task.Delay(1000);
+        }
         for (int i = 0; i < summitData.domes.Count; i++)
         {
             if (domeId == summitData.domes[i].id)
