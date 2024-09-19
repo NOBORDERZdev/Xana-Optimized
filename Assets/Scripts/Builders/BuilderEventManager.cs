@@ -157,4 +157,6 @@ public static class BuilderEventManager
     public static Action XANAPartyRaceResult;
     #endregion
 
+
+    public static Action<string, string> OpenRedirectionPopup; 
 }
