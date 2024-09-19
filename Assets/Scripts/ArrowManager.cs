@@ -103,9 +103,9 @@ public class ArrowManager : MonoBehaviourPunCallbacks
                 }
             }
         }
+           StartCoroutine(WaitForArrowIntanstiate(this.transform, !this.GetComponent<PhotonView>().IsMine));
         if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
-            StartCoroutine(WaitForArrowIntanstiate(this.transform, !this.GetComponent<PhotonView>().IsMine));
             try
             {
                 if (AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer)
@@ -391,6 +391,8 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     IEnumerator WaitForArrowIntanstiate(Transform parent, bool isOtherPlayer)
     {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld && isOtherPlayer)
+            PhotonUserName.gameObject.SetActive(false);
         yield return new WaitForSeconds(1.0f);
         InstantiateArrow(this.transform, !this.GetComponent<PhotonView>().IsMine);
     }
@@ -425,6 +427,10 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             go.transform.localPosition = new Vector3(-0.27f, 0.37f, -10.03f);
             go.transform.localEulerAngles = new Vector3(-85, -113.1f, -65);
             go.transform.localScale = new Vector3(2.35f, 2f, 1);
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            {
+                PhotonUserName.gameObject.SetActive(true);
+            }
 
             //go.AddComponent<ChangeGear>();
             // go.AddComponent<Equipment>();
