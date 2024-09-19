@@ -970,8 +970,9 @@ public class InventoryManager : MonoBehaviour
         //Debug.LogError("Scroller Value : " + myScroller.verticalNormalizedPosition);
         if (loadingItems)
             return;
-
-        if (myScroller.verticalNormalizedPosition <= 0.1f)
+  
+        Debug .Log("Scrol GameoBJECT = " +myScroller.gameObject.name +"   content count"+ myScroller.content.childCount  +"Current Pannel "+ GetActivePanelPageIndex());
+        if (myScroller.verticalNormalizedPosition <= 0.1f && myScroller.content.childCount== GetActivePanelPageIndex()*40)
         {
             loadingItems = true;
             int pageIndex = UpdateActivePanelPageIndex();
@@ -997,12 +998,16 @@ public class InventoryManager : MonoBehaviour
 
             SubmitAllItemswithSpecificSubCategory(SubCategoriesList[_ActivePanelIndex].id, false);
         }
+        else
+        {
+          
+        }
     }
 
     private ScrollRect GetActiveRect()
     {
         int _selectedPanel = ConstantsHolder.xanaConstants.currentButtonIndex;
-
+    
         if (Clothdatabool)
         {
             if (_selectedPanel == 3) return ItemsScrollrect[1];  // Outer
@@ -1037,6 +1042,7 @@ public class InventoryManager : MonoBehaviour
     private int GetActivePanelPageIndex()
     {
         int _selectedPanel = ConstantsHolder.xanaConstants.currentButtonIndex;
+        Debug.Log("Cloths Bool " + Clothdatabool + _selectedPanel);
         if (Clothdatabool)
         {
             if (_selectedPanel == 3) return _OuterApiPagaCount ;  // Outer
@@ -1055,7 +1061,7 @@ public class InventoryManager : MonoBehaviour
         int _selectedPanel = ConstantsHolder.xanaConstants.currentButtonIndex;
 
 
-        //Debug.LogError("Selected Panel Index: " + _selectedPanel);
+        Debug.LogError("Selected Panel Index: " + _selectedPanel);
 
         if (downloadCount)
         {
@@ -1119,6 +1125,7 @@ public class InventoryManager : MonoBehaviour
     }
     private void ResetPageIndex()
     {
+        print("Reset Index....");
         _BottomApiPagaCount = 1;
         _OuterApiPagaCount = 1;
         _ShoesApiPagaCount = 1;
@@ -1659,7 +1666,7 @@ public class InventoryManager : MonoBehaviour
     {
         ////Debug.Log("<color=red> Panel Index:" + TakeIndex + "</color>");
         panelIndex = TakeIndex;
-
+        ResetPageIndex();
         //  InventoryManager.instance.DeletePreviousItems();
         //Resources.UnloadUnusedAssets();
 
@@ -1713,6 +1720,7 @@ public class InventoryManager : MonoBehaviour
         }
 
         DisableColorPanels();
+
     }
 
 
@@ -3419,6 +3427,7 @@ public class InventoryManager : MonoBehaviour
                     myIndexInList = IndexofPanel;
                     TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
                     CategorieslistOuter = TempitemDetail;
+                    Debug.Log("lIST cOUNT " + CategorieslistOuter.Count);
                     TempEnumVar = EnumClass.CategoryEnum.Outer;
                     ActivateGenerateItemsCoroutine(TempSubcategoryParent.transform, CategorieslistOuter);
                     break;
@@ -3626,8 +3635,8 @@ public class InventoryManager : MonoBehaviour
         // Calculate the starting index for the data list
         int _StartFromIndex = _MaxItems - dataListOfItems.Count;
         _ResettingAssetList = false;
-
-        for (int i = _LoopStart; i < _MaxItems; i++)
+        Debug.Log(" issue could be here current inde x = " + _CurrentPageIndex + " start items " + _StartFromIndex);
+         for (int i = _LoopStart; i < _MaxItems; i++)
         {
             int _DataIndex = i - _StartFromIndex;
             

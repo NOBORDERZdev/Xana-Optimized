@@ -25,8 +25,10 @@ public class SummitAIChatHandler : MonoBehaviour
     private bool SummitNPC;
     private bool ChatActivated;
 
+    public static int NPCCount=0;
     private void OnEnable()
     {
+        NPCCount = 0;
         _CommonChatRef = LandscapeChatRef;
         BuilderEventManager.AINPCActivated += LoadAIChat;
         BuilderEventManager.AINPCDeactivated += RemoveAIChat;
@@ -85,6 +87,7 @@ public class SummitAIChatHandler : MonoBehaviour
 
     void InstantiateAINPC()
     {
+        NPCCount = 0;
         for (int i = 0; i < XANASummitDataContainer.aiData.npcData.Count; i++)
         {
             GameObject AINPCAvatar;
@@ -102,11 +105,22 @@ public class SummitAIChatHandler : MonoBehaviour
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().json = XANASummitDataContainer.aiData.npcData[i].avatarCategory;
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().Init();
             AINPCAvatar.GetComponent<AINPCTrigger>().npcID = XANASummitDataContainer.aiData.npcData[i].id;
+            NPCCount++;
+        }
+
+        try
+        {
+            ReferencesForGamePlay.instance.SetPlayerCounter();
+        }
+        catch(Exception e)
+        {
+
         }
     }
 
     void InstantiateSummitAINPC()
     {
+        NPCCount = 0;
         SummitNPC = false;
         for (int i = 0; i < XANASummitDataContainer.aiData.npcData.Count; i++)
         {
@@ -118,6 +132,16 @@ public class SummitAIChatHandler : MonoBehaviour
             AINPCAvatar.GetComponent<SetPenguinAIName>().NameText.text = XANASummitDataContainer.aiData.npcData[i].name;
             int avatarPresetId = XANASummitDataContainer.aiData.npcData[i].avatarId;
             AINPCAvatar.GetComponent<AINPCTrigger>().npcID = XANASummitDataContainer.aiData.npcData[i].id;
+            NPCCount++;
+        }
+
+        try
+        {
+            ReferencesForGamePlay.instance.SetPlayerCounter();
+        }
+        catch (Exception e)
+        {
+
         }
     }
 
