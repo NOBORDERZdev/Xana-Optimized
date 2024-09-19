@@ -128,7 +128,14 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
 #if UNITY_IOS
     Application.RequestUserAuthorization(UserAuthorization.Microphone);
 #endif
-        StartCoroutine(SetMic());
+        if (this != null)
+        {
+            StartCoroutine(SetMic());
+        }
+        else
+        {
+            Debug.LogWarning("XanaVoiceChat instance has been destroyed, cannot start SetMic coroutine.");
+        }
     }
 
     private IEnumerator SetMic()

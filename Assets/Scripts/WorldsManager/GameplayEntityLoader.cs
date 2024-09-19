@@ -143,7 +143,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         SceneManager.MoveGameObjectToScene(updatedSpawnpoint.gameObject, SceneManager.GetSceneByName("GamePlayScene"));
         BuilderSpawnPoint = false;
 
-
+        // Reset Camera 
+         MiniMapCamera.orthographicSize = 30;
         if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
         {
             // Zoom Out map Camera
