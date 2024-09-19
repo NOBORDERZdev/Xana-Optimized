@@ -719,7 +719,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void InstantiatePlayerAvatar(Vector3 pos)
     {
-       
+
         if (ConstantsHolder.isPenguin)
         {
             DashButton.SetActive(false);
@@ -734,12 +734,15 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             }
             return;
         }
+        else 
+        {
+            DashButton.SetActive(true);
+        }
         XanaPartyController.SetActive(false);
         XanaWorldController.SetActive(true);
         mainController = mainControllerRefHolder;
         if (ConstantsHolder.isFixedHumanoid)
         {
-            DashButton.SetActive(true);
             InstantiatePlayerForFixedHumanoid();
             return;
         }
