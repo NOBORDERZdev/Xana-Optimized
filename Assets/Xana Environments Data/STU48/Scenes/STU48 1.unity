@@ -454,9 +454,9 @@ Transform:
   - {fileID: 1117834985}
   - {fileID: 1562537441}
   - {fileID: 2114246239}
+  - {fileID: 844126438}
   - {fileID: 906401014}
   - {fileID: 1817088362}
-  - {fileID: 844126438}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -975,7 +975,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 310077239}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &906401013
 PrefabInstance:
@@ -1281,7 +1281,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 543450653433262472}
-  - {fileID: 543450652799243078}
   - {fileID: 543450651897535936}
   - {fileID: 543450653643808798}
   - {fileID: 543450653533205961}
@@ -1289,6 +1288,7 @@ Transform:
   - {fileID: 543450652127025887}
   - {fileID: 1572945197}
   - {fileID: 269269659}
+  - {fileID: 1561803364}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1304,8 +1304,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd617247844f1b447a0320228ca36a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldJson: '{"SceneObjects":[{"addressableKey":"STU_Water","name":"STU_Water","position":{"x":28.200000762939454,"y":-3.490299701690674,"z":43.542049407958987},"rotation":{"x":-0.7071068286895752,"y":0.0,"z":0.0,"w":0.7071068286895752},"scale":{"x":4.143580913543701,"y":4.143580913543701,"z":4.143580913543701},"objectBound":{"m_Center":{"x":28.200000762939454,"y":-3.490299701690674,"z":43.542049407958987},"m_Extent":{"x":245.15196228027345,"y":0.00003746827496797778,"z":314.30670166015627}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"STU_Screen","name":"STU_Screen","position":{"x":20.319000244140626,"y":7.525000095367432,"z":42.803001403808597},"rotation":{"x":0.0,"y":-0.9997485280036926,"z":0.0,"w":-0.02242758311331272},"scale":{"x":1.0760449171066285,"y":1.0760449171066285,"z":1.0760449171066285},"objectBound":{"m_Center":{"x":20.021100997924806,"y":7.524998188018799,"z":42.79008102416992},"m_Extent":{"x":0.4115741550922394,"y":1.597486972808838,"z":3.36296010017395}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"STU_Yacht","name":"STU_Yacht","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":19.22490119934082,"y":2.221295118331909,"z":42.72468185424805},"m_Extent":{"x":35.97740936279297,"y":8.062122344970704,"z":8.626190185546875}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":0,"lightmapScaleOffset":{"x":1.0011698007583619,"y":1.0011698007583619,"z":-0.0008462274563498795,"w":-0.0008462274563498795}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"STU_Props","name":"STU_Props","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":12.487916946411133,"y":9.173973083496094,"z":42.31877136230469},"m_Extent":{"x":0.6598682403564453,"y":0.4646143913269043,"z":4.026628494262695}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.2961389124393463,"y":0.2961389124393463,"z":0.581858217716217,"w":-0.006032428704202175}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"STU_Plane","name":"STU_Plane","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":16.507585525512697,"y":2.385941505432129,"z":42.954097747802737},"m_Extent":{"x":11.747692108154297,"y":2.125619411468506,"z":6.492706298828125}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"STU_Emmision_Strip","name":"STU_Emmision_Strip","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":15.559797286987305,"y":7.351711273193359,"z":42.562835693359378},"m_Extent":{"x":13.532316207885743,"y":2.352182149887085,"z":7.703702926635742}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"STU_DJ","name":"STU_DJ","position":{"x":15.710000038146973,"y":7.243000030517578,"z":42.415000915527347},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":15.637369155883789,"y":7.243000030517578,"z":42.415000915527347},"m_Extent":{"x":4.880793571472168,"y":2.24224853515625,"z":4.734705924987793}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.5928332805633545,"y":0.5928332805633545,"z":-0.005937816575169563,"w":-0.005937816575169563}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"STU_Grass","name":"STU_Grass","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-21.01749038696289,"y":-1.7917256355285645,"z":43.99905014038086},"m_Extent":{"x":21.01749038696289,"y":1.7917256355285645,"z":43.99905014038086}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"STU
-    Beam","name":"STU Beam","position":{"x":-26.559999465942384,"y":-1.149999976158142,"z":2.450000047683716},"rotation":{"x":0.0,"y":-0.3826836943626404,"z":0.0,"w":0.9238795042037964},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-6.80854606628418,"y":4.7953715324401859,"z":25.101926803588868},"m_Extent":{"x":19.751453399658204,"y":5.945371627807617,"z":22.651926040649415}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}}]}'
+  worldJson: '{"SceneObjects":[{"addressableKey":"STU_Water","name":"STU_Water","position":{"x":28.200000762939454,"y":-3.490299701690674,"z":43.542049407958987},"rotation":{"x":-0.7071068286895752,"y":0.0,"z":0.0,"w":0.7071068286895752},"scale":{"x":4.143580913543701,"y":4.143580913543701,"z":4.143580913543701},"objectBound":{"m_Center":{"x":28.200000762939454,"y":-3.490299701690674,"z":43.542049407958987},"m_Extent":{"x":245.15196228027345,"y":0.00003746827496797778,"z":314.30670166015627}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"STU_Yacht","name":"STU_Yacht","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":19.22490119934082,"y":2.221295118331909,"z":42.72468185424805},"m_Extent":{"x":35.97740936279297,"y":8.062122344970704,"z":8.626190185546875}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":0,"lightmapScaleOffset":{"x":1.0011698007583619,"y":1.0011698007583619,"z":-0.0008462274563498795,"w":-0.0008462274563498795}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"STU_Props","name":"STU_Props","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":12.487916946411133,"y":9.173973083496094,"z":42.31877136230469},"m_Extent":{"x":0.6598682403564453,"y":0.4646143913269043,"z":4.026628494262695}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.2961389124393463,"y":0.2961389124393463,"z":0.581858217716217,"w":-0.006032428704202175}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"STU_Plane","name":"STU_Plane","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":16.507585525512697,"y":2.385941505432129,"z":42.954097747802737},"m_Extent":{"x":11.747692108154297,"y":2.125619411468506,"z":6.492706298828125}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"STU_Emmision_Strip","name":"STU_Emmision_Strip","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":15.559797286987305,"y":7.351711273193359,"z":42.562835693359378},"m_Extent":{"x":13.532316207885743,"y":2.352182149887085,"z":7.703702926635742}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"STU_DJ","name":"STU_DJ","position":{"x":15.710000038146973,"y":7.243000030517578,"z":42.415000915527347},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":15.637369155883789,"y":7.243000030517578,"z":42.415000915527347},"m_Extent":{"x":4.880793571472168,"y":2.24224853515625,"z":4.734705924987793}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.5928332805633545,"y":0.5928332805633545,"z":-0.005937816575169563,"w":-0.005937816575169563}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"STU_Grass","name":"STU_Grass","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-21.01749038696289,"y":-1.7917256355285645,"z":43.99905014038086},"m_Extent":{"x":21.01749038696289,"y":1.7917256355285645,"z":43.99905014038086}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"STU
+    Beam","name":"STU Beam","position":{"x":-26.559999465942384,"y":-1.149999976158142,"z":2.450000047683716},"rotation":{"x":0.0,"y":-0.3826836943626404,"z":0.0,"w":0.9238795042037964},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-6.80854606628418,"y":4.7953715324401859,"z":25.101926803588868},"m_Extent":{"x":19.751453399658204,"y":5.945371627807617,"z":22.651926040649415}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"STUVideoPlayerObject","name":"STUVideoPlayerObject","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-72.09896087646485,"y":20.214073181152345,"z":-11.626571655273438},"m_Extent":{"x":126.21674346923828,"y":53.219017028808597,"z":72.3589859008789}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}}]}'
   assetsParent: {fileID: 1237965805}
 --- !u!1 &1267001565
 GameObject:
@@ -1442,6 +1442,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skyBoxShader: Skybox/Cubemap
+--- !u!1 &1561803363 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8203752992480876119, guid: c1d14dd85613b904fa5d2dcb3a6a29b7, type: 3}
+  m_PrefabInstance: {fileID: 8203752993066708020}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1561803364 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8203752992480876112, guid: c1d14dd85613b904fa5d2dcb3a6a29b7, type: 3}
+  m_PrefabInstance: {fileID: 8203752993066708020}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1561803365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561803363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: STUVideoPlayerObject
+  objectPriority: 0
 --- !u!1 &1562537440
 GameObject:
   m_ObjectHideFlags: 0
@@ -2166,11 +2190,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4489282213087065413, guid: 2f1130a7b770d88429bef38204e89f7d, type: 3}
   m_PrefabInstance: {fileID: 4163466934175181390}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &543450652799243078 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1193300317943711960, guid: dc711031286f11a4cbc650f02eef142f, type: 3}
-  m_PrefabInstance: {fileID: 7986034269902099502}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &543450653433262472 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7923359549189954004, guid: a4342fa1173f06448aa2b2cf847d7ea9, type: 3}
@@ -2243,6 +2262,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a1bf641d27188a4789fabb6f02eea4c, type: 3}
+--- !u!1 &2494423850899435161 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2494423850324743092, guid: 4a1bf641d27188a4789fabb6f02eea4c, type: 3}
+  m_PrefabInstance: {fileID: 2494423850899435160}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2494423850899435162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2494423850899435161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: STU_Grass
+  objectPriority: 0
 --- !u!1001 &2636482880680129973
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2300,6 +2338,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25f4e91d8ddb15d40ac82572d103d521, type: 3}
+--- !u!1 &2636482880680129974 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7149053126522339340, guid: 25f4e91d8ddb15d40ac82572d103d521, type: 3}
+  m_PrefabInstance: {fileID: 2636482880680129973}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2636482880680129975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2636482880680129974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: STU_Props
+  objectPriority: 0
 --- !u!1001 &4163466934175181390
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2361,6 +2418,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f1130a7b770d88429bef38204e89f7d, type: 3}
+--- !u!1 &4163466934175181391 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3821008307648786431, guid: 2f1130a7b770d88429bef38204e89f7d, type: 3}
+  m_PrefabInstance: {fileID: 4163466934175181390}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4163466934175181392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4163466934175181391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: STU_Emmision_Strip
+  objectPriority: 0
 --- !u!1001 &5698712056695966240
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2426,6 +2502,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0796f341278ff0a47911b547766ea8e0, type: 3}
+--- !u!1 &5698712056695966241 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4887687341829121363, guid: 0796f341278ff0a47911b547766ea8e0, type: 3}
+  m_PrefabInstance: {fileID: 5698712056695966240}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5698712056695966242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5698712056695966241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: STU_Plane
+  objectPriority: 0
 --- !u!1001 &7201598367935903514
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2483,6 +2578,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7af06ebf73f09f4eadaba1e194d0122, type: 3}
+--- !u!1 &7201598367935903515 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7201598367667228032, guid: c7af06ebf73f09f4eadaba1e194d0122, type: 3}
+  m_PrefabInstance: {fileID: 7201598367935903514}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7201598367935903516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7201598367935903515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: STU Beam
+  objectPriority: 0
 --- !u!1001 &7674086463826126940
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2552,79 +2666,82 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 656e95a1f95342c419f414fee5456439, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4342fa1173f06448aa2b2cf847d7ea9, type: 3}
---- !u!1001 &7986034269902099502
+--- !u!1 &7674086463826126941 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7403562830489371502, guid: a4342fa1173f06448aa2b2cf847d7ea9, type: 3}
+  m_PrefabInstance: {fileID: 7674086463826126940}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7674086463826126942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7674086463826126941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: STU_Water
+  objectPriority: 0
+--- !u!1001 &8203752993066708020
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 1237965805}
     m_Modifications:
-    - target: {fileID: 1193300317943711960, guid: dc711031286f11a4cbc650f02eef142f, type: 3}
+    - target: {fileID: 8203752992480876112, guid: c1d14dd85613b904fa5d2dcb3a6a29b7, type: 3}
       propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8203752992480876112, guid: c1d14dd85613b904fa5d2dcb3a6a29b7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8203752992480876112, guid: c1d14dd85613b904fa5d2dcb3a6a29b7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8203752992480876112, guid: c1d14dd85613b904fa5d2dcb3a6a29b7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8203752992480876112, guid: c1d14dd85613b904fa5d2dcb3a6a29b7, type: 3}
+      propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1193300317943711960, guid: dc711031286f11a4cbc650f02eef142f, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.0760449
-      objectReference: {fileID: 0}
-    - target: {fileID: 1193300317943711960, guid: dc711031286f11a4cbc650f02eef142f, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.0760449
-      objectReference: {fileID: 0}
-    - target: {fileID: 1193300317943711960, guid: dc711031286f11a4cbc650f02eef142f, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.0760449
-      objectReference: {fileID: 0}
-    - target: {fileID: 1193300317943711960, guid: dc711031286f11a4cbc650f02eef142f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.319
-      objectReference: {fileID: 0}
-    - target: {fileID: 1193300317943711960, guid: dc711031286f11a4cbc650f02eef142f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 7.525
-      objectReference: {fileID: 0}
-    - target: {fileID: 1193300317943711960, guid: dc711031286f11a4cbc650f02eef142f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 42.803
-      objectReference: {fileID: 0}
-    - target: {fileID: 1193300317943711960, guid: dc711031286f11a4cbc650f02eef142f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.022427583
-      objectReference: {fileID: 0}
-    - target: {fileID: 1193300317943711960, guid: dc711031286f11a4cbc650f02eef142f, type: 3}
+    - target: {fileID: 8203752992480876112, guid: c1d14dd85613b904fa5d2dcb3a6a29b7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1193300317943711960, guid: dc711031286f11a4cbc650f02eef142f, type: 3}
+    - target: {fileID: 8203752992480876112, guid: c1d14dd85613b904fa5d2dcb3a6a29b7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.9997485
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1193300317943711960, guid: dc711031286f11a4cbc650f02eef142f, type: 3}
+    - target: {fileID: 8203752992480876112, guid: c1d14dd85613b904fa5d2dcb3a6a29b7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1193300317943711960, guid: dc711031286f11a4cbc650f02eef142f, type: 3}
+    - target: {fileID: 8203752992480876112, guid: c1d14dd85613b904fa5d2dcb3a6a29b7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1193300317943711960, guid: dc711031286f11a4cbc650f02eef142f, type: 3}
+    - target: {fileID: 8203752992480876112, guid: c1d14dd85613b904fa5d2dcb3a6a29b7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -182.57
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1193300317943711960, guid: dc711031286f11a4cbc650f02eef142f, type: 3}
+    - target: {fileID: 8203752992480876112, guid: c1d14dd85613b904fa5d2dcb3a6a29b7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2000905543204803170, guid: dc711031286f11a4cbc650f02eef142f, type: 3}
+    - target: {fileID: 8203752992480876119, guid: c1d14dd85613b904fa5d2dcb3a6a29b7, type: 3}
       propertyPath: m_Name
-      value: STU_Screen
-      objectReference: {fileID: 0}
-    - target: {fileID: 2000905543204803170, guid: dc711031286f11a4cbc650f02eef142f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      value: STUVideoPlayerObject
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: dc711031286f11a4cbc650f02eef142f, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: c1d14dd85613b904fa5d2dcb3a6a29b7, type: 3}
 --- !u!1001 &8474231033036466488
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2682,6 +2799,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02f5344e1b83ba24a8b9ed3f794312f9, type: 3}
+--- !u!1 &8474231033036466489 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2980388721547928446, guid: 02f5344e1b83ba24a8b9ed3f794312f9, type: 3}
+  m_PrefabInstance: {fileID: 8474231033036466488}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8474231033036466490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8474231033036466489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: STU_Yacht
+  objectPriority: 0
 --- !u!1001 &9029184080459368150
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2774,3 +2910,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6026125434368459451, guid: 4ac462dfa9da3ae43a48218446fc4811, type: 3}
+--- !u!114 &9029184080459368153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9029184080459368151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: STU_DJ
+  objectPriority: 0
