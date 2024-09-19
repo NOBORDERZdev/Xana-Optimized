@@ -96,6 +96,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     [Header("XANA Summit Performer AI")]
     public GameObject[] AIAvatarPrefab;
 
+    public XANASummitDataContainer XanaSummitDataContainerObject;
     public DownloadPopupHandler DownloadPopupHandlerInstance;
     private void Awake()
     {
@@ -168,23 +169,26 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     public void ForcedMapOpenForSummitScene()
     {
-        var player = ReferencesForGamePlay.instance.m_34player.GetComponent<SummitPlayerRPC>();
-        if (ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit" && !player.isInsideCAr&&!player.isInsideWheel)
+        if (ReferencesForGamePlay.instance && ReferencesForGamePlay.instance.m_34player && ConstantsHolder.xanaConstants)
         {
-            ReferencesForGamePlay.instance.minimap.SetActive(true);
-            PlayerPrefs.SetInt("minimap", 1);
-            ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
-            ReferencesForGamePlay.instance.SumitMapStatus(true);
+            var player = ReferencesForGamePlay.instance.m_34player.GetComponent<SummitPlayerRPC>();
+            if (ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit" && !player.isInsideCAr && !player.isInsideWheel)
+            {
+                ReferencesForGamePlay.instance.minimap.SetActive(true);
+                PlayerPrefs.SetInt("minimap", 1);
+                ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
+                ReferencesForGamePlay.instance.SumitMapStatus(true);
 
-            XanaChatSystem.instance.chatDialogBox.SetActive(false);
-        }
-        else
-        {
-            Debug.Log("Load map value===");
-            ReferencesForGamePlay.instance.minimap.SetActive(false);
-            PlayerPrefs.SetInt("minimap", 0);
-            ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
-            ReferencesForGamePlay.instance.SumitMapStatus(false);
+                XanaChatSystem.instance.chatDialogBox.SetActive(false);
+            }
+            else
+            {
+                Debug.Log("Load map value===");
+                ReferencesForGamePlay.instance.minimap.SetActive(false);
+                PlayerPrefs.SetInt("minimap", 0);
+                ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
+                ReferencesForGamePlay.instance.SumitMapStatus(false);
+            }
         }
     }
     public void ForcedMapCloseForSummitScene()
@@ -1600,11 +1604,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         Destroy(penguinJump);
         Destroy(penguinJumpPot);
-        ReferencesForGamePlay.instance.SetGameplayForPenpenz(true);
         ConstantsHolder.isFixedHumanoid = false;
         ConstantsHolder.isPenguin = false;
         ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
         ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
+        ReferencesForGamePlay.instance.SetGameplayForPenpenz(true);
     }
 
     public void AssignRaffleTickets(int domeID)

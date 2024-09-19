@@ -715,6 +715,7 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.Save();
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
+        ConstantsHolder.xanaConstants.LoggedInAsGuest = false;
         SubmitSetDeviceToken();
         WebViewManager.Instance.CloseWebView();
         if (signUpOrloginSelectionPanel.activeInHierarchy)
