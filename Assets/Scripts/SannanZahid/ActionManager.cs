@@ -91,10 +91,6 @@ public class ActionManager : MonoBehaviour
             {
                 PlayerPrefs.SetString(ConstantsGod.ReactionThumb, dataObj.ThumbnailURL);
                 ArrowManager.OnInvokeReactionButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.ReactionThumb));
-                new Delayed.Action(() => 
-                {
-                    ActionManager.DisableFavoriteCircleHighlighter?.Invoke();
-                },5f);
             }
         }
     }
