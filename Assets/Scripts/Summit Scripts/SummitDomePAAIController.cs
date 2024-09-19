@@ -88,26 +88,25 @@ public class SummitDomePAAIController : MonoBehaviour
 
     async Task AssignPADataToInstAI(GameObject _aiAvatar, int _aiDataIndex)
     {
-        await SetPerformerAIClothingAndPosition(_aiAvatar, _aiDataIndex);
+        SetPerformerAIClothingAndPosition(_aiAvatar, _aiDataIndex);
         await SetPerformerAIAnim(_aiAvatar, _aiDataIndex);
-        await SetPerformerAIBehvCntrlr(_aiAvatar);
+        SetPerformerAIBehvCntrlr(_aiAvatar);
     }
 
-    async Task SetPerformerAIClothingAndPosition(GameObject _aiAvatar, int _aiDataIndex)
+    void SetPerformerAIClothingAndPosition(GameObject _aiAvatar, int _aiDataIndex)
     {
-        await Task.Run(() => {
-            SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-            _CharacterData = _CharacterData.CreateFromJSON(GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].avatarCategory);
-            _aiAvatar.GetComponent<SPAAIDresser>().AvatarJson = _CharacterData;
-            _aiAvatar.transform.position = new Vector3(GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].spawnPositionArray[0],
-                GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].spawnPositionArray[1],
-                GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].spawnPositionArray[2]);
-        });
+        SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
+        _CharacterData = _CharacterData.CreateFromJSON(GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].avatarCategory);
+        _aiAvatar.GetComponent<SPAAIDresser>().AvatarJson = _CharacterData;
+        _aiAvatar.transform.position = new Vector3(GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].spawnPositionArray[0] + 2f,
+            GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].spawnPositionArray[1],
+            GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].spawnPositionArray[2]);
     }
 
     async Task SetPerformerAIAnim(GameObject _aiAvatar, int _aiDataIndex)
     {
-        await Task.Run(() => {
+        await Task.Run(() =>
+        {
             SPAAIEmoteController _spawnAIEmoteControllerRef = _aiAvatar.GetComponent<SPAAIEmoteController>();
             _spawnAIEmoteControllerRef.AnimPlayList.Clear();
             _spawnAIEmoteControllerRef.AnimPlayList.TrimExcess();
@@ -122,12 +121,10 @@ public class SummitDomePAAIController : MonoBehaviour
         });
     }
 
-    async Task SetPerformerAIBehvCntrlr(GameObject _aiAvatar)
+    void SetPerformerAIBehvCntrlr(GameObject _aiAvatar)
     {
-        await Task.Run(() => {
-            //_aiAvatar.GetComponent<SPAAIBehvrController>().spaAIHandlerRef = this;
-            StartCoroutine(_aiAvatar.GetComponent<SPAAIBehvrController>().PerformAction());
-        });
+        //_aiAvatar.GetComponent<SPAAIBehvrController>().spaAIHandlerRef = this;
+        StartCoroutine(_aiAvatar.GetComponent<SPAAIBehvrController>().PerformAction());
     }
 
     void ResetOnExit()
