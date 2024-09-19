@@ -68,7 +68,8 @@ public class ChatSocketManager : MonoBehaviour
     public GameObject MsgPrefab;
     public Transform MsgParentObj;
 
-    private List<ChatMsgDataHolder> allMsgData=new List<ChatMsgDataHolder>();
+    private List<ChatMsgDataHolder> allMsgData = new List<ChatMsgDataHolder>();
+    internal ScrollRect MsgParentObjScrollRect;
 
 
     private bool isConnected = false;
@@ -109,6 +110,9 @@ public class ChatSocketManager : MonoBehaviour
         onSendMsg += SendMsg;
         callApi += CallApiForMessages;
         BuilderEventManager.AfterPlayerInstantiated += LoadChatAfterPlayerInstantiate;
+
+        if (MsgParentObj != null)
+            MsgParentObjScrollRect = MsgParentObj.parent.GetComponent<ScrollRect>();
     }
     private void OnDisable()
     {
@@ -393,7 +397,7 @@ public class ChatSocketManager : MonoBehaviour
     void DisplayOldChat(string OldChat)
     {
         RootData rootData = JsonUtility.FromJson<RootData>(OldChat);
-        if (rootData.count > 0)
+        if (rootData != null && rootData.count > 0)
         {
             //string tempUserName = "";
             for (int i = rootData.data.Count - 1; i > -1; i--)
@@ -415,6 +419,7 @@ public class ChatSocketManager : MonoBehaviour
 
     public void AddNewMsg(string userName, string msg, string msgId, string userId, int blockMessage)
     {
+        Debug.LogFormat("AddNewMsg {0}", userName);
         GameObject _newMsg = Instantiate(MsgPrefab, MsgParentObj);
         ChatMsgDataHolder _dataHolder = _newMsg.GetComponent<ChatMsgDataHolder>();
         _dataHolder.SetRequireData(msg, msgId, userId, blockMessage);
@@ -426,6 +431,7 @@ public class ChatSocketManager : MonoBehaviour
         }
         MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = false;
         Invoke("DelayAdded", 0.05f);
+        //StartCoroutine(nameof(Delay));
         XanaChatSystem.instance.DisplayMsg_FromSocket(userName, msg, _dataHolder.MsgText);
 
 
@@ -438,6 +444,8 @@ public class ChatSocketManager : MonoBehaviour
     void DelayAdded()
     {
         MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = true;
+        if(MsgParentObjScrollRect)
+            MsgParentObjScrollRect.verticalNormalizedPosition = 1f;
     }
 
     // Submit Guest User Name

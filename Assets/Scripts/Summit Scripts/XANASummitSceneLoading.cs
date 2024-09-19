@@ -96,7 +96,8 @@ public class XANASummitSceneLoading : MonoBehaviour
     {
         XANASummitDataContainer.DomeGeneralData domeGeneralData=new XANASummitDataContainer.DomeGeneralData();
         domeGeneralData = GetDomeData(domeId);
-        Debug.Log("triggerDome " + domeGeneralData.world);
+        int worldId = domeGeneralData.worldType == true ? domeGeneralData.builderWorldId : domeGeneralData.worldId;
+        ConstantsHolder.visitorCount = await dataContainer.GetVisitorCount(worldId.ToString());
         if (string.IsNullOrEmpty(domeGeneralData.world))
             return;
 
@@ -139,7 +140,7 @@ public class XANASummitSceneLoading : MonoBehaviour
        
         Vector3[] currentPlayerPos = GetPlayerPosition(playerPos);
 
-        ConstantsHolder.domeId = domeId;
+        
         string sceneTobeUnload = WorldItemView.m_EnvName;
 
         XANASummitDataContainer.StackInfoWorld subWorldInfo = new XANASummitDataContainer.StackInfoWorld();
@@ -155,9 +156,9 @@ public class XANASummitSceneLoading : MonoBehaviour
         XANASummitDataContainer.LoadedScenesInfo.Push(subWorldInfo);
 
 
-    
-        
-        
+
+        ConstantsHolder.domeId = domeId;
+
         WorldItemView.m_EnvName = domeGeneralData.world;
         ConstantsHolder.xanaConstants.EnviornmentName = domeGeneralData.world;
         gameplayEntityLoader.addressableSceneName = domeGeneralData.world;
@@ -257,6 +258,7 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         string sceneToBeUnload = WorldItemView.m_EnvName;
 
+        ConstantsHolder.visitorCount = await dataContainer.GetVisitorCount(worldId);
         SingleWorldInfo worldInfo = await GetSingleWorldData(worldId);
 
         #region WaitingForPLayerApproval
@@ -390,7 +392,7 @@ public class XANASummitSceneLoading : MonoBehaviour
        // LoadingHandler.Instance.ShowVideoLoading();
         XANASummitDataContainer.StackInfoWorld subWorldInfo = new XANASummitDataContainer.StackInfoWorld();
         subWorldInfo = XANASummitDataContainer.LoadedScenesInfo.Pop();
-
+        ConstantsHolder.visitorCount =await dataContainer.GetVisitorCount(subWorldInfo.id);
         LoadingHandler.Instance.showDomeLoading(subWorldInfo);
 
         playerPos = subWorldInfo.playerTrasnform[0];
@@ -481,6 +483,8 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.world360Image = dataContainer.summitData.domes[i].world360Image;
                 domeGeneralData.companyLogo = dataContainer.summitData.domes[i].companyLogo;
                 domeGeneralData.SubWorlds = dataContainer.summitData.domes[i].SubWorlds;
+                domeGeneralData.domeCategory= dataContainer.summitData.domes[i].domeCategory;
+                domeGeneralData.domeType= dataContainer.summitData.domes[i].domeType;
                 //if (dataContainer.summitData1.domes[i].worldType)
                 //    return new Tuple<string[],string>(new[] { dataContainer.summitData1.domes[i].world, "1", dataContainer.summitData1.domes[i].builderWorldId }, dataContainer.summitData1.domes[i].experienceType);
                 //else

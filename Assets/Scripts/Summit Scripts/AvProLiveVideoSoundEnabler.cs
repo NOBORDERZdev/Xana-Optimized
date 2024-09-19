@@ -10,12 +10,19 @@ public class AvProLiveVideoSoundEnabler : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerTriggerChecker.LiveVideoSoundEnabler += EnableLiveVideoSound;
+        if (PlayerTriggerChecker)
+        {
+            PlayerTriggerChecker.LiveVideoSoundEnabler += EnableLiveVideoSound;
+        }
     }
 
     private void OnDisable()
     {
-        PlayerTriggerChecker.LiveVideoSoundEnabler -= EnableLiveVideoSound;
+        if (PlayerTriggerChecker)
+        {
+            PlayerTriggerChecker.LiveVideoSoundEnabler -= EnableLiveVideoSound;
+        }
+        
     }
 
     public void EnableLiveVideoSound(bool _soundEnable)
