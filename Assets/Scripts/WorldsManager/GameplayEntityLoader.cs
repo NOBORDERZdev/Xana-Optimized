@@ -1600,11 +1600,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         Destroy(penguinJump);
         Destroy(penguinJumpPot);
-        ReferencesForGamePlay.instance.SetGameplayForPenpenz(true);
         ConstantsHolder.isFixedHumanoid = false;
         ConstantsHolder.isPenguin = false;
         ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
         ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
+        ReferencesForGamePlay.instance.SetGameplayForPenpenz(true);
     }
 
     public void AssignRaffleTickets(int domeID)
