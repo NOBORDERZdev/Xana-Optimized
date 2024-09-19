@@ -1051,6 +1051,7 @@ public class AvatarController : MonoBehaviour
             clothJson = staticClothJson;
             _CharacterData = _CharacterData.CreateFromJSON(staticClothJson);
         }
+        SetAvatarClothDefault(this.gameObject, _CharacterData.gender);
         CheckClothsStitchedOrNot(clothJson);
         _PCharacterData = _CharacterData;
         var gender = _CharacterData.gender ?? "Male";

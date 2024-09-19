@@ -115,7 +115,7 @@ public class AddressableDownloader : MonoBehaviour
                 yield return loadOp;
                 if (loadOp.Status == AsyncOperationStatus.Failed)
                 {
-                    Debug.LogError("rik Fail To load: "+ key);
+                    Debug.Log("rik Fail To load: " + key);
                     if (InventoryManager.instance && InventoryManager.instance.loaderForItems && InventoryManager.instance != null)
                         InventoryManager.instance.loaderForItems.SetActive(false);
                     if (GameManager.Instance != null)
@@ -127,7 +127,7 @@ public class AddressableDownloader : MonoBehaviour
                 {
                     if (loadOp.Result == null || loadOp.Result.Equals(null))  // Added by Ali Hamza to resolve avatar naked issue 
                     {
-                        Debug.LogError("rik result is null: " + key);
+                        Debug.Log("rik result is null: " + key);
                         //_counter++;
                         //if (_counter < 5)
                         //{
@@ -136,13 +136,13 @@ public class AddressableDownloader : MonoBehaviour
                         //}
                         //else
                         //{
+                        applyOn.WearDefaultItem(type, applyOn.gameObject, _gender);
                         Addressables.ClearDependencyCacheAsync(key);
                         Addressables.ReleaseInstance(loadOp);
                         Addressables.Release(loadOp);
                         yield return new WaitForSeconds(1);
                         goto LoadAssetAgain;
-                            applyOn.WearDefaultItem(type, applyOn.gameObject, _gender);
-                            yield break;
+                        yield break;
                         //}
                     }
                     else
@@ -175,7 +175,7 @@ public class AddressableDownloader : MonoBehaviour
                                         hairDefaultColor = hairColor;
                                     }
 
-                                        applyOn.StichHairWithColor(itemId, downloadedHair, type, applyOn.gameObject, hairDefaultColor, callFromMultiplayer);
+                                    applyOn.StichHairWithColor(itemId, downloadedHair, type, applyOn.gameObject, hairDefaultColor, callFromMultiplayer);
                                 }
                                 else
                                     applyOn.StichHairWithColor(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, hairColor, callFromMultiplayer);
