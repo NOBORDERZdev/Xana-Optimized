@@ -1,15 +1,24 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Video;
 using XanaNFT;
-using static ServerSideUserDataHandler;
 
 public class NFTFromServer : MonoBehaviour
 {
+    public enum ExhibitComponentType { Constant, Dynamic };
+    public ExhibitComponentType _ExhibitComponentType;
+    [Serializable]
+    public class ExhibitSize
+    {
+        public Vector3 potrait;
+        public Vector3 landscape;
+        public Vector3 square;
+    }
+    public ExhibitSize _ExhibitSize;
+
     // Start is called before the first frame update
     public List<GameObject> spawnPoints;
     public Transform picsSpawnPoints;

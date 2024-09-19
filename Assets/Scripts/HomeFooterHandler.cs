@@ -861,7 +861,7 @@ public class HomeFooterHandler : MonoBehaviour
             }
             else
             {
-                UserLoginSignupManager.instance.LoginRegisterScreen.SetActive(true);
+                UserLoginSignupManager.instance.signUpOrloginSelectionPanel.SetActive(true);
             }
             
         }
