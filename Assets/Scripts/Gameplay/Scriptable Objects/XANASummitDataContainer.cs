@@ -256,6 +256,14 @@ public class XANASummitDataContainer : ScriptableObject
         public string avatarCategory;
         public string personalityURL;
         public int[] spawnPositionArray;
+        public bool isAvatarPerformer;
+        public AnimationData[] animations;
+    }
+    [System.Serializable]
+    public class AnimationData
+    {
+        public string name;
+        public float playTime;
     }
     #endregion
 
