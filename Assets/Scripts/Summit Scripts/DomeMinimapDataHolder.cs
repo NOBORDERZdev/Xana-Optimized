@@ -117,19 +117,21 @@ public class DomeMinimapDataHolder : MonoBehaviour
     }
     void TeleportPlayerToSelectedDome(int _domeId, Transform playerTransform)
     {
-      
         if (_allInitDomes.TryGetValue(_domeId, out Transform domeTransform))
         {
-            if(_domeId>8&& _domeId<37)
+            if (_domeId > 8 && _domeId < 37)
             {
                 MutiplayerController.instance.Ontriggered("GrassLand");
-            }else if(_domeId>40&& _domeId<69)
+            }
+            else if (_domeId > 40 && _domeId < 69)
             {
                 MutiplayerController.instance.Ontriggered("Sea");
-            }else if(_domeId>68&& _domeId<97)
+            }
+            else if (_domeId > 68 && _domeId < 97)
             {
                 MutiplayerController.instance.Ontriggered("Solid");
-            }else if(_domeId>100&& _domeId<129)
+            }
+            else if (_domeId > 100 && _domeId < 129)
             {
                 MutiplayerController.instance.Ontriggered("Sand");
             }
@@ -140,15 +142,30 @@ public class DomeMinimapDataHolder : MonoBehaviour
 
             // Attempt to find "Player Spawner" or default to first child if not found
             Transform domePos = domeTransform.Find("Player Spawner") ?? domeTransform.GetChild(0);
+
+            GameObject playerObj = playerTransform.GetComponentInChildren<CharacterBodyParts>().gameObject;
+            // Store the original tag of the child object
+            string originalTag = playerObj.tag;
+
+            // Change the tag to "Default"
+            playerObj.tag = "Default";
+
+            // Change the player's position
             playerTransform.position = domePos.position;
             playerTransform.rotation = Quaternion.Euler(0f, domePos.rotation.eulerAngles.y, 0f);
+
+            // Restore the original tag of the child object
+            playerObj.tag = originalTag;
         }
         else
         {
             Debug.Log($"Dome with ID {_domeId} not found.");
         }
     }
-   
+
+
+
+
     public void ConfirmationPanelHandling(bool status)
     {
         ConfirmationPopup.SetActive(status);
