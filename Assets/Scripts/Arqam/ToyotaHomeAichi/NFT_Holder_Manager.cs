@@ -1,5 +1,6 @@
 using Paroxe.PdfRenderer;
 using Photon.Pun;
+using System;
 using System.Collections.Generic;
 using Toyota;
 using UnityEngine;
@@ -50,6 +51,7 @@ public class NFT_Holder_Manager : MonoBehaviour
         else
             Destroy(this.gameObject);
     }
+    
 
     private void Start()
     {
@@ -147,4 +149,14 @@ public class NFT_Holder_Manager : MonoBehaviour
         }
     }
 
+    public void videoReady()
+    {
+        if(IsSummit)
+        {
+            ratioReferences[RatioID].l_obj.SetActive(false);
+            ratioReferences[RatioID].p_obj.SetActive(false);
+            ratioReferences[RatioID].p_Loader.SetActive(false);
+            ratioReferences[RatioID].l_Loader.SetActive(false);
+        }
+    }
 }
