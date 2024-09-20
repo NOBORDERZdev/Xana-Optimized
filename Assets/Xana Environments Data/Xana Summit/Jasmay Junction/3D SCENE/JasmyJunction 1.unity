@@ -379,6 +379,11 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 21.19988, y: 0.108218536, z: 14.325509}
   m_Center: {x: -9.827296, y: -0.4755788, z: -10.67748}
+--- !u!4 &346130924 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9010246358620145964, guid: 4f7b9450eeee1b0418bd79c2ac9d817f, type: 3}
+  m_PrefabInstance: {fileID: 9010246358966075584}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &356981495
 GameObject:
   m_ObjectHideFlags: 0
@@ -2754,6 +2759,7 @@ Transform:
   - {fileID: 1980333029}
   - {fileID: 948820098}
   - {fileID: 543450651967824945}
+  - {fileID: 346130924}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4431,6 +4437,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1632742678}
     m_Modifications:
+    - target: {fileID: 2116239495217931932, guid: d0bef37d74e95c94b9a778b6983c7b57, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2742265511949716981, guid: d0bef37d74e95c94b9a778b6983c7b57, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8687172925080938524, guid: d0bef37d74e95c94b9a778b6983c7b57, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -4481,6 +4495,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0bef37d74e95c94b9a778b6983c7b57, type: 3}
+--- !u!1001 &9010246358966075584
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1632742678}
+    m_Modifications:
+    - target: {fileID: 9010246358620145963, guid: 4f7b9450eeee1b0418bd79c2ac9d817f, type: 3}
+      propertyPath: m_Name
+      value: JSM_Image_Place_Holders
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010246358620145964, guid: 4f7b9450eeee1b0418bd79c2ac9d817f, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010246358620145964, guid: 4f7b9450eeee1b0418bd79c2ac9d817f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010246358620145964, guid: 4f7b9450eeee1b0418bd79c2ac9d817f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010246358620145964, guid: 4f7b9450eeee1b0418bd79c2ac9d817f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010246358620145964, guid: 4f7b9450eeee1b0418bd79c2ac9d817f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010246358620145964, guid: 4f7b9450eeee1b0418bd79c2ac9d817f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010246358620145964, guid: 4f7b9450eeee1b0418bd79c2ac9d817f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010246358620145964, guid: 4f7b9450eeee1b0418bd79c2ac9d817f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010246358620145964, guid: 4f7b9450eeee1b0418bd79c2ac9d817f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010246358620145964, guid: 4f7b9450eeee1b0418bd79c2ac9d817f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9010246358620145964, guid: 4f7b9450eeee1b0418bd79c2ac9d817f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4f7b9450eeee1b0418bd79c2ac9d817f, type: 3}
 --- !u!4 &9159978557562844136 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8270621281146855184, guid: 1b7b6fbf58ef8a045a6190fa4a92de1e, type: 3}
