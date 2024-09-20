@@ -453,7 +453,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         public bool success { get; set; }
         public YtVideoInfo data { get; set; }
         public string msg { get; set; }
-        }
+        
     }
 
     public string ExtractVideoIdFromUrl(string url)
