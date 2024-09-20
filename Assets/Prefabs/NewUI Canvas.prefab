@@ -8650,7 +8650,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -44.7, y: -19.6}
+  m_AnchoredPosition: {x: -44.69995, y: -19.6}
   m_SizeDelta: {x: 35, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &865370000683199348
@@ -56321,6 +56321,7 @@ MonoBehaviour:
   selectedWorldBannerImage: {fileID: 640862631370054824}
   goBtn: {fileID: 7055201328139590952}
   dataManager: {fileID: 11400000, guid: 167db53466831ca41b397940080656f9, type: 2}
+  totalVisitCount: {fileID: 3854474564843013239}
   timeDelay: 0.02
 --- !u!1 &3186057715941456484
 GameObject:
@@ -66682,7 +66683,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: 02,444,224
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 81bce5c8cf894ef43b715f7bf6f1f599, type: 2}
   m_sharedMaterial: {fileID: -1985880838257013675, guid: 81bce5c8cf894ef43b715f7bf6f1f599, type: 2}
@@ -66709,10 +66710,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15.4
-  m_fontSizeBase: 36
+  m_fontSize: 19.38
+  m_fontSizeBase: 19.38
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 10
   m_fontSizeMax: 22
   m_fontStyle: 0
@@ -66725,7 +66726,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -118126,6 +118127,10 @@ PrefabInstance:
     - target: {fileID: 1378134894964813557, guid: 3eea16d20a7642e4c9c8688f4b87f514, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.099998474
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378134895226420587, guid: 3eea16d20a7642e4c9c8688f4b87f514, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.0000076293945
       objectReference: {fileID: 0}
     - target: {fileID: 1378134895703369239, guid: 3eea16d20a7642e4c9c8688f4b87f514, type: 3}
       propertyPath: m_AnchoredPosition.x
