@@ -64,13 +64,13 @@ public class SummitDomePAAIController : MonoBehaviour
         }
     }
 
-    async void InstPerformerAvatarAI()
+    void InstPerformerAvatarAI()
     {
         for (int i = 0; i < PerformerAvatarAIIndex.Count; i++)
         {
             GameObject performerAvatarAIRef = GenderBasedPrefabSlect(PerformerAvatarAIIndex[i]);
             InstPerformerAvatarAIObjects.Add(performerAvatarAIRef);
-            await AssignPADataToInstAI(performerAvatarAIRef, PerformerAvatarAIIndex[i]);
+            AssignPADataToInstAI(performerAvatarAIRef, PerformerAvatarAIIndex[i]);
         }
     }
 
@@ -86,10 +86,10 @@ public class SummitDomePAAIController : MonoBehaviour
         }
     }
 
-    async Task AssignPADataToInstAI(GameObject _aiAvatar, int _aiDataIndex)
+    void AssignPADataToInstAI(GameObject _aiAvatar, int _aiDataIndex)
     {
         SetPerformerAIClothingAndPosition(_aiAvatar, _aiDataIndex);
-        await SetPerformerAIAnim(_aiAvatar, _aiDataIndex);
+        SetPerformerAIAnim(_aiAvatar, _aiDataIndex);
         SetPerformerAIBehvCntrlr(_aiAvatar);
     }
 
@@ -103,22 +103,19 @@ public class SummitDomePAAIController : MonoBehaviour
             GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].spawnPositionArray[2]);
     }
 
-    async Task SetPerformerAIAnim(GameObject _aiAvatar, int _aiDataIndex)
+    void SetPerformerAIAnim(GameObject _aiAvatar, int _aiDataIndex)
     {
-        await Task.Run(() =>
+        SPAAIEmoteController _spawnAIEmoteControllerRef = _aiAvatar.GetComponent<SPAAIEmoteController>();
+        _spawnAIEmoteControllerRef.AnimPlayList.Clear();
+        _spawnAIEmoteControllerRef.AnimPlayList.TrimExcess();
+        _spawnAIEmoteControllerRef.AnimPlayTimer.Clear();
+        _spawnAIEmoteControllerRef.AnimPlayTimer.TrimExcess();
+        for (int i = 0; i < GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].animations.Length; i++)
         {
-            SPAAIEmoteController _spawnAIEmoteControllerRef = _aiAvatar.GetComponent<SPAAIEmoteController>();
-            _spawnAIEmoteControllerRef.AnimPlayList.Clear();
-            _spawnAIEmoteControllerRef.AnimPlayList.TrimExcess();
-            _spawnAIEmoteControllerRef.AnimPlayTimer.Clear();
-            _spawnAIEmoteControllerRef.AnimPlayTimer.TrimExcess();
-            for (int i = 0; i < GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].animations.Length; i++)
-            {
-                _spawnAIEmoteControllerRef.AnimPlayList.Add(GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].animations[i].name);
-                _spawnAIEmoteControllerRef.AnimPlayTimer.Add(GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].animations[i].playTime);
-            }
-            _aiAvatar.SetActive(true);
-        });
+            _spawnAIEmoteControllerRef.AnimPlayList.Add(GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].animations[i].name);
+            _spawnAIEmoteControllerRef.AnimPlayTimer.Add(GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].animations[i].playTime);
+        }
+        _aiAvatar.SetActive(true);
     }
 
     void SetPerformerAIBehvCntrlr(GameObject _aiAvatar)
