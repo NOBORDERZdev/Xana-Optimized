@@ -306,6 +306,8 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         }*/
 
         BuilderEventManager.YoutubeVideoLoadedCallback?.Invoke(UploadFeatureVideoID);
+        SummitDomeImageHandler.CloseLoaderObject?.Invoke();
+
         // Play both video and audio
         VideoPlayer.Play();
         VideoPlayer1.Play();
@@ -331,6 +333,8 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         {
             Debug.Log($"Setting video url to {url}");
             AVProVideoPlayer.OpenMedia(new MediaPath(url, MediaPathType.AbsolutePathOrURL), true);
+            SummitDomeImageHandler.CloseLoaderObject?.Invoke();
+
         }
     }
 
@@ -449,6 +453,36 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         public bool success { get; set; }
         public YtVideoInfo data { get; set; }
         public string msg { get; set; }
+        }
+    }
+
+    public string ExtractVideoIdFromUrl(string url)
+    {
+        // Find the position of the "v=" parameter
+        int startIndex = url.IndexOf("v=");
+
+        if (startIndex != -1)
+        {
+            // Extract the substring after "v="
+            startIndex += 2; // Move past "v="
+            int endIndex = url.IndexOf('&', startIndex);
+            if (endIndex == -1)
+                endIndex = url.Length;
+
+            // Get the video ID
+            string videoId = url.Substring(startIndex, endIndex - startIndex);
+            return videoId;
+        }
+
+        // If "v=" parameter is not found, handle accordingly (e.g., return null or an error message)
+        return null;
+    }
+
+    public void ResetVideoURL()
+    {
+        VideoPlayer.url = "";
+        VideoPlayer1.url = "";
+        AVProVideoPlayer.OpenMedia(new MediaPath("", MediaPathType.AbsolutePathOrURL),false);
     }
 
 

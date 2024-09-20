@@ -20,6 +20,7 @@ public class SMBCUIManager : MonoBehaviour
         BuilderEventManager.OnSMBCQuizComponentCollisionEnter += EnableQuizComponentUI;
         BuilderEventManager.OnSMBCQuizComponentColse += ResetCredentials;
         SMBCManager.OnIntroductryPanelClicked += OnClickIntroductryObject;
+        SMBCManager.AssignPlayerCanvasRef += AssignPlayerCanvasRef;
         SceneManager.sceneLoaded += ResetData;
     }
 
@@ -30,6 +31,7 @@ public class SMBCUIManager : MonoBehaviour
         BuilderEventManager.OnSMBCQuizComponentCollisionEnter -= EnableQuizComponentUI;
         BuilderEventManager.OnQuizComponentColse -= ResetCredentials;
         SMBCManager.OnIntroductryPanelClicked -= OnClickIntroductryObject;
+        SMBCManager.AssignPlayerCanvasRef -= AssignPlayerCanvasRef;
         SceneManager.sceneLoaded -= ResetData;
     }
 
@@ -582,8 +584,21 @@ public class SMBCUIManager : MonoBehaviour
     #region Doorkey component
     public GameObject DoorKeyParentUI;
     public TextMeshProUGUI DoorKeyText;
-
+    public PlayerCanvas playerCanvas;
     Coroutine _EnableDoorKeyCoroutine;
+
+    private void AssignPlayerCanvasRef()
+    {
+        if (playerCanvas != null)
+        {
+            SMBCManager.Instance.PlayerCanvas = playerCanvas;
+        }
+        else
+        {
+            Debug.Log("PlayerCanvas null");
+        }
+    }
+
     public void EnableDoorKeyUI(string DisplayMessage)
     {
         DisableUIObject();
