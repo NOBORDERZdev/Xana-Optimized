@@ -40,6 +40,8 @@ public class NFT_Holder_Manager : MonoBehaviour
     public bool IsSummit;
     public SummitDomeImageHandler handler;
     private XanaChatSystem _chatSystem;
+
+    public GameObject[] RationRefs;
     
     private void Awake()
     {
@@ -48,7 +50,7 @@ public class NFT_Holder_Manager : MonoBehaviour
         else
             Destroy(this.gameObject);
     }
-   
+
     private void Start()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -120,6 +122,12 @@ public class NFT_Holder_Manager : MonoBehaviour
                 GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
             }
         }
+    }
+
+    public void CloseAllRatioRefs()
+    {
+        if (RationRefs.Length != 0)
+            RationRefs.SetActive(false);
     }
 
 
