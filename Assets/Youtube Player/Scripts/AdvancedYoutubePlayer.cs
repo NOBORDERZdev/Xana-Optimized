@@ -158,8 +158,8 @@ public class AdvancedYoutubePlayer : MonoBehaviour
             var audioformat = GetCompatibleFormat(videoInfo, "18");
             Debug.Log("<color=red>instance url " + instanceUrl + " our url " + videoformat.Url + "</color>");
 
-            string url = GetProxiedUrl(videoformat.Url, instanceUrl);
-            string audio = GetProxiedUrl(audioformat.Url, instanceUrl);
+            string url = videoformat.Url;//GetProxiedUrl(videoformat.Url, "https://invidious.xana.net/");
+            string audio = audioformat.Url;// GetProxiedUrl(audioformat.Url, "https://invidious.xana.net/");
 
             if (VideoPlayer.url != url)
             {
