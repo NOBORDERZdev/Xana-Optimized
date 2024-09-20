@@ -259,6 +259,7 @@ public class SummitDomeNFTDataController : MonoBehaviour
                     }
                     if (NFTDataFetchScrptRef)
                     {
+                        if (i >= NFTDataFetchScrptRef.spawnPoints.Count) break;
 
                         NftPlaceholderList[i].transform.position = new Vector3(NFTDataFetchScrptRef.spawnPoints[j].transform.position.x,
     (NFTDataFetchScrptRef.spawnPoints[j].transform.position.y + 0.72f),
