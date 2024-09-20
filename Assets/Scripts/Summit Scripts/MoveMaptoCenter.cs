@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using TMPro;
 
 
 public class MoveMaptoCenter : MonoBehaviour
@@ -25,6 +26,14 @@ public class MoveMaptoCenter : MonoBehaviour
     public GameObject goBtn;
 
     public XANASummitDataContainer dataManager;
+    public TMPro.TMP_Text totalVisitCount;
+
+
+    private void OnEnable()
+    {
+        totalVisitCount.text = "" + ConstantsHolder.visitorCount;
+    }
+
 
 
     void Start()
@@ -68,6 +77,12 @@ public class MoveMaptoCenter : MonoBehaviour
     public void ItemClicked(int ind)
     {
         Debug.Log("Item Clicked: " + ind);
+
+        if (ind >= 170)
+        {
+            ind -= 3;
+            Debug.Log("Modify Item Clicked: " + ind);
+        }
 
         int arratInd = ind;
         grandChildPing = MapHighlightObjs[arratInd];

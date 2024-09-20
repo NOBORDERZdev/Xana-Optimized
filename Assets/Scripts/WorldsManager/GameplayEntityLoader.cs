@@ -93,6 +93,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     [Header("XANA Summit Performer AI")]
     public GameObject[] AIAvatarPrefab;
 
+    public XANASummitDataContainer XanaSummitDataContainerObject;
     public DownloadPopupHandler DownloadPopupHandlerInstance;
     private void Awake()
     {
@@ -133,7 +134,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         updatedSpawnpoint = _updatedSpawnPoint.transform;
         BuilderSpawnPoint = false;
 
-
+        // Reset Camera 
+         MiniMapCamera.orthographicSize = 30;
         if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
         {
             // Zoom Out map Camera
@@ -717,7 +719,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void InstantiatePlayerAvatar(Vector3 pos)
     {
-       
+
         if (ConstantsHolder.isPenguin)
         {
             DashButton.SetActive(false);
@@ -732,12 +734,15 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             }
             return;
         }
+        else 
+        {
+            DashButton.SetActive(true);
+        }
         XanaPartyController.SetActive(false);
         XanaWorldController.SetActive(true);
         mainController = mainControllerRefHolder;
         if (ConstantsHolder.isFixedHumanoid)
         {
-            DashButton.SetActive(true);
             InstantiatePlayerForFixedHumanoid();
             return;
         }
@@ -1023,6 +1028,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void ResetPlayerPosition()
     {
+        //Stop selfi functionality when respawn after fall down
+        PlayerSelfieController.Instance.DisableSelfieFeature();
+
         if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
             //Player respawn at spawn point after jump down from world
