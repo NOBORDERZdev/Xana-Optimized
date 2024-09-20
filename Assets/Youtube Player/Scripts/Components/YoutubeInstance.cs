@@ -13,8 +13,7 @@ namespace ZeelKheni.YoutubePlayer.Components
         {
             if (Instance == null)
                 Instance = this;
-            else
-                DestroyImmediate(this);
+           
         }
         public enum YoutubeInstanceType
         {
