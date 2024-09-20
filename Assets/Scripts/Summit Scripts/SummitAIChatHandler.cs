@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using static RestAPI;
 
 public class SummitAIChatHandler : MonoBehaviour
 {
@@ -230,20 +231,19 @@ public class SummitAIChatHandler : MonoBehaviour
         string url = string.Empty;
         if (!GetFirstNPCMessage)
         {
-            GetFirstNPCMessage = false;
             ChatSocketManagerInstance.AddNewMsg(ConstantsHolder.userName, _CommonChatRef.InputFieldChat.text, "NPC", "NPC", 0);
             url = npcURL + "&usr_id=" + ConstantsHolder.userId + "&input_string=" + _CommonChatRef.InputFieldChat.text;
         }
         else
         {
+            GetFirstNPCMessage = false;
             url = npcURL + "&usr_id=" + ConstantsHolder.userId + "&input_string="+s;
         }
 
         ClearInputField();
-
-        UriBuilder uriBuilder = new UriBuilder(url);
-
+     
         string response = await GetAIResponse(url);
+     
         if(ChatActivated)
         {
             string res = JsonUtility.FromJson<AIResponse>(response).data;
@@ -275,6 +275,9 @@ public class SummitAIChatHandler : MonoBehaviour
         ClearInputField();
         CloseChatBox();
         DestroyNPC();
+        RemoveAIListenerFromChatField();
+        //_CommonChatRef.LoadOldChat();
+        ChatActivated = false;
     }
 
     void DestroyNPC()

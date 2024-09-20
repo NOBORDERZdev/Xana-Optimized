@@ -15,6 +15,9 @@ using ZeelKheni.YoutubePlayer;
 using System.Collections;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using YoutubeExplode;
+using YoutubeExplode.Videos.Streams;
+using Newtonsoft.Json;
 
 public class AdvancedYoutubePlayer : MonoBehaviour
 {
@@ -173,6 +176,9 @@ public class AdvancedYoutubePlayer : MonoBehaviour
 
         m_PlayingVideoId = VideoId;
         m_StartedPlayingVideoId = null;
+
+        
+       
         await PrepareVideoUrls(cancellationToken);
         /* if (!IsLive)
          {
@@ -188,6 +194,21 @@ public class AdvancedYoutubePlayer : MonoBehaviour
     {
         if (!IsLive)
         {
+            string video = await getvideoasync(VideoId);
+            string audio = await getvideoasync(VideoId + "audio");
+            if (!audio.IsNullOrEmpty())
+            {
+                StartCoroutine(PlayVideoAndAudio(video, audio));
+                return;
+            }
+            if (!video.IsNullOrEmpty())
+            {
+                VideoPlayer.url = video;
+                VideoPlayer.Prepare();
+                BuilderEventManager.YoutubeVideoLoadedCallback?.Invoke(UploadFeatureVideoID);
+                VideoPlayer.Play();
+                return;
+            }
             if (YoutubeInstance == null)
             {
                 throw new InvalidOperationException("YoutubeInstance is not set");
@@ -195,35 +216,65 @@ public class AdvancedYoutubePlayer : MonoBehaviour
 
             var instanceUrl = await YoutubeInstance.GetInstanceUrl(cancellationToken);
             VideoInfo videoInfo = null;
-            var lst =new List<YoutubeVideoInfo>( YoutubeInstance.YoutubeInstanceInfos);
-            foreach (var item in lst)
+            var lst = new List<YoutubeVideoInfo>(YoutubeInstance.YoutubeInstanceInfos);
+            videoInfo = await YoutubeApi.GetVideoInfo(instanceUrl, VideoId, cancellationToken, lst, skipPrevious);
+
+            if (videoInfo == null)
             {
-                instanceUrl = item.Uri;
 
-                 videoInfo = await YoutubeApi.GetVideoInfo(instanceUrl, VideoId, cancellationToken, YoutubeInstance.YoutubeInstanceInfos, skipPrevious);
-                if (videoInfo!=null) { break; }
-            }
-            var videoformat = GetCompatibleFormat(videoInfo, ((int)PreferedQuality).ToString());
-            var audioformat = GetCompatibleFormat(videoInfo, "18");
-            Debug.Log("<color=red>instance url " + instanceUrl + " our url " + videoformat.Url + "</color>");
-
-            string url = GetProxiedUrl(videoformat.Url, instanceUrl);
-            string audio = GetProxiedUrl(audioformat.Url, instanceUrl);
-
-            if (VideoPlayer.url != url)
-            {
-                if (PreferedQuality != Quality.Standard)
+                var youtube = new YoutubeClient();
+                var videdo = await youtube.Videos.GetAsync("https://www.youtube.com/watch?v=" + VideoId);
+                var streamManifest = await youtube.Videos.Streams.GetManifestAsync(videdo.Id);
+                var streamInfo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();
+                if (VideoPlayer.url != streamInfo.Url)
                 {
-                    StartCoroutine(PlayVideoAndAudio(url, audio));
-                }
-                else
-                {
-                    Debug.Log($"Setting video url to {url}");
-                    VideoPlayer.url = url;
+
+
+
+                    VideoPlayer.url = streamInfo.Url;
                     VideoPlayer.Prepare();
                     BuilderEventManager.YoutubeVideoLoadedCallback?.Invoke(UploadFeatureVideoID);
-                    SummitDomeImageHandler.CloseLoaderObject?.Invoke();
                     VideoPlayer.Play();
+
+                }
+                setStreamableAsync(VideoId,streamInfo.Url);
+            }
+            else
+            {
+
+                var videoformat = GetCompatibleFormat(videoInfo, ((int)PreferedQuality).ToString());
+                var audioformat = GetCompatibleFormat(videoInfo, "18");
+                Debug.Log("<color=red>instance url " + instanceUrl + " our url " + videoformat.Url + "</color>");
+
+                string url = videoformat.Url;//GetProxiedUrl(videoformat.Url, "https://invidious.xana.net/");
+                 audio = audioformat.Url;// GetProxiedUrl(audioformat.Url, "https://invidious.xana.net/");
+
+
+
+                if (VideoPlayer.url != url)
+                {
+                    if (PreferedQuality != Quality.Standard)
+                    {
+                        StartCoroutine(PlayVideoAndAudio(url, audio));
+                        setStreamableAsync(VideoId, url);
+                        setStreamableAsync(VideoId + "audio", audio);
+
+                        /*JsonUtility.ToJson(new {
+                        
+                        Video = url,
+                        Audio = audio,
+
+                        }));*/
+                    }
+                    else
+                    {
+                        Debug.Log($"Setting video url to {url}");
+                        VideoPlayer.url = url;
+                        VideoPlayer.Prepare();
+                        BuilderEventManager.YoutubeVideoLoadedCallback?.Invoke(UploadFeatureVideoID);
+                        VideoPlayer.Play();
+                        setStreamableAsync(VideoId, url);
+                    }
                 }
             }
         }
@@ -235,6 +286,43 @@ public class AdvancedYoutubePlayer : MonoBehaviour
 
     }
 
+    public async Task<string> getvideoasync(string videoId)
+    {
+        try
+        {
+            UnityEngine.Networking.UnityWebRequest request = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.YtStreamUrl + videoId);
+            request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            await request.SendWebRequestAsync();
+            if (request.error.IsNullOrEmpty())
+            {
+                var data = JsonConvert.DeserializeObject<YtStream>(request.downloadHandler.text, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
+                if (data.success)
+                {
+                    return data.data.url;
+                }
+            }
+            return "";
+        } catch (Exception e)
+        {
+            return "";
+        }
+    } 
+
+
+    public async void setStreamableAsync(string videoId,string Streamableurl)
+    {
+        WWWForm frm = new WWWForm();
+        frm.AddField("videoId",videoId);
+        frm.AddField("url",Streamableurl);
+        UnityWebRequest request = UnityWebRequest.Post(ConstantsGod.API_BASEURL + ConstantsGod.YtSetStreamUrl, frm);
+        request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+        await request.SendWebRequestAsync();
+       if (request.error.IsNullOrEmpty())
+        {
+            Debug.Log(request.downloadHandler.text);
+        }
+       Debug.Log(request.downloadHandler.text);
+    }
 
     private IEnumerator PlayVideoAndAudio(string video, string audio)
     {
@@ -307,7 +395,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         if (string.IsNullOrEmpty(itag))
         {
             // 720p, the highest quality available with the video and audio combined
-            itag = "22";
+            itag = "18";
         }
         if (!IsLive)
         {
@@ -413,6 +501,23 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         }
     }
 
+    public class YtVideoInfo
+    {
+        public int id { get; set; }
+        public string video_id { get; set; }
+        public string url { get; set; }
+        public DateTime createdAt { get; set; }
+        public DateTime updatedAt { get; set; }
+    }
+
+    public class YtStream
+    {
+        public bool success { get; set; }
+        public YtVideoInfo data { get; set; }
+        public string msg { get; set; }
+        
+    }
+
     public string ExtractVideoIdFromUrl(string url)
     {
         // Find the position of the "v=" parameter
@@ -441,4 +546,6 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         VideoPlayer1.url = "";
         AVProVideoPlayer.OpenMedia(new MediaPath("", MediaPathType.AbsolutePathOrURL),false);
     }
+
+
 }
