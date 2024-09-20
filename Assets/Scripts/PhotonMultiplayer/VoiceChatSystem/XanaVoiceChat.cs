@@ -100,6 +100,7 @@ public class XanaVoiceChat : MonoBehaviour
 
         //InvokeRepeating(nameof(MicroPhoneName), 2f, 2f);
 
+#if UNITY_ANDROID
         if (!ChangeOrientation_waqas._instance.isPotrait)
         {
             // There is two instance of this script
@@ -111,6 +112,10 @@ public class XanaVoiceChat : MonoBehaviour
                 Permission.RequestUserPermission(Permission.Microphone);
             }
         }
+#elif UNITY_IOS
+    StartCoroutine(RequestMicrophonePermissionIOS());
+#endif
+
         //Debug.Log("Environment name: " + FeedEventPrefab.m_EnvName + "   " + FeedEventPrefab.m_EnvName.Contains("Xana Festival") + "   " + FeedEventPrefab.m_EnvName.Equals("Xana Festival"));
         if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("BreakingDown Arena"))
         {
@@ -121,20 +126,17 @@ public class XanaVoiceChat : MonoBehaviour
         }
         else
         {
-            //#if UNITY_ANDROID
             if (recorder != null)
             {
                 recorder.AutoStart = true;
                 recorder.Init(voiceConnection);
             }
-            //#endif
+
             MicToggleOff = TurnOnMic;
             MicToggleOn = TurnOffMic;
 
             Debug.Log("its not an event");
 
-            //micOffBtn = GameObject.Find("MicOffToggle");
-            //micOnBtn = GameObject.Find("MicToggle");
             micOffBtn.GetComponent<Button>().onClick.AddListener(MicToggleOff);
             micOffBtnPotrait.GetComponent<Button>().onClick.AddListener(MicToggleOff);
             micOnBtn.GetComponent<Button>().onClick.AddListener(MicToggleOn);
@@ -148,6 +150,24 @@ public class XanaVoiceChat : MonoBehaviour
                 XanaConstants.xanaConstants.mic = 0;
             }
             StartCoroutine(CheckVoiceConnect());
+        }
+    }
+
+    private IEnumerator RequestMicrophonePermissionIOS()
+    {
+        if (!Application.HasUserAuthorization(UserAuthorization.Microphone))
+        {
+            // Request microphone permission
+            yield return Application.RequestUserAuthorization(UserAuthorization.Microphone);
+        }
+
+        if (Application.HasUserAuthorization(UserAuthorization.Microphone))
+        {
+            Debug.Log("Microphone permission granted");
+        }
+        else
+        {
+            Debug.Log("Microphone permission denied");
         }
     }
 
@@ -199,8 +219,8 @@ public class XanaVoiceChat : MonoBehaviour
         micOffBtnPotrait.SetActive(true);
         micOnBtn.SetActive(false);
         micOnBtnPotrait.SetActive(false);
-        if(recorder != null)
-        recorder.TransmitEnabled = false;
+        if (recorder != null)
+            recorder.TransmitEnabled = false;
     }
 
 
