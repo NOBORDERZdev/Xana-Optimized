@@ -275,6 +275,9 @@ public class SummitAIChatHandler : MonoBehaviour
         ClearInputField();
         CloseChatBox();
         DestroyNPC();
+        RemoveAIListenerFromChatField();
+        //_CommonChatRef.LoadOldChat();
+        ChatActivated = false;
     }
 
     void DestroyNPC()
