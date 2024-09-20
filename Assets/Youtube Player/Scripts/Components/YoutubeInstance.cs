@@ -8,6 +8,14 @@ namespace ZeelKheni.YoutubePlayer.Components
 {
     public class YoutubeInstance : MonoBehaviour
     {
+        public static YoutubeInstance Instance;
+        private void Awake()
+        {
+            if (Instance == null)
+                Instance = this;
+            else
+                DestroyImmediate(this);
+        }
         public enum YoutubeInstanceType
         {
             Public,
@@ -23,8 +31,10 @@ namespace ZeelKheni.YoutubePlayer.Components
         public string VideoJson;
         private string m_PublicInstanceUrl;
 
-        public async Task<string> GetInstanceUrl(CancellationToken cancellationToken = default)
+        public  async Task<string> GetInstanceUrl(CancellationToken cancellationToken = default)
         {
+            if(!m_PublicInstanceUrl.IsNullOrEmpty()) { return m_PublicInstanceUrl; }
+
             switch (InstanceType)
             {
                 case YoutubeInstanceType.Public:

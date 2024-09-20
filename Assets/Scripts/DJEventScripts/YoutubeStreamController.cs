@@ -29,6 +29,7 @@ public class YoutubeStreamController : MonoBehaviour
         PrevURL = "xyz";
         StartCoroutine(SetStreamContinous());
         playPrercordedVideo += PlayPrerecordedVideo;
+       
     }
 
     private void OnDisable()
@@ -259,7 +260,8 @@ public class YoutubeStreamController : MonoBehaviour
 
         }
     }
-
+    
+    
     public void SetBGMAudioSound()
     {
         if (gameObject.GetComponent<BGMVolumeControlOnTrigger>())

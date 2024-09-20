@@ -476,7 +476,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                                 if (_apiResponse.videoData.isYoutube)
                                 {
                                     bool _isLiveVideo = _apiResponse.videoData.type.Contains("Live") ? true : false;
-                                    Data = new StreamData(incominglink, _isLiveVideo, _apiResponse.videoData.isPlaying, _apiResponse.videoData.isYoutube, "HD");
+                                    Data = new StreamData(incominglink, _isLiveVideo, _apiResponse.videoData.isPlaying, _apiResponse.videoData.isYoutube, "Standard");
                                     OldAWSURL = "xyz";
                                 }
                                 else//For AWS Video playing
@@ -524,7 +524,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                         if (_apiResponse.videoData.isYoutube)
                         {
                             bool _isLiveVideo = _apiResponse.videoData.type.Contains("Live") ? true : false;
-                            Data = new StreamData(incominglink, _isLiveVideo, _apiResponse.videoData.isPlaying, _apiResponse.videoData.isYoutube, "HD");
+                            Data = new StreamData(incominglink, _isLiveVideo, _apiResponse.videoData.isPlaying, _apiResponse.videoData.isYoutube, "Standard");
                             OldAWSURL = "xyz";
                         }
                         else//For AWS Video playing
