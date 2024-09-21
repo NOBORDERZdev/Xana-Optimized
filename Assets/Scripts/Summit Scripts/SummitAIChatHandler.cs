@@ -92,6 +92,8 @@ public class SummitAIChatHandler : MonoBehaviour
         NPCCount = 0;
         for (int i = 0; i < XANASummitDataContainer.aiData.npcData.Count; i++)
         {
+            if (XANASummitDataContainer.aiData.npcData[i].isAvatarPerformer)
+                continue;
             GameObject AINPCAvatar;
             if (XANASummitDataContainer.aiData.npcData[i].avatarId > 10)
                 AINPCAvatar = Instantiate(XANASummitDataContainer.femaleAIAvatar);
