@@ -180,7 +180,7 @@ public class DomeMinimapDataHolder : MonoBehaviour
                 {
                     _stayTimeTrackerForSummit.SummitAreaName = _clickedDomeArea;
                     string eventName = "XS_TV_" + _stayTimeTrackerForSummit.SummitAreaName;
-                    GlobalConstants.SendFirebaseEventForSummit(eventName);
+                    GlobalConstants.SendFirebaseEventForSummit(eventName, ConstantsHolder.userId);
                     _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = true;
                     _stayTimeTrackerForSummit.StartTrackingTime();
                 }

@@ -224,7 +224,7 @@ public class SubWorldsHandler : MonoBehaviour
                 eventName = "TV_Dome_" + _stayTimeTrackerForSummit.DomeId + "_BW_" + _stayTimeTrackerForSummit.DomeWorldId;
             else
                 eventName = "TV_Dome_" + _stayTimeTrackerForSummit.DomeId + "_XW_" + _stayTimeTrackerForSummit.DomeWorldId;
-            GlobalConstants.SendFirebaseEventForSummit(eventName);
+            GlobalConstants.SendFirebaseEventForSummit(eventName, ConstantsHolder.userId);
             _stayTimeTrackerForSummit.StartTrackingTime();
         }
     }

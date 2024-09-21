@@ -221,7 +221,7 @@ public class XANASummitSceneLoading : MonoBehaviour
                 _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.worldId;
                 eventName = "TV_Dome_" + domeId + "_XW_" + domeGeneralData.worldId;
             }
-            GlobalConstants.SendFirebaseEventForSummit(eventName);
+            GlobalConstants.SendFirebaseEventForSummit(eventName,ConstantsHolder.userId);
             _stayTimeTrackerForSummit.StartTrackingTime();
         }
 

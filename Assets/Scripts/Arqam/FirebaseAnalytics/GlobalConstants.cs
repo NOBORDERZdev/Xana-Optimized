@@ -79,20 +79,27 @@ public class GlobalConstants
 
         Firebase.Analytics.FirebaseAnalytics.LogEvent(eventName);
     }
-    public static void SendFirebaseEventForSummit(string eventName)
+    public static void SendFirebaseEventForSummit(string eventName,string userId="")
     {
         if (eventName.IsNullOrEmpty() || eventName.Substring(0) == "_") return;
 
-        string prefix = "TA_";
+        string prefix = "TAU_";
 
         if (APIBasepointManager.instance.IsXanaLive)
         {
             prefix = "LA_"; environmentType = EnvironmentType.Live;
         }
         eventName = prefix + eventName;
-        Debug.Log("<color=red>FB Event: " + eventName + "</color>");
-
-        Firebase.Analytics.FirebaseAnalytics.LogEvent(eventName);
+        if (userId == "" || ConstantsHolder.xanaConstants.LoggedInAsGuest)
+        {
+            Debug.LogError("<color=red>FB Event: " + eventName + "</color>");
+            Firebase.Analytics.FirebaseAnalytics.LogEvent(eventName);
+        }
+        else
+        {
+            Debug.LogError("<color=red>FB Event: " + eventName +" "+userId + "</color>");
+            Firebase.Analytics.FirebaseAnalytics.LogEvent(eventName,userId,"");
+        }
     }
     #endregion
 
