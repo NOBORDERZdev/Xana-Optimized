@@ -28,6 +28,7 @@ public class SummitDomeShaderApply : MonoBehaviour
             DomeMeshRenderer.material.mainTexture = texture;
             DomeMeshRenderer.gameObject.SetActive(true);
             Frame.SetActive(true);
+            DomeText.GetComponent<Transform>().localPosition = new Vector3(0, 2.1551f, 0);
         }
         if (!string.IsNullOrEmpty(LogoUrl))
         {
