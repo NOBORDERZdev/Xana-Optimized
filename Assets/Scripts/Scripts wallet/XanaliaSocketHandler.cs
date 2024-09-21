@@ -28,6 +28,7 @@ public class XanaliaSocketHandler : MonoBehaviour
     }
     private void Start()
     {
+        Application.runInBackground = true;
         Invoke(nameof(InitializeSocket), 1f);
     }
 

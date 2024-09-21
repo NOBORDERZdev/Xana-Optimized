@@ -2131,17 +2131,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2660820682332917248, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.023803711
+      objectReference: {fileID: 0}
+    - target: {fileID: 2660820682332917248, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.017333984
+      objectReference: {fileID: 0}
     - target: {fileID: 2790886520961827346, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -8.006989
+      value: -8.006958
       objectReference: {fileID: 0}
     - target: {fileID: 4343778718239381665, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
       propertyPath: m_Name
       value: LoadingHandler
       objectReference: {fileID: 0}
+    - target: {fileID: 4667015458801594786, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6016069901723803143, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -9.739258
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611498929915286423, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.2998047
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611498929915286423, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.018554688
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
@@ -4489,6 +4509,7 @@ MonoBehaviour:
   isMasterOfGame: 0
   EnableSignInPanelByDefault: 0
   GameIsFinished: 0
+  LastLobbyName: 
   labels:
   - boyc11hair
   - staffshirt
@@ -7217,6 +7238,66 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 21}
   m_SizeDelta: {x: 66, y: 66}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &721954122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 721954123}
+  - component: {fileID: 721954124}
+  m_Layer: 0
+  m_Name: XANALIASocketHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &721954123
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721954122}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 50
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &721954124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721954122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 704e45ecdb2c5f54d855d10d148be1ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  socketAddress: 
+  socketConnected: 0
+  telegramdataRoot:
+    data:
+      access_token: 
+      xanaToken: 
+      nftDuelToken: 
+      refresh_token: 
+      user:
+        id: 0
+        username: 
+        email: 
+        walletAddress: 
+      restrict: 0
+      new_login: 0
+      builderLoginHash: 
 --- !u!1 &731110328
 GameObject:
   m_ObjectHideFlags: 0
