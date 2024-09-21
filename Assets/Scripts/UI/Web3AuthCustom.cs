@@ -226,12 +226,15 @@ public class Web3AuthCustom : MonoBehaviour
 
     public void TelegramLogin()
     {
-        string loginHash = Guid.NewGuid().ToString();
-        string deviceID = SystemInfo.deviceUniqueIdentifier;
-        string loginURL = ConstantsGod.TELEGRAM_LOGIN_URL + loginHash + "&deviceId=" + deviceID + "&type=XANA&comingFor=telegram";
-        Debug.Log("Telegram URL: " + loginURL);
+        if (XanaliaSocketHandler.Instance.socketConnected)
+        {
+
+            string loginHash = Guid.NewGuid().ToString();
+            string deviceID = SystemInfo.deviceUniqueIdentifier;
+            string loginURL = ConstantsGod.TELEGRAM_LOGIN_URL + loginHash + "&deviceId=" + deviceID + "&type=XANA&comingFor=telegram";
+            Debug.Log("Telegram URL: " + loginURL);
 #if UNITY_EDITOR
-        Application.OpenURL(loginURL);
+            Application.OpenURL(loginURL);
 #else
         Application.OpenURL(loginURL);
         return;
@@ -240,6 +243,7 @@ public class Web3AuthCustom : MonoBehaviour
             WebViewManager.Instance.StartwebView(loginURL);
         }
 #endif
+        }
     }
 
     public void OnTelegramLogin(TelegramRoot telegramData)

@@ -12,6 +12,7 @@ public class XanaliaSocketHandler : MonoBehaviour
     public string socketAddress = "";
     public SocketManager Manager;
     public static XanaliaSocketHandler Instance;
+    public bool socketConnected;
     public TelegramRoot telegramdataRoot = new TelegramRoot();
     private void Awake()
     {
@@ -127,6 +128,7 @@ public class XanaliaSocketHandler : MonoBehaviour
 
     void OnConnected(ConnectResponse resp)
     {
+        socketConnected = true;
         Debug.Log("XanaliaSocketHandler OnConnected:");
     }
 
