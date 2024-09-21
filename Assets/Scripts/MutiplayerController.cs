@@ -69,7 +69,8 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "XanaSummit240921";  // YYYYMMDD
+        //string gameVersion = "XanaSummit240921";  // YYYYMMDD
+        string gameVersion = "XanaSummit240921RikTest";  // YYYYMMDD for testing
 
         #endregion
         #region Multtisection Fields
