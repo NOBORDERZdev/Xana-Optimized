@@ -190,7 +190,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
                 ReferencesForGamePlay.instance.SumitMapStatus(false);
             }
-        }
     }
     public void ForcedMapCloseForSummitScene()
     {
