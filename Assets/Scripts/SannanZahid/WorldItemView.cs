@@ -376,6 +376,14 @@ public class WorldItemView : EnhancedScrollerCellView
         ConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
         ConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
 
+        if (m_EnvName.Contains("RooftopParty") || m_EnvName.Contains("XanaParty"))
+        {
+            ConstantsHolder.xanaConstants.isXanaPartyWorld = true;
+        }
+        else
+        {
+            ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
+        }
         //if (m_EnvironmentName.Contains("XANA Lobby"))
         //{
         //    worldItemPreview.Init(XanaWorldBanner,

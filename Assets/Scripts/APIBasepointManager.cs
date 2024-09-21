@@ -57,6 +57,8 @@ public class APIBasepointManager : MonoBehaviour
             ConstantsGod.API_BASEURL_XANALIA = "https://api.xanalia.com";
             ConstantsGod.XANALIA_SOCKET_ADDRESS = "https://prod-socket.xanalia.com/";
             ConstantsGod.TELEGRAM_LOGIN_URL = "https://xana.net/app?builderLoginHash=";
+
+            ConstantsGod.API_BASEURL_Penpenz = "https://penpenz-prod.xana.net/"; // For Penpenz
             //_moralisServerSettings.DappIconUrl = MainDappURL;
             //_moralisServerSettings.DappId = MainAppID;
         }
@@ -67,6 +69,7 @@ public class APIBasepointManager : MonoBehaviour
             ConstantsGod.XANALIA_SOCKET_ADDRESS = "https://socket.xanalia.com/";
             ConstantsGod.TELEGRAM_LOGIN_URL = "https://event-test.xana.net/app?builderLoginHash=";
 
+            ConstantsGod.API_BASEURL_Penpenz = "https://penpenz-dev.xana.net/"; // For Penpenz
             //_moralisServerSettings.DappIconUrl = testDappURL;
             //_moralisServerSettings.DappId = TestAppID;
         }
