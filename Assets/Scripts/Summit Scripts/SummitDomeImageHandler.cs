@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Toyota;
@@ -15,39 +14,48 @@ public class SummitDomeImageHandler : MonoBehaviour
     public NFT_Holder_Manager CommonScreen;
 
     public static Action<int> ShowNftData;
-    
+    public static Action CloseLoaderObject;
+
     private Dictionary<string, Texture> _textureCache = new Dictionary<string, Texture>();
+
+    AdvancedYoutubePlayer _youtubePlayer;
+    GameObject _portraitLoader;
+    GameObject _landscapeLoader;
+
+
     void OnEnable()
     {
         BuilderEventManager.AfterWorldOffcialWorldsInatantiated += ApplyDomeShader;
         ShowNftData += SetInfo;
+        CloseLoaderObject += CloseLoader;
     }
 
     private void OnDisable()
     {
         BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= ApplyDomeShader;
         ShowNftData -= SetInfo;
+        CloseLoaderObject -= CloseLoader;
     }
 
     void ApplyDomeShader()
     {
-        for(int i=0;i<XanaWorldDownloader.AllDomes.Count;i++) 
+        for (int i = 0; i < XanaWorldDownloader.AllDomes.Count; i++)
         {
             SummitDomeShaderApply SummitDomeShaderApplyRef = XanaWorldDownloader.AllDomes[i].GetComponent<SummitDomeShaderApply>();
-              string [] DomeData= XANASummitDataContainer.GetDomeImage(SummitDomeShaderApplyRef.DomeId);
-              SummitDomeShaderApplyRef.ImageUrl = DomeData[0];
-              SummitDomeShaderApplyRef.LogoUrl = DomeData[2];
-              if(!string.IsNullOrEmpty(DomeData[1]) && string.IsNullOrEmpty(DomeData[2]))
-              {
-                  TMPro.TextMeshPro DomeText1 = SummitDomeShaderApplyRef.DomeText.AddComponent<TMPro.TextMeshPro>();
-                  DomeText1.font = DometextFont;
-                  DomeText1.fontMaterial = DomeTextMaterial;
-                  DomeText1.fontSize = 4.5f;
-                  DomeText1.alignment = TMPro.TextAlignmentOptions.Center;
-                  DomeText1.text = DomeData[1];
-              }
-                  SummitDomeShaderApplyRef.Init();
-         
+            string[] DomeData = XANASummitDataContainer.GetDomeImage(SummitDomeShaderApplyRef.DomeId);
+            SummitDomeShaderApplyRef.ImageUrl = DomeData[0];
+            SummitDomeShaderApplyRef.LogoUrl = DomeData[2];
+            if (!string.IsNullOrEmpty(DomeData[1]) && string.IsNullOrEmpty(DomeData[2]))
+            {
+                TMPro.TextMeshPro DomeText1 = SummitDomeShaderApplyRef.DomeText.AddComponent<TMPro.TextMeshPro>();
+                DomeText1.font = DometextFont;
+                DomeText1.fontMaterial = DomeTextMaterial;
+                DomeText1.fontSize = 4.5f;
+                DomeText1.alignment = TMPro.TextAlignmentOptions.Center;
+                DomeText1.text = DomeData[1];
+            }
+            SummitDomeShaderApplyRef.Init();
+
         }
     }
     public void Enable_PDF_Panel()
@@ -62,7 +70,7 @@ public class SummitDomeImageHandler : MonoBehaviour
     }
     public void EnableControlls()
     {
-      
+
         if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
         {
             GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
@@ -112,13 +120,14 @@ public class SummitDomeImageHandler : MonoBehaviour
         //    quizPanel_P.GetComponent<PMY_QuizController>().SetQuizData(quizData);
         //    EnableQuizPanel();
         //}
-      
+
         else
         {
             var images = await DownloadDomeTexture(domedata.world360Image);
             // Setting Landscape Data
             CommonScreen.ratioReferences[ratioId].l_image.gameObject.SetActive(true);
             CommonScreen.ratioReferences[ratioId].p_image.gameObject.SetActive(true);
+
             CommonScreen.ratioReferences[ratioId].p_videoPlayer.gameObject.SetActive(true);
             CommonScreen.ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(true);
             if (ratioId < 4)
@@ -129,7 +138,7 @@ public class SummitDomeImageHandler : MonoBehaviour
             }
             if (domedata.mediaType == "Image")
             {
-                var image =await DownloadDomeTexture(domedata.mediaUpload);
+                var image = await DownloadDomeTexture(domedata.mediaUpload);
                 CommonScreen.ratioReferences[ratioId].l_image.texture = image;
                 CommonScreen.ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(false);
             }
@@ -143,7 +152,7 @@ public class SummitDomeImageHandler : MonoBehaviour
             if (ratioId < 4)
             {
                 CommonScreen.ratioReferences[ratioId].p_Title.text = domedata.name; ;
-                CommonScreen.ratioReferences[ratioId].p_Aurthur.text = domedata.creatorName; 
+                CommonScreen.ratioReferences[ratioId].p_Aurthur.text = domedata.creatorName;
                 CommonScreen.ratioReferences[ratioId].p_Description.text = domedata.description;// + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
             }
             CommonScreen.ratioReferences[ratioId].p_image.texture = images;
@@ -167,25 +176,30 @@ public class SummitDomeImageHandler : MonoBehaviour
                 CommonScreen.ratioReferences[ratioId].p_obj.SetActive(false);
                 if (domedata.mediaType == "Video")
                 {
-                    CommonScreen.ratioReferences[ratioId].l_Loader.SetActive(true);
-                    CommonScreen.ratioReferences[ratioId].p_Loader.SetActive(false);
-
+                    _landscapeLoader = CommonScreen.ratioReferences[ratioId].l_Loader.gameObject;
+                    _landscapeLoader.SetActive(true);
+                    _portraitLoader = CommonScreen.ratioReferences[ratioId].p_Loader.gameObject;
+                    _portraitLoader.SetActive(false);
+                    _youtubePlayer = CommonScreen.ratioReferences[ratioId].l_obj.GetComponent<AdvancedYoutubePlayer>();
+                    _youtubePlayer.ResetVideoURL();
                     if (domedata.videoType == "Live")
                     {
                         CommonScreen.ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = false;
                         CommonScreen.ratioReferences[ratioId].l_videoPlayer.enabled = false;
                         CommonScreen.ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
                         CommonScreen.ratioReferences[ratioId].l_LivePlayer.SetActive(true);
-
-                        CommonScreen.ratioReferences[ratioId].l_LivePlayer.GetComponent<StreamYoutubeVideo>().StreamYtVideo(domedata.mediaUpload, true);
+                        _youtubePlayer.IsLive = true;
+                        _youtubePlayer.VideoId = domedata.mediaUpload;
+                        _youtubePlayer.PlayVideo();
                     }
                     else if (domedata.videoType == "Prerecorded")
                     {
                         CommonScreen.ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = true;
                         CommonScreen.ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(true);
                         CommonScreen.ratioReferences[ratioId].l_LivePlayer.SetActive(false);
-
-                        CommonScreen.ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<StreamYoutubeVideo>().StreamYtVideo(domedata.mediaUpload, false);
+                        _youtubePlayer.IsLive = false;
+                        _youtubePlayer.VideoId = _youtubePlayer.ExtractVideoIdFromUrl(domedata.mediaUpload);
+                        _youtubePlayer.PlayVideo();
                     }
                     else if (domedata.isYoutubeUrl)
                     {
@@ -201,7 +215,7 @@ public class SummitDomeImageHandler : MonoBehaviour
                         CommonScreen.ratioReferences[ratioId].l_videoPlayer.Play();
                     }
 
-                //    OnVideoEnlargeAction?.Invoke();
+                    //    OnVideoEnlargeAction?.Invoke();
                 }
             }
             else // for Potraite
@@ -212,8 +226,10 @@ public class SummitDomeImageHandler : MonoBehaviour
                 CommonScreen.ratioReferences[ratioId].p_obj.SetActive(true);
                 if (domedata.mediaType == "Video")
                 {
-                    CommonScreen.ratioReferences[ratioId].l_Loader.SetActive(false);
-                    CommonScreen.ratioReferences[ratioId].p_Loader.SetActive(true);
+                    _landscapeLoader = CommonScreen.ratioReferences[ratioId].l_Loader.gameObject;
+                    _landscapeLoader.SetActive(false);
+                    _portraitLoader = CommonScreen.ratioReferences[ratioId].p_Loader.gameObject;
+                    _portraitLoader.SetActive(true);
 
                     if (domedata.videoType == "Live")
                     {
@@ -243,7 +259,7 @@ public class SummitDomeImageHandler : MonoBehaviour
 
                     }
 
-                   // OnVideoEnlargeAction.Invoke();
+                    // OnVideoEnlargeAction.Invoke();
                 }
 
             }
@@ -272,5 +288,13 @@ public class SummitDomeImageHandler : MonoBehaviour
             return null;
         }
 
+    }
+
+    void CloseLoader()
+    {
+        if (_landscapeLoader)
+            _landscapeLoader.SetActive(false);
+        if (_portraitLoader)
+            _portraitLoader.SetActive(false);
     }
 }

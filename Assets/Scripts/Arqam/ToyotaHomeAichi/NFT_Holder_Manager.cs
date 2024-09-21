@@ -1,5 +1,6 @@
 using Paroxe.PdfRenderer;
 using Photon.Pun;
+using System;
 using System.Collections.Generic;
 using Toyota;
 using UnityEngine;
@@ -40,6 +41,8 @@ public class NFT_Holder_Manager : MonoBehaviour
     public bool IsSummit;
     public SummitDomeImageHandler handler;
     private XanaChatSystem _chatSystem;
+
+    public GameObject[] RationRefs;
     
     private void Awake()
     {
@@ -48,7 +51,8 @@ public class NFT_Holder_Manager : MonoBehaviour
         else
             Destroy(this.gameObject);
     }
-   
+    
+
     private void Start()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -122,6 +126,12 @@ public class NFT_Holder_Manager : MonoBehaviour
         }
     }
 
+    public void CloseAllRatioRefs()
+    {
+        if (RationRefs.Length != 0)
+            RationRefs.SetActive(false);
+    }
+
 
     public void PdfClosed()
     {
@@ -139,4 +149,14 @@ public class NFT_Holder_Manager : MonoBehaviour
         }
     }
 
+    public void videoReady()
+    {
+        if(IsSummit)
+        {
+            ratioReferences[RatioID].l_obj.SetActive(false);
+            ratioReferences[RatioID].p_obj.SetActive(false);
+            ratioReferences[RatioID].p_Loader.SetActive(false);
+            ratioReferences[RatioID].l_Loader.SetActive(false);
+        }
+    }
 }

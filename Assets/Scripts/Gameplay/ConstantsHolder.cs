@@ -104,6 +104,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool isBackFromWorld = false;
     public String MuseumID;
 
+    public bool isXanaPartyWorld = false;
     //For Metabuzz Environments
     public enum ComingFrom
     {
@@ -192,7 +193,7 @@ public class ConstantsHolder : MonoBehaviour
     public static int AvatarIndex;
     public static bool HaveSubWorlds;
     public static string Thumbnail;
-   
+    public static bool isTeleporting = false;
 
     //Daily reward
     public bool isGoingForHomeScene = false;

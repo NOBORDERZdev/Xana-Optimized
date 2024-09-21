@@ -149,4 +149,6 @@ public static class BuilderEventManager
     public static Action OnSMBCQuizComponentColse;
     public static Action OnSMBCRocketCollected;
     public static Action OnSMBCQuizWrongAnswer;
+
+    public static Action<string, string> OpenRedirectionPopup; 
 }
