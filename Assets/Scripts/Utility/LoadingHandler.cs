@@ -826,8 +826,6 @@ public class LoadingHandler : MonoBehaviour
         DomeDescription.text = info.description;
         DomeCreator.text = info.creator;
 
-        info.id = info.domeId.ToString();
-        Debug.Log("Dome id " + info.domeId);
         if (info.domeId > 0 && info.domeId < 9)
         {
             DomeCategory.text = "Center";

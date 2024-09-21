@@ -1935,9 +1935,10 @@ public class UserLoginSignupManager : MonoBehaviour
                 {
                     if (myObject1.success)
                     {
-
+                        
                         ConstantsGod.AUTH_TOKEN = myObject1.data.token;
 
+                        Debug.Log(ConstantsGod.AUTH_TOKEN);
                         if (PlayerPrefs.GetInt("shownWelcome") == 1)
                         {
                             //DynamicEventManager.deepLink?.Invoke("Guest login");

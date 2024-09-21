@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5781050658600436519}
   - component: {fileID: 3172827409399162493}
   - component: {fileID: 2086728712474992246}
+  - component: {fileID: 5781050657728356467}
   m_Layer: 0
   m_Name: BannerShade
   m_TagString: Untagged
@@ -28,14 +29,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6699952307463257717}
-  m_LocalRotation: {x: -0, y: 0.12237768, z: -0, w: 0.9924836}
+  m_LocalRotation: {x: 0, y: 0.122380376, z: 0, w: 0.99248326}
   m_LocalPosition: {x: 94.95949, y: 0.78, z: -157.03046}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -75.941, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 14.059, z: 0}
 --- !u!33 &6926263659393493866
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -66,7 +67,7 @@ MeshRenderer:
   m_Materials:
   - {fileID: 2100000, guid: b721308e738644342a37fa66b216a6f8, type: 2}
   - {fileID: 2100000, guid: 1aaf8b2f5ce80a54f8fcecf9adaf727b, type: 2}
-  - {fileID: 2100000, guid: 318106ad416f7bf49868048cdbe65068, type: 2}
+  - {fileID: 2100000, guid: 6f1e143607e8c7b4c8b2fc53cd829500, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -134,3 +135,18 @@ LODGroup:
     renderers:
     - renderer: {fileID: 5187020114989965216}
   m_Enabled: 1
+--- !u!114 &5781050657728356467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6699952307463257717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 604340eca1bf4034aaea1cfc0af333fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectMeshRenderer: {fileID: 5187020114989965216}
+  EnglishText: {fileID: 2800000, guid: 059ad143dd5c500479fa1ae97d9288bb, type: 3}
+  JPText: {fileID: 2800000, guid: 19742ad4b6ecb0647874e227a568ef1d, type: 3}

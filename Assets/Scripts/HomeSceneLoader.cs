@@ -63,6 +63,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     public async void LoadMain(bool changeOritentationChange)
     {
         BuilderEventManager.StopBGM?.Invoke();
+        LoadingHandler.Instance.DisableDomeLoading();
         LoadingHandler.Instance.DisableVideoLoading();
         //GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
         disableSoundXanalobby();
