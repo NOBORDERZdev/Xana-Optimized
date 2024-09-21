@@ -21,11 +21,20 @@ public class PartyTimerManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+        if (ReferencesForGamePlay.instance.isMatchingTimerFinished == true)
         {
+            Debug.Log("Fixes Done");
+           // ReferencesForGamePlay.instance.XANAPartyCounterText.gameObject.SetActive(false);
+            StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().ShowLobbyCounter(0f));
             return;
         }
-        if(LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
+
+        if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+        {
+            Debug.Log("Fixes not Done");
+            return;
+        }
+        if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
             ReferencesForGamePlay.instance.XANAPartyWaitingText.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "他のプレイヤーを待っています... " + "60s";
         else
             ReferencesForGamePlay.instance.XANAPartyWaitingText.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Waiting for other players... " + "60s";
