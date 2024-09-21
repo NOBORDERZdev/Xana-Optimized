@@ -1,3 +1,4 @@
+using Firebase.Analytics;
 using UnityEngine;
 
 public class GlobalConstants
@@ -97,8 +98,8 @@ public class GlobalConstants
         }
         else
         {
-            Debug.LogError("<color=red>FB Event: " + eventName +" "+userId + "</color>");
-            Firebase.Analytics.FirebaseAnalytics.LogEvent(eventName,userId,"");
+            Debug.LogError("<color=red>FB Event: " + eventName +" User_Id "+userId+ " User_Name "+ ConstantsHolder.userName + "</color>");
+            Firebase.Analytics.FirebaseAnalytics.LogEvent(eventName,new Parameter("User_Id",userId),new Parameter("User_Name",ConstantsHolder.userName));
         }
     }
     #endregion
