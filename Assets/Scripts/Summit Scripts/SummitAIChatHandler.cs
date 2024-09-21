@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using static RestAPI;
 
 public class SummitAIChatHandler : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class SummitAIChatHandler : MonoBehaviour
     private bool _NPCInstantiated;
     private bool SummitNPC;
     private bool ChatActivated;
+    private bool GetFirstNPCMessage;
 
     public static int NPCCount=0;
     private void OnEnable()
@@ -155,6 +157,8 @@ public class SummitAIChatHandler : MonoBehaviour
                 npcURL = XANASummitDataContainer.aiData.npcData[i].personalityURL;
             }
         }
+
+        SendMessageFromAI("Hello");
     }
 
     void LoadAIChat(int npcID, string[] welcomeMsgs)
@@ -210,6 +214,7 @@ public class SummitAIChatHandler : MonoBehaviour
 
     void AddAIListenerOnChatField()
     {
+        GetFirstNPCMessage = true;
         _CommonChatRef.InputFieldChat.onSubmit.RemoveAllListeners();
         _CommonChatRef.InputFieldChat.onSubmit.AddListener(SendMessageFromAI);
     }
@@ -223,14 +228,22 @@ public class SummitAIChatHandler : MonoBehaviour
     async void SendMessageFromAI(string s)
     {
         //_CommonChatRef.DisplayMsg_FromSocket(ConstantsHolder.userName, _CommonChatRef.InputFieldChat.text);
-        ChatSocketManagerInstance.AddNewMsg(ConstantsHolder.userName, _CommonChatRef.InputFieldChat.text, "NPC", "NPC", 0);
-        string url = npcURL + "&usr_id=" + ConstantsHolder.userId + "&input_string=" + _CommonChatRef.InputFieldChat.text;
+        string url = string.Empty;
+        if (!GetFirstNPCMessage)
+        {
+            ChatSocketManagerInstance.AddNewMsg(ConstantsHolder.userName, _CommonChatRef.InputFieldChat.text, "NPC", "NPC", 0);
+            url = npcURL + "&usr_id=" + ConstantsHolder.userId + "&input_string=" + _CommonChatRef.InputFieldChat.text;
+        }
+        else
+        {
+            GetFirstNPCMessage = false;
+            url = npcURL + "&usr_id=" + ConstantsHolder.userId + "&input_string="+s;
+        }
 
         ClearInputField();
-
-        UriBuilder uriBuilder = new UriBuilder(url);
-
+     
         string response = await GetAIResponse(url);
+     
         if(ChatActivated)
         {
             string res = JsonUtility.FromJson<AIResponse>(response).data;
@@ -262,6 +275,9 @@ public class SummitAIChatHandler : MonoBehaviour
         ClearInputField();
         CloseChatBox();
         DestroyNPC();
+        RemoveAIListenerFromChatField();
+        //_CommonChatRef.LoadOldChat();
+        ChatActivated = false;
     }
 
     void DestroyNPC()

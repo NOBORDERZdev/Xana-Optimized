@@ -89,7 +89,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     [SerializeField] public CameraManager XanaPartyCamera;
     [SerializeField] InputReader XanaPartyInput;
     [SerializeField] PenguinLookPointTracker penguinLook;
-    [SerializeField] ReferenceForPenguinAvatar referenceForPenguin;
+    public ReferenceForPenguinAvatar referenceForPenguin;
     #endregion
     [SerializeField] RaffleTicketHandler _raffleTickets;
 
@@ -777,12 +777,15 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             }
             return;
         }
+        else 
+        {
+            DashButton.SetActive(true);
+        }
         XanaPartyController.SetActive(false);
         XanaWorldController.SetActive(true);
         mainController = mainControllerRefHolder;
         if (ConstantsHolder.isFixedHumanoid)
         {
-            DashButton.SetActive(true);
             InstantiatePlayerForFixedHumanoid();
             return;
         }
@@ -1589,18 +1592,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         mainController = mainControllerRefHolder;
 
 
-        referenceForPenguin.XanaFeaturesLandsacape.SetActive(true);
-        referenceForPenguin.EmoteFavLandsacape.SetActive(true);
-        referenceForPenguin.EmotePanelsLandsacape.SetActive(true);
-
-
-        referenceForPenguin.XanaFeaturesPotraite.SetActive(true);
-        referenceForPenguin.EmoteFavPotraite.SetActive(true);
-        referenceForPenguin.EmotePanelsPotraite.SetActive(true);
-
-
-        referenceForPenguin.XanaJumpPotraite.SetActive(true);
-        referenceForPenguin.XanaJumpLandsacape.SetActive(true);
+        
 
         ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(false);
         ReferencesForGamePlay.instance.XANAPartyWaitingPanel.SetActive(false);
@@ -1611,7 +1603,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         ConstantsHolder.isPenguin = false;
         ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
         ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
-        ReferencesForGamePlay.instance.SetGameplayForPenpenz(true);
     }
 
     public void AssignRaffleTickets(int domeID)

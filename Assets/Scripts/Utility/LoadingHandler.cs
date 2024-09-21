@@ -365,7 +365,7 @@ public class LoadingHandler : MonoBehaviour
             {
                 loadingPanel.SetActive(false);
                 await Task.Delay(1000);
-                if (ConstantsHolder.xanaConstants.isBackFromWorld)
+                if (ConstantsHolder.xanaConstants.isBackFromWorld && !ConstantsHolder.xanaConstants.EnableSignInPanelByDefault)
                     Screen.orientation = ScreenOrientation.Portrait;
 
                 ConstantsHolder.xanaConstants.isBackFromWorld = false;
@@ -826,8 +826,6 @@ public class LoadingHandler : MonoBehaviour
         DomeDescription.text = info.description;
         DomeCreator.text = info.creator;
 
-        info.id = info.domeId.ToString();
-        Debug.Log("Dome id " + info.domeId);
         if (info.domeId > 0 && info.domeId < 9)
         {
             DomeCategory.text = "Center";

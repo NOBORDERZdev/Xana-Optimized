@@ -5,7 +5,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
-
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
 {
     //[SerializeField] Animator animator;
@@ -81,6 +81,9 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
     [PunRPC]
     public void StartLobbyCounter()
     {
+        Hashtable _hash = new Hashtable();
+        _hash.Add("IsReady", false);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(_hash);
         StartCoroutine(ReferencesForGamePlay.instance.ShowLobbyCounterAndMovePlayer());
     }
 

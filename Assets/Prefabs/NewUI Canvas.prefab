@@ -1415,7 +1415,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7939765955239655344}
-  m_RootOrder: 15
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -13510,7 +13510,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -14}
+  m_AnchoredPosition: {x: 0, y: -21.7}
   m_SizeDelta: {x: -16, y: 30}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &248433466283385035
@@ -13541,10 +13541,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Raffle Tickets
+  m_text: "\u62BD\u9078\u30C1\u30B1\u30C3\u30C8"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3b80664f39c9ad641becdf962e40c832, type: 2}
-  m_sharedMaterial: {fileID: 1822493514935977383, guid: 3b80664f39c9ad641becdf962e40c832, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3925e587e4c6ce7489d80d484481db56, type: 2}
+  m_sharedMaterial: {fileID: -5601961426062528943, guid: 3925e587e4c6ce7489d80d484481db56, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -13574,7 +13574,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -34340,8 +34340,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 21.4052}
-  m_SizeDelta: {x: -30, y: 107.1895}
+  m_AnchoredPosition: {x: 0, y: 27}
+  m_SizeDelta: {x: -120, y: 107.1895}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2290067853473701631
 CanvasRenderer:
@@ -34371,14 +34371,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You can receive a raffle ticket by visiting each space. After the XANA
-    SUMMIT period ends, a drawing will be conducted using the collected tickets,
-    and prizes will be sent to the winning accounts (wallets). For more details,
-    please refer to the XANA SUMMIT homepage.<link="https://xana.net/XANASUMMIT/"><color=#008FFF>XANA
-    SUMMIT</color></link>
+  m_text: "\u5404\u30B9\u30DA\u30FC\u30B9\u3092\u8A2A\u554F\u3059\u308B\u3053\u3068\u3067\u62BD\u9078\u30C1\u30B1\u30C3\u30C8\u3092\u7372\u5F97\u3067\u304D\u307E\u3059\u3002
+    XANA SUMMIT \u306E\u671F\u9593\u7D42\u4E86\u5F8C\u3001\u7372\u5F97\u3057\u305F\u30C1\u30B1\u30C3\u30C8\u3092\u5BFE\u8C61\u306B\u62BD\u9078\u3092\u884C\u3044\u3001\u5F53\u9078\u3057\u305F\u30A2\u30AB\u30A6\u30F3\u30C8\uFF08\u30A6\u30A9\u30EC\u30C3\u30C8\uFF09\u306B\u666F\u54C1\u304C\u9001\u4ED8\u3055\u308C\u307E\u3059\u3002\u8A73\u7D30\u306F
+    XANA SUMMIT \u30DB\u30FC\u30E0\u30DA\u30FC\u30B8\u3092\u3054\u53C2\u7167\u304F\u3060\u3055\u3044\u3002<link=\"https://xana.net/XANASUMMIT/\"><color=#008FFF>XANA
+    SUMMIT \u30DB\u30FC\u30E0\u30DA\u30FC\u30B8</color></link>"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a42bccfd68da37e4fb81138d3dade56d, type: 2}
-  m_sharedMaterial: {fileID: -1348047706647286274, guid: a42bccfd68da37e4fb81138d3dade56d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c28cbd845e3f41646a5163e68ddf159a, type: 2}
+  m_sharedMaterial: {fileID: 731413442213515940, guid: c28cbd845e3f41646a5163e68ddf159a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -34413,8 +34412,8 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_wordSpacing: 3
+  m_lineSpacing: 15
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -42010,6 +42009,7 @@ RectTransform:
   - {fileID: 4659728933399854336}
   - {fileID: 1174242103235854452}
   - {fileID: 1112965299091237999}
+  - {fileID: 8312206097098141410}
   - {fileID: 8977633968523047648}
   - {fileID: 7567748853965643414}
   m_Father: {fileID: 2185985444613829993}
@@ -43657,10 +43657,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Ok
+  m_text: OK
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a42bccfd68da37e4fb81138d3dade56d, type: 2}
-  m_sharedMaterial: {fileID: -1348047706647286274, guid: a42bccfd68da37e4fb81138d3dade56d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dc250a65c59b8ac418ac0b19ca6a29ad, type: 2}
+  m_sharedMaterial: {fileID: 7826374939578404572, guid: dc250a65c59b8ac418ac0b19ca6a29ad, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -43684,13 +43684,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 17
+  m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -44341,7 +44341,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Say Something
+  m_Text: "\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u5165\u529B"
 --- !u!114 &6183360033463500989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50795,8 +50795,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -0.000014842, y: 19.300049}
-  m_SizeDelta: {x: 200, y: 35}
+  m_AnchoredPosition: {x: -0, y: 20.8}
+  m_SizeDelta: {x: 374.4804, y: 58.6049}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &2545594134090506583
 CanvasRenderer:
@@ -50826,7 +50826,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cb1b85cbf31cae64f8908a7cb0f56b79, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 955ee0942d92a76419af4baa7a10c023, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -56097,7 +56097,7 @@ RectTransform:
   - {fileID: 1472997057719966242}
   - {fileID: 5556103260409861906}
   m_Father: {fileID: 2185985444943424399}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -56530,7 +56530,7 @@ MonoBehaviour:
   selectedWorldBannerImage: {fileID: 640862631370054824}
   goBtn: {fileID: 7055201328139590952}
   dataManager: {fileID: 11400000, guid: 167db53466831ca41b397940080656f9, type: 2}
-  totalVisitCount: {fileID: 3854474564843013239}
+  totalVisitCount: {fileID: 0}
   timeDelay: 0.02
 --- !u!1 &3186057715941456484
 GameObject:
@@ -61025,14 +61025,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3753799679652590248}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7039221033120106264}
-  m_Father: {fileID: 7939765955239655344}
-  m_RootOrder: 13
+  m_Father: {fileID: 2185985444943424399}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -66032,7 +66032,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Favorite
+  m_text: "\u304A\u6C17\u306B\u5165\u308A"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
@@ -66059,7 +66059,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 9
+  m_fontSize: 6.5
   m_fontSizeBase: 10.05
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -99657,10 +99657,10 @@ RectTransform:
   m_Father: {fileID: 8312206097098141410}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -280, y: -120}
+  m_SizeDelta: {x: 645, y: 333}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2135642411216642940
 CanvasRenderer:
@@ -99690,9 +99690,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b956ee5c3282e7b43943de7175d51991, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f4551a5f97acced4e9da1af1541f1172, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

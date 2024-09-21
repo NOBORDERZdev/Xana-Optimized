@@ -446,6 +446,24 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         ConstantsHolder.DiasableMultiPartPhoton = false;
 
+        ReferencesForGamePlay.instance.SetGameplayForPenpenz(true);
+
+        ReferenceForPenguinAvatar referenceForPenguin = GameplayEntityLoader.instance.referenceForPenguin;
+        referenceForPenguin.XanaFeaturesLandsacape.SetActive(true);
+        referenceForPenguin.EmoteFavLandsacape.SetActive(true);
+        referenceForPenguin.EmotePanelsLandsacape.SetActive(true);
+
+
+        referenceForPenguin.XanaFeaturesPotraite.SetActive(true);
+        referenceForPenguin.EmoteFavPotraite.SetActive(true);
+        referenceForPenguin.EmotePanelsPotraite.SetActive(true);
+
+
+        referenceForPenguin.XanaJumpPotraite.SetActive(true);
+        referenceForPenguin.XanaJumpLandsacape.SetActive(true);
+
+        GameplayEntityLoader.instance.PositionResetButton.SetActive(false);
+
         // Map Working
         _domeMiniMap.SummitSceneReloaded();
         //SummitMiniMapStatusOnSceneChange(true);

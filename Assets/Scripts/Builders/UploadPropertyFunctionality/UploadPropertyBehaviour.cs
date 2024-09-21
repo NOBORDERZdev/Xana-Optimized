@@ -240,7 +240,7 @@ public class UploadPropertyBehaviour : MonoBehaviour
         //feedMediaPlayer.Play();
     }
 
-    public string ExtractVideoIdFromUrl(string url)
+    public static string ExtractVideoIdFromUrl(string url)
     {
 
         Uri uri = new Uri(url);
