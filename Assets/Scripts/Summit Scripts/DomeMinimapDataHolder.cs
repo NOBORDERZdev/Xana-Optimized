@@ -140,8 +140,10 @@ public class DomeMinimapDataHolder : MonoBehaviour
 
             // Attempt to find "Player Spawner" or default to first child if not found
             Transform domePos = domeTransform.Find("Player Spawner") ?? domeTransform.GetChild(0);
+            ConstantsHolder.isTeleporting = true;
             playerTransform.position = domePos.position;
             playerTransform.rotation = Quaternion.Euler(0f, domePos.rotation.eulerAngles.y, 0f);
+            Invoke("SetTeleportingFalse", 3f);
         }
         else
         {
@@ -149,6 +151,11 @@ public class DomeMinimapDataHolder : MonoBehaviour
         }
     }
    
+
+    void SetTeleportingFalse()
+    {
+        ConstantsHolder.isTeleporting = false;
+    }
     public void ConfirmationPanelHandling(bool status)
     {
         ConfirmationPopup.SetActive(status);
