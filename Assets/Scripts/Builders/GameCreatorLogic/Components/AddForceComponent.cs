@@ -38,6 +38,8 @@ public class AddForceComponent : ItemComponent
 
     public void ApplyAddForce()
     {
+        if (GamificationComponentData.instance == null || _addForceComponentData == null || _rigidBodyPlayer == null)
+            return;
 
         if (!_addForceComponentData.forceApplyOnAvatar)
         {
