@@ -1515,8 +1515,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     }
 
 
-    GameObject penguinJump;
-    GameObject penguinJumpPot;
     //penguin mehtods 
     IEnumerator SetXanaPartyControllers(GameObject player)
     {
@@ -1539,24 +1537,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             GamificationComponentData.instance.PlayerRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
         }
         // Landscape
-        referenceForPenguin.XanaFeaturesLandsacape.SetActive(false);
-        referenceForPenguin.EmoteFavLandsacape.SetActive(false);
-        referenceForPenguin.EmotePanelsLandsacape.SetActive(false);
-
-        referenceForPenguin.XanaFeaturesPotraite.SetActive(false);
-        referenceForPenguin.EmoteFavPotraite.SetActive(false);
-        referenceForPenguin.EmotePanelsPotraite.SetActive(false);
-
-
-        penguinJump = Instantiate(referenceForPenguin.XanaJumpLandsacape, referenceForPenguin.XanaJumpLandsacape.transform.parent);
-        penguinJumpPot = Instantiate(referenceForPenguin.XanaJumpPotraite, referenceForPenguin.XanaJumpPotraite.transform.parent);
-
-        Destroy(penguinJump.GetComponent<UnityEngine.EventSystems.EventTrigger>());
-        Destroy(penguinJumpPot.GetComponent<UnityEngine.EventSystems.EventTrigger>());
-
-        referenceForPenguin.XanaJumpPotraite.SetActive(false);
-        referenceForPenguin.XanaJumpLandsacape.SetActive(false);
-        PositionResetButton.SetActive(false);
+        referenceForPenguin.ActiveXanaUIData(false);
         if (ConstantsHolder.xanaConstants.isXanaPartyWorld )
         {
             ReferencesForGamePlay.instance.SetGameplayForPenpenz(false);
@@ -1591,14 +1572,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             Destroy(YoutubeStreamPlayer);
         mainController = mainControllerRefHolder;
 
-
-        
-
         ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(false);
         ReferencesForGamePlay.instance.XANAPartyWaitingPanel.SetActive(false);
 
-        Destroy(penguinJump);
-        Destroy(penguinJumpPot);
         ConstantsHolder.isFixedHumanoid = false;
         ConstantsHolder.isPenguin = false;
         ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
