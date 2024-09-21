@@ -69,14 +69,14 @@ public class FeedData : MonoBehaviour
                 }
 
                 //isFeedScreen = !isFeed; //To assign back data to prefab items in case of no pooling in OnEnable
-                if (isFeed)
-                {
-                    Invoke(nameof(HieghtListUpdateWithDelay), 0.08f);
-                }
-                else
-                {
-                    Invoke(nameof(SetProfileFeedWithWait), 0.08f);
-                }
+                //if (isFeed)
+                //{
+                //    Invoke(nameof(HieghtListUpdateWithDelay), 0.08f);
+                //}
+                //else
+                //{
+                //    Invoke(nameof(SetProfileFeedWithWait), 0.08f);
+                //}
             }
             else
             {
