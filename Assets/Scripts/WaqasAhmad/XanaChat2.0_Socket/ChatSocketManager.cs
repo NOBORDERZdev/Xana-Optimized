@@ -68,6 +68,9 @@ public class ChatSocketManager : MonoBehaviour
     public GameObject MsgPrefab;
     public Transform MsgParentObj;
 
+    public ChatScroller PollingScroller;
+
+
     private List<ChatMsgDataHolder> allMsgData = new List<ChatMsgDataHolder>();
     internal ScrollRect MsgParentObjScrollRect;
 
@@ -331,7 +334,10 @@ public class ChatSocketManager : MonoBehaviour
             tempUser = "XanaUser-(" + msg.socket_id + ")";//XanaUser-(userId)
         }
         //XanaChatSystem.instance.DisplayMsg_FromSocket(tempUser, msg.message);
-        AddNewMsg(tempUser, msg.message, msg.message_id.ToString(), msg.userId, 0);
+        //AddNewMsg(tempUser, msg.message, msg.message_id.ToString(), msg.userId, 0);
+
+        PollingScroller._data.Add(msg);
+        Invoke(nameof(UpdateChatScroller),0.5f);
     }
     bool CheckUserNameIsValid(string _UserName)
     {
@@ -412,9 +418,34 @@ public class ChatSocketManager : MonoBehaviour
                     tempUser = tempUser = "XanaUser-(" + socketId + ")";//XanaUser-(userId)
                 }
 
-                AddNewMsg(tempUser, rootData.data[i].message, rootData.data[i].id, rootData.data[i].user_id, rootData.data[i].block_message);
+                //AddNewMsg(tempUser, rootData.data[i].message, rootData.data[i].id, rootData.data[i].user_id, rootData.data[i].block_message);
+
+                ChangeUSerDataType(rootData.data[i]);
             }
+
+            Invoke(nameof(UpdateChatScroller), 0.5f);
         }
+    }
+
+    void ChangeUSerDataType(MessageData msg)
+    {
+        ChatUserData tempUserData = new ChatUserData();
+        
+        tempUserData.name = msg.name;
+        tempUserData.guestusername = msg.guest_username;
+        tempUserData.message = msg.message;
+        tempUserData.message_id = int.Parse(msg.id);
+        tempUserData.userId = msg.user_id;
+        tempUserData.isMessageBlocked = msg.block_message;
+        tempUserData.isGuest = msg.guest;
+        //if(PollingScroller._data == null)
+        //    PollingScroller.IntList();
+
+        PollingScroller._data.Add(tempUserData);
+    }
+    void UpdateChatScroller()
+    {
+        PollingScroller.scroller.ReloadData();
     }
 
     public void AddNewMsg(string userName, string msg, string msgId, string userId, int blockMessage)
@@ -431,6 +462,7 @@ public class ChatSocketManager : MonoBehaviour
         }
         MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = false;
         Invoke("DelayAdded", 0.05f);
+
         //StartCoroutine(nameof(Delay));
         XanaChatSystem.instance.DisplayMsg_FromSocket(userName, msg, _dataHolder.MsgText);
 
@@ -583,10 +615,10 @@ public class ChatSocketManager : MonoBehaviour
 public class ChatUserData
 {
     public string userId;
-    public string id; // MessageID
     public int message_id;
     public string socket_id;
     public string username;
+    public bool isGuest; // used Locally not getting from server
     public string name;
     public string guestusername;
 
@@ -604,6 +636,8 @@ public class ChatUserData
     public string video;
     public bool isLiked;
     public int likesCount;
+    public int isMessageBlocked;
+
 }
 //{
 //    socket_id: _socketId,

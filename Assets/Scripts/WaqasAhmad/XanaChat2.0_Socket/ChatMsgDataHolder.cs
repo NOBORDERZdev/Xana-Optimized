@@ -38,11 +38,40 @@ public class ChatMsgDataHolder : MonoBehaviour
        _MsgTextString = msgText;   
        _SenderUserID = senderUserId;
 
+
+        if(senderUserId == ConstantsHolder.userId)
+        {
+            DotedBtn.SetActive(false);
+        }
+        else
+        {
+            DotedBtn.SetActive(true);
+        }
+
         if (isMessageBlocked == 1)
         {
             OnFlagUserApiCompleted(true);
         }
     }
+    public void DisplayMsg(string _userName, string _msg)
+    {
+        if (_userName.Length > 12)
+        {
+            MsgText.text = "<b>" + _userName.Substring(0, 12) + "...</b>" + " : " + _msg;
+        }
+        else
+        {
+            MsgText.text = "<b>" + _userName + "</b>" + " : " + _msg;
+        }
+
+        //if (!chatDialogBox.activeSelf && _userName != UserName)
+        //{
+        //    chatNotificationIcon.SetActive(true);
+        //}
+    }
+
+
+
 
     public void BtnForcedStatus(bool status)
     {

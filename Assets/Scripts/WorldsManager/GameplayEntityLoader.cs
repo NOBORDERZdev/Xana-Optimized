@@ -169,7 +169,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
             ReferencesForGamePlay.instance.SumitMapStatus(true);
 
-            XanaChatSystem.instance.chatDialogBox.SetActive(false);
+            //XanaChatSystem.instance.chatDialogBox.SetActive(false);
+            XanaChatSystem.instance.chatDialogBox.GetComponent<CanvasGroup>().alpha = 0;
         }
         else
         {
