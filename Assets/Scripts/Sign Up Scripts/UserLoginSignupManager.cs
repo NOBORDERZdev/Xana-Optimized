@@ -427,7 +427,7 @@ public class UserLoginSignupManager : MonoBehaviour
     {
         if (ConstantsHolder.xanaConstants.EnableSignInPanelByDefault)
         {
-            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            Screen.orientation = ScreenOrientation.Portrait;
             emailOrWalletLoginPanel.SetActive(false);
             return;
         }
