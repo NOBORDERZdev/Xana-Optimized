@@ -30,9 +30,9 @@ public class PartyTimerManager : MonoBehaviourPunCallbacks
         else
             ReferencesForGamePlay.instance.XANAPartyWaitingPanel.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Waiting for other players... " + "60s";
 
+        XANAPartyManager.Instance.GameIndex = 0;
         if (PhotonNetwork.IsMasterClient && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
         {
-            XANAPartyManager.Instance.GameIndex = 0;
             XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().RaceID = 0;
             if (startTime <= -1)
             {

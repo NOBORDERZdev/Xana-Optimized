@@ -53,6 +53,7 @@ public class FinishPoint : MonoBehaviour
         GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<AnimatedController>().enabled = false;
         Animator penguinAnimator = GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<Animator>();
         penguinAnimator.SetBool("isGrounded", true);
+        penguinAnimator.SetFloat("velocity", 0);
         penguinAnimator.SetBool("isJump", false);
         //penguinAnimator.SetBool("Win", true);
         StartCoroutine(DelayedWinAnimation(penguinAnimator, 0.01f));
