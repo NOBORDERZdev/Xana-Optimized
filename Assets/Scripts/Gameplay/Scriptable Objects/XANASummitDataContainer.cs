@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using System.Drawing;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.Networking.Types;
+using static SummitAIChatHandler;
+using UnityEditor;
 
 [CreateAssetMenu(menuName = "ScriptableObjects/SummitDataContainer", fileName = "ScriptableObjects/SummitDataContainer")]
 public class XANASummitDataContainer : ScriptableObject
@@ -20,20 +20,19 @@ public class XANASummitDataContainer : ScriptableObject
     public static List<GameObject> SceneTeleportingObjects = new List<GameObject>();
     string[] s = { "ZONE-X", "ZONE X Musuem", "Xana Lobby", "XANA Festival Stage", "Xana Festival", "THE RHETORIC STAR", "ROCK?N ROLL CIRCUS", "MASAMI TANAKA", "Koto-ku Virtual Exhibition", "JJ MUSEUM", "HOKUSAI KATSUSHIKA", "Green Screen Studio", "GOZANIMATOR HARUNA GOUZU GALLERY 2021", "Genesis ART Metaverse Museum", "FIVE ELEMENTS", "DEEMO THE MOVIE Metaverse Museum", "D_Infinity_Labo", "BreakingDown Arena", "Astroboy x Tottori Metaverse Museum" };
 
-    //private void OnEnable()
-    //{
-    //    for (int i = 0; i < 128; i++)
-    //    {
-    //        DomeGeneralData domeData = new DomeGeneralData();
-    //        domeData.id = i;
-    //        string sceneName= s[Random.Range(0, s.Length)];
-    //        domeData.name = sceneName;
-    //        domeData.world = sceneName;
-    //        summitData.domes.Add(domeData);
-    //        //summitData.root[i].world = summitData.root[i].name;
-    //    }
+    private void OnEnable()
+    {
+#if UNITY_EDITOR
+        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+#endif
+    }
 
-    //}
+    private void OnDisable()
+    {
+#if UNITY_EDITOR
+        EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+#endif
+    }
 
     public async void GetAllDomesData()
     {
@@ -101,7 +100,7 @@ public class XANASummitDataContainer : ScriptableObject
 
     public async Task<string> GetAudioFile(int domeId)
     {
-        if (summitData.domes.Count == 0)
+        while (summitData.domes.Count==0)
         {
             await Task.Delay(1000);
         }
@@ -145,7 +144,6 @@ public class XANASummitDataContainer : ScriptableObject
     {
         string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.VISITORCOUNT + worldId;
         string reponse = await GetTokenBasedAsyncRequest(apiUrl);
-        Debug.LogError(reponse);
         VisitorInfo visitorInfo = JsonUtility.FromJson<VisitorInfo>(reponse);
         if (visitorInfo.success)
             return visitorInfo.data.total_visit;
@@ -153,6 +151,21 @@ public class XANASummitDataContainer : ScriptableObject
             return 100;
     }
 
+#if UNITY_EDITOR
+    private void OnPlayModeStateChanged(PlayModeStateChange obj)
+    {
+        switch (obj)
+        {
+            case PlayModeStateChange.EnteredPlayMode:
+                summitData.domes.Clear();
+                break;
+
+            case PlayModeStateChange.ExitingPlayMode:
+                summitData.domes.Clear();
+                break;
+        }
+    }
+#endif
     #region DomeInfo
 
     [System.Serializable]
@@ -256,6 +269,14 @@ public class XANASummitDataContainer : ScriptableObject
         public string avatarCategory;
         public string personalityURL;
         public int[] spawnPositionArray;
+        public bool isAvatarPerformer;
+        public AnimationData[] animations;
+    }
+    [System.Serializable]
+    public class AnimationData
+    {
+        public string name;
+        public float playTime;
     }
     #endregion
 

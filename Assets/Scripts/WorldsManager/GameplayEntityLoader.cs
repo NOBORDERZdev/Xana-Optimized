@@ -161,6 +161,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     public void ForcedMapOpenForSummitScene()
     {
+        if (ReferencesForGamePlay.instance.m_34player == null)
+            return;
         var player = ReferencesForGamePlay.instance.m_34player.GetComponent<SummitPlayerRPC>();
         if (ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit" && !player.isInsideCAr&&!player.isInsideWheel)
         {
@@ -719,7 +721,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void InstantiatePlayerAvatar(Vector3 pos)
     {
-       
+
         if (ConstantsHolder.isPenguin)
         {
             DashButton.SetActive(false);
@@ -734,12 +736,15 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             }
             return;
         }
+        else 
+        {
+            DashButton.SetActive(true);
+        }
         XanaPartyController.SetActive(false);
         XanaWorldController.SetActive(true);
         mainController = mainControllerRefHolder;
         if (ConstantsHolder.isFixedHumanoid)
         {
-            DashButton.SetActive(true);
             InstantiatePlayerForFixedHumanoid();
             return;
         }
