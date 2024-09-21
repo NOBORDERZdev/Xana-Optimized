@@ -409,11 +409,11 @@ public class SoundSettings : MonoBehaviour
         UserSlider.value = PlayerPrefs.GetFloat(ConstantsGod.MIC);
         UserSliderPotrait.value = PlayerPrefs.GetFloat(ConstantsGod.MIC);
 
-        foreach (var gameobject in MutiplayerController.instance.playerobjects)
+        foreach (var playerObject in MutiplayerController.instance.playerobjects)
         {
-            if (gameobject != null && !gameobject.GetComponent<PhotonView>().IsMine)
+            if (playerObject != null && !playerObject.GetComponent<PhotonView>().IsMine && playerObject.GetComponent<SpeakerRefrence>()) 
             {
-                gameobject.GetComponent<SpeakerRefrence>().RangeVolSpeaker.volume = UserSlider.value;
+                playerObject.GetComponent<SpeakerRefrence>().RangeVolSpeaker.volume = UserSlider.value;
             }
         }
 

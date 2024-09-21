@@ -194,20 +194,23 @@ public class AdvancedYoutubePlayer : MonoBehaviour
     {
         if (!IsLive)
         {
-            string video = await getvideoasync(VideoId);
-            string audio = await getvideoasync(VideoId + "audio");
-            if (!audio.IsNullOrEmpty())
+            if (!skipPrevious)
             {
-                StartCoroutine(PlayVideoAndAudio(video, audio));
-                return;
-            }
-            if (!video.IsNullOrEmpty())
-            {
-                VideoPlayer.url = video;
-                VideoPlayer.Prepare();
-                BuilderEventManager.YoutubeVideoLoadedCallback?.Invoke(UploadFeatureVideoID);
-                VideoPlayer.Play();
-                return;
+                string video = await getvideoasync(VideoId);
+                string audio = await getvideoasync(VideoId + "audio");
+                if (!audio.IsNullOrEmpty())
+                {
+                    StartCoroutine(PlayVideoAndAudio(video, audio));
+                    return;
+                }
+                if (!video.IsNullOrEmpty())
+                {
+                    VideoPlayer.url = video;
+                    VideoPlayer.Prepare();
+                    BuilderEventManager.YoutubeVideoLoadedCallback?.Invoke(UploadFeatureVideoID);
+                    VideoPlayer.Play();
+                    return;
+                }
             }
             if (YoutubeInstance == null)
             {
@@ -247,7 +250,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
                 Debug.Log("<color=red>instance url " + instanceUrl + " our url " + videoformat.Url + "</color>");
 
                 string url = videoformat.Url;//GetProxiedUrl(videoformat.Url, "https://invidious.xana.net/");
-                 audio = audioformat.Url;// GetProxiedUrl(audioformat.Url, "https://invidious.xana.net/");
+                var audio = audioformat.Url;// GetProxiedUrl(audioformat.Url, "https://invidious.xana.net/");
 
 
 

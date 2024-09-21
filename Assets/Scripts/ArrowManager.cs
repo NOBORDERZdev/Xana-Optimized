@@ -90,10 +90,13 @@ public class ArrowManager : MonoBehaviourPunCallbacks
                 SMBCManager.Instance.NameCanvas= PhotonUserName.GetComponentInParent<Canvas>();
             if (AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer == null)
             {
-                AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = this.gameObject;
+                if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+                {
+                    AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = this.gameObject;
+                }
                 PhotonUserName.text = PhotonNetwork.NickName;
 
-                if(!ConstantsHolder.isPenguin)
+                if(!ConstantsHolder.isPenguin || !ConstantsHolder.xanaConstants.isXanaPartyWorld)
                 {
                     AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().animator = this.GetComponent<Animator>();
                     ActionAnimationApplyToPlayer.PlayerAnimatorInitializer?.Invoke(this.GetComponent<Animator>().runtimeAnimatorController);
@@ -101,15 +104,18 @@ public class ArrowManager : MonoBehaviourPunCallbacks
                 }
             }
         }
-        StartCoroutine(WaitForArrowIntanstiate(this.transform, !this.GetComponent<PhotonView>().IsMine));
-        try
+           StartCoroutine(WaitForArrowIntanstiate(this.transform, !this.GetComponent<PhotonView>().IsMine));
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
-            if(AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer)
-                AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
-        }
-        catch (Exception e)
-        {
-            print(e.Message);
+            try
+            {
+                if (AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer)
+                    AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
+            }
+            catch (Exception e)
+            {
+                print(e.Message);
+            }
         }
         VoiceView = GetComponent<PhotonVoiceView>();
     }
@@ -144,7 +150,10 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     public override void OnEnable()
     {
-        ReactionDelegateButtonClickEvent += OnChangeReactionIcon;
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            ReactionDelegateButtonClickEvent += OnChangeReactionIcon;
+        }
         CommentDelegateButtonClickEvent += OnChangeText;
         ConstantsHolder.userNameToggleDelegate += OnChangeUsernameToggle;
         OnChangeUsernameToggle(ConstantsHolder.xanaConstants.userNameVisibilty);
@@ -154,7 +163,10 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     public override void OnDisable ()
     {
-        ReactionDelegateButtonClickEvent -= OnChangeReactionIcon;
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            ReactionDelegateButtonClickEvent -= OnChangeReactionIcon;
+        }
         CommentDelegateButtonClickEvent -= OnChangeText;
         ConstantsHolder.userNameToggleDelegate -= OnChangeUsernameToggle;
         base.OnDisable();
@@ -380,6 +392,8 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     IEnumerator WaitForArrowIntanstiate(Transform parent, bool isOtherPlayer)
     {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld && isOtherPlayer)
+            PhotonUserName.gameObject.SetActive(false);
         yield return new WaitForSeconds(1.0f);
         InstantiateArrow(this.transform, !this.GetComponent<PhotonView>().IsMine);
     }
@@ -414,6 +428,10 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             go.transform.localPosition = new Vector3(-0.27f, 0.37f, -10.03f);
             go.transform.localEulerAngles = new Vector3(-85, -113.1f, -65);
             go.transform.localScale = new Vector3(2.35f, 2f, 1);
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            {
+                PhotonUserName.gameObject.SetActive(true);
+            }
 
             //go.AddComponent<ChangeGear>();
             // go.AddComponent<Equipment>();

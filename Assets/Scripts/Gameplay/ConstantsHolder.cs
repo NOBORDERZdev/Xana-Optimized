@@ -106,7 +106,6 @@ public class ConstantsHolder : MonoBehaviour
     public bool isBackFromWorld = false;
     public String MuseumID;
 
-    public bool isXanaPartyWorld = false;
     //For Metabuzz Environments
     public enum ComingFrom
     {
@@ -195,13 +194,28 @@ public class ConstantsHolder : MonoBehaviour
     public static int AvatarIndex;
     public static bool HaveSubWorlds;
     public static string Thumbnail;
-   
+    public static bool isTeleporting = false;
 
     public List<string> presetClothsJsonList =new List<string>();
 
     //Daily reward
     public bool isGoingForHomeScene = false;
     public bool hasToShowDailyPopup = false;
+
+
+    #region XANA PARTY WORLD
+    public bool PenpenzBuild = false;
+    public bool isXanaPartyWorld = false;
+    public bool isJoinigXanaPartyGame = false;
+    public int XanaPartyGameId;
+    public string XanaPartyGameName;
+    public bool isMasterOfGame = false;
+    public static int XanaPartyMaxPlayers = 25;
+    public bool EnableSignInPanelByDefault = false;
+    public bool GameIsFinished = false;
+    public string LastLobbyName;
+    #endregion
+
 
     public string r_EmoteStoragePersistentPath
     {

@@ -150,5 +150,13 @@ public static class BuilderEventManager
     public static Action OnSMBCRocketCollected;
     public static Action OnSMBCQuizWrongAnswer;
 
+    #region XANA PARTY WORLD
+    public static Action XANAPartyRaceStart;
+    public static Action XANAPartyRaceFinish;
+    public static Action XANAPartyWiatingForPlayer;
+    public static Action XANAPartyRaceResult;
+    #endregion
+
+
     public static Action<string, string> OpenRedirectionPopup; 
 }
