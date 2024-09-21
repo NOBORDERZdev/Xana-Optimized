@@ -365,7 +365,7 @@ public class LoadingHandler : MonoBehaviour
             {
                 loadingPanel.SetActive(false);
                 await Task.Delay(1000);
-                if (ConstantsHolder.xanaConstants.isBackFromWorld)
+                if (ConstantsHolder.xanaConstants.isBackFromWorld && !ConstantsHolder.xanaConstants.EnableSignInPanelByDefault)
                     Screen.orientation = ScreenOrientation.Portrait;
 
                 ConstantsHolder.xanaConstants.isBackFromWorld = false;

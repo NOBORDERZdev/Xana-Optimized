@@ -104,17 +104,6 @@ public class UserLoginSignupManager : MonoBehaviour
     public GameObject DownloadPermissionPopup;
     #endregion
 
-    IEnumerator EnableEmailPopup()
-    {
-        emailOrWalletLoginPanel.SetActive(true);
-        ClearInputFieldsData();
-        while (emailOrWalletLoginPanel.activeInHierarchy)
-        {
-            Screen.orientation = ScreenOrientation.LandscapeLeft;
-            yield return null;
-        }
-        Screen.orientation = ScreenOrientation.Portrait;
-    }
 
     private void OnEnable()
     {
@@ -122,7 +111,9 @@ public class UserLoginSignupManager : MonoBehaviour
 
         if (ConstantsHolder.xanaConstants.EnableSignInPanelByDefault)
         {
-            StartCoroutine(EnableEmailPopup());
+            emailOrWalletLoginPanel.SetActive(true);
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            ClearInputFieldsData();
         }
 
 
@@ -436,6 +427,7 @@ public class UserLoginSignupManager : MonoBehaviour
     {
         if (ConstantsHolder.xanaConstants.EnableSignInPanelByDefault)
         {
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
             emailOrWalletLoginPanel.SetActive(false);
             return;
         }

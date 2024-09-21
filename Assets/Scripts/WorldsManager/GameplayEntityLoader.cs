@@ -1611,7 +1611,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         ConstantsHolder.isPenguin = false;
         ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
         ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
-        ReferencesForGamePlay.instance.SetGameplayForPenpenz(true);
     }
 
     public void AssignRaffleTickets(int domeID)

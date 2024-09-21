@@ -446,6 +446,7 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         ConstantsHolder.DiasableMultiPartPhoton = false;
 
+        ReferencesForGamePlay.instance.SetGameplayForPenpenz(true);
         // Map Working
         _domeMiniMap.SummitSceneReloaded();
         //SummitMiniMapStatusOnSceneChange(true);
