@@ -71,7 +71,7 @@ public class CharSelectSummit : MonoBehaviour
                     }
                     
                 }
-                if (i != 0 || i != 19)
+                if (i != 0 || i != 43)
                 {
                     if (i == 0)
                     {

@@ -170,15 +170,15 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     public void ForcedMapOpenForSummitScene()
     {
-        if (ReferencesForGamePlay.instance && ReferencesForGamePlay.instance.m_34player && ConstantsHolder.xanaConstants)
+        if (ReferencesForGamePlay.instance.m_34player == null && !ConstantsHolder.xanaConstants)
+            return;
+        var player = ReferencesForGamePlay.instance.m_34player.GetComponent<SummitPlayerRPC>();
+        if (ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit" && !player.isInsideCAr&&!player.isInsideWheel)
         {
-            var player = ReferencesForGamePlay.instance.m_34player.GetComponent<SummitPlayerRPC>();
-            if (ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit" && !player.isInsideCAr && !player.isInsideWheel)
-            {
-                ReferencesForGamePlay.instance.minimap.SetActive(true);
-                PlayerPrefs.SetInt("minimap", 1);
-                ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
-                ReferencesForGamePlay.instance.SumitMapStatus(true);
+            ReferencesForGamePlay.instance.minimap.SetActive(true);
+            PlayerPrefs.SetInt("minimap", 1);
+            ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
+            ReferencesForGamePlay.instance.SumitMapStatus(true);
 
                 XanaChatSystem.instance.chatDialogBox.SetActive(false);
             }
