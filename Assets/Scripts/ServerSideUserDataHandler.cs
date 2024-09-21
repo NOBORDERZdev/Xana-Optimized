@@ -76,7 +76,10 @@ public class ServerSideUserDataHandler : MonoBehaviour
                     {
                         if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
                         {
-                            Screen.orientation = ScreenOrientation.Portrait;
+                            if (ConstantsHolder.xanaConstants.EnableSignInPanelByDefault)
+                                Screen.orientation = ScreenOrientation.LandscapeLeft;
+                            else
+                                Screen.orientation = ScreenOrientation.Portrait;
                             LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
                         }
                     }

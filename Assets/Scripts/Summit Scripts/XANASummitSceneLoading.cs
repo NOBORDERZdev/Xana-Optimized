@@ -101,7 +101,11 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (string.IsNullOrEmpty(domeGeneralData.world))
             return;
 
-     
+        if (domeGeneralData.is_penpenz && ConstantsHolder.xanaConstants.LoggedInAsGuest)
+        {
+            GamePlayUIHandler.inst.SignInPopupForGuestUser.SetActive(true);
+            return;
+        }
 
         if (domeGeneralData.isSubWorld)
         {
@@ -164,6 +168,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         gameplayEntityLoader.addressableSceneName = domeGeneralData.world;
         ConstantsHolder.userLimit = domeGeneralData.maxPlayer;
         ConstantsHolder.isPenguin = domeGeneralData.IsPenguin;
+        ConstantsHolder.xanaConstants.isXanaPartyWorld = domeGeneralData.is_penpenz;
         ConstantsHolder.isFixedHumanoid = domeGeneralData.Ishumanoid;
         ConstantsHolder.Thumbnail = domeGeneralData.world360Image;
         ConstantsHolder.AvatarIndex = domeGeneralData.AvatarIndex;
@@ -197,7 +202,10 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (domeGeneralData.worldType)
             LoadBuilderSceneLoading(domeGeneralData.builderWorldId);
         else
-            multiplayerController.Connect("XANA Summit-" + ConstantsHolder.domeId+"-"+domeGeneralData.world);
+        {
+            ConstantsHolder.xanaConstants.LastLobbyName = "XANA Summit-" + ConstantsHolder.domeId + "-" + domeGeneralData.world;
+            multiplayerController.Connect("XANA Summit-" + ConstantsHolder.domeId + "-" + domeGeneralData.world);
+        }
 
         // Summit Analytics Part
         if (_stayTimeTrackerForSummit != null)
@@ -319,7 +327,10 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (ConstantsHolder.xanaConstants.isBuilderScene)
             LoadBuilderSceneLoading(int.Parse(worldInfo.data.id));
         else
+        {
+            ConstantsHolder.xanaConstants.LastLobbyName = "XANA Summit-" + ConstantsHolder.domeId + "-" + worldInfo.data.name;
             multiplayerController.Connect("XANA Summit-" + ConstantsHolder.domeId + "-" + worldInfo.data.name);
+        }
 
         if (ReferencesForGamePlay.instance.playerControllerNew.isFirstPerson)
         {
@@ -435,6 +446,11 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         ConstantsHolder.DiasableMultiPartPhoton = false;
 
+        ReferencesForGamePlay.instance.SetGameplayForPenpenz(true);
+
+        ReferenceForPenguinAvatar referenceForPenguin = GameplayEntityLoader.instance.referenceForPenguin;
+        referenceForPenguin.ActiveXanaUIData(true);
+
         // Map Working
         _domeMiniMap.SummitSceneReloaded();
         //SummitMiniMapStatusOnSceneChange(true);
@@ -485,6 +501,7 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.SubWorlds = dataContainer.summitData.domes[i].SubWorlds;
                 domeGeneralData.domeCategory= dataContainer.summitData.domes[i].domeCategory;
                 domeGeneralData.domeType= dataContainer.summitData.domes[i].domeType;
+                domeGeneralData.is_penpenz = dataContainer.summitData.domes[i].is_penpenz;
                 //if (dataContainer.summitData1.domes[i].worldType)
                 //    return new Tuple<string[],string>(new[] { dataContainer.summitData1.domes[i].world, "1", dataContainer.summitData1.domes[i].builderWorldId }, dataContainer.summitData1.domes[i].experienceType);
                 //else
