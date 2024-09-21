@@ -161,6 +161,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     public void ForcedMapOpenForSummitScene()
     {
+        if (ReferencesForGamePlay.instance.m_34player == null)
+            return;
         var player = ReferencesForGamePlay.instance.m_34player.GetComponent<SummitPlayerRPC>();
         if (ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit" && !player.isInsideCAr&&!player.isInsideWheel)
         {
