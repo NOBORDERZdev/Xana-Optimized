@@ -228,7 +228,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 2
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
@@ -252,7 +252,7 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 1
-  m_UseLocal: 1
+  m_UseLocal: 0
 --- !u!114 &577130344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -485,7 +485,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 633a1b383fbe15a4c924264c11b9fbdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UserId: 0
   RaceFinishCount: 0
+  isRaceFinished: 0
 --- !u!114 &6827054931154011104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,6 +501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerDuration: 60
+  startTime: -1
   isTimerRunning: 0
 --- !u!1 &1927154725311225520
 GameObject:
@@ -1788,6 +1791,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 180
@@ -2522,7 +2526,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &8502821395473516984
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2539,7 +2543,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &8502821395473516985
 MonoBehaviour:
   m_ObjectHideFlags: 0
