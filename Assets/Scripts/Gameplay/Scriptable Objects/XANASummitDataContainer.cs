@@ -100,7 +100,7 @@ public class XANASummitDataContainer : ScriptableObject
 
     public async Task<string> GetAudioFile(int domeId)
     {
-        if (summitData.domes.Count == 0)
+        while (summitData.domes.Count==0)
         {
             await Task.Delay(1000);
         }
@@ -144,7 +144,6 @@ public class XANASummitDataContainer : ScriptableObject
     {
         string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.VISITORCOUNT + worldId;
         string reponse = await GetTokenBasedAsyncRequest(apiUrl);
-        Debug.LogError(reponse);
         VisitorInfo visitorInfo = JsonUtility.FromJson<VisitorInfo>(reponse);
         if (visitorInfo.success)
             return visitorInfo.data.total_visit;
@@ -270,6 +269,14 @@ public class XANASummitDataContainer : ScriptableObject
         public string avatarCategory;
         public string personalityURL;
         public int[] spawnPositionArray;
+        public bool isAvatarPerformer;
+        public AnimationData[] animations;
+    }
+    [System.Serializable]
+    public class AnimationData
+    {
+        public string name;
+        public float playTime;
     }
     #endregion
 

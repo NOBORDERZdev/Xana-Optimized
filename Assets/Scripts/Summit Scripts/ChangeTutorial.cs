@@ -14,20 +14,20 @@ public class ChangeTutorial : MonoBehaviour
 
         if (newLanguage == "English")
         {
-            ObjectMeshRenderer.materials[3].mainTexture = EnglishText;
-            ObjectMeshRenderer.materials[3].SetTexture("_EmissionMap", EnglishText);
+            ObjectMeshRenderer.materials[2].mainTexture = EnglishText;
+            ObjectMeshRenderer.materials[2].SetTexture("_EmissionMap", EnglishText);
         }
         else if (newLanguage == "Japanese")
         {
 
-            ObjectMeshRenderer.materials[3].mainTexture = JPText;
-            ObjectMeshRenderer.materials[3].SetTexture("_EmissionMap", JPText);
+            ObjectMeshRenderer.materials[2].mainTexture = JPText;
+            ObjectMeshRenderer.materials[2].SetTexture("_EmissionMap", JPText);
         }
         else
         {
 
-            ObjectMeshRenderer.materials[3].mainTexture = JPText;
-            ObjectMeshRenderer.materials[3].SetTexture("_EmissionMap", JPText);
+            ObjectMeshRenderer.materials[2].mainTexture = JPText;
+            ObjectMeshRenderer.materials[2].SetTexture("_EmissionMap", JPText);
         }
     }
 
