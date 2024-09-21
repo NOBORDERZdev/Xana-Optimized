@@ -491,7 +491,7 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
-
+            bool raceFinishStatus = false;
             Debug.Log("OnPlayerLeft  ..... " + otherPlayer.NickName);
             if (otherPlayer.NickName == "XANA_XANA")
             {
@@ -499,10 +499,43 @@ namespace Photon.Pun.Demo.PunBasics
             }
             for (int x = 0; x < playerobjects.Count; x++)
             {
+                if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+                {
+                    if (otherPlayer.ActorNumber == playerobjects[x].GetComponent<PhotonView>().OwnerActorNr)
+                    {
+                        raceFinishStatus = playerobjects[x].GetComponent<XANAPartyMulitplayer>().isRaceFinished;
+                    }
+                }
                 if (playerobjects[x] == null)
                 {
                     playerobjects.RemoveAt(x);
                 }
+            }
+
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            {
+                if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+                {
+                    ReferencesForGamePlay.instance.ReduceActivePlayerCountInCurrentLevel();
+                    if (XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().isLeaderboardShown)
+                    {
+                        if (PhotonNetwork.IsMasterClient && (XANAPartyManager.Instance.GameIndex < XANAPartyManager.Instance.GamesToVisitInCurrentRound.Count))
+                        {
+                            StartCoroutine(GamificationComponentData.instance.MovePlayersToNextGame());
+                        }
+                    }
+                    else
+                    {
+                        GamificationComponentData.instance.UpdateRaceStatusIfPlayerLeaveWithoutCompletiting(raceFinishStatus);
+                    }
+
+                    if (GamificationComponentData.instance != null && !GamificationComponentData.instance.isRaceStarted && ReferencesForGamePlay.instance != null)
+                    {
+                        ReferencesForGamePlay.instance.IsLevelPropertyUpdatedOnlevelLoad = false;
+                        ReferencesForGamePlay.instance.CheckActivePlayerInCurrentLevel();
+                    }
+                }
+
             }
             Resources.UnloadUnusedAssets();
             GC.Collect();
