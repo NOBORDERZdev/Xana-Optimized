@@ -46,7 +46,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public static string CurrLobbyName, CurrRoomName;
 
-        private RoomOptions roomOptions;
+        public RoomOptions roomOptions;
         private List<RoomInfo> availableRoomList = new List<RoomInfo>();
         public List<string> roomNames;
         public List<GameObject> playerobjects;
@@ -543,8 +543,8 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
-            Debug.LogError("Failed to join " + message);
-            AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
+            Debug.LogError("Failed to join ");
+            OnJoinedLobby();
             //GameplayEntityLoader.instance._uiReferences.LoadMain(true);
         }
 

@@ -38,7 +38,17 @@ public class MapItemName : MonoBehaviour
         if (_HighlightObj != null)
             _HighlightObj.SetActive(false);
 
-        manager.ItemClicked(ItemIndex);
+        int TempIndex = ItemIndex;
+
+        Debug.Log("Name Btn -- Clicked: " + TempIndex);
+        if (TempIndex >= 167) // There is Somedome which are handles differently
+        {
+            TempIndex -= 3;
+            Debug.Log("Name Btn -- Modify Clicked: " + TempIndex);
+        }
+
+
+        manager.ItemClicked(TempIndex);
         highlighter.SetActive(true);
         _HighlightObj = highlighter;
     }
