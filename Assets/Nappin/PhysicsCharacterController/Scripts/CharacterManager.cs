@@ -116,8 +116,8 @@ namespace PhysicsCharacterController
         public GameObject characterCamera;
         [Tooltip("Character model")]
         public GameObject characterModel;
-        //[Tooltip("Mulitplayer")]
-        //public XANAPartyMulitplayer mulitplayer;
+        [Tooltip("Mulitplayer")]
+        public XANAPartyMulitplayer mulitplayer;
         [Tooltip("Character rotation speed when the forward direction is changed")]
         public float characterModelRotationSmooth = 0.1f;
         [Space(10)]
@@ -185,7 +185,7 @@ namespace PhysicsCharacterController
         private bool isCrouch = false;
         private bool canJumpNow = true;
 
-        private float PhyJumpTimeout = 0.8f;
+        //private float PhyJumpTimeout = 0.65f;
 
         private Vector2 axisInput;
         private bool jump;
@@ -232,7 +232,7 @@ namespace PhysicsCharacterController
             else
             {
                 rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-                this.GetComponent<CharacterManager>().enabled= false;
+                this.GetComponent<CharacterManager>().enabled = false;
             }
             currentLockOnSlope = lockOnSlope;
         }
@@ -241,7 +241,7 @@ namespace PhysicsCharacterController
         private void Update()
         {
             //input
-            if (photonView.IsMine && input!= null)
+            if (photonView.IsMine && input != null)
             {
                 axisInput = input.axisInput;
                 jump = input.jump;
@@ -281,7 +281,8 @@ namespace PhysicsCharacterController
             UpdateEvents();
         }
 
-        public void HidePlayer(){ 
+        public void HidePlayer()
+        {
             meshCharacter.SetActive(false);
         }
 
@@ -297,8 +298,8 @@ namespace PhysicsCharacterController
             prevGrounded = isGrounded;
             isGrounded = Physics.CheckSphere(transform.position - new Vector3(0, originalColliderHeight / 2f, 0), groundCheckerThrashold, groundMask);
             canJumpNow = true;
-            //if (GamificationComponentData.instance != null)
-            //    GamificationComponentData.instance.IsGrounded = isGrounded;
+            if (GamificationComponentData.instance != null)
+                GamificationComponentData.instance.IsGrounded = isGrounded;
         }
 
 
@@ -496,7 +497,7 @@ namespace PhysicsCharacterController
                 }
                 return;
             }
-            if (GamificationComponentData.instance == null )
+            if (GamificationComponentData.instance == null)
             {
                 return;
             }
@@ -621,11 +622,11 @@ namespace PhysicsCharacterController
 
         public void MoveJump()
         {
-           
+
             //jumped
-            if (jump && canJumpNow && isGrounded)/* && ((isTouchingSlope && currentSurfaceAngle <= maxClimbableSlopeAngle) || !isTouchingSlope) && !isTouchingWall)*/
+            if (jump && canJumpNow && isGrounded /* && ((isTouchingSlope && currentSurfaceAngle <= maxClimbableSlopeAngle)*/ /*|| !isTouchingSlope) && !isTouchingWall*/)
             {
-              
+
                 rigidbody.velocity += Vector3.up * jumpVelocity;
                 isJumping = true;
                 canJumpNow = false;

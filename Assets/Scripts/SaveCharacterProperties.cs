@@ -26,6 +26,8 @@ public class SaveCharacterProperties : MonoBehaviour
     }
     public void Start()
     {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            return;
         StartLocal();
 
         SaveItemList.faceMorphed = false;
