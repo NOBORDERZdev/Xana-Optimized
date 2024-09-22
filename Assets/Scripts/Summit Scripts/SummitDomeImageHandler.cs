@@ -50,7 +50,7 @@ public class SummitDomeImageHandler : MonoBehaviour
                 TMPro.TextMeshPro DomeText1 = SummitDomeShaderApplyRef.DomeText.AddComponent<TMPro.TextMeshPro>();
                 DomeText1.font = DometextFont;
                 DomeText1.fontMaterial = DomeTextMaterial;
-                DomeText1.fontSize = 4.5f;
+                DomeText1.fontSize = 6f;
                 DomeText1.alignment = TMPro.TextAlignmentOptions.Center;
                 DomeText1.text = DomeData[1];
             }
