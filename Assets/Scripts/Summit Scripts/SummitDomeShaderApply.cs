@@ -1,4 +1,6 @@
+using SuperStar.Helpers;
 using System.Collections;
+using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -42,7 +44,7 @@ public class SummitDomeShaderApply : MonoBehaviour
         }
         if (!string.IsNullOrEmpty(LogoUrl))
         {
-            ImageUrl = ImageUrl + "?width=256?height=256";
+            ImageUrl = ImageUrl + "?width=256";
             Texture2D texture = await DownloadDomeTexture(LogoUrl);
             LogoSpriteRenderer.sprite = ConvertToSprite(texture);
             LogoSpriteRenderer.material.shader = Shader.Find("Sprites/Default");
@@ -102,6 +104,8 @@ public class SummitDomeShaderApply : MonoBehaviour
         request.Dispose();
         return null;
     }
+
+
 
 
 }
