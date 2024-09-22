@@ -180,7 +180,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
                 var videdo = await youtube.Videos.GetAsync("https://www.youtube.com/watch?v=" + VideoId);
                 var streamManifest = await youtube.Videos.Streams.GetManifestAsync(videdo.Id);
                 var streamInfo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();
-                if (VideoPlayer.url != streamInfo.Url)
+                if (VideoPlayer.url != streamInfo.Url )
                 {
 
 
@@ -234,7 +234,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         }
         else
         {
-            if(prevVideo==VideoId ) { return; }
+            if(prevVideo==VideoId && !AVProVideoPlayer.MediaPath.Path.IsNotEmpty()) { return; }
 
             prevVideo = VideoId;
             var YoutubeHlsGetter = new FetchHtmlContent();
