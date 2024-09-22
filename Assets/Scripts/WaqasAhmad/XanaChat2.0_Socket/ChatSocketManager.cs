@@ -67,9 +67,12 @@ public class ChatSocketManager : MonoBehaviour
     public static ChatSocketManager instance;
     public GameObject MsgPrefab;
     public Transform MsgParentObj;
+    public ChatPollingScroller ChatPollingScroller;
+
 
     private List<ChatMsgDataHolder> allMsgData = new List<ChatMsgDataHolder>();
     internal ScrollRect MsgParentObjScrollRect;
+
 
 
     private bool isConnected = false;
@@ -305,6 +308,8 @@ public class ChatSocketManager : MonoBehaviour
         Manager.Socket.Emit("chatMessage", data);
     }
 
+
+    float currentScrollPosition;
     void ReceiveMsgs(ChatUserData msg)
     {
 
@@ -317,13 +322,18 @@ public class ChatSocketManager : MonoBehaviour
         if (ConstantsHolder.xanaConstants.MuseumID != msg.world_id.ToString())
             return;
 
+        receivedMsgForTesting = msg;
+
+        currentScrollPosition = ChatPollingScroller.scroller.ScrollPosition;
+        ChatPollingScroller._data.AddStart(msg);
+
+        Invoke(nameof(RefreshDataList), 0.5f);
+        /* Commented By WaqasAhmad
         string tempUser = msg.name;
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0 && string.IsNullOrEmpty(msg.name))
             tempUser = msg.guestusername;
         else if (string.IsNullOrEmpty(msg.name))
             tempUser = msg.username;
-
-        receivedMsgForTesting = msg;
 
         if (CheckUserNameIsValid(tempUser))
         {
@@ -331,8 +341,17 @@ public class ChatSocketManager : MonoBehaviour
             tempUser = "XanaUser-(" + msg.socket_id + ")";//XanaUser-(userId)
         }
         //XanaChatSystem.instance.DisplayMsg_FromSocket(tempUser, msg.message);
-        AddNewMsg(tempUser, msg.message, msg.message_id.ToString(), msg.userId, 0);
+        AddNewMsg(tempUser, msg.message, msg.message_id, msg.userId, 0); 
+        */
     }
+
+    void RefreshDataList()
+    {
+        ChatPollingScroller.scroller.ReloadData();
+        ChatPollingScroller.scroller.ScrollPosition = currentScrollPosition;
+    }
+
+
     bool CheckUserNameIsValid(string _UserName)
     {
         if (string.IsNullOrEmpty(_UserName) ||
@@ -394,30 +413,58 @@ public class ChatSocketManager : MonoBehaviour
 
         www.Dispose();
     }
+
+
+
+
     void DisplayOldChat(string OldChat)
     {
         RootData rootData = JsonUtility.FromJson<RootData>(OldChat);
         if (rootData != null && rootData.count > 0)
         {
-            //string tempUserName = "";
             for (int i = rootData.data.Count - 1; i > -1; i--)
             {
                 string tempUser = rootData.data[i].name;
-                if (rootData.data[i].guest)
-                {
-                    tempUser = rootData.data[i].guest_username;
-                }
-                else if (string.IsNullOrEmpty(tempUser) || tempUser.Contains("null"))
-                {
-                    tempUser = tempUser = "XanaUser-(" + socketId + ")";//XanaUser-(userId)
-                }
+                
+                //if (rootData.data[i].guest)
+                //{
+                //    tempUser = rootData.data[i].guest_username;
+                //}
+                //else if (string.IsNullOrEmpty(tempUser) || tempUser.Contains("null"))
+                //{
+                //    tempUser = tempUser = "XanaUser-(" + socketId + ")";//XanaUser-(userId)
+                //}
+                //AddNewMsg(tempUser, rootData.data[i].message, rootData.data[i].id, rootData.data[i].user_id, rootData.data[i].block_message);
 
-                AddNewMsg(tempUser, rootData.data[i].message, rootData.data[i].id, rootData.data[i].user_id, rootData.data[i].block_message);
+                ChangeUserDataType(rootData.data[i]);
             }
+            ChatPollingScroller.InovkeScrollReload();
         }
     }
+    void ChangeUserDataType(MessageData msg)
+    {
+        ChatUserData tempUserData = new ChatUserData();
 
-    public void AddNewMsg(string userName, string msg, string msgId, string userId, int blockMessage)
+        tempUserData.name = msg.name;
+
+        tempUserData.isGuest = msg.guest;
+        tempUserData.guestusername = msg.guest_username;
+
+        tempUserData.message = msg.message;
+        tempUserData.message_id = int.Parse(msg.id);
+        tempUserData.isMessageBlocked = msg.block_message;
+        tempUserData.userId = msg.user_id;
+
+        //if(PollingScroller._data == null)
+        //    PollingScroller.IntList();
+
+
+
+        ChatPollingScroller._data.AddStart(tempUserData);
+    }
+
+
+    public void AddNewMsg(string userName, string msg, int msgId, string userId, int blockMessage)
     {
         Debug.LogFormat("AddNewMsg {0}", userName);
         GameObject _newMsg = Instantiate(MsgPrefab, MsgParentObj);
@@ -475,11 +522,11 @@ public class ChatSocketManager : MonoBehaviour
     }
 
     // Flag Message
-    public void FlagMessages(string msgID, Action<bool> callback)
+    public void FlagMessages(int msgID, Action<bool> callback)
     {
         StartCoroutine(FlagMessagesRoutine(msgID, callback));
     }
-    IEnumerator FlagMessagesRoutine(string msgID, Action<bool> callback)
+    IEnumerator FlagMessagesRoutine(int msgID, Action<bool> callback)
     {
         string token = ConstantsGod.AUTH_TOKEN;
         string api = address + blockMsgApi + msgID + "/" + ConstantsHolder.userId;
@@ -583,7 +630,6 @@ public class ChatSocketManager : MonoBehaviour
 public class ChatUserData
 {
     public string userId;
-    public string id; // MessageID
     public int message_id;
     public string socket_id;
     public string username;
@@ -604,36 +650,13 @@ public class ChatUserData
     public string video;
     public bool isLiked;
     public int likesCount;
+
+
+    // Not Getting form Server-- Locally Used
+    public int isMessageBlocked;
+    public bool isGuest;
 }
-//{
-//    socket_id: _socketId,
-//    username: _username,
-//    avatar: _avatar,
-//    message: _text,
-//    world: _worldName,
-//    event_id: _eventId,
-//    world_id: _worldId,
-//    time: Date.now()
-//  }
 
-
-//[System.Serializable]
-//public class OldChatOutPut
-//{
-//    public bool success;
-//    public List<OldChatMessage> data;
-//    public int count;
-//}
-
-//[System.Serializable]
-//public class OldChatMessage
-//{
-//    public string username;
-//    public string avatar;
-//    public string message;
-//    public DateTime time;
-//    public DateTime createdAt;
-//}
 
 [System.Serializable]
 public class MessageData

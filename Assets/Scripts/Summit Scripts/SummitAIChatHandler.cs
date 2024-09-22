@@ -233,7 +233,8 @@ public class SummitAIChatHandler : MonoBehaviour
         string url = string.Empty;
         if (!GetFirstNPCMessage)
         {
-            ChatSocketManagerInstance.AddNewMsg(ConstantsHolder.userName, _CommonChatRef.InputFieldChat.text, "NPC", "NPC", 0);
+            //ChatSocketManagerInstance.AddNewMsg(ConstantsHolder.userName, _CommonChatRef.InputFieldChat.text, "NPC", "NPC", 0);
+            ChatSocketManagerInstance.AddNewMsg(ConstantsHolder.userName, _CommonChatRef.InputFieldChat.text, 0, "NPC", 0);
             url = npcURL + "&usr_id=" + ConstantsHolder.userId + "&input_string=" + _CommonChatRef.InputFieldChat.text;
         }
         else
@@ -251,7 +252,8 @@ public class SummitAIChatHandler : MonoBehaviour
             string res = JsonUtility.FromJson<AIResponse>(response).data;
 
             //_CommonChatRef.DisplayMsg_FromSocket(npcName, res);
-            ChatSocketManagerInstance.AddNewMsg(npcName, res, "NPC", "NPC", 0);
+            //ChatSocketManagerInstance.AddNewMsg(npcName, res, "NPC", "NPC", 0);
+            ChatSocketManagerInstance.AddNewMsg(npcName, res, 0, "NPC", 0);
         }
         
     }

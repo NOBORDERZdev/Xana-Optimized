@@ -3333,11 +3333,15 @@ PrefabInstance:
     - target: {fileID: 2060585220283431954, guid: 1378533159d2612428a57e572761aaa0, type: 3}
       propertyPath: MsgPrefab
       value: 
-      objectReference: {fileID: 1066938667009777568, guid: de67603b04beee44594be7ec9da1cfdd, type: 3}
+      objectReference: {fileID: 1066938667009777568, guid: ce07673ac952f9a4299f4f87a75cdaa6, type: 3}
     - target: {fileID: 2060585220283431954, guid: 1378533159d2612428a57e572761aaa0, type: 3}
       propertyPath: MsgParentObj
       value: 
       objectReference: {fileID: 819079776}
+    - target: {fileID: 2060585220283431954, guid: 1378533159d2612428a57e572761aaa0, type: 3}
+      propertyPath: ChatPollingScroller
+      value: 
+      objectReference: {fileID: 910895082}
     - target: {fileID: 2060585220283431955, guid: 1378533159d2612428a57e572761aaa0, type: 3}
       propertyPath: m_Name
       value: XanaChat_Socket
@@ -4180,6 +4184,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2452571441569123087, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
   m_PrefabInstance: {fileID: 9067209682325055448}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &910895082 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 11058746306336541, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+  m_PrefabInstance: {fileID: 9067209682325055448}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eb8cd9b8b93421498d80f03b602b732, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &913098790 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 700551829, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
@@ -13476,7 +13491,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.06806946, y: -0.0008904878, z: 0.000060757826, w: 0.99768025}
+  m_LocalRotation: {x: 0.06806946, y: -0.0008904713, z: 0.0000607567, w: 0.99768025}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13927,7 +13942,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010642432, y: -0.0008925568, z: 0.0000095013775, w: 0.999943}
+  m_LocalRotation: {x: 0.010641925, y: -0.0008925119, z: 0.000009500448, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -16027,6 +16042,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 487964027}
     - target: {fileID: 11058746306336541, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: cellViewPrefab
+      value: 
+      objectReference: {fileID: -3583459871446602851, guid: ce07673ac952f9a4299f4f87a75cdaa6, type: 3}
+    - target: {fileID: 11058746306336541, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: releaseToRefreshText
       value: 
       objectReference: {fileID: 1247748965}
@@ -16766,6 +16785,18 @@ PrefabInstance:
       propertyPath: actionImgPotrait
       value: 
       objectReference: {fileID: 149072525}
+    - target: {fileID: 5707927405845509611, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: spacing
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5707927405845509611, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: padding.m_Top
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5707927405845509611, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: padding.m_Left
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5769396419710186631, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: manager
       value: 
@@ -17134,6 +17165,10 @@ PrefabInstance:
       propertyPath: manager
       value: 
       objectReference: {fileID: 1339195405}
+    - target: {fileID: 8529457199209804035, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.0000076293945
+      objectReference: {fileID: 0}
     - target: {fileID: 8545965107838211728, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: manager
       value: 

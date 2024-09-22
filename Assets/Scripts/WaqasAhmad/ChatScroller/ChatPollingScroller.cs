@@ -15,9 +15,9 @@ public class ChatPollingScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBe
     /// Internal representation of our data. Note that the scroller will never see
     /// this, so it separates the data from the layout using MVC principles.
     /// </summary>
-    public SmallList<FeedResponseRow> _data;
-    public List<FeedHeightData> feedHeight;
-    FeedController feedController;
+    public SmallList<ChatUserData> _data;
+    //public List<FeedHeightData> feedHeight;
+    //FeedController feedController;
     /// <summary>
     /// Whether the scroller is being dragged
     /// </summary>
@@ -77,115 +77,40 @@ public class ChatPollingScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBe
     {
         if (preloadCells)
         {
-            scroller.lookAheadBefore = 2000f;
-            scroller.lookAheadAfter = 2000f;
+            //scroller.lookAheadBefore = 2000f;
+            //scroller.lookAheadAfter = 2000f;
+
+            float lookAheadValue = 2000f * (48f / 256f); // Adjust look-ahead based on new cell size
+            scroller.lookAheadBefore = lookAheadValue;
+            scroller.lookAheadAfter = lookAheadValue;
         }
     }
 
 
     private void Start()
     {
-        Invoke(nameof(IntFeedScroller), 2f);
+        Invoke(nameof(IntFeedScroller), 0.5f);
     }
-    //async void IntFeedPage()
-    //{
-    //    //FeedLoader.SetActive(true);
-    //    IntFeedScroller();
-    //    if (SNS_APIManager.Instance.userId == 0)
-    //    {
-    //        SNS_APIManager.Instance.userId = int.Parse(PlayerPrefs.GetString("UserName"));
-    //    }
-    //    await GetFeedData(SNS_APIManager.Instance.userId);
-    //}
+    
     async void IntFeedScroller(){
-       // set the application frame rate.
-       // this improves smoothness on some devices
-       // Application.targetFrameRate = 60;
 
         // tell the scroller that this script will be its delegate
         scroller.Delegate = this;
 
         // tell our controller to monitor the scroller's scrolled event.
         scroller.scrollerScrolled = ScrollerScrolled;
-        _data = new SmallList<FeedResponseRow>();
-        feedHeight = new List<FeedHeightData>();
+        _data = new SmallList<ChatUserData>();
 
-        // load in a large set of data
-        //LoadLargeData();
-
-
-        await GetFeedData(int.Parse(ConstantsHolder.userId));
     }
-    #region Waqas Ahmad Code
-   
-    public FeedResponse feedResponseData;
-    List<FeedResponseRow> FeedAPIData = new List<FeedResponseRow>();
-    async Task GetFeedData(int userId)
-    {
-        string url = ConstantsGod.API_BASEURL + ConstantsGod.FeedGetAllByUserId + userId + "/" + 1 + "/" + 20;
-        UnityWebRequest response = UnityWebRequest.Get(url);
-        try
-        {
-            await response.SendWebRequest();
-            if (response.isNetworkError)
-            {
-                Debug.Log(response.error);
-            }
-            else
-            {
 
-                print("~~~~~ " + response.downloadHandler.text);
-                feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
-                // FeedAPIData.Add(feedResponseData);
-                if (feedResponseData.data.rows.Count > 0)
-                {
-                    foreach (var item in feedResponseData.data.rows)
-                    {
-                        if (!String.IsNullOrEmpty(item.text_post) && !item.text_post.Equals("null"))
-                        {
-                            if (!FeedAPIData.Any(list1 => list1.id == item.id))
-                            {
-                                FeedAPIData.Add(item);
-                                _data.Add(item);
-                            }
-                        }
-
-                    }
-                    Invoke(nameof(InovkeScrollReload), 2f);
-                }
-               
-
-            }
-
-        }
-        catch (System.Exception ex)
-        {
-            Debug.Log(ex.Message);
-        }
-        response.Dispose();
-    }
-    void InovkeScrollReload()
+    public void InovkeScrollReload()
     {
         scroller.GetComponent<ScrollRect>().content.SetParent(scroller.transform.GetChild(0).transform);
         scroller.ReloadData();
     }
-    #endregion
     
     
     
-    ///// <summary>
-    ///// Populates the data with a lot of records
-    ///// </summary>
-    //private void LoadLargeData()
-    //{
-    //    // set up some simple data
-    //    _data = new SmallList<FeedResponseRow>();
-    //    //for (var i = 0; i < 100; i++)
-    //    //    _data.Add(new Data() { someText = "Cell Data Index " + i.ToString() });
-
-    //    // tell the scroller to reload now that we have the data
-    //    scroller.ReloadData();
-    //}
 
     #region EnhancedScroller Handlers
 
@@ -212,13 +137,13 @@ public class ChatPollingScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBe
     {
         // in this example, even numbered cells are 30 pixels tall, odd numbered cells are 100 pixels tall
         //return (dataIndex % 2 == 0 ? 30f : 100f);
-        if (dataIndex < feedHeight.Count)
+        //if (dataIndex < feedHeight.Count)
+        //{
+        //     return feedHeight[dataIndex].height ;
+        //}
+        //else
         {
-             return feedHeight[dataIndex].height ;
-        }
-        else
-        {
-            return 256f;
+            return 48f;
         }
        
     }
@@ -241,12 +166,15 @@ public class ChatPollingScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBe
         // set the name of the game object to the cell's data index.
         // this is optional, but it helps up debug the objects in 
         // the scene hierarchy.
-        cellView.name = "Feed " + dataIndex.ToString();
+        cellView.name = "Msg " + dataIndex.ToString();
 
         // in this example, we just pass the data to our cell's view which will update its UI
         //cellView.SetData(_data[dataIndex]);
-        cellView.GetComponent<FeedData>().SetFeedUiController(this.GetComponent<FeedScroller>());
-        cellView.GetComponent<FeedData>().SetFeedPrefab(_data[dataIndex]);
+        //cellView.GetComponent<FeedData>().SetFeedUiController(this.GetComponent<FeedScroller>());
+        //cellView.GetComponent<FeedData>().SetFeedPrefab(_data[dataIndex]);
+
+        cellView.GetComponent<ChatMsgDataHolder>().FillCellData(_data[dataIndex]);
+
         // return the cell to the scroller
         return cellView;
     }
@@ -309,7 +237,7 @@ public class ChatPollingScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBe
             //}
             
         /// GET NEW DATA FROM API
-             scroller.GetComponent<FeedController>().GetComponent<FeedController>().PullNewPlayerPost();
+             //scroller.GetComponent<FeedController>().GetComponent<FeedController>().PullNewPlayerPost();
             // reload the scroller to show the new data
           //  scroller.ReloadData();
 
@@ -318,25 +246,6 @@ public class ChatPollingScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBe
 
             // hide the release text if the scroller is down beyond the threshold
             releaseToRefreshText.gameObject.SetActive(false);
-        }
-    }
-
-    public void AddInHeightList(int feedId, float height){
-        if (!feedHeight.Any(item => item.feedId == feedId))
-        {
-            feedHeight.Add( new FeedHeightData(feedId,height));
-        }
-    }
-
-    public void updateLikeCount(int feedId, int likeCount,bool likedBool= false){
-        for (int i = 0; i < _data.Count; i++)
-        {
-            if (_data[i].id == feedId)
-            {
-                _data[i].like_count = likeCount;
-                _data[i].isLikedByUser = likedBool;
-                break;
-            }
         }
     }
 }

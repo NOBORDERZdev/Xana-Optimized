@@ -270,7 +270,8 @@ public class XanaChatSystem : MonoBehaviour
 
         if (isChatOpen)
         {
-            chatDialogBox.SetActive(true);
+            //chatDialogBox.SetActive(true);
+            chatDialogBox.GetComponent<CanvasGroup>().alpha = 1f;
             chatNotificationIcon.SetActive(false);
             chatButton.GetComponent<Image>().enabled = true;
 
@@ -303,7 +304,8 @@ public class XanaChatSystem : MonoBehaviour
         }
         else
         {
-            chatDialogBox.SetActive(false);
+            //chatDialogBox.SetActive(false);
+            chatDialogBox.GetComponent<CanvasGroup>().alpha = 0f;
             chatNotificationIcon.SetActive(false);
             chatButton.GetComponent<Image>().enabled = false;
 
@@ -337,13 +339,15 @@ public class XanaChatSystem : MonoBehaviour
 
         if (isChatOpen)
         {
-            chatDialogBox.SetActive(true);
+            chatDialogBox.GetComponent<CanvasGroup>().alpha = 1f;
+            //chatDialogBox.SetActive(true);
             chatNotificationIcon.SetActive(false);
             chatButton.GetComponent<Image>().enabled = true;
         }
         else
         {
-            chatDialogBox.SetActive(false);
+            //chatDialogBox.SetActive(false);
+            chatDialogBox.GetComponent<CanvasGroup>().alpha = 0f;
             chatNotificationIcon.SetActive(false);
             chatButton.GetComponent<Image>().enabled = false;
         }

@@ -19,7 +19,7 @@ public class ChatMsgDataHolder : MonoBehaviour
     public Sprite BlockActive, BlockInactive;
     public GameObject BlockLoader;
 
-    string _MsgID;
+    int _MsgID;
     string _MsgTextString;
     string _SenderUserID;
 
@@ -32,17 +32,60 @@ public class ChatMsgDataHolder : MonoBehaviour
     }
 
 
-    public void SetRequireData(string msgText, string msgId, string senderUserId, int isMessageBlocked)
+    public void SetRequireData(string msgText, int msgId, string senderUserId, int isMessageBlocked)
     {
        _MsgID = msgId;
        _MsgTextString = msgText;   
        _SenderUserID = senderUserId;
+
+        if(senderUserId.Equals(ConstantsHolder.userId))
+            DotedBtn.SetActive(false);
+        else
+            DotedBtn.SetActive(true);
+
 
         if (isMessageBlocked == 1)
         {
             OnFlagUserApiCompleted(true);
         }
     }
+
+    public void FillCellData(ChatUserData _MyData)
+    {
+        SetRequireData(_MyData.message, _MyData.message_id, _MyData.userId, _MyData.isMessageBlocked);
+
+        string senderName = "";
+        if (_MyData.isGuest)
+            senderName = _MyData.guestusername;
+        else
+        {
+            senderName = _MyData.name; 
+            if(string.IsNullOrEmpty(senderName))
+                senderName = _MyData.username;
+        }
+
+        if(string.IsNullOrEmpty(senderName))
+            senderName = "XanaUser";
+        ShowMsg(senderName, _MyData.message);
+    }
+
+    void ShowMsg(string senderName, string msg)
+    {
+        if (senderName.Length > 12)
+        {
+            MsgText.text = "<b>" + senderName.Substring(0, 12) + "...</b>" + " : " + msg;
+        }
+        else
+        {
+            MsgText.text = "<b>" + senderName + "</b>" + " : " + msg;
+        }
+
+        //if (!chatDialogBox.activeSelf && senderName != UserName)
+        //{
+        //    chatNotificationIcon.SetActive(true);
+        //}
+    }
+
 
     public void BtnForcedStatus(bool status)
     {
