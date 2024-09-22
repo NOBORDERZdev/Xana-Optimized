@@ -1,4 +1,5 @@
 using Photon.Pun;
+using RenderHeads.Media.AVProVideo;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ public class BGMVolumeControlOnTrigger : MonoBehaviour
 {
     public AdvancedYoutubePlayer VideoPlayerController;
     public AudioSource PrePrecordered;
+    public MediaPlayer player;
     public bool IsPlayerCollided = false;
     
     private void Awake()
@@ -51,6 +53,13 @@ public class BGMVolumeControlOnTrigger : MonoBehaviour
 
                 PrePrecordered.mute = false;
             }
+            if (player && player.isActiveAndEnabled)
+            {
+                SoundSettings.soundManagerSettings.videoSource = player.AudioSource;
+                SoundSettings.soundManagerSettings.SetAudioSourceSliderVal(player.AudioSource, PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
+                player.AudioMuted = false;
+
+            }
 
         }
     }
@@ -66,6 +75,13 @@ public class BGMVolumeControlOnTrigger : MonoBehaviour
             {
                 SoundSettings.soundManagerSettings.videoSource = null;
                 PrePrecordered.mute = true;
+            }
+            if (player && player.isActiveAndEnabled)
+            {
+                SoundSettings.soundManagerSettings.videoSource = null ;
+              
+                player.AudioMuted = true;
+
             }
         }
         

@@ -221,6 +221,7 @@ public class AvProDirectionalSound : MonoBehaviour
 
     public IEnumerator EnableVideoSound()
     {
+        
         if (!LoadingHandler.Instance.isLoadingComplete)
         {
             // Wait for a end of frame
