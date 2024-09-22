@@ -72,7 +72,7 @@ namespace Photon.Pun
 
         private SupportLogger supportLoggerComponent;
 
-
+        public static string levelName;
         protected override void Awake()
         {
             this.swSendOutgoing.Start();

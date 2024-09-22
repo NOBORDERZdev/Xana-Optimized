@@ -38,6 +38,8 @@ public class AddForceComponent : ItemComponent
 
     public void ApplyAddForce()
     {
+        if (GamificationComponentData.instance == null || _addForceComponentData == null || _rigidBodyPlayer == null)
+            return;
 
         if (!_addForceComponentData.forceApplyOnAvatar)
         {
@@ -68,6 +70,13 @@ public class AddForceComponent : ItemComponent
         }
         else
         {
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            {
+                var addForce = GamificationComponentData.instance.MapValue(_addForceComponentData.forceAmountValue, 0, 100, 30, 100);
+                var direction = Quaternion.AngleAxis(GamificationComponentData.instance.PlayerRigidBody.gameObject.transform.rotation.y, Vector3.up) * _addForceComponentData.forceDirection;
+                if (direction.y == 0) direction.y = 0.5f;
+                GamificationComponentData.instance.PlayerRigidBody.AddForce(addForce * direction, ForceMode.Impulse);
+            }
             Debug.Log("Coming soon");
             //AddRigidBody();
             //_rigidBodyPlayer.isKinematic = false;
@@ -120,7 +129,8 @@ public class AddForceComponent : ItemComponent
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             _rigidBodyPlayer = _other.gameObject.GetComponent<Rigidbody>();
-            _characterControllerNew = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<CharacterController>();
+            if (!ConstantsHolder.xanaConstants.isXanaPartyWorld && _characterControllerNew == null)
+                _characterControllerNew = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<CharacterController>();
             ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.AddForce);
             if (GamificationComponentData.instance.withMultiplayer && !_addForceComponentData.forceApplyOnAvatar)
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, _runtimeItemID, _componentType);
