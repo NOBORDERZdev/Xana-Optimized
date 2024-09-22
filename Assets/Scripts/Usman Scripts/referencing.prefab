@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bcdb3ff682b6a6439ab8c718d66e811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventSystemObj: {fileID: 0}
   overlayPanels:
   - {fileID: 0}
   - {fileID: 0}
@@ -70,6 +71,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   disableBtnObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -81,7 +84,10 @@ MonoBehaviour:
   offBtnUsername: {fileID: 0}
   m_34player: {fileID: 0}
   playerControllerNew: {fileID: 0}
+  spawnedSkateBoard: {fileID: 0}
   minimap: {fileID: 0}
+  MinimapSummit: {fileID: 0}
+  FullscreenMapSummit: {fileID: 0}
   minimapSettingsBtn: {fileID: 0}
   totalCounter: {fileID: 0}
   ReferenceObject: {fileID: 5112787733255262741}
@@ -89,10 +95,26 @@ MonoBehaviour:
   FirstPersonCam: {fileID: 0}
   RotateBtn: {fileID: 0}
   JoyStick: {fileID: 0}
-  RoomMaxPlayerCount: 0
   PlayerCount: 0
   MonitorDistance: 0
   landscapeMoveWhileDancingButton: {fileID: 0}
   portraitMoveWhileDancingButton: {fileID: 0}
   moveWhileDanceCheck: 0
+  QualityManager: {fileID: 0}
+  ChatSystemRef: {fileID: 0}
+  ExitBtnGameplay: {fileID: 0}
+  backBtnSprite: {fileID: 21300000, guid: af69592e60796d9479855f7e9238a647, type: 3}
+  HomeBtnSprite: {fileID: 21300000, guid: 1aad95a22fe15e243a6a3be1aa773678, type: 3}
+  XANAPartyWaitingPanel: {fileID: 0}
+  XANAPartyCounterPanel: {fileID: 0}
+  XANAPartyCounterText: {fileID: 0}
+  isCounterStarted: 0
+  isMatchingTimerFinished: 0
+  IsLevelPropertyUpdatedOnlevelLoad: 0
+  PenpenzDisableUi:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   isHidebtn: 0

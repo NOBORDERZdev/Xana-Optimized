@@ -143,9 +143,12 @@ public class GamificationComponentUIManager : MonoBehaviour
     public TextMeshProUGUI TimerCountDownText;
 
     //Display Messages Component
-    public GameObject DisplayMessageParentUI;
+    public GameObject DisplayMessageParentUI; 
+    public GameObject XANAPartyMessageParentUI;
     public TextMeshProUGUI DisplayMessageText;
+    public TextMeshProUGUI XANAPartyMessageText;
     public TextMeshProUGUI DisplayMessageTimeText;
+
 
     //Door Key Component
     public GameObject DoorKeyParentUI;
@@ -443,13 +446,23 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
 
         DisplayMessageText.text = DisplayMessage;
+        XANAPartyMessageText.text = DisplayMessage;
         bool isJPText = CheckJapaneseDisplayMessage(DisplayMessage);
         if (isJPText)
             DisplayMessageText.font = GamificationComponentData.instance.hiraginoFont;
         else
             DisplayMessageText.font = GamificationComponentData.instance.orbitronFont;
 
-        DisplayMessageParentUI.SetActive(true);
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            DisplayMessageParentUI.SetActive(true);
+            XANAPartyMessageParentUI.SetActive(false);
+        }
+        else
+        {
+            DisplayMessageParentUI.SetActive(false);
+            XANAPartyMessageParentUI.SetActive(true);
+        }
 
         while (time > 0)
         {
@@ -459,6 +472,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             time--;
         }
         DisplayMessageParentUI.SetActive(false);
+        XANAPartyMessageParentUI.SetActive(false);
     }
 
     public void DisableDisplayMessageUI()
@@ -466,7 +480,9 @@ public class GamificationComponentUIManager : MonoBehaviour
         if (EnableDisplayMessageCoroutine != null)
             StopCoroutine(EnableDisplayMessageCoroutine);
         DisplayMessageParentUI.SetActive(false);
+        XANAPartyMessageParentUI.SetActive(false);
         DisplayMessageText.text = "";
+        XANAPartyMessageText.text = "";
         DisplayMessageTimeText.text = "00:00";
         DisplayMessageTimeText.transform.parent.gameObject.SetActive(true);
     }

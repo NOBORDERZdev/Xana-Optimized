@@ -42,6 +42,8 @@ public class ActorManager : MonoBehaviour
     }
     public void IdlePlayerAvatorForMenu(bool flag)
     {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            return;
         GameManager.Instance.mainCharacter.GetComponent<Actor>().IdlePlayerAvatorForMenu(flag,false);
         GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(!flag);
         if (flag)
