@@ -15,6 +15,7 @@ public class ConstantsHolder : MonoBehaviour
 
     public bool pushToTalk;
     public bool openLandingSceneDirectly;
+    public bool XSummitBG = false;
     public bool SwitchXanaToXSummit = false;
     public static bool IsXSummitApp;
     public bool OpenSpaceScreen_fromSummit = false;
