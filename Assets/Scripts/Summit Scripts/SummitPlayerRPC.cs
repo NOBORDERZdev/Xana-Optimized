@@ -385,7 +385,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
     {
         if (ConstantsHolder.xanaConstants.EnviornmentName != "XANA Summit") { return; }
 
-            Debug.LogError("OnPlayerEnteredRoo");
+            //Debug.LogError("OnPlayerEnteredRoo");
         if (isInsideCAr && view.IsMine)
         {
             view.RPC("EnterCAr", newPlayer, carID, isdriver);
