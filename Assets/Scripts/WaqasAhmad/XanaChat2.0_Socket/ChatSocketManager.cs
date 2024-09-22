@@ -422,6 +422,12 @@ public class ChatSocketManager : MonoBehaviour
         Debug.LogFormat("AddNewMsg {0}", userName);
         GameObject _newMsg = Instantiate(MsgPrefab, MsgParentObj);
         ChatMsgDataHolder _dataHolder = _newMsg.GetComponent<ChatMsgDataHolder>();
+        RectTransform rectTransform = _dataHolder.MsgText.GetComponent<RectTransform>();
+#if UNITY_IOS
+        rectTransform.sizeDelta = new Vector2(204.6f, rectTransform.sizeDelta.y);
+#elif UNITY_ANDROID
+        rectTransform.sizeDelta = new Vector2(250.6f, rectTransform.sizeDelta.y);
+#endif
         _dataHolder.SetRequireData(msg, msgId, userId, blockMessage);
 
         if (userId.Equals(ConstantsHolder.userId))
