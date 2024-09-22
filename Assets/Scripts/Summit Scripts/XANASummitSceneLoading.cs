@@ -495,6 +495,8 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.Avatarjson = dataContainer.summitData.domes[i].Avatarjson;
                 domeGeneralData.AvatarIndex = dataContainer.summitData.domes[i].AvatarIndex;
                 domeGeneralData.name = dataContainer.summitData.domes[i].name;
+                domeGeneralData.creatorName = dataContainer.summitData.domes[i].creatorName;
+                domeGeneralData.description = dataContainer.summitData.domes[i].description;
                 domeGeneralData.isSubWorld = dataContainer.summitData.domes[i].isSubWorld;
                 domeGeneralData.world360Image = dataContainer.summitData.domes[i].world360Image;
                 domeGeneralData.companyLogo = dataContainer.summitData.domes[i].companyLogo;
