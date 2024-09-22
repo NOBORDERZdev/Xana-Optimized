@@ -28,6 +28,8 @@ public class XANASummitSceneLoading : MonoBehaviour
     [SerializeField]
     private DomeMinimapDataHolder _domeMiniMap;
 
+    public SummitDomePAAIController DomePerformerAvatarHandler;
+
     public delegate void SetPlayerOnSubworldBack();
     public static event SetPlayerOnSubworldBack setPlayerPositionDelegate;
 
@@ -206,6 +208,8 @@ public class XANASummitSceneLoading : MonoBehaviour
             ConstantsHolder.xanaConstants.LastLobbyName = "XANA Summit-" + ConstantsHolder.domeId + "-" + domeGeneralData.world;
             multiplayerController.Connect("XANA Summit-" + ConstantsHolder.domeId + "-" + domeGeneralData.world);
         }
+
+        DomePerformerAvatarHandler.InitPerformerAvatarNPC();
 
         // Summit Analytics Part
         if (_stayTimeTrackerForSummit != null)

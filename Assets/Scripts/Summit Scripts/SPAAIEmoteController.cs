@@ -343,7 +343,7 @@ public class SPAAIEmoteController : MonoBehaviour
             while (!loadOp.IsDone)
             {
                 _inValidAnimCount++;
-                Debug.LogError("Animation addressable call failed to load animation" + label);
+                //Debug.LogError("Animation addressable call failed to load animation" + label);
                 yield break;
             }
 
@@ -371,7 +371,7 @@ public class SPAAIEmoteController : MonoBehaviour
             }
             else
             {
-                Debug.LogError($"Failed to load asset: Action_{label}. Error: {loadOp.Status.ToString()}");
+                //Debug.LogError($"Failed to load asset: Action_{label}. Error: {loadOp.Status.ToString()}");
                 Addressables.ClearDependencyCacheAsync("Action_" + label);
                 Addressables.ReleaseInstance(loadOp);
                 Addressables.Release(loadOp);
@@ -403,7 +403,7 @@ public class SPAAIEmoteController : MonoBehaviour
         {
             if (clip.name == "emaotedefault")
             {
-                Debug.LogError("Setting Clip");
+                //Debug.Log("Setting Clip");
                 keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, animationClip));
             }
             else
