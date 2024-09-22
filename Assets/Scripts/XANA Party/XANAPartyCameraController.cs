@@ -13,15 +13,15 @@ public class XANAPartyCameraController : MonoBehaviour
     public enum OrientationType { Landscape, Portrait };
     public OrientationType orientationType;
     [Space(5)]
-    public float lookSpeed;
-    public float lookSpeedd;
+    float _editorLookSpeed = 0.01f;
+    float _touchLookSpeed = 0.6f;
     [SerializeField]
     public CinemachineFreeLook cinemachine;
     private CinemachineFreeLook.Orbit[] originalOrbits;
 
     public Controls controls;
     public RectTransform freelookup;
-   // public bool gyroCheck = false;
+    // public bool gyroCheck = false;
     public static XANAPartyCameraController instance;
 
     private float zoomScrollVal = 0;                // for editor testing only
@@ -68,14 +68,14 @@ public class XANAPartyCameraController : MonoBehaviour
     private void OnEnable()
     {
         controls.Enable();
-      //  ScreenOrientationManager.switchOrientation += SwitchOrientation;
-       // BuilderEventManager.ChangeCameraHeight += ChangeCameraHeight;
+        //  ScreenOrientationManager.switchOrientation += SwitchOrientation;
+        // BuilderEventManager.ChangeCameraHeight += ChangeCameraHeight;
     }
     private void OnDisable()
     {
         controls.Disable();
-       // ScreenOrientationManager.switchOrientation -= SwitchOrientation;
-       // BuilderEventManager.ChangeCameraHeight -= ChangeCameraHeight;
+        // ScreenOrientationManager.switchOrientation -= SwitchOrientation;
+        // BuilderEventManager.ChangeCameraHeight -= ChangeCameraHeight;
 
     }
     private void Awake()
@@ -92,8 +92,8 @@ public class XANAPartyCameraController : MonoBehaviour
 
     private void Start()
     {
-        lookSpeedd = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.75f);
-        lookSpeed = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.75f);
+        //_touchLookSpeed = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.75f);
+        // _editorLookSpeed = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.75f);
         //playerController = AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<CharacterManager>();
         controls.Gameplay.SecondaryTouchContact.started += _ => ZoomStart();
         controls.Gameplay.SecondaryTouchContact.canceled += _ => ZoomEnd();
@@ -110,7 +110,7 @@ public class XANAPartyCameraController : MonoBehaviour
         originalOrbits[1].m_Radius = cinemachine.m_Orbits[1].m_Radius;    // get the radius of middle rig
         if (Application.isEditor)
         {
-            lookSpeed = 0.05f;
+            //lookSpeed = 0.05f;
             zoomScrollVal = originalOrbits[1].m_Radius;
         }
         camRender = ReferencesForGamePlay.instance.randerCamera.gameObject;
@@ -218,15 +218,15 @@ public class XANAPartyCameraController : MonoBehaviour
     void CameraControls_Editor()
     {
         //gyroCheck = CanvusHandler.canvusHandlerInstance.isGyro;
-         delta = controls.Gameplay.Look.ReadValue<Vector2>();
-         cinemachine.m_XAxis.Value += delta.x * 400 * lookSpeed * Time.deltaTime;
-         cinemachine.m_YAxis.Value += delta.y * 5 * lookSpeed * Time.deltaTime;
+        delta = controls.Gameplay.Look.ReadValue<Vector2>();
+        cinemachine.m_XAxis.Value += delta.x * 400 * _editorLookSpeed * Time.deltaTime;
+        cinemachine.m_YAxis.Value += delta.y * 5 * _editorLookSpeed * Time.deltaTime;
     }
 
     void Longtouch()
     {
 
-       // gyroCheck = CanvusHandler.canvusHandlerInstance.isGyro;
+        // gyroCheck = CanvusHandler.canvusHandlerInstance.isGyro;
         delta = Vector2.zero;
         if (/*!gyroCheck && */PlayerSelfieController.Instance.disablecamera && Input.touchCount > 0
            /* && !playerController.sprint*/)
@@ -315,8 +315,8 @@ public class XANAPartyCameraController : MonoBehaviour
     }
     private void MoveCamera(Vector2 delta)
     {
-        cinemachine.m_XAxis.Value += delta.x * 10 * lookSpeedd * Time.deltaTime;
-        cinemachine.m_YAxis.Value += -delta.y * 0.08f * lookSpeedd * Time.deltaTime;
+        cinemachine.m_XAxis.Value += delta.x * 10 * _touchLookSpeed * Time.deltaTime;
+        cinemachine.m_YAxis.Value += -delta.y * 0.08f * _touchLookSpeed * Time.deltaTime;
     }
     void CameraControls_Mobile()
     {
