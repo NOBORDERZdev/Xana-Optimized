@@ -27,7 +27,7 @@ public class SummitDomeShaderApply : MonoBehaviour
         clickListener.DomeId = DomeId;
         if (!string.IsNullOrEmpty(ImageUrl))
         {
-            ImageUrl = ImageUrl + "?width=256?height=256";
+            ImageUrl = ImageUrl + "?width=512?height=256";
             Texture2D texture = await DownloadDomeTexture(ImageUrl);
             DomeMeshRenderer.material.mainTexture = texture;
             DomeMeshRenderer.gameObject.SetActive(true);
@@ -42,6 +42,7 @@ public class SummitDomeShaderApply : MonoBehaviour
         }
         if (!string.IsNullOrEmpty(LogoUrl))
         {
+            ImageUrl = ImageUrl + "?width=256?height=256";
             Texture2D texture = await DownloadDomeTexture(LogoUrl);
             LogoSpriteRenderer.sprite = ConvertToSprite(texture);
             LogoSpriteRenderer.material.shader = Shader.Find("Sprites/Default");
@@ -89,10 +90,14 @@ public class SummitDomeShaderApply : MonoBehaviour
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
         await request.SendWebRequest();
         if ((request.result == UnityWebRequest.Result.ConnectionError) || (request.result == UnityWebRequest.Result.ProtocolError))
+        {
             Debug.Log(request.error);
+        }
         else
         {
-            return DownloadHandlerTexture.GetContent(request);
+            Texture2D Texture = DownloadHandlerTexture.GetContent(request);
+            request.Dispose();
+            return Texture;
         }
         request.Dispose();
         return null;
