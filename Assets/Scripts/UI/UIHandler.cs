@@ -284,8 +284,15 @@ public class UIHandler : MonoBehaviour
             for (int i = 0; i < apiResponse.data.Count; i++) 
             {
                 if (apiResponse.data[i].feature_name == "SummitApp")
+                {
                     ConstantsHolder.xanaConstants.SwitchXanaToXSummit = apiResponse.data[i].feature_status;
+                }
+                else if (apiResponse.data[i].feature_name == "Xsummitbg")
+                {
+                    ConstantsHolder.xanaConstants.XSummitBg = apiResponse.data[i].feature_status;
+                }
             }
+            
             Debug.Log("Features List: " + apiResponse.data.Count);
         }
     }
