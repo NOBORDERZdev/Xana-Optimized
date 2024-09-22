@@ -502,6 +502,10 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.domeCategory= dataContainer.summitData.domes[i].domeCategory;
                 domeGeneralData.domeType= dataContainer.summitData.domes[i].domeType;
                 domeGeneralData.is_penpenz = dataContainer.summitData.domes[i].is_penpenz;
+                domeGeneralData.description= dataContainer.summitData.domes[i].description;
+                domeGeneralData.creatorName= dataContainer.summitData.domes[i].creatorName;
+                
+
                 //if (dataContainer.summitData1.domes[i].worldType)
                 //    return new Tuple<string[],string>(new[] { dataContainer.summitData1.domes[i].world, "1", dataContainer.summitData1.domes[i].builderWorldId }, dataContainer.summitData1.domes[i].experienceType);
                 //else
