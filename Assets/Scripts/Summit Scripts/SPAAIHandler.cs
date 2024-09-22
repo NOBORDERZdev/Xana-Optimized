@@ -32,10 +32,9 @@ public class SPAAIHandler : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>())
+        if (other.tag=="Player")
         {
-            if (other.gameObject.GetComponent<PhotonView>().IsMine)
-            {
+           
                 if (IsAIDataFetched)
                 {
                     SpawnAIPerformer();
@@ -46,22 +45,21 @@ public class SPAAIHandler : MonoBehaviour
                 }
                 IsPlayerTriggered = true;
                 LiveVideoSoundEnabler?.Invoke(true);
-            }
+            
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>())
+        if (other.tag == "Player")
         {
-            if (other.gameObject.GetComponent<PhotonView>().IsMine)
-            {
+         
                 if (CurrentAIPerformerRef)
                 {
                     CurrentAIPerformerRef.SetActive(false);
                 }
                 LiveVideoSoundEnabler?.Invoke(false);
-            }
+            IsPlayerTriggered = false;
         }
     }
 

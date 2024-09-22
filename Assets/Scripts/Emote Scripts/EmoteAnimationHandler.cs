@@ -62,7 +62,7 @@ public class EmoteAnimationHandler : MonoBehaviour, IInRoomCallbacks, IOnEventCa
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this);
+            //DontDestroyOnLoad(this);
         }
         else
         {
