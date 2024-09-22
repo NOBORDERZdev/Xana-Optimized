@@ -325,8 +325,8 @@ GameObject:
   - component: {fileID: 308199224479237399}
   - component: {fileID: 7479087223999055101}
   - component: {fileID: 7479087223999055102}
-  - component: {fileID: 4224067735979679189}
   - component: {fileID: 8239988752213726737}
+  - component: {fileID: 3504595701367386717}
   m_Layer: 0
   m_Name: SM_Metal_Stopper_018
   m_TagString: Untagged
@@ -414,19 +414,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7129471055965056754, guid: dbdf53f5d99d1ce4c8e90ac48c29da3e, type: 3}
---- !u!114 &4224067735979679189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 721650412469382917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f31cee8a695a304cba1fab70ac28678, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerPos: {fileID: 1718000519}
 --- !u!65 &8239988752213726737
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -440,6 +427,26 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 895.98047, y: 224.90729, z: 892.5111}
   m_Center: {x: -2.769923e-21, y: 104.644775, z: 0.00390625}
+--- !u!114 &3504595701367386717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721650412469382917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83db127d742d5d7458132c511b0de616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DomeId: -1
+  WorldIdTestnet: 
+  WorldIdMainnet: 6889
+  textMeshPro: {fileID: 0}
+  LoadDirectly: 1
+  LoadingFromSummitWorld: 1
+  HaveSubworlds: 0
+  WorldId: 
 --- !u!1 &783868334349460618
 GameObject:
   m_ObjectHideFlags: 0
