@@ -226,6 +226,7 @@ public class AvProDirectionalSound : MonoBehaviour
             // Wait for a end of frame
             yield return null;
         }
+        Debug.Log("Called This");
         SoundController.Instance.EffectsSource.mute = false;
         SoundController.Instance.EffectsSource.volume = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME);
         yield return new WaitForSeconds(0.5f);

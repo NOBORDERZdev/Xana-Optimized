@@ -217,6 +217,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        ConstantsHolder.ontriggteredplayerEntered?.Invoke(other.gameObject);
         if (other.tag == "LiveStream")
         {
             Gamemanager._InstanceGM.m_youtubeAudio.volume = 1f;
@@ -254,6 +255,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        ConstantsHolder.ontriggteredplayerExit?.Invoke(other.gameObject);
         if (other.tag == "LiveStream")
         {
             //Gamemanager._InstanceGM.mediaPlayer.AudioVolume = 0;

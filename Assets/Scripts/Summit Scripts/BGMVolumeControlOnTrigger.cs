@@ -10,7 +10,11 @@ public class BGMVolumeControlOnTrigger : MonoBehaviour
     public AdvancedYoutubePlayer VideoPlayerController;
     public AudioSource PrePrecordered;
     public bool IsPlayerCollided = false;
-
+    
+    private void Awake()
+    {
+  
+    }
     private void Start()
     {
         if (gameObject.GetComponent<AdvancedYoutubePlayer>())
@@ -19,43 +23,52 @@ public class BGMVolumeControlOnTrigger : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnEnable()
     {
-        if (other.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>())
+        ConstantsHolder.ontriggteredplayerEntered += OnTriggeredEnter;
+        ConstantsHolder.ontriggteredplayerExit += OnTriggeredExit;
+    }
+    private void OnDisable()
+    {
+        ConstantsHolder.ontriggteredplayerEntered -= OnTriggeredEnter;
+        ConstantsHolder.ontriggteredplayerExit -= OnTriggeredExit;
+    }
+
+    void OnTriggeredEnter(GameObject TriggeredObject)
+    {
+        if (TriggeredObject == this.gameObject)
         {
-            if (other.gameObject.GetComponent<PhotonView>().IsMine)
+            Debug.Log("Player Entered");
+            //Bgm issue Resolve
+            IsPlayerCollided = true;
+            SetBGMAudioOnTrigger(true);
+            if (PrePrecordered && PrePrecordered.isActiveAndEnabled)
             {
-                IsPlayerCollided = true;
-                SetBGMAudioOnTrigger(true);
-                if (PrePrecordered && PrePrecordered.isActiveAndEnabled)
-                {
-                    SoundSettings.soundManagerSettings.videoSource = PrePrecordered;
-                    //if(IsPlayerCollided)
-                    // SoundSettings.soundManagerSettings.SetBgmVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
-                    SoundSettings.soundManagerSettings.SetAudioSourceSliderVal(PrePrecordered, PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
+                SoundSettings.soundManagerSettings.videoSource = PrePrecordered;
+                //if(IsPlayerCollided)
+                // SoundSettings.soundManagerSettings.SetBgmVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
+                SoundSettings.soundManagerSettings.SetAudioSourceSliderVal(PrePrecordered, PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
 
-                    PrePrecordered.mute = false;
-                }
-
+                PrePrecordered.mute = false;
             }
+
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggeredExit(GameObject TriggeredObject)
     {
-        if (other.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>())
+        if (TriggeredObject == this.gameObject)
         {
-            if (other.gameObject.GetComponent<PhotonView>().IsMine)
+            Debug.Log("Player Exiterd.....");
+            IsPlayerCollided = false;
+            SetBGMAudioOnTrigger(false);
+            if (PrePrecordered && PrePrecordered.isActiveAndEnabled)
             {
-                IsPlayerCollided = false;
-                SetBGMAudioOnTrigger(false);
-                if (PrePrecordered && PrePrecordered.isActiveAndEnabled)
-                {
-                    SoundSettings.soundManagerSettings.videoSource = null;
-                    PrePrecordered.mute = true;
-                }
+                SoundSettings.soundManagerSettings.videoSource = null;
+                PrePrecordered.mute = true;
             }
         }
+        
     }
 
 
