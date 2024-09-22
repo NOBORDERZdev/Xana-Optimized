@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 8485164774061021887}
   - component: {fileID: 2286232385020354246}
   - component: {fileID: 3141503287995704522}
-  - component: {fileID: 2609470930501225634}
-  - component: {fileID: 5819901891346889974}
   m_Layer: 0
   m_Name: SummitVideoPlayerHandler
   m_TagString: Untagged
@@ -117,39 +115,6 @@ MonoBehaviour:
   AndroidLiveVideoMesh: {fileID: 4300000, guid: 4d5df18ac3562db42a15f8bc7ad43465, type: 3}
   IOSLiveVideoMesh: {fileID: 4300000, guid: dfb61840dac0cbe449e051792734e64e, type: 3}
   IsInternetDisconnected: 0
---- !u!114 &2609470930501225634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1948039019143160951}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11a695eefa4c7984abf4719a5bb1c9b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxDistance: 25
-  minDistance: 7
-  updateInterval: 0.5
-  playerCam: {fileID: 0}
-  activePlayer: {fileID: 5226123731516465621}
-  audioSource: {fileID: 5226123732534829227}
-  PlayerTriggerCheck: {fileID: 0}
---- !u!114 &5819901891346889974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1948039019143160951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8810f4d3d6ad3a47b9f607d5f658a51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerTriggerChecker: {fileID: 0}
-  DirectionalSoundController: {fileID: 2609470930501225634}
 --- !u!1 &2785865629739442305
 GameObject:
   m_ObjectHideFlags: 0
@@ -731,7 +696,7 @@ MonoBehaviour:
     pauseOnPrerollComplete: 0
     forceAudioOutputDeviceName: 
     preferredFilters: []
-    audioOutput: 0
+    audioOutput: 1
     audio360ChannelMode: 0
     startWithHighestBitrate: 0
     useLowLiveLatency: 0
@@ -763,7 +728,7 @@ MonoBehaviour:
       overrideDecryptionKeyBase64: 
       overrideDecryptionKey: 
     textureFormat: 0
-    _audioMode: 0
+    _audioMode: 1
     _flags: 0
     maximumPlaybackRate: 2
     _preferredPeakBitRate: 0
@@ -801,7 +766,7 @@ MonoBehaviour:
     videoApi: 2
     useFastOesPath: 0
     showPosterFrame: 0
-    audioOutput: 0
+    audioOutput: 1
     audio360ChannelMode: 0
     audio360LatencyMS: 0
     preferSoftwareDecoder: 0
@@ -885,10 +850,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 18
+  MaxDistance: 25
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -921,7 +886,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -973,10 +938,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b05a64a5de3f8546bf586f42e37b979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mediaPlayer: {fileID: 0}
+  _mediaPlayer: {fileID: 5226123731516465621}
   _audioOutputMode: 1
-  _channelMask: 65535
-  _supportPositionalAudio: 0
+  _channelMask: -1
+  _supportPositionalAudio: 1
 --- !u!1 &5226123732447689051
 GameObject:
   m_ObjectHideFlags: 0
@@ -1737,10 +1702,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 18
+  MaxDistance: 25
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -1773,7 +1738,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
