@@ -1019,7 +1019,7 @@ public class LoadingHandler : MonoBehaviour
         DomeType.text = "Entertainment";
         DomeID.text = "-";
         DomeVisitedCount.text = "-";
-        DomeCategory.text = "Entertainment";
+        DomeCategory.text = "Adventure";
  
         ApprovalUI.SetActive(true);
         DomeLodingUI.SetActive(false);
