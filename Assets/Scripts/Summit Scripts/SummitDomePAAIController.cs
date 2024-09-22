@@ -13,17 +13,17 @@ public class SummitDomePAAIController : MonoBehaviour
 
     private void OnEnable()
     {
-        BuilderEventManager.AfterPlayerInstantiated += InitPerformerAvatarNPC;
+        //BuilderEventManager.AfterPlayerInstantiated += InitPerformerAvatarNPC;
         BuilderEventManager.ResetSummit += ResetOnExit;
     }
 
     private void OnDisable()
     {
-        BuilderEventManager.AfterPlayerInstantiated -= InitPerformerAvatarNPC;
+        //BuilderEventManager.AfterPlayerInstantiated -= InitPerformerAvatarNPC;
         BuilderEventManager.ResetSummit -= ResetOnExit;
     }
 
-    void InitPerformerAvatarNPC()
+    public void InitPerformerAvatarNPC()
     {
         if (ConstantsHolder.isFromXANASummit && !isPerformerAvtrInit)
         {

@@ -530,7 +530,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740058267462333246}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
   m_Controller: {fileID: 0}
   m_CullingMode: 1
@@ -3994,7 +3994,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5958298307327268428}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.14, y: 1.14, z: 1.14}
   m_ConstrainProportionsScale: 0
@@ -4015,7 +4015,7 @@ Animator:
   m_GameObject: {fileID: 5958298307327268428}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
-  m_Controller: {fileID: 9100000, guid: 09abe94bb91f4224ab0e08b1fca6e083, type: 2}
+  m_Controller: {fileID: 9100000, guid: 99c676147d4eb1c40b482d48f9ee8284, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4040,7 +4040,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 2
 --- !u!195 &363187588729219715
 NavMeshAgent:
@@ -4194,6 +4194,7 @@ MonoBehaviour:
   spaAIBhvrController: {fileID: 6695394099681832824}
   npcMC: {fileID: 6161366529465134880}
   animationController: {fileID: 6234924633825439289}
+  _inValidAnimCount: 0
 --- !u!114 &6161366529465134880
 MonoBehaviour:
   m_ObjectHideFlags: 0

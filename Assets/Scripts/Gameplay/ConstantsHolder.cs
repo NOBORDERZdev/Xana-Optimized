@@ -11,10 +11,11 @@ public class ConstantsHolder : MonoBehaviour
     public static ConstantsHolder xanaConstants;
     public delegate void UserNameToggleDeligate(int userNameToggleConstant);
     public static event UserNameToggleDeligate userNameToggleDelegate;
-
-
+    public static Action<GameObject> ontriggteredplayerEntered;
+    public static Action<GameObject> ontriggteredplayerExit;
     public bool pushToTalk;
     public bool openLandingSceneDirectly;
+    public bool XSummitBg = false;
     public bool SwitchXanaToXSummit = false;
     public static bool IsXSummitApp;
     public bool OpenSpaceScreen_fromSummit = false;
@@ -225,6 +226,8 @@ public class ConstantsHolder : MonoBehaviour
     public UnityEvent<float> ProgressEvent;
     public UnityEvent<bool> CompletionEvent;
     private AsyncOperationHandle downloadHandle;
+
+
 
     public bool IsProfileVisit = false; // bool to check is player in profile section.
     public int SnsProfileID = 0; // Id of user profile when the user visit the profile section.
