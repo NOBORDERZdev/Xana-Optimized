@@ -4,13 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using VLB_Samples;
-using UnityEngine.Networking;
 using System.Linq;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using Photon.Pun;
-using UnityEngine.InputSystem;
 using UnityEngine.ResourceManagement.ResourceLocations;
 
 public class SPAAIEmoteController : MonoBehaviour
