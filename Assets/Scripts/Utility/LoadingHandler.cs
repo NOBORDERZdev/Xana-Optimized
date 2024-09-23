@@ -801,6 +801,7 @@ public class LoadingHandler : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(info.thumbnail))
         {
+
             DomeThumbnail.gameObject.SetActive(true);
             if (AssetCache.Instance.HasFile(info.thumbnail))
             {
@@ -867,6 +868,7 @@ public class LoadingHandler : MonoBehaviour
 
     public void showApprovaldomeloading(XANASummitDataContainer.DomeGeneralData info)
     {
+        ConstantsHolder.DiasableMultiPartPhoton = true;
         WaitForInput = true;
         if (!string.IsNullOrEmpty(info.world360Image))
         {
@@ -896,8 +898,8 @@ public class LoadingHandler : MonoBehaviour
         DomeType.text = info.domeType;
         DomeCategory.text = info.domeCategory;
         Debug.Log("Dome id " + info.id);
-        
-        if(info.id>0 && info.id < 9)
+      
+        if (info.id>0 && info.id < 9)
         {
             //DomeCategory.text = "Center";
             DomeID.text = "CA-"+ info.id;
@@ -937,6 +939,7 @@ public class LoadingHandler : MonoBehaviour
     }
     public void showApprovaldomeloading(XANASummitSceneLoading.SingleWorldInfo info, XANASummitDataContainer.OfficialWorldDetails selectedWold)
     {
+        ConstantsHolder.DiasableMultiPartPhoton = true;
         WaitForInput = true;
         if (!string.IsNullOrEmpty(selectedWold.icon))
         {
@@ -1047,6 +1050,7 @@ public class LoadingHandler : MonoBehaviour
     }
     public void ReturnDome()
     {
+        ConstantsHolder.xanaConstants.isBackFromWorld = true;
         enter = false;
         WaitForInput = false;
         EnterWheel?.Invoke(false);
