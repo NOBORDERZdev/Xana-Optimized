@@ -26,7 +26,7 @@ public class TriggerSpaceX : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>() && vClip != null)
+        if (other.CompareTag("PhotonLocalPlayer") && other.GetComponent<PhotonView>().IsMine && vClip!=null)
         {
             if (other.GetComponent<PhotonView>().IsMine)
             {
