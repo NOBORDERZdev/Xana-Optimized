@@ -119,6 +119,8 @@ public class AddressableDownloader : MonoBehaviour
                         InventoryManager.instance.loaderForItems.SetActive(false);
                     if (GameManager.Instance != null)
                         GameManager.Instance.isStoreAssetDownloading = false;
+
+                    applyOn.WearDefaultItem(type, applyOn.gameObject, _gender);    //Zeel Added if failed apply default
                     DisableLoadingPanel();
                     yield break;
                 }
