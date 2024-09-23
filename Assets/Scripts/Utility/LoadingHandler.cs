@@ -803,18 +803,18 @@ public class LoadingHandler : MonoBehaviour
         {
 
             DomeThumbnail.gameObject.SetActive(true);
-            if (AssetCache.Instance.HasFile(info.thumbnail))
+            if (AssetCache.Instance.HasFile(info.thumbnail  + "?width=512?height=256"))
             {
-                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.thumbnail,changeAspectRatio:true);
+                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.thumbnail +"?width=512?height=256", changeAspectRatio:true);
 
             }
             else
             {
-                AssetCache.Instance.EnqueueOneResAndWait(info.thumbnail, info.thumbnail, (success) =>
+                AssetCache.Instance.EnqueueOneResAndWait(info.thumbnail + "?width=512?height=256", info.thumbnail + "?width=512?height=256", (success) =>
                 {
                     if (success)
                     {
-                        AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.thumbnail, changeAspectRatio: true);
+                        AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.thumbnail + "?width=512?height=256", changeAspectRatio: true);
 
                     }
                 });
@@ -872,24 +872,26 @@ public class LoadingHandler : MonoBehaviour
         WaitForInput = true;
         if (!string.IsNullOrEmpty(info.world360Image))
         {
+
             DomeThumbnail.gameObject.SetActive(true);
-            if (AssetCache.Instance.HasFile(info.world360Image))
+            if (AssetCache.Instance.HasFile(info.world360Image + "?width=512?height=256"))
             {
-                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.world360Image);
+                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.world360Image + "?width=512?height=256", changeAspectRatio: true);
 
             }
             else
             {
-                AssetCache.Instance.EnqueueOneResAndWait(info.world360Image, info.world360Image, (success) =>
+                AssetCache.Instance.EnqueueOneResAndWait(info.world360Image + "?width=512?height=256", info.world360Image + "?width=512?height=256", (success) =>
                 {
                     if (success)
                     {
-                        AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.world360Image, changeAspectRatio: true);
+                        AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.world360Image + "?width=512?height=256", changeAspectRatio: true);
 
                     }
                 });
             }
-        }else { DomeThumbnail.gameObject.SetActive(false);}
+        }
+      else { DomeThumbnail.gameObject.SetActive(false);}
         ResetLoadingValues();
         DomeLoading.SetActive(true);
         DomeName.text = info.name;
@@ -941,27 +943,29 @@ public class LoadingHandler : MonoBehaviour
     {
         ConstantsHolder.DiasableMultiPartPhoton = true;
         WaitForInput = true;
-        if (!string.IsNullOrEmpty(selectedWold.icon))
-        {
-            DomeThumbnail.gameObject.SetActive(true);
-            if (AssetCache.Instance.HasFile(selectedWold.icon))
+      
+            if (!string.IsNullOrEmpty(selectedWold.icon))
             {
-                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, selectedWold.icon);
 
-            }
-            else
-            {
-                AssetCache.Instance.EnqueueOneResAndWait(selectedWold.icon, selectedWold.icon, (success) =>
+                DomeThumbnail.gameObject.SetActive(true);
+                if (AssetCache.Instance.HasFile(selectedWold.icon + "?width=512?height=256"))
                 {
-                    if (success)
-                    {
-                        AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, selectedWold.icon, changeAspectRatio: true);
+                    AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, selectedWold.icon + "?width=512?height=256", changeAspectRatio: true);
 
-                    }
-                });
+                }
+                else
+                {
+                    AssetCache.Instance.EnqueueOneResAndWait(selectedWold.icon + "?width=512?height=256", selectedWold.icon + "?width=512?height=256", (success) =>
+                    {
+                        if (success)
+                        {
+                            AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, selectedWold.icon + "?width=512?height=256", changeAspectRatio: true);
+
+                        }
+                    });
+                }
             }
-        }
-        else { DomeThumbnail.gameObject.SetActive(false); }
+            else { DomeThumbnail.gameObject.SetActive(false); }
         ResetLoadingValues();
         DomeLoading.SetActive(true);
         DomeName.text = info.data.name;
