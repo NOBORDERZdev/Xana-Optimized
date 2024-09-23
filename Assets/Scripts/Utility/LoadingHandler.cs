@@ -106,7 +106,7 @@ public class LoadingHandler : MonoBehaviour
     private float sliderCompleteValue = 0f;
     private float originalWidth;
     public static System.Action CompleteSlider;
-
+    public Sprite Wheelsprite;
     public GameObject SearchLoadingCanvas;
     private CanvasGroup canvasGroup;
 
@@ -804,7 +804,7 @@ public class LoadingHandler : MonoBehaviour
             DomeThumbnail.gameObject.SetActive(true);
             if (AssetCache.Instance.HasFile(info.thumbnail))
             {
-                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.thumbnail);
+                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.thumbnail,changeAspectRatio:true);
 
             }
             else
@@ -1007,14 +1007,19 @@ public class LoadingHandler : MonoBehaviour
     }
     public void showApprovalWheelloading()
     {
+
+        DomeThumbnail.gameObject.SetActive(true);
+        DomeThumbnail.sprite = Wheelsprite;
         ResetLoadingValues();
-        DomeThumbnail.gameObject.SetActive(false);
+      
         DomeLoading.SetActive(true);
         DomeName.text = "Giant Wheel";
         DomeDescription.text = "Giant Wheel";
         DomeCreator.text = "XANA";
         DomeType.text = "Entertainment";
-        DomeCategory.text = "Entertainment";
+        DomeID.text = "-";
+        DomeVisitedCount.text = "-";
+        DomeCategory.text = "Adventure";
  
         ApprovalUI.SetActive(true);
         DomeLodingUI.SetActive(false);

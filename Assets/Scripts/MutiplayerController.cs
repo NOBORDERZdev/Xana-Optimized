@@ -46,7 +46,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public static string CurrLobbyName, CurrRoomName;
 
-        private RoomOptions roomOptions;
+        public RoomOptions roomOptions;
         private List<RoomInfo> availableRoomList = new List<RoomInfo>();
         public List<string> roomNames;
         public List<GameObject> playerobjects;
@@ -69,7 +69,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        //string gameVersion = "XanaSummit240921";  // YYYYMMDD
+        //string gameVersion = "XanaSummit240922";  // YYYYMMDD
         string gameVersion = "XanaSummit240921RikTest";  // YYYYMMDD for testing
 
         #endregion
@@ -544,8 +544,8 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
-            Debug.LogError("Failed to join " + message);
-            AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
+            Debug.LogError("Failed to join ");
+            OnJoinedLobby();
             //GameplayEntityLoader.instance._uiReferences.LoadMain(true);
         }
 

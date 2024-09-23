@@ -1,3 +1,4 @@
+using AIFLogger;
 using RenderHeads.Media.AVProVideo;
 using System.Collections;
 using System.Collections.Generic;
@@ -127,6 +128,8 @@ public class SummitDomeNFTDataController : MonoBehaviour
                     bool isWithDes = false;
                     string compersionPrfex = "";
                     ////Debug.LogError(i + "-----" + nftPlaceHolder + "----"+worldData.Count);
+                    ///
+                    Debug.Log("Media Type  " + worldData[j].media_type);
                     switch (worldData[j].ratio)
                     {
                         case "1:1":
@@ -204,8 +207,9 @@ public class SummitDomeNFTDataController : MonoBehaviour
                         worldInfos[i].Type = DataType.Video;
                         if (worldPlayingVideos) // to play video's in world
                         {
+                            Debug.Log("Dome Id" + worldData[j].id + "is youtube " + worldData[j].youtubeUrlCheck);
                             NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().isCreateFrame = true;
-                            if (worldData[j].PrercrdOrLiveURL == "Live" && !string.IsNullOrEmpty(worldData[j].youtubeUrl))  //for Live Video 
+                            if (worldData[j].PrercrdOrLiveURL == "Live" && !string.IsNullOrEmpty(worldData[j].youtubeUrl) && worldData[j].youtubeUrlCheck)  //for Live Video 
                             {
                                 yield return new WaitForSeconds(1f);
                                 worldInfos[i].VideoLink = worldData[j].youtubeUrl;
@@ -217,7 +221,7 @@ public class SummitDomeNFTDataController : MonoBehaviour
                                 //NftPlaceholder[i].GetComponent<JjVideo>().videoLink = worldData[i].youtubeUrl;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().CheckForPlayValidPlayer();
                             }
-                            else if (worldData[j].PrercrdOrLiveURL == "Prerecorded" && !string.IsNullOrEmpty(worldData[j].youtubeUrl))  // for Prerecorded video
+                            else if (worldData[j].PrercrdOrLiveURL == "Prerecorded" && !string.IsNullOrEmpty(worldData[j].youtubeUrl)&& worldData[j]. youtubeUrlCheck)  // for Prerecorded video
                             {
                                 yield return new WaitForSeconds(1f);
                                 worldInfos[i].VideoLink = worldData[j].youtubeUrl;
