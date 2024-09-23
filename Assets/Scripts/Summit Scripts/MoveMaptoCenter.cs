@@ -7,7 +7,6 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
 
-
 public class MoveMaptoCenter : MonoBehaviour
 {
     public ScrollRect scrollRect;
@@ -33,9 +32,6 @@ public class MoveMaptoCenter : MonoBehaviour
     {
         totalVisitCount.text = "" + ConstantsHolder.visitorCount;
     }
-
-
-
     void Start()
     {
         for (int i = 0; i < MapHighlightObjs.Count; i++)
@@ -46,7 +42,6 @@ public class MoveMaptoCenter : MonoBehaviour
 
         InitializeSubBtns();
     }
-    
     void InitializeSubBtns()
     {
         var domesDictionary = new Dictionary<int, string>();
@@ -70,8 +65,6 @@ public class MoveMaptoCenter : MonoBehaviour
             }
         }
     }
-
-
 
 
     public void ItemClicked(int ind)
@@ -158,10 +151,12 @@ public class MoveMaptoCenter : MonoBehaviour
     }
 
 
+    int selectedCategoryIndex = -1;
     public void ExpandChild(int _Index)
     {
+        selectedCategoryIndex = _Index;
 
-        // Disable Other Categories
+        //Disable Other Categories
         for (int i = 0; i < CetegoryObjects.Count; i++)
         {
             if (i != _Index)
@@ -175,24 +170,76 @@ public class MoveMaptoCenter : MonoBehaviour
         // Reverse the Status
         childStatus = !childStatus;
 
+        if(childStatus)
+            selectedCategoryIndex = _Index;
+        else
+            selectedCategoryIndex = -1;
+
         CategoriesController(_Index, childStatus);
 
         Invoke(nameof(AddDelay), timeDelay);
     }
     void CategoriesController(int ind, bool status)
     {
+        Vector3 localPos = CetegoryObjects[ind].localPosition;
         for (int i = 1; i < CetegoryObjects[ind].childCount; i++)
         {
             CetegoryObjects[ind].GetChild(i).gameObject.SetActive(status);
         }
+
     }
     void AddDelay()
     {
-        // Move the ScrollRect to the top
-        scrollRect.verticalNormalizedPosition = 1;
-        //scrollRect.DOVerticalNormalizedPos(1, timeDelay).SetEase(Ease.InOutQuad);
-    }
+        float normalizedPos = 0.0f;
+        switch (selectedCategoryIndex)
+        {
+            case 0:
+            case 1:
+                normalizedPos = 1.0f;
+                break;
 
+            case 2:
+                normalizedPos = 0.9f;
+                break;
+
+            case 3:
+                normalizedPos = 0.93f;
+                break;
+
+            case 4:
+            case 5:
+                normalizedPos = 0.8f;
+                break;
+
+            case 6:
+                normalizedPos = 0.88f;
+                break;
+
+            case 7:
+                normalizedPos = 0.0f;
+                break;
+
+            case 8:
+                normalizedPos = 0.47f;
+                break;
+
+            case 9:
+                normalizedPos = 0.26f;
+                break;
+
+            case 10:
+                normalizedPos = 0.3f;
+                break;
+
+
+            default:
+                normalizedPos = 1f;
+                break;
+        }
+
+        scrollRect.verticalNormalizedPosition = normalizedPos;
+    }
+ 
     public float timeDelay = 0.02f;
 }
 
