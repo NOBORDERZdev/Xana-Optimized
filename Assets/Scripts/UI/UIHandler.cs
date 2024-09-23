@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine.Networking;
 using SimpleJSON;
+using UnityEngine.SceneManagement;
 
 public class UIHandler : MonoBehaviour
 {
@@ -290,7 +291,10 @@ public class UIHandler : MonoBehaviour
                 else if (apiResponse.data[i].feature_name == "Xsummitbg")
                 {
                     ConstantsHolder.xanaConstants.XSummitBg = apiResponse.data[i].feature_status;
-                    UserLoginSignupManager.instance.XSummitBgChange.ChangeBG();
+                    if (SceneManager.GetSceneByName("XSummitLoginSignupScene").isLoaded)
+                    {
+                        UserLoginSignupManager.instance.XSummitBgChange.ChangeBG();
+                    }
                 }
             }
             

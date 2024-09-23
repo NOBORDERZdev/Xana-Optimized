@@ -193,6 +193,7 @@ public class ConstantsHolder : MonoBehaviour
     public static int AvatarIndex;
     public static bool HaveSubWorlds;
     public static string Thumbnail;
+    public static string description;
     public static bool isTeleporting = false;
 
     //Daily reward

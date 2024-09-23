@@ -290,9 +290,8 @@ public class SummitVideoAndImageController : MonoBehaviour
 
     string ModifyImageUrl(string url, int newWidth)
     {
-        // Parse the URL to get base URL and parameters
         string baseUrl = url.Split('?')[0]; // Get everything before the '?'
-        string parameters = $"width={newWidth}"; // New parameters
+        string parameters = $"width={newWidth}";
 
         // Return the modified URL
         return $"{baseUrl}?{parameters}";
