@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.Video;
 using UnityEngine.UI;
 using RenderHeads.Media.AVProVideo;
+using SuperStar.Helpers;
 
 public class SummitVideoAndImageController : MonoBehaviour
 {
@@ -43,7 +41,7 @@ public class SummitVideoAndImageController : MonoBehaviour
     [SerializeField] Material imageMat;
     [SerializeField] bool applyVideoMesh; // If play video on mesh 
     [SerializeField] VideoPlayer videoMesh;
-    private Texture2D _texture;
+    private Texture _texture;
     private StreamYoutubeVideo streamYoutubeVideo;
     RenderTexture renderTexture_temp;
 
@@ -81,9 +79,6 @@ public class SummitVideoAndImageController : MonoBehaviour
             SetImage();
         else if (dataType == DataType.Video)
             SetVideo();
-
-        //if(isCreateFrame)
-        //    CreateFrame();   //create frame
     }
     public void TurnOffAllImageAndVideo()
     {
@@ -136,105 +131,35 @@ public class SummitVideoAndImageController : MonoBehaviour
             imgVideo4x3.SetActive(false);
         if (liveVideoPlayer)
             liveVideoPlayer.SetActive(false);
-        //if (preRecordedPlayer)
-        //    preRecordedPlayer.SetActive(false);
 
-
-        StartCoroutine(GetSprite(imageLink, (response) =>
+        if (_imgVideoRatio == JjRatio.SixteenXNineWithDes || _imgVideoRatio == JjRatio.SixteenXNineWithoutDes)
         {
-            if (SummitDomeNFTDataController.Instance && response != null)
-                SummitDomeNFTDataController.Instance.NFTLoadedSprites.Add(response);
-
-            if (ApplyImageOnTexture && imageMesh != null)
+            if (imgVideo16x9)
             {
-                imageMesh.material = imageMat;
-                imageMesh.material.mainTexture = response;
+                SetSprite(imageLink, imgVideo16x9.GetComponent<RawImage>());
             }
-            else if (_imgVideoRatio == JjRatio.SixteenXNineWithDes || _imgVideoRatio == JjRatio.SixteenXNineWithoutDes)
+        }
+        else if (_imgVideoRatio == JjRatio.NineXSixteenWithDes || _imgVideoRatio == JjRatio.NineXSixteenWithoutDes)
+        {
+            if (imgVideo9x16)
             {
-                if (imgVideo16x9)
-                {
-                    if (imgVideoFrame16x9)
-                    {
-                        EnableImageVideoFrame(imgVideoFrame16x9);
-                    }
-                    imgVideo16x9.SetActive(true);
-                    imgVideo16x9.GetComponent<RawImage>().texture = response;
-                    imgVideo16x9.GetComponent<VideoPlayer>().enabled = false;
-                    //if (imgVideo16x9.transform.childCount > 0)
-                    //{
-                    //    foreach (Transform g in imgVideo16x9.transform)
-                    //    {
-                    //        g.gameObject.GetComponent<RawImage>().texture = response;
-                    //        g.gameObject.SetActive(true);
-                    //    }
-                    //}
-                }
+                SetSprite(imageLink, imgVideo9x16.GetComponent<RawImage>());
             }
-            else if (_imgVideoRatio == JjRatio.NineXSixteenWithDes || _imgVideoRatio == JjRatio.NineXSixteenWithoutDes)
+        }
+        else if (_imgVideoRatio == JjRatio.OneXOneWithDes || _imgVideoRatio == JjRatio.OneXOneWithoutDes)
+        {
+            if (imgVideo1x1)
             {
-                if (imgVideo9x16)
-                {
-                    if (imgVideoFrame9x16)
-                    {
-                        EnableImageVideoFrame(imgVideoFrame9x16);
-                    }
-                    imgVideo9x16.SetActive(true);
-                    imgVideo9x16.GetComponent<RawImage>().texture = response;
-                    imgVideo9x16.GetComponent<VideoPlayer>().enabled = false;
-                    //if (imgVideo9x16.transform.childCount > 0)
-                    //{
-                    //    foreach (Transform g in imgVideo9x16.transform)
-                    //    {
-                    //        g.gameObject.GetComponent<RawImage>().texture = response;
-                    //        g.gameObject.SetActive(true);
-                    //    }
-                    //}
-                }
+                SetSprite(imageLink, imgVideo1x1.GetComponent<RawImage>());
             }
-            else if (_imgVideoRatio == JjRatio.OneXOneWithDes || _imgVideoRatio == JjRatio.OneXOneWithoutDes)
+        }
+        else if (_imgVideoRatio == JjRatio.FourXThreeWithDes || _imgVideoRatio == JjRatio.FourXThreeWithoutDes)
+        {
+            if (imgVideo4x3)
             {
-                if (imgVideo1x1)
-                {
-                    if (imgVideoFrame1x1)
-                    {
-                        EnableImageVideoFrame(imgVideoFrame1x1);
-                    }
-                    imgVideo1x1.SetActive(true);
-                    imgVideo1x1.GetComponent<RawImage>().texture = response;
-                    imgVideo1x1.GetComponent<VideoPlayer>().enabled = false;
-                    //if (imgVideo1x1.transform.childCount > 0)
-                    //{
-                    //    foreach (Transform g in imgVideo1x1.transform)
-                    //    {
-                    //        g.gameObject.GetComponent<RawImage>().texture = response;
-                    //        g.gameObject.SetActive(true);
-                    //    }
-                    //}
-                }
+                SetSprite(imageLink, imgVideo4x3.GetComponent<RawImage>());
             }
-            else if (_imgVideoRatio == JjRatio.FourXThreeWithDes || _imgVideoRatio == JjRatio.FourXThreeWithoutDes)
-            {
-                if (imgVideo4x3)
-                {
-                    if (imgVideoFrame4x3)
-                    {
-                        EnableImageVideoFrame(imgVideoFrame4x3);
-                    }
-                    imgVideo4x3.SetActive(true);
-                    imgVideo4x3.GetComponent<RawImage>().texture = response;
-                    imgVideo4x3.GetComponent<VideoPlayer>().enabled = false;
-                    //if (imgVideo4x3.transform.childCount > 0)
-                    //{
-                    //    foreach (Transform g in imgVideo4x3.transform)
-                    //    {
-                    //        g.gameObject.GetComponent<RawImage>().texture = response;
-                    //        g.gameObject.SetActive(true);
-                    //    }
-                    //}
-                }
-            }
-        }));
+        }
 
         if (isCreateFrame)
             CreateFrame();   //create frame
@@ -250,41 +175,76 @@ public class SummitVideoAndImageController : MonoBehaviour
         frameToEnable.SetActive(true);
     }
 
-    IEnumerator GetSprite(string path, System.Action<Texture> callback)
+    private void SetSprite(string path, RawImage img)
     {
-        while (Application.internetReachability == NetworkReachability.NotReachable)
+        path = ModifyImageUrl(path, 200);
+        if (AssetCache.Instance.HasFile(path))
         {
-            yield return new WaitForEndOfFrame();
-            print("Internet Not Reachable");
+            AssetCache.Instance.LoadTexture2DIntoRawImage(img, path, changeAspectRatio: true);
+            _texture = img.texture;
         }
-        string imageUrlWithParams = ModifyImageUrl(path, 200);      // (added by AR) set width 200 of each texture 
-        using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(imageUrlWithParams))
+        else
         {
-            www.SendWebRequest();
-            while (!www.isDone)
+            AssetCache.Instance.EnqueueOneResAndWait(path, path, (success) =>
             {
-                yield return null;
-            }
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                //Debug.Log("ERror in loading sprite" + www.error);
-            }
-            else
-            {
-                if (www.isDone)
+                if (success)
                 {
-                    Texture2D loadedTexture = DownloadHandlerTexture.GetContent(www);
-                    _texture = loadedTexture;
-                    //var rect = new Rect(1, 1, 1, 1);
-                    //thunbNailImage = Sprite.Create(loadedTexture, new Rect(0f, 0f, loadedTexture.width, loadedTexture.height), new Vector2(.5f, 0f));
-                    //Texture2D tempTex = ((DownloadHandlerTexture)www.downloadHandler).texture;
-                    //Sprite sprite = /*Sprite.Create(tempTex, rect, new Vector2(0.5f, 0.5f))*/ Sprite.Create(loadedTexture, new Rect(0f, 0f, loadedTexture.width, loadedTexture.height), new Vector2(.5f, 0f));
-                    //print("Texture is " + sprite);
-                    callback(_texture);
+                    AssetCache.Instance.LoadTexture2DIntoRawImage(img, path, changeAspectRatio: true);
+                    _texture = img.texture;
                 }
+            });
+        }
+
+        if(_texture != null)
+        {
+            if (SummitDomeNFTDataController.Instance && img != null)
+                SummitDomeNFTDataController.Instance.NFTLoadedSprites.Add(img.texture);
+
+            if (ApplyImageOnTexture && imageMesh != null)
+            {
+                imageMesh.material = imageMat;
+                imageMesh.material.mainTexture = img.texture;
             }
-            www.Dispose();
+            else if (_imgVideoRatio == JjRatio.SixteenXNineWithDes || _imgVideoRatio == JjRatio.SixteenXNineWithoutDes)
+            {
+                if (imgVideoFrame16x9)
+                {
+                    EnableImageVideoFrame(imgVideoFrame16x9);
+                }
+                imgVideo16x9.SetActive(true);
+                imgVideo16x9.GetComponent<RawImage>().texture = img.texture;
+                imgVideo16x9.GetComponent<VideoPlayer>().enabled = false;
+            }
+            else if (_imgVideoRatio == JjRatio.NineXSixteenWithDes || _imgVideoRatio == JjRatio.NineXSixteenWithoutDes)
+            {
+                if (imgVideoFrame9x16)
+                {
+                    EnableImageVideoFrame(imgVideoFrame9x16);
+                }
+                imgVideo9x16.SetActive(true);
+                imgVideo9x16.GetComponent<RawImage>().texture = img.texture;
+                imgVideo9x16.GetComponent<VideoPlayer>().enabled = false;
+            }
+            else if (_imgVideoRatio == JjRatio.OneXOneWithDes || _imgVideoRatio == JjRatio.OneXOneWithoutDes)
+            {
+                if (imgVideoFrame1x1)
+                {
+                    EnableImageVideoFrame(imgVideoFrame1x1);
+                }
+                imgVideo1x1.SetActive(true);
+                imgVideo1x1.GetComponent<RawImage>().texture = img.texture;
+                imgVideo1x1.GetComponent<VideoPlayer>().enabled = false;
+            }
+            else if (_imgVideoRatio == JjRatio.FourXThreeWithDes || _imgVideoRatio == JjRatio.FourXThreeWithoutDes)
+            {
+                if (imgVideoFrame4x3)
+                {
+                    EnableImageVideoFrame(imgVideoFrame4x3);
+                }
+                imgVideo4x3.SetActive(true);
+                imgVideo4x3.GetComponent<RawImage>().texture = img.texture;
+                imgVideo4x3.GetComponent<VideoPlayer>().enabled = false;
+            }
         }
     }
 
@@ -309,8 +269,6 @@ public class SummitVideoAndImageController : MonoBehaviour
             imgVideo4x3.SetActive(false);
         if (liveVideoPlayer)
             liveVideoPlayer.SetActive(false);
-        //if (preRecordedPlayer)
-        //    preRecordedPlayer.SetActive(false);
 
         if (_videoType == VideoTypeRes.islive && liveVideoPlayer)
         {
@@ -319,9 +277,7 @@ public class SummitVideoAndImageController : MonoBehaviour
                 SummitDomeNFTDataController.Instance.videoRenderObject = liveVideoPlayer;
                 if (liveVideoPlayer)
                     liveVideoPlayer.SetActive(true);
-                //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
-                //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().GetLivestreamUrl(videoLink);
-                //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
+
                 if (streamYoutubeVideo != null)
                     streamYoutubeVideo.StreamYtVideo(videoLink, true);
                 SoundController.Instance.livePlayerSource = liveVideoPlayer.GetComponent<MediaPlayer>();
@@ -363,12 +319,6 @@ public class SummitVideoAndImageController : MonoBehaviour
                     tempVideoPlayer = imgVideo16x9.GetComponent<VideoPlayer>();
                 }
 
-                //preRecordedPlayer.SetActive(true);
-                //preRecordedPlayer.GetComponent<YoutubeSimplified>().videoPlayer = tempVideoPlayer;
-                //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.videoPlayer = tempVideoPlayer;
-                //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.audioPlayer = tempVideoPlayer;
-                //preRecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
-                //preRecordedPlayer.GetComponent<YoutubeSimplified>().Play();
                 if (streamYoutubeVideo != null)
                     streamYoutubeVideo.StreamYtVideo(videoLink, false);
                 imgVideo16x9.GetComponent<VideoPlayer>().playOnAwake = true;
