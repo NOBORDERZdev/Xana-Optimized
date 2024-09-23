@@ -801,20 +801,20 @@ public class LoadingHandler : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(info.thumbnail))
         {
-
+            info.thumbnail += "?width=512?height=256";
             DomeThumbnail.gameObject.SetActive(true);
-            if (AssetCache.Instance.HasFile(info.thumbnail  + "?width=512?height=256"))
+            if (AssetCache.Instance.HasFile(info.thumbnail  ))
             {
-                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.thumbnail +"?width=512?height=256", changeAspectRatio:true);
+                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.thumbnail , changeAspectRatio:true);
 
             }
             else
             {
-                AssetCache.Instance.EnqueueOneResAndWait(info.thumbnail + "?width=512?height=256", info.thumbnail + "?width=512?height=256", (success) =>
+                AssetCache.Instance.EnqueueOneResAndWait(info.thumbnail, info.thumbnail , (success) =>
                 {
                     if (success)
                     {
-                        AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.thumbnail + "?width=512?height=256", changeAspectRatio: true);
+                        AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.thumbnail, changeAspectRatio: true);
 
                     }
                 });
@@ -872,20 +872,20 @@ public class LoadingHandler : MonoBehaviour
         WaitForInput = true;
         if (!string.IsNullOrEmpty(info.world360Image))
         {
-
+            info.world360Image = "?width=512?height=256";
             DomeThumbnail.gameObject.SetActive(true);
-            if (AssetCache.Instance.HasFile(info.world360Image + "?width=512?height=256"))
+            if (AssetCache.Instance.HasFile(info.world360Image ))
             {
-                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.world360Image + "?width=512?height=256", changeAspectRatio: true);
+                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.world360Image , changeAspectRatio: true);
 
             }
             else
             {
-                AssetCache.Instance.EnqueueOneResAndWait(info.world360Image + "?width=512?height=256", info.world360Image + "?width=512?height=256", (success) =>
+                AssetCache.Instance.EnqueueOneResAndWait(info.world360Image , info.world360Image , (success) =>
                 {
                     if (success)
                     {
-                        AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.world360Image + "?width=512?height=256", changeAspectRatio: true);
+                        AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.world360Image, changeAspectRatio: true);
 
                     }
                 });
@@ -946,20 +946,21 @@ public class LoadingHandler : MonoBehaviour
       
             if (!string.IsNullOrEmpty(selectedWold.icon))
             {
+            selectedWold.icon += "?width=512?height=256";
 
                 DomeThumbnail.gameObject.SetActive(true);
-                if (AssetCache.Instance.HasFile(selectedWold.icon + "?width=512?height=256"))
+                if (AssetCache.Instance.HasFile(selectedWold.icon ))
                 {
-                    AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, selectedWold.icon + "?width=512?height=256", changeAspectRatio: true);
+                    AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, selectedWold.icon , changeAspectRatio: true);
 
                 }
                 else
                 {
-                    AssetCache.Instance.EnqueueOneResAndWait(selectedWold.icon + "?width=512?height=256", selectedWold.icon + "?width=512?height=256", (success) =>
+                    AssetCache.Instance.EnqueueOneResAndWait(selectedWold.icon , selectedWold.icon, (success) =>
                     {
                         if (success)
                         {
-                            AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, selectedWold.icon + "?width=512?height=256", changeAspectRatio: true);
+                            AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, selectedWold.icon , changeAspectRatio: true);
 
                         }
                     });
