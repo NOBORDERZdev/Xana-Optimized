@@ -257,6 +257,7 @@ public class SummitVideoAndImageController : MonoBehaviour
             yield return new WaitForEndOfFrame();
             print("Internet Not Reachable");
         }
+        path = path + "?w=200";
 
         using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(path))
         {
