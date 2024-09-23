@@ -51,7 +51,15 @@ public class SpaceXHandler : MonoBehaviour
         _ReturnPlayerPos = ReturnPlayerPos;
         VideoPlayer.gameObject.SetActive(true);
         VideoPlayer.targetTexture.Release();
-        VideoPlayer.clip=VideoClip; 
+        VideoPlayer.clip = VideoClip;
+
+        #if UNITY_ANDROID
+        RenderTexture rt = RenderTexture.active;            // This is to avoid the black screen before playback on Android.
+        RenderTexture.active = VideoPlayer.targetTexture;   
+        GL.Clear(true, true, Color.clear);
+        RenderTexture.active = rt;
+        #endif
+
         VideoPlayer.Play();
         VideoPlayer.loopPointReached += VideoPlayer_loopPointReached;
     }
@@ -62,7 +70,7 @@ public class SpaceXHandler : MonoBehaviour
         _WaitForRestart = true;
         int x = 10;
         LaunchCounter.gameObject.SetActive(true);
-        while (x> 0)
+        while (x > 0)
         {
             if (token.IsCancellationRequested)
             {
@@ -73,7 +81,7 @@ public class SpaceXHandler : MonoBehaviour
             await Task.Delay(1000, token); // Pass the cancellation token to Task.Delay
             x--;
         }
-        LaunchCounter.GetComponent<Animator>().enabled=false;
+        LaunchCounter.GetComponent<Animator>().enabled = false;
         LaunchCounter.gameObject.SetActive(false);
         //launchCountingAudioSource.clip=audioClip;
         await Task.Delay(1000, token); // Delay before proceeding, also cancellable
@@ -105,8 +113,8 @@ public class SpaceXHandler : MonoBehaviour
         else
             SceneId = PlanetWorldId_Testnet[x];
 
-        ConstantsHolder.isFromXANASummit = true;
-        ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
+        //ConstantsHolder.isFromXANASummit = true; // set these after user clicks Yes
+        //ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
         SummitSceneLoading.LoadingSceneByIDOrName(SceneId, _ReturnPlayerPos);
         DisableObjects();
         // SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
