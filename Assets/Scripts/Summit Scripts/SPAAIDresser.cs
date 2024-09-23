@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -74,7 +75,7 @@ public class SPAAIDresser : MonoBehaviour
         {
             for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
             {
-                if (string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName))
+                if (string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName) || _CharacterData.myItemObj[i].ItemName.Contains("md", StringComparison.CurrentCultureIgnoreCase))
                     continue;
                 DownloadAddressableWearableWearable(_CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType);
             }
