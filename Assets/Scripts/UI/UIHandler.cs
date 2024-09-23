@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine.Networking;
 using SimpleJSON;
+using UnityEngine.SceneManagement;
 
 public class UIHandler : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class UIHandler : MonoBehaviour
     public Transform _postScreen,_postCamera, _postScreenBG;
     public bool IsSplashActive = true;
     /*public Transform SecondSliderScrollView;*/
-
+   
     [Header("Footer Reference")]
     public GameObject _footerCan;
     public GameObject faceMorphPanel;
@@ -290,6 +291,10 @@ public class UIHandler : MonoBehaviour
                 else if (apiResponse.data[i].feature_name == "Xsummitbg")
                 {
                     ConstantsHolder.xanaConstants.XSummitBg = apiResponse.data[i].feature_status;
+                    if (SceneManager.GetSceneByName("XSummitLoginSignupScene").isLoaded)
+                    {
+                        UserLoginSignupManager.instance.XSummitBgChange.ChangeBG();
+                    }
                 }
             }
             

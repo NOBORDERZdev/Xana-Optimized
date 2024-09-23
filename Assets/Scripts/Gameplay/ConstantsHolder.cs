@@ -16,7 +16,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool pushToTalk;
     public bool openLandingSceneDirectly;
     public bool XSummitBg = false;
-    public bool SwitchXanaToXSummit = false;
+    public bool SwitchXanaToXSummit=true;
     public static bool IsXSummitApp;
     public bool OpenSpaceScreen_fromSummit = false;
 
@@ -193,6 +193,7 @@ public class ConstantsHolder : MonoBehaviour
     public static int AvatarIndex;
     public static bool HaveSubWorlds;
     public static string Thumbnail;
+    public static string description;
     public static bool isTeleporting = false;
 
     //Daily reward

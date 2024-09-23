@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -27,9 +28,9 @@ public class OnTriggerSceneSwitch : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (PhotonNetwork.InRoom)
+        if (PhotonNetwork.InRoom && !MutiplayerController.instance.isShifting)
         {
-            if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine && !alreadyTriggered)
+            if (other.GetComponent<PhotonView>() && other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine && !alreadyTriggered)
             {
                 alreadyTriggered = true;
              
