@@ -505,11 +505,14 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             }
             else
             {
-                if (itemtype.Contains("Hair"))
-                {
-                    applyOn.GetComponent<AvatarController>().WearDefaultHair(applyOn, hairColor);
-                }
-                else
+                // Old Implementation
+                // {
+                //if (itemtype.Contains("Hair"))
+                //{
+                //    applyOn.GetComponent<AvatarController>().WearDefaultHair(applyOn, hairColor);
+                //}
+                //else
+                //}
                     applyOn.GetComponent<AvatarController>().WearDefaultItem(itemtype, applyOn, _gender);
             }
         }
