@@ -872,7 +872,7 @@ public class LoadingHandler : MonoBehaviour
         WaitForInput = true;
         if (!string.IsNullOrEmpty(info.world360Image))
         {
-            info.world360Image = "?width=512?height=256";
+            info.world360Image += "?width=512?height=256";
             DomeThumbnail.gameObject.SetActive(true);
             if (AssetCache.Instance.HasFile(info.world360Image ))
             {
