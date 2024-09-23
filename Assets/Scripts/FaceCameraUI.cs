@@ -37,6 +37,8 @@ public class FaceCameraUI : MonoBehaviour
     {
         if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
+            if (firstPersonCam == null)
+                return;
             if (firstPersonCam.gameObject.activeInHierarchy && mainCam != firstPersonCam)
                 mainCam = firstPersonCam;
             else if (mainCam != thirdPersonCam && !firstPersonCam.gameObject.activeInHierarchy)
