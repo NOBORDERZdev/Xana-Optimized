@@ -169,16 +169,23 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         BuilderEventManager.AfterWorldInstantiated -= ResetPlayerAfterInstantiation;
         GamePlayButtonEvents.OnExitButtonXANASummit -= ResetOnBackFromSummit;
     }
-
+    SummitPlayerRPC _SummitPlayerRPC;
     public void ForcedMapOpenForSummitScene()
     {
         if (ReferencesForGamePlay.instance.m_34player == null && !ConstantsHolder.xanaConstants)
             return;
-        var player = ReferencesForGamePlay.instance.m_34player.GetComponent<SummitPlayerRPC>();
+        
+        try
+        {
+            _SummitPlayerRPC = ReferencesForGamePlay.instance.m_34player.GetComponent<SummitPlayerRPC>();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Player not found");
+        }
 
-        Debug.Log("Forced Minimap  " + ConstantsHolder.xanaConstants.EnviornmentName);
 
-        if (ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit" && !player.isInsideCAr && !player.isInsideWheel)
+        if (ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit" && !_SummitPlayerRPC.isInsideCAr && !_SummitPlayerRPC.isInsideWheel)
         {
             ReferencesForGamePlay.instance.minimap.SetActive(true);
             PlayerPrefs.SetInt("minimap", 1);
@@ -188,8 +195,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             XanaChatSystem.instance.chatDialogBox.SetActive(false);
         }
         else
-        {
-            Debug.Log("Load map value===");
+        { 
             ReferencesForGamePlay.instance.minimap.SetActive(false);
             PlayerPrefs.SetInt("minimap", 0);
             ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
