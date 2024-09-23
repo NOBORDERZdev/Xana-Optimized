@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,13 @@ public class SPAAIDresser : MonoBehaviour
     public SavingCharacterDataClass AvatarJson;
 
     public TMPro.TextMeshProUGUI npcName;
+    [SerializeField]
+    PerformerAvatarGender PAGender;
+    enum PerformerAvatarGender
+    {
+        Male,
+        Female
+    }
 
     private void Start()
     {
@@ -74,7 +82,7 @@ public class SPAAIDresser : MonoBehaviour
         {
             for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
             {
-                if (string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName))
+                if (string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName) || _CharacterData.myItemObj[i].ItemName.Contains("md", StringComparison.CurrentCultureIgnoreCase))
                     continue;
                 DownloadAddressableWearableWearable(_CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType);
             }
@@ -136,16 +144,44 @@ public class SPAAIDresser : MonoBehaviour
         switch (type)
         {
             case "Chest":
-                StichItem(DefaultClothDatabase.instance.DefaultShirt, "Chest", this.gameObject, false);
+                if (PAGender.Equals(PerformerAvatarGender.Male))
+                {
+                    StichItem(DefaultClothDatabase.instance.maleAvatarDefaultCostume.DefaultShirt, "Chest", this.gameObject, false);
+                }
+                else
+                {
+                    StichItem(DefaultClothDatabase.instance.femaleAvatarDefaultCostume.DefaultShirt, "Chest", this.gameObject, false);
+                }
                 break;
             case "Legs":
-                StichItem(DefaultClothDatabase.instance.DefaultPent, "Legs", this.gameObject, false);
+                if (PAGender.Equals(PerformerAvatarGender.Male))
+                {
+                    StichItem(DefaultClothDatabase.instance.maleAvatarDefaultCostume.DefaultPent, "Legs", this.gameObject, false);
+                }
+                else
+                {
+                    StichItem(DefaultClothDatabase.instance.femaleAvatarDefaultCostume.DefaultPent, "Legs", this.gameObject, false);
+                }
                 break;
             case "Feet":
-                StichItem(DefaultClothDatabase.instance.DefaultShoes, "Feet", this.gameObject, false);
+                //if (PAGender.Equals(PerformerAvatarGender.Male))
+                //{
+                //    StichItem(DefaultClothDatabase.instance.maleAvatarDefaultCostume.DefaultShoes, "Feet", this.gameObject, false);
+                //}
+                //else
+                //{
+                //    StichItem(DefaultClothDatabase.instance.femaleAvatarDefaultCostume.DefaultShoes, "Feet", this.gameObject, false);
+                //}
                 break;
             case "Hair":
-                StichItem(DefaultClothDatabase.instance.DefaultHair, "Hair", this.gameObject, false);
+                if (PAGender.Equals(PerformerAvatarGender.Male))
+                {
+                    StichItem(DefaultClothDatabase.instance.maleAvatarDefaultCostume.DefaultHair, "Hair", this.gameObject, false);
+                }
+                else
+                {
+                    StichItem(DefaultClothDatabase.instance.femaleAvatarDefaultCostume.DefaultHair, "Hair", this.gameObject, false);
+                }
                 break;
             default:
                 break;
