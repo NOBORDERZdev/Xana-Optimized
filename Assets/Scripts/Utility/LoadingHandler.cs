@@ -1037,6 +1037,7 @@ public class LoadingHandler : MonoBehaviour
         BuilderEventManager.SpaceXDeactivated?.Invoke();
 
         ConstantsHolder.isFromXANASummit = true;
+        ConstantsHolder.IsSummitDomeWorld = true;
         ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
     }
 
