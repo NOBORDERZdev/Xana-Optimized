@@ -10,6 +10,7 @@ using System;
 using Random = UnityEngine.Random;
 using UnityEditor;
 using static InventoryManager;
+using Photon.Pun.Demo.PunBasics;
 
 public class AvatarController : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class AvatarController : MonoBehaviour
     public CharacterBodyParts characterBodyParts;
     public SavingCharacterDataClass _PCharacterData = new SavingCharacterDataClass();
     [SerializeField] RuntimeAnimatorController ArAnimator;
+
+    public List<Item>ClothsToBeLoaded = new List<Item>();
     #endregion
 
     #region var Hide Inspector
@@ -87,6 +90,8 @@ public class AvatarController : MonoBehaviour
     {
         BoxerNFTEventManager.OnNFTequip += EquipNFT;
         BoxerNFTEventManager.OnNFTUnequip += UnequipNFT;
+
+        Debug.Log("enabled  " + IsInit);
         if (IsInit) // init avatar according to the Avatar Type (Friend/Self player). 
         {
 
@@ -423,9 +428,11 @@ public class AvatarController : MonoBehaviour
         await Task.Delay(200);
         if (isLoadStaticClothFromJson)
         {
+            Debug.Log("Buildding character from local json... ");
             BuildCharacterFromLocalJson();
             return;
         }
+        Debug.Log("Buildding character from Saved Path ... ");
         string folderPath= GameManager.Instance.GetStringFolderPath();
         if (File.Exists(folderPath) && File.ReadAllText(folderPath) != "") //Check if data exist
         {
@@ -462,7 +469,8 @@ public class AvatarController : MonoBehaviour
                 else
                 {
                     CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);
-                    SetAvatarClothDefault(gameObject, _CharacterData.gender);
+                   
+                    //SetAvatarClothDefault(gameObject, _CharacterData.gender);   Zeel Commented why you have to set default cloths every time
 
                     if (_CharacterData.myItemObj.Count > 0)
                     {
@@ -689,12 +697,13 @@ public class AvatarController : MonoBehaviour
             }
             else // worlds scene 
             {
+               
                 if (this.GetComponent<PhotonView>() && this.GetComponent<PhotonView>().IsMine || staticPlayer) // self
                 {
-                    SetAvatarClothDefault(gameObject, gender);
+                    //   SetAvatarClothDefault(gameObject, gender);             //  Zeel Commented why you have to set default cloths every time
 
                     if (_CharacterData.myItemObj.Count > 0)
-                    {
+                    {ClothsToBeLoaded.Clear();
                         for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
                         {
                             var item = _CharacterData.myItemObj[i];
@@ -712,10 +721,18 @@ public class AvatarController : MonoBehaviour
                                             if (!string.IsNullOrEmpty(_CharacterData.hairItemData) && _CharacterData.hairItemData.Contains("No hair") && wornHair)
                                                 UnStichItem("Hair");
                                             else
+                                            {
+                                                ClothsToBeLoaded.Add(item);
                                                 StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, avatarController, _CharacterData.HairColor));
+
+                                            }
                                         }
                                         else
+                                        {
+                                            ClothsToBeLoaded.Add(item);
                                             StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, _CharacterData.gender != null ? _CharacterData.gender : "Male", this.gameObject.GetComponent<AvatarController>(), Color.clear));
+
+                                        }
                                     }
                                     else
                                     {
@@ -797,6 +814,8 @@ public class AvatarController : MonoBehaviour
                                 }
                             }
                         }
+
+                        StartCoroutine(WaitForCallback());
                     }
                     if (_CharacterData.charactertypeAi == true && !UGCManager.isSelfieTaken)
                     {
@@ -891,7 +910,81 @@ public class AvatarController : MonoBehaviour
         }
         isClothLoaded = true;
     }
-  
+
+    IEnumerator WaitForCallback()
+    {
+       while (true)
+        {
+            int clothsloaded = 0;
+            foreach (var item in ClothsToBeLoaded)
+            {
+                
+                switch (item.ItemType)
+                {
+
+                    case "Chest":
+                      
+                       if( wornShirtId == item.ItemID)
+                            clothsloaded++;
+                       
+                        break;
+
+                    case "Legs":
+                        if (wornPantId == item.ItemID)
+                            clothsloaded++;
+                      
+                      
+                        break;
+
+                    case "Hair":
+
+                        if (wornHairId == item.ItemID)
+                            clothsloaded++;
+               
+                     
+                        break;
+
+                    case "Feet":
+
+                        if (wornShoesId == item.ItemID)
+                            clothsloaded++;
+                      
+                        
+                        break;
+
+                    case "EyeWearable":
+
+                        if (wornEyewearableId == item.ItemID)
+                            clothsloaded++;
+                        
+                        break;
+
+                    case "Chain":
+
+                        if (wornChainId == item.ItemID)
+                            clothsloaded++;
+                     
+                        break;
+
+                    case "Glove":
+
+                        if (wornGlovesId == item.ItemID)
+                            clothsloaded++;
+                   
+                        break;
+                }
+            }
+
+            if (clothsloaded == ClothsToBeLoaded.Count)
+            {
+                GameplayEntityLoader.instance.ClothsLoaded = true;
+                yield break;
+            }
+            yield return new WaitForSeconds(1f);
+        }
+
+    }
+
     /// <summary>
     /// Setting Character from localJson neither than server
     /// </summary>
@@ -913,7 +1006,7 @@ public class AvatarController : MonoBehaviour
             }
             else
             {
-                SetAvatarClothDefault(this.gameObject, _CharacterData.gender);
+             //   SetAvatarClothDefault(this.gameObject, _CharacterData.gender);    //Zeel Comment why default cloths is needed
                 for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
                 {
                      var item= _CharacterData.myItemObj[i];
@@ -1585,7 +1678,7 @@ public class AvatarController : MonoBehaviour
         CharacterBodyParts tempBodyParts = applyOn.gameObject.GetComponent<CharacterBodyParts>();
         //FriendAvatarController friendAvatarController = applyOn.GetComponent<FriendAvatarController>();
         EffectedParts effectedParts = item.GetComponent<EffectedParts>();
-        UnStichItem(type);
+       
         
         if (effectedParts && effectedParts.texture != null)
         {
@@ -1681,7 +1774,7 @@ public class AvatarController : MonoBehaviour
                 item.layer = 11;
             }
         }
-       
+        UnStichItem(type);
         switch (type)
         {
             case "Chest":
