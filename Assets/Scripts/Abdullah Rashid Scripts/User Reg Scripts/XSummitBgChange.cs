@@ -8,18 +8,25 @@ public class XSummitBgChange : MonoBehaviour
     public Sprite XSummitBackgroung;
     public Sprite XanaSummitBackgroung;
     public GameObject BackGroundSprite;
-   
-    private void Awake()
+
+    void Start()
+    {
+        // Start the coroutine
+        StartCoroutine(ChangeBGCoroutine());
+    }
+    IEnumerator ChangeBGCoroutine()
     {
         if (ConstantsHolder.xanaConstants.XSummitBg)
         {
             BackGroundSprite.GetComponent<Image>().sprite = XSummitBackgroung;
 
         }
-        else 
+        else
         {
 
             BackGroundSprite.GetComponent<Image>().sprite = XanaSummitBackgroung;
         }
+        yield return new WaitForSeconds(0.5f);
     }
+
 }
