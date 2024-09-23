@@ -264,7 +264,7 @@ public class GamePlayUIHandler : MonoBehaviour
         ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
         ConstantsHolder.xanaConstants.LastLobbyName = "";
         //StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().MoveToLobby());
-        LeaderboardPanel.SetActive(false);
+        //LeaderboardPanel.SetActive(false);
         //ReferencesForGamePlay.instance.SetGameplayForPenpenz(true);
         GamePlayButtonEvents.inst.OnExitButtonClick();
     }
