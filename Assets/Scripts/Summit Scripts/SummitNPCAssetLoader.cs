@@ -38,6 +38,11 @@ public class SummitNPCAssetLoader : MonoBehaviour
 
     void Custom_InitializeAvatar(string aiAvatarJson)
     {
+        if(aiAvatarJson.IsNullOrEmpty())
+        {
+            Debug.LogError("Json is null");
+            return;
+        }
         SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
         _CharacterData = _CharacterData.CreateFromJSON(aiAvatarJson);
 
