@@ -578,8 +578,11 @@ public class XanaWorldDownloader : MonoBehaviour
         newObj.SetActive(_itemData.isActive);
         ApplyLightmapData(_itemData.lightmapData, newObj);
         //AddObjectInPool(downloadKey, newObj);
-        AssignDomeId(newObj, _itemData);
-        SetSubworldIndex(newObj, _itemData);
+        if(ConstantsHolder.DomeHeaderInfo)
+        {
+            AssignDomeId(newObj, _itemData);
+            SetSubworldIndex(newObj, _itemData);
+        }
         //if (ConstantsHolder.HaveSubWorlds)
         //{
         //    if (_itemData.addressableKey.Contains("TLP"))

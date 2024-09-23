@@ -1,9 +1,11 @@
 using SuperStar.Helpers;
+using System;
 using System.Collections;
 using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class SummitDomeShaderApply : MonoBehaviour
 {
@@ -30,10 +32,7 @@ public class SummitDomeShaderApply : MonoBehaviour
         if (!string.IsNullOrEmpty(ImageUrl))
         {
             ImageUrl = ImageUrl + "?width=512?height=256";
-            Texture2D texture = await DownloadDomeTexture(ImageUrl);
-            DomeMeshRenderer.material.mainTexture = texture;
-            DomeMeshRenderer.gameObject.SetActive(true);
-            Frame.SetActive(true);
+            DownloadDomeTexture(ImageUrl);  
         }
         else
         {
@@ -45,14 +44,7 @@ public class SummitDomeShaderApply : MonoBehaviour
         if (!string.IsNullOrEmpty(LogoUrl))
         {
             ImageUrl = ImageUrl + "?width=256";
-            Texture2D texture = await DownloadDomeTexture(LogoUrl);
-            LogoSpriteRenderer.sprite = ConvertToSprite(texture);
-            LogoSpriteRenderer.material.shader = Shader.Find("Sprites/Default");
-            ScaleSpriteToTargetSize();
-            //texture.wrapMode = TextureWrapMode.Clamp;
-            //AdjustUVs(LogoMeshRenderer, texture);
-            //LogoMeshRenderer.material.mainTexture = texture;
-            //LogoMeshRenderer.gameObject.SetActive(true);
+            DownloadLogoTexture(LogoUrl);
         }
     }
 
@@ -87,25 +79,62 @@ public class SummitDomeShaderApply : MonoBehaviour
         LogoSpriteRenderer.transform.localScale = scale;
     }
 
-    async Task<Texture2D> DownloadDomeTexture(string url)
+    void DownloadDomeTexture(string url)
     {
-        UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
-        await request.SendWebRequest();
-        if ((request.result == UnityWebRequest.Result.ConnectionError) || (request.result == UnityWebRequest.Result.ProtocolError))
+        if (!string.IsNullOrEmpty(url))
         {
-            Debug.Log(request.error);
+            if (AssetCache.Instance.HasFile(url))
+            {
+                SetDomeTexture(url);
+            }
+            else
+            {
+                AssetCache.Instance.EnqueueOneResAndWait(url, url, (success) =>
+                {
+                    if (success)
+                    {
+                        SetDomeTexture(url);
+                    }
+                });
+            }
         }
-        else
+    }
+
+    void SetDomeTexture(string url)
+    {
+        Texture2D texture=AssetCache.Instance.LoadImage(url);
+        DomeMeshRenderer.material.mainTexture = texture;
+        DomeMeshRenderer.gameObject.SetActive(true);
+        Frame.SetActive(true);
+    }
+
+    void DownloadLogoTexture(string url)
+    {
+        if (!string.IsNullOrEmpty(url))
         {
-            Texture2D Texture = DownloadHandlerTexture.GetContent(request);
-            request.Dispose();
-            return Texture;
+            if (AssetCache.Instance.HasFile(url))
+            {
+                SetLogoTexture(url);
+            }
+            else
+            {
+                AssetCache.Instance.EnqueueOneResAndWait(url, url, (success) =>
+                {
+                    if (success)
+                    {
+                        SetLogoTexture(url);
+                    }
+                });
+            }
         }
-        request.Dispose();
-        return null;
     }
 
 
-
-
+    void SetLogoTexture(string url)
+    {
+        Texture2D texture = AssetCache.Instance.LoadImage(url);
+        LogoSpriteRenderer.sprite = ConvertToSprite(texture);
+        LogoSpriteRenderer.material.shader = Shader.Find("Sprites/Default");
+        ScaleSpriteToTargetSize();
+    }
 }

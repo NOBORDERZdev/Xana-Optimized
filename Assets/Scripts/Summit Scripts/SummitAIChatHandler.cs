@@ -63,7 +63,7 @@ public class SummitAIChatHandler : MonoBehaviour
 
     void LoadNPC()
     {
-        if (ConstantsHolder.isFromXANASummit && !_NPCInstantiated)
+        if (ConstantsHolder.isFromXANASummit && ConstantsHolder.IsSummitDomeWorld && !_NPCInstantiated)
         {
             _NPCInstantiated = true;
             SummitNPC = false;

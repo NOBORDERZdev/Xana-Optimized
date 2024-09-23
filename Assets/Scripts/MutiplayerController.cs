@@ -69,7 +69,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "XanaSummit240923Crash";  // YYYYMMDD
+        string gameVersion = "XanaSummit240923CrashFix";  // YYYYMMDD
 
         #endregion
         #region Multtisection Fields
@@ -598,12 +598,13 @@ namespace Photon.Pun.Demo.PunBasics
 
         public async void Ontriggered(string SectorName, bool isWheel = false)
         {
-            if (SectorName == this.SectorName || (disableSector && !isWheel) || ConstantsHolder.DiasableMultiPartPhoton) return;
+          
 
             while (isShifting)
             {
                 await Task.Delay(1000);
             }
+            if (SectorName == this.SectorName || (disableSector && !isWheel) || ConstantsHolder.DiasableMultiPartPhoton) return;
 
             isShifting = true;
             var player = ReferencesForGamePlay.instance.m_34player;

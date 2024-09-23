@@ -16,6 +16,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool pushToTalk;
     public bool openLandingSceneDirectly;
     public bool XSummitBg = false;
+    public static bool DomeHeaderInfo=true;
     public bool SwitchXanaToXSummit=true;
     public static bool IsXSummitApp;
     public bool OpenSpaceScreen_fromSummit = false;
@@ -182,6 +183,7 @@ public class ConstantsHolder : MonoBehaviour
 
     //XANA Summit 
     public static bool isFromXANASummit = false;
+    public static bool IsSummitDomeWorld = false;
     public static bool MultiSectionPhoton = false;
     public static bool TempDiasableMultiPartPhoton = false;
     public static bool DiasableMultiPartPhoton = false;
