@@ -121,7 +121,10 @@ public class SubWorldsHandler : MonoBehaviour
                 _SubWorldPrefab.WorldId = domeGeneralData.SubWorlds[i].selectWorld.id;
             else
                 _SubWorldPrefab.WorldId = int.Parse(domeGeneralData.SubWorlds[i].builderSubWorldId);
-
+            if (domeGeneralData.SubWorlds[i].selectWorld.label.Contains("D + Infinity Labo") || domeGeneralData.SubWorlds[i].selectWorld.label.Contains("D +  Infinity Labo"))
+            {
+                domeGeneralData.SubWorlds[i].selectWorld.label = "D_Infinity_Labo";
+            }
             _SubWorldPrefab.SubWorldName = domeGeneralData.SubWorlds[i].selectWorld.label;
             _SubWorldPrefab.WorldDescription = domeGeneralData.SubWorlds[i].selectWorld.description;
             _SubWorldPrefab.CreatorName = domeGeneralData.SubWorlds[i].selectWorld.creatorName;

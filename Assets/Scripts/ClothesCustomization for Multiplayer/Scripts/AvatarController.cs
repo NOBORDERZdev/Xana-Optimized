@@ -1819,7 +1819,8 @@ public class AvatarController : MonoBehaviour
             // Disable Pant
             if (wornPant)
             {
-                wornPant.GetComponent<SkinnedMeshRenderer>().enabled = false;
+                UnStichItem("Legs");
+               // wornPant.GetComponent<SkinnedMeshRenderer>().enabled = false; 
             }
 
             // Also Remove Pant Mask
