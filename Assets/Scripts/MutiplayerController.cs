@@ -69,8 +69,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        //string gameVersion = "XanaSummit240923";  // YYYYMMDD
-        string gameVersion = "XanaSummit240921RikTest";  // YYYYMMDD for testing
+        string gameVersion = "XanaSummit240923Crash";  // YYYYMMDD
 
         #endregion
         #region Multtisection Fields
@@ -480,7 +479,7 @@ namespace Photon.Pun.Demo.PunBasics
                 {
                     LoadingHandler.Instance.DomeLoadingProgess(90);
                 }
-                GameplayEntityLoader.instance.SetPlayer(); DestroyPlayerDelay();
+                GameplayEntityLoader.instance.SetPlayer(); 
             }
         }
         public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -582,9 +581,9 @@ namespace Photon.Pun.Demo.PunBasics
 
             PhotonNetwork.JoinRoom(name);
         }
-        async void DestroyPlayerDelay()
+       public async void DestroyPlayerDelay()
         {
-            await new WaitForSeconds(2);
+            await new WaitForSeconds(.4f);
             foreach (var item in playerobjectRoom)
             {
                 DestroyImmediate(item);
