@@ -74,7 +74,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public double eventRemainingTime;
 
     public HomeSceneLoader _uiReferences;
-
+    public bool ClothsLoaded = false;
     //string OrdinaryUTCdateOfSystem = "2023-08-10T14:45:00.000Z";
     //DateTime OrdinarySystemDateTime, localENDDateTime, univStartDateTime, univENDDateTime;
 
@@ -98,6 +98,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     public XANASummitDataContainer XanaSummitDataContainerObject;
     public DownloadPopupHandler DownloadPopupHandlerInstance;
+
+    public GameObject OldPlayer;
     private void Awake()
     {
         instance = this;
@@ -421,10 +423,24 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public async void SpawnPlayerSection()  // Created this for summit
     {
         spawnPoint = player.transform.position;
-        Destroy(player);
+   ;
+        OldPlayer = player;
+        ClothsLoaded = false;
         Debug.Log("player shoud be destroyed");
-        InstantiatePlayerAvatar(spawnPoint);
-
+        InstantiatePlayerAvatarSector(new Vector3 (0,-1000,0));  // instantiate player below ground to avoid glitter;
+        
+        while(ClothsLoaded == false)
+        {
+            await Task.Delay(1000);
+        }
+        Quaternion rotation = OldPlayer.transform.localRotation;
+       
+        Destroy(OldPlayer);
+        MutiplayerController.instance.DestroyPlayerDelay();
+        player.transform.parent = mainController.transform;
+        player.transform.localPosition = Vector3.zero;
+        player.transform.localRotation = rotation;
+   
         ReferencesForGamePlay.instance.m_34player = player;
         if (player.GetComponent<SummitAnalyticsTrigger>() == null)
             player.AddComponent<SummitAnalyticsTrigger>();
@@ -808,6 +824,53 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             player.transform.localRotation = Quaternion.identity;
             player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Female");      // Set Default Cloth to avoid naked avatar
         }
+    }
+
+    void InstantiatePlayerAvatarSector(Vector3 pos)
+    {
+        if (ConstantsHolder.isPenguin || ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            DashButton.SetActive(false);
+            XanaWorldController.SetActive(false);
+            XanaPartyController.SetActive(true);
+            player = PhotonNetwork.Instantiate("XanaPenguin", spawnPoint, Quaternion.identity, 0);
+            PenguinPlayer = player;
+            mainController = player;
+            if (player != null)
+            {
+                if (SceneManager.GetActiveScene().name == "Builder" && ConstantsHolder.xanaConstants.isXanaPartyWorld)
+                {
+                    SituationChangerSkyboxScript.instance.builderMapDownload.XANAPartyLoading.SetActive(false);
+                }
+                StartCoroutine(SetXanaPartyControllers(player));
+            }
+            return;
+        }
+        else
+        {
+            DashButton.SetActive(true);
+        }
+        XanaPartyController.SetActive(false);
+        XanaWorldController.SetActive(true);
+        mainController = mainControllerRefHolder;
+        if (ConstantsHolder.isFixedHumanoid)
+        {
+            InstantiatePlayerForFixedHumanoid();
+            return;
+        }
+
+        if (SaveCharacterProperties.instance?.SaveItemList.gender == AvatarGender.Male.ToString())
+        {
+            player = PhotonNetwork.Instantiate("XanaAvatar2.0_Male", pos, Quaternion.identity, 0);    // Instantiate Male Avatar
+           
+    
+           
+        }
+        else
+        {
+            player = PhotonNetwork.Instantiate("XanaAvatar2.0_Female", pos, Quaternion.identity, 0);  // Instantiate Female Avatar
+           
+                   }
     }
 
     void InstantiatePlayerForFixedHumanoid()
