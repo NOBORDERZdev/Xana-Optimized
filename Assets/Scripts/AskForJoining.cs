@@ -92,7 +92,13 @@ public class AskForJoining : MonoBehaviour
         else
         {
             if (ReferencesForGamePlay.instance != null)
+            {
                 ReferencesForGamePlay.instance.workingCanvas.SetActive(false);
+                ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().horizontal = 0;
+                ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().vertical = 0;
+            }
+
+
 
             if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
             {
@@ -102,9 +108,6 @@ public class AskForJoining : MonoBehaviour
                     PhotonNetwork.LeaveLobby();
                 if (PhotonNetwork.InRoom)
                     PhotonNetwork.Disconnect();
-
-                ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().horizontal = 0;
-                ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().vertical = 0;
                 GamePlayUIHandler.inst.MoveToLobbyBtnClick();
                 return;
             }
