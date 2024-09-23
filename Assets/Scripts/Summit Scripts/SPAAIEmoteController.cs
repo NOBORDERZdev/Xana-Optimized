@@ -24,6 +24,7 @@ public class SPAAIEmoteController : MonoBehaviour
     Coroutine emotCoroutine;
     public int _inValidAnimCount;
     bool skipCurrentIteration = false;
+    //public float AnimStateShiftTime = 0.09f;
     string emoteName;
     string emoteBundleUrl;
     string emoteBundlePath;
@@ -418,13 +419,30 @@ public class SPAAIEmoteController : MonoBehaviour
         List<KeyValuePair<AnimationClip, AnimationClip>> keyValuePairs = new List<KeyValuePair<AnimationClip, AnimationClip>>();
         foreach (var clip in overrideController.animationClips)
         {
-            if (clip.name == "emaotedefault")
-            {
-                //Debug.Log("Setting Clip");
-                keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, animationClip));
-            }
-            else
-                keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+            //if (animator.GetBool("IsNextEmote"))
+            //{
+                if (clip.name == "emaotedefault")
+                {
+                    //Debug.Log("Setting Clip");
+                    keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, animationClip));
+                }
+                else
+                {
+                    keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+                }
+            //}
+            //else
+            //{
+            //    if (clip.name == "Idle")
+            //    {
+            //        //Debug.Log("Setting Clip");
+            //        keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, animationClip));
+            //    }
+            //    else
+            //    {
+            //        keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+            //    }
+            //}
         }
         overrideController.ApplyOverrides(keyValuePairs);
 
@@ -432,6 +450,17 @@ public class SPAAIEmoteController : MonoBehaviour
         animator.runtimeAnimatorController = overrideController;
         CurrDanceAnimName = animationClip.name;
         animator.SetBool("IsEmote", true);
+        //if (animator.GetBool("IsNextEmote"))
+        //{
+        //    animator.SetBool("IsNextEmote", false);
+        //    animator.CrossFade("Animation", AnimStateShiftTime);
+        //}
+        //else
+        //{
+        //    animator.SetBool("IsNextEmote", true);
+        //    animator.CrossFade("NewEmoteAnimState", AnimStateShiftTime);
+        //    //animator.SetBool("IsEmote", false);
+        //}
     }
 
     void CheckIfAnimationListUpdated()
