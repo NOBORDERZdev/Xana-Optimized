@@ -131,6 +131,9 @@ public class YoutubeStreamController : MonoBehaviour
         {
             yield return null;
         }
+        if (!APIHandler.Data.isPlaying) yield break;
+
+        if (PrevURL.Equals(APIHandler.Data.URL)) yield break;
 
         if (!PrevURL.Equals(APIHandler.Data.URL) && APIHandler.Data.isPlaying)
         {
