@@ -251,7 +251,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         if (currentEnvironment == null)
         {
             if (ConstantsHolder.xanaConstants.isBuilderScene)
-                SetupEnvirnmentForBuidlerScene();
+                StartCoroutine(WaitForMapDownload());
+
             else
             {
                 LoadEnvironment(ConstantsHolder.xanaConstants.EnviornmentName);
@@ -782,6 +783,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             DashButton.SetActive(false);
             XanaWorldController.SetActive(false);
             XanaPartyController.SetActive(true);
+            Debug.LogError("Xana Player Penguin.......");
             player = PhotonNetwork.Instantiate("XanaPenguin", spawnPoint, Quaternion.identity, 0);
             PenguinPlayer = player;
             mainController = player;
@@ -1240,6 +1242,18 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             LoadingHandler.CompleteSlider?.Invoke();
         }
         StartCoroutine(DownloadAssets());
+    }
+
+    IEnumerator WaitForMapDownload()
+    {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            while (!BuilderAssetDownloader.isSpawnDownloaded)
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+        SetupEnvirnmentForBuidlerScene();
     }
 
     void SetupEnvirnmentForBuidlerScene()

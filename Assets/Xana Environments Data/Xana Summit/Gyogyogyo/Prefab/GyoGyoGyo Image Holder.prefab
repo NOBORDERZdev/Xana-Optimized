@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3928199234238375363}
+  - component: {fileID: 3723769286386942608}
   m_Layer: 0
   m_Name: GyoGyoGyo Image Holder
   m_TagString: Untagged
@@ -34,6 +35,40 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3723769286386942608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3928199234238375362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cebf05f19ae445244bb15afce6994a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ExhibitComponentType: 1
+  _ExhibitSize:
+    potrait: {x: 0.1051391, y: 0.1051391, z: 0.1051391}
+    landscape: {x: 0.1051391, y: 0.1051391, z: 0.1051391}
+    square: {x: 0.1051391, y: 0.1051391, z: 0.1051391}
+  spawnPoints: []
+  picsSpawnPoints: {fileID: 3928199234238375363}
+  updateVar: 0
+  metaData: []
+  creatorDetails: []
+  tokenDetails: []
+  nftLink: 
+  creatorLink: 
+  RoomCount: 0
+  isDynamicMuseum: 1
+  dynamicManager: {fileID: 0}
+  spotLightSprite: {fileID: 4183035712081772258, guid: 1e6926f084bd40a438fea1beac7ac6c5, type: 3}
+  testnetMussuemId: 28
+  mainnetMussuemId: 13
+  eventid: 
+  XanaSummitNFTHandler: {fileID: 8141283418276172437, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+  AllS3Nfts: []
 --- !u!1 &3928199234419438454
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,7 +157,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3928199235698001316}
   m_LocalRotation: {x: -0.000000010536711, y: 0.70710677, z: 0.000000010536714, w: 0.7071069}
-  m_LocalPosition: {x: -3.169, y: -0.364, z: -0.693}
+  m_LocalPosition: {x: -3.169, y: -0.6681, z: -0.693}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
