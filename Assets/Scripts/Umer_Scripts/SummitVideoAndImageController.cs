@@ -257,9 +257,8 @@ public class SummitVideoAndImageController : MonoBehaviour
             yield return new WaitForEndOfFrame();
             print("Internet Not Reachable");
         }
-        path = path + "?w=200";
-
-        using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(path))
+        string imageUrlWithParams = ModifyImageUrl(path, 200);      // (added by AR) set width 200 of each texture 
+        using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(imageUrlWithParams))
         {
             www.SendWebRequest();
             while (!www.isDone)
@@ -287,6 +286,16 @@ public class SummitVideoAndImageController : MonoBehaviour
             }
             www.Dispose();
         }
+    }
+
+    string ModifyImageUrl(string url, int newWidth)
+    {
+        // Parse the URL to get base URL and parameters
+        string baseUrl = url.Split('?')[0]; // Get everything before the '?'
+        string parameters = $"width={newWidth}"; // New parameters
+
+        // Return the modified URL
+        return $"{baseUrl}?{parameters}";
     }
 
     void SetVideo()
