@@ -11,10 +11,10 @@ public class XSummitBgChange : MonoBehaviour
 
     void Start()
     {
-        // Start the coroutine
-        StartCoroutine(ChangeBGCoroutine());
+        
+        ChangeBG();
     }
-    IEnumerator ChangeBGCoroutine()
+    public void ChangeBG()
     {
         if (ConstantsHolder.xanaConstants.XSummitBg)
         {
@@ -26,7 +26,7 @@ public class XSummitBgChange : MonoBehaviour
 
             BackGroundSprite.GetComponent<Image>().sprite = XanaSummitBackgroung;
         }
-        yield return new WaitForSeconds(0.5f);
+       
     }
 
 }
