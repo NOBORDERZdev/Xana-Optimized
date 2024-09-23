@@ -23,6 +23,7 @@ public class SPAAIEmoteController : MonoBehaviour
 
     Coroutine emotCoroutine;
     public int _inValidAnimCount;
+    bool skipCurrentIteration = false;
     string emoteName;
     string emoteBundleUrl;
     string emoteBundlePath;
@@ -36,12 +37,21 @@ public class SPAAIEmoteController : MonoBehaviour
                 _inValidAnimCount = 0;
                 for (int i = 0; i < AnimPlayList.Count; i++)
                 {
+                    skipCurrentIteration = false;
                     if (!KeepLoopingEmotes)
                     {
                         break;
                     }
                     emotCoroutine = StartCoroutine(DownloadAddressableActionAnimation(AnimPlayList[i]));
-                    yield return new WaitForSeconds(AnimPlayTimer[i]);
+                    yield return emotCoroutine;
+                    if (skipCurrentIteration)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        yield return new WaitForSeconds(AnimPlayTimer[i]);
+                    }
                     #region Old Asset Bundle Implementation
                     //if (SerachForEmoteWithName(AnimPlayList[i]))
                     //{
@@ -344,6 +354,7 @@ public class SPAAIEmoteController : MonoBehaviour
             {
                 _inValidAnimCount++;
                 //Debug.LogError("Animation addressable call failed to load animation" + label);
+                skipCurrentIteration = true;
                 yield break;
             }
 
@@ -355,6 +366,7 @@ public class SPAAIEmoteController : MonoBehaviour
                     {
                         Debug.LogError("Network null.....");
                         _inValidAnimCount++;
+                        skipCurrentIteration = true;
                         yield break;
                     }
                     else
@@ -366,6 +378,7 @@ public class SPAAIEmoteController : MonoBehaviour
                 else
                 {
                     _inValidAnimCount++;
+                    skipCurrentIteration = true;
                     yield break;
                 }
             }
@@ -376,12 +389,16 @@ public class SPAAIEmoteController : MonoBehaviour
                 Addressables.ReleaseInstance(loadOp);
                 Addressables.Release(loadOp);
                 _inValidAnimCount++;
+                skipCurrentIteration = true;
                 yield break;
             }
         }
         else
         {
+            _inValidAnimCount++;
+            skipCurrentIteration = true;
             Debug.LogError("Network not reachable or key name is empty");
+            yield break;
         }
     }
 
@@ -411,6 +428,7 @@ public class SPAAIEmoteController : MonoBehaviour
         }
         overrideController.ApplyOverrides(keyValuePairs);
 
+        //Debug.Log("Is emote value check: " + animator.GetBool("IsEmote"));
         animator.runtimeAnimatorController = overrideController;
         CurrDanceAnimName = animationClip.name;
         animator.SetBool("IsEmote", true);
