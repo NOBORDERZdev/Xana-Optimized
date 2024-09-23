@@ -50,7 +50,7 @@ public class SummitDomeImageHandler : MonoBehaviour
                 TMPro.TextMeshPro DomeText1 = SummitDomeShaderApplyRef.DomeText.AddComponent<TMPro.TextMeshPro>();
                 DomeText1.font = DometextFont;
                 DomeText1.fontMaterial = DomeTextMaterial;
-                DomeText1.fontSize = 4.5f;
+                DomeText1.fontSize = 6f;
                 DomeText1.alignment = TMPro.TextAlignmentOptions.Center;
                 DomeText1.text = DomeData[1];
             }
@@ -85,15 +85,15 @@ public class SummitDomeImageHandler : MonoBehaviour
         switch (proportionType)
         {
             case "1:1":
-                return mediaType == "VIDEO" || mediaType == "LIVE" ? PMY_Ratio.OneXOneWithoutDes : PMY_Ratio.OneXOneWithDes;
+                return mediaType == "Video" || mediaType == "Live" ? PMY_Ratio.OneXOneWithoutDes : PMY_Ratio.OneXOneWithDes;
             case "16:9":
-                return mediaType == "VIDEO" || mediaType == "LIVE" ? PMY_Ratio.SixteenXNineWithoutDes : PMY_Ratio.SixteenXNineWithDes;
+                return mediaType == "Video" || mediaType == "Live" ? PMY_Ratio.SixteenXNineWithoutDes : PMY_Ratio.SixteenXNineWithDes;
             case "9:16":
-                return mediaType == "VIDEO" || mediaType == "LIVE" ? PMY_Ratio.NineXSixteenWithoutDes : PMY_Ratio.NineXSixteenWithDes;
+                return mediaType == "Video" || mediaType == "Live" ? PMY_Ratio.NineXSixteenWithoutDes : PMY_Ratio.NineXSixteenWithDes;
             case "4:3":
-                return mediaType == "VIDEO" || mediaType == "LIVE" ? PMY_Ratio.FourXThreeWithoutDes : PMY_Ratio.FourXThreeWithDes;
+                return mediaType == "Video" || mediaType == "Live" ? PMY_Ratio.FourXThreeWithoutDes : PMY_Ratio.FourXThreeWithDes;
             default:
-                return mediaType == "VIDEO" || mediaType == "LIVE" ? PMY_Ratio.OneXOneWithoutDes : PMY_Ratio.OneXOneWithDes;
+                return mediaType == "Video" || mediaType == "Live" ? PMY_Ratio.OneXOneWithoutDes : PMY_Ratio.OneXOneWithDes;
         }
     }
 
@@ -174,7 +174,7 @@ public class SummitDomeImageHandler : MonoBehaviour
                 CommonScreen.PotraiteObj.SetActive(false);
                 CommonScreen.ratioReferences[ratioId].l_obj.SetActive(true);
                 CommonScreen.ratioReferences[ratioId].p_obj.SetActive(false);
-                if (domedata.mediaType == "Video")
+                if (domedata.mediaType == "Video" )
                 {
                     _landscapeLoader = CommonScreen.ratioReferences[ratioId].l_Loader.gameObject;
                     _landscapeLoader.SetActive(true);
@@ -182,7 +182,7 @@ public class SummitDomeImageHandler : MonoBehaviour
                     _portraitLoader.SetActive(false);
                     _youtubePlayer = CommonScreen.ratioReferences[ratioId].l_obj.GetComponent<AdvancedYoutubePlayer>();
                     _youtubePlayer.ResetVideoURL();
-                    if (domedata.videoType == "Live")
+                    if (domedata.videoType == "Live" && domedata.isYoutubeUrl)
                     {
                         CommonScreen.ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = false;
                         CommonScreen.ratioReferences[ratioId].l_videoPlayer.enabled = false;
@@ -192,7 +192,7 @@ public class SummitDomeImageHandler : MonoBehaviour
                         _youtubePlayer.VideoId = domedata.mediaUpload;
                         _youtubePlayer.PlayVideo();
                     }
-                    else if (domedata.videoType == "Prerecorded")
+                    else if (domedata.videoType == "Prerecorded" && domedata.isYoutubeUrl)
                     {
                         CommonScreen.ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = true;
                         CommonScreen.ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(true);
@@ -201,8 +201,9 @@ public class SummitDomeImageHandler : MonoBehaviour
                         _youtubePlayer.VideoId = _youtubePlayer.ExtractVideoIdFromUrl(domedata.mediaUpload);
                         _youtubePlayer.PlayVideo();
                     }
-                    else if (domedata.isYoutubeUrl)
+                    else if (!domedata.isYoutubeUrl)
                     {
+                        Debug.Log("Ratio " + ratioId + "  " + domedata.name +"  Video Url " + domedata.mediaUpload);
                         if (CommonScreen.ratioReferences[ratioId].l_PrerecordedPlayer)
                             CommonScreen.ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
 
@@ -212,6 +213,7 @@ public class SummitDomeImageHandler : MonoBehaviour
                         CommonScreen.ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = true;
                         CommonScreen.ratioReferences[ratioId].l_videoPlayer.enabled = true;
                         CommonScreen.ratioReferences[ratioId].l_videoPlayer.url = domedata.mediaUpload;
+                        CommonScreen.ratioReferences[ratioId].l_videoPlayer.prepareCompleted += (vid) => { NFT_Holder_Manager.instance.videoReady(); };
                         CommonScreen.ratioReferences[ratioId].l_videoPlayer.Play();
                     }
 
@@ -231,7 +233,7 @@ public class SummitDomeImageHandler : MonoBehaviour
                     _portraitLoader = CommonScreen.ratioReferences[ratioId].p_Loader.gameObject;
                     _portraitLoader.SetActive(true);
 
-                    if (domedata.videoType == "Live")
+                    if (domedata.videoType == "Live" && domedata.isYoutubeUrl)
                     {
                         CommonScreen.ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = false;
                         CommonScreen.ratioReferences[ratioId].p_videoPlayer.enabled = false;
@@ -240,7 +242,7 @@ public class SummitDomeImageHandler : MonoBehaviour
 
                         CommonScreen.ratioReferences[ratioId].p_LivePlayer.GetComponent<StreamYoutubeVideo>().StreamYtVideo(domedata.mediaUpload, true);
                     }
-                    else if (domedata.videoType == "Prerecorded")
+                    else if (domedata.videoType == "Prerecorded" && domedata.isYoutubeUrl)
                     {
                         CommonScreen.ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = true;
                         CommonScreen.ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(true);
@@ -248,12 +250,14 @@ public class SummitDomeImageHandler : MonoBehaviour
 
                         CommonScreen.ratioReferences[ratioId].p_PrerecordedPlayer.GetComponent<StreamYoutubeVideo>().StreamYtVideo(domedata.mediaUpload, false);
                     }
-                    else if (domedata.isYoutubeUrl)
+                    else if (!domedata.isYoutubeUrl)
                     {
+                        Debug.Log("Ratio " + ratioId + "  " + domedata.name);
                         CommonScreen.ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(false);
                         CommonScreen.ratioReferences[ratioId].p_LivePlayer.SetActive(false);
                         CommonScreen.ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = true;
                         CommonScreen.ratioReferences[ratioId].p_videoPlayer.enabled = true;
+                        CommonScreen.ratioReferences[ratioId].p_videoPlayer.prepareCompleted += (vid) => { NFT_Holder_Manager.instance.videoReady(); };
                         CommonScreen.ratioReferences[ratioId].p_videoPlayer.url = domedata.mediaUpload;
                         CommonScreen.ratioReferences[ratioId].p_videoPlayer.Play();
 

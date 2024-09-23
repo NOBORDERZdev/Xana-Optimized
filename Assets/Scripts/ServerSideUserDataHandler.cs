@@ -91,7 +91,8 @@ public class ServerSideUserDataHandler : MonoBehaviour
                         MainSceneEventHandler.OpenLandingScene?.Invoke();
                         yield break;
                     }
-                   
+
+                    Screen.orientation = ScreenOrientation.Portrait;
                     loadprevious();
 
                     GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();
