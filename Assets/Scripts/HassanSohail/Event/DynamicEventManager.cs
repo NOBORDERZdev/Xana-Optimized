@@ -169,10 +169,18 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                        else
                            ConstantsHolder.userLimit = 10;
 
-                       ConstantsHolder.xanaConstants.builderMapID = int.Parse(envId);
-                       ConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
-                       ConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
-                       WorldItemView.m_EnvName = environmentDetails.data.name;
+                        ConstantsHolder.xanaConstants.builderMapID = int.Parse(envId);
+                        ConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
+                        ConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
+                        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("RooftopParty") || ConstantsHolder.xanaConstants.EnviornmentName.Contains("XanaParty"))
+                        {
+                            ConstantsHolder.xanaConstants.isXanaPartyWorld = true;
+                        }
+                        else
+                        {
+                            ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
+                        }
+                        WorldItemView.m_EnvName = environmentDetails.data.name;
 
                        if (isBuilderScene)
                            WorldManager.instance.JoinBuilderWorld();

@@ -217,6 +217,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        ConstantsHolder.ontriggteredplayerEntered?.Invoke(other.gameObject);
         if (other.tag == "LiveStream")
         {
             Gamemanager._InstanceGM.m_youtubeAudio.volume = 1f;
@@ -254,6 +255,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        ConstantsHolder.ontriggteredplayerExit?.Invoke(other.gameObject);
         if (other.tag == "LiveStream")
         {
             //Gamemanager._InstanceGM.mediaPlayer.AudioVolume = 0;
@@ -835,6 +837,10 @@ public class PlayerController : MonoBehaviour
 
     public void ButtonsToggleOnOff(bool b)
     {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            return;
+        }
         m_FreeFloatCam = b;
         StopBuilderComponent();
         FreeFloatCamCharacterController.gameObject.SetActive(b);
@@ -1067,6 +1073,12 @@ public class PlayerController : MonoBehaviour
                 // UpdateSefieBtn(false);
                 if ((Mathf.Abs(horizontal) <= .85f || Mathf.Abs(vertical) <= .85f)) // walk
                 {
+                    //Avoid player sliding on very low speed
+                    if (currentSpeed <= 1.40)
+                    {
+                        currentSpeed = 1.4f;
+                    }
+
                     if (animator != null)
                     {
                         float walkSpeed = 0.2f * currentSpeed; // Smoothing animator.
@@ -1088,36 +1100,6 @@ public class PlayerController : MonoBehaviour
 
                     characterController.Move(gravityVector * Time.deltaTime);
                 }
-                else if ((Mathf.Abs(horizontal) <= .001f || Mathf.Abs(vertical) <= .001f))
-                {
-                    if (animator != null)
-                    {
-                        animator.SetFloat("Blend", 0.23f * 0, speedSmoothTime, Time.deltaTime);
-                        animator.SetFloat("BlendY", 3f, speedSmoothTime, Time.deltaTime);
-                    }
-                    if (!_IsGrounded) // is in jump
-                    {
-                        //checking moving platform
-                        if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
-                        {
-                            characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
-                        }
-                        characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
-                        gravityVector.y += gravityValue * Time.deltaTime;
-                        characterController.Move(gravityVector * Time.deltaTime);
-                    }
-                    else // walk start state
-                    {
-                        //checking moving platform
-                        if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
-                        {
-                            characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
-                        }
-                        characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
-                        gravityVector.y += gravityValue * Time.deltaTime;
-                        characterController.Move(gravityVector * Time.deltaTime);
-                    }
-                }
             }
         }
         else // Reseating animator to idel when joystick is not moving-----
@@ -1133,7 +1115,7 @@ public class PlayerController : MonoBehaviour
             {
                 characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
             }
-            characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
+            characterController.Move(Vector3.zero);
             gravityVector.y += gravityValue * Time.deltaTime;
             characterController.Move(gravityVector * Time.deltaTime);
 

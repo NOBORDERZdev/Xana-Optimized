@@ -208,8 +208,8 @@ namespace UnityEngine.UI.Extensions
         public void SetScrollContainerPositionOnStaet()
         {
             _scrollStartPosition = _screensContainer.anchoredPosition.x;
-            _scroll_rect.horizontalNormalizedPosition = (float)(10) / (_screens - 1);
-            OnCurrentScreenChange(10);
+            _scroll_rect.horizontalNormalizedPosition = (float)(22) / (_screens - 1);
+            OnCurrentScreenChange(22);
         }
 
         /// <summary>

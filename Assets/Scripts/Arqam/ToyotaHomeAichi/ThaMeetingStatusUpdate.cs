@@ -74,6 +74,10 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     {
         base.OnPlayerEnteredRoom(newPlayer);
 
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            return;
+        }
         NewPlayerSpawned();
     }
 
@@ -94,6 +98,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 
     private void NewPlayerSpawned()
     {
+
         if (PhotonNetwork.IsMasterClient)
         {
             if (_pv != null)

@@ -76,7 +76,10 @@ public class ServerSideUserDataHandler : MonoBehaviour
                     {
                         if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
                         {
-                            Screen.orientation = ScreenOrientation.Portrait;
+                            if (ConstantsHolder.xanaConstants.EnableSignInPanelByDefault)
+                                Screen.orientation = ScreenOrientation.LandscapeLeft;
+                            else
+                                Screen.orientation = ScreenOrientation.Portrait;
                             LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
                         }
                     }
@@ -88,7 +91,8 @@ public class ServerSideUserDataHandler : MonoBehaviour
                         MainSceneEventHandler.OpenLandingScene?.Invoke();
                         yield break;
                     }
-                   
+
+                    Screen.orientation = ScreenOrientation.Portrait;
                     loadprevious();
 
                     GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();

@@ -73,7 +73,8 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
     private void OnDisable()
     {
         BuilderEventManager.AfterPlayerInstantiated -= CheckMicPermission;
-        _punVoiceClient.Client.StateChanged -= VoiceClientStateChanged;
+        if (_punVoiceClient != null)
+            _punVoiceClient.Client.StateChanged -= VoiceClientStateChanged;
     }
 
     private void CheckMicPermission()
@@ -103,7 +104,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
                     StartCoroutine(SetMic());
                 }
 #elif UNITY_IOS
-                if(!Application.HasUserAuthorization(UserAuthorization.Microphone)){
+                if(!Application.HasUserAuthorization(UserAuthorization.Microphone) && PlayerPrefs.GetInt("MicPermission", 0) == 0){
                       PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
                     PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
                     PermissionPopusSystem.Instance.OpenPermissionScreen();
@@ -119,11 +120,22 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
 
     public void SetMicByBtn()
     {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            return;
+        }
         PermissionPopusSystem.Instance.onCloseAction -= SetMicByBtn;
 #if UNITY_IOS
     Application.RequestUserAuthorization(UserAuthorization.Microphone);
 #endif
-        StartCoroutine(SetMic());
+        if (this != null)
+        {
+            StartCoroutine(SetMic());
+        }
+        else
+        {
+            Debug.LogWarning("XanaVoiceChat instance has been destroyed, cannot start SetMic coroutine.");
+        }
     }
 
     private IEnumerator SetMic()
