@@ -3,6 +3,7 @@ using Photon.Pun;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -109,6 +110,11 @@ public class PlayerController : MonoBehaviour
     internal Vector3 desiredMoveDirection;
     internal Vector3 desiredMoveDirectionFPP;
 
+    //Store Player Speed & Jump height data
+    float _defaultJumpHeight = default;
+    float _defaultSprintSpeed = default;
+    float _defaultMoveSpeed = default;
+
     private void OnEnable()
     {
         BuilderEventManager.OnHideOpenSword += HideorOpenSword;
@@ -121,6 +127,12 @@ public class PlayerController : MonoBehaviour
         BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
         BuilderEventManager.AfterPlayerInstantiated += RemoveLayerFromCameraCollider;
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate += SpecialItemPlayerPropertiesUpdate;
+
+        SceneManager.sceneLoaded += SetDefaultPlayerSpeedJumpData;
+
+        _defaultJumpHeight = JumpVelocity;
+        _defaultSprintSpeed = sprintSpeed;
+        _defaultMoveSpeed = movementSpeed;
     }
     private void OnDisable()
     {
@@ -135,6 +147,7 @@ public class PlayerController : MonoBehaviour
         BuilderEventManager.AfterPlayerInstantiated -= RemoveLayerFromCameraCollider;
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate -= SpecialItemPlayerPropertiesUpdate;
 
+        SceneManager.sceneLoaded -= SetDefaultPlayerSpeedJumpData;
     }
 
     void Start()
@@ -2118,5 +2131,15 @@ public class PlayerController : MonoBehaviour
 
         movedPosition = movingPlatform.position - lastMovePlatformPosition;
         lastMovePlatformPosition = movingPlatform.position;
+    }
+
+    void SetDefaultPlayerSpeedJumpData(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        if (scene.name != "Builder")
+        {
+            jumpHeight = _defaultJumpHeight;
+            sprintSpeed = _defaultSprintSpeed;
+            movementSpeed = _defaultMoveSpeed;
+        }
     }
 }
