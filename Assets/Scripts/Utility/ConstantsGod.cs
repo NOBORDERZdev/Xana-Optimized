@@ -354,4 +354,12 @@ public class ConstantsGod
     #region Bundle Update Api
     public static string BUNDLEUPDATEAPI = "/app-bundles/get";
     #endregion
+
+    #region XANA PARTY WORLD Api's
+    public static string API_BASEURL_Penpenz = "https://penpenz-prod.xana.net/";
+    public static string GetXanaPartyWorlds = "/item/v1/get-world-by-world-type/1"; // 1 for xana party and 0 for simple builder  
+    public static string CreateUser_Penpenz = "api/users";
+    public static string GetRankPoints_Penpenz = "api/rankpoints";
+    public static string StartRace_Penpenz = "api/races/start";
+    #endregion
 }

@@ -11,10 +11,11 @@ public class ConstantsHolder : MonoBehaviour
     public static ConstantsHolder xanaConstants;
     public delegate void UserNameToggleDeligate(int userNameToggleConstant);
     public static event UserNameToggleDeligate userNameToggleDelegate;
-
-
+    public static Action<GameObject> ontriggteredplayerEntered;
+    public static Action<GameObject> ontriggteredplayerExit;
     public bool pushToTalk;
     public bool openLandingSceneDirectly;
+    public bool XSummitBg = false;
     public bool SwitchXanaToXSummit = false;
     public static bool IsXSummitApp;
     public bool OpenSpaceScreen_fromSummit = false;
@@ -104,7 +105,6 @@ public class ConstantsHolder : MonoBehaviour
     public bool isBackFromWorld = false;
     public String MuseumID;
 
-    public bool isXanaPartyWorld = false;
     //For Metabuzz Environments
     public enum ComingFrom
     {
@@ -199,6 +199,21 @@ public class ConstantsHolder : MonoBehaviour
     public bool isGoingForHomeScene = false;
     public bool hasToShowDailyPopup = false;
 
+
+    #region XANA PARTY WORLD
+    public bool PenpenzBuild = false;
+    public bool isXanaPartyWorld = false;
+    public bool isJoinigXanaPartyGame = false;
+    public int XanaPartyGameId;
+    public string XanaPartyGameName;
+    public bool isMasterOfGame = false;
+    public static int XanaPartyMaxPlayers = 25;
+    public bool EnableSignInPanelByDefault = false;
+    public bool GameIsFinished = false;
+    public string LastLobbyName;
+    #endregion
+
+
     public string r_EmoteStoragePersistentPath
     {
         get
@@ -211,6 +226,8 @@ public class ConstantsHolder : MonoBehaviour
     public UnityEvent<float> ProgressEvent;
     public UnityEvent<bool> CompletionEvent;
     private AsyncOperationHandle downloadHandle;
+
+
 
     public bool IsProfileVisit = false; // bool to check is player in profile section.
     public int SnsProfileID = 0; // Id of user profile when the user visit the profile section.

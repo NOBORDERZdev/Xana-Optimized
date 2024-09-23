@@ -127,6 +127,14 @@ public class JjWorldChanger : MonoBehaviour
         else if (isBuilderWorld)
         {
             ConstantsHolder.xanaConstants.isBuilderScene = true;
+            if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("RooftopParty") || ConstantsHolder.xanaConstants.EnviornmentName.Contains("XanaParty"))
+            {
+                ConstantsHolder.xanaConstants.isXanaPartyWorld = true;
+            }
+            else
+            {
+                ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
+            }
             if (APIBasepointManager.instance.IsXanaLive)
             {
                 ConstantsHolder.xanaConstants.builderMapID = MainNet;

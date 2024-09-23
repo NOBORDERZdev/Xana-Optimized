@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.9411765, g: 0.9411765, b: 0.9411765, a: 1}
+  m_AmbientSkyColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: a3ce3ccec5754174bb1e23ed417cbc2d, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: e27877c2232158348acfb91365d32251, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -3250,6 +3250,68 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1001 &143286170
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 448302102}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.157
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.282
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.899
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_Name
+      value: Heros Frame Spawn Points (8)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+--- !u!4 &143286171 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+  m_PrefabInstance: {fileID: 143286170}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &143874178
 GameObject:
   m_ObjectHideFlags: 0
@@ -9713,6 +9775,49 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0.1
   m_ShadowAngle: 0
+--- !u!1 &448302101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 448302102}
+  m_Layer: 0
+  m_Name: Heros Frame Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &448302102
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448302101}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 557480326}
+  - {fileID: 1943888626}
+  - {fileID: 827065504}
+  - {fileID: 1914433322}
+  - {fileID: 1586595422}
+  - {fileID: 1965862865}
+  - {fileID: 1573541040}
+  - {fileID: 1775436975}
+  - {fileID: 143286171}
+  - {fileID: 962269106}
+  - {fileID: 1572638450}
+  - {fileID: 1745887859}
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &449396036
 GameObject:
   m_ObjectHideFlags: 0
@@ -11688,6 +11793,68 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1001 &557480325
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 448302102}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.157
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.282
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.899
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_Name
+      value: Heros Frame Spawn Points
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+--- !u!4 &557480326 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+  m_PrefabInstance: {fileID: 557480325}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &559877001
 GameObject:
   m_ObjectHideFlags: 0
@@ -17260,6 +17427,68 @@ Transform:
   m_Father: {fileID: 1054924616}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &827065503
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 448302102}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.157
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.168
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.899
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_Name
+      value: Heros Frame Spawn Points (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+--- !u!4 &827065504 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+  m_PrefabInstance: {fileID: 827065503}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &833610233
 GameObject:
   m_ObjectHideFlags: 0
@@ -19793,6 +20022,68 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0.1
   m_ShadowAngle: 0
+--- !u!1001 &962269105
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 448302102}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.157
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.282
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.672
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_Name
+      value: Heros Frame Spawn Points (9)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+--- !u!4 &962269106 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+  m_PrefabInstance: {fileID: 962269105}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &972296552
 GameObject:
   m_ObjectHideFlags: 0
@@ -32476,6 +32767,130 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1001 &1572638449
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 448302102}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.157
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.168
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.899
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_Name
+      value: Heros Frame Spawn Points (10)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+--- !u!4 &1572638450 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+  m_PrefabInstance: {fileID: 1572638449}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1573541039
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 448302102}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.157
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.168
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.398
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_Name
+      value: Heros Frame Spawn Points (6)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+--- !u!4 &1573541040 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+  m_PrefabInstance: {fileID: 1573541039}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1578344331
 GameObject:
   m_ObjectHideFlags: 0
@@ -32706,6 +33121,68 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1001 &1586595421
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 448302102}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.157
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.282
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.398
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_Name
+      value: Heros Frame Spawn Points (4)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+--- !u!4 &1586595422 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+  m_PrefabInstance: {fileID: 1586595421}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1588322560
 GameObject:
   m_ObjectHideFlags: 0
@@ -36241,6 +36718,68 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0.1
   m_ShadowAngle: 0
+--- !u!1001 &1745887858
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 448302102}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.157
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.168
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.672
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_Name
+      value: Heros Frame Spawn Points (11)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+--- !u!4 &1745887859 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+  m_PrefabInstance: {fileID: 1745887858}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1750218989
 GameObject:
   m_ObjectHideFlags: 0
@@ -36701,6 +37240,68 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0.1
   m_ShadowAngle: 0
+--- !u!1001 &1775436974
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 448302102}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.157
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.168
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.171
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_Name
+      value: Heros Frame Spawn Points (7)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+--- !u!4 &1775436975 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+  m_PrefabInstance: {fileID: 1775436974}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1777188903
 GameObject:
   m_ObjectHideFlags: 0
@@ -39394,6 +39995,68 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0.1
   m_ShadowAngle: 0
+--- !u!1001 &1914433321
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 448302102}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.157
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.168
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.672
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_Name
+      value: Heros Frame Spawn Points (3)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+--- !u!4 &1914433322 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+  m_PrefabInstance: {fileID: 1914433321}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1916159396
 GameObject:
   m_ObjectHideFlags: 0
@@ -39899,6 +40562,68 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1001 &1943888625
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 448302102}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.157
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.282
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.672
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_Name
+      value: Heros Frame Spawn Points (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+--- !u!4 &1943888626 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+  m_PrefabInstance: {fileID: 1943888625}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1951432034
 GameObject:
   m_ObjectHideFlags: 0
@@ -40014,6 +40739,68 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0.1
   m_ShadowAngle: 0
+--- !u!1001 &1965862864
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 448302102}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.157
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.282
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.171
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+      propertyPath: m_Name
+      value: Heros Frame Spawn Points (5)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+--- !u!4 &1965862865 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f114a258c0b39aa479777b61569cb67e, type: 3}
+  m_PrefabInstance: {fileID: 1965862864}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1966529867
 GameObject:
   m_ObjectHideFlags: 0

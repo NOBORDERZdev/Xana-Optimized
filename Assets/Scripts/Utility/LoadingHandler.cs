@@ -106,9 +106,16 @@ public class LoadingHandler : MonoBehaviour
     private float sliderCompleteValue = 0f;
     private float originalWidth;
     public static System.Action CompleteSlider;
-
+    public Sprite Wheelsprite;
     public GameObject SearchLoadingCanvas;
     private CanvasGroup canvasGroup;
+
+    #region XANA Party
+    [Header("XANA Party TELEPORT")]
+    public CanvasGroup XANAPartyFeader;
+    public GameObject XANAPartyLandscape, XANAPartyPotraite;
+    #endregion
+
     bool Autostartslider = false;
     bool completed;
     private void Awake()
@@ -358,7 +365,7 @@ public class LoadingHandler : MonoBehaviour
             {
                 loadingPanel.SetActive(false);
                 await Task.Delay(1000);
-                if (ConstantsHolder.xanaConstants.isBackFromWorld)
+                if (ConstantsHolder.xanaConstants.isBackFromWorld && !ConstantsHolder.xanaConstants.EnableSignInPanelByDefault)
                     Screen.orientation = ScreenOrientation.Portrait;
 
                 ConstantsHolder.xanaConstants.isBackFromWorld = false;
@@ -727,6 +734,52 @@ public class LoadingHandler : MonoBehaviour
             default:
                 break;
         }
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            StartCoroutine(PenpenzLoading(FadeAction.Out));
+        }
+        yield return null;
+    }
+
+
+    public IEnumerator PenpenzLoading(FadeAction action)
+    {
+        // teleportFeader.gameObject.SetActive(true);
+        switch (action)
+        {
+            case FadeAction.Out:
+                XANAPartyFeader.DOFade(0, 0.5f).OnComplete(() =>
+                {
+                    XANAPartyFeader.gameObject.SetActive(false);
+                    XANAPartyLandscape.SetActive(false);
+                    XANAPartyPotraite.SetActive(false);
+                });
+                break;
+            case FadeAction.In:
+                if (ConstantsHolder.xanaConstants != null)
+                {
+                    XANAPartyLandscape.SetActive(!ConstantsHolder.xanaConstants.orientationchanged);
+                    XANAPartyPotraite.SetActive(ConstantsHolder.xanaConstants.orientationchanged);
+                }
+                else
+                {
+                    XANAPartyLandscape.SetActive(true);
+                }
+                if (!XANAPartyFeader.gameObject.activeInHierarchy)
+                {
+                    currentValue = 0;
+                    isLoadingComplete = false;
+                    timer = 0;
+                    //JJLoadingSlider.fillAmount = 0f;
+                    //JJLoadingPercentageText.text = "0%".ToString();
+                }
+
+                XANAPartyFeader.gameObject.SetActive(true);
+                XANAPartyFeader.DOFade(1, 0.5f);
+                break;
+            default:
+                break;
+        }
         yield return null;
     }
 
@@ -751,7 +804,7 @@ public class LoadingHandler : MonoBehaviour
             DomeThumbnail.gameObject.SetActive(true);
             if (AssetCache.Instance.HasFile(info.thumbnail))
             {
-                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.thumbnail);
+                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.thumbnail,changeAspectRatio:true);
 
             }
             else
@@ -954,14 +1007,19 @@ public class LoadingHandler : MonoBehaviour
     }
     public void showApprovalWheelloading()
     {
+
+        DomeThumbnail.gameObject.SetActive(true);
+        DomeThumbnail.sprite = Wheelsprite;
         ResetLoadingValues();
-        DomeThumbnail.gameObject.SetActive(false);
+      
         DomeLoading.SetActive(true);
         DomeName.text = "Giant Wheel";
         DomeDescription.text = "Giant Wheel";
         DomeCreator.text = "XANA";
         DomeType.text = "Entertainment";
-        DomeCategory.text = "Entertainment";
+        DomeID.text = "-";
+        DomeVisitedCount.text = "-";
+        DomeCategory.text = "Adventure";
  
         ApprovalUI.SetActive(true);
         DomeLodingUI.SetActive(false);

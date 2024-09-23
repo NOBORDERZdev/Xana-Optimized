@@ -47,6 +47,18 @@ public class GamePlayUIHandler : MonoBehaviour
     public GameObject currentPortalObject;
     public TextMeshProUGUI JJPortalPopupText;
     public string[] JJPortalPopupTextData;
+
+    #region XANA PARTY WORLD
+    [Header("Penpenz Leaderboard")]
+    public Text MyRankText;
+    public Text MyPointsText;
+    public GameObject LeaderboardPanel;
+    public GameObject PlayerLeaderboardStatsContainer;
+    public GameObject PlayerLeaderboardStatsPrefab;
+    public GameObject MoveToLobbyBtn;
+    public GameObject SignInPopupForGuestUser;
+    #endregion
+
     private void Start()
     {
         if (rotateOrientationLand)
@@ -58,6 +70,8 @@ public class GamePlayUIHandler : MonoBehaviour
     {
         if (_inst != this)
             _inst = this;
+
+        ConstantsHolder.xanaConstants.EnableSignInPanelByDefault = false;
     }
     void ChangeOrientation()
     {
@@ -89,6 +103,7 @@ public class GamePlayUIHandler : MonoBehaviour
 
     public void OnExitButtonClick()
     {
+        ConstantsHolder.xanaConstants.LastLobbyName = "";
         GamePlayButtonEvents.inst.OnExitButtonClick();
     }
 
@@ -235,4 +250,32 @@ public class GamePlayUIHandler : MonoBehaviour
         currentPortalObject = obj;
         JJPortalPopup.SetActive(true);
     }
+
+    #region XANA PARTY WORLD
+    public void MoveToLobbyBtnClick()
+    {
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().RaceStartWithPlayers = 0;
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PlayerIDs.Clear();
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().WinnerPlayerIds.Clear();
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().RaceFinishTime.Clear();
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().isLeaderboardShown = false;
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().ResetGame();
+        ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
+        ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
+        ConstantsHolder.xanaConstants.LastLobbyName = "";
+        //StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().MoveToLobby());
+        LeaderboardPanel.SetActive(false);
+        //ReferencesForGamePlay.instance.SetGameplayForPenpenz(true);
+        GamePlayButtonEvents.inst.OnExitButtonClick();
+    }
+
+    public void OnSignInBtnClick()
+    {
+        LoadingHandler.Instance.ShowLoading(); 
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        ConstantsHolder.xanaConstants.EnableSignInPanelByDefault = true;
+        GameplayEntityLoader.instance._uiReferences.LoadMain(false);
+        SignInPopupForGuestUser.SetActive(false);
+    }
+    #endregion
 }
