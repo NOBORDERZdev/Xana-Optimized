@@ -598,12 +598,13 @@ namespace Photon.Pun.Demo.PunBasics
 
         public async void Ontriggered(string SectorName, bool isWheel = false)
         {
-            if (SectorName == this.SectorName || (disableSector && !isWheel) || ConstantsHolder.DiasableMultiPartPhoton) return;
+          
 
             while (isShifting)
             {
                 await Task.Delay(1000);
             }
+            if (SectorName == this.SectorName || (disableSector && !isWheel) || ConstantsHolder.DiasableMultiPartPhoton) return;
 
             isShifting = true;
             var player = ReferencesForGamePlay.instance.m_34player;
