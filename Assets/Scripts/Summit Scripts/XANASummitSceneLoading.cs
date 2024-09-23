@@ -417,6 +417,11 @@ public class XANASummitSceneLoading : MonoBehaviour
         ConstantsHolder.visitorCount =await dataContainer.GetVisitorCount(subWorldInfo.id);
         LoadingHandler.Instance.showDomeLoading(subWorldInfo);
 
+        if(GamePlayUIHandler.inst.LeaderboardPanel.activeInHierarchy)
+        {
+            GamePlayUIHandler.inst.LeaderboardPanel.SetActive(false);
+        }
+
         playerPos = subWorldInfo.playerTrasnform[0];
         playerRot = subWorldInfo.playerTrasnform[1];
         playerScale = subWorldInfo.playerTrasnform[2];
