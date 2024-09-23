@@ -49,7 +49,7 @@ public class SummitDomeNFTDataController : MonoBehaviour
     string _Aurthor;
     string _Des;
     string _URL;
-    Texture2D _image;
+    Texture _image;
     DataType _Type;
     string _VideoLink;
     VideoTypeRes _videoType;
@@ -343,7 +343,7 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
         _jjAssetObj.updatedAt = _domeNFTDataObj.updatedAt;
 
     }
-    public void SetInfo(JjRatio ratio, string title, string aurthur, string des, string url, Texture2D image, DataType type, string videoLink, VideoTypeRes videoType, int nftId = 0, SummitVideoAndImageController.MuseumType museumType = SummitVideoAndImageController.MuseumType.AtomMuseum, int roomNum = 1)
+    public void SetInfo(JjRatio ratio, string title, string aurthur, string des, string url, Texture image, DataType type, string videoLink, VideoTypeRes videoType, int nftId = 0, SummitVideoAndImageController.MuseumType museumType = SummitVideoAndImageController.MuseumType.AtomMuseum, int roomNum = 1)
     {
         nftTitle = title;
         _Ratio = ratio;
