@@ -11,12 +11,14 @@ GameObject:
   - component: {fileID: 2553996470447066700}
   - component: {fileID: 1503716116861960681}
   - component: {fileID: 3691459239320401187}
+  - component: {fileID: 3709027756989379162}
+  - component: {fileID: 9029184080459368153}
   m_Layer: 0
   m_Name: STU_DJ
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2553996470447066700
 Transform:
@@ -25,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2898716096425694454}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -61,9 +63,11 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2550a5d26934fdd49a686bcdf9537f33, type: 2}
   - {fileID: 2100000, guid: d0ebebcd36e880c41bd4834d7fd8c371, type: 2}
   - {fileID: 2100000, guid: c71df1e57945e0045a327b87901f0044, type: 2}
+  - {fileID: 2100000, guid: c71df1e57945e0045a327b87901f0044, type: 2}
+  - {fileID: 2100000, guid: c71df1e57945e0045a327b87901f0044, type: 2}
+  - {fileID: 2100000, guid: 9d6f27dc172ba1f4eb583f06e5035a62, type: 2}
   - {fileID: 2100000, guid: 9d6f27dc172ba1f4eb583f06e5035a62, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -86,3 +90,31 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3709027756989379162
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2898716096425694454}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6026125434368459451, guid: 4ac462dfa9da3ae43a48218446fc4811, type: 3}
+--- !u!114 &9029184080459368153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2898716096425694454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: STU_DJ
+  objectPriority: 0
