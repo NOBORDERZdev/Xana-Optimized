@@ -25,6 +25,7 @@ Material:
   m_ValidKeywords:
   - _EMISSION
   - _METALLICSPECGLOSSMAP
+  - _OCCLUSIONMAP
   - _SPECULARHIGHLIGHTS_OFF
   m_InvalidKeywords: []
   m_LightmapFlags: 0
@@ -90,7 +91,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 9d17ea4fe1dba0e4c973332dc884ccb6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -167,7 +168,7 @@ Material:
     - _METALNESS: 0
     - _Metallic: 0.116
     - _Mode: 0
-    - _OcclusionStrength: 1
+    - _OcclusionStrength: 0.65
     - _OpaqueCullMode: 2
     - _Parallax: 0.02
     - _QueueControl: 0
@@ -182,7 +183,7 @@ Material:
     - _RefractionModel: 0
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
-    - _Smoothness: 0.82
+    - _Smoothness: 0.85
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 0
     - _SrcBlend: 1
