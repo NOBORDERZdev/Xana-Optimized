@@ -531,6 +531,7 @@ public class ReferencesForGamePlay : MonoBehaviour, IInRoomCallbacks, IMatchmaki
         }
         else
         {
+            minimap.SetActive(false);
             MinimapSummit.SetActive(false);
         }
     }
