@@ -815,10 +815,11 @@ public class XanaWorldDownloader : MonoBehaviour
         isfailedObjectsDownloaded = false;
         isSpawnDownloaded = false;
 
-        cts.Cancel();
+        if (cts != null)
+            cts.Cancel();
         xanaWorldDownloader.ResetDisplayDownloadText();
         xanaWorldDownloader.StopAllCoroutines();
-
+        LoadingHandler.Instance.HideLoading();
         //AssetBundle.UnloadAllAssetBundles(false);
         //Caching.ClearCache();
         //Addressables.CleanBundleCache();

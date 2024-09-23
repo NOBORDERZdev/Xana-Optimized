@@ -94,7 +94,7 @@ public class UserLoginSignupManager : MonoBehaviour
     EyesBlinking ref_EyesBlinking;
     [Header("Bools Fields")]
     private bool _isUserClothDataFetched = false;
-
+    public XSummitBgChange XSummitBgChange;
     public float DisplayNameFieldMoveUpValue = 500f; // Distance to move the input field up
     Vector2 _originalPosition;
     AdvancedInputField _displayNameInputField;
