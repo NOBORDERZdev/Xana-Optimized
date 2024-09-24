@@ -85,10 +85,20 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         //    await PlayVideoAsync();
         //}
     }
+
+    private void Start()
+    {
+        SummitDomeNFTDataController.Instance.VideoOpened += StopVideoSound;
+        SummitDomeNFTDataController.Instance.NFTClosed += PlayVideoSound;
+    }
+
     private void OnDisable()
     {
         AvatarSpawnerOnDisconnect.OninternetDisconnect -= OnInternetDisconnect;
         AvatarSpawnerOnDisconnect.OninternetConnected -= OnInternetConnect;
+
+        SummitDomeNFTDataController.Instance.VideoOpened -= StopVideoSound;
+        SummitDomeNFTDataController.Instance.NFTClosed -= PlayVideoSound;
     }
 
     public async void PlayVideo()
@@ -491,5 +501,18 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         AVProVideoPlayer.OpenMedia(new MediaPath("", MediaPathType.AbsolutePathOrURL),false);
     }
 
+    private void StopVideoSound()
+    {
+        this.VideoPlayer.SetDirectAudioMute(0, true);
+        this.VideoPlayer1.SetDirectAudioMute(0, true);
+        AVProVideoPlayer.AudioMuted = true;
+    }
+
+    private void PlayVideoSound()
+    {
+        this.VideoPlayer.SetDirectAudioMute(0, false);
+        this.VideoPlayer1.SetDirectAudioMute(0, false);
+        AVProVideoPlayer.AudioMuted = false;
+    }
 
 }

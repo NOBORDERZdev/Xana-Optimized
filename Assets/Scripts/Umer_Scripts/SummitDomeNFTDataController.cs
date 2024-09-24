@@ -34,6 +34,9 @@ public class SummitDomeNFTDataController : MonoBehaviour
     public GalleryImageManager NFTDataHandlerScrptRef;
     public DomeNFTDataArray DoomNFTData;
     public int RoomCount;
+    public System.Action VideoOpened;
+    public System.Action NFTClosed;
+
     [SerializeField] bool worldPlayingVideos;
     [SerializeField] int RetryChances = 3;
     [NonReorderable]
@@ -490,6 +493,8 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
                     //ratioReferences[ratioId].p_videoPlayer.Play();
 
                 }
+
+                VideoOpened?.Invoke();
             }
             else// For portrait images
             {
@@ -606,7 +611,9 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
         {
             SoundSettings.soundManagerSettings.bgmSource.mute = false;
         }
+        NFTClosed?.Invoke();
     }
+
     IEnumerator GetNFTDatAForDynamicMuseum()
     {
         while (Application.internetReachability == NetworkReachability.NotReachable)
