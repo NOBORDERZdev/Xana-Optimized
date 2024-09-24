@@ -35,6 +35,7 @@ public class SubWorldPrefab : MonoBehaviour
 
     IEnumerator DownloadTexture()
     {
+        ThumbnailUrl = ThumbnailUrl + "?width=512?height=256";
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(ThumbnailUrl);
         request.SendWebRequest();
         while(!request.isDone)

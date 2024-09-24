@@ -104,6 +104,10 @@ public class GamePlayUIHandler : MonoBehaviour
     public void OnExitButtonClick()
     {
         ConstantsHolder.xanaConstants.LastLobbyName = "";
+        if (ConstantsHolder.isFromXANASummit)
+        {
+            ConstantsHolder.IsSummitDomeWorld = false;
+        }
         GamePlayButtonEvents.inst.OnExitButtonClick();
     }
 

@@ -128,7 +128,7 @@ public class XANASummitSceneLoading : MonoBehaviour
             {
                 await Task.Delay(1000);
             }
-            if (!LoadingHandler.Instance.enter) { return; }
+            if (!LoadingHandler.Instance.enter) { ConstantsHolder.DiasableMultiPartPhoton = false; return; }
 
             LoadingHandler.Instance.enter = false;
 
@@ -289,7 +289,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         {
             await Task.Delay(1000);
         }
-        if (!LoadingHandler.Instance.enter) { return; }
+        if (!LoadingHandler.Instance.enter) { ConstantsHolder.DiasableMultiPartPhoton = false; return; }
 
         LoadingHandler.Instance.enter = false;
 
