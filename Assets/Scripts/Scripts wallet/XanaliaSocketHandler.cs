@@ -135,7 +135,7 @@ public class XanaliaSocketHandler : MonoBehaviour
 
     void OnError(CustomError args)
     {
-        //Debug.LogError("SocketHandler OnError");
+        socketConnected = false;
         Debug.LogError(string.Format("Error: {0}", args.ToString()));
     }
     
