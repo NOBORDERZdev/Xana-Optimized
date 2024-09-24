@@ -276,7 +276,149 @@ public class AvatarController : MonoBehaviour
         }
         Custom_InitializeAvatar(_tempdata);
     }
-   
+
+    public bool isStitchedSuccessfully;
+    public SavingCharacterDataClass clothDataClass = new SavingCharacterDataClass();
+    public List<string> clothsList = new List<string>();
+    public Coroutine clothsStichedOrNotCoroutine;
+
+    public void CheckClothsStitchedOrNot(string cJson)
+    {
+        if (clothsStichedOrNotCoroutine != null)
+        {
+            StopCoroutine(clothsStichedOrNotCoroutine);
+        }
+        clothsStichedOrNotCoroutine = StartCoroutine(IECheckClothsStitchedOrNot(cJson));
+    }
+
+    public IEnumerator IECheckClothsStitchedOrNot(string cJson)
+    {
+        float timeWithoutCloth = 0f;
+        HandleCharacterParts(false);
+        clothJson = cJson;
+        if (!string.IsNullOrEmpty(clothJson))
+        {
+            clothsList.Clear();
+            isStitchedSuccessfully = false;
+            SavingCharacterDataClass clothDataClass = JsonUtility.FromJson<SavingCharacterDataClass>(clothJson);
+            if (clothDataClass.myItemObj.Count == 0)
+            {
+                HandleCloths(true);
+                HandleCharacterParts(true);
+            }
+            else
+            {
+                if (clothDataClass.gender == "Male")
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (i < clothDataClass.myItemObj.Count)
+                        {
+                            clothsList.Add(clothDataClass.myItemObj[i].ItemName);
+                        }
+                    }
+                }
+                else if (clothDataClass.gender == "Female")
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (i < clothDataClass.myItemObj.Count)
+                        {
+                            clothsList.Add(clothDataClass.myItemObj[i].ItemName);
+                        }
+                    }
+                }
+
+                while (!ConstantsHolder.isAddressableCatalogDownload)
+                {
+                    yield return new WaitForSeconds(1f);
+                }
+                while (!isClothStichedOrNot(clothsList, this))
+                {
+                    HandleCloths(false);
+                    yield return new WaitForSeconds(1);
+
+                    timeWithoutCloth += 1;
+                    if (timeWithoutCloth > 10)
+                    {
+                        Custom_InitializeAvatar();
+                        yield break;
+                    }
+                }
+
+                if (isClothStichedOrNot(clothsList, this))
+                {
+                    HandleCloths(true);
+                    HandleCharacterParts(true);
+                    isStitchedSuccessfully = true;
+                }
+            }
+        }
+        else
+        {
+            HandleCharacterParts(true);
+        }
+        clothsStichedOrNotCoroutine = null;
+    }
+
+
+    public void HandleCharacterParts(bool active)
+    {
+        /*if (characterBodyParts.eyeShadow != null)
+        {
+            characterBodyParts.eyeShadow.enabled = active;
+        }
+        characterBodyParts.head.enabled = characterBodyParts.body.enabled = active;*/
+    }
+
+    public void HandleCloths(bool active)
+    {
+        /*if (wornHair != null)
+        {
+            wornHair.SetActive(active);
+        }
+        if (wornShirt != null)
+        {
+            wornShirt.SetActive(active);
+        }
+        if (wornPant != null)
+        {
+            wornPant.SetActive(active);
+        }
+        if (wornShoes != null)
+        {
+            wornShoes.SetActive(active);
+        }*/
+    }
+    public bool isClothStichedOrNot(List<string> clothsList, AvatarController avatar)
+    {
+        if (clothsList.Count == 0)
+        {
+            return true;
+        }
+        string pant = "";
+        string shirt = "";
+        string hair = "";
+        string shoes = "";
+        if (avatar.wornPant != null)
+        {
+            pant = avatar.wornPant.name;
+        }
+        if (avatar.wornShirt != null)
+        {
+            shirt = avatar.wornShirt.name;
+        }
+        if (avatar.wornHair != null)
+        {
+            hair = avatar.wornHair.name;
+        }
+        if (avatar.wornShoes != null)
+        {
+            shoes = avatar.wornShoes.name;
+        }
+        return clothsList[0] == pant && clothsList[1] == shirt && clothsList[2] == hair;
+    }
+
     /// <summary>
     /// Downloading Random Preset
     /// </summary>
@@ -988,7 +1130,7 @@ public class AvatarController : MonoBehaviour
     /// <summary>
     /// Setting Character from localJson neither than server
     /// </summary>
-    void BuildCharacterFromLocalJson()
+    public void BuildCharacterFromLocalJson()
     {
         SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
         _CharacterData = new SavingCharacterDataClass();
@@ -1700,6 +1842,8 @@ public class AvatarController : MonoBehaviour
                 if (isLoadStaticClothFromJson)
                 {
                     _CharacterData = _CharacterData.CreateFromJSON(staticClothJson);
+                    if (!ConstantsHolder.xanaConstants.isStoreActive) // Changing Hair no need to apply color from file
+                        StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.HairColor, SliderType.HairColor, applyOn));
                 }
                 else
                 {
