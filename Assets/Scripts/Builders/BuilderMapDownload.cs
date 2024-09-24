@@ -80,7 +80,6 @@ public class BuilderMapDownload : MonoBehaviour
         if (GamificationComponentData.instance.aiSkyMaterial != null)
             Destroy(GamificationComponentData.instance.aiSkyMaterial.mainTexture); // AR changes
         RenderSettings.skybox = null;
-        BuilderEventManager.ApplyDefaultPlayerProperties?.Invoke();
     }
 
     private void Start()

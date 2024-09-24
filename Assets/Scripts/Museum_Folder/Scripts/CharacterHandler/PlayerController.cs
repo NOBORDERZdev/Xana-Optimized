@@ -125,7 +125,6 @@ public class PlayerController : MonoBehaviour
 
         //Update jump height according to builder
         BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
-        BuilderEventManager.ApplyDefaultPlayerProperties += ApplyDefaultPlayerProperties;
         BuilderEventManager.AfterPlayerInstantiated += RemoveLayerFromCameraCollider;
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate += SpecialItemPlayerPropertiesUpdate;
 
@@ -1426,11 +1425,6 @@ public class PlayerController : MonoBehaviour
 
 
     }
-    private void ApplyDefaultPlayerProperties()
-    {
-        JumpVelocity = _defaultJumpHeight;
-        sprintSpeed = _defaultSprintSpeed;
-    }
 
     void SpecialItemPlayerPropertiesUpdate(float jumpValue, float playerSpeed)
     {
@@ -2144,7 +2138,7 @@ public class PlayerController : MonoBehaviour
     {
         if (scene.name != "Builder")
         {
-            jumpHeight = _defaultJumpHeight;
+            JumpVelocity = _defaultJumpHeight;
             sprintSpeed = _defaultSprintSpeed;
             movementSpeed = _defaultMoveSpeed;
         }
