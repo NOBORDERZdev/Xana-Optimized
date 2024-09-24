@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using UnityEngine.Networking;
 using SimpleJSON;
 using UnityEngine.SceneManagement;
+//using UnityEditor.SceneManagement;
 
 public class UIHandler : MonoBehaviour
 {
@@ -134,9 +135,13 @@ public class UIHandler : MonoBehaviour
         }
         else 
         {
-            SplashScreenXana.SetActive(false);
-            SplashScreenSummit.SetActive(true);
-            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            //added condition because above code causes issue in reconnection (keep orientation in portrait mode)
+            if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft) 
+            {
+                SplashScreenXana.SetActive(false);
+                SplashScreenSummit.SetActive(true);
+                Screen.orientation = ScreenOrientation.LandscapeLeft;
+            }
         }
         if (SaveCharacterProperties.NeedToShowSplash == 1)
         {
