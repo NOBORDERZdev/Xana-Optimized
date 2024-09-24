@@ -86,9 +86,10 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
             // Already Called For Landscape no need to call again.
             if (Application.isEditor)
             {
-                PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
-                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
-                PermissionPopusSystem.Instance.OpenPermissionScreen();
+                SetMicByBtn();
+                //PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
+                //PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
+                //PermissionPopusSystem.Instance.OpenPermissionScreen();
             }
             else
             {

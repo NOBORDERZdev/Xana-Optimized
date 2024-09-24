@@ -27,7 +27,7 @@ public class SummitAIChatHandler : MonoBehaviour
     private bool ChatActivated;
     private bool GetFirstNPCMessage;
 
-    public static int NPCCount=0;
+    public static int NPCCount = 0;
     private void OnEnable()
     {
         NPCCount = 0;
@@ -63,7 +63,7 @@ public class SummitAIChatHandler : MonoBehaviour
 
     void LoadNPC()
     {
-        if (ConstantsHolder.isFromXANASummit && !_NPCInstantiated)
+        if (ConstantsHolder.isFromXANASummit && ConstantsHolder.IsSummitDomeWorld && !_NPCInstantiated)
         {
             _NPCInstantiated = true;
             SummitNPC = false;
@@ -95,7 +95,7 @@ public class SummitAIChatHandler : MonoBehaviour
             if (XANASummitDataContainer.aiData.npcData[i].isAvatarPerformer)
                 continue;
             GameObject AINPCAvatar;
-            if (XANASummitDataContainer.aiData.npcData[i].avatarId > 10)
+            if (GetAvatarGender(XANASummitDataContainer.aiData.npcData[i].avatarCategory) == "female")
                 AINPCAvatar = Instantiate(XANASummitDataContainer.femaleAIAvatar);
             else
                 AINPCAvatar = Instantiate(XANASummitDataContainer.maleAIAvatar);
@@ -116,10 +116,20 @@ public class SummitAIChatHandler : MonoBehaviour
         {
             ReferencesForGamePlay.instance.SetPlayerCounter();
         }
-        catch(Exception e)
+        catch (Exception e)
         {
 
         }
+    }
+
+    string GetAvatarGender(string AvatarJson)
+    {
+        SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
+        _CharacterData = _CharacterData.CreateFromJSON(AvatarJson);
+        if (string.IsNullOrEmpty(AvatarJson))
+            return "male";
+        else
+            return _CharacterData.gender;
     }
 
     void InstantiateSummitAINPC()
@@ -171,7 +181,7 @@ public class SummitAIChatHandler : MonoBehaviour
         OpenChatBox();
         ChatActivated = true;
         //foreach (string msg in welcomeMsgs)
-           // _CommonChatRef.DisplayMsg_FromSocket(npcName, msg);
+        // _CommonChatRef.DisplayMsg_FromSocket(npcName, msg);
     }
 
     void RemoveAIChat(int npcId)
@@ -239,36 +249,40 @@ public class SummitAIChatHandler : MonoBehaviour
         else
         {
             GetFirstNPCMessage = false;
-            url = npcURL + "&usr_id=" + ConstantsHolder.userId + "&input_string="+s;
+            url = npcURL + "&usr_id=" + ConstantsHolder.userId + "&input_string=" + s;
         }
 
         ClearInputField();
-     
+
         string response = await GetAIResponse(url);
-     
-        if(ChatActivated)
+
+        if (ChatActivated)
         {
             string res = JsonUtility.FromJson<AIResponse>(response).data;
 
             //_CommonChatRef.DisplayMsg_FromSocket(npcName, res);
             ChatSocketManagerInstance.AddNewMsg(npcName, res, "NPC", "NPC", 0);
         }
-        
+
     }
 
     async Task<string> GetAIResponse(string url)
     {
-        UnityWebRequest www = UnityWebRequest.Get(url);
-        await www.SendWebRequest();
-        while (!www.isDone)
-            await System.Threading.Tasks.Task.Yield();
-
-        if (www.result == UnityWebRequest.Result.ConnectionError)
+        using UnityWebRequest www = UnityWebRequest.Get(url);
         {
-            return www.error;
+            await www.SendWebRequest();
+            while (!www.isDone)
+                await System.Threading.Tasks.Task.Yield();
+
+            if (www.result == UnityWebRequest.Result.ConnectionError)
+            {
+                return www.error;
+            }
+            else
+                return www.downloadHandler.text;
         }
-        else
-            return www.downloadHandler.text;
+
+
     }
 
 
