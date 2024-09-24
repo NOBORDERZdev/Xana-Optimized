@@ -360,7 +360,11 @@ namespace Photon.Pun
             {
                 if (this.m_SynchronizeLayers[i].SynchronizeType == SynchronizeType.Continuous)
                 {
-                    this.m_Animator.SetLayerWeight(this.m_SynchronizeLayers[i].LayerIndex, (float) this.m_StreamQueue.ReceiveNext());
+                    object receivedData = this.m_StreamQueue.ReceiveNext();
+                    if (receivedData is float layerWeight)
+                    {
+                        this.m_Animator.SetLayerWeight(this.m_SynchronizeLayers[i].LayerIndex, layerWeight);
+                    }
                 }
             }
 
@@ -370,19 +374,32 @@ namespace Photon.Pun
 
                 if (parameter.SynchronizeType == SynchronizeType.Continuous)
                 {
+                    object receivedData = this.m_StreamQueue.ReceiveNext();
                     switch (parameter.Type)
                     {
                         case ParameterType.Bool:
-                            this.m_Animator.SetBool(parameter.Name, (bool) this.m_StreamQueue.ReceiveNext());
+                            if (receivedData is bool boolValue)
+                            {
+                                this.m_Animator.SetBool(parameter.Name, boolValue);
+                            }
                             break;
                         case ParameterType.Float:
-                            this.m_Animator.SetFloat(parameter.Name, (float) this.m_StreamQueue.ReceiveNext());
+                            if (receivedData is float floatValue)
+                            {
+                                this.m_Animator.SetFloat(parameter.Name, floatValue);
+                            }
                             break;
                         case ParameterType.Int:
-                            this.m_Animator.SetInteger(parameter.Name, (int) this.m_StreamQueue.ReceiveNext());
+                            if (receivedData is int intValue)
+                            {
+                                this.m_Animator.SetInteger(parameter.Name, intValue);
+                            }
                             break;
                         case ParameterType.Trigger:
-                            this.m_Animator.SetBool(parameter.Name, (bool) this.m_StreamQueue.ReceiveNext());
+                            if (receivedData is bool triggerValue)
+                            {
+                                this.m_Animator.SetBool(parameter.Name, triggerValue);
+                            }
                             break;
                     }
                 }
