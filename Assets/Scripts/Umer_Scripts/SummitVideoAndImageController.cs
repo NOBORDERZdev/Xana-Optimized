@@ -41,6 +41,7 @@ public class SummitVideoAndImageController : MonoBehaviour
     [SerializeField] Material imageMat;
     [SerializeField] bool applyVideoMesh; // If play video on mesh 
     [SerializeField] VideoPlayer videoMesh;
+    [HideInInspector]
     public Texture _texture;
     private StreamYoutubeVideo streamYoutubeVideo;
     RenderTexture renderTexture_temp;
@@ -197,7 +198,6 @@ public class SummitVideoAndImageController : MonoBehaviour
 
         if(_texture != null)
         {
-            Debug.LogError("Texture Assigned");
             if (SummitDomeNFTDataController.Instance && img != null)
                 SummitDomeNFTDataController.Instance.NFTLoadedSprites.Add(img.texture);
 
