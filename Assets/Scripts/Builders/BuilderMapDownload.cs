@@ -80,6 +80,7 @@ public class BuilderMapDownload : MonoBehaviour
         if (GamificationComponentData.instance.aiSkyMaterial != null)
             Destroy(GamificationComponentData.instance.aiSkyMaterial.mainTexture); // AR changes
         RenderSettings.skybox = null;
+        BuilderEventManager.ApplyDefaultPlayerProperties?.Invoke();
     }
 
     private void Start()
@@ -694,6 +695,8 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.ApplyPlayerProperties?.Invoke(levelData.playerProperties.jumpMultiplier, levelData.playerProperties.speedMultiplier);
         //Invoke(nameof(XanaSetItemData), 1.5f);
     }
+
+
 
     void XanaSetItemData()
     {

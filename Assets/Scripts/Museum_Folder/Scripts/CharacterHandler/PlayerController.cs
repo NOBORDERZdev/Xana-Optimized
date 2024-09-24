@@ -125,6 +125,7 @@ public class PlayerController : MonoBehaviour
 
         //Update jump height according to builder
         BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
+        BuilderEventManager.ApplyDefaultPlayerProperties += ApplyDefaultPlayerProperties;
         BuilderEventManager.AfterPlayerInstantiated += RemoveLayerFromCameraCollider;
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate += SpecialItemPlayerPropertiesUpdate;
 
@@ -1424,6 +1425,11 @@ public class PlayerController : MonoBehaviour
         GamificationComponentData.instance.buildingDetect.DefaultSpeedStore();
 
 
+    }
+    private void ApplyDefaultPlayerProperties()
+    {
+        JumpVelocity = _defaultJumpHeight;
+        sprintSpeed = _defaultSprintSpeed;
     }
 
     void SpecialItemPlayerPropertiesUpdate(float jumpValue, float playerSpeed)

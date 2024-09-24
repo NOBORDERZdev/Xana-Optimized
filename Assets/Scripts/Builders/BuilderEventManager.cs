@@ -15,6 +15,7 @@ public static class BuilderEventManager
     public static Action ApplySkyoxSettings;
 
     public static Action<float, float> ApplyPlayerProperties;
+    public static Action ApplyDefaultPlayerProperties;
 
     public static Action AfterMapDataDownloaded;
     public static Action<string> XanaMapDataDownloaded;
