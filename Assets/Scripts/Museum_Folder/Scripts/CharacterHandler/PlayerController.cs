@@ -1223,7 +1223,7 @@ public class PlayerController : MonoBehaviour
         if (EmoteAnimationHandler.Instance.animatorremote != null && ReferencesForGamePlay.instance.m_34player.GetComponent<Animator>().GetBool("EtcAnimStart"))    //Added by Ali Hamza
             ReferencesForGamePlay.instance.m_34player.GetComponent<RpcManager>().BackToIdleAnimBeforeJump();
 
-        if (ReferencesForGamePlay.instance.m_34player)
+        if (ReferencesForGamePlay.instance.m_34player && _IsGrounded)
         {
             ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.JumpSound);
         }
