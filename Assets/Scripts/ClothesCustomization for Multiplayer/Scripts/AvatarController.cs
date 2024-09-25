@@ -1554,71 +1554,71 @@ public class AvatarController : MonoBehaviour
     /// <param name="gender"></param>
     public void WearDefaultItem(string type, GameObject applyOn, string gender)
     {
-        //CharacterBodyParts bodyParts = characterBodyParts;
+        CharacterBodyParts bodyParts = characterBodyParts;
 
-        ////Debug.Log("Item: " + type + " --- Gender: " + gender);
+        //Debug.Log("Item: " + type + " --- Gender: " + gender);
 
-        //if (gender.IsNullOrEmpty())
-        //{
-        //    if (applyOn.name.Contains("Female", System.StringComparison.CurrentCultureIgnoreCase))
-        //        gender = "Female";
-        //    else
-        //        gender = "Male";
-        //}
+        if (gender.IsNullOrEmpty())
+        {
+            if (applyOn.name.Contains("Female", System.StringComparison.CurrentCultureIgnoreCase))
+                gender = "Female";
+            else
+                gender = "Male";
+        }
 
 
-        //if (itemDatabase== null)
-        //{
-        //    itemDatabase = DefaultClothDatabase.instance;
-        //}
-        //if (gender == "Male") // if avatar is Male
-        //{
-        //    switch (type)
-        //    {
-        //        case "Legs":
-        //            if (itemDatabase.maleAvatarDefaultCostume.DefaultPent != null)
-        //                StichItem(-1, itemDatabase.maleAvatarDefaultCostume.DefaultPent, type, applyOn);
-        //            break;
-        //        case "Chest":
-        //            if (itemDatabase.maleAvatarDefaultCostume.DefaultShirt != null)
-        //                StichItem(-1, itemDatabase.maleAvatarDefaultCostume.DefaultShirt, type, applyOn);
-        //            break;
-        //        case "Feet":
-        //            if (itemDatabase.maleAvatarDefaultCostume.DefaultShoes != null)
-        //                StichItem(-1, itemDatabase.maleAvatarDefaultCostume.DefaultShoes, type, applyOn);
-        //            break;
-        //        case "Hair":
-        //            if (itemDatabase.maleAvatarDefaultCostume.DefaultHair != null)
-        //                StichItem(-1, itemDatabase.maleAvatarDefaultCostume.DefaultHair, type, applyOn);
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
-        //else if (gender == "Female") // if avatar is female
-        //{
-        //    switch (type)
-        //    {
-        //        case "Legs":
-        //            if (itemDatabase.femaleAvatarDefaultCostume.DefaultPent != null)
-        //                StichItem(-1, itemDatabase.femaleAvatarDefaultCostume.DefaultPent, type, applyOn);
-        //            break;
-        //        case "Chest":
-        //            if (itemDatabase.femaleAvatarDefaultCostume.DefaultShirt != null)
-        //                StichItem(-1, itemDatabase.femaleAvatarDefaultCostume.DefaultShirt, type, applyOn);
-        //            break;
-        //        case "Feet":
-        //            if (itemDatabase.femaleAvatarDefaultCostume.DefaultShoes != null)
-        //                StichItem(-1, itemDatabase.femaleAvatarDefaultCostume.DefaultShoes, type, applyOn);
-        //            break;
-        //        case "Hair":
-        //            if (itemDatabase.femaleAvatarDefaultCostume.DefaultHair != null)
-        //                StichItem(-1, itemDatabase.femaleAvatarDefaultCostume.DefaultHair, type, applyOn);
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
+        if (itemDatabase == null)
+        {
+            itemDatabase = DefaultClothDatabase.instance;
+        }
+        if (gender == "Male") // if avatar is Male
+        {
+            switch (type)
+            {
+                case "Legs":
+                    if (itemDatabase.maleAvatarDefaultCostume.DefaultPent != null)
+                        StichItem(-1, itemDatabase.maleAvatarDefaultCostume.DefaultPent, type, applyOn);
+                    break;
+                case "Chest":
+                    if (itemDatabase.maleAvatarDefaultCostume.DefaultShirt != null)
+                        StichItem(-1, itemDatabase.maleAvatarDefaultCostume.DefaultShirt, type, applyOn);
+                    break;
+                case "Feet":
+                    if (itemDatabase.maleAvatarDefaultCostume.DefaultShoes != null)
+                        StichItem(-1, itemDatabase.maleAvatarDefaultCostume.DefaultShoes, type, applyOn);
+                    break;
+                case "Hair":
+                    if (itemDatabase.maleAvatarDefaultCostume.DefaultHair != null)
+                        StichItem(-1, itemDatabase.maleAvatarDefaultCostume.DefaultHair, type, applyOn);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (gender == "Female") // if avatar is female
+        {
+            switch (type)
+            {
+                case "Legs":
+                    if (itemDatabase.femaleAvatarDefaultCostume.DefaultPent != null)
+                        StichItem(-1, itemDatabase.femaleAvatarDefaultCostume.DefaultPent, type, applyOn);
+                    break;
+                case "Chest":
+                    if (itemDatabase.femaleAvatarDefaultCostume.DefaultShirt != null)
+                        StichItem(-1, itemDatabase.femaleAvatarDefaultCostume.DefaultShirt, type, applyOn);
+                    break;
+                case "Feet":
+                    if (itemDatabase.femaleAvatarDefaultCostume.DefaultShoes != null)
+                        StichItem(-1, itemDatabase.femaleAvatarDefaultCostume.DefaultShoes, type, applyOn);
+                    break;
+                case "Hair":
+                    if (itemDatabase.femaleAvatarDefaultCostume.DefaultHair != null)
+                        StichItem(-1, itemDatabase.femaleAvatarDefaultCostume.DefaultHair, type, applyOn);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     /// <summary>
