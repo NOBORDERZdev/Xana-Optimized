@@ -88,8 +88,11 @@ public class AdvancedYoutubePlayer : MonoBehaviour
 
     private void Start()
     {
-        SummitDomeNFTDataController.Instance.VideoOpened += StopVideoSound;
-        SummitDomeNFTDataController.Instance.NFTClosed += PlayVideoSound;
+        if (SummitDomeNFTDataController.Instance)
+        {
+            SummitDomeNFTDataController.Instance.VideoOpened += StopVideoSound;
+            SummitDomeNFTDataController.Instance.NFTClosed += PlayVideoSound;
+        }
     }
 
     private void OnDisable()
@@ -97,8 +100,11 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         AvatarSpawnerOnDisconnect.OninternetDisconnect -= OnInternetDisconnect;
         AvatarSpawnerOnDisconnect.OninternetConnected -= OnInternetConnect;
 
-        SummitDomeNFTDataController.Instance.VideoOpened -= StopVideoSound;
-        SummitDomeNFTDataController.Instance.NFTClosed -= PlayVideoSound;
+        if (SummitDomeNFTDataController.Instance)
+        {
+            SummitDomeNFTDataController.Instance.VideoOpened -= StopVideoSound;
+            SummitDomeNFTDataController.Instance.NFTClosed -= PlayVideoSound;
+        }
     }
 
     public async void PlayVideo()
