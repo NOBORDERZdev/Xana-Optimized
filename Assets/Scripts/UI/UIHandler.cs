@@ -136,7 +136,7 @@ public class UIHandler : MonoBehaviour
         else 
         {
             //added condition because above code causes issue in reconnection (keep orientation in portrait mode)
-            if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft) 
+            if (Screen.orientation != ScreenOrientation.Portrait) 
             {
                 SplashScreenXana.SetActive(false);
                 SplashScreenSummit.SetActive(true);
