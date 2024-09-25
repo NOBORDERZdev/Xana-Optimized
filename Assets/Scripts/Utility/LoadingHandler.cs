@@ -945,23 +945,23 @@ public class LoadingHandler : MonoBehaviour
         ConstantsHolder.DiasableMultiPartPhoton = true;
         WaitForInput = true;
       
-            if (!string.IsNullOrEmpty(selectedWold.icon))
+            if (!string.IsNullOrEmpty(info.data.thumbnail))
             {
-            selectedWold.icon += "?width=512?height=256";
+                info.data.thumbnail += "?width=512?height=256";
 
                 DomeThumbnail.gameObject.SetActive(true);
-                if (AssetCache.Instance.HasFile(selectedWold.icon ))
+                if (AssetCache.Instance.HasFile(info.data.thumbnail ))
                 {
-                    AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, selectedWold.icon , changeAspectRatio: true);
+                    AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.data.thumbnail , changeAspectRatio: true);
 
                 }
                 else
                 {
-                    AssetCache.Instance.EnqueueOneResAndWait(selectedWold.icon , selectedWold.icon, (success) =>
+                    AssetCache.Instance.EnqueueOneResAndWait(info.data.thumbnail , info.data.thumbnail, (success) =>
                     {
                         if (success)
                         {
-                            AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, selectedWold.icon , changeAspectRatio: true);
+                            AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.data.thumbnail , changeAspectRatio: true);
 
                         }
                     });
@@ -971,8 +971,8 @@ public class LoadingHandler : MonoBehaviour
         ResetLoadingValues();
         DomeLoading.SetActive(true);
         DomeName.text = info.data.name;
-        DomeDescription.text = selectedWold.description;
-        DomeCreator.text = selectedWold.creatorName;
+        DomeDescription.text = info.data.description;
+        DomeCreator.text = info.data.creator;
         DomeType.text = selectedWold.subWorldType;
         DomeCategory.text = selectedWold.subWorldCategory;
         DomeVisitedCount.text = ConstantsHolder.visitorCount.ToString();
