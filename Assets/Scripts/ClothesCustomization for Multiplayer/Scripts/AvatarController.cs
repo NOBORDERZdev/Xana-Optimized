@@ -612,7 +612,7 @@ public class AvatarController : MonoBehaviour
                 {
                     CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);
 
-                    //SetAvatarClothDefault(gameObject, _CharacterData.gender);   Zeel Commented why you have to set default cloths every time
+                    //SetAvatarClothDefault(gameObject, _CharacterData.gender);   //Zeel Commented why you have to set default cloths every time
 
                     if (_CharacterData.myItemObj.Count > 0)
                     {
