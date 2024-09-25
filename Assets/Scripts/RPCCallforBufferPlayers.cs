@@ -133,7 +133,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
 
                     if (!otherPlayer.GetComponent<PhotonView>().IsMine)
                     {
-                        otherPlayer.GetComponent<AvatarController>().SetAvatarClothDefault(otherPlayer.gameObject, _CharacterData.gender);
+                        //otherPlayer.GetComponent<AvatarController>().SetAvatarClothDefault(otherPlayer.gameObject, _CharacterData.gender);
                         //CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);
                         //bodyparts.SetAvatarByGender(_CharacterData.gender);
 
@@ -505,11 +505,14 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             }
             else
             {
-                if (itemtype.Contains("Hair"))
-                {
-                    applyOn.GetComponent<AvatarController>().WearDefaultHair(applyOn, hairColor);
-                }
-                else
+                // Old Implementation
+                // {
+                //if (itemtype.Contains("Hair"))
+                //{
+                //    applyOn.GetComponent<AvatarController>().WearDefaultHair(applyOn, hairColor);
+                //}
+                //else
+                //}
                     applyOn.GetComponent<AvatarController>().WearDefaultItem(itemtype, applyOn, _gender);
             }
         }

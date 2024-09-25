@@ -60,6 +60,7 @@ public class AskForJoining : MonoBehaviour
     //    LoadingHandler.Instance.UpdateLoadingSlider(asyncLoading.progress * 1.1f);
     //}
 
+    
     public void GoToMainMenu()
     {
         if (Application.internetReachability != NetworkReachability.NotReachable)
@@ -91,8 +92,25 @@ public class AskForJoining : MonoBehaviour
         else
         {
             if (ReferencesForGamePlay.instance != null)
+            {
                 ReferencesForGamePlay.instance.workingCanvas.SetActive(false);
+                ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().horizontal = 0;
+                ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().vertical = 0;
+            }
 
+
+
+            if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+            {
+                if(PhotonNetwork.InRoom)
+                    PhotonNetwork.LeaveRoom();
+                if (PhotonNetwork.InLobby)
+                    PhotonNetwork.LeaveLobby();
+                if (PhotonNetwork.InRoom)
+                    PhotonNetwork.Disconnect();
+                GamePlayUIHandler.inst.MoveToLobbyBtnClick();
+                return;
+            }
             if (!GameplayEntityLoader.instance.mainController)
             {
                 XanaWorldDownloader.ResetAll();
@@ -123,11 +141,30 @@ public class AskForJoining : MonoBehaviour
             BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none, false);
             TurnCameras(true);
             _panel.SetActive(false);
-            Destroy(this.gameObject,5f);
 
+            
+
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame
+            && XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().isLeaderboardShown)
+            {
+                StartCoroutine(MovePlayerToNextGameOnReconnection());
+            }
+            else
+            {
+                Destroy(this.gameObject, 5f);
+            }
         }
     }
 
+    IEnumerator MovePlayerToNextGameOnReconnection()
+    {
+        while (GameplayEntityLoader.instance == null || GameplayEntityLoader.instance.PenguinPlayer == null)
+        {
+            yield return new WaitForSeconds(0.2f);
+        }
+        GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC("MovePlayerToNextGameOnReconnect", RpcTarget.AllBuffered);
+        Destroy(this.gameObject);
+    }
 
     private void TurnCameras(bool active)
     {

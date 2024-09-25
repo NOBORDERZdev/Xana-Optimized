@@ -107,7 +107,7 @@ public class XanaWorldDownloader : MonoBehaviour
     {
         if (assetParent)
             assetParentStatic = assetParent;
-        if (!ConstantsHolder.xanaConstants.isBuilderScene)
+        if (!ConstantsHolder.xanaConstants.isBuilderScene || ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
             BuilderEventManager.XanaMapDataDownloaded += PostLoadingBuilderAssets;
             ScreenOrientationManager.switchOrientation += OnOrientationChange;
@@ -153,7 +153,7 @@ public class XanaWorldDownloader : MonoBehaviour
         }
         catch (OperationCanceledException)
         {
-            Debug.LogError("task Canceled");
+            Debug.Log("<color=red>task Canceled</color>");
         }
 
     }
@@ -174,7 +174,7 @@ public class XanaWorldDownloader : MonoBehaviour
                 temp.ItemID = xanaSceneData.SceneObjects[i].addressableKey;
                 if (!uniqueDownloadKeys.Contains(xanaSceneData.SceneObjects[i].addressableKey) && !XanaWorldDownloader.CheckForVisitedWorlds(ConstantsHolder.xanaConstants.EnviornmentName))
                 {
-                    Debug.LogError("Calculate Download Size");
+                    Debug.Log("<color=red>Calculate Download Size</color>");
                     uniqueDownloadKeys.Add(xanaSceneData.SceneObjects[i].addressableKey);
                     downloadSize += Addressables.GetDownloadSizeAsync(xanaSceneData.SceneObjects[i].addressableKey).WaitForCompletion();
                 }
@@ -206,7 +206,7 @@ public class XanaWorldDownloader : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError("An error occurred: " + e.Message);
+            Debug.Log("<color=red>An error occurred: " + e.Message + "</color>");
         }
     }
 
@@ -578,8 +578,11 @@ public class XanaWorldDownloader : MonoBehaviour
         newObj.SetActive(_itemData.isActive);
         ApplyLightmapData(_itemData.lightmapData, newObj);
         //AddObjectInPool(downloadKey, newObj);
-        AssignDomeId(newObj, _itemData);
-        SetSubworldIndex(newObj, _itemData);
+        if(ConstantsHolder.DomeHeaderInfo)
+        {
+            AssignDomeId(newObj, _itemData);
+            SetSubworldIndex(newObj, _itemData);
+        }
         //if (ConstantsHolder.HaveSubWorlds)
         //{
         //    if (_itemData.addressableKey.Contains("TLP"))
@@ -815,10 +818,11 @@ public class XanaWorldDownloader : MonoBehaviour
         isfailedObjectsDownloaded = false;
         isSpawnDownloaded = false;
 
-        cts.Cancel();
+        if (cts != null)
+            cts.Cancel();
         xanaWorldDownloader.ResetDisplayDownloadText();
         xanaWorldDownloader.StopAllCoroutines();
-
+        LoadingHandler.Instance.HideLoading();
         //AssetBundle.UnloadAllAssetBundles(false);
         //Caching.ClearCache();
         //Addressables.CleanBundleCache();

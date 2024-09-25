@@ -28,6 +28,8 @@ public class XANASummitSceneLoading : MonoBehaviour
     [SerializeField]
     private DomeMinimapDataHolder _domeMiniMap;
 
+    public SummitDomePAAIController DomePerformerAvatarHandler;
+
     public delegate void SetPlayerOnSubworldBack();
     public static event SetPlayerOnSubworldBack setPlayerPositionDelegate;
 
@@ -101,7 +103,11 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (string.IsNullOrEmpty(domeGeneralData.world))
             return;
 
-     
+        if (domeGeneralData.is_penpenz && ConstantsHolder.xanaConstants.LoggedInAsGuest)
+        {
+            GamePlayUIHandler.inst.SignInPopupForGuestUser.SetActive(true);
+            return;
+        }
 
         if (domeGeneralData.isSubWorld)
         {
@@ -122,7 +128,7 @@ public class XANASummitSceneLoading : MonoBehaviour
             {
                 await Task.Delay(1000);
             }
-            if (!LoadingHandler.Instance.enter) { return; }
+            if (!LoadingHandler.Instance.enter) { ConstantsHolder.DiasableMultiPartPhoton = false; return; }
 
             LoadingHandler.Instance.enter = false;
 
@@ -150,6 +156,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         subWorldInfo.user_limit = ConstantsHolder.userLimit;
         subWorldInfo.domeId = ConstantsHolder.domeId;
         subWorldInfo.thumbnail = ConstantsHolder.Thumbnail;
+        subWorldInfo.description = ConstantsHolder.description;
         subWorldInfo.haveSubWorlds = ConstantsHolder.HaveSubWorlds;
         subWorldInfo.isFromSummitWorld = ConstantsHolder.isFromXANASummit;
         subWorldInfo.playerTrasnform = currentPlayerPos;
@@ -164,8 +171,10 @@ public class XANASummitSceneLoading : MonoBehaviour
         gameplayEntityLoader.addressableSceneName = domeGeneralData.world;
         ConstantsHolder.userLimit = domeGeneralData.maxPlayer;
         ConstantsHolder.isPenguin = domeGeneralData.IsPenguin;
+        ConstantsHolder.xanaConstants.isXanaPartyWorld = domeGeneralData.is_penpenz;
         ConstantsHolder.isFixedHumanoid = domeGeneralData.Ishumanoid;
         ConstantsHolder.Thumbnail = domeGeneralData.world360Image;
+        ConstantsHolder.description = domeGeneralData.description;
         ConstantsHolder.AvatarIndex = domeGeneralData.AvatarIndex;
         if (domeGeneralData.worldType)
             ConstantsHolder.xanaConstants.MuseumID = domeGeneralData.builderWorldId.ToString();
@@ -197,7 +206,12 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (domeGeneralData.worldType)
             LoadBuilderSceneLoading(domeGeneralData.builderWorldId);
         else
-            multiplayerController.Connect("XANA Summit-" + ConstantsHolder.domeId+"-"+domeGeneralData.world);
+        {
+            ConstantsHolder.xanaConstants.LastLobbyName = "XANA Summit-" + ConstantsHolder.domeId + "-" + domeGeneralData.world;
+            multiplayerController.Connect("XANA Summit-" + ConstantsHolder.domeId + "-" + domeGeneralData.world);
+        }
+
+        DomePerformerAvatarHandler.InitPerformerAvatarNPC();
 
         // Summit Analytics Part
         if (_stayTimeTrackerForSummit != null)
@@ -268,7 +282,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         {
             await Task.Delay(1000);
         }
-        if (!LoadingHandler.Instance.enter) { return; }
+        if (!LoadingHandler.Instance.enter) { ConstantsHolder.DiasableMultiPartPhoton = false; return; }
 
         LoadingHandler.Instance.enter = false;
 
@@ -286,6 +300,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         subWorldInfo.haveSubWorlds = ConstantsHolder.HaveSubWorlds;
         subWorldInfo.isFromSummitWorld = ConstantsHolder.isFromXANASummit;
         subWorldInfo.thumbnail = ConstantsHolder.Thumbnail;
+        subWorldInfo.description = ConstantsHolder.description;
         subWorldInfo.playerTrasnform = currentPlayerPos;
         XANASummitDataContainer.LoadedScenesInfo.Push(subWorldInfo);
 
@@ -296,6 +311,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         ConstantsHolder.xanaConstants.MuseumID = worldInfo.data.id;
         //ConstantsHolder.HaveSubWorlds = false;
         ConstantsHolder.Thumbnail = worldInfo.data.thumbnail;
+        ConstantsHolder.description = worldInfo.data.description;
         ConstantsHolder.xanaConstants.isBuilderScene = worldInfo.data.entityType == "USER_WORLD" ? true : false;
         gameplayEntityLoader.currentEnvironment = null;
         multiplayerController.isConnecting = false;
@@ -319,7 +335,10 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (ConstantsHolder.xanaConstants.isBuilderScene)
             LoadBuilderSceneLoading(int.Parse(worldInfo.data.id));
         else
+        {
+            ConstantsHolder.xanaConstants.LastLobbyName = "XANA Summit-" + ConstantsHolder.domeId + "-" + worldInfo.data.name;
             multiplayerController.Connect("XANA Summit-" + ConstantsHolder.domeId + "-" + worldInfo.data.name);
+        }
 
         if (ReferencesForGamePlay.instance.playerControllerNew.isFirstPerson)
         {
@@ -395,6 +414,11 @@ public class XANASummitSceneLoading : MonoBehaviour
         ConstantsHolder.visitorCount =await dataContainer.GetVisitorCount(subWorldInfo.id);
         LoadingHandler.Instance.showDomeLoading(subWorldInfo);
 
+        if(GamePlayUIHandler.inst.LeaderboardPanel.activeInHierarchy)
+        {
+            GamePlayUIHandler.inst.LeaderboardPanel.SetActive(false);
+        }
+
         playerPos = subWorldInfo.playerTrasnform[0];
         playerRot = subWorldInfo.playerTrasnform[1];
         playerScale = subWorldInfo.playerTrasnform[2];
@@ -409,6 +433,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         ConstantsHolder.isFromXANASummit = subWorldInfo.isFromSummitWorld;
         Debug.LogError("Back loading..."+ subWorldInfo.haveSubWorlds);
         ConstantsHolder.HaveSubWorlds = subWorldInfo.haveSubWorlds;
+        ConstantsHolder.description = subWorldInfo.description;
         ConstantsHolder.Thumbnail = subWorldInfo.thumbnail;
         ConstantsHolder.isPenguin = false;
         ConstantsHolder.isFixedHumanoid = false;
@@ -434,6 +459,11 @@ public class XANASummitSceneLoading : MonoBehaviour
             multiplayerController.Connect(subWorldInfo.name);
 
         ConstantsHolder.DiasableMultiPartPhoton = false;
+
+        ReferencesForGamePlay.instance.SetGameplayForPenpenz(true);
+
+        ReferenceForPenguinAvatar referenceForPenguin = GameplayEntityLoader.instance.referenceForPenguin;
+        referenceForPenguin.ActiveXanaUIData(true);
 
         // Map Working
         _domeMiniMap.SummitSceneReloaded();
@@ -479,12 +509,20 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.Avatarjson = dataContainer.summitData.domes[i].Avatarjson;
                 domeGeneralData.AvatarIndex = dataContainer.summitData.domes[i].AvatarIndex;
                 domeGeneralData.name = dataContainer.summitData.domes[i].name;
+                domeGeneralData.creatorName = dataContainer.summitData.domes[i].creatorName;
+                domeGeneralData.description = dataContainer.summitData.domes[i].description;
                 domeGeneralData.isSubWorld = dataContainer.summitData.domes[i].isSubWorld;
                 domeGeneralData.world360Image = dataContainer.summitData.domes[i].world360Image;
                 domeGeneralData.companyLogo = dataContainer.summitData.domes[i].companyLogo;
                 domeGeneralData.SubWorlds = dataContainer.summitData.domes[i].SubWorlds;
                 domeGeneralData.domeCategory= dataContainer.summitData.domes[i].domeCategory;
                 domeGeneralData.domeType= dataContainer.summitData.domes[i].domeType;
+
+                domeGeneralData.is_penpenz = dataContainer.summitData.domes[i].is_penpenz;
+                domeGeneralData.description= dataContainer.summitData.domes[i].description;
+                domeGeneralData.creatorName= dataContainer.summitData.domes[i].creatorName;
+                
+
                 //if (dataContainer.summitData1.domes[i].worldType)
                 //    return new Tuple<string[],string>(new[] { dataContainer.summitData1.domes[i].world, "1", dataContainer.summitData1.domes[i].builderWorldId }, dataContainer.summitData1.domes[i].experienceType);
                 //else

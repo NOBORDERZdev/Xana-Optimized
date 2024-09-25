@@ -592,6 +592,8 @@ namespace SuperStar.Helpers
                     set.finishEvent(set.errorCount == 0);
                 }
             }
+
+            www.Dispose();
         }
 
         private IEnumerator PlayAudioCoroutine(string key, bool repeat)

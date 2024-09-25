@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine.Networking;
 using SimpleJSON;
+using UnityEngine.SceneManagement;
 
 public class UIHandler : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class UIHandler : MonoBehaviour
     public Transform _postScreen,_postCamera, _postScreenBG;
     public bool IsSplashActive = true;
     /*public Transform SecondSliderScrollView;*/
-
+   
     [Header("Footer Reference")]
     public GameObject _footerCan;
     public GameObject faceMorphPanel;
@@ -270,7 +271,9 @@ public class UIHandler : MonoBehaviour
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
 
-        yield return request.SendWebRequest();
+        request.SendWebRequest();
+        while(!request.isDone)
+            yield return null;
 
         if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
         {
@@ -279,28 +282,42 @@ public class UIHandler : MonoBehaviour
         else
         {
             string jsonResponse = request.downloadHandler.text;
-            //JSONNode jsonNode = JSON.Parse(jsonResponse);
-            ApiFeatureListResponse apiResponse = JsonConvert.DeserializeObject<ApiFeatureListResponse>(jsonResponse);
+            ApiFeatureListResponse apiResponse = JsonUtility.FromJson<ApiFeatureListResponse>(jsonResponse);
             for (int i = 0; i < apiResponse.data.Count; i++) 
             {
+                if (apiResponse.data[i].feature_name == "DomeHeaderInfo")
+                {
+                    ConstantsHolder.DomeHeaderInfo = apiResponse.data[i].feature_status;
+                }
                 if (apiResponse.data[i].feature_name == "SummitApp")
+                {
                     ConstantsHolder.xanaConstants.SwitchXanaToXSummit = apiResponse.data[i].feature_status;
+                }
+                if (apiResponse.data[i].feature_name == "Xsummitbg")
+                {
+                    ConstantsHolder.xanaConstants.XSummitBg = apiResponse.data[i].feature_status;
+                    if (SceneManager.GetSceneByName("XSummitLoginSignupScene").isLoaded)
+                    {
+                        UserLoginSignupManager.instance.XSummitBgChange.ChangeBG();
+                    }
+                }
             }
-            Debug.Log("Features List: " + apiResponse.data.Count);
         }
+        request.Dispose();
     }
 
 }
+[System.Serializable]
 public class ApiFeatureListResponse
 {
-    public bool success { get; set; }
-    public List<Feature> data { get; set; }
-    public string msg { get; set; }
+    public bool success;
+    public List<Feature> data;
+    public string msg;
 }
-
+[System.Serializable]
 public class Feature
 {
-    public int id { get; set; }
-    public string feature_name { get; set; }
-    public bool feature_status { get; set; }
+    public int id;
+    public string feature_name;
+    public bool feature_status;
 }

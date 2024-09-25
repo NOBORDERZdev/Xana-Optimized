@@ -106,6 +106,46 @@ public class WorldManager : MonoBehaviour
         MainSceneEventHandler.OpenLandingScene += OpenLandingScene;
     }
 
+
+    public IEnumerator xanaParty()
+    {
+        if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            yield return null;
+        if (!XANAPartyManager.Instance.EnableXANAPartyGuest)
+        {
+            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.PenpenzLoading(FadeAction.In));
+            while (PlayerPrefs.GetInt("WalletLogin") == 1 && ConstantsHolder.userId.IsNullOrEmpty() && ConstantsHolder.userName.IsNullOrEmpty())
+            {
+                yield return new WaitForSeconds(0.5f);
+            }
+
+            if (PlayerPrefs.GetInt("IsProcessComplete") == 1 && PlayerPrefs.GetString("DownloadPermission", "false") == "false")
+            {
+                UserLoginSignupManager.instance.DownloadPermissionPopup.SetActive(true);
+            }
+            else if (PlayerPrefs.GetInt("IsProcessComplete") == 1 && PlayerPrefs.GetString("DownloadPermission", "false") == "true")
+            {
+                XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
+                yield return null;
+            }
+        }
+        else if (XANAPartyManager.Instance.EnableXANAPartyGuest)
+        {
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+
+            if (PlayerPrefs.GetInt("IsProcessComplete") == 1 && PlayerPrefs.GetString("DownloadPermission") == "false")
+            {
+                UserLoginSignupManager.instance.DownloadPermissionPopup.SetActive(true);
+            }
+            else if (PlayerPrefs.GetInt("IsProcessComplete") == 1 && PlayerPrefs.GetString("DownloadPermission") == "true")
+            {
+                XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
+                yield return null;
+            }
+        }
+
+    }
+
     private void OnDisable()
     {
         MainSceneEventHandler.OpenLandingScene -= OpenLandingScene;
@@ -139,6 +179,7 @@ public class WorldManager : MonoBehaviour
             ConstantsHolder.xanaConstants.MuseumID = singleWorldInfo.data.id;
             WorldItemView.m_EnvName = singleWorldInfo.data.name;
             ConstantsHolder.Thumbnail = singleWorldInfo.data.thumbnail;
+            ConstantsHolder.description = singleWorldInfo.data.description;
             ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             ConstantsHolder.xanaConstants.UserMicEnable = singleWorldInfo.data.userMicEnable;
             LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
@@ -158,9 +199,9 @@ public class WorldManager : MonoBehaviour
 
     void AddingDeleyToLoadScene()
     {
-         LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
-        //PhotonNetwork.LoadLevel("GamePlayScene");
-
+        LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+        XANAPartyManager xANAPartyManager = XANAPartyManager.Instance;
+        xANAPartyManager.StartCoroutine(xANAPartyManager.FetchXanaPartyGames());
     }
 
     IEnumerator GetSingleWorldData(string apiURL, Action<bool> callback)

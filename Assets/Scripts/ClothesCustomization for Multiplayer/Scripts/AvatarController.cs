@@ -10,6 +10,7 @@ using System;
 using Random = UnityEngine.Random;
 using UnityEditor;
 using static InventoryManager;
+using Photon.Pun.Demo.PunBasics;
 
 public class AvatarController : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class AvatarController : MonoBehaviour
     public CharacterBodyParts characterBodyParts;
     public SavingCharacterDataClass _PCharacterData = new SavingCharacterDataClass();
     [SerializeField] RuntimeAnimatorController ArAnimator;
+
+    public List<Item>ClothsToBeLoaded = new List<Item>();
     #endregion
 
     #region var Hide Inspector
@@ -87,18 +90,20 @@ public class AvatarController : MonoBehaviour
     {
         BoxerNFTEventManager.OnNFTequip += EquipNFT;
         BoxerNFTEventManager.OnNFTUnequip += UnequipNFT;
-        if (IsInit) // init avatar according to the Avatar Type (Friend/Self player). 
-        {
 
-            if (!isPlayerAvatar) // to check is friend or player avatar in Home Scene.
-            {
-                SetAvatarClothDefault(this.gameObject, "Male");
-            }
-            else
-            {
-                StartCoroutine(SetAvatarDefaultClothDelay(this.gameObject, "Male"));
-            }
-        }
+        Debug.Log("enabled  " + IsInit);
+        //if (IsInit) // init avatar according to the Avatar Type (Friend/Self player). 
+        //{
+
+        //    if (!isPlayerAvatar) // to check is friend or player avatar in Home Scene.
+        //    {
+        //        SetAvatarClothDefault(this.gameObject, "Male");
+        //    }
+        //    else
+        //    {
+        //        StartCoroutine(SetAvatarDefaultClothDelay(this.gameObject, "Male"));
+        //    }
+        //}
         if (xanaConstants== null)
             xanaConstants = ConstantsHolder.xanaConstants;
         if(addressableDownloader==null)
@@ -423,9 +428,11 @@ public class AvatarController : MonoBehaviour
         await Task.Delay(200);
         if (isLoadStaticClothFromJson)
         {
+            Debug.Log("Buildding character from local json... ");
             BuildCharacterFromLocalJson();
             return;
         }
+        Debug.Log("Buildding character from Saved Path ... ");
         string folderPath= GameManager.Instance.GetStringFolderPath();
         if (File.Exists(folderPath) && File.ReadAllText(folderPath) != "") //Check if data exist
         {
@@ -462,7 +469,8 @@ public class AvatarController : MonoBehaviour
                 else
                 {
                     CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);
-                    SetAvatarClothDefault(gameObject, _CharacterData.gender);
+                   
+                    //SetAvatarClothDefault(gameObject, _CharacterData.gender);   Zeel Commented why you have to set default cloths every time
 
                     if (_CharacterData.myItemObj.Count > 0)
                     {
@@ -689,12 +697,13 @@ public class AvatarController : MonoBehaviour
             }
             else // worlds scene 
             {
+               
                 if (this.GetComponent<PhotonView>() && this.GetComponent<PhotonView>().IsMine || staticPlayer) // self
                 {
-                    SetAvatarClothDefault(gameObject, gender);
+                    //   SetAvatarClothDefault(gameObject, gender);             //  Zeel Commented why you have to set default cloths every time
 
                     if (_CharacterData.myItemObj.Count > 0)
-                    {
+                    {ClothsToBeLoaded.Clear();
                         for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
                         {
                             var item = _CharacterData.myItemObj[i];
@@ -712,10 +721,18 @@ public class AvatarController : MonoBehaviour
                                             if (!string.IsNullOrEmpty(_CharacterData.hairItemData) && _CharacterData.hairItemData.Contains("No hair") && wornHair)
                                                 UnStichItem("Hair");
                                             else
+                                            {
+                                                ClothsToBeLoaded.Add(item);
                                                 StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, avatarController, _CharacterData.HairColor));
+
+                                            }
                                         }
                                         else
+                                        {
+                                            ClothsToBeLoaded.Add(item);
                                             StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, _CharacterData.gender != null ? _CharacterData.gender : "Male", this.gameObject.GetComponent<AvatarController>(), Color.clear));
+
+                                        }
                                     }
                                     else
                                     {
@@ -797,6 +814,8 @@ public class AvatarController : MonoBehaviour
                                 }
                             }
                         }
+
+                        StartCoroutine(WaitForCallback());
                     }
                     if (_CharacterData.charactertypeAi == true && !UGCManager.isSelfieTaken)
                     {
@@ -891,7 +910,81 @@ public class AvatarController : MonoBehaviour
         }
         isClothLoaded = true;
     }
-  
+
+    IEnumerator WaitForCallback()
+    {
+       while (true)
+        {
+            int clothsloaded = 0;
+            foreach (var item in ClothsToBeLoaded)
+            {
+                
+                switch (item.ItemType)
+                {
+
+                    case "Chest":
+                      
+                       if( wornShirtId == item.ItemID)
+                            clothsloaded++;
+                       
+                        break;
+
+                    case "Legs":
+                        if (wornPantId == item.ItemID)
+                            clothsloaded++;
+                      
+                      
+                        break;
+
+                    case "Hair":
+
+                        if (wornHairId == item.ItemID)
+                            clothsloaded++;
+               
+                     
+                        break;
+
+                    case "Feet":
+
+                        if (wornShoesId == item.ItemID)
+                            clothsloaded++;
+                      
+                        
+                        break;
+
+                    case "EyeWearable":
+
+                        if (wornEyewearableId == item.ItemID)
+                            clothsloaded++;
+                        
+                        break;
+
+                    case "Chain":
+
+                        if (wornChainId == item.ItemID)
+                            clothsloaded++;
+                     
+                        break;
+
+                    case "Glove":
+
+                        if (wornGlovesId == item.ItemID)
+                            clothsloaded++;
+                   
+                        break;
+                }
+            }
+
+            if (clothsloaded == ClothsToBeLoaded.Count)
+            {
+                GameplayEntityLoader.instance.ClothsLoaded = true;
+                yield break;
+            }
+            yield return new WaitForSeconds(1f);
+        }
+
+    }
+
     /// <summary>
     /// Setting Character from localJson neither than server
     /// </summary>
@@ -913,7 +1006,7 @@ public class AvatarController : MonoBehaviour
             }
             else
             {
-                SetAvatarClothDefault(this.gameObject, _CharacterData.gender);
+             //   SetAvatarClothDefault(this.gameObject, _CharacterData.gender);    //Zeel Comment why default cloths is needed
                 for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
                 {
                      var item= _CharacterData.myItemObj[i];
@@ -1392,87 +1485,66 @@ public class AvatarController : MonoBehaviour
     /// <param name="gender"></param>
     public void WearDefaultItem(string type, GameObject applyOn, string gender)
     {
-        CharacterBodyParts bodyParts = characterBodyParts;
+        //CharacterBodyParts bodyParts = characterBodyParts;
 
-        //Debug.Log("Item: " + type + " --- Gender: " + gender);
+        ////Debug.Log("Item: " + type + " --- Gender: " + gender);
 
-        if (gender.IsNullOrEmpty())
-        {
-            if (applyOn.name.Contains("Female", System.StringComparison.CurrentCultureIgnoreCase))
-                gender = "Female";
-            else
-                gender = "Male";
-        }
+        //if (gender.IsNullOrEmpty())
+        //{
+        //    if (applyOn.name.Contains("Female", System.StringComparison.CurrentCultureIgnoreCase))
+        //        gender = "Female";
+        //    else
+        //        gender = "Male";
+        //}
 
 
-        if (itemDatabase== null)
-        {
-            itemDatabase = DefaultClothDatabase.instance;
-        }
-        if (gender == "Male") // if avatar is Male
-        {
-            switch (type)
-            {
-                case "Legs":
-                    if (itemDatabase.maleAvatarDefaultCostume.DefaultPent != null)
-                        StichItem(-1, itemDatabase.maleAvatarDefaultCostume.DefaultPent, type, applyOn);
-                    break;
-                case "Chest":
-                    if (itemDatabase.maleAvatarDefaultCostume.DefaultShirt != null)
-                        StichItem(-1, itemDatabase.maleAvatarDefaultCostume.DefaultShirt, type, applyOn);
-                    break;
-                case "Feet":
-                    if (itemDatabase.maleAvatarDefaultCostume.DefaultShoes != null)
-                        StichItem(-1, itemDatabase.maleAvatarDefaultCostume.DefaultShoes, type, applyOn);
-                    break;
-                case "Hair":
-                    if (itemDatabase.maleAvatarDefaultCostume.DefaultHair != null)
-                        StichItem(-1, itemDatabase.maleAvatarDefaultCostume.DefaultHair, type, applyOn);
-                    break;
-                default:
-                    break;
-            }
-        }
-        else if (gender == "Female") // if avatar is female
-        {
-            switch (type)
-            {
-                case "Legs":
-                    if (itemDatabase.femaleAvatarDefaultCostume.DefaultPent != null)
-                        StichItem(-1, itemDatabase.femaleAvatarDefaultCostume.DefaultPent, type, applyOn);
-                    break;
-                case "Chest":
-                    if (itemDatabase.femaleAvatarDefaultCostume.DefaultShirt != null)
-                        StichItem(-1, itemDatabase.femaleAvatarDefaultCostume.DefaultShirt, type, applyOn);
-                    break;
-                case "Feet":
-                    if (itemDatabase.femaleAvatarDefaultCostume.DefaultShoes != null)
-                        StichItem(-1, itemDatabase.femaleAvatarDefaultCostume.DefaultShoes, type, applyOn);
-                    break;
-                case "Hair":
-                    if (itemDatabase.femaleAvatarDefaultCostume.DefaultHair != null)
-                        StichItem(-1, itemDatabase.femaleAvatarDefaultCostume.DefaultHair, type, applyOn);
-                    break;
-                default:
-                    break;
-            }
-        }
-       
-        //else
+        //if (itemDatabase== null)
+        //{
+        //    itemDatabase = DefaultClothDatabase.instance;
+        //}
+        //if (gender == "Male") // if avatar is Male
         //{
         //    switch (type)
         //    {
         //        case "Legs":
-        //            StichItem(-1, itemDatabase.DefaultPent, type, applyOn);
+        //            if (itemDatabase.maleAvatarDefaultCostume.DefaultPent != null)
+        //                StichItem(-1, itemDatabase.maleAvatarDefaultCostume.DefaultPent, type, applyOn);
         //            break;
         //        case "Chest":
-        //            StichItem(-1, itemDatabase.DefaultShirt, type, applyOn);
+        //            if (itemDatabase.maleAvatarDefaultCostume.DefaultShirt != null)
+        //                StichItem(-1, itemDatabase.maleAvatarDefaultCostume.DefaultShirt, type, applyOn);
         //            break;
         //        case "Feet":
-        //            StichItem(-1, itemDatabase.DefaultShoes, type, applyOn);
+        //            if (itemDatabase.maleAvatarDefaultCostume.DefaultShoes != null)
+        //                StichItem(-1, itemDatabase.maleAvatarDefaultCostume.DefaultShoes, type, applyOn);
         //            break;
         //        case "Hair":
-        //            StichItem(-1, itemDatabase.DefaultHair, type, applyOn);
+        //            if (itemDatabase.maleAvatarDefaultCostume.DefaultHair != null)
+        //                StichItem(-1, itemDatabase.maleAvatarDefaultCostume.DefaultHair, type, applyOn);
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
+        //else if (gender == "Female") // if avatar is female
+        //{
+        //    switch (type)
+        //    {
+        //        case "Legs":
+        //            if (itemDatabase.femaleAvatarDefaultCostume.DefaultPent != null)
+        //                StichItem(-1, itemDatabase.femaleAvatarDefaultCostume.DefaultPent, type, applyOn);
+        //            break;
+        //        case "Chest":
+        //            if (itemDatabase.femaleAvatarDefaultCostume.DefaultShirt != null)
+        //                StichItem(-1, itemDatabase.femaleAvatarDefaultCostume.DefaultShirt, type, applyOn);
+        //            break;
+        //        case "Feet":
+        //            if (itemDatabase.femaleAvatarDefaultCostume.DefaultShoes != null)
+        //                StichItem(-1, itemDatabase.femaleAvatarDefaultCostume.DefaultShoes, type, applyOn);
+        //            break;
+        //        case "Hair":
+        //            if (itemDatabase.femaleAvatarDefaultCostume.DefaultHair != null)
+        //                StichItem(-1, itemDatabase.femaleAvatarDefaultCostume.DefaultHair, type, applyOn);
         //            break;
         //        default:
         //            break;
@@ -1585,7 +1657,7 @@ public class AvatarController : MonoBehaviour
         CharacterBodyParts tempBodyParts = applyOn.gameObject.GetComponent<CharacterBodyParts>();
         //FriendAvatarController friendAvatarController = applyOn.GetComponent<FriendAvatarController>();
         EffectedParts effectedParts = item.GetComponent<EffectedParts>();
-        UnStichItem(type);
+       
         
         if (effectedParts && effectedParts.texture != null)
         {
@@ -1681,7 +1753,7 @@ public class AvatarController : MonoBehaviour
                 item.layer = 11;
             }
         }
-       
+        UnStichItem(type);
         switch (type)
         {
             case "Chest":
@@ -1732,7 +1804,8 @@ public class AvatarController : MonoBehaviour
             // Disable Pant
             if (wornPant)
             {
-                wornPant.GetComponent<SkinnedMeshRenderer>().enabled = false;
+                UnStichItem("Legs");
+               // wornPant.GetComponent<SkinnedMeshRenderer>().enabled = false; 
             }
 
             // Also Remove Pant Mask
@@ -2077,7 +2150,7 @@ public class AvatarController : MonoBehaviour
                     string type = _CharacterData.myItemObj[i].ItemType;
                     Item item = _CharacterData.myItemObj[i];
                     string gender = _CharacterData.gender != null ? _CharacterData.gender : "Male";
-                    if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName) && !_CharacterData.myItemObj[i].ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
+                    if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName) && !_CharacterData.myItemObj[i].ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase) && !_CharacterData.myItemObj[i].ItemName.Contains("boy_h_066", System.StringComparison.CurrentCultureIgnoreCase) ) // last condition is for the deault hairs
                     {
                         HashSet<string> itemTypes = new HashSet<string> { "Legs", "Chest", "Feet", "Hair", "EyeWearable", "Glove", "Chain" };
                         if (itemTypes.Any(item => type.Contains(item)))

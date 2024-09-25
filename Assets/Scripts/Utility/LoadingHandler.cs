@@ -97,7 +97,7 @@ public class LoadingHandler : MonoBehaviour
     public ManualRoomController manualRoomController;
     public StreamingLoadingText streamingLoading;
     public string Aalternate;
-    public bool enter = false, WaitForInput = false;
+    public bool enter = false, WaitForInput = false,iswheel = false;
     public float currentValue = 0;
     private float timer = 0;
     public bool isLoadingComplete = false;
@@ -106,9 +106,16 @@ public class LoadingHandler : MonoBehaviour
     private float sliderCompleteValue = 0f;
     private float originalWidth;
     public static System.Action CompleteSlider;
-
+    public Sprite Wheelsprite;
     public GameObject SearchLoadingCanvas;
     private CanvasGroup canvasGroup;
+
+    #region XANA Party
+    [Header("XANA Party TELEPORT")]
+    public CanvasGroup XANAPartyFeader;
+    public GameObject XANAPartyLandscape, XANAPartyPotraite;
+    #endregion
+
     bool Autostartslider = false;
     bool completed;
     private void Awake()
@@ -358,7 +365,7 @@ public class LoadingHandler : MonoBehaviour
             {
                 loadingPanel.SetActive(false);
                 await Task.Delay(1000);
-                if (ConstantsHolder.xanaConstants.isBackFromWorld)
+                if (ConstantsHolder.xanaConstants.isBackFromWorld && !ConstantsHolder.xanaConstants.EnableSignInPanelByDefault)
                     Screen.orientation = ScreenOrientation.Portrait;
 
                 ConstantsHolder.xanaConstants.isBackFromWorld = false;
@@ -727,6 +734,52 @@ public class LoadingHandler : MonoBehaviour
             default:
                 break;
         }
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            StartCoroutine(PenpenzLoading(FadeAction.Out));
+        }
+        yield return null;
+    }
+
+
+    public IEnumerator PenpenzLoading(FadeAction action)
+    {
+        // teleportFeader.gameObject.SetActive(true);
+        switch (action)
+        {
+            case FadeAction.Out:
+                XANAPartyFeader.DOFade(0, 0.5f).OnComplete(() =>
+                {
+                    XANAPartyFeader.gameObject.SetActive(false);
+                    XANAPartyLandscape.SetActive(false);
+                    XANAPartyPotraite.SetActive(false);
+                });
+                break;
+            case FadeAction.In:
+                if (ConstantsHolder.xanaConstants != null)
+                {
+                    XANAPartyLandscape.SetActive(!ConstantsHolder.xanaConstants.orientationchanged);
+                    XANAPartyPotraite.SetActive(ConstantsHolder.xanaConstants.orientationchanged);
+                }
+                else
+                {
+                    XANAPartyLandscape.SetActive(true);
+                }
+                if (!XANAPartyFeader.gameObject.activeInHierarchy)
+                {
+                    currentValue = 0;
+                    isLoadingComplete = false;
+                    timer = 0;
+                    //JJLoadingSlider.fillAmount = 0f;
+                    //JJLoadingPercentageText.text = "0%".ToString();
+                }
+
+                XANAPartyFeader.gameObject.SetActive(true);
+                XANAPartyFeader.DOFade(1, 0.5f);
+                break;
+            default:
+                break;
+        }
         yield return null;
     }
 
@@ -748,15 +801,16 @@ public class LoadingHandler : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(info.thumbnail))
         {
+            info.thumbnail += "?width=512?height=256";
             DomeThumbnail.gameObject.SetActive(true);
-            if (AssetCache.Instance.HasFile(info.thumbnail))
+            if (AssetCache.Instance.HasFile(info.thumbnail  ))
             {
-                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.thumbnail);
+                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.thumbnail , changeAspectRatio:true);
 
             }
             else
             {
-                AssetCache.Instance.EnqueueOneResAndWait(info.thumbnail, info.thumbnail, (success) =>
+                AssetCache.Instance.EnqueueOneResAndWait(info.thumbnail, info.thumbnail , (success) =>
                 {
                     if (success)
                     {
@@ -814,18 +868,20 @@ public class LoadingHandler : MonoBehaviour
 
     public void showApprovaldomeloading(XANASummitDataContainer.DomeGeneralData info)
     {
+        ConstantsHolder.DiasableMultiPartPhoton = true;
         WaitForInput = true;
         if (!string.IsNullOrEmpty(info.world360Image))
         {
+            info.world360Image += "?width=512?height=256";
             DomeThumbnail.gameObject.SetActive(true);
-            if (AssetCache.Instance.HasFile(info.world360Image))
+            if (AssetCache.Instance.HasFile(info.world360Image ))
             {
-                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.world360Image);
+                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.world360Image , changeAspectRatio: true);
 
             }
             else
             {
-                AssetCache.Instance.EnqueueOneResAndWait(info.world360Image, info.world360Image, (success) =>
+                AssetCache.Instance.EnqueueOneResAndWait(info.world360Image , info.world360Image , (success) =>
                 {
                     if (success)
                     {
@@ -834,7 +890,8 @@ public class LoadingHandler : MonoBehaviour
                     }
                 });
             }
-        }else { DomeThumbnail.gameObject.SetActive(false);}
+        }
+      else { DomeThumbnail.gameObject.SetActive(false);}
         ResetLoadingValues();
         DomeLoading.SetActive(true);
         DomeName.text = info.name;
@@ -842,9 +899,10 @@ public class LoadingHandler : MonoBehaviour
         DomeCreator.text = info.creatorName;
         DomeType.text = info.domeType;
         DomeCategory.text = info.domeCategory;
+        iswheel = false;
         Debug.Log("Dome id " + info.id);
-        
-        if(info.id>0 && info.id < 9)
+      
+        if (info.id>0 && info.id < 9)
         {
             //DomeCategory.text = "Center";
             DomeID.text = "CA-"+ info.id;
@@ -884,28 +942,32 @@ public class LoadingHandler : MonoBehaviour
     }
     public void showApprovaldomeloading(XANASummitSceneLoading.SingleWorldInfo info, XANASummitDataContainer.OfficialWorldDetails selectedWold)
     {
+        ConstantsHolder.DiasableMultiPartPhoton = true;
         WaitForInput = true;
-        if (!string.IsNullOrEmpty(selectedWold.icon))
-        {
-            DomeThumbnail.gameObject.SetActive(true);
-            if (AssetCache.Instance.HasFile(selectedWold.icon))
+      
+            if (!string.IsNullOrEmpty(selectedWold.icon))
             {
-                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, selectedWold.icon);
+            selectedWold.icon += "?width=512?height=256";
 
-            }
-            else
-            {
-                AssetCache.Instance.EnqueueOneResAndWait(selectedWold.icon, selectedWold.icon, (success) =>
+                DomeThumbnail.gameObject.SetActive(true);
+                if (AssetCache.Instance.HasFile(selectedWold.icon ))
                 {
-                    if (success)
-                    {
-                        AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, selectedWold.icon, changeAspectRatio: true);
+                    AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, selectedWold.icon , changeAspectRatio: true);
 
-                    }
-                });
+                }
+                else
+                {
+                    AssetCache.Instance.EnqueueOneResAndWait(selectedWold.icon , selectedWold.icon, (success) =>
+                    {
+                        if (success)
+                        {
+                            AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, selectedWold.icon , changeAspectRatio: true);
+
+                        }
+                    });
+                }
             }
-        }
-        else { DomeThumbnail.gameObject.SetActive(false); }
+            else { DomeThumbnail.gameObject.SetActive(false); }
         ResetLoadingValues();
         DomeLoading.SetActive(true);
         DomeName.text = info.data.name;
@@ -914,7 +976,7 @@ public class LoadingHandler : MonoBehaviour
         DomeType.text = selectedWold.subWorldType;
         DomeCategory.text = selectedWold.subWorldCategory;
         DomeVisitedCount.text = ConstantsHolder.visitorCount.ToString();
-        
+        iswheel = false;
         if (ConstantsHolder.domeId > 0 && ConstantsHolder.domeId < 9)
         {
             //DomeCategory.text = "Center";
@@ -954,38 +1016,49 @@ public class LoadingHandler : MonoBehaviour
     }
     public void showApprovalWheelloading()
     {
+
+        DomeThumbnail.gameObject.SetActive(true);
+        DomeThumbnail.sprite = Wheelsprite;
         ResetLoadingValues();
-        DomeThumbnail.gameObject.SetActive(false);
+        iswheel = true;
         DomeLoading.SetActive(true);
         DomeName.text = "Giant Wheel";
         DomeDescription.text = "Giant Wheel";
         DomeCreator.text = "XANA";
         DomeType.text = "Entertainment";
-        DomeCategory.text = "Entertainment";
+        DomeID.text = "-";
+        DomeVisitedCount.text = "-";
+        DomeCategory.text = "Adventure";
  
         ApprovalUI.SetActive(true);
         DomeLodingUI.SetActive(false);
 
     }
-    public   void EnterDome()
+
+    public void EnterDome()
     {
         ResetLoadingValues();
         enter = true;
         WaitForInput = false;
         ApprovalUI.SetActive(false);
         DomeLodingUI.SetActive(true);
-
         EnterWheel?.Invoke(true);
         BuilderEventManager.SpaceXDeactivated?.Invoke();
-       
-
+        if (!iswheel)
+        {
+            ConstantsHolder.isFromXANASummit = true;
+            ConstantsHolder.IsSummitDomeWorld = true;
+            ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
+        }
     }
+
     public void startLoading()
     {
         StartCoroutine(IncrementSliderValue(Random.Range(0f, 5f)));
     }
     public void ReturnDome()
     {
+        ConstantsHolder.xanaConstants.isBackFromWorld = true;
         enter = false;
         WaitForInput = false;
         EnterWheel?.Invoke(false);

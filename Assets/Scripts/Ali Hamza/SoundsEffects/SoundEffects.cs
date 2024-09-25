@@ -33,6 +33,11 @@ public class SoundEffects : MonoBehaviour
     }
     public void PlaySoundEffects(Sounds soundType)
     {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            return;
+        }
+
         if (ref_audio.isPlaying)
             return;
         switch (soundType)
