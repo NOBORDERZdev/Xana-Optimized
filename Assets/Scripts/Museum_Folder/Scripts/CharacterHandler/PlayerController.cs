@@ -2137,7 +2137,7 @@ public class PlayerController : MonoBehaviour
     {
         if (scene.name != "Builder")
         {
-            jumpHeight = _defaultJumpHeight;
+            JumpVelocity = _defaultJumpHeight;
             sprintSpeed = _defaultSprintSpeed;
             movementSpeed = _defaultMoveSpeed;
         }

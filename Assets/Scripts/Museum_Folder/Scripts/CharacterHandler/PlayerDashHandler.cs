@@ -93,6 +93,7 @@ public class PlayerDashHandler : MonoBehaviour
 
         float startTime = Time.time;
         float endTime = startTime + _dashTime;
+        _actualSpringSpeed = _playerController.sprintSpeed;
 
         if (_dashEffect)
             _dashEffect.SetActive(true);  // Enable speed lines effect on Camera
@@ -122,7 +123,6 @@ public class PlayerDashHandler : MonoBehaviour
 
     private IEnumerator DashEndRoutine()
     {
-
         _playerController.sprintSpeed = 16f;
         while (_playerController.cinemachineFreeLook.m_Lens.FieldOfView >= 60f)
         {

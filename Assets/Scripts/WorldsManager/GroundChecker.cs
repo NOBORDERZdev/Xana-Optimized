@@ -31,13 +31,13 @@ public class GroundChecker : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        if (isBuilderScene)
-            return;
-        isGrounded = IsGrounded();
-        playerAnimator.SetBool("IsGrounded", isGrounded);
-    }
+    //private void Update()
+    //{
+    //    if (isBuilderScene)
+    //        return;
+    //    isGrounded = IsGrounded();
+    //    playerAnimator.SetBool("IsGrounded", isGrounded);
+    //}
 
     void SyncAnimatorParams()
     {
