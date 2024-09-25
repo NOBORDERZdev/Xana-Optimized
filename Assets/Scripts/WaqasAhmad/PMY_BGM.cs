@@ -100,8 +100,15 @@ public class PMY_BGM : MonoBehaviour
     private void HookEvent()
     {
         //SceneManage.onExitAction += OnSceneExit;                               // invoke when scene is changed
-        PMY_Nft_Manager.Instance.exitClickedAction += UpdateMusicStatus;       // invoke when nft video is closed
-        PMY_Nft_Manager.Instance.OnVideoEnlargeAction += OnVideoEnlargeAction; // invoke when nft video is enlarged
+        if (PMY_Nft_Manager.Instance != null)
+        {
+            PMY_Nft_Manager.Instance.exitClickedAction += UpdateMusicStatus;
+            PMY_Nft_Manager.Instance.OnVideoEnlargeAction += OnVideoEnlargeAction;
+        }
+        else
+        {
+            Debug.LogWarning("PMY_Nft_Manager.Instance is null. Events not hooked.");
+        }
     }
 
     //private void OnSceneExit()
