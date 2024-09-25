@@ -350,19 +350,14 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     public IEnumerator DownloadSpawnPointsPreload()
     {
+        // First loop for preLoadStartFinishPoints
         for (int i = 0; i < BuilderData.preLoadStartFinishPoints.Count; i++)
         {
             string downloadKey = prefabPrefix + BuilderData.preLoadStartFinishPoints[i].ItemID + prefabSuffix;
             string dicKey = BuilderData.preLoadStartFinishPoints[i].DcitionaryKey;
 
-
-
-            //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-            //bool flag = false;
-            //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
-            //if (!flag)
             AsyncOperationHandle<GameObject> _async;
-            LoadAssetAgain:
+        LoadAssetAgainStartFinish:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
@@ -370,19 +365,16 @@ public class BuilderAssetDownloader : MonoBehaviour
             }
             if (_async.IsValid() && _async.Result != null)
             {
-
+                // Asset loaded successfully
             }
             else
             {
+                // If the asset failed to load, retry after clearing cache
                 Addressables.ClearDependencyCacheAsync(downloadKey);
                 Addressables.ReleaseInstance(_async);
                 Addressables.Release(_async);
                 yield return new WaitForSeconds(1);
-                goto LoadAssetAgain;
-            }
-            while (!_async.IsDone)
-            {
-                yield return null;
+                goto LoadAssetAgainStartFinish;
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
@@ -396,23 +388,31 @@ public class BuilderAssetDownloader : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-
+        // Second loop for preLoadspawnPoint (updated with retry mechanism)
         for (int i = 0; i < BuilderData.preLoadspawnPoint.Count; i++)
         {
             string downloadKey = prefabPrefix + BuilderData.preLoadspawnPoint[i].ItemID + prefabSuffix;
             string dicKey = BuilderData.preLoadspawnPoint[i].DcitionaryKey;
 
-
-
-            //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-            //bool flag = false;
-            //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
-            //if (!flag)
-
-            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            AsyncOperationHandle<GameObject> _async;
+        LoadAssetAgainSpawnPoint:
+            _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
                 yield return null;
+            }
+            if (_async.IsValid() && _async.Result != null)
+            {
+                // Asset loaded successfully
+            }
+            else
+            {
+                // If the asset failed to load, retry after clearing cache
+                Addressables.ClearDependencyCacheAsync(downloadKey);
+                Addressables.ReleaseInstance(_async);
+                Addressables.Release(_async);
+                yield return new WaitForSeconds(1);
+                goto LoadAssetAgainSpawnPoint;
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
@@ -684,6 +684,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         }
         
 
+        isSpawnDownloaded = false;//Failed due to spawn points not being downloaded upon re-entry.
         downloadDataQueue.Clear();
         builderDataDictionary.Clear();
         BuilderData.mapData = null;
