@@ -67,11 +67,11 @@ public class OnTriggerSceneSwitch : MonoBehaviour
 
     void CheckSceneParemeter()
     {
-        if (LoadingFromSummitWorld)
-        {
-            ConstantsHolder.isFromXANASummit = true;
-            ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
-        }
+        //if (LoadingFromSummitWorld)
+        //{
+        //    ConstantsHolder.isFromXANASummit = true;
+        //    ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
+        //}
         if(HaveSubworlds)
         {
             ConstantsHolder.HaveSubWorlds = true;
