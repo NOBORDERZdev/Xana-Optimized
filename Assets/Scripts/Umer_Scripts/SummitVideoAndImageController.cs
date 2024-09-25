@@ -41,7 +41,8 @@ public class SummitVideoAndImageController : MonoBehaviour
     [SerializeField] Material imageMat;
     [SerializeField] bool applyVideoMesh; // If play video on mesh 
     [SerializeField] VideoPlayer videoMesh;
-    private Texture _texture;
+    [HideInInspector]
+    public Texture _texture;
     private StreamYoutubeVideo streamYoutubeVideo;
     RenderTexture renderTexture_temp;
 
