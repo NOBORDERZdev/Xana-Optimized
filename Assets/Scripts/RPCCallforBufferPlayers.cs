@@ -125,6 +125,11 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         otherPlayer.isLoadStaticClothFromJson = true;
         otherPlayer.staticClothJson = ClothJson;
         otherPlayer.BuildCharacterFromLocalJson();
+        if (otherPlayer.GetComponent<EyesBlinking>())                      // Added by Ali Hamza
+        {
+            otherPlayer.GetComponent<EyesBlinking>().StoreBlendShapeValues();
+            StartCoroutine(otherPlayer.GetComponent<EyesBlinking>().BlinkingStartRoutine());
+        }
     }
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
