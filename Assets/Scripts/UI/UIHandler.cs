@@ -135,9 +135,14 @@ public class UIHandler : MonoBehaviour
         else 
         {
             SplashScreenXana.SetActive(false);
-            SplashScreenSummit.SetActive(true);
-            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            
+            if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+            {
+                SplashScreenSummit.SetActive(true);
+                Screen.orientation = ScreenOrientation.LandscapeLeft; // this shouldn't run if user is reconnecting
+            }
         }
+
         if (SaveCharacterProperties.NeedToShowSplash == 1)
         {
             if (PlayerPrefs.HasKey("TermsConditionAgreement"))
