@@ -33,7 +33,7 @@ public class LoadingHandler : MonoBehaviour
 
     public float fadeTimer;
     public bool isFirstTime = true;
-    
+
     /// <summary>
     /// Help Screen Arrays for 2 scenarios.
     /// If loading percentage is less than 50 only display helpScreenOne items
@@ -97,7 +97,7 @@ public class LoadingHandler : MonoBehaviour
     public ManualRoomController manualRoomController;
     public StreamingLoadingText streamingLoading;
     public string Aalternate;
-    public bool enter = false, WaitForInput = false,iswheel = false;
+    public bool enter = false, WaitForInput = false, iswheel = false;
     public float currentValue = 0;
     private float timer = 0;
     public bool isLoadingComplete = false;
@@ -130,7 +130,7 @@ public class LoadingHandler : MonoBehaviour
 
         loadingText.text = "";
         manualRoomController = gameObject.GetComponent<ManualRoomController>();
-      //  Debug.unityLogger.logEnabled = true;
+        //  Debug.unityLogger.logEnabled = true;
 #if UNITY_EDITOR
         Debug.unityLogger.logEnabled = true;
 #else
@@ -140,13 +140,14 @@ public class LoadingHandler : MonoBehaviour
         if (LoadingStatus != null)
         {
             originalWidth = LoadingStatus.sizeDelta.x;
-           
+
         }
     }
 
     private void OnEnable()
     {
-        CompleteSlider += () => {
+        CompleteSlider += () =>
+        {
             Debug.Log("Complete   ");
             completed = true;
             loadingSlider.DOFillAmount(1, 0.15f);
@@ -155,9 +156,9 @@ public class LoadingHandler : MonoBehaviour
             DomeProgress.text = " 100%";
             loadingPercentageText.text = " 100%";
             DomeProgress.text = (100).ToString();
-          /*  StartCoroutine(AnimateNumberCoroutine(JJLoadingPercentageText, int.Parse(JJLoadingPercentageText.text), 100, 0.15f));
-            StartCoroutine(AnimateNumberCoroutine(loadingPercentageText, int.Parse(loadingPercentageText.text), 100, 0.15f));
-            StartCoroutine(AnimateNumberCoroutine(DomeProgress, int.Parse(DomeProgress.text), 100, 0.15f));*/
+            /*  StartCoroutine(AnimateNumberCoroutine(JJLoadingPercentageText, int.Parse(JJLoadingPercentageText.text), 100, 0.15f));
+              StartCoroutine(AnimateNumberCoroutine(loadingPercentageText, int.Parse(loadingPercentageText.text), 100, 0.15f));
+              StartCoroutine(AnimateNumberCoroutine(DomeProgress, int.Parse(DomeProgress.text), 100, 0.15f));*/
 
         };
     }
@@ -210,7 +211,7 @@ public class LoadingHandler : MonoBehaviour
         {
             text += "...  ";
         }
-       
+
         loadingText.text = text.ToUpper();
         loadingText.GetComponent<TextLocalization>().LocalizeTextText(message);
         loadingText.GetComponent<TextLocalization>().LocalizeTextText();
@@ -226,7 +227,7 @@ public class LoadingHandler : MonoBehaviour
         {
             loadingSlider.fillAmount = value;
         }
-        loadingPercentageText.text =" "+ ((int)(value * 100f)).ToString() + "%";
+        loadingPercentageText.text = " " + ((int)(value * 100f)).ToString() + "%";
 
     }
     public void UpdateLoadingSliderForJJ(float value, float fillSpeed, bool doLerp = false)
@@ -273,7 +274,7 @@ public class LoadingHandler : MonoBehaviour
             {
                 ActivateFadder_AtLoadingStart();
             }
-           
+
         }
 
         //StartCoroutine(CustomLoading());
@@ -293,7 +294,7 @@ public class LoadingHandler : MonoBehaviour
             //Debug.LogError(" ~~~~~~~  Oriantation Change Called ~~~~~~~ " );
         });
     }
-   
+
     void CustomLoading()
     {
         //if (needWait)
@@ -307,11 +308,11 @@ public class LoadingHandler : MonoBehaviour
         //    loadingPanel.SetActive(true);
         //}
 
-       
+
         loadingPanel.SetActive(true);
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         blackScreen.DOFade(0, 0.2f).SetDelay(0f);
-      
+
 
         if (gameplayLoadingUIRefreshCo != null)//rik for refresh screen on every 5-7 second.......
         {
@@ -325,7 +326,7 @@ public class LoadingHandler : MonoBehaviour
         else
             ConstantsHolder.xanaConstants.needToClearMemory = true;
     }
-   
+
     public void ResetLoadingValues()
     {
         //if (GameplayEntityLoader.instance)
@@ -358,7 +359,7 @@ public class LoadingHandler : MonoBehaviour
 
         if (!ConstantsHolder.xanaConstants.isFromXanaLobby && ConstantsHolder.xanaConstants.isBackFromWorld)
         {
-            
+
             Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
             blackScreen.DOKill();
             blackScreen.DOFade(1f, 0.01f).OnComplete(async () =>
@@ -455,7 +456,7 @@ public class LoadingHandler : MonoBehaviour
 
     private IEnumerator Check_Orientation(ScreenOrientation oriantation)
     {
-    CheckAgain:
+        CheckAgain:
         //  Debug.LogError(Screen.orientation + " ~~~~~~~ Oriantation Checking ~~~~~~~ " + oriantation);
         yield return new WaitForSeconds(.2f);
         if (Screen.orientation == oriantation || ConstantsHolder.xanaConstants.JjWorldSceneChange)
@@ -535,7 +536,7 @@ public class LoadingHandler : MonoBehaviour
 
     public IEnumerator ShowLoadingForCharacterUpdation(float delay)
     {
-        if(canvasGroup.alpha == 0)
+        if (canvasGroup.alpha == 0)
             canvasGroup.alpha = 1;
         characterLoading.SetActive(true);
         yield return new WaitForSeconds(delay);
@@ -547,7 +548,7 @@ public class LoadingHandler : MonoBehaviour
     {
         fader.gameObject.SetActive(true);
         // loop over 1 second
-        for (float i = 0; i <= 1; i += (Time.deltaTime*5))
+        for (float i = 0; i <= 1; i += (Time.deltaTime * 5))
         {
             // set color with i as alpha
             fader.color = new Color(0, 0, 0, i);
@@ -568,7 +569,7 @@ public class LoadingHandler : MonoBehaviour
     }
 
 
-    public AsyncOperation LoadSceneByIndex(string sceneName, bool isBuilder = false,LoadSceneMode mode = LoadSceneMode.Single)
+    public AsyncOperation LoadSceneByIndex(string sceneName, bool isBuilder = false, LoadSceneMode mode = LoadSceneMode.Single)
     {
         //UpdateLoadingSlider(.2f);
         if (ConstantsHolder.xanaConstants.JjWorldSceneChange)
@@ -584,18 +585,18 @@ public class LoadingHandler : MonoBehaviour
             else
                 StartCoroutine(IncrementSliderValue(Random.Range(10f, 13f)));
         }
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName,mode);
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName, mode);
         return asyncOperation;
     }
 
     public IEnumerator IncrementSliderValue(float speed, bool loadMainScene = false)
     {
-      completed = false;
-     
-        while (currentValue < sliderCompleteValue)  
+        completed = false;
+
+        while (currentValue < sliderCompleteValue)
         {
-            
-            while(StopLoader && currentValue>30)
+
+            while (StopLoader && currentValue > 30)
             {
                 yield return null;
             }
@@ -608,17 +609,18 @@ public class LoadingHandler : MonoBehaviour
                 JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                 JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
             }
-            else if (ConstantsHolder.isFromXANASummit) {
-            
-              LoadingStatus.DOAnchorMax(new Vector2(currentValue / 100, LoadingStatus.anchorMax.y), 0.15f); ;
+            else if (ConstantsHolder.isFromXANASummit)
+            {
+
+                LoadingStatus.DOAnchorMax(new Vector2(currentValue / 100, LoadingStatus.anchorMax.y), 0.15f); ;
                 DomeProgress.text = ((int)(currentValue)).ToString();
             }
             else
             {
                 loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                 loadingPercentageText.text = " " + ((int)(currentValue)).ToString() + "%";
-               
-               
+
+
             }
 
 
@@ -633,7 +635,7 @@ public class LoadingHandler : MonoBehaviour
                     isLoadingComplete = true;
                 }
             }
-            else if(loadMainScene)
+            else if (loadMainScene)
             {
                 if (currentValue > 35f)
                 {
@@ -656,13 +658,13 @@ public class LoadingHandler : MonoBehaviour
                 if (ConstantsHolder.isFromXANASummit)
                 {
                     LoadingStatus.DOAnchorMax(new Vector2(currentValue / 100, LoadingStatus.anchorMax.y), 0.15f); ;
-                  //  StartCoroutine(AnimateNumberCoroutine(DomeProgress, int.Parse(DomeProgress.text), (int)currentValue, 0.15f));
+                    //  StartCoroutine(AnimateNumberCoroutine(DomeProgress, int.Parse(DomeProgress.text), (int)currentValue, 0.15f));
                     DomeProgress.text = ((int)(currentValue)).ToString();
                 }
                 else
                 {
                     loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
-                       loadingPercentageText.text = " " + ((int)(currentValue)).ToString() + "%";
+                    loadingPercentageText.text = " " + ((int)(currentValue)).ToString() + "%";
                     //StartCoroutine(AnimateNumberCoroutine(loadingPercentageText, int.Parse(loadingPercentageText.text), (int)currentValue, 0.15f));
 
                     //yield return new WaitForSeconds(1f);
@@ -673,7 +675,7 @@ public class LoadingHandler : MonoBehaviour
             yield return null;
         }
     }
-    private IEnumerator AnimateNumberCoroutine(TextMeshProUGUI text,int startValue, int endValue, float time)
+    private IEnumerator AnimateNumberCoroutine(TextMeshProUGUI text, int startValue, int endValue, float time)
     {
         float elapsedTime = 0.0f; // Time elapsed since the start of the animation
 
@@ -785,7 +787,7 @@ public class LoadingHandler : MonoBehaviour
 
     public void ShowVideoLoading()
     {
-        if(ScreenOrientationManager._instance != null)
+        if (ScreenOrientationManager._instance != null)
         {
             if (ScreenOrientationManager._instance.isPotrait)
                 VideoLoading.GetComponent<VideoPlayer>().targetTexture = Texture9x16;
@@ -803,14 +805,14 @@ public class LoadingHandler : MonoBehaviour
         {
             info.thumbnail += "?width=512?height=256";
             DomeThumbnail.gameObject.SetActive(true);
-            if (AssetCache.Instance.HasFile(info.thumbnail  ))
+            if (AssetCache.Instance.HasFile(info.thumbnail))
             {
-                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.thumbnail , changeAspectRatio:true);
+                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.thumbnail, changeAspectRatio: true);
 
             }
             else
             {
-                AssetCache.Instance.EnqueueOneResAndWait(info.thumbnail, info.thumbnail , (success) =>
+                AssetCache.Instance.EnqueueOneResAndWait(info.thumbnail, info.thumbnail, (success) =>
                 {
                     if (success)
                     {
@@ -855,7 +857,7 @@ public class LoadingHandler : MonoBehaviour
             DomeCategory.text = "Entertainmnent";
             DomeID.text = "EA-" + info.domeId;
         }
-        if (info.domeId > 128 && info.domeId < 161)
+        if (info.domeId > 128)
         {
             DomeCategory.text = "Entertainmnent";
             DomeID.text = "MD   -" + info.domeId;
@@ -874,14 +876,14 @@ public class LoadingHandler : MonoBehaviour
         {
             info.world360Image += "?width=512?height=256";
             DomeThumbnail.gameObject.SetActive(true);
-            if (AssetCache.Instance.HasFile(info.world360Image ))
+            if (AssetCache.Instance.HasFile(info.world360Image))
             {
-                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.world360Image , changeAspectRatio: true);
+                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.world360Image, changeAspectRatio: true);
 
             }
             else
             {
-                AssetCache.Instance.EnqueueOneResAndWait(info.world360Image , info.world360Image , (success) =>
+                AssetCache.Instance.EnqueueOneResAndWait(info.world360Image, info.world360Image, (success) =>
                 {
                     if (success)
                     {
@@ -891,7 +893,7 @@ public class LoadingHandler : MonoBehaviour
                 });
             }
         }
-      else { DomeThumbnail.gameObject.SetActive(false);}
+        else { DomeThumbnail.gameObject.SetActive(false); }
         ResetLoadingValues();
         DomeLoading.SetActive(true);
         DomeName.text = info.name;
@@ -901,11 +903,11 @@ public class LoadingHandler : MonoBehaviour
         DomeCategory.text = info.domeCategory;
         iswheel = false;
         Debug.Log("Dome id " + info.id);
-      
-        if (info.id>0 && info.id < 9)
+
+        if (info.id > 0 && info.id < 9)
         {
             //DomeCategory.text = "Center";
-            DomeID.text = "CA-"+ info.id;
+            DomeID.text = "CA-" + info.id;
         }
 
         if (info.id > 8 && info.id < 39)
@@ -930,7 +932,7 @@ public class LoadingHandler : MonoBehaviour
             //DomeCategory.text = "Entertainmnent";
             DomeID.text = "EA-" + info.id;
         }
-        if (info.id > 128 && info.id < 161)
+        if (info.id > 128)
         {
             //DomeCategory.text = "Entertainmnent";
             DomeID.text = "MD   -" + info.id;
@@ -944,39 +946,49 @@ public class LoadingHandler : MonoBehaviour
     {
         ConstantsHolder.DiasableMultiPartPhoton = true;
         WaitForInput = true;
-      
-            if (!string.IsNullOrEmpty(info.data.thumbnail))
+
+        if (!string.IsNullOrEmpty(info.data.thumbnail))
+        {
+            info.data.thumbnail += "?width=512?height=256";
+
+            DomeThumbnail.gameObject.SetActive(true);
+            if (AssetCache.Instance.HasFile(info.data.thumbnail))
             {
-                info.data.thumbnail += "?width=512?height=256";
+                AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.data.thumbnail, changeAspectRatio: true);
 
-                DomeThumbnail.gameObject.SetActive(true);
-                if (AssetCache.Instance.HasFile(info.data.thumbnail ))
-                {
-                    AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.data.thumbnail , changeAspectRatio: true);
-
-                }
-                else
-                {
-                    AssetCache.Instance.EnqueueOneResAndWait(info.data.thumbnail , info.data.thumbnail, (success) =>
-                    {
-                        if (success)
-                        {
-                            AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.data.thumbnail , changeAspectRatio: true);
-
-                        }
-                    });
-                }
             }
-            else { DomeThumbnail.gameObject.SetActive(false); }
+            else
+            {
+                AssetCache.Instance.EnqueueOneResAndWait(info.data.thumbnail, info.data.thumbnail, (success) =>
+                {
+                    if (success)
+                    {
+                        AssetCache.Instance.LoadSpriteIntoImage(DomeThumbnail, info.data.thumbnail, changeAspectRatio: true);
+
+                    }
+                });
+            }
+        }
+        else { DomeThumbnail.gameObject.SetActive(false); }
         ResetLoadingValues();
         DomeLoading.SetActive(true);
         DomeName.text = info.data.name;
         DomeDescription.text = info.data.description;
-        DomeCreator.text = info.data.creator;
-        DomeType.text = selectedWold.subWorldType;
-        DomeCategory.text = selectedWold.subWorldCategory;
+        if (string.IsNullOrEmpty(info.data.creator))
+            DomeCreator.text = info.data.user.name;
+        else
+            DomeCreator.text = info.data.creator;
+        if (ConstantsHolder.DomeType == "None")
+            DomeType.text = "-";
+        else
+            DomeType.text = ConstantsHolder.DomeType;
+        if (ConstantsHolder.DomeCategory == "None")
+            DomeCategory.text = "-";
+        else
+            DomeCategory.text = ConstantsHolder.DomeCategory;
         DomeVisitedCount.text = ConstantsHolder.visitorCount.ToString();
         iswheel = false;
+
         if (ConstantsHolder.domeId > 0 && ConstantsHolder.domeId < 9)
         {
             //DomeCategory.text = "Center";
@@ -1005,7 +1017,7 @@ public class LoadingHandler : MonoBehaviour
             //DomeCategory.text = "Entertainmnent";
             DomeID.text = "EA-" + ConstantsHolder.domeId;
         }
-        if (ConstantsHolder.domeId > 128 && ConstantsHolder.domeId < 161)
+        if (ConstantsHolder.domeId > 128)
         {
             //DomeCategory.text = "Entertainmnent";
             DomeID.text = "MD   -" + ConstantsHolder.domeId;
@@ -1029,7 +1041,7 @@ public class LoadingHandler : MonoBehaviour
         DomeID.text = "-";
         DomeVisitedCount.text = "-";
         DomeCategory.text = "Adventure";
- 
+
         ApprovalUI.SetActive(true);
         DomeLodingUI.SetActive(false);
 
@@ -1080,7 +1092,7 @@ public class LoadingHandler : MonoBehaviour
         Debug.Log("Loading progress...");
         LoadingStatus.DOAnchorMax(new Vector2(progress / 100, LoadingStatus.anchorMax.y), 0.15f); ;
         DomeProgress.text = ((int)progress).ToString("D2");
-       
+
     }
 }
 
