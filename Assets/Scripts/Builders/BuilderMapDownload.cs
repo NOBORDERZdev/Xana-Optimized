@@ -695,6 +695,8 @@ public class BuilderMapDownload : MonoBehaviour
         //Invoke(nameof(XanaSetItemData), 1.5f);
     }
 
+
+
     void XanaSetItemData()
     {
         StartCoroutine(XanaSetItemDataCO());
