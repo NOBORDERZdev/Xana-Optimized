@@ -430,6 +430,8 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
                     //ratioReferences[ratioId].l_videoPlayer.Play();
 
                 }
+
+                VideoOpened?.Invoke();
             }
             else// To Show Image
             {

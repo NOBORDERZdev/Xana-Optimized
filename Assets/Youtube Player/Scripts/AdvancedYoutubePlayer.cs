@@ -66,7 +66,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
     {
         AvatarSpawnerOnDisconnect.OninternetDisconnect += OnInternetDisconnect;
         AvatarSpawnerOnDisconnect.OninternetConnected += OnInternetConnect;
-        VideoPlayer.errorReceived += (hand, message) => { Debug.Log("Error in video.... "); PrepareVideoUrls(default,true); };
+        VideoPlayer.errorReceived += (hand, message) => { Debug.Log("Error in video.... "); PrepareVideoUrls(default, true); };
         //if (IsLive)
         //{
         //    AVProVideoPlayer.gameObject.SetActive(true);
@@ -138,8 +138,8 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         m_PlayingVideoId = VideoId;
         m_StartedPlayingVideoId = null;
 
-        
-       
+
+
         await PrepareVideoUrls(cancellationToken);
         /* if (!IsLive)
          {
@@ -190,7 +190,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
                 var videdo = await youtube.Videos.GetAsync("https://www.youtube.com/watch?v=" + VideoId);
                 var streamManifest = await youtube.Videos.Streams.GetManifestAsync(videdo.Id);
                 var streamInfo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();
-                if (VideoPlayer.url != streamInfo.Url )
+                if (VideoPlayer.url != streamInfo.Url)
                 {
 
 
@@ -201,7 +201,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
                     VideoPlayer.Play();
 
                 }
-                setStreamableAsync(VideoId,streamInfo.Url);
+                setStreamableAsync(VideoId, streamInfo.Url);
             }
             else
             {
@@ -244,7 +244,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         }
         else
         {
-            if(prevVideo==VideoId && !AVProVideoPlayer.MediaPath.Path.IsNotEmpty()) { return; }
+            if (prevVideo == VideoId && !AVProVideoPlayer.MediaPath.Path.IsNotEmpty()) { return; }
 
             prevVideo = VideoId;
             var YoutubeHlsGetter = new FetchHtmlContent();
@@ -268,26 +268,27 @@ public class AdvancedYoutubePlayer : MonoBehaviour
                 }
             }
             return "";
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             return "";
         }
-    } 
+    }
 
 
-    public async void setStreamableAsync(string videoId,string Streamableurl)
+    public async void setStreamableAsync(string videoId, string Streamableurl)
     {
         WWWForm frm = new WWWForm();
-        frm.AddField("videoId",videoId);
-        frm.AddField("url",Streamableurl);
+        frm.AddField("videoId", videoId);
+        frm.AddField("url", Streamableurl);
         UnityWebRequest request = UnityWebRequest.Post(ConstantsGod.API_BASEURL + ConstantsGod.YtSetStreamUrl, frm);
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         await request.SendWebRequestAsync();
-       if (request.error.IsNullOrEmpty())
+        if (request.error.IsNullOrEmpty())
         {
             Debug.Log(request.downloadHandler.text);
         }
-       Debug.Log(request.downloadHandler.text);
+        Debug.Log(request.downloadHandler.text);
     }
 
     private IEnumerator PlayVideoAndAudio(string video, string audio)
@@ -327,7 +328,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         // Play both video and audio
         VideoPlayer.Play();
         VideoPlayer1.Play();
-       
+
     }
 
     private string GetProxiedUrl(string url, string YoutubeUrl)
@@ -401,7 +402,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         }
         else
         {
-            VideoPlayer.playOnAwake= false;
+            VideoPlayer.playOnAwake = false;
             PreRecVideoScreen.SetActive(!_isLiveVideo);
             LiveVideoPlayerScreen.gameObject.SetActive(_isLiveVideo);
         }
@@ -469,7 +470,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         public bool success { get; set; }
         public YtVideoInfo data { get; set; }
         public string msg { get; set; }
-        
+
     }
 
     public string ExtractVideoIdFromUrl(string url)
@@ -498,20 +499,36 @@ public class AdvancedYoutubePlayer : MonoBehaviour
     {
         VideoPlayer.url = "";
         VideoPlayer1.url = "";
-        AVProVideoPlayer.OpenMedia(new MediaPath("", MediaPathType.AbsolutePathOrURL),false);
+        AVProVideoPlayer.OpenMedia(new MediaPath("", MediaPathType.AbsolutePathOrURL), false);
     }
 
     private void StopVideoSound()
     {
-        this.VideoPlayer.SetDirectAudioMute(0, true);
-        this.VideoPlayer1.SetDirectAudioMute(0, true);
+        if (this.VideoPlayer.audioOutputMode == VideoAudioOutputMode.AudioSource)
+        {
+            if (this.VideoPlayer.GetTargetAudioSource(0) != null)
+                this.VideoPlayer.GetTargetAudioSource(0).mute = true;
+        }
+        if (this.VideoPlayer1.audioOutputMode == VideoAudioOutputMode.AudioSource)
+        {
+            if (this.VideoPlayer1.GetTargetAudioSource(0) != null)
+                this.VideoPlayer1.GetTargetAudioSource(0).mute = true;
+        }
         AVProVideoPlayer.AudioMuted = true;
     }
 
     private void PlayVideoSound()
     {
-        this.VideoPlayer.SetDirectAudioMute(0, false);
-        this.VideoPlayer1.SetDirectAudioMute(0, false);
+        if (this.VideoPlayer.audioOutputMode == VideoAudioOutputMode.AudioSource)
+        {
+            if (this.VideoPlayer.GetTargetAudioSource(0) != null)
+                this.VideoPlayer.GetTargetAudioSource(0).mute = false;
+        }
+        if (this.VideoPlayer1.audioOutputMode == VideoAudioOutputMode.AudioSource)
+        {
+            if (this.VideoPlayer1.GetTargetAudioSource(0) != null)
+                this.VideoPlayer1.GetTargetAudioSource(0).mute = false;
+        }
         AVProVideoPlayer.AudioMuted = false;
     }
 
