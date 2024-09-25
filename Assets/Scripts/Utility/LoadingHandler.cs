@@ -97,7 +97,7 @@ public class LoadingHandler : MonoBehaviour
     public ManualRoomController manualRoomController;
     public StreamingLoadingText streamingLoading;
     public string Aalternate;
-    public bool enter = false, WaitForInput = false;
+    public bool enter = false, WaitForInput = false,iswheel = false;
     public float currentValue = 0;
     private float timer = 0;
     public bool isLoadingComplete = false;
@@ -899,6 +899,7 @@ public class LoadingHandler : MonoBehaviour
         DomeCreator.text = info.creatorName;
         DomeType.text = info.domeType;
         DomeCategory.text = info.domeCategory;
+        iswheel = false;
         Debug.Log("Dome id " + info.id);
       
         if (info.id>0 && info.id < 9)
@@ -975,7 +976,7 @@ public class LoadingHandler : MonoBehaviour
         DomeType.text = selectedWold.subWorldType;
         DomeCategory.text = selectedWold.subWorldCategory;
         DomeVisitedCount.text = ConstantsHolder.visitorCount.ToString();
-        
+        iswheel = false;
         if (ConstantsHolder.domeId > 0 && ConstantsHolder.domeId < 9)
         {
             //DomeCategory.text = "Center";
@@ -1019,7 +1020,7 @@ public class LoadingHandler : MonoBehaviour
         DomeThumbnail.gameObject.SetActive(true);
         DomeThumbnail.sprite = Wheelsprite;
         ResetLoadingValues();
-      
+        iswheel = true;
         DomeLoading.SetActive(true);
         DomeName.text = "Giant Wheel";
         DomeDescription.text = "Giant Wheel";
@@ -1043,10 +1044,12 @@ public class LoadingHandler : MonoBehaviour
         DomeLodingUI.SetActive(true);
         EnterWheel?.Invoke(true);
         BuilderEventManager.spaceXDeactivated?.Invoke();
-       
-        ConstantsHolder.isFromXANASummit = true;
-        ConstantsHolder.IsSummitDomeWorld = true;
-        ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
+        if (!iswheel)
+        {
+            ConstantsHolder.isFromXANASummit = true;
+            ConstantsHolder.IsSummitDomeWorld = true;
+            ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
+        }
     }
 
     public void startLoading()

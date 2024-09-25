@@ -42,7 +42,7 @@ namespace ZeelKheni.YoutubePlayer.Components
                         Debug.LogWarning("Instance type is set to \"Public\". Fetching public instances every time is slow, and are only used for the sample to work. Please set a custom instance in the YoutubeInstance component.");
                         Debug.Log("Fetching Youtube public instances...");
                         YoutubeInstanceInfos = await YoutubeApi.GetPublicInstances(cancellationToken);
-
+                        if(YoutubeInstanceInfos.Count > 0)
                         m_PublicInstanceUrl = YoutubeInstanceInfos[0].Uri;
                         Debug.Log($"Using Youtube public instance: {m_PublicInstanceUrl}");
                     //}
