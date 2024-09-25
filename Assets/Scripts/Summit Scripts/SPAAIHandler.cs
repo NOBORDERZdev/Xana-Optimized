@@ -32,9 +32,8 @@ public class SPAAIHandler : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag=="Player")
+        if (other.GetComponent<PhotonView>() && other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
         {
-           
                 if (IsAIDataFetched)
                 {
                     SpawnAIPerformer();
@@ -51,7 +50,7 @@ public class SPAAIHandler : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.GetComponent<PhotonView>() && other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
         {
          
                 if (CurrentAIPerformerRef)
@@ -117,6 +116,8 @@ public class SPAAIHandler : MonoBehaviour
         if (CurrentAIPerformerRef)
         {
             CurrentAIPerformerRef.SetActive(true);
+            CurrentAIPerformerRef.GetComponent<SPAAIBehvrController>().isPerformingAction = false;
+            StartCoroutine(CurrentAIPerformerRef.GetComponent<SPAAIBehvrController>().PerformAction());
         }
         else
         {
