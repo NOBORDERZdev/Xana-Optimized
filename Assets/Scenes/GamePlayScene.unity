@@ -507,6 +507,7 @@ MonoBehaviour:
   HomeBtn: {fileID: 6408302776192530263}
   eventRemainingTime: 0
   _uiReferences: {fileID: 4338721142732702075}
+  ClothsLoaded: 0
   PositionResetButton: {fileID: 1962226382}
   XanaWorldController: {fileID: 7223993324936418732}
   XanaPartyController: {fileID: 376793118}
@@ -520,6 +521,7 @@ MonoBehaviour:
   - {fileID: 4894719807666117210, guid: 0ab61f970144d8443b71b12c1ce22c71, type: 3}
   XanaSummitDataContainerObject: {fileID: 11400000, guid: 167db53466831ca41b397940080656f9, type: 2}
   DownloadPopupHandlerInstance: {fileID: 435560302}
+  OldPlayer: {fileID: 0}
   autoSwitchTime: 0
 --- !u!4 &79798789
 Transform:
@@ -13337,7 +13339,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.06806946, y: -0.0008904756, z: 0.00006075699, w: 0.99768025}
+  m_LocalRotation: {x: 0.06806946, y: -0.0008904681, z: 0.000060756483, w: 0.99768025}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13453,7 +13455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CollideAgainst:
     serializedVersion: 2
-    m_Bits: 8386359
+    m_Bits: 4192055
   m_IgnoreTag: PhotonLocalPlayer
   m_TransparentLayers:
     serializedVersion: 2
@@ -13788,7 +13790,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010642108, y: -0.0008925234, z: 0.000009500733, w: 0.999943}
+  m_LocalRotation: {x: 0.010641612, y: -0.0008924941, z: 0.000009499979, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14405,10 +14407,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.13
-  m_Height: 1
+  m_Radius: 0.16655801
+  m_Height: 1.5240515
   m_Direction: 1
-  m_Center: {x: 0, y: 0.46, z: 0}
+  m_Center: {x: 0.002150461, y: 0.7220257, z: 0}
 --- !u!143 &1808683680640967395
 CharacterController:
   m_ObjectHideFlags: 0
@@ -14420,13 +14422,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 0.69
+  m_Height: 1.68
   m_Radius: 0.25
   m_SlopeLimit: 50
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.34, z: 0}
+  m_Center: {x: 0, y: 0.86, z: 0}
 --- !u!114 &1808683680640967397
 MonoBehaviour:
   m_ObjectHideFlags: 0
