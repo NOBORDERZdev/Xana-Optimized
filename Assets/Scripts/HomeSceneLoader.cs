@@ -140,6 +140,8 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
             Screen.orientation = ScreenOrientation.LandscapeLeft;
         ConstantsHolder.xanaConstants.isBuilderScene = false;
         ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
+        ConstantsHolder.isSoftBankGame = false;
+
         ConstantsHolder.xanaConstants.JjWorldSceneChange = true;
         ConstantsHolder.xanaConstants.JjWorldTeleportSceneName = "XANA Lobby";
 

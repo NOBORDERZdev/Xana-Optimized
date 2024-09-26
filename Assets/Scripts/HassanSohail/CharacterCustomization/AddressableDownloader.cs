@@ -486,7 +486,7 @@ public class AddressableDownloader : MonoBehaviour
                 {
                     Addressables.ClearDependencyCacheAsync(bundleUpdateInfo.data.bundles_list[i]);
                     Caching.ClearAllCachedVersions(bundleUpdateInfo.data.bundles_list[i]);
-                    await Task.Delay(400);
+                    await Task.Delay(200);
                 }
             }
     }
