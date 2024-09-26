@@ -18,7 +18,7 @@ public class SummitAIChatHandler : MonoBehaviour
     [Header("This Class variables")]
     public XANASummitDataContainer XANASummitDataContainer;
 
-    private List<GameObject> aiNPC = new List<GameObject>();
+    public List<GameObject> aiNPC = new List<GameObject>();
 
     private string npcName;
     private string npcURL;
@@ -90,6 +90,8 @@ public class SummitAIChatHandler : MonoBehaviour
     void InstantiateAINPC()
     {
         NPCCount = 0;
+        if (aiNPC.Count > 0)
+            return;
         for (int i = 0; i < XANASummitDataContainer.aiData.npcData.Count; i++)
         {
             if (XANASummitDataContainer.aiData.npcData[i].isAvatarPerformer)
@@ -136,6 +138,9 @@ public class SummitAIChatHandler : MonoBehaviour
     {
         NPCCount = 0;
         SummitNPC = false;
+
+        if (aiNPC.Count > 0)
+            return;
         for (int i = 0; i < XANASummitDataContainer.aiData.npcData.Count; i++)
         {
             GameObject AINPCAvatar;
