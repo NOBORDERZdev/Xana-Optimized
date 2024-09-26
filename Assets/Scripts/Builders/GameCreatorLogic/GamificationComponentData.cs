@@ -408,12 +408,25 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
         multiplayerComponentdatas.multiplayerComponents.Add(multiplayerComponentData);
         string json = JsonUtility.ToJson(multiplayerComponentdatas);
-        //Debug.LogError(json);
-        hash.Add("gamificationMultiplayerComponentDatas", json);
+
+        // Split the JSON string into smaller chunks
+        const int chunkSize = 30000; // Ensure each chunk is well below the 32767 limit
+        int totalChunks = (json.Length + chunkSize - 1) / chunkSize;
+
+        for (int i = 0; i < totalChunks; i++)
+        {
+            string chunkKey = $"gamificationMultiplayerComponentDatas_{i}";
+            string chunkValue = json.Substring(i * chunkSize, Math.Min(chunkSize, json.Length - i * chunkSize));
+            hash[chunkKey] = chunkValue;
+        }
+
+        // Store the total number of chunks
+        hash["gamificationMultiplayerComponentDatas_TotalChunks"] = totalChunks;
+
         PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
     }
 
-    
+
     public void MasterClientSwitched(Player newMasterClient)
     {
         //if (!withMultiplayer)

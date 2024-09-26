@@ -55,6 +55,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
             {
                 Debug.LogError($"Error: {webRequest.error}, HTTP Status Code: {webRequest.responseCode}");
                 Debug.LogError("Response: " + webRequest.downloadHandler.text);
+
             }
             else
             {
@@ -69,7 +70,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
                 }
                 else
                 {
-                    Debug.LogError("Error: " + getPointsAPIResponse.msg);
+                    Debug.Log("<color=red>Error: " + getPointsAPIResponse.msg + "</color>");
                 }
             }
         }
@@ -266,7 +267,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
 
         if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
         {
-            Debug.LogError("Error: " + request.error);
+            Debug.Log("<color=red>Error: " + request.error + "</color>");
         }
         else
         {
@@ -291,7 +292,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
 
         if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
         {
-            Debug.LogError("Error: " + request.error);
+            Debug.Log("<color=red>Error: " + request.error + "</color>");
         }
         else
         {
@@ -339,7 +340,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
 
         if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
         {
-            Debug.LogError("Error: " + request.error);
+            Debug.Log("<color=red>Error: " + request.error + "</color>");
         }
         else
         {
