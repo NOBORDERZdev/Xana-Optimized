@@ -21,8 +21,8 @@ public class PresetData_Jsons : MonoBehaviour
     //public static GameObject lastSelectedPreset=null;
     //public static string lastSelectedPresetName=null;
     [SerializeField] Texture eyeTex;
-   // AvatarController avatarController;
-   // CharcterBodyParts charcterBodyParts;
+    AvatarController avatarController;
+    CharcterBodyParts charcterBodyParts;
 
     private void OnEnable()
     {
@@ -55,13 +55,13 @@ public class PresetData_Jsons : MonoBehaviour
         }
 
 
-       // callScripts();
+        callScripts();
     }
 
     public void callScripts() 
     {
-        //avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
-        //charcterBodyParts = CharcterBodyParts.instance;
+        avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
+        charcterBodyParts = CharcterBodyParts.instance;
     }
 
 
@@ -71,7 +71,7 @@ public class PresetData_Jsons : MonoBehaviour
     }
    public void ChangecharacterOnCLickFromserver()
     {
-        //callScripts();
+        callScripts();
         if (StoreManager.instance.StartPanel_PresetParentPanel.activeInHierarchy)
         {
             //if (IsStartUp_Canvas && WaheedDynamicScrollRect.ScrollContent.instance != null)
@@ -91,10 +91,10 @@ public class PresetData_Jsons : MonoBehaviour
             else
                 return;
         }
-        //if (CharcterBodyParts.instance)
-        //{
-        //    charcterBodyParts.DefaultTexture(false);
-        //}
+        if (CharcterBodyParts.instance)
+        {
+            charcterBodyParts.DefaultTexture(false);
+        }
 
         if (!IsStartUp_Canvas && !PremiumUsersDetails.Instance.CheckSpecificItem(PresetNameinServer))
         {
@@ -183,15 +183,15 @@ public class PresetData_Jsons : MonoBehaviour
                
                 XanaConstants.xanaConstants._lastClickedBtn = this.gameObject;
             }
-            //if (avatarController.wornEyewearable != null)
-            //{
-            //    avatarController.UnStichItem("EyeWearable");
-            //}
+            if (avatarController.wornEyewearable != null)
+            {
+                avatarController.UnStichItem("EyeWearable");
+            }
 
             if (_CharacterData.HairColor != null)
                 XanaConstants.xanaConstants.isPresetHairColor = true;
 
-                //avatarController.ApplyPreset(_CharacterData);
+                avatarController.ApplyPreset(_CharacterData);
 
             GetSavedPreset();
             if (!presetAlreadySaved)
@@ -250,7 +250,7 @@ public class PresetData_Jsons : MonoBehaviour
         if (PlayerPrefs.GetInt("presetPanel") == 1)   // preset panel is enable so saving preset to account 
             PlayerPrefs.SetInt("presetPanel", 0);
         ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
-        //avatarController.IntializeAvatar();
+        avatarController.IntializeAvatar();
        // Debug.LogError("IntializeAvatar after");
     }  
 }
