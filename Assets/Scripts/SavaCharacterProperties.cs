@@ -158,6 +158,23 @@ public class SavaCharacterProperties : MonoBehaviour
 
     public void SavePlayerPropertiesInClassObj()
     {
+        if (SaveItemList == null)
+        {
+            Debug.LogError("SaveItemList is null");
+            return;
+        }
+
+        if (characterController == null)
+        {
+            Debug.LogError("characterController is null");
+            return;
+        }
+
+        if (charcterBodyParts == null)
+        {
+            Debug.LogError("charcterBodyParts is null");
+            return;
+        }
         SaveItemList.myItemObj.Clear();
         SaveItemList.id = LoadPlayerAvatar.avatarId;
         SaveItemList.name = LoadPlayerAvatar.avatarName;
