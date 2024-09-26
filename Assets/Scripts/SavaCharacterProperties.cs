@@ -22,8 +22,8 @@ public class SavaCharacterProperties : MonoBehaviour
     {
         instance = this;
         NeedToShowSplash = 1;
-        charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
-        characterController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
+        //charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
+        //characterController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
     }
     public void Start()
     {
@@ -93,14 +93,14 @@ public class SavaCharacterProperties : MonoBehaviour
                 CharcterBodyParts.instance.ImplementSavedSkinColor(_CharacterData.Skin);
             }
 
-            if (_CharacterData.SkinGerdientColor != null)
-            {
-                CharcterBodyParts.instance.ApplyGredientColor(_CharacterData.SkinGerdientColor, GameManager.Instance.mainCharacter);
-            }
-            else
-            {
-                CharcterBodyParts.instance.ApplyGredientDefault(GameManager.Instance.mainCharacter);
-            }
+            //if (_CharacterData.SkinGerdientColor != null)
+            //{
+            //    CharcterBodyParts.instance.ApplyGredientColor(_CharacterData.SkinGerdientColor, GameManager.Instance.mainCharacter);
+            //}
+            //else
+            //{
+            //    CharcterBodyParts.instance.ApplyGredientDefault(GameManager.Instance.mainCharacter);
+            //}
 
         }
     }

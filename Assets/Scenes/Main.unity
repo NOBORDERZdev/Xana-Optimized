@@ -50249,7 +50249,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2090902525, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: IsXanaLive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6812878254336208881, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: m_RootOrder
@@ -52623,6 +52623,7 @@ MonoBehaviour:
   defaultPngForSkinIcon: {fileID: 21300000, guid: 798e5c914621dd347bdc9c980d2a54c7, type: 3}
   defaultSssValue: 2.52
   PresetGredientColor: {r: 0.42352942, g: 0.39215687, b: 0.39215687, a: 0}
+  avatarController: {fileID: 0}
 --- !u!114 &98365739056566247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52889,7 +52890,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7707584184333010784, guid: e374f7ce7ded7a142ac4b5664386e809, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7707584184333010790, guid: e374f7ce7ded7a142ac4b5664386e809, type: 3}
       propertyPath: ikActive
@@ -52903,6 +52904,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7707584184333010791, guid: e374f7ce7ded7a142ac4b5664386e809, type: 3}
+      propertyPath: avatarController
+      value: 
+      objectReference: {fileID: 7536554817844675416}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e374f7ce7ded7a142ac4b5664386e809, type: 3}
 --- !u!4 &193979704697793217
@@ -72927,6 +72932,17 @@ MonoBehaviour:
   ActionClipTime: 0
   NameTagHolderObj: {fileID: 905011725}
   overrideController: {fileID: 0}
+--- !u!114 &7536554817844675416 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7707584184333010789, guid: e374f7ce7ded7a142ac4b5664386e809, type: 3}
+  m_PrefabInstance: {fileID: 171680320602670171}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7536554817844675387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95296ea1ef4bbab4e9a8dc6f89182fba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &7574426618912661149
 SpriteRenderer:
   m_ObjectHideFlags: 0
