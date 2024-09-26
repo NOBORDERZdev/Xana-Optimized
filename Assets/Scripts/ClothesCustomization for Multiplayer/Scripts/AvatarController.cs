@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 public class AvatarController : MonoBehaviour
 {
@@ -213,9 +214,21 @@ public class AvatarController : MonoBehaviour
     {
         if (isLoadStaticClothFromJson)
         {
+            if(string.IsNullOrEmpty(staticClothJson))
+            {
+                Debug.LogError("Static Cloth Json is Empty");
+                return;
+            }
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-            _CharacterData = new SavingCharacterDataClass();
-            _CharacterData = _CharacterData.CreateFromJSON(staticClothJson);
+            try
+            {
+                _CharacterData = _CharacterData.CreateFromJSON(staticClothJson);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Failed to parse JSON: {e.Message}");
+                return;
+            }
             _PCharacterData = _CharacterData;
             clothJson = staticClothJson;
             if (_CharacterData.myItemObj.Count > 0)
