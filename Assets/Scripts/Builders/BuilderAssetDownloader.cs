@@ -49,8 +49,6 @@ public class BuilderAssetDownloader : MonoBehaviour
     public static List<DownloadQueueData> downloadFailed = new List<DownloadQueueData>();
     public static Dictionary<string, ItemData> builderDataDictionary = new Dictionary<string, ItemData>();
 
-    int _assetDownloadTryCount = 0;
-
     private void OnEnable()
     {
         assetParentStatic = assetParent;
@@ -237,7 +235,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
             //if (!flag)
             AsyncOperationHandle<GameObject> _async;
-            _assetDownloadTryCount = 0;
+            int _assetDownloadTryCount = 0;
         LoadAssetAgain:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
@@ -308,7 +306,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
             //if (!flag)
             AsyncOperationHandle<GameObject> _async;
-            _assetDownloadTryCount = 0;
+            int _assetDownloadTryCount = 0;
         LoadAssetAgain:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
@@ -369,7 +367,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             string dicKey = BuilderData.preLoadStartFinishPoints[i].DcitionaryKey;
 
             AsyncOperationHandle<GameObject> _async;
-            _assetDownloadTryCount = 0;
+            int _assetDownloadTryCount = 0;
         LoadAssetAgainStartFinish:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
@@ -412,7 +410,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             string dicKey = BuilderData.preLoadspawnPoint[i].DcitionaryKey;
 
             AsyncOperationHandle<GameObject> _async;
-            _assetDownloadTryCount = 0;
+            int _assetDownloadTryCount = 0;
         LoadAssetAgainSpawnPoint:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)

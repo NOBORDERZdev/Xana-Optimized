@@ -61,7 +61,6 @@ public class XanaWorldDownloader : MonoBehaviour
     public DownloadPopupHandler DownloadPopupHandlerInstance;
 
     private static CancellationTokenSource cts;
-    int _assetDownloadTryCount = 0;
 
     private void Start()
     {
@@ -301,8 +300,8 @@ public class XanaWorldDownloader : MonoBehaviour
             //    yield break;
             //}
             //else
-            _assetDownloadTryCount = 0;
-            LoadAssetAgain:
+            int _assetDownloadTryCount = 0;
+        LoadAssetAgain:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
@@ -370,8 +369,8 @@ public class XanaWorldDownloader : MonoBehaviour
             //    yield break;
             //}
             //else
-            _assetDownloadTryCount = 0;
-            LoadAssetAgain:
+            int _assetDownloadTryCount = 0;
+        LoadAssetAgain:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
@@ -431,8 +430,8 @@ public class XanaWorldDownloader : MonoBehaviour
             //    yield break;
             //}
             //else
-            _assetDownloadTryCount = 0;
-            LoadAssetAgain:
+            int _assetDownloadTryCount = 0;
+        LoadAssetAgain:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
