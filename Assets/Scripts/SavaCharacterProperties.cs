@@ -22,7 +22,6 @@ public class SavaCharacterProperties : MonoBehaviour
     {
         instance = this;
         NeedToShowSplash = 1;
-        SaveItemList = new SavingCharacterDataClass();
         charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
         characterController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
     }
@@ -213,7 +212,10 @@ public class SavaCharacterProperties : MonoBehaviour
             if (i < SaveItemList.FaceBlendsShapes.Length)
                 SaveItemList.FaceBlendsShapes[i] = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(i);
         }
-        SaveItemList.SavedBones.Clear();
+        if (SaveItemList != null && SaveItemList.SavedBones != null)
+        {
+            SaveItemList.SavedBones.Clear();
+        }
         for (int i = 0; i < charcterBodyParts.BonesData.Count; i++)
         {
             Transform bone = charcterBodyParts.BonesData[i].Obj.transform;
