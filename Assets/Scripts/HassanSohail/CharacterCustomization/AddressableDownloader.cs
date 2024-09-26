@@ -180,6 +180,7 @@ public class AddressableDownloader : MonoBehaviour
                                     applyOn.StichHairWithColor(itemId, downloadedHair, type, applyOn.gameObject, hairDefaultColor, callFromMultiplayer);
                                 }
                                 else
+                                    if(applyOn.GetComponent<CharacterBodyParts>())
                                     applyOn.StichHairWithColor(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, hairColor, callFromMultiplayer);
                             }
                             else
