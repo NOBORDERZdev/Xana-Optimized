@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
   _IsSpriteRenderer: 0
-  isMeshRendrer: 0
+  isMeshRendrer: 1
   shaderName: Sprites/Default
   isTerrain: 0
 --- !u!1 &3850033308444285065
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
   _IsSpriteRenderer: 0
-  isMeshRendrer: 0
+  isMeshRendrer: 1
   shaderName: Sprites/Default
   isTerrain: 0
 --- !u!1 &3850033308943706703
@@ -211,9 +211,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3850033308943706700}
-  - component: {fileID: 966450911}
-  - component: {fileID: 8983028008831723596}
-  - component: {fileID: 6461953336001750527}
   m_Layer: 0
   m_Name: VideoPlayingObject
   m_TagString: Untagged
@@ -239,48 +236,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &966450911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3850033308943706703}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  downloadKey: VideoPlayingObject
-  objectPriority: 0
---- !u!114 &8983028008831723596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3850033308943706703}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  downloadKey: VideoPlayingObject
-  objectPriority: 0
---- !u!114 &6461953336001750527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3850033308943706703}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  downloadKey: VideoPlayingObject
-  objectPriority: 0
 --- !u!1001 &3850033307193030714
 PrefabInstance:
   m_ObjectHideFlags: 0
