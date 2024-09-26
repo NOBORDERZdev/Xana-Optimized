@@ -1663,6 +1663,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         ConstantsHolder.isFixedHumanoid = false;
         ConstantsHolder.isPenguin = false;
         ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
+        ConstantsHolder.isSoftBankGame = false;
         ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
     }
 
