@@ -285,7 +285,7 @@ public class ConstantsGod
     public static string GetUserAllTextPosts = "/item/get-user-text-post/";
     #endregion
     #region Get App Features List Api's
-    public static string FeaturesListApi = "/admin/get-features-list";
+    public static string FeaturesListApi = "/admin/v2/get-features-list";
     #endregion
 
 
