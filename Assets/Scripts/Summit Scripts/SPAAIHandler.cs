@@ -32,9 +32,8 @@ public class SPAAIHandler : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag=="Player")
+        if (other.tag == "Player")
         {
-           
                 if (IsAIDataFetched)
                 {
                     SpawnAIPerformer();
@@ -117,6 +116,8 @@ public class SPAAIHandler : MonoBehaviour
         if (CurrentAIPerformerRef)
         {
             CurrentAIPerformerRef.SetActive(true);
+            CurrentAIPerformerRef.GetComponent<SPAAIBehvrController>().isPerformingAction = false;
+            StartCoroutine(CurrentAIPerformerRef.GetComponent<SPAAIBehvrController>().PerformAction());
         }
         else
         {

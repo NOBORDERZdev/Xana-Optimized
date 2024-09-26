@@ -521,7 +521,7 @@ public class XanaWorldDownloader : MonoBehaviour
     {
         if (!assetDownloadingText)
         {
-            Debug.LogError("<color=red> Textmesh is Destroyed </color>");
+            Debug.Log("<color=red> Textmesh is Destroyed </color>");
             return;
         }
         assetDownloadingText.text = string.Empty;
