@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1367286260076328872}
   - component: {fileID: 3827326111777276770}
   - component: {fileID: 2512148171722678251}
+  - component: {fileID: 3114011465533419021}
   m_Layer: 0
   m_Name: SFB_Screen (2)
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3322979922202354359}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.0000014603138}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: -5.066905, y: 0.9200002, z: 0.0039194557}
   m_LocalScale: {x: 2.5879354, y: 2.5879352, z: -2.587935}
   m_ConstrainProportionsScale: 0
@@ -58,7 +59,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3322979922202354359}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -106,6 +107,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.8941664, y: 1.0531323, z: 0.00000012741657}
   m_Center: {x: -0.000000059604645, y: 0.574556, z: 0.00035464263}
+--- !u!114 &3114011465533419021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3322979922202354359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: SFB_Screen (2)
+  objectPriority: 0
 --- !u!1 &7166235727058570704
 GameObject:
   m_ObjectHideFlags: 0
