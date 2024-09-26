@@ -214,7 +214,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 1.2641277, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 543450653018919709}
+  - {fileID: 1016753433}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -233,6 +235,30 @@ MonoBehaviour:
   worldJson: '{"SceneObjects":[{"addressableKey":"JR Kyusyu_StructureBase","name":"JR
     Kyusyu_StructureBase","position":{"x":-12.300537109375,"y":-1.2640666961669922,"z":11.48974609375},"rotation":{"x":-0.7071068286895752,"y":0.0,"z":0.0,"w":0.7071068286895752},"scale":{"x":0.6000000238418579,"y":0.6000000238418579,"z":0.6000000238418579},"objectBound":{"m_Center":{"x":-12.300537109375,"y":3.0000617504119875,"z":11.489745140075684},"m_Extent":{"x":9.01200008392334,"y":3.000002384185791,"z":9.012001991271973}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"PlaceHolders","name":"PlaceHolders","position":{"x":0.0,"y":-0.44999998807907107,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-10.619664192199707,"y":2.040041923522949,"z":10.214164733886719},"m_Extent":{"x":10.619664192199707,"y":1.225914478302002,"z":10.214164733886719}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}}]}'
   assetsParent: {fileID: 903830213}
+--- !u!1 &1016753432 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3032971797697359802, guid: 6d0379456a6b95046a9af058157ab9b8, type: 3}
+  m_PrefabInstance: {fileID: 3032971798025929378}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1016753433 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3032971797697359803, guid: 6d0379456a6b95046a9af058157ab9b8, type: 3}
+  m_PrefabInstance: {fileID: 3032971798025929378}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1016753435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016753432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: PlaceHolders
+  objectPriority: 0
 --- !u!1 &1539715767
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,3 +406,141 @@ Transform:
   m_Father: {fileID: 287902778}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &543450653018919709 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 940337104078943817, guid: b7434128abec7e64f9287e2c5236edbc, type: 3}
+  m_PrefabInstance: {fileID: 758301148139169108}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &758301148139169108
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 903830213}
+    m_Modifications:
+    - target: {fileID: 452452546687986931, guid: b7434128abec7e64f9287e2c5236edbc, type: 3}
+      propertyPath: m_Name
+      value: JR Kyusyu_StructureBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 940337104078943817, guid: b7434128abec7e64f9287e2c5236edbc, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 940337104078943817, guid: b7434128abec7e64f9287e2c5236edbc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -12.300537
+      objectReference: {fileID: 0}
+    - target: {fileID: 940337104078943817, guid: b7434128abec7e64f9287e2c5236edbc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2640667
+      objectReference: {fileID: 0}
+    - target: {fileID: 940337104078943817, guid: b7434128abec7e64f9287e2c5236edbc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 11.489746
+      objectReference: {fileID: 0}
+    - target: {fileID: 940337104078943817, guid: b7434128abec7e64f9287e2c5236edbc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 940337104078943817, guid: b7434128abec7e64f9287e2c5236edbc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 940337104078943817, guid: b7434128abec7e64f9287e2c5236edbc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 940337104078943817, guid: b7434128abec7e64f9287e2c5236edbc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 940337104078943817, guid: b7434128abec7e64f9287e2c5236edbc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 940337104078943817, guid: b7434128abec7e64f9287e2c5236edbc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 940337104078943817, guid: b7434128abec7e64f9287e2c5236edbc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b7434128abec7e64f9287e2c5236edbc, type: 3}
+--- !u!1 &919132148761741735 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 452452546687986931, guid: b7434128abec7e64f9287e2c5236edbc, type: 3}
+  m_PrefabInstance: {fileID: 758301148139169108}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3032971798025929378
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 903830213}
+    m_Modifications:
+    - target: {fileID: 3032971797697359802, guid: 6d0379456a6b95046a9af058157ab9b8, type: 3}
+      propertyPath: m_Name
+      value: PlaceHolders
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032971797697359803, guid: 6d0379456a6b95046a9af058157ab9b8, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032971797697359803, guid: 6d0379456a6b95046a9af058157ab9b8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032971797697359803, guid: 6d0379456a6b95046a9af058157ab9b8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032971797697359803, guid: 6d0379456a6b95046a9af058157ab9b8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032971797697359803, guid: 6d0379456a6b95046a9af058157ab9b8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032971797697359803, guid: 6d0379456a6b95046a9af058157ab9b8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032971797697359803, guid: 6d0379456a6b95046a9af058157ab9b8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032971797697359803, guid: 6d0379456a6b95046a9af058157ab9b8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032971797697359803, guid: 6d0379456a6b95046a9af058157ab9b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032971797697359803, guid: 6d0379456a6b95046a9af058157ab9b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3032971797697359803, guid: 6d0379456a6b95046a9af058157ab9b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6d0379456a6b95046a9af058157ab9b8, type: 3}
+--- !u!114 &3469287836801998009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148761741735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: JR Kyusyu_StructureBase
+  objectPriority: 0
