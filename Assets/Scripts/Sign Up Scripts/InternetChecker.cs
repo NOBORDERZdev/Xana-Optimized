@@ -1,12 +1,13 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class InternetChecker : MonoBehaviour
 {
     public static InternetChecker instance;
     public GameObject PopUp,loader;
-    //private bool once;
+    public CanvasScaler CanvasScalerChecker;
 
     public UnityEvent onConnected ;
     public UnityEvent onDisconnected;
@@ -69,8 +70,17 @@ public class InternetChecker : MonoBehaviour
     void ShowPage()
     {
         ispopUpClose = false;
-        PopUp.SetActive(true);
+        if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+        {
+            CanvasScalerChecker.referenceResolution = new Vector2(1920, 1080);
+            PopUp.SetActive(true);
+        }
+        else
+        {
+            PopUp.SetActive(true);
+        }
         onDisconnected.Invoke();
+       
     }
 
     public void cancel_PopUp()
