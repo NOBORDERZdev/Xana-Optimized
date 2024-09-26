@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3723728176134898634}
   - component: {fileID: 7490291418025601028}
   - component: {fileID: 637615832508215531}
+  - component: {fileID: 3850033308534060181}
   m_Layer: 0
   m_Name: KDS_Screen_PR
   m_TagString: Untagged
@@ -83,6 +84,23 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3850033308534060181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2799750744001602339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  _IsSpriteRenderer: 0
+  isMeshRendrer: 0
+  shaderName: Sprites/Default
+  isTerrain: 0
 --- !u!1 &3850033308444285065
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,6 +112,7 @@ GameObject:
   - component: {fileID: 3850033308444285070}
   - component: {fileID: 3850033308444285069}
   - component: {fileID: 3850033308444285068}
+  - component: {fileID: 3850033308534060182}
   m_Layer: 0
   m_Name: KDS_Screen_Live
   m_TagString: Untagged
@@ -166,6 +185,23 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3850033308534060182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3850033308444285065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  _IsSpriteRenderer: 0
+  isMeshRendrer: 0
+  shaderName: Sprites/Default
+  isTerrain: 0
 --- !u!1 &3850033308943706703
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,6 +211,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3850033308943706700}
+  - component: {fileID: 966450911}
   m_Layer: 0
   m_Name: VideoPlayingObject
   m_TagString: Untagged
@@ -200,6 +237,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &966450911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3850033308943706703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: VideoPlayingObject
+  objectPriority: 0
 --- !u!1001 &3850033307193030714
 PrefabInstance:
   m_ObjectHideFlags: 0
