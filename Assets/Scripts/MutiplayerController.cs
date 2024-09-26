@@ -217,7 +217,7 @@ namespace Photon.Pun.Demo.PunBasics
             if (working == ScenesList.MainMenu)
                 return;
 
-           // JoinLobby(CurrLobbyName);
+            JoinLobby(CurrLobbyName);
         }
 
         private async void JoinLobby(String lobbyName)

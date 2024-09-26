@@ -520,20 +520,20 @@ public class BuilderAssetDownloader : MonoBehaviour
         }
 
 
-        //if (IsMultiplayerComponent(_itemData) && GamificationComponentData.instance.withMultiplayer)
-        //{
-        //    newObj.SetActive(false);
+        if (IsMultiplayerComponent(_itemData) && GamificationComponentData.instance.withMultiplayer)
+        {
+            newObj.SetActive(false);
 
-        //    GamificationComponentData.instance.MultiplayerComponentData.Add(_itemData);
-        //    var multiplayerObject = Instantiate(GamificationComponentData.instance.MultiplayerComponente, _itemData.Position, _itemData.Rotation);
-        //    MultiplayerComponentData multiplayerComponentData = new();
-        //    multiplayerObject.GetComponent<MultiplayerComponent>().RunTimeItemID = _itemData.RuntimeItemID;
-        //    multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
-        //    //  multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
-        //    GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
+            GamificationComponentData.instance.MultiplayerComponentData.Add(_itemData);
+            var multiplayerObject = Instantiate(GamificationComponentData.instance.MultiplayerComponente, _itemData.Position, _itemData.Rotation);
+            MultiplayerComponentData multiplayerComponentData = new();
+            multiplayerObject.GetComponent<MultiplayerComponent>().RunTimeItemID = _itemData.RuntimeItemID;
+            multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
+            //  multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
+            GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
 
-        //    return;
-        //}
+            return;
+        }
         //meshCombinerRef.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
         //foreach (Transform childTransform in newObj.GetComponentsInChildren<Transform>())
         //{
