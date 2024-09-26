@@ -430,7 +430,7 @@ public class ChatSocketManager : MonoBehaviour
 #endif
         _dataHolder.SetRequireData(msg, msgId, userId, blockMessage);
 
-        if (userId.Equals(ConstantsHolder.userId))
+        if (!ConstantsHolder.xanaConstants.chatFlagBtnStatus || userId.Equals(ConstantsHolder.userId))
         {
             // That My msg, and i cannot flag or block it
             _dataHolder.DotedBtn.SetActive(false);
@@ -483,7 +483,8 @@ public class ChatSocketManager : MonoBehaviour
     // Flag Message
     public void FlagMessages(string msgID, Action<bool> callback)
     {
-        StartCoroutine(FlagMessagesRoutine(msgID, callback));
+        if(ConstantsHolder.xanaConstants.chatFlagBtnStatus) // if flag functionality is disabled than no need to call API
+            StartCoroutine(FlagMessagesRoutine(msgID, callback));
     }
     IEnumerator FlagMessagesRoutine(string msgID, Action<bool> callback)
     {

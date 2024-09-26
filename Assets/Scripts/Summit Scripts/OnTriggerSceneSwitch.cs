@@ -22,6 +22,10 @@ public class OnTriggerSceneSwitch : MonoBehaviour
     public string WorldId;
     private bool alreadyTriggered;
 
+    [Header("Dome Type and Category")]
+    public DomeType _domeType;
+    public DomeCategory _domeCategory;
+
     private void OnEnable()
     {
         if (APIBasepointManager.instance.IsXanaLive)
@@ -36,7 +40,7 @@ public class OnTriggerSceneSwitch : MonoBehaviour
             if (other.GetComponent<PhotonView>() && other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine && !alreadyTriggered)
             {
                 alreadyTriggered = true;
-             
+
                 if (DomeId == -1 || LoadDirectly)
                 {
                     TriggerSceneLoading(WorldId);
@@ -78,11 +82,46 @@ public class OnTriggerSceneSwitch : MonoBehaviour
             ConstantsHolder.isFromXANASummit = true;
             ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
         }
-        if(HaveSubworlds)
+        if (HaveSubworlds)
         {
             ConstantsHolder.HaveSubWorlds = true;
             ConstantsHolder.domeId = DomeId;
         }
+        ConstantsHolder.DomeType = _domeType.ToString();
+        ConstantsHolder.DomeCategory = _domeCategory.ToString();
+    }
 
+    public enum DomeType
+    {
+        None,
+        Game,
+        Exhibition
+    }
+
+    public enum DomeCategory
+    {
+        None,
+        Business,
+        Sports,
+        Music,
+        Art,
+        Education,
+        Healing,
+        Action,
+        Race,
+        Adventure,
+        Story,
+        NFT,
+        DAO,
+        Fun,
+        Horror,
+        Quiz,
+        Idol,
+        Vtuber,
+        Space,
+        AI,
+        Local,
+        Blockchain,
+        Finance
     }
 }
