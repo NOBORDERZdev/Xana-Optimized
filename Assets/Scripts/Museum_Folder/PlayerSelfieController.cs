@@ -476,7 +476,8 @@ public class PlayerSelfieController : MonoBehaviour
     IEnumerator InputDelay()
     {
         yield return new WaitForSeconds(0.05f);
-        m_PlayerController.GetComponent<PlayerController>().vertical = 0;
+        if(m_PlayerController!=null)
+            m_PlayerController.GetComponent<PlayerController>().vertical = 0;
 
     }
 

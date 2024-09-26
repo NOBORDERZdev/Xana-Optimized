@@ -375,6 +375,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     {
         if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
+            if (mainController == null)
+                return false;
             if (mainController?.transform.position.y < (updatedSpawnpoint.transform.position.y - fallOffset))
             {
                 RaycastHit hit;
