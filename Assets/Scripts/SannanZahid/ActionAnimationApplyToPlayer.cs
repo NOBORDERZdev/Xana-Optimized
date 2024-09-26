@@ -68,7 +68,7 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
 
         for (int i = 0; i < photonplayerObjects.Length; i++)
         {
-            if (photonplayerObjects[i] != null)
+            if (photonplayerObjects[i] != null && photonplayerObjects[i].GetComponent<PhotonView>())
             {
                 if (photonplayerObjects[i].GetComponent<PhotonView>().ViewID == viewId)
                 {
@@ -109,7 +109,7 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
                 goto LoadAssetAgain;
             }
            
-            Debug.LogError("Playing Action " + label +"Flag  "+flag);
+            Debug.Log("Playing Action " + label +"Flag  "+flag);
 
           
 
@@ -147,7 +147,7 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError($"Failed to load asset: Action_{label}. Error: {loadOp.Status.ToString()}");
+                    Debug.Log($"Failed to load asset: Action_{label}. Error: {loadOp.Status.ToString()}");
                     Addressables.ClearDependencyCacheAsync("Action_" + label);
                     Addressables.ReleaseInstance(loadOp);
                     Addressables.Release(loadOp);
@@ -159,7 +159,7 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
             {
                 if (loadOp.Result == null)
                 {
-                    Debug.LogError("Network null.....");
+                    Debug.Log("Network null.....");
                 }
                 else
                 {
@@ -193,7 +193,7 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
                 animator = photonplayerObjects[i].gameObject.GetComponent<Animator>();
                 if (photonplayerObjects[i].GetComponent<PhotonView>().ViewID == playerId)
                 {
-                    Debug.LogError("Player Found");
+                    Debug.Log("Player Found");
                     if (!PlayerSelfieController.Instance.selfiePanel.activeInHierarchy)
                     {
                         if (animator.GetBool("EtcAnimStart"))
@@ -210,7 +210,7 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
                         {
                             if (clip.name == "emaotedefault")
                             {
-                                Debug.LogError("Setting Clip");
+                                Debug.Log("Setting Clip");
                                 keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, animationClip));
                             }
                             else
@@ -219,7 +219,7 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
                         overrideController.ApplyOverrides(keyValuePairs);
 
                         animator.runtimeAnimatorController = overrideController;
-                        Debug.LogError("Play Clip");
+                        Debug.Log("Play Clip");
                         animator.SetBool("IsEmote", true);
                     }
                 }
