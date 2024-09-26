@@ -277,6 +277,7 @@ public class BuildingDetect : MonoBehaviour
             cloneObject.transform.localPosition = Vector3.zero;
             cloneObject.transform.localEulerAngles = Vector3.zero;
             cloneObject.SetActive(true);
+            GamificationComponentData.instance.playerControllerNew.RemoveCharacterLayer(true);
         }
 
 
@@ -336,6 +337,8 @@ public class BuildingDetect : MonoBehaviour
     {
         if (state)
         {
+            GamificationComponentData.instance.playerControllerNew.RemoveCharacterLayer(false);
+
             if (avatarChangeCoroutine != null)
                 StopCoroutine(avatarChangeCoroutine);
 
