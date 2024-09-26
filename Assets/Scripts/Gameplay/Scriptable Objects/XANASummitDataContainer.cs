@@ -270,8 +270,8 @@ public class XANASummitDataContainer : ScriptableObject
         public int avatarId;
         public string avatarCategory;
         public string personalityURL;
-        public int[] spawnPositionArray;
-        public int[] rotationPositionArray;
+        public float[] rotationPositionArray;
+        public float[] spawnPositionArray;
         public bool isAvatarPerformer;
         public AnimationData[] animations;
     }

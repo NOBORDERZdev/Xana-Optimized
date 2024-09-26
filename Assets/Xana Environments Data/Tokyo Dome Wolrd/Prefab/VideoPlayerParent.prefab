@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3459062488143696584}
   - component: {fileID: 3459062488143696587}
   - component: {fileID: 3459062488143696586}
+  - component: {fileID: 373873989749728289}
   m_Layer: 0
   m_Name: TOD_PavilionScreen_Live
   m_TagString: Untagged
@@ -98,6 +99,23 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1451443487313757394, guid: e8bca068e076e2548835fb7605c65131, type: 3}
+--- !u!114 &373873989749728289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3459062488143696588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  _IsSpriteRenderer: 0
+  isMeshRendrer: 1
+  shaderName: Sprites/Default
+  isTerrain: 0
 --- !u!1 &3459062489206681702
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,6 +162,7 @@ GameObject:
   - component: {fileID: 3148412984103537056}
   - component: {fileID: 689333998544094641}
   - component: {fileID: 4892601855507155388}
+  - component: {fileID: 4689213837017929068}
   m_Layer: 0
   m_Name: TOD_PavilionScreen_PR
   m_TagString: Untagged
@@ -230,6 +249,23 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1451443487313757394, guid: e8bca068e076e2548835fb7605c65131, type: 3}
+--- !u!114 &4689213837017929068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4892601855507155391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  _IsSpriteRenderer: 0
+  isMeshRendrer: 1
+  shaderName: Sprites/Default
+  isTerrain: 0
 --- !u!1001 &3459062488748147365
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -325,10 +361,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5226123731516465617, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226123731516465619, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: MaxDistance
+      value: 94
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226123731516465619, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: MinDistance
+      value: 66
+      objectReference: {fileID: 0}
     - target: {fileID: 5226123731516465620, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: _renderer
       value: 
       objectReference: {fileID: 3459062488143696587}
+    - target: {fileID: 5226123731516465622, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -14.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226123732534829227, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: MaxDistance
+      value: 94
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226123732534829227, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: MinDistance
+      value: 66
+      objectReference: {fileID: 0}
     - target: {fileID: 5226123732534829229, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: m_Looping
       value: 1
