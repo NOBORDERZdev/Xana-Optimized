@@ -32,7 +32,7 @@ public class SPAAIHandler : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<PhotonView>() && other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
+        if (other.tag == "Player")
         {
                 if (IsAIDataFetched)
                 {
@@ -50,7 +50,7 @@ public class SPAAIHandler : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<PhotonView>() && other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
+        if (other.tag == "Player")
         {
          
                 if (CurrentAIPerformerRef)
