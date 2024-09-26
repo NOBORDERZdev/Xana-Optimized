@@ -1254,13 +1254,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     IEnumerator WaitForMapDownload()
     {
-        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        while (!BuilderAssetDownloader.isSpawnDownloaded)
         {
-            while (!BuilderAssetDownloader.isSpawnDownloaded)
-            {
-                yield return new WaitForSeconds(0.1f);
-            }
+            yield return new WaitForSeconds(0.1f);
         }
+
         SetupEnvirnmentForBuidlerScene();
     }
 
