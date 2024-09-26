@@ -1432,12 +1432,16 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void ResetPlayerAfterInstantiation()
     {
-        if (BuilderAssetDownloader.isPostLoading)
+        if (ConstantsHolder.isSoftBankGame)
+        {
+            return;
+        }
+        if (BuilderAssetDownloader.isPostLoading  )
         {
             //Debug.LogError("here resetting player .... ");
             if (BuilderData.StartFinishPoints.Count > 1 && BuilderData.mapData.data.worldType == 1)
             {
-                if (!IsPlayerOnStartPoint())
+                if (!IsPlayerOnStartPoint()  )
                 {
                     BuilderSpawnPoint = true;
                     StartFinishPointData startFinishPoint = BuilderData.StartFinishPoints.Find(x => x.IsStartPoint);
@@ -1521,6 +1525,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     bool IsPlayerOnStartPoint()
     {
+
         Transform playerTransform = PenguinPlayer.transform;
         float raycastDistance = 2f; // Adjust as needed
 
