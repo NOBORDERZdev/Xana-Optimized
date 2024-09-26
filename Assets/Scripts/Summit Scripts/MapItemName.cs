@@ -39,14 +39,16 @@ public class MapItemName : MonoBehaviour
             _HighlightObj.SetActive(false);
 
         int TempIndex = ItemIndex;
-
         Debug.Log("Name Btn -- Clicked: " + TempIndex);
-        if (TempIndex >= 167) // There is Somedome which are handles differently
-        {
-            TempIndex -= 3;
-            Debug.Log("Name Btn -- Modify Clicked: " + TempIndex);
-        }
 
+        if (TempIndex != 176 && TempIndex != 177) // This is ninga DAO && SMBC
+        {  
+            if (TempIndex >= 167) // There is Somedome which are handles differently
+            {
+                TempIndex -= 3;
+                Debug.Log("Name Btn -- Modify Clicked: " + TempIndex);
+            }
+        }
 
         manager.ItemClicked(TempIndex);
         highlighter.SetActive(true);

@@ -190,6 +190,8 @@ public class ConstantsHolder : MonoBehaviour
     public static bool DisableFppRotation = false;
     public static int domeId;
     public static int visitorCount;
+    public static string DomeType;
+    public static string DomeCategory;
     public static bool isPenguin;
     public static bool isFixedHumanoid;
     public static int AvatarIndex;
