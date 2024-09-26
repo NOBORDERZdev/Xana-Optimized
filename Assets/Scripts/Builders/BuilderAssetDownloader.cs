@@ -520,7 +520,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         }
 
 
-        if (IsMultiplayerComponent(_itemData) && GamificationComponentData.instance.withMultiplayer)
+      /*  if (IsMultiplayerComponent(_itemData) && GamificationComponentData.instance.withMultiplayer)
         {
             newObj.SetActive(false);
 
@@ -533,7 +533,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
 
             return;
-        }
+        }*/
         //meshCombinerRef.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
         //foreach (Transform childTransform in newObj.GetComponentsInChildren<Transform>())
         //{

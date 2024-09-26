@@ -301,6 +301,11 @@ public class UIHandler : MonoBehaviour
                         UserLoginSignupManager.instance.XSummitBgChange.ChangeBG();
                     }
                 }
+
+                if (apiResponse.data[i].feature_name == "XanaChatFlag")
+                {
+                    ConstantsHolder.xanaConstants.chatFlagBtnStatus = apiResponse.data[i].feature_status;
+                }
             }
         }
         request.Dispose();
