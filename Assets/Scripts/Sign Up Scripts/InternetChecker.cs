@@ -1,12 +1,14 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class InternetChecker : MonoBehaviour
 {
     public static InternetChecker instance;
-    public GameObject PopUp,loader;
+    public GameObject PopUp, loader;
     private bool once;
+    public CanvasScaler canvasScaler;
 
     public UnityEvent onConnected ;
     public UnityEvent onDisconnected;
@@ -27,6 +29,7 @@ public class InternetChecker : MonoBehaviour
             onConnected = new UnityEvent();
         // onConnected = GameManager.Instance.ReloadMainScene();
         onConnected.AddListener(test);
+      
     }
 
     void test()
@@ -68,9 +71,17 @@ public class InternetChecker : MonoBehaviour
 
     void showPage()
     {
-        ispopUpClose = false;
-        PopUp.SetActive(true);
-        onDisconnected.Invoke();
+         ispopUpClose = false;
+        if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+        {
+            canvasScaler.referenceResolution = new Vector2(1920, 1080);
+            PopUp.SetActive(true);
+        }
+         else
+        {
+           PopUp.SetActive(true);
+        }
+         onDisconnected.Invoke();
     }
 
     public void cancel_PopUp()

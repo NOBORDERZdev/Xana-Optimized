@@ -827,6 +827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PopUp: {fileID: 8484376615174234505}
   loader: {fileID: 0}
+  canvasScaler: {fileID: 8484376615174234519}
   onConnected:
     m_PersistentCalls:
       m_Calls: []
@@ -891,6 +892,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 50
@@ -953,6 +955,7 @@ GameObject:
   - component: {fileID: 4976500594653202473}
   - component: {fileID: 4987025846747405688}
   - component: {fileID: 2217711341903410053}
+  - component: {fileID: 798265308614410784}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -1113,6 +1116,21 @@ MonoBehaviour:
   LocalizeText: {fileID: 8484376615339011216}
   LocalizeTextTMP: {fileID: 0}
 --- !u!114 &2217711341903410053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8484376615339011218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  LocalizeText: {fileID: 8484376615339011216}
+  LocalizeTextTMP: {fileID: 0}
+--- !u!114 &798265308614410784
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
