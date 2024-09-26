@@ -20,7 +20,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool SwitchXanaToXSummit=true;
     public static bool IsXSummitApp;
     public bool OpenSpaceScreen_fromSummit = false;
-
+    public bool chatFlagBtnStatus = false;
 
     //Login Info
     public static bool isAdmin;
