@@ -217,7 +217,7 @@ namespace Photon.Pun.Demo.PunBasics
             if (working == ScenesList.MainMenu)
                 return;
 
-            JoinLobby(CurrLobbyName);
+           // JoinLobby(CurrLobbyName);
         }
 
         private async void JoinLobby(String lobbyName)
@@ -236,7 +236,7 @@ namespace Photon.Pun.Demo.PunBasics
         public override void OnJoinedLobby()
         {
 
-            Debug.LogError("On Joined lobby :- " + PhotonNetwork.CurrentLobby.Name + "--" + Time.time + " Shifting " + isShifting);
+            Debug.Log("<color=red>On Joined lobby :- " + PhotonNetwork.CurrentLobby.Name + "--" + Time.time + " Shifting " + isShifting + "</color>");
             if (SectorManager.Instance)
             {
                 SectorManager.Instance.UpdateMultisector();
@@ -371,7 +371,7 @@ namespace Photon.Pun.Demo.PunBasics
                                 continue; 
                                 }
                             CurrRoomName = info.Name;
-                            Debug.LogError(" ~~~~~~~ Joining room   " + " Shifting " + isShifting + "  " + SectorName);
+                            Debug.Log("<color=red> ~~~~~~~ Joining room   " + " Shifting " + isShifting + "  " + SectorName + "</color>");
                             joinedRoom = PhotonNetwork.JoinRoom(CurrRoomName);
                             return;
                         }
@@ -404,7 +404,7 @@ namespace Photon.Pun.Demo.PunBasics
                 }
                 else
                 {
-                    Debug.LogError("Joining room   " + " Shifting " + isShifting + " " + SectorName);
+                    Debug.Log("<color=red>Joining room   Shifting " + isShifting + " " + SectorName + "</color>");
                     PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(4, ConstantsHolder.MultiSectionPhoton), new TypedLobby(CurrLobbyName, LobbyType.Default));
                 }
                 //   PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(CurrLobbyName, LobbyType.Default));
@@ -413,7 +413,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         private void JoinRoomSeperateSingleRoom()
         {
-            Debug.LogError("Joining Seprateroom Lobby  " + PhotonNetwork.CurrentLobby.Name);
+            Debug.Log("<color=red>Joining Seprateroom Lobby  " + PhotonNetwork.CurrentLobby.Name + "</color>");
             string roomName;
             do
             {
@@ -543,7 +543,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
-            Debug.LogError("Failed to join ");
+            Debug.Log("<color=red>Failed to join</color>");
             OnJoinedLobby();
             //GameplayEntityLoader.instance._uiReferences.LoadMain(true);
         }
@@ -689,10 +689,10 @@ namespace Photon.Pun.Demo.PunBasics
         {
             base.OnRoomPropertiesUpdate(propertiesThatChanged);
 
-            foreach (var key in propertiesThatChanged.Keys)
-            {
-                Debug.Log($"Room property '{key}' has been updated to {propertiesThatChanged[key]}.");
-            }
+            //foreach (var key in propertiesThatChanged.Keys)
+            //{
+            //    Debug.Log($"Room property '{key}' has been updated to {propertiesThatChanged[key]}.");
+            //}
         }
     }
 }
