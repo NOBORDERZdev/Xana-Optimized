@@ -1,4 +1,5 @@
 using Crosstales;
+using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 using SuperStar.Helpers;
 using System;
@@ -193,7 +194,10 @@ public class XANASummitSceneLoading : MonoBehaviour
        if(!domeGeneralData.isSubWorld) LoadingHandler.Instance.startLoading();
         XanaWorldDownloader.ResetAll();
         BuilderEventManager.ResetSummit?.Invoke();
-
+        while(MutiplayerController.instance.isShifting||!PhotonNetwork.InRoom)
+        {
+            await Task.Delay(1000);
+        }
         multiplayerController.Disconnect();
         multiplayerController.playerobjects.Clear();
 
@@ -319,7 +323,10 @@ public class XANASummitSceneLoading : MonoBehaviour
         gameplayEntityLoader.isAlreadySpawned = true;
         LoadingHandler.Instance.startLoading();
         ReferencesForGamePlay.instance.m_34player.transform.localScale = new Vector3(0, 0, 0);
-
+        while (MutiplayerController.instance.isShifting || !PhotonNetwork.InRoom)
+        {
+            await Task.Delay(1000);
+        }
         multiplayerController.Disconnect();
 
         XanaWorldDownloader.ResetAll();
