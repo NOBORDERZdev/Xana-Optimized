@@ -49,7 +49,7 @@ public class BuilderAssetDownloader : MonoBehaviour
     public static List<DownloadQueueData> downloadFailed = new List<DownloadQueueData>();
     public static Dictionary<string, ItemData> builderDataDictionary = new Dictionary<string, ItemData>();
 
-    int assetdownloadTryCount = 0;
+    int _assetDownloadTryCount = 0;
 
     private void OnEnable()
     {
@@ -237,7 +237,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
             //if (!flag)
             AsyncOperationHandle<GameObject> _async;
-            assetdownloadTryCount = 0;
+            _assetDownloadTryCount = 0;
         LoadAssetAgain:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
@@ -253,8 +253,8 @@ public class BuilderAssetDownloader : MonoBehaviour
                 Addressables.ClearDependencyCacheAsync(downloadKey);
                 Addressables.ReleaseInstance(_async);
                 Addressables.Release(_async);
-                assetdownloadTryCount++;
-                if (assetdownloadTryCount < 5)
+                _assetDownloadTryCount++;
+                if (_assetDownloadTryCount < 5)
                 {
                     yield return new WaitForSeconds(1);
                     goto LoadAssetAgain;
@@ -308,7 +308,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
             //if (!flag)
             AsyncOperationHandle<GameObject> _async;
-            assetdownloadTryCount = 0;
+            _assetDownloadTryCount = 0;
         LoadAssetAgain:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
@@ -324,8 +324,8 @@ public class BuilderAssetDownloader : MonoBehaviour
                 Addressables.ClearDependencyCacheAsync(downloadKey);
                 Addressables.ReleaseInstance(_async);
                 Addressables.Release(_async);
-                assetdownloadTryCount++;
-                if (assetdownloadTryCount < 5)
+                _assetDownloadTryCount++;
+                if (_assetDownloadTryCount < 5)
                 {
                     yield return new WaitForSeconds(1);
                     goto LoadAssetAgain;
@@ -369,7 +369,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             string dicKey = BuilderData.preLoadStartFinishPoints[i].DcitionaryKey;
 
             AsyncOperationHandle<GameObject> _async;
-            assetdownloadTryCount = 0;
+            _assetDownloadTryCount = 0;
         LoadAssetAgainStartFinish:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
@@ -386,8 +386,8 @@ public class BuilderAssetDownloader : MonoBehaviour
                 Addressables.ClearDependencyCacheAsync(downloadKey);
                 Addressables.ReleaseInstance(_async);
                 Addressables.Release(_async);
-                assetdownloadTryCount++;
-                if (assetdownloadTryCount < 5)
+                _assetDownloadTryCount++;
+                if (_assetDownloadTryCount < 5)
                 {
                     yield return new WaitForSeconds(1);
                     goto LoadAssetAgainStartFinish;
@@ -412,7 +412,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             string dicKey = BuilderData.preLoadspawnPoint[i].DcitionaryKey;
 
             AsyncOperationHandle<GameObject> _async;
-            assetdownloadTryCount = 0;
+            _assetDownloadTryCount = 0;
         LoadAssetAgainSpawnPoint:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
@@ -429,8 +429,8 @@ public class BuilderAssetDownloader : MonoBehaviour
                 Addressables.ClearDependencyCacheAsync(downloadKey);
                 Addressables.ReleaseInstance(_async);
                 Addressables.Release(_async);
-                assetdownloadTryCount++;
-                if (assetdownloadTryCount < 5)
+                _assetDownloadTryCount++;
+                if (_assetDownloadTryCount < 5)
                 {
                     yield return new WaitForSeconds(1);
                     goto LoadAssetAgainSpawnPoint;
