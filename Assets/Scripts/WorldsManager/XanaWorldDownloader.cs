@@ -370,6 +370,7 @@ public class XanaWorldDownloader : MonoBehaviour
             //    yield break;
             //}
             //else
+            _assetDownloadTryCount = 0;
             LoadAssetAgain:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
@@ -385,10 +386,14 @@ public class XanaWorldDownloader : MonoBehaviour
                 Addressables.ClearDependencyCacheAsync(downloadKey);
                 Addressables.ReleaseInstance(_async);
                 Addressables.Release(_async);
-                yield return new WaitForSeconds(1);
-                goto LoadAssetAgain;
+                _assetDownloadTryCount++;
+                if (_assetDownloadTryCount < 5)
+                {
+                    yield return new WaitForSeconds(1);
+                    goto LoadAssetAgain;
+                }
             }
-            if (_async.Status == AsyncOperationStatus.Succeeded)
+            if (_async.Status == AsyncOperationStatus.Succeeded && _async.Result != null)
             {
                 AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, xanaWorldDataDictionary[dicKey], dicKey);
