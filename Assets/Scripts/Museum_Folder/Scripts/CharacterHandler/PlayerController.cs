@@ -2142,4 +2142,21 @@ public class PlayerController : MonoBehaviour
             movementSpeed = _defaultMoveSpeed;
         }
     }
+
+
+    public void RemoveCharacterLayer(bool flag) {
+        CinemachineCollider cinemachineCollider = GameplayEntityLoader.instance.PlayerCamera.GetComponent<CinemachineCollider>();
+        if (cinemachineCollider != null )
+        {
+
+            int characterLayerIndex = LayerMask.NameToLayer("Character");
+            // Remove the layer from the collide against mask
+            if(flag)
+            cinemachineCollider.m_CollideAgainst &= ~(1 << characterLayerIndex);
+            else
+                cinemachineCollider.m_CollideAgainst |= (1 << characterLayerIndex);
+        }
+
+
+    }
 }

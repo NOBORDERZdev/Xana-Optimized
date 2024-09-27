@@ -481,11 +481,19 @@ public class AddressableDownloader : MonoBehaviour
             if (!PlayerPrefs.HasKey(bundleUpdateInfo.data.version))
             {
                 PlayerPrefs.SetString(bundleUpdateInfo.data.version, "0");
+
+                if(bundleUpdateInfo.data.force_update)
+                {
+                    await Addressables.CleanBundleCache();
+                    Caching.ClearCache();
+                    return;
+                }
+
                 for (int i = 0; i < bundleUpdateInfo.data.bundles_list.Length; i++)
                 {
                     Addressables.ClearDependencyCacheAsync(bundleUpdateInfo.data.bundles_list[i]);
                     Caching.ClearAllCachedVersions(bundleUpdateInfo.data.bundles_list[i]);
-                    await Task.Delay(400);
+                    await Task.Delay(200);
                 }
             }
     }
@@ -517,6 +525,7 @@ public class AddressableDownloader : MonoBehaviour
     {
         public string version;
         public string[] bundles_list;
+        public bool force_update;
     }
 }
 

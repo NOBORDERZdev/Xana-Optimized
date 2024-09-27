@@ -19,6 +19,10 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
     private void Start()
     {
         photonView = GetComponent<PhotonView>();
+        if (ConstantsHolder.isSoftBankGame)
+        {
+            GameplayEntityLoader.instance.PositionResetButton.SetActive(true);
+        }
         Invoke(nameof(DisbleAnimatedController),0.1f);
     }
     public void OnPhotonInstantiate(PhotonMessageInfo info)

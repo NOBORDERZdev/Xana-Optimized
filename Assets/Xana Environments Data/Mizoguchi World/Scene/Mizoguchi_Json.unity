@@ -775,30 +775,11 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!1 &104445691 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6237480187932496746, guid: b98472e5fd861ec4ba6744a58950aab0, type: 3}
-  m_PrefabInstance: {fileID: 9215431126869738208}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &104445692 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6237480187932496741, guid: b98472e5fd861ec4ba6744a58950aab0, type: 3}
   m_PrefabInstance: {fileID: 9215431126869738208}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &104445694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 104445691}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  downloadKey: MZC Image Place holder
-  objectPriority: 0
 --- !u!1 &121008741
 GameObject:
   m_ObjectHideFlags: 0
@@ -10874,6 +10855,10 @@ PrefabInstance:
     - target: {fileID: 3062620318941946444, guid: 6fb1e7445edc2694e998af1196faf559, type: 3}
       propertyPath: m_Name
       value: MZC_Kiosk
+      objectReference: {fileID: 0}
+    - target: {fileID: 3062620318941946444, guid: 6fb1e7445edc2694e998af1196faf559, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fb1e7445edc2694e998af1196faf559, type: 3}

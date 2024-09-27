@@ -18,7 +18,7 @@ public class SummitAIChatHandler : MonoBehaviour
     [Header("This Class variables")]
     public XANASummitDataContainer XANASummitDataContainer;
 
-    private List<GameObject> aiNPC = new List<GameObject>();
+    public List<GameObject> aiNPC = new List<GameObject>();
 
     private string npcName;
     private string npcURL;
@@ -90,6 +90,8 @@ public class SummitAIChatHandler : MonoBehaviour
     void InstantiateAINPC()
     {
         NPCCount = 0;
+        if (aiNPC.Count > 0)
+            return;
         for (int i = 0; i < XANASummitDataContainer.aiData.npcData.Count; i++)
         {
             if (XANASummitDataContainer.aiData.npcData[i].isAvatarPerformer)
@@ -102,6 +104,8 @@ public class SummitAIChatHandler : MonoBehaviour
 
             aiNPC.Add(AINPCAvatar);
             AINPCAvatar.transform.position = new Vector3(XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[0], XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[1], XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[2]);
+            if (XANASummitDataContainer.aiData.npcData[i].rotationPositionArray != null)
+                AINPCAvatar.transform.rotation = Quaternion.Euler(XANASummitDataContainer.aiData.npcData[i].rotationPositionArray[0], XANASummitDataContainer.aiData.npcData[i].rotationPositionArray[1], XANASummitDataContainer.aiData.npcData[i].rotationPositionArray[2]);
             AINPCAvatar.name = XANASummitDataContainer.aiData.npcData[i].name;
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().npcName.text = XANASummitDataContainer.aiData.npcData[i].name;
             int avatarPresetId = XANASummitDataContainer.aiData.npcData[i].avatarId;
@@ -136,12 +140,17 @@ public class SummitAIChatHandler : MonoBehaviour
     {
         NPCCount = 0;
         SummitNPC = false;
+
+        if (aiNPC.Count > 0)
+            return;
         for (int i = 0; i < XANASummitDataContainer.aiData.npcData.Count; i++)
         {
             GameObject AINPCAvatar;
             AINPCAvatar = Instantiate(XANASummitDataContainer.penguinAvatar);
             aiNPC.Add(AINPCAvatar);
             AINPCAvatar.transform.position = new Vector3(XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[0], XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[1], XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[2]);
+            if (XANASummitDataContainer.aiData.npcData[i].rotationPositionArray!=null)
+                AINPCAvatar.transform.rotation = Quaternion.Euler(XANASummitDataContainer.aiData.npcData[i].rotationPositionArray[0], XANASummitDataContainer.aiData.npcData[i].rotationPositionArray[1], XANASummitDataContainer.aiData.npcData[i].rotationPositionArray[2]);
             AINPCAvatar.name = XANASummitDataContainer.aiData.npcData[i].name;
             AINPCAvatar.GetComponent<SetPenguinAIName>().NameText.text = XANASummitDataContainer.aiData.npcData[i].name;
             int avatarPresetId = XANASummitDataContainer.aiData.npcData[i].avatarId;
