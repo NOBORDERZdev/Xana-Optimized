@@ -270,6 +270,7 @@ public class SummitAIChatHandler : MonoBehaviour
             string res = JsonUtility.FromJson<AIResponse>(response).data;
 
             //_CommonChatRef.DisplayMsg_FromSocket(npcName, res);
+            await Task.Delay(300);
             ChatSocketManagerInstance.AddNewMsg(npcName, res, "NPC", "NPC", 0);
         }
 
