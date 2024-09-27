@@ -22,13 +22,13 @@ public class SavaCharacterProperties : MonoBehaviour
     {
         instance = this;
         NeedToShowSplash = 1;
-        charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
-        characterController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
+        
     }
     public void Start()
     {
         StartLocal();
-
+        charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
+        characterController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
         SaveItemList.faceMorphed = false;
         SaveItemList.eyeBrowMorphed = false;
         SaveItemList.eyeMorphed = false;

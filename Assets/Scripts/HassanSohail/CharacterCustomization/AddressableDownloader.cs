@@ -80,87 +80,93 @@ public class AddressableDownloader : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
 
-        if (Application.internetReachability != NetworkReachability.NotReachable)
+        if (Application.internetReachability == NetworkReachability.NotReachable)
         {
-            if (key.Contains("gambeson")) // To remove gambeson from shirt names
-            {
-                string tempName = key.Replace("gambeson", "shirt");
-                key = tempName;
-            }
-            if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
-            {
-                StoreManager.instance.loaderForItems.SetActive(true);
-            }
-            while (true)
-            {
-                AsyncOperationHandle loadOp;
+            yield break;
+        }
 
-                bool flag = false;
-                loadOp = MemoryManager.GetReferenceIfExist(key.ToLower(), ref flag);
-                if (!flag)
-                    loadOp = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
+        if (key.Contains("gambeson")) // To remove gambeson from shirt names
+        {
+            key = key.Replace("gambeson", "shirt");
+        }
 
-                SwitchToShoesHirokoKoshinoNFT.Instance?.SwitchLightFor_HirokoKoshino(key.ToLower());
-                yield return loadOp;
-                if (loadOp.Status == AsyncOperationStatus.Failed)
+        if (StoreManager.instance?.loaderForItems != null)
+        {
+            StoreManager.instance.loaderForItems.SetActive(true);
+        }
+
+        while (true)
+        {
+            bool flag = false;
+            AsyncOperationHandle loadOp = MemoryManager.GetReferenceIfExist(key.ToLower(), ref flag);
+            if (!flag)
+            {
+                loadOp = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
+            }
+
+            SwitchToShoesHirokoKoshinoNFT.Instance?.SwitchLightFor_HirokoKoshino(key.ToLower());
+            yield return loadOp;
+
+            if (loadOp.Status == AsyncOperationStatus.Failed)
+            {
+                StoreManager.instance?.loaderForItems?.SetActive(false);
+                if (GameManager.Instance != null)
                 {
-                    if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
-                        StoreManager.instance.loaderForItems.SetActive(false);
-                    if (GameManager.Instance != null)
-                        GameManager.Instance.isStoreAssetDownloading = false;
-                    DisableLoadingPanel();
-                    yield break;
+                    GameManager.Instance.isStoreAssetDownloading = false;
                 }
-                else if (loadOp.Status == AsyncOperationStatus.Succeeded)
+                DisableLoadingPanel();
+                yield break;
+            }
+            else if (loadOp.Status == AsyncOperationStatus.Succeeded)
+            {
+                if (loadOp.Result == null)  // Added by Ali Hamza to resolve avatar naked issue 
                 {
-                    if (loadOp.Result == null || loadOp.Result.Equals(null))  // Added by Ali Hamza to resolve avatar naked issue 
+                    _counter++;
+                    if (_counter < 5)
                     {
-                        _counter++;
-                        if (_counter < 5)
-                        {
-                            Addressables.ClearDependencyCacheAsync(key);
-                            MemoryManager.RemoveAddressable(key);
-                        }
-                        else
-                        {
-                            applyOn.WearDefaultItem(type, applyOn.gameObject);
-                            yield break;
-                        }
+                        Addressables.ClearDependencyCacheAsync(key);
+                        MemoryManager.RemoveAddressable(key);
                     }
                     else
                     {
-                        //loadOp.Result. = key;
-                        MemoryManager.AddToReferenceList(loadOp, key.ToLower());
-                        if (PlayerPrefs.GetInt("presetPanel") != 1)
+                        applyOn.WearDefaultItem(type, applyOn.gameObject);
+                        yield break;
+                    }
+                }
+                else
+                {
+                    MemoryManager.AddToReferenceList(loadOp, key.ToLower());
+                    if (PlayerPrefs.GetInt("presetPanel") != 1)
+                    {
+                        if (callFromMultiplayer)
                         {
-                            if (callFromMultiplayer)
-                            {
-                                applyOn.StichItem(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, mulitplayerHairColor);
-                            }
-                            else
-                            {
-                                applyOn.StichItem(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, applyHairColor);
-                            }
-                            if (GameManager.Instance != null)
-                                GameManager.Instance.isStoreAssetDownloading = false;
-                            DisableLoadingPanel();
+                            applyOn.StichItem(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, mulitplayerHairColor);
                         }
                         else
                         {
-                            presetsItem.Add(new Item(itemId, loadOp.Result as GameObject, type));
-                            if (presetsItem.Count >= presetItemCount)
+                            applyOn.StichItem(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, applyHairColor);
+                        }
+                        if (GameManager.Instance != null)
+                        {
+                            GameManager.Instance.isStoreAssetDownloading = false;
+                        }
+                        DisableLoadingPanel();
+                    }
+                    else
+                    {
+                        presetsItem.Add(new Item(itemId, loadOp.Result as GameObject, type));
+                        if (presetsItem.Count >= presetItemCount)
+                        {
+                            StartCoroutine(ApplyPresetItems(applyOn));
+                            yield return new WaitForSeconds(5);
+                            if (GameManager.Instance.isStoreAssetDownloading)
                             {
-                                StartCoroutine(ApplyPresetItems(applyOn));
-                                yield return new WaitForSeconds(5);
-                                if (GameManager.Instance.isStoreAssetDownloading)
-                                {
-                                    GameManager.Instance.isStoreAssetDownloading = false;
-                                    DisableLoadingPanel();
-                                }
+                                GameManager.Instance.isStoreAssetDownloading = false;
+                                DisableLoadingPanel();
                             }
                         }
-                        yield break;
                     }
+                    yield break;
                 }
             }
         }

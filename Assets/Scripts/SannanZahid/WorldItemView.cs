@@ -151,7 +151,7 @@ public class WorldItemView : MonoBehaviour
             {
                 Debug.Log("Env Name: " + m_EnvironmentName);
                 worldItemPreview.classCodeInputField.Text = "";
-                worldItemPreview.enterClassCodePanel.SetActive(true);
+                //worldItemPreview.enterClassCodePanel.SetActive(true);
                 UIManager.Instance._SplashScreen.SetActive(false);
                 OnClickPrefab();
             }
