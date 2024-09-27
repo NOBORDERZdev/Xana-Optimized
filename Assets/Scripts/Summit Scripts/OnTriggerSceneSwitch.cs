@@ -15,6 +15,9 @@ public class OnTriggerSceneSwitch : MonoBehaviour
     public bool LoadDirectly;
     public bool LoadingFromSummitWorld;
     public bool HaveSubworlds;
+    [Header("To Manage Penpenz Mini Game")]
+    public bool isPenpenzMiniGame;
+
     [HideInInspector]
     public string WorldId;
     private bool alreadyTriggered;
@@ -58,6 +61,9 @@ public class OnTriggerSceneSwitch : MonoBehaviour
 
     void TriggerSceneLoading(string WorldId)
     {
+        ConstantsHolder.isSoftBankGame = isPenpenzMiniGame;
+        if (isPenpenzMiniGame)
+            ConstantsHolder.isPenguin = true;
         CheckSceneParemeter();
         BuilderEventManager.LoadSceneByName?.Invoke(WorldId, transform.GetChild(0).transform.position);
     }
