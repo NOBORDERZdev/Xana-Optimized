@@ -375,6 +375,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     {
         if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
+            if (mainController == null)
+                return false;
             if (mainController?.transform.position.y < (updatedSpawnpoint.transform.position.y - fallOffset))
             {
                 RaycastHit hit;
@@ -1252,13 +1254,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     IEnumerator WaitForMapDownload()
     {
-        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        while (!BuilderAssetDownloader.isSpawnDownloaded)
         {
-            while (!BuilderAssetDownloader.isSpawnDownloaded)
-            {
-                yield return new WaitForSeconds(0.1f);
-            }
+            yield return new WaitForSeconds(0.1f);
         }
+
         SetupEnvirnmentForBuidlerScene();
     }
 
@@ -1430,12 +1430,16 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void ResetPlayerAfterInstantiation()
     {
-        if (BuilderAssetDownloader.isPostLoading)
+        if (ConstantsHolder.isSoftBankGame)
+        {
+            return;
+        }
+        if (BuilderAssetDownloader.isPostLoading  )
         {
             //Debug.LogError("here resetting player .... ");
             if (BuilderData.StartFinishPoints.Count > 1 && BuilderData.mapData.data.worldType == 1)
             {
-                if (!IsPlayerOnStartPoint())
+                if (!IsPlayerOnStartPoint()  )
                 {
                     BuilderSpawnPoint = true;
                     StartFinishPointData startFinishPoint = BuilderData.StartFinishPoints.Find(x => x.IsStartPoint);
@@ -1519,6 +1523,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     bool IsPlayerOnStartPoint()
     {
+
         Transform playerTransform = PenguinPlayer.transform;
         float raycastDistance = 2f; // Adjust as needed
 
@@ -1663,6 +1668,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         ConstantsHolder.isFixedHumanoid = false;
         ConstantsHolder.isPenguin = false;
         ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
+        ConstantsHolder.isSoftBankGame = false;
         ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
     }
 

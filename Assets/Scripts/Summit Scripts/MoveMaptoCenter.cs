@@ -73,14 +73,22 @@ public class MoveMaptoCenter : MonoBehaviour
 
         int arratInd = ind;
 
-        if (ind >= 167) // There is Somedome which are handles differently
+        if (ind == 176) // This is ninga DAO 
+        {
+            arratInd = 170;
+        }
+        else if (ind == 177) // This is SMBC 
+        {
+            arratInd = 171;
+        }
+        else if (ind >= 167) // There is Somedome which are handles differently
         {
             ind += 3;
             Debug.Log("Modify Item Clicked: " + ind);
         }
-        
+
         grandChildPing = MapHighlightObjs[arratInd];
-        string areaName=grandChildPing.name;
+        string areaName = grandChildPing.name;
         StartCoroutine(MoveChildToCenterOfMainScreen());
         EnableSelectedImage(arratInd);
 
@@ -90,7 +98,7 @@ public class MoveMaptoCenter : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(dome.world360Image))
             {
-                string ThumbnailUrl = dome.world360Image;
+                string ThumbnailUrl = dome.world360Image+"?width=512?height=256";
                 StartCoroutine(DownloadTexture(ThumbnailUrl));
                 selectedWorldBannerImage.transform.parent.gameObject.SetActive(true);
             }
@@ -105,7 +113,13 @@ public class MoveMaptoCenter : MonoBehaviour
         }
 
         goBtn.SetActive(true);
-        DomeMinimapDataHolder.OnSetDomeId?.Invoke(ind + 1,areaName);
+
+        if(ind == 176) // Ninga DAO
+            DomeMinimapDataHolder.OnSetDomeId?.Invoke(168, areaName);
+        if (ind == 177) // SMBC
+            DomeMinimapDataHolder.OnSetDomeId?.Invoke(178, areaName);
+        else 
+            DomeMinimapDataHolder.OnSetDomeId?.Invoke(ind + 1, areaName);
     }
     IEnumerator MoveChildToCenterOfMainScreen()
     {
@@ -170,7 +184,7 @@ public class MoveMaptoCenter : MonoBehaviour
         // Reverse the Status
         childStatus = !childStatus;
 
-        if(childStatus)
+        if (childStatus)
             selectedCategoryIndex = _Index;
         else
             selectedCategoryIndex = -1;
@@ -239,7 +253,7 @@ public class MoveMaptoCenter : MonoBehaviour
 
         scrollRect.verticalNormalizedPosition = normalizedPos;
     }
- 
+
     public float timeDelay = 0.02f;
 }
 
