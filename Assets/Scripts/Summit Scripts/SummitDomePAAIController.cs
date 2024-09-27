@@ -101,9 +101,13 @@ public class SummitDomePAAIController : MonoBehaviour
         _aiAvatar.transform.position = new Vector3(GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].spawnPositionArray[0] + 2f,
             GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].spawnPositionArray[1],
             GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].spawnPositionArray[2]);
-        _aiAvatar.transform.Rotate(GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].rotationPositionArray[0],
-            GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].rotationPositionArray[1],
-            GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].rotationPositionArray[2]);
+        if (GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].rotationPositionArray != null &&
+            GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].rotationPositionArray.Length > 0)
+        {
+            _aiAvatar.transform.Rotate(GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].rotationPositionArray[0],
+    GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].rotationPositionArray[1],
+    GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].rotationPositionArray[2]);
+        }
     }
 
     void SetPerformerAIAnim(GameObject _aiAvatar, int _aiDataIndex)
