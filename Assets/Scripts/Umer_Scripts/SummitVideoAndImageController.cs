@@ -41,8 +41,8 @@ public class SummitVideoAndImageController : MonoBehaviour
     [SerializeField] Material imageMat;
     [SerializeField] bool applyVideoMesh; // If play video on mesh 
     [SerializeField] VideoPlayer videoMesh;
-    [HideInInspector]
-    public Texture _texture;
+    [SerializeField]
+    private Texture _texture;
     private StreamYoutubeVideo streamYoutubeVideo;
     RenderTexture renderTexture_temp;
 
@@ -67,7 +67,7 @@ public class SummitVideoAndImageController : MonoBehaviour
         {
             streamYoutubeVideo = this.GetComponent<StreamYoutubeVideo>();
         }
-
+        _texture = new Texture2D(2, 2);
     }
 
     public void InitData(string imageurl, string videourl, JjRatio imgvideores, DataType dataType, VideoTypeRes videoType)
@@ -179,9 +179,11 @@ public class SummitVideoAndImageController : MonoBehaviour
     private void SetSprite(string path, RawImage img)
     {
         path = ModifyImageUrl(path, 200);
+        img.enabled = true;
         if (AssetCache.Instance.HasFile(path))
         {
             AssetCache.Instance.LoadTexture2DIntoRawImage(img, path, changeAspectRatio: true);
+            img.gameObject.SetActive(true);
             _texture = img.texture;
         }
         else
@@ -191,6 +193,7 @@ public class SummitVideoAndImageController : MonoBehaviour
                 if (success)
                 {
                     AssetCache.Instance.LoadTexture2DIntoRawImage(img, path, changeAspectRatio: true);
+                    img.gameObject.SetActive(true);
                     _texture = img.texture;
                 }
             });

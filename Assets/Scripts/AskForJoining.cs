@@ -94,8 +94,11 @@ public class AskForJoining : MonoBehaviour
             if (ReferencesForGamePlay.instance != null)
             {
                 ReferencesForGamePlay.instance.workingCanvas.SetActive(false);
-                ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().horizontal = 0;
-                ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().vertical = 0;
+                if (ReferencesForGamePlay.instance.MainPlayerParent)
+                {
+                    ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().horizontal = 0;
+                    ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().vertical = 0;
+                }
             }
 
 
