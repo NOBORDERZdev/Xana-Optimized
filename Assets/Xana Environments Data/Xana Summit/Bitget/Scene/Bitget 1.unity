@@ -2448,13 +2448,13 @@ ReflectionProbe:
   m_Enabled: 1
   serializedVersion: 2
   m_Type: 0
-  m_Mode: 1
+  m_Mode: 0
   m_RefreshMode: 0
   m_TimeSlicingMode: 0
-  m_Resolution: 128
+  m_Resolution: 512
   m_UpdateFrequency: 0
   m_BoxSize: {x: 10, y: 3.8545547, z: 7.470282}
-  m_BoxOffset: {x: -0.664855, y: 0.12018776, z: 0.5620773}
+  m_BoxOffset: {x: -4.376503, y: 0.834862, z: 0.5620773}
   m_NearClip: 0.3
   m_FarClip: 1000
   m_ShadowDistance: 100
@@ -2479,7 +2479,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1117198158}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.072771, y: 1.7358689, z: 0.24750805}
+  m_LocalPosition: {x: 12.784419, y: 1.386, z: 0.24750805}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2767,30 +2767,11 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0.1
   m_ShadowAngle: 0
---- !u!1 &1362624297 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8922248097471608815, guid: acb2679bc906bc8479f72aa1cddc75de, type: 3}
-  m_PrefabInstance: {fileID: 8922248096109611206}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1362624298 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8922248097471608812, guid: acb2679bc906bc8479f72aa1cddc75de, type: 3}
   m_PrefabInstance: {fileID: 8922248096109611206}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1362624299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1362624297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  downloadKey: BitgetVideoPlayerObject
-  objectPriority: 0
 --- !u!1 &1402454190
 GameObject:
   m_ObjectHideFlags: 0
@@ -4624,31 +4605,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3347851488598811439, guid: fc500d80cb073b04eb26e36c350e1076, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: -745014563743299588, guid: 0ce67d9077590944e871a231201c35e6, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc500d80cb073b04eb26e36c350e1076, type: 3}
---- !u!1 &2184412777197008422 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1338129879686624816, guid: fc500d80cb073b04eb26e36c350e1076, type: 3}
-  m_PrefabInstance: {fileID: 2184412777197008421}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2184412777197008423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2184412777197008422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  downloadKey: BGT_Ceiling_lamp
-  objectPriority: 0
 --- !u!23 &3276114934167167149
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4750,25 +4708,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c44ada012fd2e1f499dfab706494cca5, type: 3}
---- !u!1 &3667592287378876520 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4477860133599574555, guid: c44ada012fd2e1f499dfab706494cca5, type: 3}
-  m_PrefabInstance: {fileID: 3667592287378876519}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3667592287378876521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3667592287378876520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  downloadKey: BGT_Frames
-  objectPriority: 0
 --- !u!1 &3924857787750629752
 GameObject:
   m_ObjectHideFlags: 0
@@ -4903,10 +4842,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1281891917}
     m_Modifications:
-    - target: {fileID: 5592281767865960505, guid: 4b6ed3754e396334f86044e4b1899996, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: -2506122918002852457, guid: 2c7a51564eebe234b9486c8f2ccb7f99, type: 3}
     - target: {fileID: 7477853112347714329, guid: 4b6ed3754e396334f86044e4b1899996, type: 3}
       propertyPath: m_Name
       value: BGT_Logo
@@ -4957,25 +4892,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b6ed3754e396334f86044e4b1899996, type: 3}
---- !u!1 &6150166298214772854 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7477853112347714329, guid: 4b6ed3754e396334f86044e4b1899996, type: 3}
-  m_PrefabInstance: {fileID: 6150166298214772853}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6150166298214772855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6150166298214772854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  downloadKey: BGT_Logo
-  objectPriority: 0
 --- !u!1001 &6587630397735127901
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4986,6 +4902,10 @@ PrefabInstance:
     - target: {fileID: 6317036388668065255, guid: 1c3a9a16aeb95884b9c72de83668e1fc, type: 3}
       propertyPath: m_Name
       value: BGT_Plants
+      objectReference: {fileID: 0}
+    - target: {fileID: 6317036388668065255, guid: 1c3a9a16aeb95884b9c72de83668e1fc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 6692717987209060189, guid: 1c3a9a16aeb95884b9c72de83668e1fc, type: 3}
       propertyPath: m_RootOrder
@@ -5031,31 +4951,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7732280447609704696, guid: 1c3a9a16aeb95884b9c72de83668e1fc, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: -2458118643811769822, guid: 5e4abdc795957a145bec097f58028e8c, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c3a9a16aeb95884b9c72de83668e1fc, type: 3}
---- !u!1 &6587630397735127902 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6317036388668065255, guid: 1c3a9a16aeb95884b9c72de83668e1fc, type: 3}
-  m_PrefabInstance: {fileID: 6587630397735127901}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6587630397735127903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6587630397735127902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  downloadKey: BGT_Plants
-  objectPriority: 0
 --- !u!23 &6637866847931011853
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5108,10 +5005,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1281891917}
     m_Modifications:
-    - target: {fileID: 6508816114825902000, guid: d43365ff0cd3cc64d88d6783de97eadc, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 2561875316638440158, guid: d466bb9a9d8cdef42ba00c4544f0550c, type: 3}
     - target: {fileID: 7401664873781158575, guid: d43365ff0cd3cc64d88d6783de97eadc, type: 3}
       propertyPath: m_Name
       value: BGT_Door_stand
@@ -5160,35 +5053,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9058711978391487354, guid: d43365ff0cd3cc64d88d6783de97eadc, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9058711978391487354, guid: d43365ff0cd3cc64d88d6783de97eadc, type: 3}
-      propertyPath: m_Materials.Array.data[2]
-      value: 
-      objectReference: {fileID: 2100000, guid: 60e9fccd1ef52bb4c92b568577920e41, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d43365ff0cd3cc64d88d6783de97eadc, type: 3}
---- !u!1 &7671485236019983006 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7401664873781158575, guid: d43365ff0cd3cc64d88d6783de97eadc, type: 3}
-  m_PrefabInstance: {fileID: 7671485236019983005}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7671485236019983007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7671485236019983006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  downloadKey: BGT_Door_stand
-  objectPriority: 0
 --- !u!1 &8569327490103194471
 GameObject:
   m_ObjectHideFlags: 0
