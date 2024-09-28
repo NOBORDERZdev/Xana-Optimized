@@ -100,8 +100,8 @@ public class AddForceComponent : ItemComponent
         {
             yield return new WaitForFixedUpdate();
         }
-        _rigidBody.isKinematic = true;
-        if (_rigidBodyPlayer)
+        //_rigidBody.isKinematic = true;
+        if (_rigidBodyPlayer && !ConstantsHolder.isSoftBankGame)
             _rigidBodyPlayer.isKinematic = true;
         if (_characterControllerNew)
             _characterControllerNew.enabled = true;
