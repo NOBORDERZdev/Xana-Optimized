@@ -632,7 +632,7 @@ namespace Photon.Pun.Demo.PunBasics
             }
             if (isWheel)
             {
-                XANASummitSceneLoading.OnJoinSubItem?.Invoke(ConstantsHolder.xanaConstants.minimap == 1);
+                XANASummitSceneLoading.OnJoinSubItem?.Invoke(false);
             }
             if (PhotonNetwork.InRoom)
             {

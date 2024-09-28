@@ -10,6 +10,7 @@ public class MoodTabItemView : MonoBehaviour
 {
     public string m_ThumbnailDownloadURL;
     public Image _moodIcon;
+    public Image _selectionImage;
     public TMPro.TMP_Text _moodName;
     UserAnimationPostFeature _animationPostManager;
     public void InitItem(string moodName,string imagURL, UserAnimationPostFeature animationPostManager)
@@ -49,5 +50,7 @@ public class MoodTabItemView : MonoBehaviour
     public void OnClickMood()
     {
         this._animationPostManager.SetMood(_moodName.transform.GetComponent<TextLocalization>().GetOriginalText());
+        _animationPostManager.UnselectAllMoodView();
+        _selectionImage.gameObject.SetActive(true);
     }
 }

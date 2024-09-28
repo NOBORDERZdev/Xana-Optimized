@@ -80,8 +80,10 @@ public class NFTFromServer : MonoBehaviour
         }
         else
         {
-            GameObject _summitNFTHandlerRef = Instantiate(XanaSummitNFTHandler, Vector3.zero, Quaternion.identity);
-            _summitNFTHandlerRef.GetComponentInChildren<SummitDomeNFTDataController>().NFTDataFetchScrptRef = this;
+            //GameObject _summitNFTHandlerRef = Instantiate(XanaSummitNFTHandler, Vector3.zero, Quaternion.identity);
+            // _summitNFTHandlerRef.GetComponentInChildren<SummitDomeNFTDataController>().NFTDataFetchScrptRef = this;
+            XanaSummitNFTHandler.GetComponentInChildren<SummitDomeNFTDataController>().NFTDataFetchScrptRef = this;
+
             //if (!this.GetComponent<SummitDomeNFTDataController>())
             //{
             //    this.AddComponent<SummitDomeNFTDataController>();
