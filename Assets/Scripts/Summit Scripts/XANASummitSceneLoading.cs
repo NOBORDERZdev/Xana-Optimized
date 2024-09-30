@@ -183,7 +183,14 @@ public class XANASummitSceneLoading : MonoBehaviour
             ConstantsHolder.xanaConstants.MuseumID = domeGeneralData.worldId.ToString();
         ConstantsHolder.HaveSubWorlds = domeGeneralData.isSubWorld;
         if (domeGeneralData.Ishumanoid)
+        {
             XANASummitDataContainer.FixedAvatarJson = domeGeneralData.Avatarjson;
+            ConstantsHolder.xanaConstants.SetPlayerProperties(XANASummitDataContainer.FixedAvatarJson);
+        }
+        else
+        {
+            ConstantsHolder.xanaConstants.SetPlayerProperties();
+        }
         gameplayEntityLoader.currentEnvironment = null;
         multiplayerController.singlePlayerInstance = domeGeneralData.experienceType != "double";
         multiplayerController.isConnecting = false;
@@ -446,10 +453,10 @@ public class XANASummitSceneLoading : MonoBehaviour
         ConstantsHolder.Thumbnail = subWorldInfo.thumbnail;
         ConstantsHolder.isPenguin = false;
         ConstantsHolder.isFixedHumanoid = false;
+        ConstantsHolder.xanaConstants.SetPlayerProperties();
         gameplayEntityLoader.currentEnvironment = null;
         multiplayerController.isConnecting = false;
         gameplayEntityLoader.isEnvLoaded = false;
-        //ConstantsHolder.isFromXANASummit = false;
         gameplayEntityLoader.isAlreadySpawned = true;
         multiplayerController.Disconnect();
 
