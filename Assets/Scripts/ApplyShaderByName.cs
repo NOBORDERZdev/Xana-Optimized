@@ -11,21 +11,37 @@ public class ApplyShaderByName : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
-        if(isMeshRendrer)
+        if (isMeshRendrer)
         {
-            gameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find(shaderName);
+            var meshRenderer = gameObject.GetComponent<MeshRenderer>();
+            if (meshRenderer != null)
+            {
+                meshRenderer.material.shader = Shader.Find(shaderName);
+            }
         }
-        else if(isTerrain)
+        else if (isTerrain)
         {
-            gameObject.GetComponent<Terrain>().materialTemplate.shader = Shader.Find(shaderName);
+            var terrain = gameObject.GetComponent<Terrain>();
+            if (terrain != null)
+            {
+                terrain.materialTemplate.shader = Shader.Find(shaderName);
+            }
         }
         else if (_IsSpriteRenderer)
         {
-            gameObject.GetComponent<SpriteRenderer>().material.shader = Shader.Find(shaderName);
+            var spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.material.shader = Shader.Find(shaderName);
+            }
         }
         else
         {
-            gameObject.GetComponent<ParticleSystemRenderer>().material.shader = Shader.Find(shaderName);
+            var particleSystemRenderer = gameObject.GetComponent<ParticleSystemRenderer>();
+            if (particleSystemRenderer != null)
+            {
+                particleSystemRenderer.material.shader = Shader.Find(shaderName);
+            }
         }
     }
 }
