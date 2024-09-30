@@ -277,8 +277,8 @@ public class XANASummitSceneLoading : MonoBehaviour
         }
 
         //StartCoroutine(LoadingHandler.Instance.FadeIn());
-        // LoadingHandler.Instance.ShowVideoLoading();
-        SummitMiniMapStatusOnSceneChange(false);
+        //LoadingHandler.Instance.ShowVideoLoading();
+        //SummitMiniMapStatusOnSceneChange(false);
         Vector3[] currentPlayerPos = GetPlayerPosition(playerPos);
 
         string sceneToBeUnload = WorldItemView.m_EnvName;
@@ -298,6 +298,9 @@ public class XANASummitSceneLoading : MonoBehaviour
         LoadingHandler.Instance.enter = false;
 
         #endregion
+
+        SummitMiniMapStatusOnSceneChange(false);
+
         if (ConstantsHolder.MultiSectionPhoton)
         {
             ConstantsHolder.DiasableMultiPartPhoton = true;

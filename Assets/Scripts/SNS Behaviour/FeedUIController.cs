@@ -462,6 +462,7 @@ public class FeedUIController : MonoBehaviour
             findFriendScreen.SetActive(false);
             SNS_APIController.Instance.AdFrndFollowingFetch();
             UpdateAdFrndBtnStatus(2);
+            HotFriendPanel.GetComponentInParent<FollowParentHeight>().SetChildHeight();
         }
     }
 
