@@ -28,8 +28,11 @@ public class TriggerSpaceX : MonoBehaviour
     {
         if (other.CompareTag("PhotonLocalPlayer") && other.GetComponent<PhotonView>().IsMine && vClip!=null)
         {
-            XANASummitSceneLoading.OnJoinSubItem?.Invoke(false);
-            BuilderEventManager.spaceXActivated?.Invoke(vClip,playerPos.position);
+            if (other.GetComponent<PhotonView>().IsMine)
+            {
+                XANASummitSceneLoading.OnJoinSubItem?.Invoke(false);
+                BuilderEventManager.spaceXActivated?.Invoke(vClip, playerPos.position);
+            }
         }
     }
 }

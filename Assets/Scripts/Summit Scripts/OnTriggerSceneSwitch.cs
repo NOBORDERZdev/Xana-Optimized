@@ -55,6 +55,7 @@ public class OnTriggerSceneSwitch : MonoBehaviour
 
     void TriggerSceneLoading()
     {
+        BuilderEventManager.spaceXDeactivated?.Invoke();
         //GameplayEntityLoader.instance.AssignRaffleTickets(DomeId);
         BuilderEventManager.LoadNewScene?.Invoke(DomeId, transform.GetChild(0).transform.position);
     }
@@ -77,12 +78,12 @@ public class OnTriggerSceneSwitch : MonoBehaviour
 
     void CheckSceneParemeter()
     {
-        if (LoadingFromSummitWorld)
-        {
-            ConstantsHolder.isFromXANASummit = true;
-            ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
-        }
-        if (HaveSubworlds)
+        //if (LoadingFromSummitWorld)
+        //{
+        //    ConstantsHolder.isFromXANASummit = true;
+        //    ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
+        //}
+        if(HaveSubworlds)
         {
             ConstantsHolder.HaveSubWorlds = true;
             ConstantsHolder.domeId = DomeId;
