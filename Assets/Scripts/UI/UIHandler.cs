@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using UnityEngine.Networking;
 using SimpleJSON;
 using UnityEngine.SceneManagement;
+//using UnityEditor.SceneManagement;
 
 public class UIHandler : MonoBehaviour
 {
@@ -135,7 +136,6 @@ public class UIHandler : MonoBehaviour
         else
         {
             SplashScreenXana.SetActive(false);
-            
             if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
             {
                 SplashScreenSummit.SetActive(true);
