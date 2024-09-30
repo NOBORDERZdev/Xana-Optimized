@@ -53,23 +53,23 @@ public class NFT_Holder_Manager : MonoBehaviour
     }
     
 
-    private void Start()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            GameObject meetingObj = Resources.Load("ThaMeetingObj") as GameObject;
-            meetingObj = PhotonNetwork.InstantiateRoomObject(meetingObj.name, new Vector3(0f, 0f, 0f), Quaternion.identity);
-            meetingStatus = meetingObj.GetComponent<ThaMeetingStatusUpdate>();
-            //Debug.LogError("Instantiate Meeting Object");
-        }
-        else if (meetingStatus == null)
-            meetingStatus = FindObjectOfType<ThaMeetingStatusUpdate>();
+    //private void Start()
+    //{
+    //    if (PhotonNetwork.IsMasterClient)
+    //    {
+    //        GameObject meetingObj = Resources.Load("ThaMeetingObj") as GameObject;
+    //        meetingObj = PhotonNetwork.InstantiateRoomObject(meetingObj.name, new Vector3(0f, 0f, 0f), Quaternion.identity);
+    //        meetingStatus = meetingObj.GetComponent<ThaMeetingStatusUpdate>();
+    //        //Debug.LogError("Instantiate Meeting Object");
+    //    }
+    //    else if (meetingStatus == null)
+    //        meetingStatus = FindObjectOfType<ThaMeetingStatusUpdate>();
 
-        SetChatRefrence();
+    //    SetChatRefrence();
 
-        // send Space_Entry_UniqueUsers_Mobile_App
-        GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.SE_UU_Mobile_App_THA.ToString());
-    }
+    //    // send Space_Entry_UniqueUsers_Mobile_App
+    //    GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.SE_UU_Mobile_App_THA.ToString());
+    //}
     //private void OnApplicationFocus(bool hasFocus)
     //{
     //    if (!hasFocus)

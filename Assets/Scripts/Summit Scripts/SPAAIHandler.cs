@@ -139,8 +139,8 @@ public class SPAAIHandler : MonoBehaviour
             CurrentAIPerformerRef = Instantiate(GameplayEntityLoader.instance.AIAvatarPrefab[_index], SpawnPoint.position, SpawnPoint.localRotation);
             if (CurrentAIPerformerRef.GetComponent<Rigidbody>())
             {
-
-                CurrentAIPerformerRef.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+                CurrentAIPerformerRef.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                //CurrentAIPerformerRef.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             }
             AssignFtchDataToAIAvtr();
         }
