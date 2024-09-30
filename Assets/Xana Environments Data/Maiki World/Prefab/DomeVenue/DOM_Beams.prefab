@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4361980607836347814
+--- !u!1 &95502140
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,47 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4361980607836347817}
-  - component: {fileID: 4361980607836347819}
-  - component: {fileID: 4361980607836347816}
+  - component: {fileID: 95502141}
+  - component: {fileID: 95502143}
+  - component: {fileID: 95502142}
   m_Layer: 0
-  m_Name: LongBeam (5)
+  m_Name: LongBeam (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4361980607836347817
+--- !u!4 &95502141
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4361980607836347814}
-  m_LocalRotation: {x: 0.82252526, y: -0, z: -0, w: 0.5687286}
-  m_LocalPosition: {x: 43.428, y: 42.75, z: 5.272}
+  m_GameObject: {fileID: 95502140}
+  m_LocalRotation: {x: 0.14746028, y: -0.79382265, z: -0.21270329, w: -0.5503258}
+  m_LocalPosition: {x: 29, y: 33, z: 18.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4361980608074997683}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 110.677, y: 0, z: 0}
---- !u!114 &4361980607836347819
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: -30, y: -249.46399, z: 0}
+--- !u!114 &95502143
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4361980607836347814}
+  m_GameObject: {fileID: 95502140}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b69c542c9a8f4f44a3123e3fa103d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pluginVersion: 20100
   colorFromLight: 1
   colorMode: 0
-  color: {r: 1.215834, g: 0, b: 2.9960785, a: 1}
+  color: {r: 0, g: 2.865687, b: 3.9999995, a: 1}
   colorGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -115,6 +114,273 @@ MonoBehaviour:
   noiseVelocityLocal: {x: 0.035, y: 0.1, z: 0.05}
   dimensions: 0
   tiltFactor: {x: 0, y: 0}
+  pluginVersion: 1991
+  _TrackChangesDuringPlaytime: 0
+  _SortingLayerID: 0
+  _SortingOrder: 0
+  _FadeOutBegin: -150
+  _FadeOutEnd: -200
+--- !u!114 &95502142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95502140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 031dc173b8912b246aaed3b7e88df54e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EulerSpeed: {x: 0, y: 75, z: 0}
+--- !u!1 &1122955866
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1122955867}
+  - component: {fileID: 1122955869}
+  - component: {fileID: 1122955868}
+  m_Layer: 0
+  m_Name: LongBeam (10)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1122955867
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122955866}
+  m_LocalRotation: {x: 0.20434214, y: -0.59281844, z: -0.1588441, w: -0.76261336}
+  m_LocalPosition: {x: 28.9, y: 33, z: 3.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4361980608074997683}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: -30, y: -284.28, z: 0}
+--- !u!114 &1122955869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122955866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b69c542c9a8f4f44a3123e3fa103d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorFromLight: 1
+  colorMode: 0
+  color: {r: 0, g: 2.865687, b: 3.9999995, a: 1}
+  colorGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  intensityFromLight: 0
+  intensityModeAdvanced: 1
+  intensityInside: 1
+  intensityOutside: 0.895
+  intensityMultiplier: 1
+  hdrpExposureWeight: 0
+  blendingMode: 0
+  spotAngleFromLight: 1
+  spotAngle: 5
+  spotAngleMultiplier: 1
+  coneRadiusStart: 0.05
+  shaderAccuracy: 0
+  geomMeshType: 0
+  geomCustomSides: 32
+  geomCustomSegments: 5
+  skewingLocalForwardDirection: {x: 0, y: 0, z: 1}
+  clippingPlaneTransform: {fileID: 0}
+  geomCap: 0
+  attenuationEquation: 1
+  attenuationCustomBlending: 0.5
+  fallOffStart: 0
+  fallOffEnd: 25
+  fallOffEndFromLight: 1
+  fallOffEndMultiplier: 1
+  depthBlendDistance: 1
+  cameraClippingDistance: 0.385
+  glareFrontal: 0.864
+  glareBehind: 0.837
+  fresnelPow: 9.22
+  noiseMode: 1
+  noiseIntensity: 0.58
+  noiseScaleUseGlobal: 0
+  noiseScaleLocal: 0.05
+  noiseVelocityUseGlobal: 1
+  noiseVelocityLocal: {x: 0.035, y: 0.1, z: 0.05}
+  dimensions: 0
+  tiltFactor: {x: 0, y: 0}
+  pluginVersion: 1991
+  _TrackChangesDuringPlaytime: 0
+  _SortingLayerID: 0
+  _SortingOrder: 0
+  _FadeOutBegin: -150
+  _FadeOutEnd: -200
+--- !u!114 &1122955868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122955866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 031dc173b8912b246aaed3b7e88df54e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EulerSpeed: {x: 0, y: 75, z: 0}
+--- !u!1 &4361980607836347814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4361980607836347817}
+  - component: {fileID: 4361980607836347819}
+  - component: {fileID: 4361980607836347816}
+  m_Layer: 0
+  m_Name: LongBeam (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4361980607836347817
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4361980607836347814}
+  m_LocalRotation: {x: -0.32968634, y: 0.00000008940697, z: -0.000000014901161, w: 0.9440906}
+  m_LocalPosition: {x: 43.52, y: 33, z: -3.39}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4361980608074997683}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: -38.499, y: 0, z: 0}
+--- !u!114 &4361980607836347819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4361980607836347814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b69c542c9a8f4f44a3123e3fa103d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorFromLight: 1
+  colorMode: 0
+  color: {r: 0, g: 2.865687, b: 3.9999995, a: 1}
+  colorGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  intensityFromLight: 0
+  intensityModeAdvanced: 1
+  intensityInside: 1
+  intensityOutside: 0.895
+  intensityMultiplier: 1
+  hdrpExposureWeight: 0
+  blendingMode: 0
+  spotAngleFromLight: 1
+  spotAngle: 5
+  spotAngleMultiplier: 1
+  coneRadiusStart: 0.05
+  shaderAccuracy: 0
+  geomMeshType: 0
+  geomCustomSides: 32
+  geomCustomSegments: 5
+  skewingLocalForwardDirection: {x: 0, y: 0, z: 1}
+  clippingPlaneTransform: {fileID: 0}
+  geomCap: 0
+  attenuationEquation: 1
+  attenuationCustomBlending: 0.5
+  fallOffStart: 0
+  fallOffEnd: 25
+  fallOffEndFromLight: 1
+  fallOffEndMultiplier: 1
+  depthBlendDistance: 1
+  cameraClippingDistance: 0.385
+  glareFrontal: 0.864
+  glareBehind: 0.837
+  fresnelPow: 9.22
+  noiseMode: 1
+  noiseIntensity: 0.58
+  noiseScaleUseGlobal: 0
+  noiseScaleLocal: 0.05
+  noiseVelocityUseGlobal: 1
+  noiseVelocityLocal: {x: 0.035, y: 0.1, z: 0.05}
+  dimensions: 0
+  tiltFactor: {x: 0, y: 0}
+  pluginVersion: 1991
   _TrackChangesDuringPlaytime: 0
   _SortingLayerID: 0
   _SortingOrder: 0
@@ -158,8 +424,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4361980607870673307}
-  m_LocalRotation: {x: 0.5748657, y: -0, z: -0, w: 0.81824774}
-  m_LocalPosition: {x: 43.428, y: 42.75, z: 5.272}
+  m_LocalRotation: {x: -0.183012, y: -0.6830117, z: -0.18301257, w: 0.683014}
+  m_LocalPosition: {x: 46.83, y: 33.572, z: 5.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -178,10 +444,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b69c542c9a8f4f44a3123e3fa103d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pluginVersion: 20100
   colorFromLight: 1
   colorMode: 0
-  color: {r: 3.9999995, g: 0.9500022, b: 0, a: 1}
+  color: {r: 0, g: 2.865687, b: 3.9999995, a: 1}
   colorGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -248,6 +513,7 @@ MonoBehaviour:
   noiseVelocityLocal: {x: 0.035, y: 0.1, z: 0.05}
   dimensions: 0
   tiltFactor: {x: 0, y: 0}
+  pluginVersion: 1991
   _TrackChangesDuringPlaytime: 0
   _SortingLayerID: 0
   _SortingOrder: 0
@@ -275,6 +541,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4361980608074997683}
+  - component: {fileID: 4361980608138473075}
   m_Layer: 0
   m_Name: DOM_Beams
   m_TagString: Untagged
@@ -289,7 +556,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4361980608074997680}
-  m_LocalRotation: {x: -0, y: 0.70710576, z: -0, w: 0.70710784}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -16.000223, y: -50.461536, z: 75.892265}
   m_LocalScale: {x: 1.5384616, y: 1.5384616, z: 1.5384616}
   m_ConstrainProportionsScale: 0
@@ -303,9 +570,25 @@ Transform:
   - {fileID: 4361980608857098720}
   - {fileID: 4361980609411673428}
   - {fileID: 4361980608580851036}
+  - {fileID: 95502141}
+  - {fileID: 1122955867}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &4361980608138473075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4361980608074997680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: DOM_Beams
+  objectPriority: 0
 --- !u!1 &4361980608097817188
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,14 +614,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4361980608097817188}
-  m_LocalRotation: {x: 0.53329647, y: -0, z: -0, w: 0.8459285}
-  m_LocalPosition: {x: 41.3, y: 45.12, z: 17.42}
+  m_LocalRotation: {x: 0.92915857, y: -0.052424364, z: -0.18617429, w: -0.31504804}
+  m_LocalPosition: {x: 44.56, y: 33.16, z: 22.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4361980608074997683}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 64.457, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 217.227, y: 23.141998, z: -1.4309998}
 --- !u!114 &4361980608097817193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,10 +634,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b69c542c9a8f4f44a3123e3fa103d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pluginVersion: 20100
   colorFromLight: 1
   colorMode: 0
-  color: {r: 3.9999995, g: 0.9500022, b: 0, a: 1}
+  color: {r: 0, g: 2.865687, b: 3.9999995, a: 1}
   colorGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -421,6 +703,7 @@ MonoBehaviour:
   noiseVelocityLocal: {x: 0.035, y: 0.1, z: 0.05}
   dimensions: 0
   tiltFactor: {x: 0, y: 0}
+  pluginVersion: 1991
   _TrackChangesDuringPlaytime: 0
   _SortingLayerID: 0
   _SortingOrder: 0
@@ -464,14 +747,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4361980608360031534}
-  m_LocalRotation: {x: 0.8015215, y: -0, z: -0, w: 0.5979661}
-  m_LocalPosition: {x: 41.3, y: 45.12, z: 3.57}
+  m_LocalRotation: {x: -0.18301211, y: -0.6830117, z: -0.18301268, w: 0.6830139}
+  m_LocalPosition: {x: 53.1, y: 33.662, z: 10.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4361980608074997683}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 106.550995, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -30, y: -90, z: 0}
 --- !u!114 &4361980608360031507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -484,10 +767,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b69c542c9a8f4f44a3123e3fa103d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pluginVersion: 20100
   colorFromLight: 1
   colorMode: 0
-  color: {r: 3.9999995, g: 0.9500022, b: 0, a: 1}
+  color: {r: 0, g: 2.865687, b: 3.9999995, a: 1}
   colorGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -554,6 +836,7 @@ MonoBehaviour:
   noiseVelocityLocal: {x: 0.035, y: 0.1, z: 0.05}
   dimensions: 0
   tiltFactor: {x: 0, y: 0}
+  pluginVersion: 1991
   _TrackChangesDuringPlaytime: 0
   _SortingLayerID: 0
   _SortingOrder: 0
@@ -597,14 +880,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4361980608580851037}
-  m_LocalRotation: {x: 0.82817054, y: -0, z: -0, w: 0.56047624}
-  m_LocalPosition: {x: 43.74, y: 42.75, z: 15.49}
+  m_LocalRotation: {x: -0.2127031, y: -0.5503283, z: -0.1474609, w: 0.7938208}
+  m_LocalPosition: {x: 54.076, y: 33.166, z: 14.386}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4361980608074997683}
   m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 111.82199, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -30, y: -69.464, z: 0}
 --- !u!114 &4361980608580851038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,10 +900,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b69c542c9a8f4f44a3123e3fa103d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pluginVersion: 20100
   colorFromLight: 1
   colorMode: 0
-  color: {r: 3.9999995, g: 0.9500022, b: 0, a: 1}
+  color: {r: 0, g: 2.865687, b: 3.9999995, a: 1}
   colorGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -687,6 +969,7 @@ MonoBehaviour:
   noiseVelocityLocal: {x: 0.035, y: 0.1, z: 0.05}
   dimensions: 0
   tiltFactor: {x: 0, y: 0}
+  pluginVersion: 1991
   _TrackChangesDuringPlaytime: 0
   _SortingLayerID: 0
   _SortingOrder: 0
@@ -730,14 +1013,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4361980608857098721}
-  m_LocalRotation: {x: 0.6009614, y: -0, z: -0, w: 0.799278}
-  m_LocalPosition: {x: 36.45, y: 45.12, z: 5.56}
+  m_LocalRotation: {x: -0.0023031458, y: -0.9477483, z: -0.20092112, w: 0.24778754}
+  m_LocalPosition: {x: 50.08, y: 33.11, z: 21.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4361980608074997683}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 73.878, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -22.457, y: -149.521, z: -5.913}
 --- !u!114 &4361980608857098722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -750,10 +1033,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b69c542c9a8f4f44a3123e3fa103d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pluginVersion: 20100
   colorFromLight: 1
   colorMode: 0
-  color: {r: 1.215834, g: 0, b: 2.9960785, a: 1}
+  color: {r: 0, g: 2.865687, b: 3.9999995, a: 1}
   colorGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -820,6 +1102,7 @@ MonoBehaviour:
   noiseVelocityLocal: {x: 0.035, y: 0.1, z: 0.05}
   dimensions: 0
   tiltFactor: {x: 0, y: 0}
+  pluginVersion: 1991
   _TrackChangesDuringPlaytime: 0
   _SortingLayerID: 0
   _SortingOrder: 0
@@ -863,14 +1146,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4361980609411673429}
-  m_LocalRotation: {x: 0.76929027, y: -0, z: -0, w: 0.63889945}
-  m_LocalPosition: {x: 36.41, y: 45.12, z: 15.43}
+  m_LocalRotation: {x: -0.20167175, y: -0.22987917, z: 0.04875669, w: 0.9508454}
+  m_LocalPosition: {x: 49.58, y: 32.97, z: -0.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4361980608074997683}
   m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 100.58002, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -21.168, y: -29.333, z: 11.47}
 --- !u!114 &4361980609411673430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -883,10 +1166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b69c542c9a8f4f44a3123e3fa103d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pluginVersion: 20100
   colorFromLight: 1
   colorMode: 0
-  color: {r: 1.215834, g: 0, b: 2.9960785, a: 1}
+  color: {r: 0, g: 2.865687, b: 3.9999995, a: 1}
   colorGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -953,6 +1235,7 @@ MonoBehaviour:
   noiseVelocityLocal: {x: 0.035, y: 0.1, z: 0.05}
   dimensions: 0
   tiltFactor: {x: 0, y: 0}
+  pluginVersion: 1991
   _TrackChangesDuringPlaytime: 0
   _SortingLayerID: 0
   _SortingOrder: 0
@@ -996,14 +1279,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4361980609626724813}
-  m_LocalRotation: {x: 0.69676673, y: -0.120476544, z: -0.120476924, w: 0.69676894}
-  m_LocalPosition: {x: 34.369, y: 45.12, z: 10.32}
+  m_LocalRotation: {x: -0.21117502, y: -0.743414, z: -0.14964022, w: 0.6167241}
+  m_LocalPosition: {x: 54.069, y: 33.21, z: 6.548}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4361980608074997683}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 70.38, y: -89.999, z: -90}
+  m_LocalEulerAnglesHint: {x: -28.879, y: -102.835, z: 8.499}
 --- !u!114 &4361980609626724814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1016,10 +1299,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b69c542c9a8f4f44a3123e3fa103d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pluginVersion: 20100
   colorFromLight: 1
   colorMode: 0
-  color: {r: 3.9999995, g: 0.9500022, b: 0, a: 1}
+  color: {r: 0, g: 2.865687, b: 3.9999995, a: 1}
   colorGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -1086,6 +1368,7 @@ MonoBehaviour:
   noiseVelocityLocal: {x: 0.035, y: 0.1, z: 0.05}
   dimensions: 0
   tiltFactor: {x: 0, y: 0}
+  pluginVersion: 1991
   _TrackChangesDuringPlaytime: 0
   _SortingLayerID: 0
   _SortingOrder: 0
@@ -1129,14 +1412,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4361980609703872021}
-  m_LocalRotation: {x: 0.63428986, y: -0, z: -0, w: 0.77309537}
-  m_LocalPosition: {x: 43.74, y: 42.75, z: 15.7}
+  m_LocalRotation: {x: -0.18301213, y: -0.68301165, z: -0.1830127, w: 0.6830139}
+  m_LocalPosition: {x: 46.99, y: 33.511, z: 15.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4361980608074997683}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 78.735, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -30, y: -90, z: 0}
 --- !u!114 &4361980609703872022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1149,10 +1432,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b69c542c9a8f4f44a3123e3fa103d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pluginVersion: 20100
   colorFromLight: 1
   colorMode: 0
-  color: {r: 1.215834, g: 0, b: 2.9960785, a: 1}
+  color: {r: 0, g: 2.865687, b: 3.9999995, a: 1}
   colorGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -1219,6 +1501,7 @@ MonoBehaviour:
   noiseVelocityLocal: {x: 0.035, y: 0.1, z: 0.05}
   dimensions: 0
   tiltFactor: {x: 0, y: 0}
+  pluginVersion: 1991
   _TrackChangesDuringPlaytime: 0
   _SortingLayerID: 0
   _SortingOrder: 0
