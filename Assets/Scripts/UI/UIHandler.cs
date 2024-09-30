@@ -135,14 +135,14 @@ public class UIHandler : MonoBehaviour
         }
         else
         {
-            //added condition because above code causes issue in reconnection (keep orientation in portrait mode)
-            if (Screen.orientation != ScreenOrientation.Portrait) 
+            SplashScreenXana.SetActive(false);
+            if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
             {
-                SplashScreenXana.SetActive(false);
                 SplashScreenSummit.SetActive(true);
-                Screen.orientation = ScreenOrientation.LandscapeLeft;
+                Screen.orientation = ScreenOrientation.LandscapeLeft; // this shouldn't run if user is reconnecting
             }
         }
+
         if (SaveCharacterProperties.NeedToShowSplash == 1)
         {
             if (PlayerPrefs.HasKey("TermsConditionAgreement"))

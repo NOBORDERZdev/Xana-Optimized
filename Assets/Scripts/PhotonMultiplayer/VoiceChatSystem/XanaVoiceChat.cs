@@ -146,7 +146,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
 #endif
 
         //Adding delay because of loading screen stuck issue in rotation by getting permission popup. // Sohaib
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         Debug.Log("Xana VoiceChat Start");
         recorder = GameObject.FindObjectOfType<Recorder>();
@@ -163,7 +163,10 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
                 Permission.RequestUserPermission(Permission.Microphone);
             }
         }
-
+        while (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+        {
+            yield return new WaitForSeconds(1f);
+        }
 
         if (recorder != null)
         {

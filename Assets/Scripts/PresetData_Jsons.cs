@@ -176,6 +176,15 @@ public class PresetData_Jsons : MonoBehaviour
             GameManager.Instance.selectedPresetData = JsonUtility.ToJson(_CharacterData);
 
             CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);
+            if (_CharacterData.gender=="Male")
+            {
+                CharacterHandler.instance.maleAvatarData.avatar_parent.GetComponent<AvatarController>().SetAvatarClothDefault(CharacterHandler.instance.maleAvatarData.avatar_parent, _CharacterData.gender);
+            }
+            else if (_CharacterData.gender=="Female")
+            {
+                CharacterHandler.instance.femaleAvatarData.avatar_parent.GetComponent<AvatarController>().SetAvatarClothDefault(CharacterHandler.instance.femaleAvatarData.avatar_parent, _CharacterData.gender);
+
+            }
             //GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>().SetAvatarByGender(_CharacterData.gender);
 
 
