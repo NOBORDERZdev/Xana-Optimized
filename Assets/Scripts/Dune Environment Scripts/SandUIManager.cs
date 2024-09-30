@@ -221,6 +221,10 @@ public class SandUIManager : MonoBehaviour
         //    rank.GetChild(0).GetComponent<Text>() = rankingList.
         //}
     }
+    private void OnDisable()
+    {
+        Enable_DisableObjects.Instance.EnableChatFeature();
+    }
 }
 
 
