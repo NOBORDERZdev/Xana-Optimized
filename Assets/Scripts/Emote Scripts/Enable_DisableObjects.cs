@@ -29,6 +29,7 @@ public class Enable_DisableObjects : MonoBehaviour
     [SerializeField] private GameObject _chatSystem;
     [SerializeField] private RectTransform[] _objectsToRepositioned;
     [SerializeField] private float[] _objectsNewPosX;
+    [SerializeField] private float[] _objectsDefaultPosX;
 
     private bool _wasMicOn;
     private bool _once = false;
@@ -159,10 +160,18 @@ public class Enable_DisableObjects : MonoBehaviour
             rect.anchorMin = new Vector2(0.5f, 0);
             rect.anchorMax = new Vector2(0.5f, 0);
         }
-
         for (int i = 0; i < _objectsToRepositioned.Length; i++)
         {
             _objectsToRepositioned[i].anchoredPosition = new Vector2(_objectsNewPosX[i], 35.5f);
+            _objectsToRepositioned[i].sizeDelta = new Vector2(30f, 33f);
+        }
+    }
+    public void EnableChatFeature()
+    {
+        _chatSystem.SetActive(true);
+        for (int i = 0; i < _objectsToRepositioned.Length; i++)
+        {
+            _objectsToRepositioned[i].anchoredPosition = new Vector2(_objectsDefaultPosX[i], 35.5f);
             _objectsToRepositioned[i].sizeDelta = new Vector2(30f, 33f);
         }
     }
