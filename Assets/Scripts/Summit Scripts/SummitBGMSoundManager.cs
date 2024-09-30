@@ -65,7 +65,7 @@ public class SummitBGMSoundManager : MonoBehaviour
                 audioSource.clip = clip;
                 audioSource.loop = true;
                 audioSource.Play();
-
+                SoundSettings.soundManagerSettings.SetBgmVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
             }
         }
     }
