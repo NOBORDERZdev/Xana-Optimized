@@ -110,7 +110,9 @@ public class SummitDomePAAIController : MonoBehaviour
         }
         if (_aiAvatar.GetComponent<Rigidbody>())
         {
-            _aiAvatar.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            _aiAvatar.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            _aiAvatar.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
+            _aiAvatar.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
             //CurrentAIPerformerRef.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         }
     }
