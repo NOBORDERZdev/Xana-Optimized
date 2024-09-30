@@ -724,8 +724,12 @@ public class HomeFooterHandler : MonoBehaviour
         }
         OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Othertabs);
         QuestDataHandler.Instance.OpenAndCloseQuestPanel(false);
+        Invoke("DelayInSetChildHeight",.5f);
     }
-
+    void DelayInSetChildHeight()
+    {
+        FeedUIController.Instance.HotFriendPanel.GetComponentInParent<FollowParentHeight>().SetChildHeight();
+    }
     void DisableSubScreen()
     {
         if (FeedUIController.Instance != null)
