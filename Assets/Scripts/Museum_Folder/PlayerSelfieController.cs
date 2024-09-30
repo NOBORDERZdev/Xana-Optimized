@@ -567,7 +567,8 @@ public class PlayerSelfieController : MonoBehaviour
             }
 
            
-            newRenderTexture.Release();
+            if (newRenderTexture) newRenderTexture.Release(); // caused a null-ref when user was falling and touching the screen.
+                                                              // unneccessary, as the render texture is being destroyed below.
 
 
             StartCoroutine(SetMuseumRaycasterBoolean());

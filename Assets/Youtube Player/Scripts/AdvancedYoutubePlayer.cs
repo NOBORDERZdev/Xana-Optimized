@@ -14,6 +14,7 @@ using ZeelKheni.YoutubePlayer.Models;
 using ZeelKheni.YoutubePlayer;
 using System.Collections;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using YoutubeExplode;
 using YoutubeExplode.Videos.Streams;
 using Newtonsoft.Json;
@@ -67,6 +68,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         AvatarSpawnerOnDisconnect.OninternetDisconnect += OnInternetDisconnect;
         AvatarSpawnerOnDisconnect.OninternetConnected += OnInternetConnect;
         VideoPlayer.errorReceived += (hand, message) => { Debug.Log("Error in video.... "); PrepareVideoUrls(default, true); };
+        SetSoundSettingReference();
         //if (IsLive)
         //{
         //    AVProVideoPlayer.gameObject.SetActive(true);
@@ -99,6 +101,8 @@ public class AdvancedYoutubePlayer : MonoBehaviour
     {
         AvatarSpawnerOnDisconnect.OninternetDisconnect -= OnInternetDisconnect;
         AvatarSpawnerOnDisconnect.OninternetConnected -= OnInternetConnect;
+
+        RemoveReference();
 
         if (SummitDomeNFTDataController.Instance)
         {
@@ -137,6 +141,52 @@ public class AdvancedYoutubePlayer : MonoBehaviour
             AVProVideoPlayer.Play();
     }
 
+    public void SetSoundSettingReference()
+    {
+        if (SoundSettings.soundManagerSettings == null)
+        {
+            return;
+        }
+        if (SceneManager.GetActiveScene().name == "Builder")
+        {
+            if (VideoPlayer != null)
+            {
+                if (VideoPlayer.GetComponent<AudioSource>())
+                {
+                    SoundSettings.soundManagerSettings.AddVideoSources(VideoPlayer.GetComponent<AudioSource>());
+                }
+            }
+            if (AVProVideoPlayer != null)
+            {
+                SoundSettings.soundManagerSettings.AddLiveVideoSources(AVProVideoPlayer);
+            }
+        }
+    }
+
+    public void RemoveReference()
+    {
+        if (SoundSettings.soundManagerSettings == null)
+        {
+            return;
+        }
+        if (VideoPlayer != null)
+        {
+            if (VideoPlayer.GetComponent<AudioSource>())
+            {
+                if (SoundSettings.soundManagerSettings.videoSources.Contains(VideoPlayer.GetComponent<AudioSource>()))
+                {
+                    SoundSettings.soundManagerSettings.videoSources.Remove(VideoPlayer.GetComponent<AudioSource>());
+                }
+            }
+        }
+        if (AVProVideoPlayer != null)
+        {
+            if (SoundSettings.soundManagerSettings.livevideoSources.Contains(AVProVideoPlayer))
+            {
+                SoundSettings.soundManagerSettings.livevideoSources.Remove(AVProVideoPlayer);
+            }
+        }
+    }
     public async Task PrepareVideoAsync(CancellationToken cancellationToken = default)
     {
         // TODO: use destroyCancellationToken in 2022.3
@@ -256,6 +306,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
             var YoutubeHlsGetter = new FetchHtmlContent();
             StartCoroutine(YoutubeHlsGetter.GetHtmlContent(VideoId, HLSurlLoaded));
         }
+
     }
 
     public async Task<string> getvideoasync(string videoId)
@@ -403,14 +454,26 @@ public class AdvancedYoutubePlayer : MonoBehaviour
 #elif UNITY_IOS
             LiveVideoPlayerScreen.mesh = IOSLiveVideoMesh;
 #endif
-            LiveVideoPlayerScreen.gameObject.SetActive(_isLiveVideo);
-            PreRecVideoScreen.SetActive(!_isLiveVideo);
+            if (LiveVideoPlayerScreen != null)
+            {
+                LiveVideoPlayerScreen.gameObject.SetActive(_isLiveVideo);
+            }
+            if (PreRecVideoScreen != null)
+            {
+                PreRecVideoScreen.SetActive(!_isLiveVideo);
+            }
         }
         else
         {
             VideoPlayer.playOnAwake = false;
-            PreRecVideoScreen.SetActive(!_isLiveVideo);
-            LiveVideoPlayerScreen.gameObject.SetActive(_isLiveVideo);
+            if (PreRecVideoScreen != null)
+            {
+                PreRecVideoScreen.SetActive(!_isLiveVideo);
+            }
+            if (LiveVideoPlayerScreen != null)
+            {
+                LiveVideoPlayerScreen.gameObject.SetActive(_isLiveVideo);
+            }
         }
     }
 

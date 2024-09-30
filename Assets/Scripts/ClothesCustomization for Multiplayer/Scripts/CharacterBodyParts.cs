@@ -83,6 +83,7 @@ public class CharacterBodyParts : MonoBehaviour
     public SkinnedMeshRenderer body;
     //[HideInInspector]
     public SkinnedMeshRenderer head;
+    public SkinnedMeshRenderer eyeShadow;
 
 
     public RandomPreset[] randomPresetData;

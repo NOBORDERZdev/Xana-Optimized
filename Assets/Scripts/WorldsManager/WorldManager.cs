@@ -153,6 +153,7 @@ public class WorldManager : MonoBehaviour
 
     void OpenLandingScene()
     {
+        ConstantsHolder.xanaConstants.SetPlayerProperties();
         int WorldId;
         try
         {
@@ -818,6 +819,7 @@ public class WorldManager : MonoBehaviour
 
     public async void JoinEvent()
     {
+        ConstantsHolder.xanaConstants.SetPlayerProperties();
         MainSceneEventHandler.MakeScreenSpaceAdditive?.Invoke();
 
         //MainSceneEventHandler.MemoryRelaseAfterLoading?.Invoke();
@@ -914,6 +916,7 @@ public class WorldManager : MonoBehaviour
 
     public async void JoinBuilderWorld()
     {
+        ConstantsHolder.xanaConstants.SetPlayerProperties();
         MainSceneEventHandler.MakeScreenSpaceAdditive?.Invoke();
 
         //MainSceneEventHandler.MemoryRelaseAfterLoading?.Invoke();

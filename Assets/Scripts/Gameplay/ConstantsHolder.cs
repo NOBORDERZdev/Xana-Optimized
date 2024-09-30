@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
@@ -201,6 +203,8 @@ public class ConstantsHolder : MonoBehaviour
     public static string description;
     public static bool isTeleporting = false;
 
+    public List<string> presetClothsJsonList =new List<string>();
+
     //Daily reward
     public bool isGoingForHomeScene = false;
     public bool hasToShowDailyPopup = false;
@@ -320,6 +324,45 @@ public class ConstantsHolder : MonoBehaviour
         //  StartCoroutine(LoadAddressableDependenceies());
     }
 
+    public void SetPlayerProperties(string cloths = "")
+    {
+        Debug.Log("SetPlayerProperties");
+        PhotonNetwork.LocalPlayer.CustomProperties.Clear();
+        ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
+        if (string.IsNullOrEmpty(cloths))
+        {
+            playerProperties.Add("ClothJson", GetJsonFolderData());
+        }
+        else
+        {
+            playerProperties.Add("ClothJson", cloths);
+        }
+        playerProperties.Add("NFTEquiped", isNFTEquiped);
+        PhotonNetwork.LocalPlayer.CustomProperties = playerProperties;
+    }
+
+    public string GetRandomPresetClothJson()
+    {
+        return presetClothsJsonList[UnityEngine.Random.Range(0, presetClothsJsonList.Count)];
+    }
+    public string GetJsonFolderData()
+    {
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 1)  // loged from account)
+        {
+            if (ConstantsHolder.xanaConstants.isNFTEquiped)
+            {
+                return File.ReadAllText(Application.persistentDataPath + ConstantsHolder.xanaConstants.NFTBoxerJson);
+            }
+            else
+            {
+                return File.ReadAllText(Application.persistentDataPath + "/logIn.json");
+            }
+        }
+        else
+        {
+            return File.ReadAllText(Application.persistentDataPath + "/loginAsGuestClass.json");
+        }
+    }
     public void StopMic()
     {
         PlayerPrefs.SetInt("micSound", 0);
