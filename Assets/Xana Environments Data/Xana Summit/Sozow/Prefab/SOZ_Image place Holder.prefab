@@ -1170,7 +1170,7 @@ MonoBehaviour:
   testnetMussuemId: 28
   mainnetMussuemId: 13
   eventid: 
-  XanaSummitNFTHandler: {fileID: 8141283418276172437, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+  XanaSummitNFTHandler: {fileID: 8992530551613452898}
   AllS3Nfts: []
 --- !u!1 &7602649409594645898
 GameObject:
@@ -3238,6 +3238,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8231405403531119645}
     m_Modifications:
+    - target: {fileID: 7905879506377309225, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+      propertyPath: NFTDataFetchScrptRef
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8141283418276172436, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -3288,6 +3292,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+--- !u!1 &8992530551613452898 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8141283418276172437, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+  m_PrefabInstance: {fileID: 878277544982700279}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8992530551613452899 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8141283418276172436, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
