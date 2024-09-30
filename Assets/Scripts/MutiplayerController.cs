@@ -69,7 +69,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "XanaSummit240923CrashFix";  // YYYYMMDD
+        string gameVersion = "XanaSummit240930";  // YYYYMMDD
 
         #endregion
         #region Multtisection Fields
@@ -632,7 +632,7 @@ namespace Photon.Pun.Demo.PunBasics
             }
             if (isWheel)
             {
-                XANASummitSceneLoading.OnJoinSubItem?.Invoke(ConstantsHolder.xanaConstants.minimap == 1);
+                XANASummitSceneLoading.OnJoinSubItem?.Invoke(false);
             }
             if (PhotonNetwork.InRoom)
             {

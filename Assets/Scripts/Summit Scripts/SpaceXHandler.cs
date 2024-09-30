@@ -23,15 +23,15 @@ public class SpaceXHandler : MonoBehaviour
     private void OnEnable()
     {
         BuilderEventManager.spaceXActivated += StartVideoPlayer;
-        BuilderEventManager.SpaceXDeactivated += SpaceXDeactivated;
+        BuilderEventManager.spaceXDeactivated += SpaceXDeactivated;
     }
     private void OnDisable()
     {
         BuilderEventManager.spaceXActivated -= StartVideoPlayer;
-        BuilderEventManager.SpaceXDeactivated -= SpaceXDeactivated;
+        BuilderEventManager.spaceXDeactivated -= SpaceXDeactivated;
     }
 
-    async void StartVideoPlayer(VideoClip VideoClip,Vector3 ReturnPlayerPos)
+    async void StartVideoPlayer(VideoClip VideoClip, Vector3 ReturnPlayerPos)
     {
         if (_WaitForRestart)
             return;
