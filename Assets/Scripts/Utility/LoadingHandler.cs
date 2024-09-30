@@ -130,7 +130,7 @@ public class LoadingHandler : MonoBehaviour
 
         loadingText.text = "";
         manualRoomController = gameObject.GetComponent<ManualRoomController>();
-        //  Debug.unityLogger.logEnabled = true;
+        //Debug.unityLogger.logEnabled = true;
 #if UNITY_EDITOR
         Debug.unityLogger.logEnabled = true;
 #else
@@ -1055,7 +1055,7 @@ public class LoadingHandler : MonoBehaviour
         ApprovalUI.SetActive(false);
         DomeLodingUI.SetActive(true);
         EnterWheel?.Invoke(true);
-        BuilderEventManager.SpaceXDeactivated?.Invoke();
+        BuilderEventManager.spaceXDeactivated?.Invoke();
         if (!iswheel)
         {
             ConstantsHolder.isFromXANASummit = true;

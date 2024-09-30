@@ -187,7 +187,6 @@ public class PlayerController : MonoBehaviour
         //BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
 
         RemoveLayerFromCameraCollider();
-
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -952,7 +951,7 @@ public class PlayerController : MonoBehaviour
         }
 
         animator.SetBool("IsGrounded", _IsGrounded);
-        if (characterController.velocity.y < 0)
+        if (characterController.velocity.y <= 0)
         {
             animator.SetBool("standJump", false);
         }
