@@ -437,15 +437,23 @@ public class ChatSocketManager : MonoBehaviour
         }
         MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = false;
         Invoke("DelayAdded", 0.05f);
+
         //StartCoroutine(nameof(Delay));
         XanaChatSystem.instance.DisplayMsg_FromSocket(userName, msg, _dataHolder.MsgText);
-
 
         // Add to List
         if (allMsgData == null)
             allMsgData = new List<ChatMsgDataHolder>();
         allMsgData.Add(_dataHolder);
+        Refresh();
     }
+
+    void Refresh()
+    {
+        LayoutRebuilder.ForceRebuildLayoutImmediate(MsgParentObj.GetComponent<RectTransform>());    
+    }
+
+  
 
     void DelayAdded()
     {
