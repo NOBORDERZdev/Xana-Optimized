@@ -28,15 +28,15 @@ public class AudioComponent : ItemComponent
     }
 
 
-    private void OnCollisionExit(Collision collision)
+    /*private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("PhotonLocalPlayer") && collision.gameObject.GetComponent<PhotonView>().IsMine)
+        if (collision.gameObject.CompareTag("PhotonLocalPlayer") && collision.gameObject.GetComponent<PhotonView>().IsMine && audioClip)
         {
             float stopAudioAfterSeconds = audioClip.length;
             if (stopAudioAfterSeconds > 3) stopAudioAfterSeconds = 3; // Some clips are too long (up to 130 seconds)
             Invoke(nameof(StopAudio), stopAudioAfterSeconds);
         }
-    }
+    }*/
 
     private void StopAudio()
     {
