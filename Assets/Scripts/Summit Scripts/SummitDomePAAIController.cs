@@ -108,6 +108,11 @@ public class SummitDomePAAIController : MonoBehaviour
     GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].rotationPositionArray[1],
     GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_aiDataIndex].rotationPositionArray[2]);
         }
+        if (_aiAvatar.GetComponent<Rigidbody>())
+        {
+            _aiAvatar.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            //CurrentAIPerformerRef.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+        }
     }
 
     void SetPerformerAIAnim(GameObject _aiAvatar, int _aiDataIndex)
