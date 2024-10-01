@@ -57,7 +57,7 @@ public class XanaWorldDownloader : MonoBehaviour
 
     private float unloadDistance = 50;
 
-    private static XanaWorldDownloader xanaWorldDownloader;
+    public static XanaWorldDownloader xanaWorldDownloader;
     public DownloadPopupHandler DownloadPopupHandlerInstance;
 
     private static CancellationTokenSource cts;
@@ -819,7 +819,8 @@ public class XanaWorldDownloader : MonoBehaviour
         preLoadObjects.Clear();
         postLoadObjects.Clear();
         downloadFailed.Clear();
-        xanaSceneData.SceneObjects.Clear();
+        if(xanaSceneData != null && xanaSceneData.SceneObjects != null)
+            xanaSceneData.SceneObjects.Clear();
         BuilderData.mapData = null;
         BuilderData.spawnPoint.Clear();
         AllDomes.Clear();
