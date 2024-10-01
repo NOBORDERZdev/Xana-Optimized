@@ -899,6 +899,7 @@ public class LoadingHandler : MonoBehaviour
         DomeName.text = info.name;
         DomeDescription.text = info.description;
         DomeCreator.text = info.creatorName;
+        ConstantsHolder.xanaConstants.domeCreatorName = info.creatorName;
         DomeType.text = info.domeType;
         DomeCategory.text = info.domeCategory;
         iswheel = false;
