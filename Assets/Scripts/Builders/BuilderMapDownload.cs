@@ -448,42 +448,72 @@ public class BuilderMapDownload : MonoBehaviour
 
     IEnumerator SetRealisticTerrain(MeshRenderer meshRenderer)
     {
+        if (realisticTerrainMaterials == null || levelData == null || realisticTerrainMaterials.terrainMaterials == null)
+        {
+            Debug.LogError("RealisticTerrainMaterials, LevelData, or TerrainMaterials is null.");
+            yield break;
+        }
+
         bool realisticTerrainExist = realisticTerrainMaterials.terrainMaterials.Exists(x => x.id == levelData.terrainProperties.realisticMatIndex);
         if (realisticTerrainExist)
         {
             AsyncOperationHandle loadRealisticMaterial;
             RealisticMaterialData realisticMaterialData = realisticTerrainMaterials.terrainMaterials.Find(x => x.id == levelData.terrainProperties.realisticMatIndex);
+
+            if (realisticMaterialData == null)
+            {
+                Debug.LogError("RealisticMaterialData is null.");
+                yield break;
+            }
+
             string loadRealisticMatKey = realisticMaterialData.name.Replace(" ", "");
             bool flag = false;
+
+            if (AddressableDownloader.Instance?.MemoryManager == null)
+            {
+                Debug.LogError("AddressableDownloader.Instance or MemoryManager is null.");
+                yield break;
+            }
+
             loadRealisticMaterial = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(loadRealisticMatKey, ref flag);
             if (!flag)
                 loadRealisticMaterial = Addressables.LoadAssetAsync<Material>(loadRealisticMatKey);
+
             while (!loadRealisticMaterial.IsDone)
             {
                 yield return null;
             }
+
             if (loadRealisticMaterial.Status == AsyncOperationStatus.None)
             {
-                ////Debug.LogError(" ---------- NONE ------------ SKY BOXX");
+                Debug.LogError("LoadRealisticMaterial status is None.");
             }
             else if (loadRealisticMaterial.Status == AsyncOperationStatus.Failed)
             {
-                ////Debug.LogError(" ----------- FAILED ----------- SKY BOXX");
+                Debug.LogError("LoadRealisticMaterial status is Failed.");
             }
             else if (loadRealisticMaterial.Status == AsyncOperationStatus.Succeeded)
             {
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadRealisticMaterial, loadRealisticMatKey);
                 Material _mat = loadRealisticMaterial.Result as Material;
-                ////Debug.LogError(realisticMaterialData.shaderName);
+
+                if (_mat == null)
+                {
+                    Debug.LogError("Material is null.");
+                    yield break;
+                }
+
                 _mat.shader = Shader.Find(realisticMaterialData.shaderName);
                 meshRenderer.enabled = false;
                 realisticPlanRenderer.material = _mat;
-                if (deformationData.Length > 0)
+
+                if (deformationData != null && deformationData.Length > 0)
                 {
                     var deformedMeshData = Encoding.UTF8.GetString(deformationData);
                     if (deformedMeshData.Length >= 10)
                         realisticPlanRenderer.GetComponent<MeshFilter>().mesh.vertices = DeserializeVector3Array(deformedMeshData);
                 }
+
                 realisticPlanRenderer.gameObject.SetActive(true);
             }
         }
