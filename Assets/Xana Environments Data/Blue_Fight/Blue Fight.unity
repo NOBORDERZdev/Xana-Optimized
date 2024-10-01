@@ -4531,6 +4531,7 @@ GameObject:
   - component: {fileID: 3661736368867026103}
   - component: {fileID: 395967426941790994}
   - component: {fileID: 2493363682435489752}
+  - component: {fileID: 4150851554909552142}
   m_Layer: 0
   m_Name: ADM_Structure
   m_TagString: Untagged
@@ -4538,6 +4539,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+--- !u!64 &4150851554909552142
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4150851554909552141}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8047807685946702772, guid: af723bcd89617f54fa31af0b07c3afaa, type: 3}
 --- !u!33 &4590835826629390733
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4613,4 +4628,7 @@ MonoBehaviour:
   LoadDirectly: 1
   LoadingFromSummitWorld: 0
   HaveSubworlds: 0
+  isPenpenzMiniGame: 0
   WorldId: 
+  _domeType: 0
+  _domeCategory: 0
