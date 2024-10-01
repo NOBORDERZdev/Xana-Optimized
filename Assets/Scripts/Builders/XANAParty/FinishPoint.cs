@@ -13,7 +13,7 @@ public class FinishPoint : MonoBehaviour
     public Collider FinishRaceCollider;
     private void OnEnable()
     {
-        if (ConstantsHolder.xanaConstants.isXanaPartyWorld || ConstantsHolder.isSoftBankGame)
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld || ConstantsHolder.xanaConstants.isSoftBankGame)
         {
             FinishRaceCollider.gameObject.SetActive(true);
         }
@@ -64,7 +64,7 @@ public class FinishPoint : MonoBehaviour
             BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("YOU WON THE RACE", 3, true);
         triggerCollider.SetActive(true);
         GamificationComponentData gamificationTemp = GamificationComponentData.instance;
-        if (ConstantsHolder.isSoftBankGame)
+        if (ConstantsHolder.xanaConstants.isSoftBankGame)
         {
             GamePlayUIHandler.inst.OnExitButtonClick();
         }

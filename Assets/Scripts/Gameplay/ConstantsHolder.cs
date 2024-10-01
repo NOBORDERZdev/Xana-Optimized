@@ -29,7 +29,6 @@ public class ConstantsHolder : MonoBehaviour
     public static bool isGuestLogin;
     public static bool loggedIn;
     public static bool isWalletLogin;
-    public static bool isSoftBankGame;
     public static string xanaliaToken;
     public static string xanaToken;
     public static string userId;
@@ -109,6 +108,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool isBackFromWorld = false;
     public String MuseumID;
     public string domeCreatorName;
+    public bool isSoftBankGame;
 
     //For Metabuzz Environments
     public enum ComingFrom
