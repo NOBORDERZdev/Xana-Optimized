@@ -454,40 +454,71 @@ public class BuilderMapDownload : MonoBehaviour
             AsyncOperationHandle loadRealisticMaterial;
             RealisticMaterialData realisticMaterialData = realisticTerrainMaterials.terrainMaterials.Find(x => x.id == levelData.terrainProperties.realisticMatIndex);
             string loadRealisticMatKey = realisticMaterialData.name.Replace(" ", "");
+
             bool flag = false;
             loadRealisticMaterial = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(loadRealisticMatKey, ref flag);
+
             if (!flag)
+            {
                 loadRealisticMaterial = Addressables.LoadAssetAsync<Material>(loadRealisticMatKey);
+            }
+
+            // Wait for the load operation to complete
             while (!loadRealisticMaterial.IsDone)
             {
                 yield return null;
             }
-            if (loadRealisticMaterial.Status == AsyncOperationStatus.None)
+
+            if (loadRealisticMaterial.Status == AsyncOperationStatus.None || loadRealisticMaterial.Status == AsyncOperationStatus.Failed || loadRealisticMaterial.Result == null)
             {
-                ////Debug.LogError(" ---------- NONE ------------ SKY BOXX");
+                // Log the failure
+                Debug.LogError("Loading material failed or returned null. Retrying...");
+
+                // Release the handle if the material is null or failed
+                if (loadRealisticMaterial.IsValid())
+                {
+                    Addressables.Release(loadRealisticMaterial);
+                }
+
+                // Retry loading the material again
+                loadRealisticMaterial = Addressables.LoadAssetAsync<Material>(loadRealisticMatKey);
+
+                while (!loadRealisticMaterial.IsDone)
+                {
+                    yield return null;
+                }
             }
-            else if (loadRealisticMaterial.Status == AsyncOperationStatus.Failed)
+
+            if (loadRealisticMaterial.Status == AsyncOperationStatus.Succeeded && loadRealisticMaterial.Result != null)
             {
-                ////Debug.LogError(" ----------- FAILED ----------- SKY BOXX");
-            }
-            else if (loadRealisticMaterial.Status == AsyncOperationStatus.Succeeded)
-            {
+                // Add the loaded material to the reference list
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadRealisticMaterial, loadRealisticMatKey);
+
                 Material _mat = loadRealisticMaterial.Result as Material;
-                ////Debug.LogError(realisticMaterialData.shaderName);
                 _mat.shader = Shader.Find(realisticMaterialData.shaderName);
+
                 meshRenderer.enabled = false;
                 realisticPlanRenderer.material = _mat;
+
                 if (deformationData.Length > 0)
                 {
                     var deformedMeshData = Encoding.UTF8.GetString(deformationData);
                     if (deformedMeshData.Length >= 10)
+                    {
                         realisticPlanRenderer.GetComponent<MeshFilter>().mesh.vertices = DeserializeVector3Array(deformedMeshData);
+                    }
                 }
+
                 realisticPlanRenderer.gameObject.SetActive(true);
+            }
+            else
+            {
+                // Log if loading failed after retry
+                Debug.LogError("Failed to load the material even after retry.");
             }
         }
     }
+
 
     IEnumerator SetWaterTexture(string textureUrl)
     {
