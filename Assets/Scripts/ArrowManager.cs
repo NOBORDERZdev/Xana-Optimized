@@ -96,7 +96,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
                 }
                 PhotonUserName.text = PhotonNetwork.NickName;
 
-                if(!ConstantsHolder.isPenguin || !ConstantsHolder.xanaConstants.isXanaPartyWorld)
+                if(!ConstantsHolder.isPenguin || !ConstantsHolder.xanaConstants.isXanaPartyWorld || !ConstantsHolder.xanaConstants.isSoftBankGame)
                 {
                     AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().animator = this.GetComponent<Animator>();
                     ActionAnimationApplyToPlayer.PlayerAnimatorInitializer?.Invoke(this.GetComponent<Animator>().runtimeAnimatorController);
@@ -105,7 +105,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             }
         }
            StartCoroutine(WaitForArrowIntanstiate(this.transform, !this.GetComponent<PhotonView>().IsMine));
-        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld || !ConstantsHolder.xanaConstants.isSoftBankGame)
         {
             try
             {
@@ -163,7 +163,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     public override void OnDisable ()
     {
-        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld || !ConstantsHolder.xanaConstants.isSoftBankGame)
         {
             ReactionDelegateButtonClickEvent -= OnChangeReactionIcon;
         }
