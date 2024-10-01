@@ -457,7 +457,6 @@ public class BuilderMapDownload : MonoBehaviour
         bool realisticTerrainExist = realisticTerrainMaterials.terrainMaterials.Exists(x => x.id == levelData.terrainProperties.realisticMatIndex);
         if (realisticTerrainExist)
         {
-        retryDownload:
             AsyncOperationHandle loadRealisticMaterial;
             RealisticMaterialData realisticMaterialData = realisticTerrainMaterials.terrainMaterials.Find(x => x.id == levelData.terrainProperties.realisticMatIndex);
 
@@ -476,63 +475,77 @@ public class BuilderMapDownload : MonoBehaviour
                 yield break;
             }
 
-            loadRealisticMaterial = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(loadRealisticMatKey, ref flag);
-            if (!flag)
-                loadRealisticMaterial = Addressables.LoadAssetAsync<Material>(loadRealisticMatKey);
-
-            while (!loadRealisticMaterial.IsDone)
+            try
             {
-                yield return null;
-            }
+                retryDownload:
+                    loadRealisticMaterial = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(loadRealisticMatKey, ref flag);
+                    if (!flag)
+                        loadRealisticMaterial = Addressables.LoadAssetAsync<Material>(loadRealisticMatKey);
 
-            if (!loadRealisticMaterial.IsValid())
+                    while (!loadRealisticMaterial.IsDone)
+                    {
+                        //yield return null;
+                    }
+
+                    if (!loadRealisticMaterial.IsValid())
+                    {
+                        Debug.LogError("Invalid operation handle.");
+                        yield break;
+                    }
+
+                    if (loadRealisticMaterial.Status == AsyncOperationStatus.None)
+                    {
+                        Debug.LogError("LoadRealisticMaterial status is None.");
+                    }
+                    else if (loadRealisticMaterial.Status == AsyncOperationStatus.Failed)
+                    {
+                        Debug.LogError("LoadRealisticMaterial status is Failed.");
+                    }
+                    else if (loadRealisticMaterial.Status == AsyncOperationStatus.Succeeded)
+                    {
+                        if (loadRealisticMaterial.Result == null || loadRealisticMaterial.Result.Equals(null))
+                        {
+                            Debug.LogError("Material Result is null. Retrying download after clearing cache.");
+                            Addressables.ClearDependencyCacheAsync(loadRealisticMatKey);
+                            Addressables.Release(loadRealisticMaterial);
+                            goto retryDownload;
+                        }
+
+                        Material _mat = loadRealisticMaterial.Result as Material;
+
+                        if (_mat == null)
+                        {
+                            Debug.LogError("Material is null.");
+                            realisticPlanRenderer.gameObject.SetActive(true);
+                            yield break;
+                        }
+
+                        AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadRealisticMaterial, loadRealisticMatKey);
+                        _mat.shader = Shader.Find(realisticMaterialData.shaderName);
+                        meshRenderer.enabled = false;
+                        realisticPlanRenderer.material = _mat;
+
+                        if (deformationData != null && deformationData.Length > 0)
+                        {
+                            var deformedMeshData = Encoding.UTF8.GetString(deformationData);
+                            if (deformedMeshData.Length >= 10)
+                                realisticPlanRenderer.GetComponent<MeshFilter>().mesh.vertices = DeserializeVector3Array(deformedMeshData);
+                        }
+
+                        realisticPlanRenderer.gameObject.SetActive(true);
+                    }
+            }
+            catch (Exception e)
             {
-                Debug.LogError("Invalid operation handle.");
-                yield break;
+                Debug.LogError($"Exception occurred: {e.Message}");
             }
-
-            if (loadRealisticMaterial.Status == AsyncOperationStatus.None)
-            {
-                Debug.LogError("LoadRealisticMaterial status is None.");
-            }
-            else if (loadRealisticMaterial.Status == AsyncOperationStatus.Failed)
-            {
-                Debug.LogError("LoadRealisticMaterial status is Failed.");
-            }
-            else if (loadRealisticMaterial.Status == AsyncOperationStatus.Succeeded)
-            {
-                if (loadRealisticMaterial.Result == null || loadRealisticMaterial.Result.Equals(null))
-                {
-                    Debug.LogError("Material Result is null. Retrying download after clearing cache.");
-                   // AddressableDownloader.Instance.MemoryManager.RemoveFromReferenceList(loadRealisticMatKey);
-                    Addressables.ClearDependencyCacheAsync(loadRealisticMatKey);
-                    Addressables.Release(loadRealisticMaterial);
-                    goto retryDownload;
-                }
-
-                Material _mat = loadRealisticMaterial.Result as Material;
-
-                if (_mat == null)
-                {
-                    Debug.LogError("Material is null.");
-                    realisticPlanRenderer.gameObject.SetActive(true);
-                    yield break;
-                }
-
-                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadRealisticMaterial, loadRealisticMatKey);
-                _mat.shader = Shader.Find(realisticMaterialData.shaderName);
-                meshRenderer.enabled = false;
-                realisticPlanRenderer.material = _mat;
-
-                if (deformationData != null && deformationData.Length > 0)
-                {
-                    var deformedMeshData = Encoding.UTF8.GetString(deformationData);
-                    if (deformedMeshData.Length >= 10)
-                        realisticPlanRenderer.GetComponent<MeshFilter>().mesh.vertices = DeserializeVector3Array(deformedMeshData);
-                }
-
-                realisticPlanRenderer.gameObject.SetActive(true);
-            }
+            //finally
+            //{
+            //    if (loadRealisticMaterial.IsValid())
+            //    {
+            //        Addressables.Release(loadRealisticMaterial);
+            //    }
+            //}
         }
     }
 
