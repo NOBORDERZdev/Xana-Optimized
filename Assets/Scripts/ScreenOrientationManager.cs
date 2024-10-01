@@ -92,22 +92,22 @@ public class ScreenOrientationManager : MonoBehaviour
         potraitCanvas.interactable = false;
         yield return new WaitForSeconds(0.1f);
         AvatarSpawnerOnDisconnect.Instance = null;
-        if (isPotrait)
-        {
-            AvatarSpawnerOnDisconnect.Instance = ref_avatarManager_Portrait;
-            potraitCanvas.DOFade(1, 0.5f);
-            potraitCanvas.blocksRaycasts = true;
-            potraitCanvas.interactable = true;
-            Screen.orientation = ScreenOrientation.Portrait;
-        }
-        else
-        {
+        //if (isPotrait)  // // Commented out the portrait code in gameplay since it's not needed for Summit.
+        //{
+        //    AvatarSpawnerOnDisconnect.Instance = ref_avatarManager_Portrait;
+        //    potraitCanvas.DOFade(1, 0.5f);
+        //    potraitCanvas.blocksRaycasts = true;
+        //    potraitCanvas.interactable = true;
+        //    Screen.orientation = ScreenOrientation.Portrait;
+        //}
+        //else
+        //{
             AvatarSpawnerOnDisconnect.Instance = ref_avatarManager;
             landscapeCanvas.DOFade(1, 0.5f);
             landscapeCanvas.blocksRaycasts = true;
             landscapeCanvas.interactable = true;
             Screen.orientation = ScreenOrientation.LandscapeLeft;
-        }
+        //}
 
         if (ArrowManager.Instance && !ConstantsHolder.isPenguin)
         {
