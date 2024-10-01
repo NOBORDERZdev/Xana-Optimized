@@ -457,6 +457,7 @@ public class BuilderMapDownload : MonoBehaviour
         bool realisticTerrainExist = realisticTerrainMaterials.terrainMaterials.Exists(x => x.id == levelData.terrainProperties.realisticMatIndex);
         if (realisticTerrainExist)
         {
+        retryDownload:
             AsyncOperationHandle loadRealisticMaterial;
             RealisticMaterialData realisticMaterialData = realisticTerrainMaterials.terrainMaterials.Find(x => x.id == levelData.terrainProperties.realisticMatIndex);
 
@@ -475,7 +476,6 @@ public class BuilderMapDownload : MonoBehaviour
                 yield break;
             }
 
-        retryDownload:
             loadRealisticMaterial = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(loadRealisticMatKey, ref flag);
             if (!flag)
                 loadRealisticMaterial = Addressables.LoadAssetAsync<Material>(loadRealisticMatKey);
