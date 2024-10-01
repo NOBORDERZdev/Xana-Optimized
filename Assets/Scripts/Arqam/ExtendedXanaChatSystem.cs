@@ -25,37 +25,49 @@ public class ExtendedXanaChatSystem : XanaChatSystem
         if (isChatOpen) { return true; }
         else { return false; }
     }
-
+    private bool isFirstNPCMessage = true;
     public void ShowMsgLocally(string senderName, string msgData)
     {
-        this.CurrentChannelText.text = "<b>" + senderName + " : " + "</b>" + msgData + "\n" + this.CurrentChannelText.text;
-        this.PotriatCurrentChannelText.text = "<b>" + senderName + " : " + "</b>" + msgData + "\n" + this.PotriatCurrentChannelText.text;
+        //this.CurrentChannelText.text = "<b>" + senderName + " : " + "</b>" + msgData + "\n" + this.CurrentChannelText.text;
+        //this.PotriatCurrentChannelText.text = "<b>" + senderName + " : " + "</b>" + msgData + "\n" + this.PotriatCurrentChannelText.text;
+        if (isFirstNPCMessage)
+        {
+            // Handle the first NPC message differently if needed
+            isFirstNPCMessage = false;
+        }
+        print("SHow Airin message : "+ isFirstNPCMessage);
+        ChatSocketManager.instance.AddNewMsg(senderName, msgData, "Airin", "Airin", 0);
+        
+       
     }
 
     public void ShowAirinMsg(string senderName, string msgData, bool airinTyping)
     {
+        Debug.Log($"ShowAirinMsg called with senderName: {senderName}, msgData: {msgData}, airinTyping: {airinTyping}");
         if (!airinTyping)
         {
             ShowMsgLocally(senderName, msgData);
+            //ChatSocketManager.instance.AddNewMsg(senderName, msgData, "NPC", "NPC", 0);
         }
         else if (airinTyping)
         {
+            ChatSocketManager.instance.AddLocalMsg(senderName, msgData, "Airin", "Airin", 0);
             // Split the text into lines
-            string[] lines = CurrentChannelText.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+            //string[] lines = CurrentChannelText.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
 
-            // Replace the first line with the AI response
-            if (lines.Length > 0)
-            {
-                lines[0] = "<b>" + senderName + " : " + "</b>" + msgData;
-            }
-            else
-            {
-                // If there are no lines, just set the text to the AI response
-                lines = new string[] { "<b>" + senderName + " : " + "</b>" + msgData };
-            }
+            //// Replace the first line with the AI response
+            //if (lines.Length > 0)
+            //{
+            //    lines[0] = "<b>" + senderName + " : " + "</b>" + msgData;
+            //}
+            //else
+            //{
+            //    // If there are no lines, just set the text to the AI response
+            //    lines = new string[] { "<b>" + senderName + " : " + "</b>" + msgData };
+            //}
 
-            this.CurrentChannelText.text = string.Join("\n", lines);
-            this.PotriatCurrentChannelText.text = string.Join("\n", lines);
+            //this.CurrentChannelText.text = string.Join("\n", lines);
+            //this.PotriatCurrentChannelText.text = string.Join("\n", lines);
         }
     }
 
