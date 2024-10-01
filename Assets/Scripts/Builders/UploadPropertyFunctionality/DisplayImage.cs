@@ -94,41 +94,31 @@ public class DisplayImage : MonoBehaviour
                 url = url.Replace("https://cdn.xana.net/", "https://aydvewoyxq.cloudimg.io/_xanaprod_/");
             }
             Vector2 imageSize = await GetImageSizeAsync(url);
-            string aspectRatio = GetAspectRatio(imageSize);
-            Debug.Log($"Image Size: {imageSize.x}x{imageSize.y}, Aspect Ratio: {aspectRatio}");
-
-            // Add query parameters based on aspect ratio
-            // Add query parameters based on aspect ratio
-            switch (aspectRatio)
+            var aspectRatioToSize = new Dictionary<string, string>
             {
-                case "1:1":
-                    url += "?width=256&height=256";
-                    break;
-                case "16:9":
-                    url += "?width=512&height=288";
-                    break;
-                case "9:16":
-                    url += "?width=288&height=512";
-                    break;
-                case "4:3":
-                    url += "?width=400&height=300";
-                    break;
-                case "3:4":
-                    url += "?width=300&height=400";
-                    break;
-                case "21:9":
-                    url += "?width=800&height=342";
-                    break;
-                case "3:2":
-                    url += "?width=450&height=300";
-                    break;
-                case "2:3":
-                    url += "?width=300&height=450";
-                    break;
-                default:
-                    // Handle other uncommon aspect ratios by preserving aspect ratio but with standard sizes
-                    url += "?width=400&height=400";
-                    break;
+                { "1:1", "?width=256&height=256" },
+                { "16:9", "?width=512&height=288" },
+                { "9:16", "?width=288&height=512" },
+                { "4:3", "?width=400&height=300" },
+                { "3:4", "?width=300&height=400" },
+                { "21:9", "?width=800&height=342" },
+                { "3:2", "?width=450&height=300" },
+                { "2:3", "?width=300&height=450" },
+                { "16:10", "?width=640&height=400" },
+                { "10:16", "?width=400&height=640" }
+            };
+
+            string aspectRatio = GetAspectRatio(imageSize);
+            Debug.Log($"Image Size: {imageSize.x}x{imageSize.y}, Aspect Ratio: {aspectRatio} , URL {url}");
+
+            if (aspectRatioToSize.TryGetValue(aspectRatio, out string sizeParams))
+            {
+                url += sizeParams;
+            }
+            else
+            {
+                // Handle other uncommon aspect ratios by preserving aspect ratio but with standard sizes
+                url += "?width=400&height=400";
             }
             print("AFTER :: " + url);
 
@@ -250,37 +240,55 @@ public class DisplayImage : MonoBehaviour
             return "Unknown";
         }
 
-        float aspectRatio = width / height;
-        float inverseAspectRatio = height / width;
-        float tolerance = 0.01f; // Smaller tolerance for greater precision
+        // Calculate and round the aspect ratio to three decimal places
+        float aspectRatio = Mathf.Round((width / height) * 1000f) / 1000f;
 
-        // Common aspect ratios and their inverses
-        if (Mathf.Abs(aspectRatio - 1f) < tolerance)
+        // Debugging: Log the calculated aspect ratio
+        Debug.Log($"Calculated Aspect Ratio: {aspectRatio}, Width: {width}, Height: {height}");
+
+        // Define common aspect ratios for direct comparison
+        float aspect1_1 = 1.0f;
+        float aspect16_9 = Mathf.Round((16f / 9f) * 1000f) / 1000f;
+        float aspect9_16 = Mathf.Round((9f / 16f) * 1000f) / 1000f;
+        float aspect4_3 = Mathf.Round((4f / 3f) * 1000f) / 1000f;
+        float aspect3_4 = Mathf.Round((3f / 4f) * 1000f) / 1000f;
+        float aspect16_10 = Mathf.Round((16f / 10f) * 1000f) / 1000f;
+        float aspect10_16 = Mathf.Round((10f / 16f) * 1000f) / 1000f;
+
+        // Check for common aspect ratios without using a tolerance value
+        if (Mathf.Approximately(aspectRatio, aspect1_1))
         {
+            Debug.Log("Matched Aspect Ratio: 1:1");
             return "1:1";
         }
-        else if (Mathf.Abs(aspectRatio - (16f / 9f)) < tolerance)
+        else if (Mathf.Approximately(aspectRatio, aspect16_9))
         {
+            Debug.Log("Matched Aspect Ratio: 16:9");
             return "16:9";
         }
-        else if (Mathf.Abs(aspectRatio - (9f / 16f)) < tolerance)
+        else if (Mathf.Approximately(aspectRatio, aspect9_16))
         {
+            Debug.Log("Matched Aspect Ratio: 9:16");
             return "9:16";
         }
-        else if (Mathf.Abs(aspectRatio - (4f / 3f)) < tolerance)
+        else if (Mathf.Approximately(aspectRatio, aspect4_3))
         {
+            Debug.Log("Matched Aspect Ratio: 4:3");
             return "4:3";
         }
-        else if (Mathf.Abs(aspectRatio - (3f / 4f)) < tolerance)
+        else if (Mathf.Approximately(aspectRatio, aspect3_4))
         {
+            Debug.Log("Matched Aspect Ratio: 3:4");
             return "3:4";
         }
-        else if (Mathf.Abs(aspectRatio - (16f / 10f)) < tolerance)
+        else if (Mathf.Approximately(aspectRatio, aspect16_10))
         {
+            Debug.Log("Matched Aspect Ratio: 16:10");
             return "16:10";
         }
-        else if (Mathf.Abs(aspectRatio - (10f / 16f)) < tolerance)
+        else if (Mathf.Approximately(aspectRatio, aspect10_16))
         {
+            Debug.Log("Matched Aspect Ratio: 10:16");
             return "10:16";
         }
 
@@ -293,12 +301,42 @@ public class DisplayImage : MonoBehaviour
         int roundedWidth = Mathf.RoundToInt(width);
         int roundedHeight = Mathf.RoundToInt(height);
 
-        // Calculate GCD to simplify ratio
+        // Calculate GCD to simplify the ratio
         int gcd = GCD(roundedWidth, roundedHeight);
 
         int simplifiedWidth = roundedWidth / gcd;
         int simplifiedHeight = roundedHeight / gcd;
 
+        // Debugging: Log the simplified general aspect ratio
+        Debug.Log($"Simplified General Aspect Ratio: {simplifiedWidth}:{simplifiedHeight}");
+
+        // Approximate the aspect ratio to common values
+        float aspectRatio = (float)simplifiedWidth / simplifiedHeight;
+
+        // Define common aspect ratios to compare against
+        Dictionary<string, float> commonRatios = new Dictionary<string, float>
+    {
+        { "1:1", 1f },
+        { "16:9", 16f / 9f },
+        { "9:16", 9f / 16f },
+        { "4:3", 4f / 3f },
+        { "3:4", 3f / 4f },
+        { "16:10", 16f / 10f },
+        { "10:16", 10f / 16f }
+    };
+
+        float tolerance = 0.05f; // Adjust this value for greater accuracy
+
+        foreach (var ratio in commonRatios)
+        {
+            if (Mathf.Abs(aspectRatio - ratio.Value) < tolerance)
+            {
+                Debug.Log($"Matched Approximate Aspect Ratio: {ratio.Key}");
+                return ratio.Key;
+            }
+        }
+
+        // Return the simplified ratio as a string if it doesn't match common aspect ratios
         return $"{simplifiedWidth}:{simplifiedHeight}";
     }
 
@@ -313,6 +351,7 @@ public class DisplayImage : MonoBehaviour
         }
         return a;
     }
+
 
 
 
