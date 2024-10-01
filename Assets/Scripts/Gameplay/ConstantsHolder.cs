@@ -108,6 +108,7 @@ public class ConstantsHolder : MonoBehaviour
 
     public bool isBackFromWorld = false;
     public String MuseumID;
+    public string domeCreatorName;
 
     //For Metabuzz Environments
     public enum ComingFrom
