@@ -475,6 +475,7 @@ public class BuilderMapDownload : MonoBehaviour
                 yield break;
             }
 
+        retryDownload:
             loadRealisticMaterial = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(loadRealisticMatKey, ref flag);
             if (!flag)
                 loadRealisticMaterial = Addressables.LoadAssetAsync<Material>(loadRealisticMatKey);
@@ -494,13 +495,14 @@ public class BuilderMapDownload : MonoBehaviour
             }
             else if (loadRealisticMaterial.Status == AsyncOperationStatus.Succeeded)
             {
-                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadRealisticMaterial, loadRealisticMatKey);
-                if (loadRealisticMaterial.Result == null|| loadRealisticMaterial.Result.Equals(null))
+                if (loadRealisticMaterial.Result == null || loadRealisticMaterial.Result.Equals(null))
                 {
-                    Debug.LogError("Material Result is null.");
-                    realisticPlanRenderer.gameObject.SetActive(true);
-                    yield break;
+                    Debug.LogError("Material Result is null. Retrying download after clearing cache.");
+                    Addressables.ClearDependencyCacheAsync(loadRealisticMatKey);
+                    Addressables.Release(loadRealisticMaterial);
+                    goto retryDownload;
                 }
+
                 Material _mat = loadRealisticMaterial.Result as Material;
 
                 if (_mat == null)
@@ -510,6 +512,7 @@ public class BuilderMapDownload : MonoBehaviour
                     yield break;
                 }
 
+                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadRealisticMaterial, loadRealisticMatKey);
                 _mat.shader = Shader.Find(realisticMaterialData.shaderName);
                 meshRenderer.enabled = false;
                 realisticPlanRenderer.material = _mat;
