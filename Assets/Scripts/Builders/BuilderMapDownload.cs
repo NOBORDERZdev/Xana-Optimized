@@ -485,6 +485,12 @@ public class BuilderMapDownload : MonoBehaviour
                 yield return null;
             }
 
+            if (!loadRealisticMaterial.IsValid())
+            {
+                Debug.LogError("Invalid operation handle.");
+                yield break;
+            }
+
             if (loadRealisticMaterial.Status == AsyncOperationStatus.None)
             {
                 Debug.LogError("LoadRealisticMaterial status is None.");
@@ -498,6 +504,7 @@ public class BuilderMapDownload : MonoBehaviour
                 if (loadRealisticMaterial.Result == null || loadRealisticMaterial.Result.Equals(null))
                 {
                     Debug.LogError("Material Result is null. Retrying download after clearing cache.");
+                   // AddressableDownloader.Instance.MemoryManager.RemoveFromReferenceList(loadRealisticMatKey);
                     Addressables.ClearDependencyCacheAsync(loadRealisticMatKey);
                     Addressables.Release(loadRealisticMaterial);
                     goto retryDownload;
