@@ -477,7 +477,10 @@ public class BuilderMapDownload : MonoBehaviour
 
             loadRealisticMaterial = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(loadRealisticMatKey, ref flag);
             if (!flag)
+            {
+                Debug.Log($"Loading material with key: {loadRealisticMatKey}");
                 loadRealisticMaterial = Addressables.LoadAssetAsync<Material>(loadRealisticMatKey);
+            }
 
             while (!loadRealisticMaterial.IsDone)
             {
@@ -495,29 +498,37 @@ public class BuilderMapDownload : MonoBehaviour
             else if (loadRealisticMaterial.Status == AsyncOperationStatus.Succeeded)
             {
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadRealisticMaterial, loadRealisticMatKey);
+
                 Material _mat = loadRealisticMaterial.Result as Material;
 
                 if (_mat == null)
                 {
-                    Debug.LogError("Material is null.");
+                    Debug.LogError($"Material is null. Key: {loadRealisticMatKey}");
                     yield break;
                 }
-
-                _mat.shader = Shader.Find(realisticMaterialData.shaderName);
-                meshRenderer.enabled = false;
-                realisticPlanRenderer.material = _mat;
-
-                if (deformationData != null && deformationData.Length > 0)
+                else
                 {
-                    var deformedMeshData = Encoding.UTF8.GetString(deformationData);
-                    if (deformedMeshData.Length >= 10)
-                        realisticPlanRenderer.GetComponent<MeshFilter>().mesh.vertices = DeserializeVector3Array(deformedMeshData);
+                    _mat.shader = Shader.Find(realisticMaterialData.shaderName);
+                    meshRenderer.enabled = false;
+                    realisticPlanRenderer.material = _mat;
+
+                    if (deformationData != null && deformationData.Length > 0)
+                    {
+                        var deformedMeshData = Encoding.UTF8.GetString(deformationData);
+                        if (deformedMeshData.Length >= 10)
+                            realisticPlanRenderer.GetComponent<MeshFilter>().mesh.vertices = DeserializeVector3Array(deformedMeshData);
+                    }
                 }
 
                 realisticPlanRenderer.gameObject.SetActive(true);
             }
         }
+        else
+        {
+            Debug.LogError("Realistic terrain material does not exist.");
+        }
     }
+
 
     IEnumerator SetWaterTexture(string textureUrl)
     {
