@@ -314,7 +314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
   _IsSpriteRenderer: 0
-  isMeshRendrer: 1
+  isMeshRendrer: 0
   shaderName: Sprites/Default
   isTerrain: 0
 --- !u!1 &8687172925080938527
@@ -326,6 +326,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8687172925080938524}
+  - component: {fileID: 8687172924670144672}
+  - component: {fileID: 6185057796527758096}
+  - component: {fileID: 5645854219187312472}
   m_Layer: 0
   m_Name: JasmyVideoPlayerObject
   m_TagString: Untagged
@@ -352,6 +355,48 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8687172924670144672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8687172925080938527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: JasmyVideoPlayerObject
+  objectPriority: 0
+--- !u!114 &6185057796527758096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8687172925080938527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: JasmyVideoPlayerObject
+  objectPriority: 0
+--- !u!114 &5645854219187312472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8687172925080938527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: JasmyVideoPlayerObject
+  objectPriority: 0
 --- !u!1001 &8687172924418547744
 PrefabInstance:
   m_ObjectHideFlags: 0
