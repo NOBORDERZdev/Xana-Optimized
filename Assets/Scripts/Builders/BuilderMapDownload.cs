@@ -451,11 +451,12 @@ public class BuilderMapDownload : MonoBehaviour
         bool realisticTerrainExist = realisticTerrainMaterials.terrainMaterials.Exists(x => x.id == levelData.terrainProperties.realisticMatIndex);
         if (realisticTerrainExist)
         {
-            AsyncOperationHandle loadRealisticMaterial;
             RealisticMaterialData realisticMaterialData = realisticTerrainMaterials.terrainMaterials.Find(x => x.id == levelData.terrainProperties.realisticMatIndex);
             string loadRealisticMatKey = realisticMaterialData.name.Replace(" ", "");
 
+            AsyncOperationHandle loadRealisticMaterial;
             bool flag = false;
+
             loadRealisticMaterial = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(loadRealisticMatKey, ref flag);
 
             if (!flag)
@@ -463,61 +464,53 @@ public class BuilderMapDownload : MonoBehaviour
                 loadRealisticMaterial = Addressables.LoadAssetAsync<Material>(loadRealisticMatKey);
             }
 
-            // Wait for the load operation to complete
-            while (!loadRealisticMaterial.IsDone)
+            // Loop until we successfully download the material and it's not null
+            while (loadRealisticMaterial.Status != AsyncOperationStatus.Succeeded || loadRealisticMaterial.Result == null)
             {
-                yield return null;
-            }
-
-            if (loadRealisticMaterial.Status == AsyncOperationStatus.None || loadRealisticMaterial.Status == AsyncOperationStatus.Failed || loadRealisticMaterial.Result == null)
-            {
-                // Log the failure
-                Debug.LogError("Loading material failed or returned null. Retrying...");
-
-                // Release the handle if the material is null or failed
-                if (loadRealisticMaterial.IsValid())
-                {
-                    Addressables.Release(loadRealisticMaterial);
-                }
-
-                // Retry loading the material again
-                loadRealisticMaterial = Addressables.LoadAssetAsync<Material>(loadRealisticMatKey);
-
+                // Wait for the load operation to complete
                 while (!loadRealisticMaterial.IsDone)
                 {
                     yield return null;
                 }
-            }
 
-            if (loadRealisticMaterial.Status == AsyncOperationStatus.Succeeded && loadRealisticMaterial.Result != null)
-            {
-                // Add the loaded material to the reference list
-                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadRealisticMaterial, loadRealisticMatKey);
-
-                Material _mat = loadRealisticMaterial.Result as Material;
-                _mat.shader = Shader.Find(realisticMaterialData.shaderName);
-
-                meshRenderer.enabled = false;
-                realisticPlanRenderer.material = _mat;
-
-                if (deformationData.Length > 0)
+                // If loading failed, log the error and retry
+                if (loadRealisticMaterial.Status == AsyncOperationStatus.None || loadRealisticMaterial.Status == AsyncOperationStatus.Failed || loadRealisticMaterial.Result == null)
                 {
-                    var deformedMeshData = Encoding.UTF8.GetString(deformationData);
-                    if (deformedMeshData.Length >= 10)
-                    {
-                        realisticPlanRenderer.GetComponent<MeshFilter>().mesh.vertices = DeserializeVector3Array(deformedMeshData);
-                    }
-                }
+                    Debug.LogError("Loading material failed or returned null. Retrying...");
 
-                realisticPlanRenderer.gameObject.SetActive(true);
+                    // Release the handle if it's valid
+                    if (loadRealisticMaterial.IsValid())
+                    {
+                        Addressables.Release(loadRealisticMaterial);
+                    }
+
+                    // Retry loading the material again with a fresh handle
+                    loadRealisticMaterial = Addressables.LoadAssetAsync<Material>(loadRealisticMatKey);
+                }
             }
-            else
+
+            // Add the loaded material to the reference list
+            AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadRealisticMaterial, loadRealisticMatKey);
+
+            Material _mat = loadRealisticMaterial.Result as Material;
+            _mat.shader = Shader.Find(realisticMaterialData.shaderName);
+
+            meshRenderer.enabled = false;
+            realisticPlanRenderer.material = _mat;
+
+            if (deformationData.Length > 0)
             {
-                // Log if loading failed after retry
-                Debug.LogError("Failed to load the material even after retry.");
+                var deformedMeshData = Encoding.UTF8.GetString(deformationData);
+                if (deformedMeshData.Length >= 10)
+                {
+                    realisticPlanRenderer.GetComponent<MeshFilter>().mesh.vertices = DeserializeVector3Array(deformedMeshData);
+                }
             }
+
+            realisticPlanRenderer.gameObject.SetActive(true);
         }
     }
+
 
 
     IEnumerator SetWaterTexture(string textureUrl)
