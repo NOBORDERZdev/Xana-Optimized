@@ -314,7 +314,13 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
         _jjAssetObj.id = _domeNFTDataObj.id;
         _jjAssetObj.index = _domeNFTDataObj.index;
         _jjAssetObj.check = true;
-        _jjAssetObj.authorName = new string[] { "XANA" };
+
+        string creatorName = ConstantsHolder.xanaConstants.domeCreatorName;
+        if(string.IsNullOrEmpty(creatorName))
+        {
+            creatorName = "XANA";
+        }
+        _jjAssetObj.authorName = new string[] { creatorName };
         _jjAssetObj.description = new string[] { _domeNFTDataObj.description };
         _jjAssetObj.descriptionHyperlink = "";
         _jjAssetObj.title = new string[] { _domeNFTDataObj.name };

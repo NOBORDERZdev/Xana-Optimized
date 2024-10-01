@@ -29,7 +29,8 @@ public class FollowTarget : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (enable) {
-			transform.position = target.position - playerOffset;
-		}
+			if(target != null)
+                transform.position = target.position - playerOffset;
+        }
 	}
 }
