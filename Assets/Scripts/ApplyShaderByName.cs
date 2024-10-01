@@ -11,11 +11,11 @@ public class ApplyShaderByName : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
-        if (isMeshRendrer)
+        if(isMeshRendrer)
         {
             gameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find(shaderName);
         }
-        else if (isTerrain)
+        else if(isTerrain)
         {
             gameObject.GetComponent<Terrain>().materialTemplate.shader = Shader.Find(shaderName);
         }
