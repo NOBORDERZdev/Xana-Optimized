@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4166720285988492053}
   - component: {fileID: 1043974828828990640}
   - component: {fileID: 2997153088355035258}
+  - component: {fileID: 1898745439827145799}
   m_Layer: 0
   m_Name: EMG_Frames
   m_TagString: Untagged
@@ -25,9 +26,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3645939508663437743}
-  m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.694, y: 1.776, z: 0.799}
-  m_LocalScale: {x: 1.75465, y: 1.457757, z: 1.75465}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -40,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3645939508663437743}
-  m_Mesh: {fileID: 3926185953385681643, guid: 1eafbe650bef25b40aaeb4763ce1b017, type: 3}
+  m_Mesh: {fileID: -2630569778831266376, guid: 05ff6b11c93e4d64d8ee99b58e08f455, type: 3}
 --- !u!23 &2997153088355035258
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -61,11 +62,10 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 260ed9f372588304695e4dacf7f51dd5, type: 2}
-  - {fileID: 2100000, guid: 20522621323f4b04f872eed99d436879, type: 2}
-  - {fileID: 2100000, guid: 612bff731c46c4342a929496e30f4e4e, type: 2}
-  - {fileID: 2100000, guid: 5de0a34e00b091d46980a0fab158af0c, type: 2}
-  - {fileID: 2100000, guid: 5de0a34e00b091d46980a0fab158af0c, type: 2}
+  - {fileID: 2100000, guid: c57aae16b6b00b14588e03a898fd1b1a, type: 2}
+  - {fileID: 2100000, guid: c6c749072d47e314ab91cce340e13559, type: 2}
+  - {fileID: 2100000, guid: 6d96b5e1ab2104846921ce87f53bc9a8, type: 2}
+  - {fileID: 2100000, guid: 85b959a24501ad144a93f6f83880814a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -87,3 +87,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1898745439827145799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3645939508663437743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: EMG_Frames
+  objectPriority: 0
