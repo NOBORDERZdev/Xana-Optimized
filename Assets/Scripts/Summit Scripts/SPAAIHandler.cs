@@ -140,10 +140,10 @@ public class SPAAIHandler : MonoBehaviour
             if (CurrentAIPerformerRef.GetComponent<Rigidbody>())
             {
                 
-                CurrentAIPerformerRef.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
-                CurrentAIPerformerRef.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
-                CurrentAIPerformerRef.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
-                
+                //CurrentAIPerformerRef.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+                //CurrentAIPerformerRef.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
+                //CurrentAIPerformerRef.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
+                CurrentAIPerformerRef.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 //CurrentAIPerformerRef.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             }
             AssignFtchDataToAIAvtr();
