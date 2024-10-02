@@ -419,7 +419,6 @@ public class ChatSocketManager : MonoBehaviour
 
     public void AddNewMsg(string userName, string msg, string msgId, string userId, int blockMessage)
     {
-        Debug.Log($"AddNewMsg called with userName: {userName}, msg: {msg}, msgId: {msgId}, userId: {userId}, blockMessage: {blockMessage}");
         GameObject _newMsg = Instantiate(MsgPrefab, MsgParentObj);
         ChatMsgDataHolder _dataHolder = _newMsg.GetComponent<ChatMsgDataHolder>();
         RectTransform rectTransform = _dataHolder.MsgText.GetComponent<RectTransform>();
