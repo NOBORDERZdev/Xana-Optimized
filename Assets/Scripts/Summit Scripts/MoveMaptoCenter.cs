@@ -37,6 +37,13 @@ public class MoveMaptoCenter : MonoBehaviour
         for (int i = 0; i < MapHighlightObjs.Count; i++)
         {
             int index = i;
+            
+            if(index > 166) // 3 Domes are skipped and user for Internal
+                index += 3;
+            
+            if (index >= 173)
+                index += 3;
+
             MapHighlightObjs[i].GetComponent<Button>().onClick.AddListener(() => ItemClicked(index));
         }
 
@@ -81,10 +88,10 @@ public class MoveMaptoCenter : MonoBehaviour
         {
             arratInd = 171;
         }
-        else if (ind >= 167) // There is Somedome which are handles differently
+        else if (ind > 166) // 3 Index are skipped and used for Internal
         {
-            ind += 3;
-            Debug.Log("Modify Item Clicked: " + ind);
+            arratInd -= 3;
+            Debug.Log("Modify Item Clicked: " + arratInd);
         }
 
         grandChildPing = MapHighlightObjs[arratInd];

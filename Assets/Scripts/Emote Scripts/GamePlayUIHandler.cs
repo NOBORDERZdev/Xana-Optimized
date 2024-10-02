@@ -265,7 +265,7 @@ public class GamePlayUIHandler : MonoBehaviour
         XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().isLeaderboardShown = false;
         XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().ResetGame();
         ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
-        ConstantsHolder.isSoftBankGame = false;
+        ConstantsHolder.xanaConstants.isSoftBankGame = false;
         ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
         ConstantsHolder.xanaConstants.LastLobbyName = "";
         //StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().MoveToLobby());
