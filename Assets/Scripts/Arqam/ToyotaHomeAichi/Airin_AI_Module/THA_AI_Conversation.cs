@@ -107,7 +107,7 @@ public class THA_AI_Conversation : MonoBehaviour
             _url = _ip + _msg + "&usr_id=" + id + "&owner_id=" + worldId;
         }
 
-        Debug.LogError("<color=red> Communication URL(Airin): " + _url + "</color>");
+        //Debug.LogError("<color=red> Communication URL(Airin): " + _url + "</color>");
 
         UnityWebRequest request = UnityWebRequest.Get(_url);
         request.downloadHandler = new DownloadHandlerBuffer();
