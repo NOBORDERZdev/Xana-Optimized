@@ -419,7 +419,6 @@ public class ChatSocketManager : MonoBehaviour
 
     public void AddNewMsg(string userName, string msg, string msgId, string userId, int blockMessage)
     {
-        Debug.LogFormat("AddNewMsg {0}", userName);
         GameObject _newMsg = Instantiate(MsgPrefab, MsgParentObj);
         ChatMsgDataHolder _dataHolder = _newMsg.GetComponent<ChatMsgDataHolder>();
         RectTransform rectTransform = _dataHolder.MsgText.GetComponent<RectTransform>();
@@ -437,15 +436,53 @@ public class ChatSocketManager : MonoBehaviour
         }
         MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = false;
         Invoke("DelayAdded", 0.05f);
+
         //StartCoroutine(nameof(Delay));
         XanaChatSystem.instance.DisplayMsg_FromSocket(userName, msg, _dataHolder.MsgText);
-
 
         // Add to List
         if (allMsgData == null)
             allMsgData = new List<ChatMsgDataHolder>();
         allMsgData.Add(_dataHolder);
+        Refresh();
     }
+
+    public void AddLocalMsg(string userName, string msg, string msgId, string userId, int blockMessage) { 
+    Debug.Log($"AddNewMsg called with userName: {userName}, msg: {msg}, msgId: {msgId}, userId: {userId}, blockMessage: {blockMessage}");
+        GameObject _newMsg = Instantiate(MsgPrefab, MsgParentObj);
+        ChatMsgDataHolder _dataHolder = _newMsg.GetComponent<ChatMsgDataHolder>();
+        RectTransform rectTransform = _dataHolder.MsgText.GetComponent<RectTransform>();
+#if UNITY_IOS
+        rectTransform.sizeDelta = new Vector2(204.6f, rectTransform.sizeDelta.y);
+#elif UNITY_ANDROID
+        rectTransform.sizeDelta = new Vector2(250.6f, rectTransform.sizeDelta.y);
+#endif
+        _dataHolder.SetRequireData(msg, msgId, userId, blockMessage);
+
+        if (!ConstantsHolder.xanaConstants.chatFlagBtnStatus || userId.Equals(ConstantsHolder.userId))
+        {
+            // That My msg, and i cannot flag or block it
+            _dataHolder.DotedBtn.SetActive(false);
+        }
+        MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = false;
+        Invoke("DelayAdded", 0.05f);
+
+        //StartCoroutine(nameof(Delay));
+        XanaChatSystem.instance.DisplayMsg_FromSocket(userName, msg, _dataHolder.MsgText);
+
+        // Add to List
+        if (allMsgData == null)
+            allMsgData = new List<ChatMsgDataHolder>();
+        allMsgData.Add(_dataHolder);
+        Refresh();
+    }
+
+    void Refresh()
+    {
+        LayoutRebuilder.ForceRebuildLayoutImmediate(MsgParentObj.GetComponent<RectTransform>());    
+    }
+
+  
 
     void DelayAdded()
     {

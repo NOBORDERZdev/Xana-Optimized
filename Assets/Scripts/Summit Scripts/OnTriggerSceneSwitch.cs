@@ -62,7 +62,7 @@ public class OnTriggerSceneSwitch : MonoBehaviour
 
     void TriggerSceneLoading(string WorldId)
     {
-        ConstantsHolder.isSoftBankGame = isPenpenzMiniGame;
+        ConstantsHolder.xanaConstants.isSoftBankGame = isPenpenzMiniGame;
         if (isPenpenzMiniGame)
             ConstantsHolder.isPenguin = true;
         CheckSceneParemeter();
