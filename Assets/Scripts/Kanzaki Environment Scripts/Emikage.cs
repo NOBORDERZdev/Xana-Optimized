@@ -40,7 +40,7 @@ public class Emikage : MonoBehaviour
 
     [SerializeField] Color[] colors;
     private string pdltUrl = "https://api.padlet.dev/v1/boards/pm18k4b03ik18lby";
-    private string api_Key = "pdltp_a442152fc8402d1207d54c7bc89c9b05aw42c3bc70207dc4ce825ef6f945755ef5bea535";
+    private string api_Key = "pdltp_a442152fc8402d1207d54c7bc89c9b0542c3bc70207dc4ce825ef6f945755ef5bea535";
     void Awake()
     {
         boards = new List<EmikageBoardContent>(GridContent.transform.childCount);
