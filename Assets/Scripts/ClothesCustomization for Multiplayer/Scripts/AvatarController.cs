@@ -1838,14 +1838,15 @@ public class AvatarController : MonoBehaviour
         }
         else if (type == "Chest" && (wornShirt && !wornShirt.name.Contains("Full_Costume", System.StringComparison.CurrentCultureIgnoreCase)))
         {
-            // User Has wear Full Costume And its Change to Shirt Than enable Pant
-            if(wornPant==null)
+            if (wornPant == null)
             {
-                if(CharacterHandler.instance.activePlayerGender == AvatarGender.Male)
+                if (CharacterHandler.instance.activePlayerGender == AvatarGender.Male)
                     StichItem(-1, itemDatabase.maleAvatarDefaultCostume.DefaultPent, "Legs", applyOn);
                 else
                     StichItem(-1, itemDatabase.femaleAvatarDefaultCostume.DefaultPent, "Legs", applyOn);
             }
+
+            // User Has wear Full Costume And its Change to Shirt Than enable Pant
             if (wornPant != null)
             {
                 wornPant.GetComponent<SkinnedMeshRenderer>().enabled = true;
