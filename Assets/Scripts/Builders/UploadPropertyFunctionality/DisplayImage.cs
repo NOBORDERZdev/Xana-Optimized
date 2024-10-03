@@ -89,9 +89,9 @@ public class DisplayImage : MonoBehaviour
         else
         {
             //print("In else :: " + url);
-            if (url.Contains("https://cdn.xana.net/"))
+            if (url.Contains("https://cdn.xana.net/xanaprod/Defaults/"))
             {
-                url = url.Replace("https://cdn.xana.net/", "https://aydvewoyxq.cloudimg.io/_xanaprod_/");
+                url = url.Replace("https://cdn.xana.net/xanaprod/Defaults/", "https://aydvewoyxq.cloudimg.io/" + (APIBasepointManager.instance.IsXanaLive ? "_xanaprod_" : "_apitestxana_") + "/xanaprod/Defaults/");
             }
             Vector2 imageSize = await GetImageSizeAsync(url);
             var aspectRatioToSize = new Dictionary<string, string>
