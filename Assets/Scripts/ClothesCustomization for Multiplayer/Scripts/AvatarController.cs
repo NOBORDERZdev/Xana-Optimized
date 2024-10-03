@@ -1804,7 +1804,7 @@ public class AvatarController : MonoBehaviour
             // Also Remove Pant Mask
             tempBodyParts.ApplyMaskTexture("Legs", null, this.gameObject);
         }
-        else if (type == "Legs" && SceneManager.GetActiveScene().name != "Home" && (wornShirt && wornShirt.name.Contains("Full_Costume", System.StringComparison.CurrentCultureIgnoreCase)))
+        else if (type == "Legs" && (wornShirt && wornShirt.name.Contains("Full_Costume", System.StringComparison.CurrentCultureIgnoreCase)))
         {
             if (SceneManager.GetActiveScene().name != "Home")
                 // User Has wear Full Costume 
@@ -1814,6 +1814,11 @@ public class AvatarController : MonoBehaviour
 
             // Apply Mask For Default Shirt
             tempBodyParts.DefaultTextureForNewCharacter_Single("Shirt");
+
+            if (CharacterHandler.instance.activePlayerGender == AvatarGender.Male)
+                StichItem(-1, itemDatabase.maleAvatarDefaultCostume.DefaultShirt, "Chest", applyOn);
+            else
+                StichItem(-1, itemDatabase.femaleAvatarDefaultCostume.DefaultShirt, "Chest", applyOn);
 
             #region Xana1.0 Boxer currently Not using In Xana2.0
             //if (xanaConstants.isNFTEquiped && gameObject.GetComponent<SwitchToBoxerAvatar>())
@@ -1834,6 +1839,13 @@ public class AvatarController : MonoBehaviour
         else if (type == "Chest" && (wornShirt && !wornShirt.name.Contains("Full_Costume", System.StringComparison.CurrentCultureIgnoreCase)))
         {
             // User Has wear Full Costume And its Change to Shirt Than enable Pant
+            if(wornPant==null)
+            {
+                if(CharacterHandler.instance.activePlayerGender == AvatarGender.Male)
+                    StichItem(-1, itemDatabase.maleAvatarDefaultCostume.DefaultPent, "Legs", applyOn);
+                else
+                    StichItem(-1, itemDatabase.femaleAvatarDefaultCostume.DefaultPent, "Legs", applyOn);
+            }
             if (wornPant != null)
             {
                 wornPant.GetComponent<SkinnedMeshRenderer>().enabled = true;
