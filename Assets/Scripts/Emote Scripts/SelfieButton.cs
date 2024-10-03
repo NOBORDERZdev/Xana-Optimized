@@ -32,6 +32,8 @@ public class SelfieButton : MonoBehaviour
         {
             ActionManager.StopActionAnimation?.Invoke();
         }
+        EmoteReactionUIHandler.lastEmotePlayed = null;
+
         GamePlayButtonEvents.inst.OnSelfieClick();
         BuilderEventManager.UIToggle?.Invoke(true);
         PlayerController.PlayerIsWalking?.Invoke();

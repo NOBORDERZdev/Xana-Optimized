@@ -206,14 +206,15 @@ public class BuilderMapDownload : MonoBehaviour
                 yield return StartCoroutine(AISkyTextureDownload());
             }
         }
-
-        if (!string.IsNullOrEmpty(levelData.terrainProperties.meshDeformationPath))
-            yield return StartCoroutine(LoadMeshDeformationFile(levelData.terrainProperties.meshDeformationPath, GetTerrainDeformation));
-        if (!string.IsNullOrEmpty(levelData.terrainProperties.texturePath))
-            yield return StartCoroutine(SetTerrainTexture(levelData.terrainProperties.texturePath));
-        if (!string.IsNullOrEmpty(levelData.terrainProperties.waterTexturePath))
-            yield return StartCoroutine(SetWaterTexture(levelData.terrainProperties.waterTexturePath));
-
+        if (!ConstantsHolder.xanaConstants.isSoftBankGame)
+        {
+            if (!string.IsNullOrEmpty(levelData.terrainProperties.meshDeformationPath))
+                yield return StartCoroutine(LoadMeshDeformationFile(levelData.terrainProperties.meshDeformationPath, GetTerrainDeformation));
+            if (!string.IsNullOrEmpty(levelData.terrainProperties.texturePath))
+                yield return StartCoroutine(SetTerrainTexture(levelData.terrainProperties.texturePath));
+            if (!string.IsNullOrEmpty(levelData.terrainProperties.waterTexturePath))
+                yield return StartCoroutine(SetWaterTexture(levelData.terrainProperties.waterTexturePath));
+        }
         SetPlaneScaleAndPosition(levelData.terrainProperties.planeScale, levelData.terrainProperties.planePos);
 
         if (levelData.uploadProperties != null)
@@ -440,10 +441,15 @@ public class BuilderMapDownload : MonoBehaviour
             }));
         }
 
-        if (levelData.terrainProperties.realisticMatIndex != -1)
+        if (levelData.terrainProperties.realisticMatIndex != -1 )
         {
             yield return StartCoroutine(SetRealisticTerrain(meshRenderer));
         }
+        else
+        {
+            yield return null;
+        }
+
     }
 
     IEnumerator SetRealisticTerrain(MeshRenderer meshRenderer)
@@ -451,6 +457,69 @@ public class BuilderMapDownload : MonoBehaviour
         bool realisticTerrainExist = realisticTerrainMaterials.terrainMaterials.Exists(x => x.id == levelData.terrainProperties.realisticMatIndex);
         if (realisticTerrainExist)
         {
+//<<<<<<< Updated upstream
+//            RealisticMaterialData realisticMaterialData = realisticTerrainMaterials.terrainMaterials.Find(x => x.id == levelData.terrainProperties.realisticMatIndex);
+//            string loadRealisticMatKey = realisticMaterialData.name.Replace(" ", "");
+
+//            AsyncOperationHandle loadRealisticMaterial;
+//            bool flag = false;
+
+//            loadRealisticMaterial = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(loadRealisticMatKey, ref flag);
+
+//            if (!flag)
+//            {
+//                loadRealisticMaterial = Addressables.LoadAssetAsync<Material>(loadRealisticMatKey);
+//            }
+
+//            // Loop until we successfully download the material and it's not null
+//            while (loadRealisticMaterial.Status != AsyncOperationStatus.Succeeded || loadRealisticMaterial.Result == null)
+//            {
+//                // Wait for the load operation to complete
+//                while (!loadRealisticMaterial.IsDone)
+//                {
+//                    yield return null;
+//                }
+
+//                // If loading failed, log the error and retry
+//                if (loadRealisticMaterial.Status == AsyncOperationStatus.None || loadRealisticMaterial.Status == AsyncOperationStatus.Failed || loadRealisticMaterial.Result == null)
+//                {
+//                    Debug.LogError("Loading material failed or returned null. Retrying...");
+
+//                    // Release the handle if it's valid
+//                    if (loadRealisticMaterial.IsValid())
+//                    {
+//                        Addressables.Release(loadRealisticMaterial);
+//                    }
+
+//                    // Retry loading the material again with a fresh handle
+//                    loadRealisticMaterial = Addressables.LoadAssetAsync<Material>(loadRealisticMatKey);
+//                }
+//            }
+
+//            // Add the loaded material to the reference list
+//            AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadRealisticMaterial, loadRealisticMatKey);
+
+//            Material _mat = loadRealisticMaterial.Result as Material;
+//            _mat.shader = Shader.Find(realisticMaterialData.shaderName);
+
+//            meshRenderer.enabled = false;
+//            realisticPlanRenderer.material = _mat;
+
+//            if (deformationData.Length > 0)
+//            {
+//                var deformedMeshData = Encoding.UTF8.GetString(deformationData);
+//                if (deformedMeshData.Length >= 10)
+//                {
+//                    realisticPlanRenderer.GetComponent<MeshFilter>().mesh.vertices = DeserializeVector3Array(deformedMeshData);
+//                }
+//            }
+
+//            realisticPlanRenderer.gameObject.SetActive(true);
+//        }
+//    }
+
+
+//=======
             AsyncOperationHandle loadRealisticMaterial;
             RealisticMaterialData realisticMaterialData = realisticTerrainMaterials.terrainMaterials.Find(x => x.id == levelData.terrainProperties.realisticMatIndex);
             string loadRealisticMatKey = realisticMaterialData.name.Replace(" ", "");
@@ -488,6 +557,9 @@ public class BuilderMapDownload : MonoBehaviour
             }
         }
     }
+//>>>>>>> Stashed changes
+
+
 
     IEnumerator SetWaterTexture(string textureUrl)
     {

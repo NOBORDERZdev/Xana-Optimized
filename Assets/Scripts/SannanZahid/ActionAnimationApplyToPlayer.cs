@@ -196,6 +196,7 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
                     Debug.Log("Player Found");
                     if (!PlayerSelfieController.Instance.selfiePanel.activeInHierarchy)
                     {
+                        animator.SetBool("IsEmote", false);
                         if (animator.GetBool("EtcAnimStart"))
                         {
                             animator.SetBool("Stand", true);

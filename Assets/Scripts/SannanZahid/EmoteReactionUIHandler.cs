@@ -25,6 +25,8 @@ public class EmoteReactionUIHandler : MonoBehaviour
     public Color UnSelectedColorTab;
     public Transform CommingSoonTxt;
 
+
+    public static Action lastEmotePlayed;
     protected EmoteReactionItemBtnHandler.ItemType SelectedAction;
 
     private int _selectedTabEmote = 0;
