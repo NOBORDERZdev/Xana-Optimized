@@ -105,9 +105,10 @@ public class DisplayImage : MonoBehaviour
                 { "3:2", "?width=450&height=300" },
                 { "2:3", "?width=300&height=450" },
                 { "16:10", "?width=640&height=400" },
-                { "10:16", "?width=400&height=640" }
+                { "10:16", "?width=400&height=640" },
+                { "10:1", "?width=500&height=50" }, 
+                { "1:10", "?width=50&height=500" }  
             };
-
             string aspectRatio = GetAspectRatio(imageSize);
             Debug.Log($"Image Size: {imageSize.x}x{imageSize.y}, Aspect Ratio: {aspectRatio} , URL {url}");
 
@@ -115,11 +116,11 @@ public class DisplayImage : MonoBehaviour
             {
                 url += sizeParams;
             }
-            else
-            {
-                // Handle other uncommon aspect ratios by preserving aspect ratio but with standard sizes
-                url += "?width=400&height=400";
-            }
+            //else
+            //{
+            //    // Handle other uncommon aspect ratios by preserving aspect ratio but with standard sizes
+            //    url += "?width=400&height=400";
+            //}
             print("AFTER :: " + url);
 
             if (AssetCache.Instance.HasFile(url))
@@ -254,6 +255,8 @@ public class DisplayImage : MonoBehaviour
         float aspect3_4 = Mathf.Round((3f / 4f) * 1000f) / 1000f;
         float aspect16_10 = Mathf.Round((16f / 10f) * 1000f) / 1000f;
         float aspect10_16 = Mathf.Round((10f / 16f) * 1000f) / 1000f;
+        float aspect10_1 = 10.0f;  // Add for 10:1
+        float aspect1_10 = 0.1f;   // Add for 1:10
 
         // Check for common aspect ratios without using a tolerance value
         if (Mathf.Approximately(aspectRatio, aspect1_1))
@@ -291,10 +294,21 @@ public class DisplayImage : MonoBehaviour
             Debug.Log("Matched Aspect Ratio: 10:16");
             return "10:16";
         }
+        else if (Mathf.Approximately(aspectRatio, aspect10_1))
+        {
+            Debug.Log("Matched Aspect Ratio: 10:1");
+            return "10:1";
+        }
+        else if (Mathf.Approximately(aspectRatio, aspect1_10))
+        {
+            Debug.Log("Matched Aspect Ratio: 1:10");
+            return "1:10";
+        }
 
         // Fallback to general aspect ratio calculation
         return GetGeneralAspectRatio(width, height);
     }
+
 
     private string GetGeneralAspectRatio(float width, float height)
     {
