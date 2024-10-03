@@ -898,6 +898,9 @@ public class MyProfileDataManager : MonoBehaviour
             username = tempStr;
             checkEditNameUpdated = 1;
             GameManager.Instance.UpdatePlayerName(username);
+            ConstantsHolder.userName = username;
+            PlayerPrefs.SetString(ConstantsGod.PLAYERNAME, username);
+
         }
         else if (string.IsNullOrEmpty(editProfileNameAdvanceInputfield.Text))
         {
