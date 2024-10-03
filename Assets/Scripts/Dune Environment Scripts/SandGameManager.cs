@@ -201,8 +201,6 @@ public class SandGameManager : MonoBehaviour
             PlayerCameraController.instance.lockRotation = true;
             PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Radius = 2.33f;
             PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Height = 2.57f;
-            PlayerCameraController.instance.gameObject.GetComponent<CinemachineCollider>().m_CollideAgainst &= ~(1 << LayerMask.NameToLayer("NoPostProcessing"));
-
         }
         else
         {
@@ -220,8 +218,6 @@ public class SandGameManager : MonoBehaviour
             PlayerCameraController.instance.lockRotation = false;
             PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Radius = 1.75f;
             PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Height = 2.47f;
-            PlayerCameraController.instance.gameObject.GetComponent<CinemachineCollider>().m_CollideAgainst |= (1 << LayerMask.NameToLayer("NoPostProcessing"));
-
         }
     }
 

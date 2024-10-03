@@ -67,7 +67,7 @@ public class SummitVideoAndImageController : MonoBehaviour
         {
             streamYoutubeVideo = this.GetComponent<StreamYoutubeVideo>();
         }
-        _texture = new Texture2D(2, 2);
+        //_texture = new Texture2D(2, 2);
     }
 
     public void InitData(string imageurl, string videourl, JjRatio imgvideores, DataType dataType, VideoTypeRes videoType)

@@ -55,12 +55,14 @@ public class CarNavigationManager : MonoBehaviour
         {
             Players.GetComponent<SummitPlayerRPC>().EnterCar(car.View.ViewID, true);
             triger.Pop();
+            car.DriverSeatEmpty = false;
             yield break;
         }else
         if (car.PasengerSeatEmty)
         {
             Players.GetComponent<SummitPlayerRPC>().EnterCar(car.View.ViewID, false);
             triger.Pop();
+            car.PasengerSeatEmty = false;
             yield break;
         }
         //teleport to car pending.....

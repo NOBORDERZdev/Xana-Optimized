@@ -62,7 +62,7 @@ public class OnTriggerSceneSwitch : MonoBehaviour
 
     void TriggerSceneLoading(string WorldId)
     {
-        ConstantsHolder.isSoftBankGame = isPenpenzMiniGame;
+        ConstantsHolder.xanaConstants.isSoftBankGame = isPenpenzMiniGame;
         if (isPenpenzMiniGame)
             ConstantsHolder.isPenguin = true;
         CheckSceneParemeter();
@@ -78,12 +78,12 @@ public class OnTriggerSceneSwitch : MonoBehaviour
 
     void CheckSceneParemeter()
     {
-        if (LoadingFromSummitWorld)
-        {
-            ConstantsHolder.isFromXANASummit = true;
-            ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
-        }
-        if (HaveSubworlds)
+        //if (LoadingFromSummitWorld)
+        //{
+        //    ConstantsHolder.isFromXANASummit = true;
+        //    ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
+        //}
+        if(HaveSubworlds)
         {
             ConstantsHolder.HaveSubWorlds = true;
             ConstantsHolder.domeId = DomeId;

@@ -10,17 +10,19 @@ public class VoiceManager : MonoBehaviourPunCallbacks
     private byte currentGroup;
     private void Start()
     {
-        BuilderEventManager.AfterPlayerInstantiated += AssignReference;
-    }
-    private void OnDisable()
-    {
-        BuilderEventManager.AfterPlayerInstantiated -= AssignReference;
-    }
-    private void AssignReference()
-    {
         NFT_Holder_Manager.instance.voiceManager = this;
         recorder = GameObject.FindObjectOfType<Recorder>();
+        //BuilderEventManager.AfterPlayerInstantiated += AssignReference;
     }
+    //private void OnDisable()
+    //{
+    //    BuilderEventManager.AfterPlayerInstantiated -= AssignReference;
+    //}
+    //private void AssignReference()
+    //{
+    //    NFT_Holder_Manager.instance.voiceManager = this;
+    //    recorder = GameObject.FindObjectOfType<Recorder>();
+    //}
     public void SetVoiceGroup(byte newGroup)
     {
         byte oldGroup = currentGroup;

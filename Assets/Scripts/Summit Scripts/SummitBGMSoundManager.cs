@@ -42,11 +42,21 @@ public class SummitBGMSoundManager : MonoBehaviour
         {
             string audioUrl = await summitDataContainer.GetAudioFile(170);
             if (!string.IsNullOrEmpty(audioUrl))
+            {
                 StartCoroutine(SetAudioFromUrl(audioUrl));
+            }
+            else
+            {
+                Invoke(nameof(RecursizeCall), 0.5f);
+            }
+
         }
     }
-
-    IEnumerator SetAudioFromUrl(string file_name)
+    void RecursizeCall()
+    {
+        StartBGMSound();
+    }
+        IEnumerator SetAudioFromUrl(string file_name)
     {
         using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(file_name, AudioType.MPEG))
         {
@@ -65,7 +75,7 @@ public class SummitBGMSoundManager : MonoBehaviour
                 audioSource.clip = clip;
                 audioSource.loop = true;
                 audioSource.Play();
-
+                SoundSettings.soundManagerSettings.SetBgmVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
             }
         }
     }
