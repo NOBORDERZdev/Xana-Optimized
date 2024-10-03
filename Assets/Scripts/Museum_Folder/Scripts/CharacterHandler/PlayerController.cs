@@ -1205,6 +1205,8 @@ public class PlayerController : MonoBehaviour
     public void Jump()
     {
         _IsGrounded = characterController.isGrounded;
+        EmoteReactionUIHandler.lastEmotePlayed = null;
+
         if (!_IsGrounded && specialItem && !canDoubleJump)
         {
             canDoubleJump = true;
