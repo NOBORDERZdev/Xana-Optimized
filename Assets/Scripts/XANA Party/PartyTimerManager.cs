@@ -21,7 +21,7 @@ public class PartyTimerManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame || ConstantsHolder.isSoftBankGame)
+        if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame || ConstantsHolder.xanaConstants.isSoftBankGame)
         {
             ReferencesForGamePlay.instance.XANAPartyWaitingPanel.SetActive(false);
             return;
