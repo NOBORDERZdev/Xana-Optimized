@@ -88,7 +88,7 @@ public class DisplayImage : MonoBehaviour
         }
         else
         {
-            print("In else :: " + url);
+            //print("In else :: " + url);
             if (url.Contains("https://cdn.xana.net/"))
             {
                 url = url.Replace("https://cdn.xana.net/", "https://aydvewoyxq.cloudimg.io/_xanaprod_/");
@@ -110,7 +110,7 @@ public class DisplayImage : MonoBehaviour
                 { "1:10", "?width=50&height=500" }  
             };
             string aspectRatio = GetAspectRatio(imageSize);
-            Debug.Log($"Image Size: {imageSize.x}x{imageSize.y}, Aspect Ratio: {aspectRatio} , URL {url}");
+            //Debug.Log($"Image Size: {imageSize.x}x{imageSize.y}, Aspect Ratio: {aspectRatio} , URL {url}");
 
             if (aspectRatioToSize.TryGetValue(aspectRatio, out string sizeParams))
             {
@@ -121,7 +121,7 @@ public class DisplayImage : MonoBehaviour
             //    // Handle other uncommon aspect ratios by preserving aspect ratio but with standard sizes
             //    url += "?width=400&height=400";
             //}
-            print("AFTER :: " + url);
+            //print("AFTER :: " + url);
 
             if (AssetCache.Instance.HasFile(url))
             {
@@ -146,7 +146,7 @@ public class DisplayImage : MonoBehaviour
 
     public async Task<Vector2> GetImageSizeAsync(string url)
     {
-        Debug.Log($"Starting GetImageSizeAsync for URL: {url}");
+        //Debug.Log($"Starting GetImageSizeAsync for URL: {url}");
 
         // Step 1: Make a HEAD request to get general information
         using (UnityWebRequest headRequest = UnityWebRequest.Head(url))
@@ -155,7 +155,7 @@ public class DisplayImage : MonoBehaviour
 
             if (headRequest.result == UnityWebRequest.Result.ConnectionError || headRequest.result == UnityWebRequest.Result.ProtocolError)
             {
-                Debug.LogError($"Error in GetImageSizeAsync: {headRequest.error}");
+                Debug.Log($"Error in GetImageSizeAsync: {headRequest.error}");
                 return Vector2.zero;
             }
 
@@ -167,12 +167,12 @@ public class DisplayImage : MonoBehaviour
                 int.TryParse(widthHeader, out int width) &&
                 int.TryParse(heightHeader, out int height))
             {
-                Debug.Log($"Parsed Width: {width}, Parsed Height: {height}");
+                //Debug.Log($"Parsed Width: {width}, Parsed Height: {height}");
                 return new Vector2(width, height);
             }
         }
 
-        Debug.LogWarning("Image dimensions not found in headers. Attempting to download a small portion of the image.");
+        //Debug.LogWarning("Image dimensions not found in headers. Attempting to download a small portion of the image.");
 
         // Step 3: Make a GET request for partial content of the image (only the initial bytes)
         using (UnityWebRequest getRequest = UnityWebRequest.Get(url))
@@ -182,7 +182,7 @@ public class DisplayImage : MonoBehaviour
 
             if (getRequest.result == UnityWebRequest.Result.ConnectionError || getRequest.result == UnityWebRequest.Result.ProtocolError)
             {
-                Debug.LogError($"Error in GetImageSizeAsync while downloading partial image: {getRequest.error}");
+                Debug.Log($"Error in GetImageSizeAsync while downloading partial image: {getRequest.error}");
                 return Vector2.zero;
             }
 
@@ -192,16 +192,16 @@ public class DisplayImage : MonoBehaviour
             try
             {
                 Vector2 imageSize = ParseImageSizeFromHeader(imageData);
-                Debug.Log($"Extracted Image Width: {imageSize.x}, Height: {imageSize.y}");
+                //Debug.Log($"Extracted Image Width: {imageSize.x}, Height: {imageSize.y}");
                 return imageSize;
             }
             catch (System.Exception ex)
             {
-                Debug.LogError($"Error in parsing image size: {ex.Message}");
+                Debug.Log($"Error in parsing image size: {ex.Message}");
             }
         }
 
-        Debug.LogWarning("Failed to determine image dimensions.");
+        Debug.Log("Failed to determine image dimensions.");
         return Vector2.zero;
     }
 
@@ -245,7 +245,7 @@ public class DisplayImage : MonoBehaviour
         float aspectRatio = Mathf.Round((width / height) * 1000f) / 1000f;
 
         // Debugging: Log the calculated aspect ratio
-        Debug.Log($"Calculated Aspect Ratio: {aspectRatio}, Width: {width}, Height: {height}");
+        //Debug.Log($"Calculated Aspect Ratio: {aspectRatio}, Width: {width}, Height: {height}");
 
         // Define common aspect ratios for direct comparison
         float aspect1_1 = 1.0f;
@@ -261,47 +261,47 @@ public class DisplayImage : MonoBehaviour
         // Check for common aspect ratios without using a tolerance value
         if (Mathf.Approximately(aspectRatio, aspect1_1))
         {
-            Debug.Log("Matched Aspect Ratio: 1:1");
+            //Debug.Log("Matched Aspect Ratio: 1:1");
             return "1:1";
         }
         else if (Mathf.Approximately(aspectRatio, aspect16_9))
         {
-            Debug.Log("Matched Aspect Ratio: 16:9");
+            //Debug.Log("Matched Aspect Ratio: 16:9");
             return "16:9";
         }
         else if (Mathf.Approximately(aspectRatio, aspect9_16))
         {
-            Debug.Log("Matched Aspect Ratio: 9:16");
+            //Debug.Log("Matched Aspect Ratio: 9:16");
             return "9:16";
         }
         else if (Mathf.Approximately(aspectRatio, aspect4_3))
         {
-            Debug.Log("Matched Aspect Ratio: 4:3");
+            //Debug.Log("Matched Aspect Ratio: 4:3");
             return "4:3";
         }
         else if (Mathf.Approximately(aspectRatio, aspect3_4))
         {
-            Debug.Log("Matched Aspect Ratio: 3:4");
+            //Debug.Log("Matched Aspect Ratio: 3:4");
             return "3:4";
         }
         else if (Mathf.Approximately(aspectRatio, aspect16_10))
         {
-            Debug.Log("Matched Aspect Ratio: 16:10");
+            //Debug.Log("Matched Aspect Ratio: 16:10");
             return "16:10";
         }
         else if (Mathf.Approximately(aspectRatio, aspect10_16))
         {
-            Debug.Log("Matched Aspect Ratio: 10:16");
+            //Debug.Log("Matched Aspect Ratio: 10:16");
             return "10:16";
         }
         else if (Mathf.Approximately(aspectRatio, aspect10_1))
         {
-            Debug.Log("Matched Aspect Ratio: 10:1");
+            //Debug.Log("Matched Aspect Ratio: 10:1");
             return "10:1";
         }
         else if (Mathf.Approximately(aspectRatio, aspect1_10))
         {
-            Debug.Log("Matched Aspect Ratio: 1:10");
+            //Debug.Log("Matched Aspect Ratio: 1:10");
             return "1:10";
         }
 
@@ -322,22 +322,22 @@ public class DisplayImage : MonoBehaviour
         int simplifiedHeight = roundedHeight / gcd;
 
         // Debugging: Log the simplified general aspect ratio
-        Debug.Log($"Simplified General Aspect Ratio: {simplifiedWidth}:{simplifiedHeight}");
+        //Debug.Log($"Simplified General Aspect Ratio: {simplifiedWidth}:{simplifiedHeight}");
 
         // Approximate the aspect ratio to common values
         float aspectRatio = (float)simplifiedWidth / simplifiedHeight;
 
         // Define common aspect ratios to compare against
         Dictionary<string, float> commonRatios = new Dictionary<string, float>
-    {
-        { "1:1", 1f },
-        { "16:9", 16f / 9f },
-        { "9:16", 9f / 16f },
-        { "4:3", 4f / 3f },
-        { "3:4", 3f / 4f },
-        { "16:10", 16f / 10f },
-        { "10:16", 10f / 16f }
-    };
+        {
+            { "1:1", 1f },
+            { "16:9", 16f / 9f },
+            { "9:16", 9f / 16f },
+            { "4:3", 4f / 3f },
+            { "3:4", 3f / 4f },
+            { "16:10", 16f / 10f },
+            { "10:16", 10f / 16f }
+        };
 
         float tolerance = 0.05f; // Adjust this value for greater accuracy
 
@@ -345,7 +345,7 @@ public class DisplayImage : MonoBehaviour
         {
             if (Mathf.Abs(aspectRatio - ratio.Value) < tolerance)
             {
-                Debug.Log($"Matched Approximate Aspect Ratio: {ratio.Key}");
+                //Debug.Log($"Matched Approximate Aspect Ratio: {ratio.Key}");
                 return ratio.Key;
             }
         }
@@ -365,8 +365,6 @@ public class DisplayImage : MonoBehaviour
         }
         return a;
     }
-
-
 
 
     void ResizeImage()
