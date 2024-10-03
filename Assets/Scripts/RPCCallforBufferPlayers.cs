@@ -134,6 +134,8 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         MutiplayerController.instance.playerobjects.Add(info.photonView.gameObject);
+        EmoteReactionUIHandler.lastEmotePlayed?.Invoke();
+
     }
 
     //Equipment otherEquip;
