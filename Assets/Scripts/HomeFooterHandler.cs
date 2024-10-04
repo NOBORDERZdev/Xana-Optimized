@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System;
+using DG.Tweening;
 
 public class HomeFooterHandler : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class HomeFooterHandler : MonoBehaviour
     public Image PostButton;
     public GameObject chatMessageUnReadCountObj;
     public TextMeshProUGUI chatMessageUnReadCountText;
+    public GameObject BGroundImage;
     AdditiveScenesLoader additiveScenesManager;
     GameManager gameManager;
     HomeScoketHandler socketController;
@@ -860,8 +862,8 @@ public class HomeFooterHandler : MonoBehaviour
         else {
             if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
             {
-                    Screen.orientation = ScreenOrientation.LandscapeLeft;
-                    UserLoginSignupManager.instance.signUpOrloginSelectionPanel.SetActive(true);
+                ActivateSequence();
+                Screen.orientation = ScreenOrientation.LandscapeLeft;
             }
             else
             {
@@ -869,6 +871,24 @@ public class HomeFooterHandler : MonoBehaviour
             }
             
         }
+
+    }
+    public void ActivateSequence()
+    {
+        // Enable the target GameObject
+        BGroundImage.SetActive(true);
+
+        // Wait for 0.5 seconds, then enable the UI Panel
+        DOVirtual.DelayedCall(0.2f, () =>
+        {
+            UserLoginSignupManager.instance.signUpOrloginSelectionPanel.SetActive(true);
+
+            // Wait for 1 second, then disable the target GameObject
+            DOVirtual.DelayedCall(0.4f, () =>
+            {
+                BGroundImage.SetActive(false);
+            });
+        });
     }
     public void InitProfileData()
     {

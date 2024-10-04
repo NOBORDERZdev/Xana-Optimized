@@ -14,6 +14,7 @@ using System.IO;
 using Photon.Pun.Demo.PunBasics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using DG.Tweening;
 
 public class UserLoginSignupManager : MonoBehaviour
 {
@@ -343,12 +344,7 @@ public class UserLoginSignupManager : MonoBehaviour
             }
             if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit && !ConstantsHolder.xanaConstants.openLandingSceneDirectly)
             {
-                if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
-                {
-                    Screen.orientation = ScreenOrientation.Portrait;
-                    signUpOrloginSelectionPanel.SetActive(false);
-                }
-
+                  ActivateSequence();
             }
         }
         else
@@ -370,7 +366,26 @@ public class UserLoginSignupManager : MonoBehaviour
 
 
     }
-    public void ContinueAsGuest()
+    public void ActivateSequence()
+    {
+        // Enable the target GameObject
+        GameManager.Instance.bottomTabManagerInstance.GetComponent<HomeFooterHandler>().BGroundImage.SetActive(true);
+        Screen.orientation = ScreenOrientation.Portrait;
+        
+        // Wait for 0.5 seconds, then enable the UI Panel
+        DOVirtual.DelayedCall(0.2f, () =>
+        {
+            UserLoginSignupManager.instance.signUpOrloginSelectionPanel.SetActive(false);
+
+            // Wait for 1 second, then disable the target GameObject
+            DOVirtual.DelayedCall(0.4f, () =>
+            {
+                GameManager.Instance.bottomTabManagerInstance.GetComponent<HomeFooterHandler>().BGroundImage.SetActive(false);
+               
+            });
+        });
+    }
+        public void ContinueAsGuest()
     {
         //GameManager.Instance.NotNowOfSignManager();
         LoginRegisterScreen.SetActive(false);
