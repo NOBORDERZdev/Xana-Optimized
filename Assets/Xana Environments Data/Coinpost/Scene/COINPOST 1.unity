@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: e27877c2232158348acfb91365d32251, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -986,7 +986,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 256694889}
   m_LocalRotation: {x: -0, y: -0.00000031292436, z: -0, w: 1}
-  m_LocalPosition: {x: -33.787, y: -2.578, z: 8.07}
+  m_LocalPosition: {x: -33.787, y: -2.518, z: 8.07}
   m_LocalScale: {x: 53.58374, y: 0.080715, z: 0.38488}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4183,7 +4183,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1291313642}
   m_LocalRotation: {x: -0, y: -0.00000031292436, z: -0, w: 1}
-  m_LocalPosition: {x: -33.79, y: -2.51, z: 0.42}
+  m_LocalPosition: {x: -33.79, y: -2.503, z: 0.38}
   m_LocalScale: {x: 53.58374, y: 0.080715, z: 0.38488}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4260,7 +4260,6 @@ GameObject:
   - component: {fileID: 1359387526}
   - component: {fileID: 1359387525}
   - component: {fileID: 1359387524}
-  - component: {fileID: 1359387523}
   m_Layer: 0
   m_Name: Glass_Dome
   m_TagString: Untagged
@@ -4268,19 +4267,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &1359387523
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1359387522}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 23.577787, y: 0.31218103, z: 23.624401}
-  m_Center: {x: -0.046661396, y: 0.15609051, z: 0}
 --- !u!64 &1359387524
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6625,6 +6611,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5940265903275358940, guid: 8a4ca9054a9880f4f90b8e177860379d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c971c88c5d4579241a68bba05bf2888c, type: 2}
     - target: {fileID: 5940265903275358940, guid: 8a4ca9054a9880f4f90b8e177860379d, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 

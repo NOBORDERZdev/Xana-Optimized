@@ -2110,8 +2110,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.1771449, y: 3.3731403, z: 26.787807}
-  m_Center: {x: 0.48672572, y: -0.72750664, z: 14.105181}
+  m_Size: {x: 0.63538104, y: 3.3731403, z: 28.969893}
+  m_Center: {x: 0.25760984, y: -0.72750664, z: 15.196268}
 --- !u!1 &334324510
 GameObject:
   m_ObjectHideFlags: 0
@@ -4252,6 +4252,7 @@ Transform:
   - {fileID: 2077303252}
   - {fileID: 1434161287}
   - {fileID: 2024513813}
+  - {fileID: 2078689100}
   m_Father: {fileID: 1430014858}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11013,6 +11014,51 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.17714487, y: 3.3731403, z: 23.094069}
   m_Center: {x: 0.48672575, y: -0.72750664, z: 8.135998}
+--- !u!1 &2078689099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2078689100}
+  - component: {fileID: 2078689101}
+  m_Layer: 0
+  m_Name: 01 (28)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2078689100
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078689099}
+  m_LocalRotation: {x: -0, y: 0.70710677, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -11.34, y: -0.044, z: -8.18}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 766818504}
+  m_RootOrder: 28
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!65 &2078689101
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078689099}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.3471537, y: 2.493183, z: 5.385209}
+  m_Center: {x: 0.5336218, y: -1.1674854, z: 4.044191}
 --- !u!1 &2091791621
 GameObject:
   m_ObjectHideFlags: 0
@@ -12067,7 +12113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  downloadKey: ABP_Room01_Spolight
+  downloadKey: ABP_Room02_Spotlight
   objectPriority: 0
 --- !u!1001 &3127706089924929460
 PrefabInstance:
