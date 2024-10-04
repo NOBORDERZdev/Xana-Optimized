@@ -26,6 +26,8 @@ public class RedirectionPopupHandler : MonoBehaviour
 
     void OpenPopup(string url, string msg)
     {
+        if (string.IsNullOrEmpty(url))
+            return;
         RedirectUrl = url;
         RedirectionPopup.SetActive(true);
 

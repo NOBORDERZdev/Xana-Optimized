@@ -5116,6 +5116,8 @@ GameObject:
   - component: {fileID: 1390282194}
   - component: {fileID: 1390282196}
   - component: {fileID: 1390282195}
+  - component: {fileID: 1390282198}
+  - component: {fileID: 1390282197}
   m_Layer: 0
   m_Name: Frame01 (1)
   m_TagString: Untagged
@@ -5188,6 +5190,35 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1390282193}
   m_Mesh: {fileID: 333562939924340478, guid: d650408f39122414b9cde0b3ef1c0718, type: 3}
+--- !u!114 &1390282197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390282193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21c48937c8bb7e469f24bfde8f2d4a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Url: https://www.coindeskjapan.com/
+  Msg: 
+  ClickRedirection: 1
+  PlayerTriggerRedirection: 0
+--- !u!65 &1390282198
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390282193}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.9482372, y: 0.8128286, z: 0.06227164}
+  m_Center: {x: -1.4741186, y: 0.4014143, z: -0.02613582}
 --- !u!1 &1402454190
 GameObject:
   m_ObjectHideFlags: 0
@@ -8662,6 +8693,8 @@ GameObject:
   - component: {fileID: 1363081786162234172}
   - component: {fileID: 5376991317180155889}
   - component: {fileID: 2239587241197875217}
+  - component: {fileID: 5376991317180155891}
+  - component: {fileID: 5376991317180155890}
   m_Layer: 0
   m_Name: Frame01
   m_TagString: Untagged
@@ -8985,6 +9018,8 @@ GameObject:
   - component: {fileID: 3173589954316221427}
   - component: {fileID: 3941308512235769789}
   - component: {fileID: 2950132679220975071}
+  - component: {fileID: 3941308512235769791}
+  - component: {fileID: 3941308512235769790}
   m_Layer: 0
   m_Name: Frame02
   m_TagString: Untagged
@@ -9350,6 +9385,35 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2521461022360040625}
   m_Mesh: {fileID: 1531743950430998278, guid: d650408f39122414b9cde0b3ef1c0718, type: 3}
+--- !u!114 &3941308512235769790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2521461022360040625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21c48937c8bb7e469f24bfde8f2d4a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Url: https://navenueclub.navenue.jp/
+  Msg: 
+  ClickRedirection: 1
+  PlayerTriggerRedirection: 0
+--- !u!65 &3941308512235769791
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2521461022360040625}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.508324, y: 1.407038, z: 0.2563221}
+  m_Center: {x: -1.754162, y: 0.698519, z: 0.07088938}
 --- !u!4 &4207452671486310064
 Transform:
   m_ObjectHideFlags: 0
@@ -9418,6 +9482,8 @@ GameObject:
   - component: {fileID: 1942368947225234505}
   - component: {fileID: 6397000181623370318}
   - component: {fileID: 1722030882681964956}
+  - component: {fileID: 6397000181623370320}
+  - component: {fileID: 6397000181623370319}
   m_Layer: 0
   m_Name: Frame03
   m_TagString: Untagged
@@ -9561,6 +9627,35 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 579846913936583366}
   m_Mesh: {fileID: 333562939924340478, guid: d650408f39122414b9cde0b3ef1c0718, type: 3}
+--- !u!114 &5376991317180155890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579846913936583366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21c48937c8bb7e469f24bfde8f2d4a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Url: https://www.coindeskjapan.com/
+  Msg: 
+  ClickRedirection: 1
+  PlayerTriggerRedirection: 0
+--- !u!65 &5376991317180155891
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579846913936583366}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.9482372, y: 0.8128286, z: 0.10614841}
+  m_Center: {x: -1.4741186, y: 0.4014143, z: -0.004197441}
 --- !u!33 &5383249614570627884
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -9608,6 +9703,35 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4477887963985106765}
   m_Mesh: {fileID: -8281553733786461561, guid: d650408f39122414b9cde0b3ef1c0718, type: 3}
+--- !u!114 &6397000181623370319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4477887963985106765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21c48937c8bb7e469f24bfde8f2d4a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Url: https://navenueclub.navenue.jp/
+  Msg: 
+  ClickRedirection: 1
+  PlayerTriggerRedirection: 0
+--- !u!65 &6397000181623370320
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4477887963985106765}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.508324, y: 1.407038, z: 0.26817822}
+  m_Center: {x: -1.754162, y: 0.698519, z: 0.06295335}
 --- !u!4 &6458634113109427509
 Transform:
   m_ObjectHideFlags: 0
@@ -9642,6 +9766,8 @@ GameObject:
   - component: {fileID: 6458634113109427509}
   - component: {fileID: 2455264602573356576}
   - component: {fileID: 8941408434408923950}
+  - component: {fileID: 8941408434408923952}
+  - component: {fileID: 8941408434408923951}
   m_Layer: 0
   m_Name: Frame04
   m_TagString: Untagged
@@ -9703,6 +9829,8 @@ GameObject:
   - component: {fileID: 4475333714092298828}
   - component: {fileID: 5383249614570627884}
   - component: {fileID: 7787866974291880694}
+  - component: {fileID: 7787866974291880696}
+  - component: {fileID: 7787866974291880695}
   m_Layer: 0
   m_Name: Frame06
   m_TagString: Untagged
@@ -9721,6 +9849,8 @@ GameObject:
   - component: {fileID: 8823802745086423222}
   - component: {fileID: 2905504874969394696}
   - component: {fileID: 5044726575995251112}
+  - component: {fileID: 8823802745086423224}
+  - component: {fileID: 8823802745086423223}
   m_Layer: 0
   m_Name: Frame05
   m_TagString: Untagged
@@ -9813,6 +9943,35 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7787866974291880695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7445268458176561069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21c48937c8bb7e469f24bfde8f2d4a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Url: https://www.coindeskjapan.com/
+  Msg: 
+  ClickRedirection: 1
+  PlayerTriggerRedirection: 0
+--- !u!65 &7787866974291880696
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7445268458176561069}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.131836, y: 212992.58, z: 0.12}
+  m_Center: {x: -1.065918, y: -106495.71, z: -0.02613582}
 --- !u!4 &8158339050520597716
 Transform:
   m_ObjectHideFlags: 0
@@ -9866,6 +10025,35 @@ Transform:
   m_Father: {fileID: 543450653241613910}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8823802745086423223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7678884210766586357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21c48937c8bb7e469f24bfde8f2d4a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Url: https://www.coindeskjapan.com/169005/?s-wdt
+  Msg: 
+  ClickRedirection: 1
+  PlayerTriggerRedirection: 0
+--- !u!65 &8823802745086423224
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7678884210766586357}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.457456, y: 1.5626478, z: 0.15651692}
+  m_Center: {x: -0.7287278, y: 0.776324, z: 0.020986825}
 --- !u!23 &8941408434408923950
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9908,6 +10096,35 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8941408434408923951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6969820318037849039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21c48937c8bb7e469f24bfde8f2d4a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Url: https://www.coindeskjapan.com/169005/?s-wdt
+  Msg: 
+  ClickRedirection: 1
+  PlayerTriggerRedirection: 0
+--- !u!65 &8941408434408923952
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6969820318037849039}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.4574561, y: 1.5626478, z: 0.14858642}
+  m_Center: {x: -0.7287283, y: 0.776324, z: 0.017021567}
 --- !u!1 &9071624901201821747
 GameObject:
   m_ObjectHideFlags: 0
