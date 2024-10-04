@@ -21,7 +21,7 @@ public class SummitAIChatHandler : MonoBehaviour
     public List<GameObject> aiNPC = new List<GameObject>();
 
     private string npcName;
-    private string npcURL;
+    public string npcURL;
     private bool _NPCInstantiated;
     private bool SummitNPC;
     private bool ChatActivated;
@@ -267,6 +267,7 @@ public class SummitAIChatHandler : MonoBehaviour
 
         if (ChatActivated)
         {
+            Debug.LogError("AI Response  ==  " + response);
             string res = JsonUtility.FromJson<AIResponse>(response).data;
 
             //_CommonChatRef.DisplayMsg_FromSocket(npcName, res);

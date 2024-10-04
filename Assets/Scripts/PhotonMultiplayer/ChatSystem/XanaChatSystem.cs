@@ -69,6 +69,8 @@ public class XanaChatSystem : MonoBehaviour
     public GameObject XanaChatPotrait; // set in inspector
     public RectTransform outline;
 
+   
+    
     public ScrollRect ChatScrollRect;
 
     public Action<string> npcAlert;
@@ -89,7 +91,8 @@ public class XanaChatSystem : MonoBehaviour
 
     #endregion
 
-
+    [HideInInspector]
+    public bool isAiChat = false;
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -104,6 +107,9 @@ public class XanaChatSystem : MonoBehaviour
         {
             this.InputFieldChat.onSubmit.AddListener(OnEnterSend);
         }
+
+        BuilderEventManager.AINPCActivated += (ind, value) => { isAiChat = true; };
+        BuilderEventManager.AINPCDeactivated += (ind) => { isAiChat = false; };
     }
     private void OnDisable()
     {
