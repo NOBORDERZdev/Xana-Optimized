@@ -133,6 +133,7 @@ public class SummitDomeShaderApply : MonoBehaviour
     void SetLogoTexture(string url)
     {
         Texture2D texture = AssetCache.Instance.LoadImage(url);
+        if(texture != null)
         LogoSpriteRenderer.sprite = ConvertToSprite(texture);
         LogoSpriteRenderer.material.shader = Shader.Find("Sprites/Default");
         ScaleSpriteToTargetSize();
