@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Photon.Pun;
 using UnityEngine;
 
@@ -7,9 +8,16 @@ public class AINPCTrigger : MonoBehaviour
     public int npcID;
 
     private bool IsAlreadyTriggered=true;
-    private void Start()
+    private void OnEnable()
     {
-        Invoke("NPCRigidBodySetup", 1);
+        BuilderEventManager.AfterWorldInstantiated += NPCRigidBodySetup;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated += NPCRigidBodySetup;
+    }
+
+    private void OnDisable()
+    {
+        BuilderEventManager.AfterWorldInstantiated -= NPCRigidBodySetup;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= NPCRigidBodySetup;
     }
     public void OnTriggerEnter(Collider other)
     {
@@ -29,8 +37,10 @@ public class AINPCTrigger : MonoBehaviour
         }
     }
 
-    void NPCRigidBodySetup()
+    async void NPCRigidBodySetup()
     {
+        GetComponent<Rigidbody>().useGravity = true;
+        await Task.Delay(1000);
         if (GetComponent<Rigidbody>())
             Destroy(GetComponent<Rigidbody>());
     }
