@@ -324,8 +324,13 @@ public class XanaChatSystem : MonoBehaviour
             {
                 if (ConstantsHolder.xanaConstants.IsMetabuzzEnvironment || ConstantsHolder.xanaConstants.isXanaPartyWorld)
                     return;
-                ReferencesForGamePlay.instance.minimap.SetActive(true);
-                ReferencesForGamePlay.instance.SumitMapStatus(true);
+
+                if (!LoadingHandler.Instance.DomeLoading.activeInHierarchy &&
+                    XanaWorldDownloader.xanaWorldDownloader != null && !XanaWorldDownloader.xanaWorldDownloader.assetDownloadingText.gameObject.activeInHierarchy)
+                {
+                    ReferencesForGamePlay.instance.minimap.SetActive(true);
+                    ReferencesForGamePlay.instance.SumitMapStatus(true);
+                }
             }
         }
         Debug.Log("ChatOpenDelay");
