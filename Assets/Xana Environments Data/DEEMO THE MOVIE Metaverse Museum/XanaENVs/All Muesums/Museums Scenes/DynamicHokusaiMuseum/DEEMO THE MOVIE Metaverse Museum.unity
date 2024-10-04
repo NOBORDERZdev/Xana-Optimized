@@ -23634,7 +23634,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8504723684509753532, guid: ce5abf3a8e4df644e8023a9d8f1deb6c, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8504723684509753532, guid: ce5abf3a8e4df644e8023a9d8f1deb6c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -47922,6 +47922,73 @@ Transform:
   m_Father: {fileID: 2226408470019596815}
   m_RootOrder: 48
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 360}
+--- !u!1001 &2104635423
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2226408470000054631}
+    m_Modifications:
+    - target: {fileID: 8141283418276172436, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8141283418276172436, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8141283418276172436, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8141283418276172436, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8141283418276172436, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8141283418276172436, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8141283418276172436, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8141283418276172436, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8141283418276172436, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8141283418276172436, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8141283418276172436, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8141283418276172437, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+      propertyPath: m_Name
+      value: SummitNFTContentHandler
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+--- !u!1 &2104635424 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8141283418276172437, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+  m_PrefabInstance: {fileID: 2104635423}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2104635425 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8141283418276172436, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+  m_PrefabInstance: {fileID: 2104635423}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2109795019
 GameObject:
   m_ObjectHideFlags: 0
@@ -66379,6 +66446,7 @@ Transform:
   m_Children:
   - {fileID: 2226408470578739437}
   - {fileID: 2226408470019596815}
+  - {fileID: 2104635425}
   - {fileID: 943050580}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -66412,11 +66480,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cebf05f19ae445244bb15afce6994a99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ExhibitComponentType: 0
+  _ExhibitComponentType: 1
   _ExhibitSize:
-    potrait: {x: 0, y: 0, z: 0}
-    landscape: {x: 0, y: 0, z: 0}
-    square: {x: 0, y: 0, z: 0}
+    potrait: {x: 0.15, y: 0.15, z: 0.15}
+    landscape: {x: 0.128787, y: 0.128787, z: 0.128787}
+    square: {x: 0.15, y: 0.15, z: 0.15}
   spawnPoints: []
   picsSpawnPoints: {fileID: 2226408470019596815}
   updateVar: 0
@@ -66432,7 +66500,7 @@ MonoBehaviour:
   testnetMussuemId: 36
   mainnetMussuemId: 14
   eventid: 
-  XanaSummitNFTHandler: {fileID: 8141283418276172437, guid: 5b7814d56347dd84e9ab2d3c1864c466, type: 3}
+  XanaSummitNFTHandler: {fileID: 2104635424}
   AllS3Nfts: []
 --- !u!4 &2226408470019596815
 Transform:
