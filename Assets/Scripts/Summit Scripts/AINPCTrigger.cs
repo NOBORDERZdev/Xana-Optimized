@@ -6,10 +6,12 @@ public class AINPCTrigger : MonoBehaviour
 {
     public string[] welcomeMsgs;
     public int npcID;
+    public Vector3 NPCPosition;
 
     private bool IsAlreadyTriggered=true;
     private void OnEnable()
     {
+        NPCRigidBodySetup();
         BuilderEventManager.AfterWorldInstantiated += NPCRigidBodySetup;
         BuilderEventManager.AfterWorldOffcialWorldsInatantiated += NPCRigidBodySetup;
     }
@@ -39,9 +41,9 @@ public class AINPCTrigger : MonoBehaviour
 
     async void NPCRigidBodySetup()
     {
+        gameObject.transform.position = NPCPosition;
         GetComponent<Rigidbody>().useGravity = true;
         await Task.Delay(1000);
-        if (GetComponent<Rigidbody>())
-            Destroy(GetComponent<Rigidbody>());
+        GetComponent<Rigidbody>().useGravity = false;
     }
 }
