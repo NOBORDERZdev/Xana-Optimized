@@ -2930,8 +2930,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 40.510098, z: 1}
+  m_Center: {x: 0, y: 19.755056, z: 1.1045784e-14}
 --- !u!1 &1430014857
 GameObject:
   m_ObjectHideFlags: 0
@@ -4175,8 +4175,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 39.147408, z: 1}
+  m_Center: {x: 0, y: -19.073708, z: 4.5579575e-14}
 --- !u!1 &2058848705
 GameObject:
   m_ObjectHideFlags: 0
@@ -5066,6 +5066,7 @@ GameObject:
   - component: {fileID: 9054361017851013597}
   - component: {fileID: 5791114965018239378}
   - component: {fileID: 6637866847931011853}
+  - component: {fileID: 9054361017851013598}
   m_Layer: 0
   m_Name: BGT_Middle_Room
   m_TagString: Untagged
@@ -5145,3 +5146,17 @@ Transform:
   m_Father: {fileID: 1430014858}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &9054361017851013598
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8569327490103194471}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2284189423151218068, guid: e5a094dd74370a240854fbf89eeec6b5, type: 3}

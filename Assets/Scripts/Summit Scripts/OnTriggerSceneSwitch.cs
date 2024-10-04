@@ -35,22 +35,29 @@ public class OnTriggerSceneSwitch : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (PhotonNetwork.InRoom && !MutiplayerController.instance.isShifting)
+        if (!PhotonNetwork.InRoom) return;
+
+        if (other.GetComponent<PhotonView>() && other.CompareTag("PhotonLocalPlayer") && 
+            other.GetComponent<PhotonView>().IsMine && !alreadyTriggered)
         {
-            if (other.GetComponent<PhotonView>() && other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine && !alreadyTriggered)
-            {
-                alreadyTriggered = true;
-
-                if (DomeId == -1 || LoadDirectly)
-                {
-                    TriggerSceneLoading(WorldId);
-                }
-                else
-                    TriggerSceneLoading();
-
-                DisableCollider();
-            }
+            StartCoroutine(WaitForShift());
         }
+    }
+
+    System.Collections.IEnumerator WaitForShift()
+    {
+        yield return new WaitUntil(() => !MutiplayerController.instance.isShifting);
+
+        alreadyTriggered = true;
+
+        if (DomeId == -1 || LoadDirectly)
+        {
+            TriggerSceneLoading(WorldId);
+        }
+        else
+            TriggerSceneLoading();
+
+        DisableCollider();
     }
 
     void TriggerSceneLoading()
