@@ -81,6 +81,8 @@ public class PlayerDashHandler : MonoBehaviour
 
     public void DashButton()
     {
+        EmoteReactionUIHandler.lastEmotePlayed = null;
+
         if (_playerController == null || !_canDash || IsPlayerInOtherState || _playerController.animator.GetFloat("Blend") == 0)
             return;
 
