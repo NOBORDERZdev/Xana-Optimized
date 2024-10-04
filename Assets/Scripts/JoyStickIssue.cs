@@ -12,6 +12,7 @@ public class JoyStickIssue : OnScreenControl, IPointerDownHandler, IPointerUpHan
     {
         if (eventData == null)
             throw new System.ArgumentNullException(nameof(eventData));
+        EmoteReactionUIHandler.lastEmotePlayed = null;
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(transform.parent.GetComponentInParent<RectTransform>(), eventData.position, eventData.pressEventCamera, out m_PointerDownPos);
 
