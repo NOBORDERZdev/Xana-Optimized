@@ -497,7 +497,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         //code by hardik 9aug2024
         if (!(SceneManager.GetActiveScene().name.Contains("Museum")))
         {
-            spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
+            spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + .5f, spawnPoint.z);
             RaycastHit hit;
 
             // Loop to check for valid spawn point
