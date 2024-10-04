@@ -113,6 +113,7 @@ public class SummitAIChatHandler : MonoBehaviour
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().json = XANASummitDataContainer.aiData.npcData[i].avatarCategory;
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().Init();
             AINPCAvatar.GetComponent<AINPCTrigger>().npcID = XANASummitDataContainer.aiData.npcData[i].id;
+            AINPCAvatar.GetComponent<AINPCTrigger>().NPCPosition = AINPCAvatar.transform.position;
             NPCCount++;
         }
 
@@ -155,6 +156,7 @@ public class SummitAIChatHandler : MonoBehaviour
             AINPCAvatar.GetComponent<SetPenguinAIName>().NameText.text = XANASummitDataContainer.aiData.npcData[i].name;
             int avatarPresetId = XANASummitDataContainer.aiData.npcData[i].avatarId;
             AINPCAvatar.GetComponent<AINPCTrigger>().npcID = XANASummitDataContainer.aiData.npcData[i].id;
+            AINPCAvatar.GetComponent<AINPCTrigger>().NPCPosition = AINPCAvatar.transform.position;
             NPCCount++;
         }
 
