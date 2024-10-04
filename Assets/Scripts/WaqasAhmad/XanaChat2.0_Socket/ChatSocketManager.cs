@@ -446,6 +446,7 @@ public class ChatSocketManager : MonoBehaviour
         Invoke("DelayAdded", 0.05f);
 
         //StartCoroutine(nameof(Delay));
+        if(!XanaChatSystem.instance.isAiChat || msgId == "NPC")
         XanaChatSystem.instance.DisplayMsg_FromSocket(userName, msg, _dataHolder.MsgText);
 
         // Add to List
