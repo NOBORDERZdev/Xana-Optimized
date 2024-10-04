@@ -28,6 +28,9 @@ public class SelfieButton : MonoBehaviour
 
     private void OnSelfieClick()
     {
+        //added condition to prevent selfie open issue while jumping and falling from environment
+        if (!ReferencesForGamePlay.instance.playerControllerNew._IsGrounded)
+            return;
         if (ActionManager.IsAnimRunning) //for stop dance animation
         {
             ActionManager.StopActionAnimation?.Invoke();
