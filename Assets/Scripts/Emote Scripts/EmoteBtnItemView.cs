@@ -46,6 +46,8 @@ public class EmoteBtnItemView : MonoBehaviour
 
         actionImg.gameObject.SetActive(false);
         actionImgPotrait.gameObject.SetActive(false);
+        if (emoteSelectionBtnScript)
+            emoteSelectionBtnScript.resetBtn.gameObject.SetActive(false);
         string data = PlayerPrefsUtility.GetEncryptedString(ConstantsGod.ANIMATION_DATA + index);
         Debug.Log(ConstantsGod.ANIMATION_DATA + index);
         Debug.Log("Data :" + data);
