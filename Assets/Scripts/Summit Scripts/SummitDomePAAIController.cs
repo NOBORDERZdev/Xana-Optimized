@@ -76,15 +76,37 @@ public class SummitDomePAAIController : MonoBehaviour
 
     GameObject GenderBasedPrefabSlect(int _index)
     {
-        if (GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_index].avatarId > 10)
+        if(GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_index].avatarId>20)
         {
-            return Instantiate(GameplayEntityLoader.instance.AIAvatarPrefab[0]);
+            if(GetAvatarGender(GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_index].avatarCategory) == "female")
+                return Instantiate(GameplayEntityLoader.instance.AIAvatarPrefab[0]);
+            else
+                return Instantiate(GameplayEntityLoader.instance.AIAvatarPrefab[1]);
         }
         else
         {
-            return Instantiate(GameplayEntityLoader.instance.AIAvatarPrefab[1]);
+            if (GameplayEntityLoader.instance.XanaSummitDataContainerObject.aiData.npcData[_index].avatarId > 10)
+            {
+                return Instantiate(GameplayEntityLoader.instance.AIAvatarPrefab[0]);
+            }
+            else
+            {
+                return Instantiate(GameplayEntityLoader.instance.AIAvatarPrefab[1]);
+            }
         }
+            
     }
+
+    string GetAvatarGender(string AvatarJson)
+    {
+        SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
+        _CharacterData = _CharacterData.CreateFromJSON(AvatarJson);
+        if (string.IsNullOrEmpty(AvatarJson))
+            return "male";
+        else
+            return _CharacterData.gender;
+    }
+
 
     void AssignPADataToInstAI(GameObject _aiAvatar, int _aiDataIndex)
     {

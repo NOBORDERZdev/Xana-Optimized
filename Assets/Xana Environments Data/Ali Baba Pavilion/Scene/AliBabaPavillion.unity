@@ -2025,8 +2025,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.1771449, y: 3.3731403, z: 26.787807}
-  m_Center: {x: 0.48672572, y: -0.72750664, z: 14.105181}
+  m_Size: {x: 0.8586147, y: 3.3731403, z: 28.759508}
+  m_Center: {x: 0.14599317, y: -0.72750664, z: 15.091072}
 --- !u!1 &334324510
 GameObject:
   m_ObjectHideFlags: 0
@@ -2532,6 +2532,51 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &369735030
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 369735031}
+  - component: {fileID: 369735032}
+  m_Layer: 0
+  m_Name: 01 (28)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &369735031
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369735030}
+  m_LocalRotation: {x: -0, y: 0.70710677, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -11.34, y: -0.04399991, z: -8.18}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 766818504}
+  m_RootOrder: 28
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!65 &369735032
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369735030}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.3471537, y: 2.493183, z: 5.385209}
+  m_Center: {x: 0.5336218, y: -1.1674854, z: 4.044191}
 --- !u!1 &390274016
 GameObject:
   m_ObjectHideFlags: 0
@@ -4343,6 +4388,7 @@ Transform:
   - {fileID: 2077303252}
   - {fileID: 1434161287}
   - {fileID: 2024513813}
+  - {fileID: 369735031}
   m_Father: {fileID: 1430014858}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6722,7 +6768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd617247844f1b447a0320228ca36a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldJson: '{"SceneObjects":[{"addressableKey":"ABP_Ceiling_lamp","name":"ABP_Ceiling_lamp","position":{"x":8.7271146774292,"y":2.8134636878967287,"z":0.27648255228996279},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":8.7271146774292,"y":2.8734636306762697,"z":0.27648255228996279},"m_Extent":{"x":3.950190544128418,"y":0.6632725596427918,"z":10.981855392456055}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.03765980899333954,"y":0.03765980899333954,"z":0.8587155938148499,"w":0.08199448883533478}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ABP_Door_stand","name":"ABP_Door_stand","position":{"x":11.405430793762207,"y":2.9554967880249025,"z":-1.9203611612319947},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":11.405430793762207,"y":3.0154967308044435,"z":-1.9203611612319947},"m_Extent":{"x":1.4684182405471802,"y":3.039334535598755,"z":4.838140964508057}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.12590698897838593,"y":0.12590698897838593,"z":0.6939167976379395,"w":-0.0018839837284758688}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ABP_Glass","name":"ABP_Glass","position":{"x":8.071922302246094,"y":3.2876994609832765,"z":-1.1795463562011719},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":10.773858070373536,"y":1.5953528881072999,"z":-3.344747543334961},"m_Extent":{"x":0.817850649356842,"y":0.7902620434761047,"z":6.701067924499512}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ABP_Logo","name":"ABP_Logo","position":{"x":12.773510932922364,"y":4.629823684692383,"z":-0.7484373450279236},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":12.773510932922364,"y":4.689823627471924,"z":-0.748437225818634},"m_Extent":{"x":0.26450926065444949,"y":1.1177380084991456,"z":2.538455009460449}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.13726365566253663,"y":0.13726365566253663,"z":0.5601165890693665,"w":-0.001895117573440075}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ABP_Metal_Rack","name":"ABP_Metal_Rack","position":{"x":7.685445785522461,"y":1.5960094928741456,"z":0.780413031578064},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":7.685445785522461,"y":1.6560094356536866,"z":0.7804127931594849},"m_Extent":{"x":3.8626832962036135,"y":1.5482842922210694,"z":3.5672266483306886}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ABP_Room01_Spolight","name":"ABP_Room01_Spolight","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":7.652120590209961,"y":2.65480375289917,"z":8.558557510375977},"m_Extent":{"x":3.7121782302856447,"y":0.1789475679397583,"z":3.285604953765869}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.08439412713050842,"y":0.08439412713050842,"z":0.8172974586486816,"w":-0.0009275643387809396}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ABP_Room01_Spolight","name":"ABP_Room02_Spotlight","position":{"x":7.773381233215332,"y":2.2521328926086427,"z":-4.732071399688721},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":7.773381233215332,"y":2.3121328353881838,"z":-4.732071399688721},"m_Extent":{"x":3.684791088104248,"y":0.1803555190563202,"z":1.6974461078643799}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.072189100086689,"y":0.072189100086689,"z":0.9012715220451355,"w":-0.0009273323812521994}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ABP_Plants","name":"ABP_Plants","position":{"x":7.925060749053955,"y":0.5114457607269287,"z":0.4219549596309662},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":7.906625747680664,"y":0.5714457631111145,"z":0.4219549596309662},"m_Extent":{"x":4.351780891418457,"y":0.49026426672935488,"z":11.711316108703614}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.05950330197811127,"y":0.05950330197811127,"z":0.9012632369995117,"w":0.0708417221903801}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ABP_Frames","name":"ABP_Frames","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":5.539384841918945,"y":1.3736811876296998,"z":2.731067180633545},"m_Extent":{"x":5.539384841918945,"y":1.3136812448501588,"z":9.420049667358399}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.7826654314994812,"w":0.13084298372268678}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.6552240252494812,"w":0.13084298372268678}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.5600091814994812,"w":0.5069336295127869}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.7401849627494812,"w":0.13084298372268678}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.5600091814994812,"w":0.34491896629333498}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.6127435564994812,"w":0.13084298372268678}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.5600091814994812,"w":0.38542264699935915}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.5600091814994812,"w":0.4259263277053833}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.6977044939994812,"w":0.13084298372268678}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.5600091814994812,"w":0.46643000841140749}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.058356817811727527,"y":0.058356817811727527,"z":0.5581398606300354,"w":0.12897364795207978}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044523321092128757,"y":0.044523321092128757,"z":0.5600134134292603,"w":0.2638455033302307}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044523321092128757,"y":0.044523321092128757,"z":0.5600134134292603,"w":0.1827678084373474}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044523321092128757,"y":0.044523321092128757,"z":0.5600134134292603,"w":0.22330665588378907}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044523321092128757,"y":0.044523321092128757,"z":0.5600134134292603,"w":0.30438435077667239}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044523321092128757,"y":0.044523321092128757,"z":0.8162267208099365,"w":0.08198609948158264}}],"summitDomeInfo":{"domeIndex":0}}]}'
+  worldJson: '{"SceneObjects":[{"addressableKey":"ABP_Ceiling_lamp","name":"ABP_Ceiling_lamp","position":{"x":8.7271146774292,"y":2.8134636878967287,"z":0.27648255228996279},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":8.7271146774292,"y":2.8734636306762697,"z":0.27648255228996279},"m_Extent":{"x":3.950190544128418,"y":0.6632725596427918,"z":10.981855392456055}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.03765980899333954,"y":0.03765980899333954,"z":0.8587155938148499,"w":0.08199448883533478}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ABP_Door_stand","name":"ABP_Door_stand","position":{"x":11.405430793762207,"y":2.9554967880249025,"z":-1.9203611612319947},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":11.405430793762207,"y":3.0154967308044435,"z":-1.9203611612319947},"m_Extent":{"x":1.4684182405471802,"y":3.039334535598755,"z":4.838140964508057}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.12590698897838593,"y":0.12590698897838593,"z":0.6939167976379395,"w":-0.0018839837284758688}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ABP_Glass","name":"ABP_Glass","position":{"x":8.071922302246094,"y":3.2876994609832765,"z":-1.1795463562011719},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":10.773858070373536,"y":1.5953528881072999,"z":-3.344747543334961},"m_Extent":{"x":0.817850649356842,"y":0.7902620434761047,"z":6.701067924499512}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ABP_Logo","name":"ABP_Logo","position":{"x":12.773510932922364,"y":4.629823684692383,"z":-0.7484373450279236},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":12.773510932922364,"y":4.689823627471924,"z":-0.748437225818634},"m_Extent":{"x":0.26450926065444949,"y":1.1177380084991456,"z":2.538455009460449}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.13726365566253663,"y":0.13726365566253663,"z":0.5601165890693665,"w":-0.001895117573440075}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ABP_Metal_Rack","name":"ABP_Metal_Rack","position":{"x":7.685445785522461,"y":1.5960094928741456,"z":0.780413031578064},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":7.685445785522461,"y":1.6560094356536866,"z":0.7804127931594849},"m_Extent":{"x":3.8626832962036135,"y":1.5482842922210694,"z":3.5672266483306886}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ABP_Room01_Spolight","name":"ABP_Room01_Spolight","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":7.652120590209961,"y":2.65480375289917,"z":8.558557510375977},"m_Extent":{"x":3.7121782302856447,"y":0.1789475679397583,"z":3.285604953765869}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.08439412713050842,"y":0.08439412713050842,"z":0.8172974586486816,"w":-0.0009275643387809396}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ABP_Room02_Spotlight","name":"ABP_Room02_Spotlight","position":{"x":7.773381233215332,"y":2.2521328926086427,"z":-4.732071399688721},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":7.773381233215332,"y":2.3121328353881838,"z":-4.732071399688721},"m_Extent":{"x":3.684791088104248,"y":0.1803555190563202,"z":1.6974461078643799}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.072189100086689,"y":0.072189100086689,"z":0.9012715220451355,"w":-0.0009273323812521994}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ABP_Plants","name":"ABP_Plants","position":{"x":7.925060749053955,"y":0.5114457607269287,"z":0.4219549596309662},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":7.906625747680664,"y":0.5714457631111145,"z":0.4219549596309662},"m_Extent":{"x":4.351780891418457,"y":0.49026426672935488,"z":11.711316108703614}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.05950330197811127,"y":0.05950330197811127,"z":0.9012632369995117,"w":0.0708417221903801}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"ABP_Frames","name":"ABP_Frames","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":5.539384841918945,"y":1.3736811876296998,"z":2.731067180633545},"m_Extent":{"x":5.539384841918945,"y":1.3136812448501588,"z":9.420049667358399}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.7826654314994812,"w":0.13084298372268678}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.6552240252494812,"w":0.13084298372268678}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.5600091814994812,"w":0.5069336295127869}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.7401849627494812,"w":0.13084298372268678}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.5600091814994812,"w":0.34491896629333498}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.6127435564994812,"w":0.13084298372268678}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.5600091814994812,"w":0.38542264699935915}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.5600091814994812,"w":0.4259263277053833}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.6977044939994812,"w":0.13084298372268678}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044506724923849109,"y":0.044506724923849109,"z":0.5600091814994812,"w":0.46643000841140749}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.058356817811727527,"y":0.058356817811727527,"z":0.5581398606300354,"w":0.12897364795207978}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044523321092128757,"y":0.044523321092128757,"z":0.5600134134292603,"w":0.2638455033302307}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044523321092128757,"y":0.044523321092128757,"z":0.5600134134292603,"w":0.1827678084373474}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044523321092128757,"y":0.044523321092128757,"z":0.5600134134292603,"w":0.22330665588378907}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044523321092128757,"y":0.044523321092128757,"z":0.5600134134292603,"w":0.30438435077667239}},{"lightmapIndex":0,"lightmapScaleOffset":{"x":0.044523321092128757,"y":0.044523321092128757,"z":0.8162267208099365,"w":0.08198609948158264}}],"summitDomeInfo":{"domeIndex":0}}]}'
   assetsParent: {fileID: 1281891917}
 --- !u!1 &1289942887
 GameObject:
@@ -12289,6 +12335,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ABP_Room02
       objectReference: {fileID: 0}
+    - target: {fileID: 449978192216719672, guid: 0b7880d18fd717640bc115838b007484, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 969809269852494722, guid: 0b7880d18fd717640bc115838b007484, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -12373,6 +12423,10 @@ PrefabInstance:
     - target: {fileID: 7090322708736270998, guid: 862337c7075fc41449ec166b5448ac00, type: 3}
       propertyPath: m_Name
       value: ABP_Middle_Room
+      objectReference: {fileID: 0}
+    - target: {fileID: 7090322708736270998, guid: 862337c7075fc41449ec166b5448ac00, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7579050487994660908, guid: 862337c7075fc41449ec166b5448ac00, type: 3}
       propertyPath: m_RootOrder

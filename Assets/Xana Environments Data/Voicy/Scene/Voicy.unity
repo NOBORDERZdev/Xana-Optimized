@@ -510,8 +510,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.13016671, y: 3.79007, z: 22.777433}
-  m_Center: {x: -0.02085957, y: -0.5190418, z: 12.142479}
+  m_Size: {x: 2.302753, y: 3.79007, z: 22.777433}
+  m_Center: {x: -1.1071529, y: -0.5190418, z: 12.142478}
 --- !u!1 &177050991
 GameObject:
   m_ObjectHideFlags: 0
@@ -6836,8 +6836,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.50452965, y: 3.3731403, z: 28.979185}
-  m_Center: {x: 0.33171937, y: -0.72750664, z: 15.200946}
+  m_Size: {x: 1.0817219, y: 3.3731403, z: 28.979185}
+  m_Center: {x: 0.043123607, y: -0.72750664, z: 15.200945}
 --- !u!1 &1701170232
 GameObject:
   m_ObjectHideFlags: 0
@@ -7819,7 +7819,6 @@ GameObject:
   - component: {fileID: 1941263926}
   - component: {fileID: 1941263925}
   - component: {fileID: 1941263924}
-  - component: {fileID: 1941263923}
   m_Layer: 0
   m_Name: Glass_Dome
   m_TagString: Untagged
@@ -7827,19 +7826,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &1941263923
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1941263922}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 23.577787, y: 0.31218103, z: 23.624401}
-  m_Center: {x: -0.046661396, y: 0.15609051, z: 0}
 --- !u!64 &1941263924
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -7853,7 +7839,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4274996314960865405, guid: 34443a1bbd8e92843844284af524e656, type: 3}
 --- !u!23 &1941263925
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9267,6 +9253,7 @@ GameObject:
   - component: {fileID: 543450652932052916}
   - component: {fileID: 3469287836916062225}
   - component: {fileID: 1711813856342830299}
+  - component: {fileID: 3469287836916062226}
   m_Layer: 0
   m_Name: VCY_Stand
   m_TagString: Untagged
@@ -9543,6 +9530,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148723109134}
+  m_Mesh: {fileID: 1963248078178399917, guid: 993290787fa552d4bb04b655ea5553d8, type: 3}
+--- !u!64 &3469287836916062226
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148723109134}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: 1963248078178399917, guid: 993290787fa552d4bb04b655ea5553d8, type: 3}
 --- !u!33 &3469287838034524340
 MeshFilter:
@@ -9904,6 +9905,7 @@ GameObject:
   - component: {fileID: 2756915917039235274}
   - component: {fileID: 9113469097726102333}
   - component: {fileID: 5922704443139060581}
+  - component: {fileID: 9113469097726102334}
   m_Layer: 0
   m_Name: VCY_Screen
   m_TagString: Untagged
@@ -9962,8 +9964,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e5cd799b28f62c9468504f5937a812f4, type: 2}
-  - {fileID: 2100000, guid: d2786c8151ed8824eaf05d42069182c1, type: 2}
+  - {fileID: 2100000, guid: fbc9f71bcfa0dc04291750ae5679d828, type: 2}
+  - {fileID: 2100000, guid: 5ec8e8a09328bff41b9a751cdfd34983, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10092,3 +10094,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &9113469097726102334
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6922653182042630765}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7039477, y: 2.6788769, z: 2.8120434}
+  m_Center: {x: -0.0000012218952, y: 1.3394384, z: 0}

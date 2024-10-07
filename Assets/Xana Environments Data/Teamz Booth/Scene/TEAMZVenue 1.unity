@@ -2011,6 +2011,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TMZ_SilverScreen (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1452113176272560980, guid: 4714abdda7bfb5f45a91e7eb11c192da, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 888b8a26cfbb75541b321d850226516f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4714abdda7bfb5f45a91e7eb11c192da, type: 3}
 --- !u!4 &797642247 stripped
@@ -2541,6 +2545,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1272329044}
+  - component: {fileID: 1272329045}
   m_Layer: 0
   m_Name: Assets
   m_TagString: Untagged
@@ -2579,6 +2584,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1272329045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272329043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd617247844f1b447a0320228ca36a12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldJson: '{"SceneObjects":[{"addressableKey":"TMZ_CoHost","name":"TMZ_CoHost","position":{"x":62.44020080566406,"y":3.576076030731201,"z":-136.28512573242188},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":93.03787231445313,"y":2.6888158321380617,"z":-78.4176025390625},"m_Extent":{"x":24.080902099609376,"y":3.6388158798217775,"z":13.730353355407715}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"TMZ_CoHostScreen","name":"TMZ_CoHostScreen","position":{"x":62.44020080566406,"y":3.576076030731201,"z":-136.28512573242188},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":92.13264465332031,"y":0.9913194179534912,"z":-78.61231994628906},"m_Extent":{"x":21.855438232421876,"y":1.476811170578003,"z":12.145451545715332}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"TMZ_CompanyPoster","name":"TMZ_CompanyPoster","position":{"x":62.44020080566406,"y":3.576076030731201,"z":-136.28512573242188},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":71.2021255493164,"y":0.14656686782836915,"z":-128.63836669921876},"m_Extent":{"x":51.75800704956055,"y":1.0545620918273926,"z":47.23229217529297}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":3,"lightmapScaleOffset":{"x":0.4662925899028778,"y":0.4662925899028778,"z":-0.00001829616303439252,"w":-0.00001829616303439252}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"TMZ_Diamond","name":"TMZ_Diamond","position":{"x":62.44020080566406,"y":3.576076030731201,"z":-136.28512573242188},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":41.63640213012695,"y":2.535665988922119,"z":-80.15998840332031},"m_Extent":{"x":26.36634635925293,"y":3.4556658267974855,"z":14.9027681350708}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"TMZ_DiamondScreen","name":"TMZ_DiamondScreen","position":{"x":62.44020080566406,"y":3.576076030731201,"z":-136.28512573242188},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":42.15867233276367,"y":0.9236085414886475,"z":-80.15998077392578},"m_Extent":{"x":24.39411163330078,"y":1.4024797677993775,"z":13.123161315917969}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"TMZ_Gold","name":"TMZ_Gold","position":{"x":62.44020080566406,"y":3.576076030731201,"z":-136.28512573242188},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":90.68429565429688,"y":2.535665988922119,"z":-186.6399688720703},"m_Extent":{"x":26.86733627319336,"y":3.4556658267974855,"z":21.2430362701416}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"TMZ_GoldScreen","name":"TMZ_GoldScreen","position":{"x":62.44020080566406,"y":3.576076030731201,"z":-136.28512573242188},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":90.61019897460938,"y":0.9236068725585938,"z":-186.63998413085938},"m_Extent":{"x":25.47300148010254,"y":1.402479648590088,"z":19.92279624938965}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"TMZ_Pitch","name":"TMZ_Pitch","position":{"x":62.44020080566406,"y":3.576076030731201,"z":-136.28512573242188},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":38.7431526184082,"y":2.545665740966797,"z":-182.30201721191407},"m_Extent":{"x":24.34311294555664,"y":3.4556658267974855,"z":23.69711685180664}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"TMZ_PitchScreen","name":"TMZ_PitchScreen","position":{"x":62.44020080566406,"y":3.576076030731201,"z":-136.28512573242188},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":39.30366516113281,"y":0.9400951862335205,"z":-182.4913330078125},"m_Extent":{"x":22.409122467041017,"y":1.4089667797088624,"z":21.50143051147461}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"TMZ_Platinum","name":"TMZ_Platinum","position":{"x":62.44020080566406,"y":3.576076030731201,"z":-136.28512573242188},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":113.73837280273438,"y":2.5456655025482179,"z":-108.62137603759766},"m_Extent":{"x":13.944639205932618,"y":3.4556655883789064,"z":25.691659927368165}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"TMZ_PlatinumScreen","name":"TMZ_PlatinumScreen","position":{"x":62.44020080566406,"y":3.576076030731201,"z":-136.28512573242188},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":113.73870849609375,"y":0.9336080551147461,"z":-109.55087280273438},"m_Extent":{"x":12.624069213867188,"y":1.4024795293807984,"z":23.441938400268556}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"TMZ_RedCarpet","name":"TMZ_RedCarpet","position":{"x":62.44020080566406,"y":3.576076030731201,"z":-136.28512573242188},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":114.11869812011719,"y":3.651379346847534,"z":-149.13531494140626},"m_Extent":{"x":18.394744873046876,"y":4.471379280090332,"z":13.511381149291993}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"TMZ_RedCarpetScreen","name":"TMZ_RedCarpetScreen","position":{"x":62.44020080566406,"y":3.576076030731201,"z":-136.28512573242188},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":114.11909484863281,"y":1.553290843963623,"z":-148.24835205078126},"m_Extent":{"x":16.686832427978517,"y":1.8269095420837403,"z":10.420205116271973}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"TMZ_Silver","name":"TMZ_Silver","position":{"x":62.44020080566406,"y":3.576076030731201,"z":-136.28512573242188},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":17.484996795654298,"y":2.525665760040283,"z":-129.5349884033203},"m_Extent":{"x":25.11803436279297,"y":3.4556658267974855,"z":61.018035888671878}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"TMZ_SilverScreen","name":"TMZ_SilverScreen
+    (1)","position":{"x":62.44020080566406,"y":3.576076030731201,"z":-136.28512573242188},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":17.48499298095703,"y":0.9136085510253906,"z":-129.5349884033203},"m_Extent":{"x":23.797801971435548,"y":1.4024797677993775,"z":59.69782257080078}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"TMZ_SponsersBoard","name":"TMZ_SponsersBoard","position":{"x":62.44020080566406,"y":3.576076030731201,"z":-136.28512573242188},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":67.79524993896485,"y":0.9434587955474854,"z":-130.3127899169922},"m_Extent":{"x":53.45225524902344,"y":1.9140653610229493,"z":54.76302719116211}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}}]}'
+  assetsParent: {fileID: 1272329044}
 --- !u!1 &1280563579
 GameObject:
   m_ObjectHideFlags: 0
@@ -4854,6 +4874,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TMZ_Silver
       objectReference: {fileID: 0}
+    - target: {fileID: 1482451938650342442, guid: c14a3818546f27a4a9663f74cab54c7b, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769552073b51a7b4bb767713179457b9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c14a3818546f27a4a9663f74cab54c7b, type: 3}
 --- !u!1 &239587495961646205 stripped
@@ -5072,6 +5096,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1272329044}
     m_Modifications:
+    - target: {fileID: 312972240923328804, guid: b8e77f246a436bf42bac79f0920a985d, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769552073b51a7b4bb767713179457b9, type: 2}
     - target: {fileID: 1449255577285098059, guid: b8e77f246a436bf42bac79f0920a985d, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -5148,6 +5176,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1272329044}
     m_Modifications:
+    - target: {fileID: 211295014049193335, guid: be187507bb291ad43bf5e731016b2134, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769552073b51a7b4bb767713179457b9, type: 2}
     - target: {fileID: 1343628973361948184, guid: be187507bb291ad43bf5e731016b2134, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -5343,6 +5375,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1272329044}
     m_Modifications:
+    - target: {fileID: 996899183969204581, guid: 7e028005962244746868b197bc7fef67, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 996899183969204581, guid: 7e028005962244746868b197bc7fef67, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769552073b51a7b4bb767713179457b9, type: 2}
+    - target: {fileID: 996899183969204581, guid: 7e028005962244746868b197bc7fef67, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 888b8a26cfbb75541b321d850226516f, type: 2}
+    - target: {fileID: 996899183969204581, guid: 7e028005962244746868b197bc7fef67, type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5e8684b3a6a2b994188d25cf85e12ddb, type: 2}
+    - target: {fileID: 996899183969204581, guid: 7e028005962244746868b197bc7fef67, type: 3}
+      propertyPath: m_Materials.Array.data[5]
+      value: 
+      objectReference: {fileID: 2100000, guid: 888b8a26cfbb75541b321d850226516f, type: 2}
     - target: {fileID: 1645308060026263728, guid: 7e028005962244746868b197bc7fef67, type: 3}
       propertyPath: m_Name
       value: TMZ_CoHost
@@ -5467,6 +5519,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TMZ_CoHostScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 3806921012557994084, guid: d68ecb665de1e534ea77f4d1c10e87c5, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 888b8a26cfbb75541b321d850226516f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d68ecb665de1e534ea77f4d1c10e87c5, type: 3}
 --- !u!1 &2528054155909301262 stripped
@@ -5543,6 +5599,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: TMZ_Pitch
       objectReference: {fileID: 0}
+    - target: {fileID: 3149939236829408363, guid: 25748d753852a9b4bbcade245ee36547, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3510038571294100926, guid: 25748d753852a9b4bbcade245ee36547, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769552073b51a7b4bb767713179457b9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25748d753852a9b4bbcade245ee36547, type: 3}
 --- !u!1 &2843949335752166718 stripped
@@ -5666,6 +5730,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1272329044}
     m_Modifications:
+    - target: {fileID: 2829855678819099607, guid: b5a786a58e5b07f4bb355cd656e19b10, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769552073b51a7b4bb767713179457b9, type: 2}
     - target: {fileID: 3967256083830773944, guid: b5a786a58e5b07f4bb355cd656e19b10, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -5742,6 +5810,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1272329044}
     m_Modifications:
+    - target: {fileID: 2809433473757344749, guid: c888b99ee4fd9e1449e4daf2e9149f1c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 888b8a26cfbb75541b321d850226516f, type: 2}
     - target: {fileID: 3942391331832858754, guid: c888b99ee4fd9e1449e4daf2e9149f1c, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -6067,6 +6139,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6796515067705826774, guid: bad41eb56b349ea4c9b75226982cba24, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 769552073b51a7b4bb767713179457b9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bad41eb56b349ea4c9b75226982cba24, type: 3}
 --- !u!1 &5301730514517206190 stripped
@@ -6171,6 +6247,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1272329044}
     m_Modifications:
+    - target: {fileID: 4984554002965798325, guid: 2e2a2b31b5fa5f44f8253cd01f54dc98, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 888b8a26cfbb75541b321d850226516f, type: 2}
     - target: {fileID: 6154060762761979610, guid: 2e2a2b31b5fa5f44f8253cd01f54dc98, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -6624,6 +6704,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7197808206483924625, guid: 8ef48579cfc3f2940afd570957d9cdd3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 888b8a26cfbb75541b321d850226516f, type: 2}
+    - target: {fileID: 7197808206483924625, guid: 8ef48579cfc3f2940afd570957d9cdd3, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 4f829a2070d2c494ca0a5b5e7696d988, type: 2}
@@ -6703,6 +6787,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1272329044}
     m_Modifications:
+    - target: {fileID: 7153808174540213410, guid: 5742ac37082590449a37757d79fd6957, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 888b8a26cfbb75541b321d850226516f, type: 2}
     - target: {fileID: 8290074120714893261, guid: 5742ac37082590449a37757d79fd6957, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -6859,6 +6947,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1272329044}
     m_Modifications:
+    - target: {fileID: 7763839976046028789, guid: 9f3d2eef623c7a44ab8caba8f4127e54, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 888b8a26cfbb75541b321d850226516f, type: 2}
     - target: {fileID: 8124017789290464800, guid: 9f3d2eef623c7a44ab8caba8f4127e54, type: 3}
       propertyPath: m_Name
       value: TMZ_PlatinumScreen

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4738363874296648898}
   - component: {fileID: 969872098529879934}
   - component: {fileID: 2853771271139961132}
+  - component: {fileID: 6446923689313937976}
   m_Layer: 0
   m_Name: CNP_Door_stand
   m_TagString: Untagged
@@ -25,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 722272398106458802}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 11.405431, y: 2.9554968, z: -1.9203612}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &969872098529879934
 MeshFilter:
@@ -40,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 722272398106458802}
-  m_Mesh: {fileID: 6867716817630373822, guid: 888616ebd1e272549b5dd6e847ec9598, type: 3}
+  m_Mesh: {fileID: -2659837943823715851, guid: 2621e1b6edc929244aa25b0917387a43, type: 3}
 --- !u!23 &2853771271139961132
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: aab35c7acf090814f8e22487e3f7804c, type: 2}
-  - {fileID: 2100000, guid: 66e56ec69ecdc9e4bbdcd3451273b023, type: 2}
+  - {fileID: 2100000, guid: 12c809682f777484392b4ca908813b42, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,3 +85,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6446923689313937976
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722272398106458802}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2659837943823715851, guid: 2621e1b6edc929244aa25b0917387a43, type: 3}

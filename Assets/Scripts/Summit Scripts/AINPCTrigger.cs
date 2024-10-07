@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Photon.Pun;
 using UnityEngine;
 
@@ -5,11 +6,20 @@ public class AINPCTrigger : MonoBehaviour
 {
     public string[] welcomeMsgs;
     public int npcID;
+    public Vector3 NPCPosition;
 
     private bool IsAlreadyTriggered=true;
-    private void Start()
+    private void OnEnable()
     {
-        Invoke("NPCRigidBodySetup", 1);
+        NPCRigidBodySetup();
+        BuilderEventManager.AfterWorldInstantiated += NPCRigidBodySetup;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated += NPCRigidBodySetup;
+    }
+
+    private void OnDisable()
+    {
+        BuilderEventManager.AfterWorldInstantiated -= NPCRigidBodySetup;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= NPCRigidBodySetup;
     }
     public void OnTriggerEnter(Collider other)
     {
@@ -29,9 +39,11 @@ public class AINPCTrigger : MonoBehaviour
         }
     }
 
-    void NPCRigidBodySetup()
+    async void NPCRigidBodySetup()
     {
-        if (GetComponent<Rigidbody>())
-            Destroy(GetComponent<Rigidbody>());
+        gameObject.transform.position = NPCPosition;
+        GetComponent<Rigidbody>().useGravity = true;
+        await Task.Delay(1000);
+        GetComponent<Rigidbody>().useGravity = false;
     }
 }

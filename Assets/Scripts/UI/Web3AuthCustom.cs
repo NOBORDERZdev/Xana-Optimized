@@ -351,7 +351,8 @@ public class Web3AuthCustom : MonoBehaviour
         //UserLoginSignupManager.instance.StartCoroutine(UserLoginSignupManager.instance.LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
         ConstantsHolder.xanaConstants.LoggedInAsGuest = false;
         Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
-        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+
+        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly && !ConstantsHolder.xanaConstants.isBackFromWorld)
         {
             if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
             {
@@ -360,14 +361,6 @@ public class Web3AuthCustom : MonoBehaviour
             else
             {
                 LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
-            }
-        }
-        else if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
-        {
-            if (!ConstantsHolder.xanaConstants.isBackFromWorld)
-            {
-                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
-
             }
         }
 

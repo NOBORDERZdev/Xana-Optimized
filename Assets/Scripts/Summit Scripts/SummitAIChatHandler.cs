@@ -21,7 +21,7 @@ public class SummitAIChatHandler : MonoBehaviour
     public List<GameObject> aiNPC = new List<GameObject>();
 
     private string npcName;
-    private string npcURL;
+    public string npcURL;
     private bool _NPCInstantiated;
     private bool SummitNPC;
     private bool ChatActivated;
@@ -113,6 +113,7 @@ public class SummitAIChatHandler : MonoBehaviour
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().json = XANASummitDataContainer.aiData.npcData[i].avatarCategory;
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().Init();
             AINPCAvatar.GetComponent<AINPCTrigger>().npcID = XANASummitDataContainer.aiData.npcData[i].id;
+            AINPCAvatar.GetComponent<AINPCTrigger>().NPCPosition = AINPCAvatar.transform.position;
             NPCCount++;
         }
 
@@ -155,6 +156,7 @@ public class SummitAIChatHandler : MonoBehaviour
             AINPCAvatar.GetComponent<SetPenguinAIName>().NameText.text = XANASummitDataContainer.aiData.npcData[i].name;
             int avatarPresetId = XANASummitDataContainer.aiData.npcData[i].avatarId;
             AINPCAvatar.GetComponent<AINPCTrigger>().npcID = XANASummitDataContainer.aiData.npcData[i].id;
+            AINPCAvatar.GetComponent<AINPCTrigger>().NPCPosition = AINPCAvatar.transform.position;
             NPCCount++;
         }
 
@@ -267,6 +269,7 @@ public class SummitAIChatHandler : MonoBehaviour
 
         if (ChatActivated)
         {
+            Debug.LogError("AI Response  ==  " + response);
             string res = JsonUtility.FromJson<AIResponse>(response).data;
 
             //_CommonChatRef.DisplayMsg_FromSocket(npcName, res);
