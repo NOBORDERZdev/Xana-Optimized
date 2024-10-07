@@ -82,33 +82,41 @@ public class AskForJoining : MonoBehaviour
     }
     public void joinCurrentRoom()
     {
+        Debug.Log("Joining Room");
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
-
+            // Handle the case where the internet is not reachable
+            Debug.Log("Internet not reachable.");
             return;
         }
         else
         {
             if (ReferencesForGamePlay.instance != null)
+            {
                 ReferencesForGamePlay.instance.workingCanvas.SetActive(false);
+            }
 
             float _rand = UnityEngine.Random.Range(6f, 10f);
             LoadingHandler.Instance.randCurrentValue = _rand;
             StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
 
+            ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+            //LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             LoadingHandler.Instance.ShowLoading();
+            LoadingHandler.Instance.UpdateLoadingSlider(0.98f);
+            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+
+            MutiplayerController.instance.Connect(MutiplayerController.CurrLobbyName);
+            AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
+            BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none);
+            TurnCameras(true);
+
             if (ScreenOrientationManager._instance != null && ScreenOrientationManager._instance.isPotrait)
             {
                 ScreenOrientationManager._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
             }
 
-            //LoadingHandler.Instance.UpdateLoadingSlider(0.5f);
-            MutiplayerController.instance.Connect(MutiplayerController.CurrLobbyName);
-            AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
-            BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none);
-            TurnCameras(true);
             Destroy(this.gameObject);
-
         }
     }
 
