@@ -178,7 +178,7 @@ public class SummitVideoAndImageController : MonoBehaviour
 
     private void SetSprite(string path, RawImage img)
     {
-        path = ModifyImageUrl(path, 200);
+        path = ModifyImageUrl(path, 225, 400);
         img.enabled = true;
         if (AssetCache.Instance.HasFile(path))
         {
@@ -201,6 +201,7 @@ public class SummitVideoAndImageController : MonoBehaviour
 
         if(_texture != null)
         {
+
             if (SummitDomeNFTDataController.Instance && img != null)
                 SummitDomeNFTDataController.Instance.NFTLoadedSprites.Add(img.texture);
 
@@ -252,14 +253,15 @@ public class SummitVideoAndImageController : MonoBehaviour
         }
     }
 
-    string ModifyImageUrl(string url, int newWidth)
+    string ModifyImageUrl(string url, int newWidth, int newHeight)
     {
         string baseUrl = url.Split('?')[0]; // Get everything before the '?'
-        string parameters = $"width={newWidth}";
+        string parameters = $"width={newWidth}&height={newHeight}";  // $"width={newWidth}";
 
         // Return the modified URL
         return $"{baseUrl}?{parameters}";
     }
+
 
     void SetVideo()
     {
