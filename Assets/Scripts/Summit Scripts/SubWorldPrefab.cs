@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using UnityEngine.UI.ProceduralImage;
 using static XANASummitDataContainer;
 
 public class SubWorldPrefab : MonoBehaviour
@@ -43,7 +44,7 @@ public class SubWorldPrefab : MonoBehaviour
             yield return null;
         }
         Texture2D texture2D = DownloadHandlerTexture.GetContent(request);
-        WorldImage=SubWorldPrefabButton.GetComponent<Image>().sprite = ConvertToSprite(texture2D);
+        WorldImage=SubWorldPrefabButton.GetComponent<ProceduralImage>().sprite = ConvertToSprite(texture2D);
         SubWorldPrefabButton.interactable = true;
     }
 
