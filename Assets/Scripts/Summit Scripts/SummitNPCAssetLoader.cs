@@ -53,7 +53,9 @@ public class SummitNPCAssetLoader : MonoBehaviour
                 if (string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName))
                     continue;
 
-                if(string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName) || _CharacterData.myItemObj[i].ItemName.Contains("md") || _CharacterData.myItemObj[i].ItemName.Contains("default"))
+                if(string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName) || 
+                    _CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase) ||
+                    _CharacterData.myItemObj[i].ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
                     WearDefault(_CharacterData.myItemObj[i].ItemType);
                 else
                     DownloadAddressableWearableWearable(_CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType);
