@@ -428,7 +428,8 @@ public class BuilderAssetDownloader : MonoBehaviour
                 Addressables.ReleaseInstance(_async);
                 Addressables.Release(_async);
                 _assetDownloadTryCount++;
-                if (_assetDownloadTryCount < 5)
+                //comment this condition due to player spawn issue after second time joining subworld
+                //if (_assetDownloadTryCount < 5)
                 {
                     yield return new WaitForSeconds(1);
                     goto LoadAssetAgainSpawnPoint;
