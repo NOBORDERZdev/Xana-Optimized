@@ -75,6 +75,7 @@ public class DomeNFTData
 [System.Serializable]
 public class DomeNFTDataArray
 {
+    public int width;
     public List<DomeNFTData> getcontentbyDomeId;
 }
 

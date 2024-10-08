@@ -356,7 +356,7 @@ public class XANASummitSceneLoading : MonoBehaviour
             ConstantsHolder.xanaConstants.LastLobbyName = "XANA Summit-" + ConstantsHolder.domeId + "-" + worldInfo.data.name;
             multiplayerController.Connect("XANA Summit-" + ConstantsHolder.domeId + "-" + worldInfo.data.name);
         }
-
+        DomePerformerAvatarHandler.InitPerformerAvatarNPC();
         if (ReferencesForGamePlay.instance.playerControllerNew.isFirstPerson)
         {
             GamePlayUIHandler.inst.OnSwitchCameraClick();

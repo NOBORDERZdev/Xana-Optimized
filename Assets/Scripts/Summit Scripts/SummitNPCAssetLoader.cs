@@ -52,7 +52,13 @@ public class SummitNPCAssetLoader : MonoBehaviour
             {
                 if (string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName))
                     continue;
-                DownloadAddressableWearableWearable(_CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType);
+
+                if(string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName) || 
+                    _CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase) ||
+                    _CharacterData.myItemObj[i].ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
+                    WearDefault(_CharacterData.myItemObj[i].ItemType);
+                else
+                    DownloadAddressableWearableWearable(_CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType);
             }
         }
     }
@@ -144,6 +150,8 @@ public class SummitNPCAssetLoader : MonoBehaviour
             item.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial.SetTexture("_BaseMap", item.GetComponent<EffectedParts>().variation_Texture);
         }
 
+        if(this.stitcher == null)
+            this.stitcher = new Stitcher();
         item = this.stitcher.Stitch(item, applyOn);
         if (type == "Hair")
         {
