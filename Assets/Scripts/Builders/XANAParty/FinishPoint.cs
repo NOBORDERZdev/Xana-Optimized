@@ -46,7 +46,7 @@ public class FinishPoint : MonoBehaviour
     {
         if (GameplayEntityLoader.instance)
         {
-            if(!ConstantsHolder.xanaConstants.isSoftBankGame)
+            if(!ConstantsHolder.xanaConstants.isBuilderGame)
                 GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC("RPC_AddWinnerId", RpcTarget.AllBuffered, int.Parse(ConstantsHolder.userId));
             GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC("UpdateStatusOnRaceFinish", RpcTarget.AllBuffered, PhotonNetwork.LocalPlayer.ActorNumber, true);
         }
