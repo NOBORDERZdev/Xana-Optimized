@@ -118,7 +118,8 @@ public class UGCDataManager : MonoBehaviour
             }
             else if (loadOp.Status == AsyncOperationStatus.Succeeded)
             {
-                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadOp, key);
+                //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadOp, key);
+                AddressableDownloader.bundleAsyncOperationHandle.Add(loadOp);
                 ugcUIManager.ApplyBgTexture(loadOp.Result as Texture, key, "true");
                 ugcUIManager.loadingTexture.SetActive(false);
             }
