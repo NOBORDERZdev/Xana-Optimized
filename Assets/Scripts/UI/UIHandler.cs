@@ -40,7 +40,7 @@ public class UIHandler : MonoBehaviour
 
     //public GameObject worldHolder;
     public GameObject searchWorldHolder;
-
+    public XSummitBgChange XSummitBgChange;
 
     public bool isAvatarSelectionBtnClicked = false;
     [SerializeField] Color postButtonColor;
@@ -303,8 +303,9 @@ public class UIHandler : MonoBehaviour
                         ConstantsHolder.xanaConstants.XSummitBg = status2;
                         if (SceneManager.GetSceneByName("XSummitLoginSignupScene").isLoaded)
                         {
-                            UserLoginSignupManager.instance.XSummitBgChange.ChangeBG();
+                            UserLoginSignupManager.instance.XSummitBgChange.ChangeSummitBG();
                         }
+                        XSummitBgChange.ChangeSummitBG();
                     }
                     if (apiResponse.data[i].feature_list.TryGetValue("XanaChatFlag", out bool status3))
                     {
