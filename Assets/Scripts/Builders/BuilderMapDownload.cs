@@ -206,7 +206,7 @@ public class BuilderMapDownload : MonoBehaviour
                 yield return StartCoroutine(AISkyTextureDownload());
             }
         }
-        if (!ConstantsHolder.xanaConstants.isSoftBankGame)
+        if (!ConstantsHolder.xanaConstants.isBuilderGame)
         {
             if (!string.IsNullOrEmpty(levelData.terrainProperties.meshDeformationPath))
                 yield return StartCoroutine(LoadMeshDeformationFile(levelData.terrainProperties.meshDeformationPath, GetTerrainDeformation));
