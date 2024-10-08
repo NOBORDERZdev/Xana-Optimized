@@ -44,7 +44,7 @@ public class MoveMaptoCenter : MonoBehaviour
             if (index >= 173)
                 index += 3;
 
-            MapHighlightObjs[i].GetComponent<Button>().onClick.AddListener(() => ItemClicked(index));
+            MapHighlightObjs[i].GetComponent<Button>().onClick.AddListener(() => ItemClicked_Icon(index));
         }
 
         InitializeSubBtns();
@@ -79,20 +79,26 @@ public class MoveMaptoCenter : MonoBehaviour
         }
     }
 
-
-    public void ItemClicked(int ind)
+    public void ItemClicked_Icon(int ind) // This is the function that is called when the Map Icon button is clicked
     {
-        Debug.Log("Item Clicked: " + ind);
+        Debug.Log("Icon Clicked: " + ind);
 
         int arratInd = ind;
 
-        if (ind == 176) // This is ninga DAO 
+        if (ind == 176) // This is Penpenz
         {
             arratInd = 170;
+            ind = 173;
         }
-        else if (ind == 177) // This is SMBC 
+        else if (ind == 177) // This is Ninga Dao
         {
             arratInd = 171;
+            ind -= 1;
+        }
+        else if (ind == 178) // This is SMBC
+        {
+            arratInd = 172;
+            ind -= 1;
         }
         else if (ind > 166) // 3 Index are skipped and used for Internal
         {
@@ -100,6 +106,32 @@ public class MoveMaptoCenter : MonoBehaviour
             Debug.Log("Modify Item Clicked: " + arratInd);
         }
 
+        NextStep(ind, arratInd);
+    }
+    public void ItemClicked(int ind) // This is the function that is called when the Name button is clicked
+    {
+        Debug.Log("Name 2 Clicked: " + ind);
+
+        int arratInd = ind;
+
+        if (ind == 176) // This is ninga DAO 
+        {
+            arratInd = 171;
+        }
+        else if (ind == 177) // This is SMBC 
+        {
+            arratInd = 172;
+        }
+        else if (ind > 166) // 3 Index are skipped and used for Internal
+        {
+            arratInd -= 3;
+            Debug.Log("Modify Item Clicked: " + arratInd);
+        }
+
+        NextStep(ind, arratInd);
+    }
+    void NextStep(int ind, int arratInd)
+    {
         grandChildPing = MapHighlightObjs[arratInd];
         string areaName = grandChildPing.name;
         StartCoroutine(MoveChildToCenterOfMainScreen());
@@ -111,7 +143,7 @@ public class MoveMaptoCenter : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(dome.world360Image))
             {
-                string ThumbnailUrl = dome.world360Image+"?width=512?height=256";
+                string ThumbnailUrl = dome.world360Image + "?width=512?height=256";
                 StartCoroutine(DownloadTexture(ThumbnailUrl));
                 selectedWorldBannerImage.transform.parent.gameObject.SetActive(true);
             }
@@ -127,13 +159,16 @@ public class MoveMaptoCenter : MonoBehaviour
 
         goBtn.SetActive(true);
 
-        if(ind == 176) // Ninga DAO
+        if (ind == 176) // Ninga DAO
             DomeMinimapDataHolder.OnSetDomeId?.Invoke(168, areaName);
         if (ind == 177) // SMBC
             DomeMinimapDataHolder.OnSetDomeId?.Invoke(178, areaName);
-        else 
+        else
             DomeMinimapDataHolder.OnSetDomeId?.Invoke(ind + 1, areaName);
     }
+
+
+
     IEnumerator MoveChildToCenterOfMainScreen()
     {
         Debug.Log("Moving Child to Center of Main Screen");
