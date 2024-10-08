@@ -1362,8 +1362,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             //One way to handle manual scene activation.
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
-                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, environmentLabel);
-
+                //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, environmentLabel);
+                AddressableDownloader.bundleAsyncOperationHandle.Add(handle);
                 yield return handle.Result.ActivateAsync();
                 DownloadCompleted();
             }

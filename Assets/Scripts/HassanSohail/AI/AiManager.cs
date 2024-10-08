@@ -152,7 +152,8 @@ namespace XanaAi
                     Handheld.Vibrate();
                     Debug.LogError("Loaded GameObject is null. Handle the error appropriately.");
                 }
-               AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
+                AddressableDownloader.bundleAsyncOperationHandle.Add(handle);
+               //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
             }
             else if (handle.Status == AsyncOperationStatus.Failed)
             {
@@ -246,7 +247,8 @@ namespace XanaAi
                     else if (ObjectType.Contains("EyeBrowPoints"))
                         charcterBody.ApplyEyeLashes(loadedObject, ai.gameObject);
 
-                    AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
+                    AddressableDownloader.bundleAsyncOperationHandle.Add(handle);
+                    //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
 
                 }
                 else
