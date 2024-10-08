@@ -813,4 +813,5 @@ public class JjAsset
     public DateTime createdAt;
     public DateTime updatedAt;
     public string event_env_class;
+    public int width;
 }

@@ -43,6 +43,7 @@ public class SummitDomeNFTDataController : MonoBehaviour
     [SerializeField] List<VideoPlayer> VideoPlayers;
     [SerializeField] GameObject LandscapeObj;
     [SerializeField] GameObject PotraiteObj;
+    [SerializeField] int WidthParam = 256;
     [SerializeField]
     List<DomeNFTData> AllS3Nfts = new List<DomeNFTData>();
     int ratioId;
@@ -127,19 +128,24 @@ public class SummitDomeNFTDataController : MonoBehaviour
                 if (i == worldData[j].index - 1)
                 {
                     isNFTUploaded = true;
-                    ////Debug.Log("<color=red> INDEX IS : " + i + " </color>");
+
                     bool isWithDes = false;
                     string compersionPrfex = "";
-                    ////Debug.LogError(i + "-----" + nftPlaceHolder + "----"+worldData.Count);
-                    ///
-                    Debug.Log("Media Type  " + worldData[j].media_type);
+                    if (worldData[j].width != 0)
+                    {
+                        compersionPrfex = "?width=" + worldData[j].width;
+                    }
+                    else
+                    {
+                        compersionPrfex = "?width=" + WidthParam;  //"?width=500&height=600";
+                    }
                     switch (worldData[j].ratio)
                     {
                         case "1:1":
                             if (JJFrameManager.instance)
                                 JJFrameManager.instance.SetTransformForFrameSpotLight(0);
                             worldInfos[i].JjRatio = JjRatio.OneXOneWithDes;
-                            compersionPrfex = "?width=512&height=512";
+                            //compersionPrfex = "?width=512&height=512";
                             if (NFTDataFetchScrptRef._ExhibitComponentType.Equals(NFTFromServer.ExhibitComponentType.Dynamic))
                             {
                                 NftPlaceholderList[i].transform.localScale = NFTDataFetchScrptRef._ExhibitSize.square;
@@ -149,7 +155,7 @@ public class SummitDomeNFTDataController : MonoBehaviour
                             if (JJFrameManager.instance)
                                 JJFrameManager.instance.SetTransformForFrameSpotLight(1);
                             worldInfos[i].JjRatio = JjRatio.SixteenXNineWithDes;
-                            compersionPrfex = "?width=800&height=450";//"?width=500&height=600";
+                            //compersionPrfex = "?width=800&height=450";//"?width=500&height=600";
                             if (NFTDataFetchScrptRef._ExhibitComponentType.Equals(NFTFromServer.ExhibitComponentType.Dynamic))
                             {
                                 NftPlaceholderList[i].transform.localScale = NFTDataFetchScrptRef._ExhibitSize.landscape;
@@ -159,7 +165,7 @@ public class SummitDomeNFTDataController : MonoBehaviour
                             if (JJFrameManager.instance)
                                 JJFrameManager.instance.SetTransformForFrameSpotLight(2);
                             worldInfos[i].JjRatio = JjRatio.NineXSixteenWithDes;
-                            compersionPrfex = "?width=450&height=800"; //"?width=700&height=500";
+                            //compersionPrfex = "?width=450&height=800"; //"?width=700&height=500";
                             if (NFTDataFetchScrptRef._ExhibitComponentType.Equals(NFTFromServer.ExhibitComponentType.Dynamic))
                             {
                                 NftPlaceholderList[i].transform.localScale = NFTDataFetchScrptRef._ExhibitSize.potrait;
@@ -169,17 +175,16 @@ public class SummitDomeNFTDataController : MonoBehaviour
                             if (JJFrameManager.instance)
                                 JJFrameManager.instance.SetTransformForFrameSpotLight(3);
                             worldInfos[i].JjRatio = JjRatio.FourXThreeWithDes;
-                            compersionPrfex = "?width=640&height=480";
+                            //compersionPrfex = "?width=640&height=480";
                             break;
                         default:
                             if (JJFrameManager.instance)
                                 JJFrameManager.instance.SetTransformForFrameSpotLight(0);
                             worldInfos[i].JjRatio = JjRatio.OneXOneWithDes;
-                            compersionPrfex = "?width=512&height=512";
+                            //compersionPrfex = "?width=512&height=512";
                             break;
                     }
                     NftPlaceholderList[i].SetActive(true);
-                    ////Debug.LogError("-----" + worldData[i].media_type);
                     if (worldData[j].media_type == "IMAGE")
                     {
 
@@ -637,7 +642,6 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
 
         //print("~~~~~~~~~ " + ConstantsGod.API_BASEURL + _mussuemLink);
         //print("TOKEN : "+ ConstantsGod.AUTH_TOKEN);
-
         using (UnityWebRequest request = UnityWebRequest.Get(ConstantsGod.API_BASEURL + _mussuemLink))
         {
 
