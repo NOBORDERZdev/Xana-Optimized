@@ -170,13 +170,15 @@ public class XANASummitSceneLoading : MonoBehaviour
         WorldItemView.m_EnvName = domeGeneralData.world;
         ConstantsHolder.xanaConstants.EnviornmentName = domeGeneralData.world;
         gameplayEntityLoader.addressableSceneName = domeGeneralData.world;
-        ConstantsHolder.xanaConstants.isBuilderGame = true;/* domeGeneralData.isBuilderGame;*/
-        if (ConstantsHolder.xanaConstants.isBuilderGame)
-            ConstantsHolder.xanaConstants.isXanaPartyWorld = true;
-        else
-            ConstantsHolder.xanaConstants.isXanaPartyWorld = domeGeneralData.is_penpenz;
         ConstantsHolder.userLimit = domeGeneralData.maxPlayer;
         ConstantsHolder.isPenguin = domeGeneralData.IsPenguin;
+        if (domeGeneralData.isBuilderGame)
+        {
+            ConstantsHolder.xanaConstants.isXanaPartyWorld = true;
+            ConstantsHolder.xanaConstants.isBuilderGame = true;
+        }
+        else
+            ConstantsHolder.xanaConstants.isXanaPartyWorld = domeGeneralData.is_penpenz;
        // ConstantsHolder.xanaConstants.isXanaPartyWorld = domeGeneralData.is_penpenz;
         ConstantsHolder.isFixedHumanoid = domeGeneralData.Ishumanoid;
         ConstantsHolder.Thumbnail = domeGeneralData.world360Image;
@@ -538,7 +540,7 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.SubWorlds = dataContainer.summitData.domes[i].SubWorlds;
                 domeGeneralData.domeCategory = dataContainer.summitData.domes[i].domeCategory;
                 domeGeneralData.domeType = dataContainer.summitData.domes[i].domeType;
-
+                domeGeneralData.isBuilderGame = dataContainer.summitData.domes[i].isBuilderGame;
                 domeGeneralData.is_penpenz = dataContainer.summitData.domes[i].is_penpenz;
                 domeGeneralData.description = dataContainer.summitData.domes[i].description;
                 domeGeneralData.creatorName = dataContainer.summitData.domes[i].creatorName;
