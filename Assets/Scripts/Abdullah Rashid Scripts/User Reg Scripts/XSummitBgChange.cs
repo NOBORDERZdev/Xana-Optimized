@@ -12,9 +12,9 @@ public class XSummitBgChange : MonoBehaviour
     void Start()
     {
         
-        ChangeBG();
+        ChangeSummitBG();
     }
-    public void ChangeBG()
+    public void ChangeSummitBG()
     {
         if (ConstantsHolder.xanaConstants.XSummitBg)
         {
