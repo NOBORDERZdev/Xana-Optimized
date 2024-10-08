@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
+using static XANASummitDataContainer;
 
 public class MoveMaptoCenter : MonoBehaviour
 {
@@ -151,6 +152,8 @@ public class MoveMaptoCenter : MonoBehaviour
             {
                 selectedWorldBannerImage.transform.parent.gameObject.SetActive(false);
             }
+            int worldId = dome.worldType == true ? dome.builderWorldId : dome.worldId;
+            StartCoroutine(GetVisitorCount(worldId.ToString()));
         }
         else
         {
@@ -206,6 +209,21 @@ public class MoveMaptoCenter : MonoBehaviour
         }
         Texture2D texture2D = DownloadHandlerTexture.GetContent(request);
         selectedWorldBannerImage.sprite = ConvertToSprite(texture2D);
+    }
+    IEnumerator GetVisitorCount(string worldId)
+    {
+        string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.VISITORCOUNT + worldId;
+        UnityWebRequest www = UnityWebRequest.Get(apiUrl);
+        www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+        www.SendWebRequest();
+        while (!www.isDone)
+            yield return null;
+        string str = www.downloadHandler.text;
+        VisitorInfo visitorInfo = JsonUtility.FromJson<VisitorInfo>(str);
+        if (visitorInfo.success)
+            totalVisitCount.text = "" + visitorInfo.data.total_visit;
+        else
+            totalVisitCount.text = "" + 100;
     }
     Sprite ConvertToSprite(Texture2D texture)
     {
