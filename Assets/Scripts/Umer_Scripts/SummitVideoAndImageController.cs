@@ -178,7 +178,6 @@ public class SummitVideoAndImageController : MonoBehaviour
 
     private void SetSprite(string path, RawImage img)
     {
-        path = ModifyImageUrl(path, 200);
         img.enabled = true;
         if (AssetCache.Instance.HasFile(path))
         {
@@ -250,15 +249,6 @@ public class SummitVideoAndImageController : MonoBehaviour
                 imgVideo4x3.GetComponent<VideoPlayer>().enabled = false;
             }
         }
-    }
-
-    string ModifyImageUrl(string url, int newWidth)
-    {
-        string baseUrl = url.Split('?')[0]; // Get everything before the '?'
-        string parameters = $"width={newWidth}";
-
-        // Return the modified URL
-        return $"{baseUrl}?{parameters}";
     }
 
     void SetVideo()
