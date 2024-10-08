@@ -21,21 +21,24 @@ public class DataManager_Shrine : MonoBehaviour
     void Start() 
     {
         ConstantsHolder.xanaConstants.comingFrom = ConstantsHolder.ComingFrom.None;
-        if (ConstantsHolder.userId != null)
+        if (!string.IsNullOrEmpty(ConstantsHolder.userId))
         {
             id = ConstantsHolder.userId;
 
         }
-        if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
+        //if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
+        //{
+        //    id = ConstantsHolder.userId;
+        //    userName = ConstantsHolder.userName;
+        //    StartCoroutine(InitPlayerDB(id, userName));
+        //}
+        //else
+
+        //As we are not setting uniqueUsername at signup so uniqueUsername scenerio in not required now.
+        if (!string.IsNullOrEmpty(ConstantsHolder.userId) && !string.IsNullOrEmpty(ConstantsHolder.userName))
         {
             id = ConstantsHolder.userId;
             userName = ConstantsHolder.userName;
-            StartCoroutine(InitPlayerDB(id, userName));
-        }
-        else if (ConstantsHolder.userId != null && ConstantsHolder.uniqueUserName != null)
-        {
-            id = ConstantsHolder.userId;
-            userName = ConstantsHolder.uniqueUserName;
             StartCoroutine(InitPlayerDB(id, userName));
         }
         else
