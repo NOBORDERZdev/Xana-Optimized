@@ -99,6 +99,7 @@ MonoBehaviour:
   - 'Hello, Welcome to XANA Summit '
   - How I can help you?
   npcID: 0
+  NPCPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &7818978524341461210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1473,6 +1474,10 @@ PrefabInstance:
     - target: {fileID: 8775338663594855032, guid: ecbd7570b8856e443a8d5df99e505a37, type: 3}
       propertyPath: m_Name
       value: Character_Lights - Worlds
+      objectReference: {fileID: 0}
+    - target: {fileID: 8775338663594855032, guid: ecbd7570b8856e443a8d5df99e505a37, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecbd7570b8856e443a8d5df99e505a37, type: 3}
