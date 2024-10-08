@@ -130,7 +130,8 @@ public class SPAAIDresser : MonoBehaviour
                 Debug.LogError("Loaded GameObject is null. Handle the error appropriately.");
             }
 
-            AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
+            //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
+            
         }
         else if (handle.Status == AsyncOperationStatus.Failed)
         {
