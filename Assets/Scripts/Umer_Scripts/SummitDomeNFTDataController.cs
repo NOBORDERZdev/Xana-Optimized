@@ -134,6 +134,7 @@ public class SummitDomeNFTDataController : MonoBehaviour
                     if (data.width != 0)
                     {
                         compersionPrfex = "?width=" + data.width;
+                        WidthParam = data.width;
                     }
                     else
                     {
