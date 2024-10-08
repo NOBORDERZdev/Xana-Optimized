@@ -91,8 +91,11 @@ public class UserDailyRewardHandler : MonoBehaviour
     }
     private void DailyRewardResponse(string resp)
     {
-        //Debug.Log("Daily Reward Daily Reward Response : " + resp);
+        Debug.Log("Daily Reward Daily Reward Response : " + resp);
         //Debug.Log("<color=green>Daily Reward ConstantsHolder.userId received : " + ConstantsHolder.userId + "</color>");
+
+        if (ConstantsHolder.xanaConstants.LoginasGustprofile)
+            return;
 
         UserDailyRewardData data = JsonConvert.DeserializeObject<UserDailyRewardData>(resp);
 
