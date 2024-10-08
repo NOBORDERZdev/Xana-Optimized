@@ -131,9 +131,9 @@ public class SummitDomeNFTDataController : MonoBehaviour
 
                     bool isWithDes = false;
                     string compersionPrfex = "";
-                    if (worldData[j].width != 0)
+                    if (data.width != 0)
                     {
-                        compersionPrfex = "?width=" + worldData[j].width;
+                        compersionPrfex = "?width=" + data.width;
                     }
                     else
                     {
