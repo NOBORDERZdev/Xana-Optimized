@@ -65,10 +65,16 @@ public class MoveMaptoCenter : MonoBehaviour
                 newObj.GetComponent<MapItemName>().manager = this;
 
                 int domeIdToCheck = CategoriesDomeInfos[i].MyDomes[j];
+
+                String domePrefix = "";
                 if (domesDictionary.TryGetValue(domeIdToCheck, out string domeName))
-                    newObj.GetComponent<MapItemName>().SetItemName(domeName, domeIdToCheck, false);
+                    domePrefix = domeName;
+
+                if(!string.IsNullOrWhiteSpace(domePrefix))
+                    newObj.GetComponent<MapItemName>().SetItemName(domePrefix, domeIdToCheck, false);
                 else
-                    newObj.GetComponent<MapItemName>().SetItemName(CategoriesDomeInfos[i].DomeNamePrefix[j], domeIdToCheck, true);
+                    newObj.GetComponent<MapItemName>().SetItemName("MD-", domeIdToCheck, true);
+                    //newObj.GetComponent<MapItemName>().SetItemName(CategoriesDomeInfos[i].DomeNamePrefix[j], domeIdToCheck, true);
             }
         }
     }
@@ -220,38 +226,42 @@ public class MoveMaptoCenter : MonoBehaviour
                 break;
 
             case 2:
-                normalizedPos = 0.9f;
-                break;
-
-            case 3:
                 normalizedPos = 0.93f;
                 break;
 
-            case 4:
+            case 3:
             case 5:
-                normalizedPos = 0.8f;
+            case 8:
+                normalizedPos = 0.86f;
+                break;
+
+            case 4:
+                normalizedPos = 0.76f;
                 break;
 
             case 6:
-                normalizedPos = 0.88f;
+                normalizedPos = 0.27f;
                 break;
 
             case 7:
-                normalizedPos = 0.0f;
-                break;
-
-            case 8:
-                normalizedPos = 0.47f;
+                normalizedPos = 0.57f;
                 break;
 
             case 9:
-                normalizedPos = 0.26f;
+                normalizedPos = 0.23f;
                 break;
 
             case 10:
-                normalizedPos = 0.3f;
+                normalizedPos = 0.78f;
                 break;
 
+            case 11:
+                normalizedPos = 0.68f;
+                break;
+
+            case 12:
+                normalizedPos = 0.0f;
+                break;
 
             default:
                 normalizedPos = 1f;
