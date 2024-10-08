@@ -248,13 +248,14 @@ public class Web3AuthCustom : MonoBehaviour
 
     public void OnTelegramLogin(TelegramRoot telegramData)
     {
-#if UNITY_IOS
-        if (PlayerPrefs.GetInt("PlayerLoginFlag") == 1)
-            PlayerPrefs.SetInt("FirstTimeappOpen", 1);
+//#if UNITY_IOS
+//        Debug.LogError("IOS");
+//        if (PlayerPrefs.GetInt("PlayerLoginFlag") == 1)
+//            PlayerPrefs.SetInt("FirstTimeappOpen", 1);
 
-        if (PlayerPrefs.GetInt("PlayerLoginFlag") == 0)
-            return;
-#endif
+//        if (PlayerPrefs.GetInt("PlayerLoginFlag") == 0)
+//            return;
+//#endif
         GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
         //UserLoginSignupManager.instance.StartCoroutine(UserLoginSignupManager.instance.LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
         ConstantsHolder.xanaConstants.LoggedInAsGuest = false;
