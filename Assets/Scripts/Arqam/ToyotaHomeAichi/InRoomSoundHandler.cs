@@ -52,7 +52,7 @@ public class InRoomSoundHandler : MonoBehaviour
             {
                 NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Waiting For Interviewer");
             }
-            else if (GameManager.currentLanguage == "ja")
+            else if (LocalizationManager.forceJapanese || GameManager.currentLanguage.Equals("ja"))
             {
                 NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("担当者待機中");
             }
@@ -64,7 +64,7 @@ public class InRoomSoundHandler : MonoBehaviour
             {
                 NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Join Meeting Now!");
             }
-            else if (GameManager.currentLanguage == "ja")
+            else if (LocalizationManager.forceJapanese || GameManager.currentLanguage.Equals("ja"))
             {
                 NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("会議室利用可");
             }
@@ -76,7 +76,7 @@ public class InRoomSoundHandler : MonoBehaviour
             {
                 NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Meeting Is In Progress");
             }
-            else if (GameManager.currentLanguage == "ja")
+            else if (LocalizationManager.forceJapanese || GameManager.currentLanguage.Equals("ja"))
             {
                 NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("会議室使用中");
             }

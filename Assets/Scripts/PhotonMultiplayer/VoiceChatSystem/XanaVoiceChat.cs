@@ -81,45 +81,59 @@ public class XanaVoiceChat : MonoBehaviour
             // Already Called For Landscape no need to call again.
             if (Application.isEditor)
             {
-                PermissionPopusSystem.Instance.onCloseAction += SetMic;
+                SetMicByBtn();
+                PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
                 PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
                 PermissionPopusSystem.Instance.OpenPermissionScreen();
             }
             else
             {
-                NativeGallery.Permission permission = NativeGallery.CheckPermission(NativeGallery.PermissionType.Read, NativeGallery.MediaType.Image);
 #if UNITY_ANDROID
-                if (permission == NativeGallery.Permission.ShouldAsk)
+                if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
                 {
-                    PermissionPopusSystem.Instance.onCloseAction += SetMic;
+                    PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
                     PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
                     PermissionPopusSystem.Instance.OpenPermissionScreen();
                 }
                 else
                 {
-                    SetMic();
+                    StartCoroutine(SetMic());
                 }
 #elif UNITY_IOS
-                if(PlayerPrefs.GetInt("MicPermission", 0) == 0){
-                     PermissionPopusSystem.Instance.onCloseAction += SetMic;
-            PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
-            PermissionPopusSystem.Instance.OpenPermissionScreen();
+                if(!Application.HasUserAuthorization(UserAuthorization.Microphone) && PlayerPrefs.GetInt("MicPermission", 0) == 0){
+                      PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
+                    PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
+                    PermissionPopusSystem.Instance.OpenPermissionScreen();
                 }
                 else
                 {
-                    SetMic();
+                    StartCoroutine(SetMic());
                 }
 #endif
             }
         }
     }
-
-    public void SetMic()      //Start()
+    public void SetMicByBtn()
     {
-        PermissionPopusSystem.Instance.onCloseAction -= SetMic;
+        PermissionPopusSystem.Instance.onCloseAction -= SetMicByBtn;
+#if UNITY_IOS
+    Application.RequestUserAuthorization(UserAuthorization.Microphone);
+#endif
+        if (this != null)
+        {
+            StartCoroutine(SetMic());
+        }
+        else
+        {
+            Debug.LogWarning("XanaVoiceChat instance has been destroyed, cannot start SetMic coroutine.");
+        }
+    }
+    public IEnumerator SetMic()
+    {
 #if !UNITY_EDITOR && UNITY_IOS
         PlayerPrefs.SetInt("MicPermission", 1);
 #endif
+        yield return new WaitForSeconds(2f);
         recorder = GameObject.FindObjectOfType<Recorder>();
         voiceConnection = GetComponent<VoiceConnection>();
 
@@ -133,6 +147,10 @@ public class XanaVoiceChat : MonoBehaviour
             {
                 Permission.RequestUserPermission(Permission.Microphone);
             }
+        }
+        while (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+        {
+            yield return new WaitForSeconds(1f);
         }
         if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("BreakingDown Arena"))
         {
