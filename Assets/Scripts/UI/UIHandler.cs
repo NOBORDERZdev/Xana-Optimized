@@ -301,9 +301,9 @@ public class UIHandler : MonoBehaviour
                     if (apiResponse.data[i].feature_list.TryGetValue("Xsummitbg", out bool status2))
                     {
                         ConstantsHolder.xanaConstants.XSummitBg = status2;
-                        
-                         Invoke("ChangeBackground", 0.3f); // Call ChangeBackground after 2 seconds
-                        
+
+                        XSummitBgChange.ChangeSummitBG(); // Call ChangeBackground after 2 seconds
+
                         if (SceneManager.GetSceneByName("XSummitLoginSignupScene").isLoaded)
                         {
                             UserLoginSignupManager.instance.XSummitBgChange.ChangeSummitBG();
@@ -338,7 +338,7 @@ public class UIHandler : MonoBehaviour
     }
     void ChangeBackground()
     {
-        XSummitBgChange.ChangeSummitBG(); // Your method logic here
+        // Your method logic here
     }
 }
 [System.Serializable]
