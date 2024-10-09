@@ -12,7 +12,9 @@ public class XSummitBgChange : MonoBehaviour
     void Start()
     {
         
-        ChangeSummitBG();
+            Invoke("ChangeSummitBG", 0.4f); // Call ChangeBackground after 2 seconds
+        
+       
     }
     public void ChangeSummitBG()
     {

@@ -166,8 +166,7 @@ public class WorldManager : MonoBehaviour
         {
             WorldId = 6239;
         }
-        
-
+        UserAnalyticsHandler.onGetWorldId?.Invoke(WorldId, "ENVIRONMENT");
         string url = ConstantsGod.API_BASEURL + ConstantsGod.SINGLEWORLDINFO + WorldId;
         StartCoroutine(GetSingleWorldData(url, (check) =>
         {

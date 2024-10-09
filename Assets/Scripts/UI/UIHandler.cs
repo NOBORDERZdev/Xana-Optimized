@@ -301,11 +301,14 @@ public class UIHandler : MonoBehaviour
                     if (apiResponse.data[i].feature_list.TryGetValue("Xsummitbg", out bool status2))
                     {
                         ConstantsHolder.xanaConstants.XSummitBg = status2;
+                        
+                         Invoke("ChangeBackground", 0.3f); // Call ChangeBackground after 2 seconds
+                        
                         if (SceneManager.GetSceneByName("XSummitLoginSignupScene").isLoaded)
                         {
                             UserLoginSignupManager.instance.XSummitBgChange.ChangeSummitBG();
                         }
-                        XSummitBgChange.ChangeSummitBG();
+                       
                     }
                     if (apiResponse.data[i].feature_list.TryGetValue("XanaChatFlag", out bool status3))
                     {
@@ -333,7 +336,10 @@ public class UIHandler : MonoBehaviour
         }
         request.Dispose();
     }
-
+    void ChangeBackground()
+    {
+        XSummitBgChange.ChangeSummitBG(); // Your method logic here
+    }
 }
 [System.Serializable]
 public class AppData
