@@ -150,7 +150,7 @@ public class PresetData_Jsons : MonoBehaviour
 
             // Set the position, rotation of the character 
             {
-                string oldSelectedGender = CharacterHandler.instance.activePlayerGender == AvatarGender.Female ? "1" : "0";
+                string oldSelectedGender = CharacterHandler.instance.activePlayerGender.ToString();//== AvatarGender.Female ? "1" : "0";
 
                 // Check Old and new Selected are not same
                 if (oldSelectedGender != _CharacterData.gender) // 
@@ -167,6 +167,8 @@ public class PresetData_Jsons : MonoBehaviour
                         CharacterHandler.instance.femaleAvatarData.avatar_parent.transform.localPosition = CharacterHandler.instance.maleAvatarData.avatar_parent.transform.localPosition;
                         CharacterHandler.instance.femaleAvatarData.avatar_parent.transform.localRotation = CharacterHandler.instance.maleAvatarData.avatar_parent.transform.localRotation;
                     }
+                    if(ConstantsHolder.xanaConstants.isStoreActive)
+                        InventoryManager.instance.DeletePreviousItems();
                 }
             }
 

@@ -97,19 +97,21 @@ public class SummitNPCAssetLoader : MonoBehaviour
 
     private void WearDefault(string type)
     {
+        AvatarDefaultClothes _defaultClo = this.name.Contains("Female", System.StringComparison.CurrentCultureIgnoreCase) ? DefaultClothDatabase.instance.femaleAvatarDefaultCostume : DefaultClothDatabase.instance.maleAvatarDefaultCostume;
+
         switch (type)
         {
             case "Chest":
-                StichItem(DefaultClothDatabase.instance.DefaultShirt, "Chest", this.gameObject, false);
+                StichItem(_defaultClo.DefaultShirt, "Chest", this.gameObject, false);
                 break;
             case "Legs":
-                StichItem(DefaultClothDatabase.instance.DefaultPent, "Legs", this.gameObject, false);
+                StichItem(_defaultClo.DefaultPent, "Legs", this.gameObject, false);
                 break;
             case "Feet":
-                StichItem(DefaultClothDatabase.instance.DefaultShoes, "Feet", this.gameObject, false);
+                StichItem(_defaultClo.DefaultShoes, "Feet", this.gameObject, false);
                 break;
             case "Hair":
-                StichItem(DefaultClothDatabase.instance.DefaultHair, "Hair", this.gameObject, false);
+                StichItem(_defaultClo.DefaultHair, "Hair", this.gameObject, false);
                 break;
             default:
                 break;

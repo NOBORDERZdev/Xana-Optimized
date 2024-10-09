@@ -154,11 +154,11 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen
                     //this.namePlayer1.text = UFE.config.player1Character.characterName;	
                     if (UFE.gameMode == GameMode.TrainingRoom)
                     {
-                        this.namePlayer1.text = GetFirstNameOfPlayer(PlayerPrefs.GetString("PlayerName").ToUpper());
+                        this.namePlayer1.text = GetFirstNameOfPlayer(PlayerPrefs.GetString("UserName").ToUpper());
                     }
                     else if (UFE.gameMode == GameMode.VersusMode)
                     {
-                        this.namePlayer1.text = GetFirstNameOfPlayer(PlayerPrefs.GetString("PlayerName").ToUpper());
+                        this.namePlayer1.text = GetFirstNameOfPlayer(PlayerPrefs.GetString("UserName").ToUpper());
                     }
                     else
                     {

@@ -141,6 +141,8 @@ public class XanaVoiceChat : MonoBehaviour
         micOnBtnPotrait.SetActive(true);
         if (recorder != null)
             recorder.TransmitEnabled = true;
+
+        EnableRecoder();
     }
 
     public void TurnOffMic()
@@ -151,6 +153,9 @@ public class XanaVoiceChat : MonoBehaviour
         micOnBtnPotrait.SetActive(false);
         if (recorder != null)
             recorder.TransmitEnabled = false;
+
+        StopRecorder();
+
     }
 
 
@@ -189,6 +194,16 @@ public class XanaVoiceChat : MonoBehaviour
         }
     }
 
+    public void EnableRecoder()
+    {
+        if (recorder != null)
+        {
+            recorder.AutoStart = recorder.TransmitEnabled = true;
+            recorder.StartRecording();
+            recorder.Init(voiceConnection);
+        }
+    }
+
     
 
     IEnumerator CheckVoiceConnect()
@@ -200,7 +215,8 @@ public class XanaVoiceChat : MonoBehaviour
         recorder.DebugEchoMode = false;
         if (ConstantsHolder.xanaConstants.mic == 1 && !ConstantsHolder.xanaConstants.pushToTalk)
         {
-            TurnOnMic();
+            //TurnOnMic();
+            TurnOffMic();  //by defult we will keep mic off in all env
         }
         else
         {

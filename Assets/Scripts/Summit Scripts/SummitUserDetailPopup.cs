@@ -23,43 +23,43 @@ public class SummitUserDetailPopup : MonoBehaviour
     private float holdStartTime;
     private float holdEndTime = 0.5f;
     private int tapCounter;
-    private void OnEnable()
-    {
-        if (GetComponent<PhotonView>().IsMine)
-            GetUserInfo();
+    //private void OnEnable()
+    //{
+    //    if (GetComponent<PhotonView>().IsMine)
+    //        GetUserInfo();
 
-        ScreenOrientationManager.switchOrientation += CheckOrientation;
-    }
+    //    ScreenOrientationManager.switchOrientation += CheckOrientation;
+    //}
 
-    private void OnDisable()
-    {
-        ScreenOrientationManager.switchOrientation -= CheckOrientation;
-    }
+    //private void OnDisable()
+    //{
+    //    ScreenOrientationManager.switchOrientation -= CheckOrientation;
+    //}
 
-    private void OnMouseDown()
-    {
-        isHolding = true;
-        if (tapCounter == 0)
-            holdStartTime = Time.time;
-        tapCounter++;
-    }
+    //private void OnMouseDown()
+    //{
+    //    isHolding = true;
+    //    if (tapCounter == 0)
+    //        holdStartTime = Time.time;
+    //    tapCounter++;
+    //}
 
-    private void OnMouseUp()
-    {
-        if (!playerInfoAvailable)
-            return;
+    //private void OnMouseUp()
+    //{
+    //    if (!playerInfoAvailable)
+    //        return;
 
-        isHolding = false;
-        float holdTime = Time.time - holdStartTime;
+    //    isHolding = false;
+    //    float holdTime = Time.time - holdStartTime;
 
-        if (holdTime < holdEndTime && tapCounter == 2) // Adjust hold time threshold as needed
-        {
-            SetPopUpActive();
-            tapCounter = 0;
-        }
-        if (tapCounter >= 2)
-            tapCounter = 0;
-    }
+    //    if (holdTime < holdEndTime && tapCounter == 2) // Adjust hold time threshold as needed
+    //    {
+    //        SetPopUpActive();
+    //        tapCounter = 0;
+    //    }
+    //    if (tapCounter >= 2)
+    //        tapCounter = 0;
+    //}
 
     async void GetUserInfo()
     {

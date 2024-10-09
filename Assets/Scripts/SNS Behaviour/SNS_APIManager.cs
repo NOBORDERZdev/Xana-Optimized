@@ -44,7 +44,7 @@ public class SNS_APIManager : MonoBehaviour
             Instance = this;
         }
         userAuthorizeToken = ConstantsGod.AUTH_TOKEN;
-        userId = int.Parse(PlayerPrefs.GetString("UserName"));
+        userId = int.Parse(PlayerPrefs.GetString("UserId"));
         gameManager = GameManager.Instance;
         if (apiController == null)
         {
@@ -81,8 +81,8 @@ public class SNS_APIManager : MonoBehaviour
             }
 
             userAuthorizeToken = ConstantsGod.AUTH_TOKEN;
-            userId = int.Parse(PlayerPrefs.GetString("UserName"));
-            userName = PlayerPrefs.GetString("PlayerName");
+            userId = int.Parse(PlayerPrefs.GetString("UserId"));
+            userName = PlayerPrefs.GetString("UserName");
         }
         else
         {
@@ -1072,6 +1072,7 @@ public class SNS_APIManager : MonoBehaviour
                 }
 
                 PlayerPrefs.SetString("PlayerName", myProfileDataRoot.data.name);
+                PlayerPrefs.SetString("UserName", myProfileDataRoot.data.name);
 
                 if (string.IsNullOrEmpty(myProfileDataRoot.data.avatar))
                 {
