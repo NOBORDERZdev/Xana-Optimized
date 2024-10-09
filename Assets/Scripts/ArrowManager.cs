@@ -101,6 +101,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
                     AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().animator = this.GetComponent<Animator>();
                     if (this.GetComponent<Animator>())
                     ActionAnimationApplyToPlayer.PlayerAnimatorInitializer?.Invoke(this.GetComponent<Animator>().runtimeAnimatorController);
+                    if(AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>() && GetComponent<FirstPersonJump>())
                     AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().playerRig = GetComponent<FirstPersonJump>().jumpRig;
                 }
             }
