@@ -319,7 +319,7 @@ public class XanaWorldDownloader : MonoBehaviour
                 _assetDownloadTryCount++;
                 if (_assetDownloadTryCount < 5)
                 {
-                    yield return new WaitForSeconds(1);
+                    yield return new WaitForSeconds(.1f);
                     goto LoadAssetAgain;
                 }
             }
@@ -388,7 +388,7 @@ public class XanaWorldDownloader : MonoBehaviour
                 _assetDownloadTryCount++;
                 if (_assetDownloadTryCount < 5)
                 {
-                    yield return new WaitForSeconds(1);
+                    yield return new WaitForSeconds(.1f);
                     goto LoadAssetAgain;
                 }
             }
@@ -449,7 +449,7 @@ public class XanaWorldDownloader : MonoBehaviour
                 _assetDownloadTryCount++;
                 if (_assetDownloadTryCount < 5)
                 {
-                    yield return new WaitForSeconds(1);
+                    yield return new WaitForSeconds(.1f);
                     goto LoadAssetAgain;
                 }
             }
