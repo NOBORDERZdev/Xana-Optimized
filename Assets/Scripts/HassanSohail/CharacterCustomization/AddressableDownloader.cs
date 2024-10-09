@@ -473,7 +473,36 @@ public class AddressableDownloader : MonoBehaviour
         }
     }
 
-    async Task DeleteCachedAddressables()
+    public bool IsSceneLoaded(int sceneId)
+    {
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            Scene scene = SceneManager.GetSceneAt(i);
+            if (scene.buildIndex == sceneId)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public void UnloadLoadScene(int oldScene, int newScene) { 
+        StartCoroutine(LoadAdditiveScene(oldScene, newScene));
+    }
+
+    IEnumerator LoadAdditiveScene(int currentSceneName, int newSceneName)
+    {
+        AsyncOperation loadOperation = SceneManager.UnloadSceneAsync(currentSceneName);
+
+        while (!loadOperation.isDone)
+        {
+            yield return null;
+        }
+
+        SceneManager.LoadSceneAsync(newSceneName, LoadSceneMode.Additive);
+    }
+
+
+async Task DeleteCachedAddressables()
     {
         string res = await GetAsyncRequest(ConstantsGod.API_BASEURL + ConstantsGod.BUNDLEUPDATEAPI);
         BundleUpdateInfo bundleUpdateInfo = JsonUtility.FromJson<BundleUpdateInfo>(res);

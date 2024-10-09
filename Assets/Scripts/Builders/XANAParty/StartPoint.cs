@@ -30,6 +30,7 @@ public class StartPoint : MonoBehaviour
         BuilderEventManager.XANAPartyRaceStart += DisableCollider;
         BuilderEventManager.XANAPartyWiatingForPlayer += EnableCollider;
         NetworkSyncManager.Instance.startGame += StartG;
+        BuilderEventManager.AfterWorldInstantiated += StartBuilderGame;
     }
 
     private void OnDisable()
@@ -42,6 +43,7 @@ public class StartPoint : MonoBehaviour
         BuilderEventManager.XANAPartyRaceStart -= DisableCollider;
         BuilderEventManager.XANAPartyWiatingForPlayer -= EnableCollider;
         NetworkSyncManager.Instance.startGame -= StartG;
+        BuilderEventManager.AfterPlayerInstantiated -= StartBuilderGame;
     }
 
     void DisableCollider()
@@ -67,7 +69,7 @@ public class StartPoint : MonoBehaviour
 
     
 
-   IEnumerator StartGame()
+    IEnumerator StartGame()
     {
         if(IsRaceStarted)
             yield break;
@@ -100,4 +102,16 @@ public class StartPoint : MonoBehaviour
         if (OpenGateAnimator != null)
             OpenGateAnimator.SetTrigger("OpenGate");
     }
+
+    void StartBuilderGame() {
+        if (ConstantsHolder.xanaConstants.isBuilderGame)
+        {
+            IsRaceStarted = true;
+            triggerCollider.SetActive(false);
+            if (OpenGateAnimator != null)
+                OpenGateAnimator.SetTrigger("OpenGate");
+
+        }
+    }
+
 }

@@ -91,13 +91,21 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     void LoadAddressableSceneAfterDownload()
     {
-        if ((SceneManager.sceneCount > 1 || ConstantsHolder.isFromXANASummit) && !ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        if ((SceneManager.sceneCount > 1 || ConstantsHolder.isFromXANASummit) && (!ConstantsHolder.xanaConstants.isXanaPartyWorld || ConstantsHolder.xanaConstants.isBuilderGame) )
         {
             Photon.Pun.Demo.PunBasics.MutiplayerController.instance.Connect(ConstantsHolder.xanaConstants.EnviornmentName);
             return;
         }
-        SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+
+        //if(!AddressableDownloader.Instance.IsSceneLoaded(1))
+        //    SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+        //else
+        //{
+        //    AddressableDownloader.Instance.UnloadLoadScene(1, 1);
+        //}
     }
+
 
     public static void ArrangeData()
     {

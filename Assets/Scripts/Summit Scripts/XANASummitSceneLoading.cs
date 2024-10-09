@@ -174,8 +174,9 @@ public class XANASummitSceneLoading : MonoBehaviour
         ConstantsHolder.isPenguin = domeGeneralData.IsPenguin;
         if (domeGeneralData.isBuilderGame)
         {
-            ConstantsHolder.xanaConstants.isXanaPartyWorld = true;
+            ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
             ConstantsHolder.xanaConstants.isBuilderGame = true;
+            ConstantsHolder.XanaPartyMaxPlayers = 1; 
         }
         else
             ConstantsHolder.xanaConstants.isXanaPartyWorld = domeGeneralData.is_penpenz;
