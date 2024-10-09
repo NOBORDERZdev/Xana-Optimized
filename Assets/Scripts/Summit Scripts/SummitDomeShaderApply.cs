@@ -31,7 +31,7 @@ public class SummitDomeShaderApply : MonoBehaviour
         clickListener.DomeId = DomeId;
         if (!string.IsNullOrEmpty(ImageUrl))
         {
-            ImageUrl = ImageUrl + "?width=512?height=256";
+            ImageUrl = ImageUrl + "?width=256";
             DownloadDomeTexture(ImageUrl);  
         }
         else
