@@ -145,7 +145,7 @@ public class MoveMaptoCenter : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(dome.world360Image))
             {
-                string ThumbnailUrl = dome.world360Image + "?width=256";
+                string ThumbnailUrl = dome.world360Image + "?width=" + ConstantsHolder.DomeImageCompression;
                 StartCoroutine(DownloadTexture(ThumbnailUrl));
                 selectedWorldBannerImage.transform.parent.gameObject.SetActive(true);
             }

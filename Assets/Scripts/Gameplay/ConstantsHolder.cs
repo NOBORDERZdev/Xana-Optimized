@@ -23,6 +23,7 @@ public class ConstantsHolder : MonoBehaviour
     public static bool IsXSummitApp;
     public bool OpenSpaceScreen_fromSummit = false;
     public bool chatFlagBtnStatus = false;
+    public static int DomeImageCompression = 350;
 
     //Login Info
     public static bool isAdmin;

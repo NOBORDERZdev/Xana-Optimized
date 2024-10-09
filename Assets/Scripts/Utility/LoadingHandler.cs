@@ -803,7 +803,7 @@ public class LoadingHandler : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(info.thumbnail))
         {
-            info.thumbnail += "?width=256";
+            info.thumbnail += "?width="+ConstantsHolder.DomeImageCompression;
             DomeThumbnail.gameObject.SetActive(true);
             if (AssetCache.Instance.HasFile(info.thumbnail))
             {
@@ -874,7 +874,7 @@ public class LoadingHandler : MonoBehaviour
         WaitForInput = true;
         if (!string.IsNullOrEmpty(info.world360Image))
         {
-            info.world360Image += "?width=256";
+            info.world360Image += "?width=" + ConstantsHolder.DomeImageCompression;
             DomeThumbnail.gameObject.SetActive(true);
             if (AssetCache.Instance.HasFile(info.world360Image))
             {
@@ -950,7 +950,7 @@ public class LoadingHandler : MonoBehaviour
 
         if (!string.IsNullOrEmpty(info.data.thumbnail))
         {
-            info.data.thumbnail += "?width=256";
+            info.data.thumbnail += "?width=" + ConstantsHolder.DomeImageCompression;
 
             DomeThumbnail.gameObject.SetActive(true);
             if (AssetCache.Instance.HasFile(info.data.thumbnail))
