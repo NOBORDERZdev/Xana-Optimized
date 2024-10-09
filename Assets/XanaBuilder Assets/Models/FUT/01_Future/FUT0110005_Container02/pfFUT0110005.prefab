@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4271026248427760072}
   - component: {fileID: 630782925866126332}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 5723895310395763544}
   - component: {fileID: 4706022412241717676}
   - component: {fileID: 9189797881885196281}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3abd906363a28804cad86c44c60557ac, type: 2}
+  - {fileID: 2100000, guid: 662939d4f7c3fa544b40f673ddc124d6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -212,9 +212,9 @@ GameObject:
   - component: {fileID: 7248792459661538413}
   - component: {fileID: 4186065916216182958}
   - component: {fileID: 380066428308806718}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: pfFUT0110005
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -226,7 +226,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5269215707738688241}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -323,9 +323,11 @@ MonoBehaviour:
   itemType: 0
   itemCategory: 0
   itemThemes: 
+  componentsAttachedToItem: 
   bottomTransform: 0
   isValid: 0
   isPlaced: 0
+  isCurrentSpawnPoint: 0
   IsItemLocked: 0
   IsItemVisible: 0
   hasParent: 0

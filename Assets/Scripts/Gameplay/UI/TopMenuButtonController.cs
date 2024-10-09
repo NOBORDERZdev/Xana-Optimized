@@ -1,9 +1,6 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Metaverse;
 
 [System.Serializable]
 public class Btn
@@ -12,8 +9,6 @@ public class Btn
     public Sprite pressed;
     //public Image image;
     public GameObject[] screens;
-
-
 }
 
 public class TopMenuButtonController : MonoBehaviour
@@ -21,17 +16,25 @@ public class TopMenuButtonController : MonoBehaviour
     public static TopMenuButtonController Instance;
 
     [SerializeField] public List<Btn> btns;
+    [SerializeField] public Button leaveRoomBtn;
 
     public bool Settings_pressed = false;
 
     bool IsHelpPanelOpen = false;
-
-
-
-
     private void Awake()
     {
         Instance = this;
+        leaveRoomBtn?.onClick.AddListener(() =>
+        {
+            if (ConstantsHolder.xanaConstants.IsMetabuzzEnvironment)
+            {
+                ConstantsHolder.xanaConstants.comingFrom = ConstantsHolder.ComingFrom.None;
+            }
+            if (!ConstantsHolder.xanaConstants.isFromXanaLobby)
+            {
+                ConstantsHolder.xanaConstants.isGoingForHomeScene = true;
+            }
+        });
     }
 
     public void OnEnable()
@@ -49,8 +52,6 @@ public class TopMenuButtonController : MonoBehaviour
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OnSettingButton -= OnSettingClick;
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OnInvite -= OnInviteClick;
     }
-
-   
 
     public void SetPress(int index)
     {
@@ -73,7 +74,6 @@ public class TopMenuButtonController : MonoBehaviour
         {
             Settings_pressed = false;
         }
-
     }
 
     void OnExitClick()
@@ -89,6 +89,7 @@ public class TopMenuButtonController : MonoBehaviour
             ReferencesForGamePlay.instance.playerControllerNew.gyroButton.SetActive(true);
             ReferencesForGamePlay.instance.playerControllerNew.gyroButton_Portait.SetActive(true);
         }
+        ReferencesForGamePlay.instance.QualityManager.SetQualityToggles(PlayerPrefs.GetInt("QualitySettings"));
     }
     void OnInviteClick()
     {
@@ -110,8 +111,6 @@ public class TopMenuButtonController : MonoBehaviour
     {
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.UpdateHelpObjects(IsHelpPanelOpen);
     }
-
-
    
     public void ResetAllToClose()
     {

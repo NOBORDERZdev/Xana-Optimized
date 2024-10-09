@@ -1,0 +1,153 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6193991703671889003
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6193991703671889005}
+  - component: {fileID: 6193991703671889002}
+  - component: {fileID: 6193991703671889007}
+  - component: {fileID: 6193991703671889004}
+  - component: {fileID: 6193991703671889006}
+  - component: {fileID: 6193991703671889009}
+  - component: {fileID: 1521382545}
+  m_Layer: 0
+  m_Name: EmoteManger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6193991703671889005
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6193991703671889003}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 523.5, y: 317, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6193991703671889002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6193991703671889003}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d82794c000a70c74f94950a4ca539bc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alreadyRuning: 1
+  AnimHighlight: {fileID: 0}
+  spawnCharacterObject: {fileID: 0}
+  spawnCharacterObjectRemote: {fileID: 0}
+  popupPenal: {fileID: 0}
+  IsEmote: 0
+  animator: {fileID: 0}
+  animatorremote: {fileID: 0}
+  controller: {fileID: 9100000, guid: d33d3787caec8ca4b9094eb59ac0103f, type: 2}
+  bean:
+    success: 0
+    data:
+      animationList: []
+    msg: 
+  AnimObject: {fileID: 0}
+  emoteAnim: []
+  isEmoteActive: 0
+  MyAnimLoader: 0
+  currentAnimationTab: 
+  lastAnimClickButton: {fileID: 0}
+  waitForStandUp: 0
+  isPreviousBundleLoad: 1
+--- !u!114 &6193991703671889007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6193991703671889003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8bd2557ccab19d4db1176915d07dd1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EmoteServerData:
+    success: 0
+    data:
+      animationList: []
+    msg: 
+  EmoteGroupSelected: 0
+--- !u!114 &6193991703671889004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6193991703671889003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b10956360a3a70649ab62e54d79834e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ReactionGroupSelected: 0
+  ReactionServerData:
+    success: 0
+    data:
+      reactionList: []
+    msg: 
+--- !u!114 &6193991703671889006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6193991703671889003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56fedfb4f09e5254481da72363d5be08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EmoteManager: {fileID: 6193991703671889007}
+  ReactionManager: {fileID: 6193991703671889004}
+  ActionFavouriteManager: {fileID: 6193991703671889009}
+--- !u!114 &6193991703671889009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6193991703671889003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 947e0ad01c62b884a8d384966015d685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActionFavouritDialogObj: {fileID: 0}
+  ActionCircleDialog: {fileID: 0}
+  IsInActionSelection: 0
+  ActionFavouritSelectionHandler: {fileID: 0}
+--- !u!114 &1521382545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6193991703671889003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdf21dd9a0b9bad49935bcac2ab38384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 9100000, guid: 7d8cca59edbcd094aaced363bf2a1ad5, type: 2}

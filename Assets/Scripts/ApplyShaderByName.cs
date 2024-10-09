@@ -3,6 +3,7 @@ using UnityEngine;
 public class ApplyShaderByName : MonoBehaviour
 {
     public Shader _shader;
+    public bool _IsSpriteRenderer;
     public bool isMeshRendrer;
     public string shaderName;
     public bool isTerrain=false;
@@ -17,6 +18,10 @@ public class ApplyShaderByName : MonoBehaviour
         else if(isTerrain)
         {
             gameObject.GetComponent<Terrain>().materialTemplate.shader = Shader.Find(shaderName);
+        }
+        else if (_IsSpriteRenderer)
+        {
+            gameObject.GetComponent<SpriteRenderer>().material.shader = Shader.Find(shaderName);
         }
         else
         {

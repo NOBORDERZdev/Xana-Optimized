@@ -808,8 +808,9 @@ public class JjAsset
     public string event_id;
     public string category;
     public bool youtubeUrlCheck;
+    public string PrercrdOrLiveURL;
     public string youtubeUrl;
     public DateTime createdAt;
     public DateTime updatedAt;
-    public string event_env_class;
+    public string event_env_class;   
 }

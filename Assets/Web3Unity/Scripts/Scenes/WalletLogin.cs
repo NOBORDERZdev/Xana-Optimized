@@ -23,7 +23,14 @@ public class WalletLogin: MonoBehaviour
         {
             if (PlayerPrefs.GetInt("RememberMe") == 1 && PlayerPrefs.GetString("publicID") != "")
             {
-                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                {
+                    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                }
+                else
+                {
+                    LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+                }
                 // move to next scene
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
@@ -53,7 +60,14 @@ public class WalletLogin: MonoBehaviour
         WalletConnectCallType type = WalletConnectCallType.None;
         try
         {
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+            }
             if (isNewReg)
             {
                 type = WalletConnectCallType.NewRegistration;
@@ -69,7 +83,6 @@ public class WalletLogin: MonoBehaviour
             int expirationTime = timestamp + 60;
             // set message
             string message = expirationTime.ToString();
-            print("message is "+ message);
              string signature;
             string account;
             // sign message
@@ -112,9 +125,17 @@ public class WalletLogin: MonoBehaviour
                 PlayerPrefs.Save();
             }
         }
-        catch (Exception e )
+        catch (Exception e)
         {
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+            }
+            UserLoginSignupManager.instance.emailOrWalletLoginPanel.SetActive(true);
             throw new System.Exception("Unbale to Connect wallet on wallet connect btn at "+type+" state  with exception : "+e );
         }
 

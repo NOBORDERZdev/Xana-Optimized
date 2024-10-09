@@ -46,6 +46,13 @@ public class LookAtCamera : MonoBehaviour
     }
     void Start()
     {
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            GetLatestPost();
+        }
+    }
+    public void GetLatestPost()
+    {
         _postHandler.GetLatestPost(_postText);
     }
     void Update()

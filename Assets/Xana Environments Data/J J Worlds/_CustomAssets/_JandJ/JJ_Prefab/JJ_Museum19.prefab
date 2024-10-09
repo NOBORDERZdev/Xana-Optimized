@@ -1746,6 +1746,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -2733,6 +2734,7 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 7856079531459057086}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -2762,6 +2764,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
   mediaPlayer: {fileID: 7856079531459057083}
   videoPlayer: {fileID: 7856079531396644241}
   liveVideoPlay:
@@ -3256,6 +3261,7 @@ GameObject:
   - component: {fileID: 8347674729415894986}
   - component: {fileID: 8347674729415894980}
   - component: {fileID: 8347674729415894981}
+  - component: {fileID: 581926052162234667}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -3328,6 +3334,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &581926052162234667
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8347674729415894987}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &8347674729423078285
 GameObject:
   m_ObjectHideFlags: 0
@@ -3339,6 +3358,7 @@ GameObject:
   - component: {fileID: 8347674729423078284}
   - component: {fileID: 8347674729423078286}
   - component: {fileID: 8347674729423078287}
+  - component: {fileID: 667706661490693629}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -3411,6 +3431,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &667706661490693629
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8347674729423078285}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &8347674729455053637
 GameObject:
   m_ObjectHideFlags: 0
@@ -3505,6 +3538,7 @@ GameObject:
   - component: {fileID: 8347674729558405928}
   - component: {fileID: 8347674729558405930}
   - component: {fileID: 8347674729558405931}
+  - component: {fileID: 1512360890807960433}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -3577,6 +3611,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1512360890807960433
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8347674729558405929}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &8347674729590732108
 GameObject:
   m_ObjectHideFlags: 0
@@ -3902,6 +3949,7 @@ GameObject:
   - component: {fileID: 8347674729713110697}
   - component: {fileID: 8347674729713110699}
   - component: {fileID: 8347674729713110696}
+  - component: {fileID: 2182091434153346165}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -3974,6 +4022,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2182091434153346165
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8347674729713110702}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &8347674729763358172
 GameObject:
   m_ObjectHideFlags: 0

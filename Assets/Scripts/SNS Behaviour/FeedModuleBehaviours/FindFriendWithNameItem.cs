@@ -30,6 +30,10 @@ public class FindFriendWithNameItem : MonoBehaviour
     public bool IsInFollowingTab;
 
     public SavingCharacterDataClass _userAvatarData;
+    public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
+    public static event Action OnFollowButtonPressed;
+
+    public static List<int> checkDublicateEntries = new List<int>();
     private void Awake()
     {
         defaultSP = profileImage.sprite;
@@ -59,12 +63,15 @@ public class FindFriendWithNameItem : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(searchUserRow.avatar) || !string.IsNullOrEmpty(allFollowersRows.follower.avatar))
         {
+            // Remove sprite from asset cache
             AssetCache.Instance.RemoveFromMemory(profileImage.sprite);
             profileImage.sprite = null;
-            //Resources.UnloadUnusedAssets();//every clear.......
-            //Caching.ClearCache();
-            SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+
+            // Unload specific assets
+            SNS_APIManager.Instance.ResourcesUnloadAssetFile();
         }
+
+       
     }
 
     public void SetupData(SearchUserRow searchUserRow1, bool isFromSearch = false)
@@ -290,6 +297,7 @@ public class FindFriendWithNameItem : MonoBehaviour
             singleUserProfileData.userProfile.bio = searchUserRow.userProfile.bio;
         }
         OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData,true);
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.FriendsProfile);
     }
 
     public void DressUpUserAvatar()
@@ -335,20 +343,43 @@ public class FindFriendWithNameItem : MonoBehaviour
             if (searchUserRow.am_i_following)
             {
                Debug.Log("UnFollow User call:" + searchUserRow.id);
-                FollowUnfollowBtnRef.interactable = false;
+                //FollowUnfollowBtnRef.interactable = false;
                 //FeedUIController.Instance.ShowLoader(true);//active api loader
                 //unfollow
-                RequestUnFollowAUser(searchUserRow.id.ToString());
+                //RequestUnFollowAUser(searchUserRow.id.ToString());
+                FeedUIController.Instance.ConfirmUnfollowPanel.SetActive(true);
+                FeedUIController.Instance.UnfollowButton.onClick.RemoveAllListeners(); // To Avoid multiple function calls
+                FeedUIController.Instance.UnfollowButton.onClick.AddListener(UnFollowAUser);
             }
             else
             {
                Debug.Log("Follow User call:" + searchUserRow.id);
-                gameObject.GetComponent<Button>().interactable = false;
+                //gameObject.GetComponent<Button>().interactable = false;
                 //FeedUIController.Instance.ShowLoader(true);//active api loader
                 //follow
                 RequestFollowAUser(searchUserRow.id.ToString());
+
+                if (OnFollowButtonPressed != null)
+                {
+
+                    if (checkDublicateEntries.Count == 0)
+                    {
+                        checkDublicateEntries.Add(searchUserRow.id);
+                        OnFollowButtonPressed.Invoke();
+
+                    }
+                    else
+                    {
+                        if(!checkDublicateEntries.Contains(searchUserRow.id))
+                        {
+                            OnFollowButtonPressed.Invoke();
+                            checkDublicateEntries.Add(searchUserRow.id);
+                        }
+                    }
+                }
             }
         }
+
     }
 
     public void RequestFollowAUser(string user_Id)
@@ -407,11 +438,18 @@ public class FindFriendWithNameItem : MonoBehaviour
             }
         }
     }
-
-    public void RequestUnFollowAUser(string user_Id)
+    public void UnFollowAUser()
     {
-        StartCoroutine(IERequestUnFollowAUser(user_Id));
+        StartCoroutine(IERequestUnFollowAUser(searchUserRow.id.ToString()));
     }
+    public void FollowingTabUnfollowAUser()
+    {
+        StartCoroutine(IERequestUnFollowAUser(GetComponent<FollowingItemController>().followingRawData.userId.ToString()));
+    }
+    //public void RequestUnFollowAUser(string user_Id)
+    //{
+    //    StartCoroutine(IERequestUnFollowAUser(user_Id));
+    //}
 
     public IEnumerator IERequestUnFollowAUser(string user_Id)
     {
@@ -441,6 +479,8 @@ public class FindFriendWithNameItem : MonoBehaviour
                 searchUserRow.is_following_me = false;
                 searchUserRow.am_i_following = false;
                 searchUserRow.is_close_friend = false;
+                if (SNS_APIManager.Instance.BFCount > 0)
+                    SNS_APIManager.Instance.BFCount -= 1;
                 //FollowFollowingSetUp(false);
                 //if (FeedUIController.Instance != null)
                 //{
@@ -460,6 +500,8 @@ public class FindFriendWithNameItem : MonoBehaviour
                     FollowFollowingSetUp(false);
                 }
                 FollowUnfollowBtnRef.interactable = true;
+                if (FeedUIController.Instance.ConfirmUnfollowPanel.activeInHierarchy)
+                    FeedUIController.Instance.ConfirmUnfollowPanel.SetActive(false);
             }
         }
     }
@@ -493,10 +535,13 @@ public class FindFriendWithNameItem : MonoBehaviour
     {
         if (GetComponent<FollowingItemController>())
         {
-            FollowUnfollowBtnRef.interactable = false;
+            //FollowUnfollowBtnRef.interactable = false;
             //FeedUIController.Instance.ShowLoader(true);
-            RequestUnFollowAUser(GetComponent<FollowingItemController>().followingRawData.userId.ToString());
+            //RequestUnFollowAUser(GetComponent<FollowingItemController>().followingRawData.userId.ToString());
             //FeedUIController.Instance.OnClickAddFriendFollowing();
+            FeedUIController.Instance.ConfirmUnfollowPanel.SetActive(true);
+            FeedUIController.Instance.UnfollowButton.onClick.RemoveAllListeners(); // To Avoid multiple function calls
+            FeedUIController.Instance.UnfollowButton.onClick.AddListener(FollowingTabUnfollowAUser);
         }
     }
 

@@ -16,7 +16,7 @@ public class PlayerPortal : MonoBehaviour
     public PortalType currentPortal = PortalType.None;
     public JJMuseumInfoManager ref_JJMuseumInfoManager;
     public string scriptObjectName;
-    public float cam_XValue = -50f;
+    public float Cam_XValue = -50f;
     #endregion
     #region PrivateVar
     // private PlayerController player;
@@ -165,7 +165,7 @@ public class PlayerPortal : MonoBehaviour
             referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
             // isAlreadyRunning = true;
             //manager.allowTeleportation = true;
-            GameplayEntityLoader.instance.StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(cam_XValue, 0.5f));
+            GameplayEntityLoader.instance.StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(Cam_XValue, 0.5f));
             yield return new WaitForSeconds(.15f);
             //player.allowTeleport = true;
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));

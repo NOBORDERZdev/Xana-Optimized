@@ -22,7 +22,7 @@ public class HyperlinkPanelResizer : MonoBehaviour
 
     private IEnumerator CheckJapaneseRoutine()
     {
-        yield return new WaitForSeconds(1f); //Wait for the text to be set
+        yield return new WaitForSeconds(0.15f); //Wait for the text to be set
         switch (LocalizationManager._instance.IsJapanese(text.text))
         {
             case false:

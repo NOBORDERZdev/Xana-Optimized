@@ -5254,6 +5254,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -9500,6 +9501,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -9914,6 +9916,7 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 4457296188833860736}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -10234,6 +10237,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -11228,6 +11232,7 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 4457296190495701530}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -11313,6 +11318,7 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 4457296188683089177}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -11573,6 +11579,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -11916,6 +11923,7 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 4457296189760212830}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -12546,6 +12554,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -14677,6 +14686,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -15118,6 +15128,7 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 4457296188933920331}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -15252,6 +15263,7 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 4457296190055549307}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -15325,6 +15337,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -16690,6 +16703,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -16966,6 +16980,7 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 4457296190208223993}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -18309,6 +18324,7 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 4457296188727104774}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -18336,6 +18352,7 @@ GameObject:
   - component: {fileID: 4457296189254322248}
   - component: {fileID: 4457296189254322250}
   - component: {fileID: 4457296189254322249}
+  - component: {fileID: 8451018978763482916}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -18408,6 +18425,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8451018978763482916
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4457296189254322263}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &4457296189255660499
 GameObject:
   m_ObjectHideFlags: 0
@@ -19744,6 +19774,7 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 4457296188468685732}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -23191,6 +23222,7 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 4457296189630130598}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -28541,6 +28573,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -28924,6 +28957,7 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 4457296189388861581}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -29355,6 +29389,7 @@ GameObject:
   - component: {fileID: 4457296189723263102}
   - component: {fileID: 4457296189723263088}
   - component: {fileID: 4457296189723263103}
+  - component: {fileID: 6883005810133812315}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -29427,6 +29462,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6883005810133812315
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4457296189723263101}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &4457296189737803495
 GameObject:
   m_ObjectHideFlags: 0
@@ -29875,6 +29923,7 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 4457296189095954271}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -32821,6 +32870,7 @@ GameObject:
   - component: {fileID: 4457296189893528548}
   - component: {fileID: 4457296189893528550}
   - component: {fileID: 4457296189893528549}
+  - component: {fileID: 5019327893392494292}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -32893,6 +32943,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5019327893392494292
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4457296189893528547}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &4457296189893921396
 GameObject:
   m_ObjectHideFlags: 0
@@ -33114,6 +33177,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -33215,6 +33279,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -34890,6 +34955,7 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 4457296189767170741}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -37269,6 +37335,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -37668,6 +37735,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -38974,6 +39042,7 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 4457296189557965512}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -40817,6 +40886,7 @@ GameObject:
   - component: {fileID: 4457296190219731113}
   - component: {fileID: 4457296190219731115}
   - component: {fileID: 4457296190219731114}
+  - component: {fileID: 1326579979579153274}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -40889,6 +40959,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1326579979579153274
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4457296190219731112}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &4457296190223533380
 GameObject:
   m_ObjectHideFlags: 0
@@ -41187,6 +41270,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -41728,6 +41812,7 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 4457296189590820330}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -42286,6 +42371,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -42535,6 +42621,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -44804,6 +44891,7 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 4457296189193041216}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0

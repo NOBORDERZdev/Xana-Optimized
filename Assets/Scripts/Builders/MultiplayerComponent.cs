@@ -1,61 +1,34 @@
-using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class MultiplayerComponent : MonoBehaviourPun
+public class MultiplayerComponent : MonoBehaviour
 {
-    string RunTimeItemID;
-    string ItemID;
-    ItemData itemData;
+    public string RunTimeItemID;
+    string _itemID;
+    ItemData _itemData;
     IEnumerator Start()
     {
-        yield return new WaitForSeconds(5f);
-        if (GamificationComponentData.instance.withMultiplayer)
+        if (GamificationComponentData.instance != null && GamificationComponentData.instance.withMultiplayer)
         {
-            MultiplayerComponentDatas multiplayerComponentdatas = new MultiplayerComponentDatas();
-            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gamificationMultiplayerComponentDatas", out object multiplayerComponentdatasObj))
-            {
-
-                multiplayerComponentdatas = JsonUtility.FromJson<MultiplayerComponentDatas>(multiplayerComponentdatasObj.ToString());
-
-                if (multiplayerComponentdatas.multiplayerComponents != null)
-                {
-                    foreach (MultiplayerComponentData multiplayerComponentData in multiplayerComponentdatas.multiplayerComponents)
-                    {
-                        yield return new WaitForSeconds(0.1f);
-                        if (multiplayerComponentData.viewID == photonView.ViewID)
-                        {
-                            RunTimeItemID = multiplayerComponentData.RuntimeItemID;
-                            break;
-                        }
-                    }
-                }
-            }
-            Rigidbody rb = null;
-            gameObject.TryGetComponent(out rb);
-            if (rb == null)
-                rb = gameObject.AddComponent<Rigidbody>();
-            rb.isKinematic = true;
-            yield return new WaitForSeconds(3f);
+            Rigidbody _rbTemp = null;
+            gameObject.TryGetComponent(out _rbTemp);
+            if (_rbTemp == null)
+                _rbTemp = gameObject.AddComponent<Rigidbody>();
+            _rbTemp.isKinematic = true;
 
             BuilderMapDownload BMD = SituationChangerSkyboxScript.instance.builderMapDownload;
             foreach (var item in BMD.levelData.otherItems)
             {
                 if (item.RuntimeItemID == RunTimeItemID)
                 {
-                    ItemID = item.ItemID;
-                    itemData = item;
+                    _itemID = item.ItemID;
+                    _itemData = item;
                     break;
                 }
             }
-            string key = "pf" + ItemID + "_XANA";
-            //bool flag = false;
-
-            //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key, ref flag);
-            //if (!flag)
-            //    _async = Addressables.LoadAssetAsync<GameObject>(key);
+            string key = "pf" + _itemID + "_XANA";
 
             AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(key);
 
@@ -68,6 +41,7 @@ public class MultiplayerComponent : MonoBehaviourPun
                 GameObject newObj = Instantiate(_async.Result as GameObject, this.transform);
                 newObj.transform.localPosition = Vector3.zero;
                 newObj.transform.localEulerAngles = Vector3.zero;
+                newObj.transform.localScale = _itemData.Scale;
                 Component[] components = newObj.GetComponents<Component>();
                 for (int i = components.Length - 1; i >= 0; i--)
                 {
@@ -77,17 +51,25 @@ public class MultiplayerComponent : MonoBehaviourPun
                     }
                 }
             }
+
+
+
             transform.SetParent(BMD.builderAssetsParent);
             XanaItem xanaItem = gameObject.AddComponent<XanaItem>();
-            xanaItem.itemData = itemData;
+            xanaItem.itemData = _itemData;
             //if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
             //    GamificationComponentData.instance.xanaItems.Add(xanaItem);
-            if (PhotonNetwork.IsMasterClient || (itemData.addForceComponentData.isActive || itemData.translateComponentData.avatarTriggerToggle))
-                xanaItem.SetData(itemData);
+            //if (_itemData.addForceComponentData.isActive || _itemData.translateComponentData.avatarTriggerToggle)
+            //    xanaItem.SetData(_itemData);
             if (!GamificationComponentData.instance.multiplayerComponentsxanaItems.Exists(x => x == xanaItem))
                 GamificationComponentData.instance.multiplayerComponentsxanaItems.Add(xanaItem);
             if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
                 GamificationComponentData.instance.xanaItems.Add(xanaItem);
+
+            if (!GamificationComponentData.instance.MultiplayerComponentstoSet.Contains(xanaItem))
+            {
+                GamificationComponentData.instance.MultiplayerComponentstoSet.Add(xanaItem);
+            }
         }
     }
 }

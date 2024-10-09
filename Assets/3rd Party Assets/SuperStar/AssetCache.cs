@@ -12,10 +12,11 @@ using UnityEngine.Events;
 using UnityEngine.Networking;
 using System.Collections;
 using SuperStar.Api;
+using UnityEngine.InputSystem;
 
 namespace SuperStar.Helpers
 {
-    public static class ExpirationModes 
+    public static class ExpirationModes
     {
         public const int EXPIRATION_NEVER = -1;
         public const int EXPIRATION_NO_CACHE = -2; // risky to use, as it will always redownload an image on Enqueue...
@@ -56,7 +57,7 @@ namespace SuperStar.Helpers
 
         private Asset() { }
 
-        static public Asset Create( string srcUrl, int expirationDays = ExpirationModes.EXPIRATION_DEFAULT, SpriteMeshType meshType = SpriteMeshType.FullRect, string forceLocalFileName = "M")
+        static public Asset Create(string srcUrl, int expirationDays = ExpirationModes.EXPIRATION_DEFAULT, SpriteMeshType meshType = SpriteMeshType.FullRect, string forceLocalFileName = "M")
         {
             Asset a = new Asset();
             a.srcUrl = srcUrl;
@@ -67,7 +68,7 @@ namespace SuperStar.Helpers
                 expirationDays = Config.GetInt("assets_expiration_default");
             }
             a.expirationDays = expirationDays;
-            
+
             a._AdjustForThumbs();
             a.forceLocalFileName = forceLocalFileName;
             return a;
@@ -205,7 +206,7 @@ namespace SuperStar.Helpers
             {
                 if (la.isAsStreamingAsset)
                 {
-					return new TextAsset(BetterStreamingAssets.ReadAllText("GameAssets/" + la.fileName));
+                    return new TextAsset(BetterStreamingAssets.ReadAllText("GameAssets/" + la.fileName));
                 }
                 else
                 {
@@ -228,7 +229,7 @@ namespace SuperStar.Helpers
                 if (la.isAsStreamingAsset)
                 {
                     string fileName = GetLocalPathForFile(la.fileName);
-                    return BetterStreamingAssets.ReadAllBytes("GameAssets/"+fileName).Length;
+                    return BetterStreamingAssets.ReadAllBytes("GameAssets/" + fileName).Length;
                 }
                 else
                 {
@@ -257,7 +258,7 @@ namespace SuperStar.Helpers
                         //string url = "file://" + Path.Combine(Path.Combine(Application.streamingAssetsPath, "GameAssets"), la.fileName);
                         texture = new Texture2D(1, 1, TextureFormat.ARGB32, false);
                         byte[] bb = BetterStreamingAssets.ReadAllBytes("GameAssets/" + la.fileName);
-                        texture.LoadImage(bb);                       
+                        texture.LoadImage(bb);
                     }
                     catch (Exception e)
                     {
@@ -378,7 +379,7 @@ namespace SuperStar.Helpers
         public void EnqueueOneResAndWait(string key, string srcUrl, UnityAction<bool> finishEvent, int expirationDays = ExpirationModes.EXPIRATION_DEFAULT, string forceLocalFileName = "M")
         {
             Asset entry = Asset.Create(expirationDays: expirationDays, srcUrl: srcUrl, forceLocalFileName: forceLocalFileName);
-            
+
             Dictionary<string, Asset> f = new Dictionary<string, Asset>
             {
                 { key, entry }
@@ -497,7 +498,7 @@ namespace SuperStar.Helpers
             UnityWebRequest www = UnityWebRequest.Get(imageUrl);
             www.SendWebRequest();
 
-            while(!www.isDone)
+            while (!www.isDone)
             {
                 yield return null;
             }
@@ -509,7 +510,7 @@ namespace SuperStar.Helpers
                     imageUrl = imageUrl.Remove(4, 1); // remove "s"
                     www = UnityWebRequest.Get(imageUrl);
                     www.SendWebRequest();
-                    while(!www.isDone)
+                    while (!www.isDone)
                     {
                         yield return null;
                     }
@@ -523,7 +524,7 @@ namespace SuperStar.Helpers
                 {
                     www = UnityWebRequest.Get(imageUrl);
                     www.SendWebRequest();
-                    while(!www.isDone)
+                    while (!www.isDone)
                     {
                         yield return null;
                     }
@@ -591,6 +592,8 @@ namespace SuperStar.Helpers
                     set.finishEvent(set.errorCount == 0);
                 }
             }
+
+            www.Dispose();
         }
 
         private IEnumerator PlayAudioCoroutine(string key, bool repeat)
@@ -639,7 +642,7 @@ namespace SuperStar.Helpers
                 {
                     return false;
                 }
-                if (la.expirationDays == -1 || ((DateTime.Now - la.timeCreated).TotalHours < la.expirationDays*24))
+                if (la.expirationDays == -1 || ((DateTime.Now - la.timeCreated).TotalHours < la.expirationDays * 24))
                 {
                     return true;
                 }
@@ -785,6 +788,15 @@ namespace SuperStar.Helpers
             }
         }
 
+        public void RemoveLoadedImagesFromMemory()
+        {
+            while (sprites.Count > 0)
+            {
+                RemoveFromMemory(sprites.ElementAt(0).Key, true);
+            }
+        }
+
+
         internal void IncRefCntSprite(Sprite sprite)
         {
             var enum1 = sprites.GetEnumerator();
@@ -844,7 +856,7 @@ namespace SuperStar.Helpers
                     img.GetComponent<UnityEngine.UI.AspectRatioFitter>().aspectRatio = (float)sp.texture.width / sp.texture.height;
                 }
                 return sp;
-            } 
+            }
             catch (System.Exception _)
             {
                 return null;
@@ -955,6 +967,6 @@ namespace SuperStar.Helpers
             items.Add(key, new LocalAsset { fileName = localFileName, expirationDays = _expirationDays, timeCreated = DateTime.Now, meshType = meshType });
 
             SaveDB();
-        }       
+        }
     }
 }

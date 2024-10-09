@@ -152,7 +152,8 @@ namespace XanaAi
                     Handheld.Vibrate();
                     Debug.LogError("Loaded GameObject is null. Handle the error appropriately.");
                 }
-               AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
+                AddressableDownloader.bundleAsyncOperationHandle.Add(handle);
+               //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
             }
             else if (handle.Status == AsyncOperationStatus.Failed)
             {
@@ -219,7 +220,7 @@ namespace XanaAi
                         charcterBody.ApplyEyeBrowTexture(charcterBody.defaultEyebrow, ai.gameObject);
                     else if (ObjectType.Contains("Makeup"))
                         charcterBody.ApplyMakeup(charcterBody.defaultMakeup, ai.gameObject);
-                    else if (ObjectType.Contains("EyeLashes"))
+                    else if (ObjectType.Contains("EyeBrowPoints"))
                         charcterBody.ApplyEyeLashes(charcterBody.defaultEyelashes, ai.gameObject);
 
                     throw new Exception("Error occur in loading addressable Textures. Wear DefaultTextures");
@@ -243,10 +244,11 @@ namespace XanaAi
                         charcterBody.ApplyEyeBrowTexture(loadedObject, ai.gameObject);
                     else if (ObjectType.Contains("Makeup"))
                         charcterBody.ApplyMakeup(loadedObject, ai.gameObject);
-                    else if (ObjectType.Contains("EyeLashes"))
+                    else if (ObjectType.Contains("EyeBrowPoints"))
                         charcterBody.ApplyEyeLashes(loadedObject, ai.gameObject);
 
-                    AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
+                    AddressableDownloader.bundleAsyncOperationHandle.Add(handle);
+                    //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
 
                 }
                 else
@@ -264,7 +266,7 @@ namespace XanaAi
                     charcterBody.ApplyEyeBrowTexture(charcterBody.defaultEyebrow, ai.gameObject);
                 else if (ObjectType.Contains("Makeup"))
                     charcterBody.ApplyMakeup(charcterBody.defaultMakeup, ai.gameObject);
-                else if (ObjectType.Contains("EyeLashes"))
+                else if (ObjectType.Contains("EyeBrowPoints"))
                     charcterBody.ApplyEyeLashes(charcterBody.defaultEyelashes, ai.gameObject);
 
                 Debug.LogError("Failed to load addressable Textures: " + handle.OperationException);

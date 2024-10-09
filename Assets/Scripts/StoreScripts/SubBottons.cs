@@ -22,12 +22,15 @@ public class SubBottons : MonoBehaviour
 
     public void ClickBtnFtn(int m_Index)
     {
+        //if(customizationUIManager == null)
+        //    customizationUIManager = CharacterCustomizationUIManager.Instance;
 
         for (int i = 0; i < TotalBtns.Length; i++)
         {
             TotalBtns[i].GetComponentInChildren<ButtonScript>().BtnTxt.color = NormalColor;
             TotalBtns[i].transform.GetChild(0).GetComponent<Text>().fontStyle = FontStyle.Normal;
         }
+
         TotalBtns[m_Index].GetComponentInChildren<ButtonScript>().BtnTxt.color = HighlightedColor;
         TotalBtns[m_Index].transform.GetChild(0).GetComponent<Text>().fontStyle = FontStyle.Bold;
 

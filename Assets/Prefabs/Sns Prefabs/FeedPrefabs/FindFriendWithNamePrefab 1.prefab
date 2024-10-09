@@ -412,7 +412,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -112.5, y: -28}
-  m_SizeDelta: {x: -575, y: 51.997997}
+  m_SizeDelta: {x: -575, y: 60}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4287619021630907309
 CanvasRenderer:
@@ -633,14 +633,16 @@ MonoBehaviour:
     gender: 
     avatarType: OldAvatar
     myItemObj: []
+    ai_gender: 
     hair_color: {r: 0, g: 0, b: 0, a: 0}
-    skin_color: {r: 0, g: 0, b: 0, a: 0}
+    skin_color: 
     lip_color: {r: 0, g: 0, b: 0, a: 0}
     faceItemData: 0
     lipItemData: 0
     noseItemData: 0
     hairItemData: 
     eyeItemData: 
+    eyeShapeItemData: 0
     charactertypeAi: 0
     SavedBones: []
     SkinId: 0
@@ -784,7 +786,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.044541985, y: 0.02721813}
   m_AnchorMax: {x: 0.9515381, y: 0.9727819}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 2.100006, y: -0.79999924}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4287619022676790131
@@ -817,8 +819,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Follow
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3b80664f39c9ad641becdf962e40c832, type: 2}
+  m_sharedMaterial: {fileID: 1822493514935977383, guid: 3b80664f39c9ad641becdf962e40c832, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -842,8 +844,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34.9
-  m_fontSizeBase: 34.9
+  m_fontSize: 35.9
+  m_fontSizeBase: 35.9
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -852,7 +854,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -7.3
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

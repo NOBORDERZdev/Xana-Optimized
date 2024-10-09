@@ -61,20 +61,29 @@ public class BlendShapeHolder : MonoBehaviour
         if (selectedBlendShapeIndex != -1 || selectedBlendShapeIndex >= allBlendShapes.Count)
             return;
 
-        Transform boneTransform = allBlendShapes[selectedBlendShapeIndex].boneObj.transform;
+
+        Transform bone = null;
+        if (CharacterHandler.instance.activePlayerGender == AvatarGender.Male)
+        {
+            bone = allBlendShapes[selectedBlendShapeIndex].maleBoneObj.transform;
+        }
+        else
+        {
+            bone = allBlendShapes[selectedBlendShapeIndex].femaleBoneObj.transform;
+        }
 
         switch (objectProperty)
         {
             case ObjectProperty.position:
-                boneTransform.localPosition = newValue;
+                bone.localPosition = newValue;
                 break;
 
             case ObjectProperty.rotation:
-                boneTransform.localEulerAngles = newValue;
+                bone.localEulerAngles = newValue;
                 break;
 
             case ObjectProperty.scale:
-                boneTransform.localScale = newValue;
+                bone.localScale = newValue;
                 break;
 
             default:
@@ -121,7 +130,7 @@ public class BlendShapeHolder : MonoBehaviour
     //            //    item.itemName = item.blendShapeName.ToString() + " - Blend Ind :" + item.index;
     //        }
     //    }
-        
+
     //}
 }
 public enum ObjectProperty { position, rotation, scale }

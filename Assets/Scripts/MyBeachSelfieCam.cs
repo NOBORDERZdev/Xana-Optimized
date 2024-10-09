@@ -18,6 +18,11 @@ public class MyBeachSelfieCam : MonoBehaviour
 
     private void Start()
     {
+        if (ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().animator)
+        {
+            RuntimeAnimatorController animator = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().animator.runtimeAnimatorController;
+            EmoteAnimationHandler.Instance.controller = animator;
+        }
         SelfieCapturePP();
     }
     public void SelfieCapturePP() {

@@ -43,6 +43,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.Others, RuntimeItemID, Constants.ItemComponentType.none);
             }
 
+            ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Invisible);
             BuilderEventManager.onComponentActivated?.Invoke(_componentType);
             PlayBehaviour();
             GamificationComponentData.instance.activeComponent = this;
@@ -193,7 +194,6 @@ public class BlindfoldedDisplayComponent : ItemComponent
         //GamificationComponentData.instance.buildingDetect.StopSpecialItemComponent();
         //GamificationComponentData.instance.playerControllerNew.NinjaComponentTimerStart(0);
         //GamificationComponentData.instance.playerControllerNew.isThrow = false;
-        ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Invisible);
         BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(blindfoldedDisplayComponentData.blindfoldSliderValue);
         raycast = GamificationComponentData.instance.raycast;
         if (!gameObject.activeInHierarchy)

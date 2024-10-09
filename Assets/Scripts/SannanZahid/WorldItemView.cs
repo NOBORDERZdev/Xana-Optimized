@@ -77,8 +77,9 @@ public class WorldItemView : EnhancedScrollerCellView
         worldTags = detail.WorldTags;
         Creator_Name = detail.Creator_Name;
         CreatorAvatarURL = detail.CreatorAvatarURL;
-        CreatorDescription = detail.CreatorDescription;
+        CreatorDescription = SNS_APIManager.DecodedString(detail.CreatorDescription);
         worldVisitCount = detail.WorldVisitCount;
+        UserMicEnable=detail.UserMicEnable;
         isFavourite = detail.isFavourite;
         if (creatorNameText)
             creatorNameText.text = Creator_Name;
@@ -122,6 +123,7 @@ public class WorldItemView : EnhancedScrollerCellView
     public string CreatorAvatarURL;
     public string CreatorDescription;
     public string worldVisitCount;
+    public bool UserMicEnable;
     public bool isFavourite;
     public WorldDescriptionPopupPreview worldItemPreview;
     UserAnalyticsHandler userAnalyticsHandler;
@@ -145,6 +147,15 @@ public class WorldItemView : EnhancedScrollerCellView
     //    }
     //    //UserAnalyticsHandler.onChangeJoinUserStats -= UpdateUserCount;
     //}
+    private void OnEnable()
+    {
+        if(worldIcon.sprite==null)
+        {
+            LoadImagesFromRemote();
+            worldItemPreview = WorldManager.instance.worldItemPreviewTabRef;
+        }
+    }
+
     public void Init(int worlditemcount, int _loopcount)
     {
         GetEventType(entityType);
@@ -156,6 +167,8 @@ public class WorldItemView : EnhancedScrollerCellView
         worldItemPreview = WorldManager.instance.worldItemPreviewTabRef;
         LoadImagesFromRemote(worlditemcount, _loopcount);
     }
+
+
     void LoadImagesFromRemote(int worlditemcount = 0, int _loopcount = 0)
     {
         //if (m_EnvironmentName.Contains("XANA Lobby"))
@@ -362,8 +375,17 @@ public class WorldItemView : EnhancedScrollerCellView
         ConstantsHolder.xanaConstants.builderMapID = int.Parse(idOfObject);
         ConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
         ConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
-        MutiplayerController.sceneName = m_EnvName;
 
+        if (m_EnvName.Contains("RooftopParty") || m_EnvName.Contains("XanaParty"))
+        {
+            ConstantsHolder.xanaConstants.isXanaPartyWorld = true;
+        }
+        else
+        {
+            ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
+            ConstantsHolder.xanaConstants.isSoftBankGame = false;
+
+        }
         //if (m_EnvironmentName.Contains("XANA Lobby"))
         //{
         //    worldItemPreview.Init(XanaWorldBanner,
@@ -374,7 +396,7 @@ public class WorldItemView : EnhancedScrollerCellView
         //{
         worldItemPreview.Init(this.gameObject, worldIcon.sprite,
     m_EnvironmentName, m_WorldDescription, Creator_Name, createdAt, updatedAt, isBuilderScene, userAvatarURL, m_ThumbnailDownloadURL, worldTags,
-    entityType, Creator_Name, CreatorDescription, CreatorAvatarURL, isFavourite, idOfObject);
+    entityType, Creator_Name, CreatorDescription, CreatorAvatarURL, UserMicEnable, isFavourite, idOfObject);
         //}
 
         ConstantsHolder.xanaConstants.EnviornmentName = m_EnvironmentName;
@@ -383,11 +405,15 @@ public class WorldItemView : EnhancedScrollerCellView
             WorldDescriptionPopupPreview.m_MuseumIsClicked = true;
         if (m_EnvironmentName == "Xana Festival")
         {
-            ConstantsHolder.xanaConstants.userLimit = (Convert.ToInt32(userLimit) /*- 1*/).ToString();
+            ConstantsHolder.userLimit = int.Parse(userLimit);
+        }
+        else if (m_EnvironmentName == "XANA_DUNE")
+        {
+            ConstantsHolder.userLimit = 1;
         }
         else
         {
-            ConstantsHolder.xanaConstants.userLimit = userLimit;
+            ConstantsHolder.userLimit = int.Parse(userLimit);
         }
         if (m_EnvironmentName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail.ToString());

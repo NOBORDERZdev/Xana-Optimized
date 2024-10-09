@@ -1,236 +1,254 @@
-﻿using DG.Tweening;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.XR.ARFoundation;
-using UnityEngine.XR.ARFoundation.Samples;
-using UnityEngine.XR.ARSubsystems;
+﻿//using DG.Tweening;
+//using System.Collections.Generic;
+//using TMPro;
+//using UnityEngine;
+//using UnityEngine.UI;
+//using UnityEngine.XR.ARFoundation;
+//using UnityEngine.XR.ARFoundation.Samples;
+//using UnityEngine.XR.ARSubsystems;
 
 
-public class UGCARFacePoseTrackingManager : MonoBehaviour
-{
-    public static UGCARFacePoseTrackingManager Instance;
-    public bool isTracking = false;
-    bool lastState;
-    public ARPoseDriver _aRPoseDriver;
-    public GameObject moveTargetObj;
-    public GameObject playerHead;
-    public GameObject playerBody;
-    public GameObject cameraTransform;
-    public GameObject mirrorARFace;
-    public GameObject mirrorARFace2;
-    public Vector3 headRotation;
-    public float bodyRotRatio;
-    public SkinnedMeshRenderer maleDFaceskinRenderer;
-    public SkinnedMeshRenderer feMaleDFaceskinRenderer;
-    public ARFaceManager m_ARFaceManager;
+//public class UGCARFacePoseTrackingManager : MonoBehaviour
+//{
+//    public static UGCARFacePoseTrackingManager Instance;
 
-    void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-    }
+//    public ARPoseDriver AR_PoseDriver;
+//    public ARFaceManager AR_FaceManager;
+//    public GameObject MoveTargetObj;
+//    public GameObject PlayerHead;
+//    public GameObject PlayerBody;
+//    public GameObject MaleHeadTarget;
+//    public GameObject FemaleHeadTarget;
+//    public GameObject MaleBodyTarget;
+//    public GameObject FemaleBodyTarget;
+//    public GameObject CameraTransform;
+//    public GameObject MirrorARFace;
+//    public GameObject MirrorARFace2;
+//    public SkinnedMeshRenderer MaleDFaceskinRenderer;
+//    public SkinnedMeshRenderer FemaleDFaceskinRenderer;
 
-    private void Start()
-    {
-        if (moveTargetObj != null)
-        {
-            defaultTargetPos = moveTargetObj.transform.position;
-        }
-        //defaultRotation = RootAnimTargetObj.transform.rotation;
-        defaultRotation = new Quaternion(0, 0, 0, 1f);
+//    [SerializeField] private Vector3 _headRotation;
+//    [SerializeField] private bool _isTracking = false;
+//    [SerializeField] private float _bodyRotRatio;
+//    private bool _lastState;
 
-        playerHead= CharacterHandler.instance.GetActiveAvatarData().avatar_face.gameObject;
-        playerBody = CharacterHandler.instance.GetActiveAvatarData().avatar_body.gameObject;
-    }
+//    void Awake()
+//    {
+//        if (Instance == null)
+//        {
+//            Instance = this;
+//        }
+//    }
 
-    private void Update()
-    {
-        SetARPoseOnAvatar();
-#if UNITY_EDITOR
-        RotatePlayerHeadManually();
-#endif
-    }
+//    private void Start()
+//    {
+//        if (MoveTargetObj != null)
+//        {
+//            defaultTargetPos = MoveTargetObj.transform.position;
+//        }
+//        //defaultRotation = RootAnimTargetObj.transform.rotation;
+//        defaultRotation = new Quaternion(0, 0, 0, 1f);
 
-    public float rotationSpeed = 1.0f;
-    public void RotatePlayerHeadManually()
-    {
-        float x = Input.GetAxis("Vertical") * rotationSpeed;
-        float y = Input.GetAxis("Horizontal") * rotationSpeed;
-        headRotation.x += x;
-        headRotation.y += y;
-        if (Input.GetKey(KeyCode.Z))
-        {
-            headRotation.z += Time.deltaTime * 50;
-        }
-        if (Input.GetKey(KeyCode.X))
-        {
-            headRotation.z -= Time.deltaTime * 50;
-        }
-        /*Vector3 bodyRot= new Vector3(0, headRotation.y/ bodyRotRatio, 0);
-        playerBody.transform.rotation = Quaternion.Euler(bodyRot);*/
-        playerHead.transform.rotation = Quaternion.Euler(headRotation);
-    }
-    private void OnDisable()
-    {
-        ToggleFaceDetection();
-    }
+//        Invoke(nameof(SetReference),1f);
+//    }
 
-    public void ToggleFaceDetection()
-    {
-        if (m_ARFaceManager == null)
-            return;
+//    public void SetReference()
+//    {
+//        if (CharacterHandler.instance.activePlayerGender==AvatarGender.Male)
+//        {
+//            PlayerHead = MaleHeadTarget;
+//            PlayerBody = MaleBodyTarget;
+//        }
+//        else
+//        {
+//            PlayerHead = FemaleHeadTarget;
+//            PlayerBody = FemaleBodyTarget;
+//        }
+//    }
+//    private void Update()
+//    {
+//        SetARPoseOnAvatar();
+//#if UNITY_EDITOR
+//        RotatePlayerHeadManually();
+//#endif
+//    }
 
-        m_ARFaceManager.enabled = !m_ARFaceManager.enabled;
+//    public float rotationSpeed = 1.0f;
+//    public void RotatePlayerHeadManually()
+//    {
+//        float x = Input.GetAxis("Vertical") * rotationSpeed;
+//        float y = Input.GetAxis("Horizontal") * rotationSpeed;
+//        _headRotation.x += x;
+//        _headRotation.y += y;
+//        if (Input.GetKey(KeyCode.Z))
+//        {
+//            _headRotation.z += Time.deltaTime * 50;
+//        }
+//        if (Input.GetKey(KeyCode.X))
+//        {
+//            _headRotation.z -= Time.deltaTime * 50;
+//        }
+//        /*Vector3 bodyRot= new Vector3(0, headRotation.y/ bodyRotRatio, 0);
+//        playerBody.transform.rotation = Quaternion.Euler(bodyRot);*/
+//        PlayerHead.transform.rotation = Quaternion.Euler(_headRotation);
+//    }
+//    private void OnDisable()
+//    {
+//        ToggleFaceDetection();
+//    }
 
-        if (m_ARFaceManager.enabled)
-        {
-            SetAllPlanesActive(true);
-        }
-        else
-        {
-            SetAllPlanesActive(false);
-        }
-    }
+//    public void ToggleFaceDetection()
+//    {
+//        if (AR_FaceManager == null)
+//            return;
 
-    void SetAllPlanesActive(bool value)
-    {
-        foreach (var face in m_ARFaceManager.trackables)
-        {
-            face.gameObject.SetActive(value);
-        }
-    }
+//        AR_FaceManager.enabled = !AR_FaceManager.enabled;
 
-    void SetARPoseOnAvatar()
-    {
-        foreach (var face in m_ARFaceManager.trackables)
-        {
-            if (face.trackingState == TrackingState.Tracking)
-            {
-                isTracking = true;
+//        if (AR_FaceManager.enabled)
+//        {
+//            SetAllPlanesActive(true);
+//        }
+//        else
+//        {
+//            SetAllPlanesActive(false);
+//        }
+//    }
 
-                Vector3 headRotation;
-#if UNITY_IOS
-                //headRotation = new Vector3(-face.transform.rotation.eulerAngles.x, face.transform.rotation.eulerAngles.y, -face.transform.rotation.eulerAngles.z);
-                headRotation = new Vector3(face.transform.rotation.eulerAngles.x, face.transform.rotation.eulerAngles.y, face.transform.rotation.eulerAngles.z);
+//    void SetAllPlanesActive(bool value)
+//    {
+//        foreach (var face in AR_FaceManager.trackables)
+//        {
+//            face.gameObject.SetActive(value);
+//        }
+//    }
 
-                mirrorARFace.transform.rotation = Quaternion.Euler(headRotation);
+//    void SetARPoseOnAvatar()
+//    {
+//        foreach (var face in AR_FaceManager.trackables)
+//        {
+//            if (face.trackingState == TrackingState.Tracking)
+//            {
+//                _isTracking = true;
 
-                Vector3 faceAngle = mirrorARFace.transform.rotation.eulerAngles;
+//                Vector3 headRotation;
+//#if UNITY_IOS
+//                //headRotation = new Vector3(-face.transform.rotation.eulerAngles.x, face.transform.rotation.eulerAngles.y, -face.transform.rotation.eulerAngles.z);
+//                headRotation = new Vector3(face.transform.rotation.eulerAngles.x, face.transform.rotation.eulerAngles.y, face.transform.rotation.eulerAngles.z);
 
-                // For y-component, use angle difference between camera and face.
-                Quaternion differenceRotation = mirrorARFace.transform.rotation * Quaternion.Inverse(cameraTransform.transform.rotation);
-                Vector3 differenceAngles = differenceRotation.eulerAngles;
+//                MirrorARFace.transform.rotation = Quaternion.Euler(headRotation);
 
-                faceAngle.y = differenceAngles.y;
-                mirrorARFace2.transform.rotation = Quaternion.Euler(faceAngle);
+//                Vector3 faceAngle = MirrorARFace.transform.rotation.eulerAngles;
 
-                float yRot = faceAngle.y / bodyRotRatio;
+//                // For y-component, use angle difference between camera and face.
+//                Quaternion differenceRotation = MirrorARFace.transform.rotation * Quaternion.Inverse(CameraTransform.transform.rotation);
+//                Vector3 differenceAngles = differenceRotation.eulerAngles;
 
-                if (yRot>100)
-                {
-                    yRot = 120 - yRot;
-                    float tempy=360 - yRot;
-                    yRot = tempy;
-                }
+//                faceAngle.y = differenceAngles.y;
+//                MirrorARFace2.transform.rotation = Quaternion.Euler(faceAngle);
 
-                Vector3 bodyRot = new Vector3(0, yRot, 0);
-                playerBody.transform.localRotation=Quaternion.Euler(bodyRot);
-                playerHead.transform.localRotation = Quaternion.Lerp(playerHead.transform.localRotation, Quaternion.Euler(mirrorARFace2.transform.rotation.eulerAngles), 10 * Time.deltaTime);
-#else
-                headRotation = new Vector3(face.transform.rotation.eulerAngles.x, -face.transform.rotation.eulerAngles.y, -face.transform.rotation.eulerAngles.z);
+//                float yRot = faceAngle.y / _bodyRotRatio;
+
+//                if (yRot>100)
+//                {
+//                    yRot = 120 - yRot;
+//                    float tempy=360 - yRot;
+//                    yRot = tempy;
+//                }
+
+//                Vector3 bodyRot = new Vector3(0, yRot, 0);
+//                PlayerBody.transform.localRotation=Quaternion.Euler(bodyRot);
+//                PlayerHead.transform.localRotation = Quaternion.Lerp(PlayerHead.transform.localRotation, Quaternion.Euler(MirrorARFace2.transform.rotation.eulerAngles), 10 * Time.deltaTime);
+//#else
+//                headRotation = new Vector3(face.transform.rotation.eulerAngles.x, -face.transform.rotation.eulerAngles.y, -face.transform.rotation.eulerAngles.z);
                 
-                float yRot=face.transform.rotation.eulerAngles.y/bodyRotRatio;
-                if (yRot>100)
-                {
-                    yRot = 120 - yRot;
-                }
-                else
-                {
-                    float tempy=360-yRot;
-                    yRot = tempy;
-                }
+//                float yRot=face.transform.rotation.eulerAngles.y/_bodyRotRatio;
+//                if (yRot>100)
+//                {
+//                    yRot = 120 - yRot;
+//                }
+//                else
+//                {
+//                    float tempy=360-yRot;
+//                    yRot = tempy;
+//                }
 
-                Vector3 bodyRot = new Vector3(0,yRot,0);
-                playerBody.transform.localRotation=Quaternion.Euler(bodyRot);
-                playerHead.transform.localRotation = Quaternion.Lerp(playerHead.transform.localRotation, Quaternion.Euler(headRotation), 10 * Time.deltaTime);
-#endif
+//                Vector3 bodyRot = new Vector3(0,yRot,0);
+//                PlayerBody.transform.localRotation=Quaternion.Euler(bodyRot);
+//                PlayerHead.transform.localRotation = Quaternion.Lerp(PlayerHead.transform.localRotation, Quaternion.Euler(headRotation), 10 * Time.deltaTime);
+//#endif
 
-                float finalXRotValue = 0;
+//                float finalXRotValue = 0;
 
-                if (face.transform.position.z <= 0.35f)
-                {
-                    finalXRotValue = -(0.4f - face.transform.position.z);
-                }
-                else if (face.transform.position.z > 0.6f)
-                {
-                    //finalXRotValue = (face.transform.position.z - 0.6f);
-                }
+//                if (face.transform.position.z <= 0.35f)
+//                {
+//                    finalXRotValue = -(0.4f - face.transform.position.z);
+//                }
+//                else if (face.transform.position.z > 0.6f)
+//                {
+//                    //finalXRotValue = (face.transform.position.z - 0.6f);
+//                }
 
-                if (moveTargetObj != null)
-                {
-                    Vector3 movePos = new Vector3(moveTargetObj.transform.localPosition.x, moveTargetObj.transform.localPosition.y, Mathf.Clamp(finalXRotValue, -0.15f, 0.1f));
-                    moveTargetObj.transform.localPosition = Vector3.Lerp(moveTargetObj.transform.localPosition, movePos, 10 * Time.deltaTime);
+//                if (MoveTargetObj != null)
+//                {
+//                    Vector3 movePos = new Vector3(MoveTargetObj.transform.localPosition.x, MoveTargetObj.transform.localPosition.y, Mathf.Clamp(finalXRotValue, -0.15f, 0.1f));
+//                    MoveTargetObj.transform.localPosition = Vector3.Lerp(MoveTargetObj.transform.localPosition, movePos, 10 * Time.deltaTime);
 
-                    //Debug.LogError("face:" + face.transform.position.z + " :finalXRotValue:" + finalXRotValue + " :face postion:" + face.transform.localPosition.z + ":LocalPos:" + moveTargetObj.transform.localPosition);
-                }
-            }
-            else
-            {
-                isTracking = false;
-            }
-            //playerHead.transform.localRotation = Quaternion.Euler(headRotation);
-            //RootAnimTargetObj.transform.localRotation = Quaternion.Euler(headRotation);
-        }
+//                    //Debug.LogError("face:" + face.transform.position.z + " :finalXRotValue:" + finalXRotValue + " :face postion:" + face.transform.localPosition.z + ":LocalPos:" + moveTargetObj.transform.localPosition);
+//                }
+//            }
+//            else
+//            {
+//                _isTracking = false;
+//            }
+//            //playerHead.transform.localRotation = Quaternion.Euler(headRotation);
+//            //RootAnimTargetObj.transform.localRotation = Quaternion.Euler(headRotation);
+//        }
 
-        //Debug.LogError("Count:" + m_ARFaceManager.trackables.count + "  :isTracking:" + isTracking);
-        if (m_ARFaceManager.trackables.count <= 0)
-        {
-            isTracking = false;
-        }
+//        //Debug.LogError("Count:" + m_ARFaceManager.trackables.count + "  :isTracking:" + isTracking);
+//        if (AR_FaceManager.trackables.count <= 0)
+//        {
+//            _isTracking = false;
+//        }
 
-        if (lastState != isTracking)
-        {
-            lastState = isTracking;
-            if (!isTracking && !isMoveToDefault)
-            {
-                ResetToDefaultAvatar();
-            }
-        }
-    }
+//        if (_lastState != _isTracking)
+//        {
+//            _lastState = _isTracking;
+//            if (!_isTracking && !isMoveToDefault)
+//            {
+//                ResetToDefaultAvatar();
+//            }
+//        }
+//    }
 
-    public void SetDefaultMoveTargetObjPos()
-    {
-        if (moveTargetObj != null)
-        {
-            moveTargetObj.transform.localPosition = Vector3.zero;
-        }
-    }
+//    public void SetDefaultMoveTargetObjPos()
+//    {
+//        if (MoveTargetObj != null)
+//        {
+//            MoveTargetObj.transform.localPosition = Vector3.zero;
+//        }
+//    }
 
-    bool isMoveToDefault = false;
-    Vector3 defaultTargetPos;
-    Quaternion defaultRotation;
-    public void ResetToDefaultAvatar()
-    {
-        Debug.LogError("ResetToDefaultAvatar:" + playerHead.transform.localRotation + "   :defaultRotation:" + defaultRotation);
-        if (playerHead.transform.localRotation != defaultRotation)
-        {
-            isMoveToDefault = true;
+//    bool isMoveToDefault = false;
+//    Vector3 defaultTargetPos;
+//    Quaternion defaultRotation;
+//    public void ResetToDefaultAvatar()
+//    {
+//        Debug.LogError("ResetToDefaultAvatar:" + PlayerHead.transform.localRotation + "   :defaultRotation:" + defaultRotation);
+//        if (PlayerHead.transform.localRotation != defaultRotation)
+//        {
+//            isMoveToDefault = true;
 
-            if (playerHead != null)
-            {
-                playerHead.transform.DOLocalRotateQuaternion(defaultRotation, 0.5f).OnComplete(() =>
-                isMoveToDefault = false
-                );
-            }
+//            if (PlayerHead != null)
+//            {
+//                PlayerHead.transform.DOLocalRotateQuaternion(defaultRotation, 0.5f).OnComplete(() =>
+//                isMoveToDefault = false
+//                );
+//            }
 
-            if (moveTargetObj != null)
-            {
-                moveTargetObj.transform.DOMove(defaultTargetPos, 0.5f);
-            }
-        }
-    }
-}
+//            if (MoveTargetObj != null)
+//            {
+//                MoveTargetObj.transform.DOMove(defaultTargetPos, 0.5f);
+//            }
+//        }
+//    }
+//}

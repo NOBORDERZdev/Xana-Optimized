@@ -16,19 +16,22 @@ public class ReleaseRenderTexture : MonoBehaviour
             renderTexture.filterMode = FilterMode.Trilinear;
 
             this.GetComponent<Camera>().targetTexture = renderTexture;   // my changes
-            UserLoginSignupManager.instance.aiPresetImage.texture = renderTexture;
+            UserLoginSignupManager.instance.AiPresetImage.texture = renderTexture;
+            UserLoginSignupManager.instance.AiPresetImageforEditProfil.texture = renderTexture;
         }
     }
 
-    private void OnDisable()
-    {
-        // optimize the render texture data     // AR changes start
-        this.GetComponent<Camera>().targetTexture = null;
-        Object.Destroy(renderTexture);
+    //private void OnDisable()
+    //{
+    //    // optimize the render texture data     // AR changes start
+       
+    //        this.GetComponent<Camera>().targetTexture = null;
+    //        Object.Destroy(renderTexture);
 
-        //renderTexture.Release();
-        //renderTexture = null;
-        Resources.UnloadUnusedAssets();
-    }
+    //        //renderTexture.Release();
+    //        //renderTexture = null;
+    //        Resources.UnloadUnusedAssets();
+    //    }
+   
 
 }

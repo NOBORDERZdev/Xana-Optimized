@@ -15,23 +15,32 @@ public class SelfieButton : MonoBehaviour
 
     public void OnEnable()
     {
-        if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.SelfieBtnUpdate += SelfieBtnUpdated;
+        // if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.SelfieBtnUpdate += SelfieBtnUpdated; // no need for this function enable and disable class doing this !
         btn.onClick.AddListener(OnSelfieClick);
     }
 
 
     public void OnDisable()
     {
-        if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.SelfieBtnUpdate -= SelfieBtnUpdated;
+        //  if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.SelfieBtnUpdate -= SelfieBtnUpdated; // no need for this function enable and disable class doing this !
         btn.onClick.RemoveListener(OnSelfieClick);
     }
 
     private void OnSelfieClick()
     {
-        GamePlayButtonEvents.inst.UpdateSelfieBtn(false);
-        BuilderEventManager.UIToggle?.Invoke(true);
-        ReferencesForGamePlay.instance.playerControllerNew.StopBuilderComponent();
+        //added condition to prevent selfie open issue while jumping and falling from environment
+        if (!ReferencesForGamePlay.instance.playerControllerNew._IsGrounded)
+            return;
+        if (ActionManager.IsAnimRunning) //for stop dance animation
+        {
+            ActionManager.StopActionAnimation?.Invoke();
+        }
+        EmoteReactionUIHandler.lastEmotePlayed = null;
+
         GamePlayButtonEvents.inst.OnSelfieClick();
+        BuilderEventManager.UIToggle?.Invoke(true);
+        PlayerController.PlayerIsWalking?.Invoke();
+        ReferencesForGamePlay.instance.playerControllerNew.StopBuilderComponent();
     }
 
     private void SelfieBtnUpdated(bool canClick)

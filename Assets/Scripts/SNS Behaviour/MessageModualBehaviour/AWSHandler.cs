@@ -195,6 +195,9 @@ public class AWSHandler : MonoBehaviour
                         case "EditProfileAvatar":
                             SNS_APIController.Instance.UpdateAvatarOnServer(fileUrl, CallingFrom);
                             break;
+                        case "SignupProfilePicUpload":
+                            UserLoginSignupManager.instance.RequestUpdateUserProfilePic(fileUrl, CallingFrom);
+                            break;
                         default:
                             break;
                     }

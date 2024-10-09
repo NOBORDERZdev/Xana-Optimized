@@ -12,6 +12,7 @@ public class JoyStickIssue : OnScreenControl, IPointerDownHandler, IPointerUpHan
     {
         if (eventData == null)
             throw new System.ArgumentNullException(nameof(eventData));
+        EmoteReactionUIHandler.lastEmotePlayed = null;
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(transform.parent.GetComponentInParent<RectTransform>(), eventData.position, eventData.pressEventCamera, out m_PointerDownPos);
 
@@ -32,9 +33,11 @@ public class JoyStickIssue : OnScreenControl, IPointerDownHandler, IPointerUpHan
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (ScreenOrientationManager._instance.isPotrait)
+        { movementRange = 60; }
+        
         if (eventData == null)
             throw new System.ArgumentNullException(nameof(eventData));
-
         RectTransformUtility.ScreenPointToLocalPointInRectangle(transform.parent.GetComponentInParent<RectTransform>(), eventData.position, eventData.pressEventCamera, out var position);
         var delta = position - m_PointerDownPos;
 

@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
+using YoutubeLight;
 
 public class XanaWorldDownloader : MonoBehaviour
 {
@@ -19,6 +22,7 @@ public class XanaWorldDownloader : MonoBehaviour
     public static bool isSpawnDownloaded;
     public static bool isDefaultPriorityObjectDownloaded;
     public static bool isfailedObjectsDownloaded;
+    public static bool isLowPriorityDownloaded;
 
     public Transform assetParent;
     public TMPro.TextMeshProUGUI assetDownloadingText;
@@ -29,6 +33,9 @@ public class XanaWorldDownloader : MonoBehaviour
     public static Transform assetParentStatic;
     private static int totalAssetCount;
     public static int downloadedTillNow = 0;
+    private static HashSet<string> uniqueDownloadKeys = new HashSet<string>();
+    public static List<string> DownloadedWorldNames = new List<string>();
+    public static long downloadSize;
 
     [Header("Short Interval sorting element count")]
     public static int shortSortingCount = 100;
@@ -41,15 +48,23 @@ public class XanaWorldDownloader : MonoBehaviour
     public static List<DownloadQueueData> postLoadObjects = new List<DownloadQueueData>();
     public static List<DownloadQueueData> downloadFailed = new List<DownloadQueueData>();
     public static Dictionary<string, ObjectsInfo> xanaWorldDataDictionary = new Dictionary<string, ObjectsInfo>();
-
+    public static Dictionary<string, GameObject> prefabObjectPool = new Dictionary<string, GameObject>();
+    public static List<GameObject> AllDomes = new List<GameObject>();
 
     public static SceneData xanaSceneData = new SceneData();
 
-    public string response;
-    // Start is called before the first frame update
-    void Start()
-    {
+    private string response;
 
+    private float unloadDistance = 50;
+
+    public static XanaWorldDownloader xanaWorldDownloader;
+    public DownloadPopupHandler DownloadPopupHandlerInstance;
+
+    private static CancellationTokenSource cts;
+
+    private void Start()
+    {
+        xanaWorldDownloader = this;
     }
 
     void GetDataFromAPI(string worldID, bool islocal)
@@ -88,51 +103,66 @@ public class XanaWorldDownloader : MonoBehaviour
         }
     }
 
-
-
     private void OnEnable()
     {
         if (assetParent)
             assetParentStatic = assetParent;
-        if (!ConstantsHolder.xanaConstants.isBuilderScene)
+        if (!ConstantsHolder.xanaConstants.isBuilderScene || ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
             BuilderEventManager.XanaMapDataDownloaded += PostLoadingBuilderAssets;
             ScreenOrientationManager.switchOrientation += OnOrientationChange;
         }
-
     }
 
     private void OnDisable()
     {
-
         BuilderEventManager.XanaMapDataDownloaded -= PostLoadingBuilderAssets;
         ScreenOrientationManager.switchOrientation -= OnOrientationChange;
-        ResetAll();
-
     }
 
     async void PostLoadingBuilderAssets(string worldData)
     {
+        cts = new CancellationTokenSource();
         GetDataFromAPI(worldData, true);
         ArrangeData();
         while (!dataArranged)
         {
             await Task.Yield();
         }
-        StartCoroutine(DownloadObjects(preLoadObjects,true));
+        if (!DownloadPopupHandler.AlwaysAllowDownload && !CheckForVisitedWorlds(ConstantsHolder.xanaConstants.EnviornmentName))
+        {
+            if (!DownloadedWorldNames.Contains(ConstantsHolder.xanaConstants.EnviornmentName))
+                DownloadedWorldNames.Add(ConstantsHolder.xanaConstants.EnviornmentName);
+            bool permission = await DownloadPopupHandlerInstance.ShowDialogAsync();
+            if (!permission)
+                return;
+        }
+
+        StartCoroutine(DownloadObjects(preLoadObjects, Priority.High));
         while (!isSpawnDownloaded)
         {
             await Task.Yield();
         }
-        StartDownloadingAssets();
         if (totalAssetCount != downloadedTillNow)
+        {
             EnableDownloadingText();
+        }
+        try
+        {
+            await StartDownloadingAssets(cts.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            Debug.Log("<color=red>task Canceled</color>");
+        }
+
     }
 
     void LoadAddressableSceneAfterDownload()
     {
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
     }
+
 
     public static void ArrangeData()
     {
@@ -142,6 +172,12 @@ public class XanaWorldDownloader : MonoBehaviour
             {
                 DownloadQueueData temp = new DownloadQueueData();
                 temp.ItemID = xanaSceneData.SceneObjects[i].addressableKey;
+                if (!uniqueDownloadKeys.Contains(xanaSceneData.SceneObjects[i].addressableKey) && !XanaWorldDownloader.CheckForVisitedWorlds(ConstantsHolder.xanaConstants.EnviornmentName))
+                {
+                    Debug.Log("<color=red>Calculate Download Size</color>");
+                    uniqueDownloadKeys.Add(xanaSceneData.SceneObjects[i].addressableKey);
+                    downloadSize += Addressables.GetDownloadSizeAsync(xanaSceneData.SceneObjects[i].addressableKey).WaitForCompletion();
+                }
                 temp.DcitionaryKey = i.ToString();
                 temp.Position = xanaSceneData.SceneObjects[i].position;
                 temp.Rotation = xanaSceneData.SceneObjects[i].rotation;
@@ -154,7 +190,7 @@ public class XanaWorldDownloader : MonoBehaviour
                     {
                         preLoadObjects.Add(temp);
                     }
-                    if (xanaSceneData.SceneObjects[i].priority == Priority.Low)
+                    else if (xanaSceneData.SceneObjects[i].priority == Priority.Low)
                     {
                         postLoadObjects.Add(temp);
                     }
@@ -162,16 +198,16 @@ public class XanaWorldDownloader : MonoBehaviour
                     {
                         downloadDataQueue.Add(temp);
                         totalAssetCount++;
-                    } 
+                    }
                 }
             }
+            uniqueDownloadKeys.Clear();
             dataArranged = true;
         }
         catch (Exception e)
         {
-            Debug.LogError("An error occurred: " + e.Message);
+            Debug.Log("<color=red>An error occurred: " + e.Message + "</color>");
         }
-      
     }
 
     //Sorting data on start and after long Interval
@@ -225,7 +261,7 @@ public class XanaWorldDownloader : MonoBehaviour
         }
     }
 
-    async void StartDownloadingAssets()
+    async Task StartDownloadingAssets(CancellationToken token)
     {
         SortingQueueData(initialPlayerPos);
         while (!dataSorted)
@@ -233,19 +269,20 @@ public class XanaWorldDownloader : MonoBehaviour
             await Task.Yield();
         }
         StartCoroutine(DownloadAssetsFromSortedList());
-        while (!isDefaultPriorityObjectDownloaded)
+        while (!isDefaultPriorityObjectDownloaded && !token.IsCancellationRequested)
+        {
+            await Task.Yield();
+        }
+        StartCoroutine(DownloadObjects(postLoadObjects, Priority.Low));
+        while (!isLowPriorityDownloaded && !token.IsCancellationRequested)
         {
             await Task.Yield();
         }
         StartCoroutine(DownloadFailedItem());
-        while (!isfailedObjectsDownloaded)
+        while (!isfailedObjectsDownloaded && !token.IsCancellationRequested)
         {
             await Task.Yield();
         }
-        StartCoroutine(DownloadObjects(postLoadObjects, false));
-        //StartCoroutine(CheckLongIntervalSorting());
-        //StartCoroutine(CheckShortIntervalSorting());
-
     }
 
     IEnumerator DownloadAssetsFromSortedList()
@@ -255,39 +292,54 @@ public class XanaWorldDownloader : MonoBehaviour
             downloadIsGoingOn = true;
             string downloadKey = downloadDataQueue[0].ItemID;
             string dicKey = downloadDataQueue[0].DcitionaryKey;
-            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-            //bool flag = false;
-            //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
-            //if (!flag)
+            AsyncOperationHandle<GameObject> _async;
+            //GameObject objectfromPool = GetObjectFromPool(downloadKey);
+            //if (objectfromPool)
             //{
-            //    try
-            //    {
-            //        _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        //Debug.LogError("Error while downloading Addressable :- " + downloadKey);
-            //    }
+            //    InstantiateAsset(objectfromPool, xanaWorldDataDictionary[dicKey], true);
+            //    yield break;
             //}
+            //else
+            int _assetDownloadTryCount = 0;
+        LoadAssetAgain:
+            _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
                 yield return null;
             }
-            if (_async.Status == AsyncOperationStatus.Succeeded)
+            if(_async.IsValid() && _async.Result!=null)
             {
-                InstantiateAsset(_async.Result, xanaWorldDataDictionary[dicKey]);
-                //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
+                
+            }
+            else
+            {
+                Addressables.ClearDependencyCacheAsync(downloadKey);
+                Addressables.ReleaseInstance(_async);
+                Addressables.Release(_async); 
+                _assetDownloadTryCount++;
+                if (_assetDownloadTryCount < 5)
+                {
+                    yield return new WaitForSeconds(1);
+                    goto LoadAssetAgain;
+                }
+            }
+
+            if (_async.Status == AsyncOperationStatus.Succeeded && _async.Result != null)
+            {
+                AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
+                InstantiateAsset(_async.Result, xanaWorldDataDictionary[dicKey], dicKey);
             }
             else
             {
                 //Debug.LogError("Download Failed......");
             }
             yield return new WaitForEndOfFrame();
-            yield return new WaitForSeconds(0.1f);
-            if (_async.Status == AsyncOperationStatus.Succeeded)
+            yield return new WaitForSeconds(0.05f);
+            if (_async.Status == AsyncOperationStatus.Succeeded && _async.Result != null)
             {
                 downloadDataQueue.RemoveAt(0);
                 DisplayDownloadedAssetText();
+
             }
             else
             {
@@ -297,39 +349,53 @@ public class XanaWorldDownloader : MonoBehaviour
 
             downloadIsGoingOn = false;
         }
-        isDefaultPriorityObjectDownloaded = true;
+
+        if (totalAssetCount == downloadedTillNow)
+            LoadingFlagUpdate(Priority.defaultPriority);
     }
 
 
     IEnumerator DownloadFailedItem()
     {
-        //Debug.LogError("Failed Count_" + downloadFailed.Count + "_TotalAsset_" + totalAssetCount + "_Downloaded_" + downloadedTillNow);
         while (downloadFailed.Count > 0)
         {
             string downloadKey = downloadFailed[0].ItemID;
             string dicKey = downloadFailed[0].DcitionaryKey;
-            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-            //bool flag = false;
-            //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
-            //if (!flag)
+            AsyncOperationHandle<GameObject> _async;
+            //GameObject objectfromPool = GetObjectFromPool(downloadKey);
+            //if (objectfromPool)
             //{
-            //    try
-            //    {
-            //        _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        //Debug.LogError("Error while downloading Addressable :- " + downloadKey);
-            //    }
+            //    InstantiateAsset(objectfromPool, xanaWorldDataDictionary[dicKey], true);
+            //    yield break;
             //}
+            //else
+            int _assetDownloadTryCount = 0;
+        LoadAssetAgain:
+            _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
                 yield return null;
             }
-            if (_async.Status == AsyncOperationStatus.Succeeded)
+            if (_async.IsValid() && _async.Result != null)
             {
-                InstantiateAsset(_async.Result, xanaWorldDataDictionary[dicKey]);
-                //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
+                
+            }
+            else
+            {
+                Addressables.ClearDependencyCacheAsync(downloadKey);
+                Addressables.ReleaseInstance(_async);
+                Addressables.Release(_async);
+                _assetDownloadTryCount++;
+                if (_assetDownloadTryCount < 5)
+                {
+                    yield return new WaitForSeconds(1);
+                    goto LoadAssetAgain;
+                }
+            }
+            if (_async.Status == AsyncOperationStatus.Succeeded && _async.Result != null)
+            {
+                AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
+                InstantiateAsset(_async.Result, xanaWorldDataDictionary[dicKey], dicKey);
             }
             else
             {
@@ -337,43 +403,60 @@ public class XanaWorldDownloader : MonoBehaviour
             }
             yield return new WaitForEndOfFrame();
             yield return new WaitForSeconds(0.01f);
-            if (_async.Status == AsyncOperationStatus.Succeeded)
-            {
-                downloadFailed.RemoveAt(0);
-                DisplayDownloadedAssetText();
-            }
-            else
-            {
-                downloadFailed.RemoveAt(0);
-                DisplayDownloadedAssetText();
-            }
+            downloadFailed.RemoveAt(0);
+            DisplayDownloadedAssetText();
         }
         isfailedObjectsDownloaded = true;
         if (totalAssetCount == downloadedTillNow)
         {
             BuilderEventManager.AfterWorldOffcialWorldsInatantiated?.Invoke();
+            
+            // Force Enable Map When all Data is Download
+            GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
         }
     }
 
-    public IEnumerator DownloadObjects(List<DownloadQueueData> downloadQueues, bool preLodaingObjects)
+    public IEnumerator DownloadObjects(List<DownloadQueueData> downloadQueues, Priority objectLoadingPriority)
     {
         for (int i = 0; i < downloadQueues.Count; i++)
         {
             string downloadKey = downloadQueues[i].ItemID;
             string dicKey = downloadQueues[i].DcitionaryKey;
-            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-            //bool flag = false;
-            //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
-            //if (!flag)
-                //_async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            AsyncOperationHandle<GameObject> _async;
+            //GameObject objectfromPool = GetObjectFromPool(downloadKey);
+            //if (objectfromPool)
+            //{
+            //    InstantiateAsset(objectfromPool, xanaWorldDataDictionary[dicKey], true);
+            //    yield break;
+            //}
+            //else
+            int _assetDownloadTryCount = 0;
+        LoadAssetAgain:
+            _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
                 yield return null;
             }
-            if (_async.Status == AsyncOperationStatus.Succeeded)
+            if (_async.IsValid() && _async.Result != null)
             {
-                InstantiateAsset(_async.Result, xanaWorldDataDictionary[dicKey]);
-                //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
+                
+            }
+            else
+            {
+                Addressables.ClearDependencyCacheAsync(downloadKey);
+                Addressables.ReleaseInstance(_async);
+                Addressables.Release(_async);
+                _assetDownloadTryCount++;
+                if (_assetDownloadTryCount < 5)
+                {
+                    yield return new WaitForSeconds(1);
+                    goto LoadAssetAgain;
+                }
+            }
+            if (_async.Status == AsyncOperationStatus.Succeeded && _async.Result != null)
+            {
+                AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
+                InstantiateAsset(_async.Result, xanaWorldDataDictionary[dicKey], dicKey);
             }
             else
             {
@@ -381,8 +464,23 @@ public class XanaWorldDownloader : MonoBehaviour
             }
             yield return new WaitForSeconds(0.01f);
         }
-        if (preLodaingObjects)
-            isSpawnDownloaded = true;
+        LoadingFlagUpdate(objectLoadingPriority);
+    }
+
+    void LoadingFlagUpdate(Priority flag)
+    {
+        switch (flag)
+        {
+            case Priority.defaultPriority:
+                isDefaultPriorityObjectDownloaded = true;
+                break;
+            case Priority.High:
+                isSpawnDownloaded = true;
+                break;
+            case Priority.Low:
+                isLowPriorityDownloaded = true;
+                break;
+        }
     }
 
     void EnableDownloadingText()
@@ -404,9 +502,7 @@ public class XanaWorldDownloader : MonoBehaviour
                 {
                     assetDownloadingText.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
                     assetDownloadingTextPotrait.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
-                    assetDownloadingText.color = Color.green;
-                    assetDownloadingTextPotrait.color = Color.green;
-         
+
                     assetDownloadingText.transform.parent.gameObject.SetActive(false);
                     assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
                 }
@@ -418,8 +514,6 @@ public class XanaWorldDownloader : MonoBehaviour
                 {
                     assetDownloadingText.text = "読み込み完了.... " + downloadedTillNow + "/" + (totalAssetCount);
                     assetDownloadingTextPotrait.text = "読み込み完了.... " + downloadedTillNow + "/" + (totalAssetCount);
-                    assetDownloadingText.color = Color.green;
-                    assetDownloadingTextPotrait.color = Color.green;
                     assetDownloadingText.transform.parent.gameObject.SetActive(false);
                     assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
                 }
@@ -431,8 +525,6 @@ public class XanaWorldDownloader : MonoBehaviour
                 {
                     assetDownloadingText.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
                     assetDownloadingTextPotrait.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
-                    assetDownloadingText.color = Color.green;
-                    assetDownloadingTextPotrait.color = Color.green;
                     assetDownloadingText.transform.parent.gameObject.SetActive(false);
                     assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
                 }
@@ -440,15 +532,89 @@ public class XanaWorldDownloader : MonoBehaviour
         }
     }
 
+    void ResetDisplayDownloadText()
+    {
+        if (!assetDownloadingText)
+        {
+            Debug.Log("<color=red> Textmesh is Destroyed </color>");
+            return;
+        }
+        assetDownloadingText.text = string.Empty;
+        assetDownloadingTextPotrait.text = string.Empty;
+        assetDownloadingText.transform.parent.gameObject.SetActive(false);
+        assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
+    }
 
-    private static void InstantiateAsset(GameObject objectTobeInstantiate, ObjectsInfo _itemData)
+
+    GameObject GetObjectFromPool(string objectKey)
+    {
+        if (prefabObjectPool.ContainsKey(objectKey))
+        {
+            if (CheckAvailableForReuse(objectKey, prefabObjectPool[objectKey]))
+                return prefabObjectPool[objectKey];
+        }
+        return null;
+    }
+
+    static void AddObjectInPool(string objectKey, GameObject prefabObject)
+    {
+        if (prefabObjectPool.ContainsKey(objectKey))
+        {
+            return;
+        }
+        else
+        {
+            prefabObjectPool.Add(objectKey, prefabObject);
+        }
+    }
+
+    void RemoveItemFromPool(string objectKey)
+    {
+        Addressables.Release(objectKey);
+        prefabObjectPool.Remove(objectKey);
+    }
+
+    bool CheckAvailableForReuse(string key, GameObject poolObject)
+    {
+        ObjectsInfo objectsInfo = new ObjectsInfo();
+        if (xanaWorldDataDictionary.TryGetValue(key, out objectsInfo))
+        {
+            float distance = Vector3.Distance(poolObject.transform.position, objectsInfo.position);
+            if (distance > unloadDistance)
+                return true;
+        }
+        return false;
+    }
+    private static void InstantiateAsset(GameObject objectTobeInstantiate, ObjectsInfo _itemData, string downloadKey)
     {
         GameObject newObj = Instantiate(objectTobeInstantiate, _itemData.position, _itemData.rotation, assetParentStatic);
         newObj.transform.localScale = _itemData.scale;
         newObj.name = _itemData.name;
         newObj.SetActive(_itemData.isActive);
         ApplyLightmapData(_itemData.lightmapData, newObj);
+        //AddObjectInPool(downloadKey, newObj);
+        if(ConstantsHolder.DomeHeaderInfo)
+        {
+            AssignDomeId(newObj, _itemData);
+            SetSubworldIndex(newObj, _itemData);
+        }
+        //if (ConstantsHolder.HaveSubWorlds)
+        //{
+        //    if (_itemData.addressableKey.Contains("TLP"))
+        //    {
+        //        XANASummitDataContainer.SceneTeleportingObjects.Add(objectTobeInstantiate);
+        //    }
+        //}
     }
+
+    private static void InstantiateAsset(GameObject ObjectFromPool, ObjectsInfo _itemData, bool alreadyInstantiated)
+    {
+        ObjectFromPool.transform.localScale = _itemData.scale;
+        ObjectFromPool.name = _itemData.name;
+        ObjectFromPool.SetActive(_itemData.isActive);
+        ApplyLightmapData(_itemData.lightmapData, ObjectFromPool);
+    }
+
     private static void ApplyLightmapData(LightmapData[] lightmapData, GameObject prefab)
     {
         try
@@ -466,6 +632,80 @@ public class XanaWorldDownloader : MonoBehaviour
         }
 
     }
+
+    static void AssignDomeId(GameObject DomeObject, ObjectsInfo _itemData)
+    {
+        if (_itemData.summitDomeInfo.domeIndex != 0)
+        {
+            DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().DomeId = _itemData.summitDomeInfo.domeIndex;
+            DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().textMeshPro.AddComponent<TMPro.TextMeshPro>().text = _itemData.summitDomeInfo.domeIndex.ToString();
+            DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().textMeshPro.GetComponent<TMPro.TextMeshPro>().alignment = TMPro.TextAlignmentOptions.Center;
+            if (DomeObject.GetComponent<SummitDomeShaderApply>())
+            {
+                AllDomes.Add(DomeObject);
+                DomeObject.GetComponent<SummitDomeShaderApply>().DomeId = _itemData.summitDomeInfo.domeIndex;
+            }
+
+        }
+
+        #region DomeMiniMap
+
+        // Cache the reference to xanaConstants for repeated use
+        var xanaConstants = ConstantsHolder.xanaConstants;
+
+        // Use StringComparison.Ordinal for case-sensitive comparison as it's faster for non-linguistic data
+        if (xanaConstants.EnviornmentName.Equals("XANA Summit", StringComparison.Ordinal))
+        {
+            // Assuming newObj.transform doesn't change, consider caching GetComponentInChildren result if possible
+            var sceneSwitchComponent = DomeObject.transform.GetComponentInChildren<OnTriggerSceneSwitch>();
+            if (sceneSwitchComponent != null)
+            {
+                DomeMinimapDataHolder.OnInitDome?.Invoke(sceneSwitchComponent);
+            }
+        }
+        #endregion
+    }
+
+    static void SetSubworldIndex(GameObject objectTobeInstantiate, ObjectsInfo _itemData)
+    {
+        if (ConstantsHolder.HaveSubWorlds)
+        {
+            if (_itemData.subWorldComponent)
+            {
+                if (objectTobeInstantiate.GetComponent<SummitSubWorldIndex>())
+                {
+                    objectTobeInstantiate.GetComponent<SummitSubWorldIndex>().SubworldIndex = _itemData.subWorldIndex;
+                    XANASummitDataContainer.SceneTeleportingObjects.Add(objectTobeInstantiate);
+                }
+            }
+        }
+    }
+
+
+    IEnumerator CheckForUnloading()
+    {
+        CheckingAgain:
+        yield return new WaitForSecondsRealtime(timeshortSorting);
+        currPlayerPosition = GameplayEntityLoader.instance.mainController.transform.localPosition;
+        yield return new WaitForEndOfFrame();
+        while (downloadIsGoingOn)
+        {
+            yield return null;
+        }
+        SortingDataShortInterval(currPlayerPosition);
+        yield return new WaitForEndOfFrame();
+        stopDownloading = false;
+        StartCoroutine(DownloadAssetsFromSortedList());
+        if (downloadDataQueue.Count > 0)
+            goto CheckingAgain;
+        else
+        {
+            stopDownloading = true;
+            BuilderEventManager.AfterWorldInstantiated?.Invoke();
+            //CheckPlacementOfAllObjects();
+        }
+    }
+
 
     IEnumerator CheckShortIntervalSorting()
     {
@@ -523,6 +763,7 @@ public class XanaWorldDownloader : MonoBehaviour
 
     }
 
+
     //bool posChecking = true;
     //public void CheckPlacementOfAllObjects()
     //{
@@ -539,12 +780,24 @@ public class XanaWorldDownloader : MonoBehaviour
     //    }
     //}
 
+    public static bool CheckForVisitedWorlds(string envName)
+    {
+        for (int i = 0; i < DownloadedWorldNames.Count; i++)
+        {
+            if (DownloadedWorldNames[i] == envName)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
-    void OnOrientationChange()
+
+    void OnOrientationChange(bool IsPortrait)
     {
         if (totalAssetCount != downloadedTillNow)
         {
-            if (ScreenOrientationManager._instance.isPotrait)
+            if (IsPortrait)
             {
                 assetDownloadingText.transform.parent.gameObject.SetActive(false);
                 assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(true);
@@ -557,7 +810,7 @@ public class XanaWorldDownloader : MonoBehaviour
         }
     }
 
-    public void ResetAll()
+    public async static void ResetAll()
     {
         stopDownloading = true;
 
@@ -566,17 +819,31 @@ public class XanaWorldDownloader : MonoBehaviour
         preLoadObjects.Clear();
         postLoadObjects.Clear();
         downloadFailed.Clear();
-        xanaSceneData.SceneObjects.Clear();
+        if(xanaSceneData != null && xanaSceneData.SceneObjects != null)
+            xanaSceneData.SceneObjects.Clear();
         BuilderData.mapData = null;
         BuilderData.spawnPoint.Clear();
+        AllDomes.Clear();
+        XANASummitDataContainer.SceneTeleportingObjects.Clear();
         downloadedTillNow = 0;
         totalAssetCount = 0;
         dataArranged = false;
         dataSorted = false;
         stopDownloading = false;
-        isDefaultPriorityObjectDownloaded=false;
+        isDefaultPriorityObjectDownloaded = false;
         isfailedObjectsDownloaded = false;
         isSpawnDownloaded = false;
+
+        if (cts != null)
+            cts.Cancel();
+        xanaWorldDownloader.ResetDisplayDownloadText();
+        xanaWorldDownloader.StopAllCoroutines();
+        LoadingHandler.Instance.HideLoading();
+        //AssetBundle.UnloadAllAssetBundles(false);
+        //Caching.ClearCache();
+        //Addressables.CleanBundleCache();
+        //Resources.UnloadUnusedAssets();
+
     }
 
 }
@@ -599,7 +866,10 @@ public class ObjectsInfo
     public string tagName;
     public int layerIndex;
     public bool isActive;
+    public bool subWorldComponent;
+    public int subWorldIndex;
     public LightmapData[] lightmapData;
+    public SummitDomeInfo summitDomeInfo;
 }
 [System.Serializable]
 public class LightmapData
@@ -608,6 +878,13 @@ public class LightmapData
     public Vector4 lightmapScaleOffset;
     // Add more fields as needed to store relevant data
 }
+
+[System.Serializable]
+public class SummitDomeInfo
+{
+    public int domeIndex;
+}
+
 
 public enum Priority
 {

@@ -45,13 +45,29 @@ public class MiniMapOnOff : MonoBehaviour
             ReferencesForGamePlay.instance.minimap.SetActive(false);
             PlayerPrefs.SetInt("minimap", 0);
             ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
+            ReferencesForGamePlay.instance.SumitMapStatus(false);
+
+            if (XanaChatSystem.instance.chatButton.GetComponent<UnityEngine.UI.Image>().enabled)
+                XanaChatSystem.instance.chatDialogBox.SetActive(true);
         }
         else
         {
+            if (GameplayEntityLoader.instance != null && GameplayEntityLoader.instance.IsJoinSummitWorld)
+            {
+                Debug.Log("Minimap is not allowed in Summit World");
+                return;
+            }
+
+
             ReferencesForGamePlay.instance.minimap.SetActive(true);
             PlayerPrefs.SetInt("minimap", 1);
             ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
+            ReferencesForGamePlay.instance.SumitMapStatus(true);
+
+            XanaChatSystem.instance.chatDialogBox.SetActive(false);
         }
         OnEnable();
     }
+
+   
 }

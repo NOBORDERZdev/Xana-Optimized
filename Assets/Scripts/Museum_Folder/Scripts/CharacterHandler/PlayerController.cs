@@ -3,12 +3,11 @@ using Photon.Pun;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-
-
     public delegate void CameraChangeDelegate(Camera camera);
     public static event CameraChangeDelegate CameraChangeDelegateEvent;
 
@@ -29,16 +28,20 @@ public class PlayerController : MonoBehaviour
     private float gravityValue = -9.81f;
 
     public float JumpVelocity = 3;
+    
+    public float YourDownhillThreshold = 30f; // Adjust slope Threshold 
+    public float CurrentSlope = 0f;
+    private readonly float _rayOffsett = 0.5f;
+
     //[SerializeField]
     public float jumpHeight = 1.0f;
-
     public Transform cameraTransform = null;
     //public Transform cameraCharacterTransform = null;
     //public GameObject cmVcam;
 
-    public bool sprint, _IsGrounded, jumpNow, sprint_Button, IsJumping;
+    public bool sprint, _IsGrounded, jumpNow, sprint_Button, IsJumping,DebugColloision;
 
-    private CharacterController characterController = null;
+    internal CharacterController characterController = null;
 
     public Animator animator = null;
 
@@ -69,8 +72,8 @@ public class PlayerController : MonoBehaviour
     public bool isFirstPerson = false;
     public GameObject gyroButton;
     public GameObject gyroButton_Portait;
-    public static event Action PlayerIsWalking;
-    public static event Action PlayerIsIdle;
+    public static Action PlayerIsWalking;
+    public static Action PlayerIsIdle;
     [HideInInspector] public Vector3 gravityVector;
     public GameObject ActiveCamera; // ethier TPS OR FPS CAM
     public bool IsJumpButtonPress = false;
@@ -100,10 +103,17 @@ public class PlayerController : MonoBehaviour
     float jumpMultiplier = 1;
     #endregion
     [SerializeField]
-    CinemachineFreeLook cinemachineFreeLook;
+    internal CinemachineFreeLook cinemachineFreeLook;
     float topRigDefaultRadius;
 
     internal float animationBlendValue = 0;
+    internal Vector3 desiredMoveDirection;
+    internal Vector3 desiredMoveDirectionFPP;
+
+    //Store Player Speed & Jump height data
+    float _defaultJumpHeight = default;
+    float _defaultSprintSpeed = default;
+    float _defaultMoveSpeed = default;
 
     private void OnEnable()
     {
@@ -115,7 +125,14 @@ public class PlayerController : MonoBehaviour
 
         //Update jump height according to builder
         BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
+        BuilderEventManager.AfterPlayerInstantiated += RemoveLayerFromCameraCollider;
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate += SpecialItemPlayerPropertiesUpdate;
+
+        SceneManager.sceneLoaded += SetDefaultPlayerSpeedJumpData;
+
+        _defaultJumpHeight = JumpVelocity;
+        _defaultSprintSpeed = sprintSpeed;
+        _defaultMoveSpeed = movementSpeed;
     }
     private void OnDisable()
     {
@@ -127,8 +144,10 @@ public class PlayerController : MonoBehaviour
 
         //Update jump height according to builder
         BuilderEventManager.ApplyPlayerProperties -= PlayerJumpUpdate;
+        BuilderEventManager.AfterPlayerInstantiated -= RemoveLayerFromCameraCollider;
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate -= SpecialItemPlayerPropertiesUpdate;
 
+        SceneManager.sceneLoaded -= SetDefaultPlayerSpeedJumpData;
     }
 
     void Start()
@@ -153,6 +172,7 @@ public class PlayerController : MonoBehaviour
         innerJoystick.gameObject.AddComponent<JoyStickIssue>();
         innerJoystick_Portrait.gameObject.AddComponent<JoyStickIssue>();
 
+
         if (GamePlayButtonEvents.inst != null)
         {
             GamePlayButtonEvents.inst.OnSwitchCamera += SwitchCameraButton;
@@ -166,21 +186,33 @@ public class PlayerController : MonoBehaviour
         ////Update jump height according to builder
         //BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
 
+        RemoveLayerFromCameraCollider();
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (DebugColloision)
+        {
+            Debug.LogError("Colloided    " + collision.gameObject.name);
+        }
+    }
+
+    private void RemoveLayerFromCameraCollider()
+    {
         if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
             CinemachineCollider cinemachineCollider = GameplayEntityLoader.instance.PlayerCamera.GetComponent<CinemachineCollider>();
             if (cinemachineCollider != null)
             {
-                int layerIndex = LayerMask.NameToLayer("NoPostProcessing");
+                int noPostProcessingLayerIndex = LayerMask.NameToLayer("NoPostProcessing");
+                //int characterLayerIndex = LayerMask.NameToLayer("Character");
                 // Remove the layer from the collide against mask
-                cinemachineCollider.m_CollideAgainst &= ~(1 << layerIndex);
+                cinemachineCollider.m_CollideAgainst &= ~(1 << noPostProcessingLayerIndex);
+                //cinemachineCollider.m_CollideAgainst &= ~(1 << characterLayerIndex);
             }
             cinemachineFreeLook = GameplayEntityLoader.instance.PlayerCamera.GetComponent<CinemachineFreeLook>();
             topRigDefaultRadius = cinemachineFreeLook.m_Orbits[0].m_Radius;
         }
-
     }
-
 
     public void OnDestroy()
     {
@@ -197,6 +229,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        ConstantsHolder.ontriggteredplayerEntered?.Invoke(other.gameObject);
         if (other.tag == "LiveStream")
         {
             Gamemanager._InstanceGM.m_youtubeAudio.volume = 1f;
@@ -234,6 +267,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        ConstantsHolder.ontriggteredplayerExit?.Invoke(other.gameObject);
         if (other.tag == "LiveStream")
         {
             //Gamemanager._InstanceGM.mediaPlayer.AudioVolume = 0;
@@ -307,7 +341,7 @@ public class PlayerController : MonoBehaviour
         gravityVector.y = 0;
 
         GamePlayUIHandler.inst.OnChangehighlightedFPSbutton(isFirstPerson);
-        if(coroutine != null) 
+        if (coroutine != null)
         {
             StopCoroutine(coroutine);
         }
@@ -416,40 +450,67 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+    public bool IsGoingDownhill()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, characterController.height / 2f + _rayOffsett))
+        {
+            CurrentSlope = Vector3.Angle(Vector3.up, hit.normal);
+            return CurrentSlope >= 0 && CurrentSlope < YourDownhillThreshold;
+        }
+        else
+        {
+            // Character is not on ground, assume not downhill
+            return false;
+        }
+    }
+
 
     private void Update()
     {
         if (animator == null)
             return;
+        //IsGoingDownhill();
+        //if (IsGrounded() && !IsJumping)
+        //{
+        //    gravityVector.y = gravityValue * Time.deltaTime;
+        //    animator.SetBool("IsFalling", false);
+        //}
+        //else if (!IsGrounded() && characterController.velocity.y < -1)
+        //    animator.SetBool("IsFalling", true);
+
 
         if (characterController.isGrounded && !IsJumping)
         {
             gravityVector.y = gravityValue * Time.deltaTime;
             animator.SetBool("IsFalling", false);
         }
-        else if (!characterController.isGrounded && characterController.velocity.y < -1)
+        else if (!IsGoingDownhill())
             animator.SetBool("IsFalling", true);
+
+
 
         if (m_IsMovementActive)
         {
             if (isFirstPerson && !m_FreeFloatCam)
             {
-                if (EmoteAnimationHandler.Instance.isAnimRunning && isJoystickDragging)
+                if (ActionManager.IsAnimRunning && isJoystickDragging)
                 {
-                    EmoteAnimationHandler.Instance.StopAnimation();
-                    EmoteAnimationHandler.Instance.StopAllCoroutines();
+                    ActionManager.StopActionAnimation?.Invoke();
+                    // EmoteAnimationHandler.Instance.StopAnimation();
+                    //  EmoteAnimationHandler.Instance.StopAllCoroutines();
                 }
                 FirstPersonCameraMove(); // FOR FIRST PERSON MOVEMENT XX
             }
             if (!isFirstPerson && !m_FreeFloatCam)
             {
-                if (EmoteAnimationHandler.Instance.isAnimRunning && isJoystickDragging)
+                if (ActionManager.IsAnimRunning && isJoystickDragging)
                 {
                     if (ReferencesForGamePlay.instance.moveWhileDanceCheck == 0)
                     {
-                        EmoteAnimationHandler.Instance.StopAnimation();
-                        EmoteAnimationHandler.Instance.StopAllCoroutines();
+                        ActionManager.StopActionAnimation?.Invoke();
+                        //  EmoteAnimationHandler.Instance.StopAnimation();
+                        //  EmoteAnimationHandler.Instance.StopAllCoroutines();
                     }
                 }
                 Move();
@@ -496,6 +557,7 @@ public class PlayerController : MonoBehaviour
         Vector2 movementInput = new Vector2(horizontal, vertical);
 
         Vector3 move = transform.right * movementInput.x + transform.forward * movementInput.y;
+        desiredMoveDirectionFPP = move;
         _IsGrounded = characterController.isGrounded;
         animator.SetBool("IsGrounded", _IsGrounded);
         if (characterController.velocity.y < 0)
@@ -567,7 +629,7 @@ public class PlayerController : MonoBehaviour
             {
                 //Debug.Log("Move current:" + firstPersonCurrentSpeed + "    :Move:" + move);
                 PlayerIsWalking?.Invoke();
-                UpdateSefieBtn(false);
+                //  UpdateSefieBtn(false);
                 //if (Mathf.Abs(horizontal) > .5f || Mathf.Abs(vertical) > .5f)
                 if ((Mathf.Abs(horizontal) <= .85f || Mathf.Abs(vertical) <= .85f))
                 {
@@ -607,8 +669,9 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            PlayerIsIdle?.Invoke();
-            UpdateSefieBtn(!LoadEmoteAnimations.animClick);
+            if (!PlayerSelfieController.Instance.m_IsSelfieFeatureActive)
+                PlayerIsIdle?.Invoke();
+            //  UpdateSefieBtn(!LoadEmoteAnimations.animClick);
 
             characterController.Move(move * firstPersonCurrentSpeed * Time.deltaTime);
             velocity.y += gravity * Time.deltaTime;
@@ -786,6 +849,10 @@ public class PlayerController : MonoBehaviour
 
     public void ButtonsToggleOnOff(bool b)
     {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            return;
+        }
         m_FreeFloatCam = b;
         StopBuilderComponent();
         FreeFloatCamCharacterController.gameObject.SetActive(b);
@@ -863,6 +930,9 @@ public class PlayerController : MonoBehaviour
         if (isFirstPerson /*|| animator.GetBool("standJump")*/)
             return;
 
+        if (!ReferencesForGamePlay.instance.m_34player)
+            return;
+
         SpecialItemDoubleJump();
 
         if (!controllerCamera.activeInHierarchy && (horizontal != 0 || vertical != 0))
@@ -881,7 +951,7 @@ public class PlayerController : MonoBehaviour
         }
 
         animator.SetBool("IsGrounded", _IsGrounded);
-        if (characterController.velocity.y < 0)
+        if (characterController.velocity.y <= 0)
         {
             animator.SetBool("standJump", false);
         }
@@ -897,7 +967,9 @@ public class PlayerController : MonoBehaviour
         //    forward.Normalize();
         //    right.Normalize();
 
-        Vector3 desiredMoveDirection = (forward * movementInput.y + right * movementInput.x).normalized;
+        //Vector3 desiredMoveDirection = (forward * movementInput.y + right * movementInput.x).normalized;
+        desiredMoveDirection = (forward * movementInput.y + right * movementInput.x).normalized;
+
         //Debug.Log("call hua for===="+ jumpNow + characterController.isGrounded + allowJump + Input.GetKeyDown(KeyCode.Space));
         //Debug.Log("MovmentInput:" + movementInput + "  :DesiredMoveDirection:" + desiredMoveDirection);
         if ((animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Animation")) && (((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && characterController.isGrounded && !animator.IsInTransition(0))/* || (characterController.isGrounded && jumpNow && allowJump)*/))
@@ -1010,9 +1082,15 @@ public class PlayerController : MonoBehaviour
             {
                 //Debug.Log("Move Current:" + currentSpeed + "    :DesiredMoveDirection:" + desiredMoveDirection);
                 PlayerIsWalking?.Invoke();
-                UpdateSefieBtn(false);
+                // UpdateSefieBtn(false);
                 if ((Mathf.Abs(horizontal) <= .85f || Mathf.Abs(vertical) <= .85f)) // walk
                 {
+                    //Avoid player sliding on very low speed
+                    if (currentSpeed <= 1.40)
+                    {
+                        currentSpeed = 1.4f;
+                    }
+
                     if (animator != null)
                     {
                         float walkSpeed = 0.2f * currentSpeed; // Smoothing animator.
@@ -1034,51 +1112,22 @@ public class PlayerController : MonoBehaviour
 
                     characterController.Move(gravityVector * Time.deltaTime);
                 }
-                else if ((Mathf.Abs(horizontal) <= .001f || Mathf.Abs(vertical) <= .001f))
-                {
-                    if (animator != null)
-                    {
-                        animator.SetFloat("Blend", 0.23f * 0, speedSmoothTime, Time.deltaTime);
-                        animator.SetFloat("BlendY", 3f, speedSmoothTime, Time.deltaTime);
-                    }
-                    if (!_IsGrounded) // is in jump
-                    {
-                        //checking moving platform
-                        if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
-                        {
-                            characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
-                        }
-                        characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
-                        gravityVector.y += gravityValue * Time.deltaTime;
-                        characterController.Move(gravityVector * Time.deltaTime);
-                    }
-                    else // walk start state
-                    {
-                        //checking moving platform
-                        if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
-                        {
-                            characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
-                        }
-                        characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
-                        gravityVector.y += gravityValue * Time.deltaTime;
-                        characterController.Move(gravityVector * Time.deltaTime);
-                    }
-                }
             }
         }
         else // Reseating animator to idel when joystick is not moving-----
         {
             if (_IsGrounded) // this check is added because not to enable bottom buttons early while the char is in jump state //
             {
-                PlayerIsIdle?.Invoke();
-                UpdateSefieBtn(!LoadEmoteAnimations.animClick);
+                if (!PlayerSelfieController.Instance.m_IsSelfieFeatureActive)
+                    PlayerIsIdle?.Invoke();
+                //  UpdateSefieBtn(!LoadEmoteAnimations.animClick);
             }
             //checking moving platform
             if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
             {
                 characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
             }
-            characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
+            characterController.Move(Vector3.zero);
             gravityVector.y += gravityValue * Time.deltaTime;
             characterController.Move(gravityVector * Time.deltaTime);
 
@@ -1156,6 +1205,8 @@ public class PlayerController : MonoBehaviour
     public void Jump()
     {
         _IsGrounded = characterController.isGrounded;
+        EmoteReactionUIHandler.lastEmotePlayed = null;
+
         if (!_IsGrounded && specialItem && !canDoubleJump)
         {
             canDoubleJump = true;
@@ -1173,7 +1224,7 @@ public class PlayerController : MonoBehaviour
         if (EmoteAnimationHandler.Instance.animatorremote != null && ReferencesForGamePlay.instance.m_34player.GetComponent<Animator>().GetBool("EtcAnimStart"))    //Added by Ali Hamza
             ReferencesForGamePlay.instance.m_34player.GetComponent<RpcManager>().BackToIdleAnimBeforeJump();
 
-        if (ReferencesForGamePlay.instance.m_34player)
+        if (ReferencesForGamePlay.instance.m_34player && IsJumpButtonPress)
         {
             ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.JumpSound);
         }
@@ -1227,12 +1278,25 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (EmoteAnimationHandler.Instance.isAnimRunning)
+        if (ActionManager.IsAnimRunning)
         {
-            EmoteAnimationHandler.Instance.StopAnimation();
-            EmoteAnimationHandler.Instance.StopAllCoroutines();
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            //  EmoteAnimationHandler.Instance.StopAllCoroutines();
         }
 
+    }
+
+    public void StopAnimationEmote()
+    {
+        if (ActionManager.IsAnimRunning)
+        {
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            //  EmoteAnimationHandler.Instance.StopAllCoroutines();
+        }
     }
 
     public void JumpNotAllowed()
@@ -1333,10 +1397,12 @@ public class PlayerController : MonoBehaviour
         }
         Invoke(nameof(UpdateVelocity), .1f);
 
-        if (EmoteAnimationHandler.Instance.isAnimRunning)
+        if (ActionManager.IsAnimRunning)
         {
-            EmoteAnimationHandler.Instance.StopAnimation();
-            EmoteAnimationHandler.Instance.StopAllCoroutines();
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            // EmoteAnimationHandler.Instance.StopAllCoroutines();
         }
     }
 
@@ -1350,7 +1416,7 @@ public class PlayerController : MonoBehaviour
     void PlayerJumpUpdate(float jumpValue, float playerSpeed)
     {
         //sprintSpeed = 5;
-        JumpVelocity += (jumpValue - 1);
+        JumpVelocity = GamificationComponentData.instance.MapValue(jumpValue, Constants.minPlayerUIJump, Constants.maxPlayerUIJump, Constants.minPlayerJumpHeight, Constants.maxPlayerJumpHeight);
         sprintSpeed = GamificationComponentData.instance.MapValue(playerSpeed,
                 Constants.minPlayerUISpeed, Constants.maxPlayerUISpeed, Constants.minPlayerSprintSpeed, Constants.maxPlayerSprintSpeed);
         speedMultiplier = playerSpeed;
@@ -1568,7 +1634,8 @@ public class PlayerController : MonoBehaviour
         }
         else // Reseating animator to idel when joystick is not moving.
         {
-            PlayerIsIdle?.Invoke();
+            if (!PlayerSelfieController.Instance.m_IsSelfieFeatureActive)
+                PlayerIsIdle?.Invoke();
             AnimationBehaviourNinjaMode();
             characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
             gravityVector.y += gravityValue * Time.deltaTime;
@@ -1702,8 +1769,8 @@ public class PlayerController : MonoBehaviour
             animator.CrossFade("Withdrawing", 0.2f);
             yield return new WaitForSecondsRealtime(1.3f);
             swordModel.transform.SetParent(swordHook, false);
-            swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
-            swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
+            swordModel.transform.localPosition = new Vector3(-0.17f, 0.06f, 0.03f);
+            swordModel.transform.localRotation = new Quaternion(0.89543f, -0.21528f, 0.28035f, -0.27066f);
             isMovementAllowed = true;
         }
     }
@@ -1754,8 +1821,8 @@ public class PlayerController : MonoBehaviour
         if (swordModel && time != 0)
         {
             swordModel.transform.SetParent(swordHook, false);
-            swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
-            swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
+            swordModel.transform.localPosition = new Vector3(-0.17f, 0.06f, 0.03f);
+            swordModel.transform.localRotation = new Quaternion(0.89543f, -0.21528f, 0.28035f, -0.27066f);
             //swordModel.SetActive(true);
         }
         yield return new WaitForSeconds(time);
@@ -1772,7 +1839,8 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("BlendY", 3f, 0.0f, Time.deltaTime);
         //Ninja_Throw(false);
         isDrawSword = false;
-        JumpVelocity = originalJumpSpeed + (jumpMultiplier - 1);
+        JumpVelocity = GamificationComponentData.instance.MapValue(jumpMultiplier,
+                Constants.minPlayerUIJump, Constants.maxPlayerUIJump, Constants.minPlayerJumpHeight, Constants.maxPlayerJumpHeight);
         sprintSpeed = GamificationComponentData.instance.MapValue(speedMultiplier,
                 Constants.minPlayerUISpeed, Constants.maxPlayerUISpeed, Constants.minPlayerSprintSpeed, Constants.maxPlayerSprintSpeed);
         BuilderEventManager.DisableAnimationsButtons?.Invoke(true);
@@ -2030,7 +2098,7 @@ public class PlayerController : MonoBehaviour
     internal bool isOnMovingPlatform;
     private void CalculateMovingPlatformSpeed()
     {
-        if (!ConstantsHolder.xanaConstants.isBuilderScene)
+        if (!ConstantsHolder.xanaConstants.isBuilderScene || GamificationComponentData.instance == null)
             return;
 
         if (!characterController.isGrounded)
@@ -2042,7 +2110,6 @@ public class PlayerController : MonoBehaviour
             }
             return;
         }
-
 
         RaycastHit hitData;
         isOnMovingPlatform = Physics.Raycast(transform.position + rayOffset, -transform.up, out hitData, rayDistance, GamificationComponentData.instance.platformLayers);
@@ -2066,5 +2133,32 @@ public class PlayerController : MonoBehaviour
 
         movedPosition = movingPlatform.position - lastMovePlatformPosition;
         lastMovePlatformPosition = movingPlatform.position;
+    }
+
+    void SetDefaultPlayerSpeedJumpData(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        if (scene.name != "Builder")
+        {
+            JumpVelocity = _defaultJumpHeight;
+            sprintSpeed = _defaultSprintSpeed;
+            movementSpeed = _defaultMoveSpeed;
+        }
+    }
+
+
+    public void RemoveCharacterLayer(bool flag) {
+        CinemachineCollider cinemachineCollider = GameplayEntityLoader.instance.PlayerCamera.GetComponent<CinemachineCollider>();
+        if (cinemachineCollider != null )
+        {
+
+            int characterLayerIndex = LayerMask.NameToLayer("Character");
+            // Remove the layer from the collide against mask
+            if(flag)
+            cinemachineCollider.m_CollideAgainst &= ~(1 << characterLayerIndex);
+            else
+                cinemachineCollider.m_CollideAgainst |= (1 << characterLayerIndex);
+        }
+
+
     }
 }

@@ -239,7 +239,7 @@ public class BuildingDetect : MonoBehaviour
         gangsterCharacter = new GameObject("AvatarChange");
         gangsterCharacter.transform.SetParent(this.transform);
         gangsterCharacter.transform.localPosition = Vector3.zero;
-        gangsterCharacter.transform.localEulerAngles = Vector3.zero;
+        gangsterCharacter.transform.localEulerAngles = avatarIndex == 2 ? Vector3.up * -180 : Vector3.zero;
         //gangsterCharacter.SetActive(false);
 
         Vector3 pos = gangsterCharacter.transform.position;
@@ -277,6 +277,7 @@ public class BuildingDetect : MonoBehaviour
             cloneObject.transform.localPosition = Vector3.zero;
             cloneObject.transform.localEulerAngles = Vector3.zero;
             cloneObject.SetActive(true);
+            GamificationComponentData.instance.playerControllerNew.RemoveCharacterLayer(true);
         }
 
 
@@ -336,6 +337,8 @@ public class BuildingDetect : MonoBehaviour
     {
         if (state)
         {
+            GamificationComponentData.instance.playerControllerNew.RemoveCharacterLayer(false);
+
             if (avatarChangeCoroutine != null)
                 StopCoroutine(avatarChangeCoroutine);
 
@@ -554,7 +557,7 @@ public class BuildingDetect : MonoBehaviour
 
     public void CameraEffect()
     {
-        StopSpecialItemComponent();
+        //StopSpecialItemComponent();
         volume = GamificationComponentData.instance.postProcessVol;
         RuntimeAnimatorController cameraEffect = GamificationComponentData.instance.cameraBlurEffect;
         cameraAnimator = GamificationComponentData.instance.playerControllerNew.ActiveCamera.GetComponent<Animator>();

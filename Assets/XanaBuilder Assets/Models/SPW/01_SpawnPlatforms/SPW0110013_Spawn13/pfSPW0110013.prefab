@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4228215994568284072}
-  - component: {fileID: 7275329899889439693}
-  - component: {fileID: 3885003857561676846}
-  - component: {fileID: 2096739122626722602}
-  - component: {fileID: 1849505769382498741}
-  - component: {fileID: 8048022750744308218}
+  - component: {fileID: 7824877383098384164}
+  - component: {fileID: 7421806265163736493}
+  - component: {fileID: 850910957642998348}
+  - component: {fileID: 384528014413047123}
+  - component: {fileID: 7959359914556597332}
   m_Layer: 9
   m_Name: Colliders
   m_TagString: Item
@@ -36,7 +36,7 @@ Transform:
   m_Father: {fileID: 1782425532275635223}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &7275329899889439693
+--- !u!65 &7824877383098384164
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,9 +47,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5565121, y: 0.5832507, z: 1.5682336}
-  m_Center: {x: -0.00403893, y: 0.29751524, z: 0.012801707}
---- !u!65 &3885003857561676846
+  m_Size: {x: 1, y: 0.4881452, z: 1}
+  m_Center: {x: 0, y: 0.1984104, z: 0}
+--- !u!65 &7421806265163736493
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,9 +60,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5564815, y: 0.31724563, z: 0.30768442}
-  m_Center: {x: -0.0065725446, y: 0.17566861, z: 0.6441164}
---- !u!65 &2096739122626722602
+  m_Size: {x: 0.26322174, y: 0.66942906, z: 1}
+  m_Center: {x: 0.63100004, y: 0.2890523, z: 0}
+--- !u!65 &850910957642998348
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,9 +73,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.3865558, y: 0.6133157, z: 1.2760499}
-  m_Center: {x: 0.58277196, y: 0.3149402, z: -0.13802493}
---- !u!65 &1849505769382498741
+  m_Size: {x: 0.26322174, y: 0.6826199, z: 1}
+  m_Center: {x: -0.631, y: 0.29564774, z: 0}
+--- !u!65 &384528014413047123
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,9 +86,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.30768442, y: 0.55815125, z: 1.2848132}
-  m_Center: {x: -0.62220764, y: 0.3048849, z: -0.1424067}
---- !u!65 &8048022750744308218
+  m_Size: {x: 1.0061448, y: 0.6867593, z: 0.382802}
+  m_Center: {x: 0.009056926, y: 0.29771742, z: 0.5942942}
+--- !u!65 &7959359914556597332
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,8 +99,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.58373404, z: 0.2770121}
-  m_Center: {x: 0, y: 0.30014956, z: -0.6200168}
+  m_Size: {x: 1.0061448, y: 0.6445732, z: 0.382802}
+  m_Center: {x: 0.009056926, y: 0.27662444, z: -0.5942942}
 --- !u!1 &1438796999235235501
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,9 +225,11 @@ MonoBehaviour:
   itemType: 0
   itemCategory: 0
   itemThemes: 
+  componentsAttachedToItem: 
   bottomTransform: 0
   isValid: 0
   isPlaced: 0
+  isCurrentSpawnPoint: 0
   IsItemLocked: 0
   IsItemVisible: 0
   hasParent: 0

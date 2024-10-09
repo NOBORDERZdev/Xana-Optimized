@@ -41,15 +41,16 @@ public class AvatarCustomizationUIHandler : MonoBehaviour
     GameManager gameManager;
     private void Awake()
     {
-        gameManager = gameManager?? GameManager.Instance;
+        //gameManager = gameManager?? GameManager.Instance;
         if (Instance == null)
             Instance = this;
     }
 
-    // private void Start()
-    // {
-    //     SlidersSaveButton.transform.parent.GetComponent<Button>().onClick.AddListener(CustomSliderSaveBtnFtn);
-    // }
+    private void Start()
+    {
+        //SlidersSaveButton.transform.parent.GetComponent<Button>().onClick.AddListener(CustomSliderSaveBtnFtn);
+        gameManager = gameManager ?? GameManager.Instance;
+    }
 
     public void CustomSliderSaveBtnFtn()
     {
@@ -216,7 +217,7 @@ public class AvatarCustomizationUIHandler : MonoBehaviour
         SetCameraPosForFaceCustomization.instance.ChangeCameraToProspective();
         // SaveCharacterProperties.instance.AssignCustomSlidersData();
 
-        InventoryManager.instance.saveStoreBtnButton.onClick.Invoke();
+        InventoryManager.instance.SaveStoreBtn.GetComponent<Button>().onClick.Invoke();
         Debug.Log("<color=red>CustomizationManager AssignLastClickedBtnHere</color>");
         ConstantsHolder.xanaConstants._lastClickedBtn = gameObject;
         //  SaveCharacterProperties.instance.AssignCustomsliderNewData();
@@ -234,7 +235,7 @@ public class AvatarCustomizationUIHandler : MonoBehaviour
     {
         AvatarCustomizationManager.Instance.ResetCharacterRotation(180f);
         AvatarCustomizationManager.Instance.m_IsCharacterRotating = true;
-        gameManager.ChangeCharacterAnimationState(false);
+        gameManager.ChangeCharacterAnimationState(true);
         ZoomOutCamera();
     }
     #endregion

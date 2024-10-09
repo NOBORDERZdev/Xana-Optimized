@@ -46,13 +46,10 @@ public class Web3Auth : MonoBehaviour
     public event Action<Web3AuthResponse> onLogin;
     public event Action onLogout;
 
- //   [SerializeField]
     private string clientId;
 
- //   [SerializeField]
     private string redirectUri;
 
- //   [SerializeField]
     private Web3Auth.Network network;
 
     private static readonly Queue<Action> _executionQueue = new Queue<Action>();
@@ -77,14 +74,6 @@ public class Web3Auth : MonoBehaviour
             this.setResultUrl(url);
         };
 
-//#elif UNITY_WEBGL
-//        var code = Utilss.GetAuthCode();
-//        Debug.Log("code is " + code);
-//        if (Utilss.GetAuthCode() != "") 
-//        {
-//            Debug.Log("I am here");
-//            this.setResultUrl(new Uri($"http://localhost#{code}"));
-//        } 
 #endif
         authorizeSession("");
     }
@@ -131,7 +120,25 @@ public class Web3Auth : MonoBehaviour
 
     private void onDeepLinkActivated(string url)
     {
-        this.setResultUrl(new Uri(url));
+        if (url.Contains("ENV"))
+        {
+            PlayerPrefs.SetString("DeeplinkDome", url);
+            return;
+        }
+        else if (url.Contains("web3auth"))
+        {
+#if UNITY_IOS
+            if (PlayerPrefs.GetInt("PlayerLoginFlag") == 1)
+                this.setResultUrl(new Uri(url));
+#endif
+
+#if UNITY_ANDROID
+            PlayerPrefs.SetInt("PlayerLoginFlag", 1); 
+            this.setResultUrl(new Uri(url));
+#endif
+
+        }
+    
     }
 
 #if UNITY_STANDALONE || UNITY_EDITOR
@@ -263,7 +270,6 @@ public class Web3Auth : MonoBehaviour
             {
                 (paramMap["params"] as Dictionary<string, object>)[item.Key] = item.Value;
             }
-        //Debug.Log("paramMap: =>" + JsonConvert.SerializeObject(paramMap));
         string loginId = await createSession(JsonConvert.SerializeObject(paramMap, Formatting.None,
             new JsonSerializerSettings
             {
@@ -316,7 +322,6 @@ public class Web3Auth : MonoBehaviour
         this.Enqueue(() => KeyStoreManagerUtils.savePreferenceData(KeyStoreManagerUtils.SESSION_ID, sessionId));
 
         //call authorize session API
-        // Debug.Log("publickey after successful redirection from web. =>" + sessionId);
         this.Enqueue(() => authorizeSession(sessionId));
 
 #if !UNITY_EDITOR && UNITY_WEBGL
@@ -331,6 +336,10 @@ public class Web3Auth : MonoBehaviour
     {
         if (web3AuthOptions.loginConfig != null)
         {
+#if UNITY_IOS
+            if (PlayerPrefs.GetInt("FirstTimeappOpen") == 0)
+                PlayerPrefs.SetInt("PlayerLoginFlag", 1);
+#endif
             var loginConfigItem = web3AuthOptions.loginConfig?.Values.First();
             var share = KeyStoreManagerUtils.getPreferencesData(loginConfigItem?.verifier);
 
@@ -366,12 +375,10 @@ public class Web3Auth : MonoBehaviour
         if (string.IsNullOrEmpty(newSessionId))
         {
             sessionId = KeyStoreManagerUtils.getPreferencesData(KeyStoreManagerUtils.SESSION_ID);
-            // Debug.Log("sessionId during  authorizeSession in if part =>" + sessionId);
         }
         else
         {
             sessionId = newSessionId;
-            // Debug.Log("sessionId during  authorizeSession in else part =>" + sessionId);
         }
 
         if (!string.IsNullOrEmpty(sessionId))
@@ -490,7 +497,6 @@ public class Web3Auth : MonoBehaviour
     {
         TaskCompletionSource<string> createSessionResponse = new TaskCompletionSource<string>();
         var newSessionKey = KeyStoreManagerUtils.generateRandomSessionKey();
-        // Debug.Log("newSessionKey =>" + newSessionKey);
         var ephemKey = KeyStoreManagerUtils.getPubKey(newSessionKey);
         var ivKey = KeyStoreManagerUtils.generateRandomBytes();
 
@@ -525,7 +531,6 @@ public class Web3Auth : MonoBehaviour
                 {
                     try
                     {
-                        // Debug.Log("newSessionKey before saving into keystore =>" + newSessionKey);
                         this.Enqueue(() => KeyStoreManagerUtils.savePreferenceData(KeyStoreManagerUtils.SESSION_ID, newSessionKey));
                         createSessionResponse.SetResult(newSessionKey);
                     }

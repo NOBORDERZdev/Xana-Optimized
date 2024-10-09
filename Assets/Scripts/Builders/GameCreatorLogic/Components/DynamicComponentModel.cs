@@ -103,6 +103,8 @@ public class ItemData
     public QuizComponentData quizComponentData;
     public WarpFunctionComponentData warpFunctionComponentData;
     public BlindComponentData blindComponentData;
+    public PhysicsComponentData physicsComponentData;
+    public TeleportComponentData teleportComponentData;
     #endregion
 
     public ItemData(string itemID, string itemType, string itemName, Vector3 position)
@@ -172,6 +174,8 @@ public class ItemData
         this.quizComponentData = new QuizComponentData();
         this.warpFunctionComponentData = new WarpFunctionComponentData();
         this.blindComponentData = new BlindComponentData();
+        this.physicsComponentData = new PhysicsComponentData();
+        this.teleportComponentData = new TeleportComponentData();
     }
 
     public ItemData(ItemData itemData)
@@ -241,6 +245,8 @@ public class ItemData
         this.quizComponentData = new QuizComponentData(itemData.quizComponentData);
         this.warpFunctionComponentData = new WarpFunctionComponentData(itemData.warpFunctionComponentData);
         this.blindComponentData = new BlindComponentData(itemData.blindComponentData);
+        this.physicsComponentData = new PhysicsComponentData(itemData.physicsComponentData);
+        this.teleportComponentData = new TeleportComponentData(itemData.teleportComponentData);
     }
 }
 
@@ -709,6 +715,9 @@ namespace Models
     {
         public bool isActive;
         public int forceAmountValue;
+        public bool forceApplyOnAvatar;
+        public bool forceApplyOnFixedDirection;
+        public int fixedForceonYAxisValue;
         public Vector3 forceDirection;
         public int directionNumber;
 
@@ -716,8 +725,11 @@ namespace Models
         {
             isActive = false;
             forceAmountValue = 50;
+            forceApplyOnAvatar = false;
             forceDirection = new Vector3(0f, 0f, -1f);
             directionNumber = 0;
+            forceApplyOnFixedDirection = true;
+            fixedForceonYAxisValue = 0;
         }
 
         public void Reset()
@@ -725,15 +737,74 @@ namespace Models
             Debug.Log("Reset");
             isActive = false;
             forceAmountValue = 50;
+            forceApplyOnAvatar = false;
             forceDirection = new Vector3(0f, 0f, -1f);
             directionNumber = 0;
+            forceApplyOnFixedDirection = true;
+            fixedForceonYAxisValue = 0;
         }
         public AddForceComponentData(AddForceComponentData data)
         {
             isActive = data.isActive;
             forceAmountValue = data.forceAmountValue;
+            forceApplyOnAvatar = data.forceApplyOnAvatar;
             forceDirection = data.forceDirection;
             directionNumber = data.directionNumber;
+            forceApplyOnFixedDirection = data.forceApplyOnFixedDirection;
+            fixedForceonYAxisValue = data.fixedForceonYAxisValue;
+        }
+    }
+
+    [System.Serializable]
+    public class PhysicsComponentData
+    {
+        public bool PhysicsComponentIsActive;
+        public int PhysicsComponentMassValue;
+        public bool PhysicsComponentUseGravity;
+        public bool PhysicsComponentFreezePosX;
+        public bool PhysicsComponentFreezePosY;
+        public bool PhysicsComponentFreezePosZ;
+        public bool PhysicsComponentFreezeRotX;
+        public bool PhysicsComponentFreezeRotY;
+        public bool PhysicsComponentFreezeRotZ;
+
+        public PhysicsComponentData()
+        {
+            PhysicsComponentIsActive = false;
+            PhysicsComponentMassValue = 50;
+            PhysicsComponentUseGravity = true;
+            PhysicsComponentFreezePosX = false;
+            PhysicsComponentFreezePosY = false;
+            PhysicsComponentFreezePosZ = false;
+            PhysicsComponentFreezeRotX = false;
+            PhysicsComponentFreezeRotY = false;
+            PhysicsComponentFreezeRotZ = false;
+        }
+
+        public void Reset()
+        {
+            Debug.Log("Reset");
+            PhysicsComponentIsActive = false;
+            PhysicsComponentMassValue = 50;
+            PhysicsComponentUseGravity = true;
+            PhysicsComponentFreezePosX = false;
+            PhysicsComponentFreezePosY = false;
+            PhysicsComponentFreezePosZ = false;
+            PhysicsComponentFreezeRotX = false;
+            PhysicsComponentFreezeRotY = false;
+            PhysicsComponentFreezeRotZ = false;
+        }
+        public PhysicsComponentData(PhysicsComponentData data)
+        {
+            PhysicsComponentIsActive = data.PhysicsComponentIsActive;
+            PhysicsComponentMassValue = data.PhysicsComponentMassValue;
+            PhysicsComponentUseGravity = data.PhysicsComponentUseGravity;
+            PhysicsComponentFreezePosX = data.PhysicsComponentFreezePosX;
+            PhysicsComponentFreezePosY = data.PhysicsComponentFreezePosY;
+            PhysicsComponentFreezePosZ = data.PhysicsComponentFreezePosZ;
+            PhysicsComponentFreezeRotX = data.PhysicsComponentFreezeRotX;
+            PhysicsComponentFreezeRotY = data.PhysicsComponentFreezeRotY;
+            PhysicsComponentFreezeRotZ = data.PhysicsComponentFreezeRotZ;
         }
     }
 
@@ -1405,5 +1476,28 @@ namespace Models
         }
     }
 
+    [System.Serializable]
+    public class TeleportComponentData
+    {
+        public bool IsActive;
+        public string spaceID;
+
+        public TeleportComponentData()
+        {
+            IsActive = false;
+            spaceID = string.Empty;
+        }
+        public void Reset()
+        {
+            IsActive = false;
+            spaceID = string.Empty;
+        }
+
+        public TeleportComponentData(TeleportComponentData data)
+        {
+            IsActive = data.IsActive;
+            spaceID = data.spaceID;
+        }
+    }
     #endregion
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Models;
 using UnityEngine;
+using UnityEngine.Video;
 
 public static class BuilderEventManager
 {
@@ -110,7 +111,7 @@ public static class BuilderEventManager
 
     //UI toggle
     public static Action<bool> UIToggle;
-    public static Action<Constants.ItemComponentType> ResetComponentUI;
+    public static Action<Constants.ItemComponentType, bool> ResetComponentUI;
     public static Action EnableWorldCanvasCamera;
     public static Action<bool> DisableAnimationsButtons;
 
@@ -128,4 +129,34 @@ public static class BuilderEventManager
     public static Action<UploadProperties> UploadPropertiesData;
     public static Action UploadPropertiesInit;
     public static Action<string> YoutubeVideoLoadedCallback;
+
+
+    //XANA Summit Specific Events 
+    public static Action LoadSummitScene;
+    public static Action<int, Vector3> LoadNewScene;
+    public static Action<string, Vector3> LoadSceneByName;
+    public static Action<int, string[]> AINPCActivated;
+    public static Action<int> AINPCDeactivated;
+
+    public static Action<VideoClip, Vector3> spaceXActivated;
+    public static Action spaceXDeactivated;
+    public static Action<string> loadBGMDirectly;
+    public static Action StopBGM;
+    public static Action ResetSummit;
+
+    //SMBC specific events
+    public static Action<SMBCQuizComponent, QuizComponentData> OnSMBCQuizComponentCollisionEnter;
+    public static Action OnSMBCQuizComponentColse;
+    public static Action OnSMBCRocketCollected;
+    public static Action OnSMBCQuizWrongAnswer;
+
+    #region XANA PARTY WORLD
+    public static Action XANAPartyRaceStart;
+    public static Action XANAPartyRaceFinish;
+    public static Action XANAPartyWiatingForPlayer;
+    public static Action XANAPartyRaceResult;
+    #endregion
+
+
+    public static Action<string, string> OpenRedirectionPopup; 
 }

@@ -9,6 +9,8 @@ public class CheckOnlineFriend : MonoBehaviour
     public int friendId;
     public SavingCharacterDataClass json;
     [HideInInspector]
+    public string randomPresetGender;
+    [HideInInspector]
     public int randomPreset;
     [SerializeField]
     GameObject offlineFriendName, onlineFriendName;
@@ -26,12 +28,14 @@ public class CheckOnlineFriend : MonoBehaviour
     private void Start()
     {
         worldItemView = GetComponent<WorldItemView>();
-        offlineFriendName.GetComponent<Button>().onClick.AddListener(onclickFriendNameButton);
-        onlineFriendName.GetComponent<Button>().onClick.AddListener(GotoSpace);
+        if (offlineFriendName)
+            offlineFriendName.GetComponent<Button>().onClick.AddListener(onclickFriendNameButton);
+        if (onlineFriendName)
+            onlineFriendName.GetComponent<Button>().onClick.AddListener(GotoSpace);
     }
     public void SpaceJoinedFriend(FriendOnlineStatus friendOnlineStatus)
     {
-        if(friendOnlineStatus.userId==friendId)
+        if (friendOnlineStatus.userId == friendId)
         {
             ToggleOnlineStatus(friendOnlineStatus.isOnline);
             WorldManager.instance.SetFriendsJoinedWorldInfo(friendOnlineStatus.worldDetails, worldItemView);
@@ -46,7 +50,8 @@ public class CheckOnlineFriend : MonoBehaviour
     }
     public void ToggleOnlineStatus(bool toggle)
     {
-        if (toggle) {
+        if (toggle)
+        {
             onlineFriendName.SetActive(true);
             offlineFriendName.SetActive(false);
         }
@@ -64,18 +69,40 @@ public class CheckOnlineFriend : MonoBehaviour
     }
     public void onclickFriendNameButton()
     {
-        GameManager.Instance.bottomTabManagerInstance.InitProfileData();
-        FeedUIController.Instance.ShowLoader(true);
-        //print("Getting Click here" + _data.user_id);
-        if(friendId!= 0)
-            SNS_APIManager.Instance.GetHomeFriendProfileData<CheckOnlineFriend>(friendId, this);
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
+        {
+            if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                Screen.orientation = ScreenOrientation.LandscapeLeft;
+                UserLoginSignupManager.instance.signUpOrloginSelectionPanel.SetActive(true);
+            }
+            else
+            {
+                UserLoginSignupManager.instance.LoginRegisterScreen.SetActive(true);
+            }
+        }
         else
-            GameManager.Instance.bottomTabManagerInstance.OnClickProfileButton();
+        {
+            GameManager.Instance.bottomTabManagerInstance.InitProfileData();
+            FeedUIController.Instance.ShowLoader(true);
+            //print("Getting Click here" + _data.user_id);
+            if (friendId != 0)
+                SNS_APIManager.Instance.GetHomeFriendProfileData<CheckOnlineFriend>(friendId, this);
+            else
+                GameManager.Instance.bottomTabManagerInstance.OnClickProfileButton();
+
+            if (MyProfileDataManager.Instance)
+            {
+                MyProfileDataManager.Instance.UpdateBackButtonAction(GameManager.Instance.bottomTabManagerInstance.OnClickHomeButton);
+            }
+        }
+
     }
     public void SetupHomeFriendProfile(SearchUserRow searchUserRow)
     {
         //print("Getting Click here name" + _feedUserData.name);
         //Debug.Log("Search User id:" + _feedUserData.id);
+        int bodyLayer = LayerMask.NameToLayer("Body");
         SNS_APIManager.Instance.RequestGetUserLatestAvatarData<CheckOnlineFriend>(searchUserRow.id.ToString(), this);
         //DressUpUserAvatar();
         if (MyProfileDataManager.Instance)
@@ -97,6 +124,7 @@ public class CheckOnlineFriend : MonoBehaviour
             FeedUIController.Instance.AddFriendPanel.SetActive(false);
             //MyProfileDataManager.Instance.gameObject.SetActive(false);
         }
+        ProfileUIHandler.instance._renderTexCamera.GetComponent<Camera>().cullingMask &= ~(1 << bodyLayer);
         ProfileUIHandler.instance.SwitchBetweenUserAndOtherProfileUI(false);
         ProfileUIHandler.instance.SetMainScrollRefs();
         ProfileUIHandler.instance.editProfileBtn.SetActive(false);
@@ -109,7 +137,7 @@ public class CheckOnlineFriend : MonoBehaviour
             ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
         }
         ProfileUIHandler.instance.followProfileBtn.SetActive(true);
-        ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        //ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
 
         AllUserWithFeedRow feedRawData = new AllUserWithFeedRow();
         feedRawData.id = searchUserRow.id;
@@ -170,7 +198,8 @@ public class CheckOnlineFriend : MonoBehaviour
         }
         else
         {
-            ProfileUIHandler.instance.SetUserAvatarDefaultClothingForHomeScreen(randomPreset);
+            //ProfileUIHandler.instance.SetUserAvatarRandomClothingForProfile(randomPreset, randomPresetGender);
+            ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
         }
     }
 }

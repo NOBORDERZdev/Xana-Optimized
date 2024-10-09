@@ -564,7 +564,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &5340415820239847921
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -581,7 +581,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1978877170025856410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1461,6 +1462,7 @@ MonoBehaviour:
     ShoesPresetData:
       ObjectName: Shoes_478
       ObjectType: Feet
+  AvatarGender: 1
   pelvisBoneNewCharacter: {fileID: 0}
 --- !u!114 &1978877170025856402
 MonoBehaviour:
@@ -2331,7 +2333,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1978877169641891326}
   m_Layer: 0
-  m_Name: HeadTarget
+  m_Name: FemaleHeadTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5045,7 +5047,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1978877170570711372}
   m_Layer: 0
-  m_Name: BodyTarget
+  m_Name: FemaleBodyTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

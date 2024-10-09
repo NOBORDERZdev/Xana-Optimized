@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using Cinemachine;
 using Photon.Voice.Unity;
 using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 using RenderHeads.Media.AVProVideo;
 using System.Collections;
+using System.Collections.Generic;
+
 public class SoundSettings : MonoBehaviour
 {
     public static SoundSettings soundManagerSettings;
@@ -13,7 +14,9 @@ public class SoundSettings : MonoBehaviour
     public AudioSource bgmSource;
     public AudioSource effectsSource;
     public AudioSource videoSource;
+    public List<AudioSource> videoSources = new List<AudioSource>();
     public MediaPlayer liveVideoSource;
+    public List<MediaPlayer> livevideoSources = new List<MediaPlayer>();
     [Header("Audio Slider")]
     public Slider totalVolumeSlider;
     public Slider bgmSlider;
@@ -41,6 +44,10 @@ public class SoundSettings : MonoBehaviour
     [Header("Speakers")]
     private Speaker speaker;
     private Recorder recorder;
+
+    public delegate void BgmAudioEvent(bool _isMuted);
+    public BgmAudioEvent OnBGMAudioMuted;
+
     void Awake()
     {
         if (soundManagerSettings == null)
@@ -52,20 +59,22 @@ public class SoundSettings : MonoBehaviour
 
             bgmSource = SoundController.Instance.MusicSource;
             effectsSource = SoundController.Instance.EffectsSource;
-            videoSource = SoundController.Instance.videoPlayerSource;
+            //videoSource = SoundController.Instance.videoPlayerSource;
             StartCoroutine(LiveVideoInstancs(5f));
         }
         //To Clamp AudioSource Volume Slider Range from 0 to 0.7 Rather Than 0 to 1 Range
         OldSliderRange = (OldSliderMax - OldSliderMin);
         NewSliderRange = (NewSliderMax - NewSliderMin);
 
-        
-        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby")){
+
+        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+        {
             PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.015f);
             PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, 0.015f);
             PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, 0.015f);
         }
-        else{
+        else
+        {
             PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, 0.5f);
             PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.5f);
             PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, 0.5f);
@@ -79,11 +88,12 @@ public class SoundSettings : MonoBehaviour
             PlayerPrefs.SetFloat(ConstantsGod.MIC, 0.5f); // Mic Value By Default 0.5f
             PlayerPrefs.SetInt("DefaultSensivity", 1);
         }
+        cameraSensitivitySliderPotrait.maxValue = 1f;
     }
     IEnumerator LiveVideoInstancs(float value)
     {
         yield return new WaitForSeconds(value);
-        liveVideoSource = SoundController.Instance.livePlayerSource;
+        //liveVideoSource = SoundController.Instance.livePlayerSource;
     }
     private void OnEnable()
     {
@@ -92,7 +102,7 @@ public class SoundSettings : MonoBehaviour
         ScreenOrientationManager.switchOrientation += OnOrientationChanged;
         //  Invoke("ObjectsDeley", 1f);
     }
-    void OnOrientationChanged()
+    void OnOrientationChanged(bool IsPortrait)
     {
         //Debug.Log("orientation is changed ......"+ PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
         totalVolumeSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
@@ -115,26 +125,26 @@ public class SoundSettings : MonoBehaviour
 
     void AddingDeley()
     {
-        if (videoSource == null)
-            videoSource = SoundController.Instance.videoPlayerSource;
-        YoutubeStreamController Videoplayer = GameObject.FindObjectOfType<YoutubeStreamController>();
-        YoutubePlayerLivestream Videoplayer2 = GameObject.FindObjectOfType<YoutubePlayerLivestream>();
-        if (Videoplayer != null)
-        {
-            videoSource = Videoplayer.videoPlayerAudioSource;
-            liveVideoSource = Videoplayer.LiveStreamPlayer.GetComponent<MediaPlayer>();
-            //Debug.Log("VideoSource Set ");
-        }
-        else if (Videoplayer2 != null)
-        {
-            //videoSource = Videoplayer.videoPlayerAudioSource;
-            liveVideoSource = Videoplayer2.mPlayer;
-            //Debug.Log("VideoSource Set ");
-        }
-        else
-        {
-            //Debug.Log("VideoSource not Set ");
-        }
+        //if (videoSource == null)
+        //    videoSource = SoundController.Instance.videoPlayerSource;
+        //YoutubeStreamController Videoplayer = GameObject.FindObjectOfType<YoutubeStreamController>();
+        //YoutubePlayerLivestream Videoplayer2 = GameObject.FindObjectOfType<YoutubePlayerLivestream>();
+        //if (Videoplayer != null)
+        //{
+        //    videoSource = Videoplayer.videoPlayerAudioSource;
+        //    liveVideoSource = Videoplayer.LiveStreamPlayer.GetComponent<MediaPlayer>();
+        //    //Debug.Log("VideoSource Set ");
+        //}
+        //else if (Videoplayer2 != null)
+        //{
+        //    //videoSource = Videoplayer.videoPlayerAudioSource;
+        //    liveVideoSource = Videoplayer2.mPlayer;
+        //    //Debug.Log("VideoSource Set ");
+        //}
+        //else
+        //{
+        //    //Debug.Log("VideoSource not Set ");
+        //}
     }
 
 
@@ -171,7 +181,7 @@ public class SoundSettings : MonoBehaviour
         });
         totalVolumeSlider.onValueChanged.AddListener((float vol) =>
         {
-           
+
             SetBgmVolume(vol);
             SetVideoVolume(vol);
         });
@@ -194,7 +204,7 @@ public class SoundSettings : MonoBehaviour
         });
         totalVolumeSliderPotrait.onValueChanged.AddListener((float vol) =>
         {
-            
+
             SetBgmVolume(vol);
             SetVideoVolume(vol);
         });
@@ -234,7 +244,7 @@ public class SoundSettings : MonoBehaviour
         //{
         //    SetBgmVolume(vol);
         //});
-       
+
     }
     public void SetUsersVolume()
     {
@@ -256,7 +266,7 @@ public class SoundSettings : MonoBehaviour
             PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, volume);
             SetMicVolume(PlayerPrefs.GetFloat(ConstantsGod.MIC));
             SetEffectsVolume(totalVolumeSliderPotrait.value);
-           // bgmSliderPotariat.value = videoSliderPotriat.value = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME);
+            // bgmSliderPotariat.value = videoSliderPotriat.value = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME);
             SetBgmVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
             SetVideoVolume(PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME));
         }
@@ -265,19 +275,19 @@ public class SoundSettings : MonoBehaviour
             PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, volume);
             SetMicVolume(PlayerPrefs.GetFloat(ConstantsGod.MIC));
             SetEffectsVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
-           // bgmSlider.value = videoSlider.value = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME);
+            // bgmSlider.value = videoSlider.value = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME);
             SetBgmVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
             SetVideoVolume(PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME));
         }
     }
     public void SetBgmVolume(float Vol)
     {
-        if (!liveVideoSource)
-        {
-            liveVideoSource = SoundController.Instance.livePlayerSource;
-        }
+        //if (!liveVideoSource)
+        //{
+        //    liveVideoSource = SoundController.Instance.livePlayerSource;
+        //}
         PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, Vol);
-       // PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, Vol);
+        // PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, Vol);
         if (bgmSource)
         {
             SetAudioSourceSliderVal(bgmSource, Vol);
@@ -285,53 +295,100 @@ public class SoundSettings : MonoBehaviour
             {
                 SetAudioSourceSliderValLive(liveVideoSource, Vol);
             }
+            if (videoSource)
+            {
+                videoSource.volume = Vol;
+            }
+            if (videoSources.Count > 0)
+            {
+                foreach (AudioSource v in videoSources)
+                {
+                    SetAudioSourceSliderVal(v, Vol);
+                }
+            }
         }
 
         BuilderEventManager.BGMVolume?.Invoke(Vol);
+        if (Vol <= 0)
+        {
+            OnBGMAudioMuted?.Invoke(true);
+        }
+        else
+        {
+            OnBGMAudioMuted?.Invoke(false);
+        }
     }
     public void SetVideoVolume(float Vol)
     {
         //Debug.Log("check orientation===" + ScreenOrientationManager._instance.isPotrait);
-        
-            PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, Vol);
-            // PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, Vol);
-            videoSliderPotriat.value = PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME);
-            videoSlider.value = PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME);
 
-           // //Debug.Log("LiveVideo" + liveVideoSource);
-            if (videoSource)
+        PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, Vol);
+        // PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, Vol);
+        videoSliderPotriat.value = PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME);
+        videoSlider.value = PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME);
+
+        // //Debug.Log("LiveVideo" + liveVideoSource);
+        if (videoSource)
+        {
+            if (videoSource.GetComponent<MediaPlayer>())
+                SetAudioSourceSliderValLive(videoSource.GetComponent<MediaPlayer>(), Vol);
+            else
             {
-                if (videoSource.GetComponent<MediaPlayer>())
-                    SetAudioSourceSliderValLive(videoSource.GetComponent<MediaPlayer>(), Vol);
-                else
-                    SetAudioSourceSliderVal(videoSource, Vol);
+                if (videoSources.Count > 0)
+                {
+                    foreach (AudioSource v in videoSources)
+                    {
+                        if (v != null)
+                        {
+                            SetAudioSourceSliderVal(v, Vol);
+                        }
+                    }
+                }
             }
-            if (liveVideoSource)
-            {
-                SetAudioSourceSliderValLive(liveVideoSource, Vol);
-            }
-     
-   }
+        }
+        if (liveVideoSource)
+        {
+            SetAudioSourceSliderValLive(liveVideoSource, Vol);
+        }
+
+    }
+
+    public void AddVideoSources(AudioSource audio)
+    {
+        audio.volume = PlayerPrefs.GetFloat(ConstantsGod.BGM_VOLUME);
+        if (!videoSources.Contains(audio))
+        {
+            videoSources.Add(audio);
+        }
+    }
+    public void AddLiveVideoSources(MediaPlayer media)
+    {
+        media.AudioVolume = PlayerPrefs.GetFloat(ConstantsGod.BGM_VOLUME);
+        if (!livevideoSources.Contains(media))
+        {
+            livevideoSources.Add(media);
+        }
+    }
 
     public void SetCameraSensitivity(float sensitivity)
     {
         PlayerPrefs.SetFloat(ConstantsGod.CAMERA_SENSITIVITY, sensitivity);
         cameraSensitivitySliderPotrait.value = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY);
         cameraSensitivitySlider.value = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY);
-  
-            if (cameraSensitivitySliderPotrait.value >= sensitivity)
-            {
-                PlayerCameraController.instance.lookSpeed = sensitivity;
-                PlayerCameraController.instance.lookSpeedd = sensitivity;
-            }
-            else
-            {
-                PlayerCameraController.instance.lookSpeed = cameraSensitivitySliderPotrait.value;
-                PlayerCameraController.instance.lookSpeedd = cameraSensitivitySliderPotrait.value;
-            }
-        
-       
-        
+
+        if (cameraSensitivitySliderPotrait.value >= sensitivity)
+        {
+            PlayerCameraController.instance.lookSpeed = sensitivity;
+            PlayerCameraController.instance.lookSpeedd = sensitivity;
+        }
+        else
+        {
+            PlayerCameraController.instance.lookSpeed = cameraSensitivitySliderPotrait.value;
+            PlayerCameraController.instance.lookSpeedd = cameraSensitivitySliderPotrait.value;
+        }
+
+
+
     }
     public void SetEffectsVolume(float Vol)
     {
@@ -352,11 +409,11 @@ public class SoundSettings : MonoBehaviour
         UserSlider.value = PlayerPrefs.GetFloat(ConstantsGod.MIC);
         UserSliderPotrait.value = PlayerPrefs.GetFloat(ConstantsGod.MIC);
 
-        foreach (var gameobject in MutiplayerController.instance.playerobjects)
+        foreach (var playerObject in MutiplayerController.instance.playerobjects)
         {
-            if (!gameobject.GetComponent<PhotonView>().IsMine) 
+            if (playerObject != null && !playerObject.GetComponent<PhotonView>().IsMine && playerObject.GetComponent<SpeakerRefrence>()) 
             {
-                gameobject.GetComponent<SpeakerRefrence>().RangeVolSpeaker.volume = UserSlider.value;
+                playerObject.GetComponent<SpeakerRefrence>().RangeVolSpeaker.volume = UserSlider.value;
             }
         }
 
@@ -392,6 +449,13 @@ public class SoundSettings : MonoBehaviour
         else
         {
             _audioSrcRef.AudioVolume = newClampedSliderValue;
+        }
+        foreach (MediaPlayer player in livevideoSources)
+        {
+            if (player != null)
+            {
+                player.AudioVolume = newClampedSliderValue;
+            }
         }
     }
     public void setNewSliderValues()

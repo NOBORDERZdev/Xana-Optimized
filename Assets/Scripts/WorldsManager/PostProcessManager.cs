@@ -26,7 +26,7 @@ public class PostProcessManager : MonoBehaviour
             firstPersonCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
             thirdPersonCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
             freeCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
-            if (ReferencesForGamePlay.instance.m_34player != null)
+            if (ReferencesForGamePlay.instance.m_34player != null && selfieCam != null)
             {
                 selfieCam.Selfie.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
                 selfieCam.SelfieCapture.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
@@ -43,7 +43,7 @@ public class PostProcessManager : MonoBehaviour
                 firstPersonCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
                 thirdPersonCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
                 freeCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
-                if (ReferencesForGamePlay.instance.m_34player != null)
+                if (ReferencesForGamePlay.instance.m_34player != null && selfieCam != null)
                 {
                     selfieCam.Selfie.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
                     selfieCam.SelfieCapture.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;

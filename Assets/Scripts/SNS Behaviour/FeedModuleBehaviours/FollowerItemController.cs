@@ -298,6 +298,8 @@ public class FollowerItemController : MonoBehaviour
                 string data = www.downloadHandler.text;
                 //searchUserRow.isFollowing = false;
                 FollowFollowingSetUp(false);
+                if (SNS_APIManager.Instance.BFCount > 0)
+                    SNS_APIManager.Instance.BFCount -= 1;
             }
         }
     }

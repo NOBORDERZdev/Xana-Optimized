@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraSetting : MonoBehaviour
 {
-    public float nearValue = 0.3f;
+    public float NearValue = 0.3f;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +17,7 @@ public class CameraSetting : MonoBehaviour
 
     private void UpdateCamNear()
     {
-        GameplayEntityLoader.instance.PlayerCamera.m_Lens.NearClipPlane = nearValue;
+        GameplayEntityLoader.instance.PlayerCamera.m_Lens.NearClipPlane = NearValue;
     }
 
 

@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6f7d6ddf2a8adb849aa2ec121e167541, type: 2}
+  - {fileID: 2100000, guid: 3a60d7fbaf3d76a47bdde55ad597ebef, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -163,7 +163,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1457335836053630092}
-  - component: {fileID: 2426353131397868440}
+  - component: {fileID: 1697551529146116195}
   m_Layer: 9
   m_Name: Colliders
   m_TagString: Item
@@ -186,8 +186,8 @@ Transform:
   m_Father: {fileID: 6549816013506511796}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2426353131397868440
-BoxCollider:
+--- !u!64 &1697551529146116195
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -196,9 +196,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.8134458, y: 0.58251774, z: 1.9488591}
-  m_Center: {x: 0.12715416, y: 0.22097754, z: 0.013012648}
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7821450378345755822, guid: a32dddc202846fa46a69850d203f17ac, type: 3}
 --- !u!1 &5885727914284603662
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +227,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5885727914284603662}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -323,9 +324,11 @@ MonoBehaviour:
   itemType: 0
   itemCategory: 0
   itemThemes: 
+  componentsAttachedToItem: 
   bottomTransform: 0
   isValid: 0
   isPlaced: 0
+  isCurrentSpawnPoint: 0
   IsItemLocked: 0
   IsItemVisible: 0
   hasParent: 0

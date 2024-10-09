@@ -5,10 +5,20 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Video;
 using XanaNFT;
-using static ServerSideUserDataHandler;
 
 public class NFTFromServer : MonoBehaviour
 {
+    public enum ExhibitComponentType { Constant, Dynamic };
+    public ExhibitComponentType _ExhibitComponentType;
+    [Serializable]
+    public class ExhibitSize
+    {
+        public Vector3 potrait;
+        public Vector3 landscape;
+        public Vector3 square;
+    }
+    public ExhibitSize _ExhibitSize;
+
     // Start is called before the first frame update
     public List<GameObject> spawnPoints;
     public Transform picsSpawnPoints;
@@ -30,10 +40,11 @@ public class NFTFromServer : MonoBehaviour
     private string dynamicEventFeedApi = "/userCustomEvent/get-events-all-assets-of-user/";
     public string eventid;
     string MussuemLink;
+    public GameObject XanaSummitNFTHandler;
     //public List<Datum> TestList;
     void Start()
     {
-        if(dynamicManager == null)
+        if (dynamicManager == null)
         {
             dynamicManager = FindObjectOfType<DynamicMuseumManager>();
         }   
@@ -62,8 +73,23 @@ public class NFTFromServer : MonoBehaviour
             i++;
         }
         RoomCount = 4;
-       
-        Invoke(nameof(GetNFTDataDetails), 1f);
+        if (!ConstantsHolder.isFromXANASummit)
+        {
+            Invoke(nameof(GetNFTDataDetails), 1f);
+            //MussuemLink = _singleDomeMusuemApi + ConstantsHolder.xanaConstants.DomeID;
+        }
+        else
+        {
+            //GameObject _summitNFTHandlerRef = Instantiate(XanaSummitNFTHandler, Vector3.zero, Quaternion.identity);
+            // _summitNFTHandlerRef.GetComponentInChildren<SummitDomeNFTDataController>().NFTDataFetchScrptRef = this;
+            XanaSummitNFTHandler.GetComponentInChildren<SummitDomeNFTDataController>().NFTDataFetchScrptRef = this;
+
+            //if (!this.GetComponent<SummitDomeNFTDataController>())
+            //{
+            //    this.AddComponent<SummitDomeNFTDataController>();
+            //    this.GetComponent<SummitDomeNFTDataController>().NFTDataFetchScrptRef = this;
+            //}
+        }
 
        // Invoke(nameof(UpdateFrames), 2f);
     }

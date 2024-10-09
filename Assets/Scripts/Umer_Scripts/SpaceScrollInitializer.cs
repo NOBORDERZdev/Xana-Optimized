@@ -34,7 +34,6 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
     //Custome Variables
     public bool initializeCategoryRow = false;
     public AllWorldManage allWorldManageRef;
-    public WorldSpacesHomeScreen _spaceCategDataInitializer;
     public SNSAPILoaderController paginationLoaderRef;
     SpaceScrollRowHandler masterData;
     public List<Sprite> categIcons = new List<Sprite>();
@@ -55,7 +54,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
         allWorldManageRef = GetComponent<AllWorldManage>();
         // set the application frame rate.
         // this improves smoothness on some devices
-        //Application.targetFrameRate = 60;
+            Application.targetFrameRate = 30;
 
         // tell the scroller that this script will be its delegate
         masterScroller.Delegate = this;
@@ -223,9 +222,9 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
         // if the scroller is at the end of the list and not already loading
         if (scroller.NormalizedScrollPosition >= 1f && !_loadingNew)
         {
-            _spaceCategDataInitializer.tagAsCategoryData.Clear();
-            _spaceCategDataInitializer.CategorytagNames.Clear();
-            if (!(_spaceCategDataInitializer._tagsTraversedCount >= WorldSpacesHomeScreen.mostVisitedTagList.Count - 1))
+            WorldManager.instance.worldSpaceHomeScreenRef.tagAsCategoryData.Clear();
+            WorldManager.instance.worldSpaceHomeScreenRef.CategorytagNames.Clear();
+            if (!(WorldManager.instance.worldSpaceHomeScreenRef._tagsTraversedCount >= WorldSpacesHomeScreen.mostVisitedTagList.Count - 1))
             {
                 masterScroller.GetComponent<ScrollRect>().enabled = false;
 
@@ -235,10 +234,6 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
                 Invoke(nameof(LoadCategoryTagsWithDelay), 0.5f);
                 //Debug.Log("Scroller Scrolled Registered");
 
-            }
-            else
-            {
-                ConstantsHolder.xanaConstants.returnedFromGamePlay = false;
             }
             //    // for this example, we fake a delay that would simulate getting new data in a real application.
             //    // normally you would just call LoadData(_data.Count) directly here, instead of adding the fake
@@ -250,8 +245,9 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
 
     public void LoadCategoryTagsWithDelay()
     {
+        Debug.LogError("hereerererer");
         paginationLoaderRef.ShowApiLoader(true);
-        _spaceCategDataInitializer.GetUsersMostVisitedTags();
+        WorldManager.instance.worldSpaceHomeScreenRef.GetUsersMostVisitedTags(5);
     }
 
         #endregion

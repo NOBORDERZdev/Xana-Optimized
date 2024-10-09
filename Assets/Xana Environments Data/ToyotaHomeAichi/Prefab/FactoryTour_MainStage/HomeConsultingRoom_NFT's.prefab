@@ -278,7 +278,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &241448842
 Transform:
   m_ObjectHideFlags: 0
@@ -309,6 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NFT: 0
   isAddBtnCompOnScreen: 1
   id: 0
   imgVideo16x9: {fileID: 1619482648}
@@ -633,7 +634,7 @@ GameObject:
   - component: {fileID: 546372503}
   - component: {fileID: 546372504}
   m_Layer: 23
-  m_Name: 3
+  m_Name: 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -669,8 +670,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NFT: 0
   isAddBtnCompOnScreen: 1
-  id: 2
+  id: 1
   imgVideo16x9: {fileID: 3167523834844285133}
   imgVideo9x16: {fileID: 3096122136184575749}
   imgVideo1x1: {fileID: 9107797465778993309}
@@ -4550,6 +4552,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -5432,7 +5435,7 @@ GameObject:
   - component: {fileID: 7261698956188716717}
   - component: {fileID: 5971277707821871960}
   m_Layer: 23
-  m_Name: 5
+  m_Name: 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5468,8 +5471,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NFT: 0
   isAddBtnCompOnScreen: 1
-  id: 4
+  id: 3
   imgVideo16x9: {fileID: 6403499138415121544}
   imgVideo9x16: {fileID: 8342426512791209100}
   imgVideo1x1: {fileID: 4115115687134862526}
@@ -6100,7 +6104,7 @@ GameObject:
   - component: {fileID: 3352185233278213324}
   - component: {fileID: 5190627044484396098}
   m_Layer: 23
-  m_Name: 4
+  m_Name: 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6136,8 +6140,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NFT: 0
   isAddBtnCompOnScreen: 1
-  id: 3
+  id: 2
   imgVideo16x9: {fileID: 65052450540692972}
   imgVideo9x16: {fileID: 4651969884351462033}
   imgVideo1x1: {fileID: 7809673963252466666}
@@ -6882,7 +6887,6 @@ MonoBehaviour:
   firebaseEventName: 
   clickedNftInd: 0
   NFTLoadedSprites: []
-  NFTLoadedVideos: []
   videoRenderObject: {fileID: 0}
   videoPlayerSource: {fileID: 0}
   livePlayerSource: {fileID: 0}
@@ -7056,7 +7060,6 @@ MonoBehaviour:
     pmyRatio: 0
     videoType: 0
   NftPlaceholder:
-  - {fileID: 241448841}
   - {fileID: 5026257661413201836}
   - {fileID: 546372502}
   - {fileID: 4420357780994125860}
@@ -7089,7 +7092,7 @@ GameObject:
   - component: {fileID: 5026257661413201835}
   - component: {fileID: 5993596980157930893}
   m_Layer: 23
-  m_Name: 2
+  m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7125,8 +7128,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NFT: 0
   isAddBtnCompOnScreen: 1
-  id: 1
+  id: 0
   imgVideo16x9: {fileID: 4004325812267664774}
   imgVideo9x16: {fileID: 5397154224710504824}
   imgVideo1x1: {fileID: 8928751520023567314}
@@ -7796,7 +7800,7 @@ GameObject:
   - component: {fileID: 4527534554225390240}
   - component: {fileID: 275181620093142443}
   m_Layer: 23
-  m_Name: 6
+  m_Name: 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7832,8 +7836,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NFT: 0
   isAddBtnCompOnScreen: 1
-  id: 5
+  id: 4
   imgVideo16x9: {fileID: 4344811978470829224}
   imgVideo9x16: {fileID: 8375488937070863253}
   imgVideo1x1: {fileID: 8291687638485894134}
@@ -12615,6 +12620,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 163

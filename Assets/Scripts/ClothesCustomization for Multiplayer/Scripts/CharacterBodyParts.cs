@@ -5,6 +5,7 @@ using TMPro;
 using Photon.Pun;
 using System;
 using System.IO;
+using System.Linq;
 
 public class CharacterBodyParts : MonoBehaviour
 {
@@ -82,13 +83,16 @@ public class CharacterBodyParts : MonoBehaviour
     public SkinnedMeshRenderer body;
     //[HideInInspector]
     public SkinnedMeshRenderer head;
+    public SkinnedMeshRenderer eyeShadow;
 
 
     public RandomPreset[] randomPresetData;
+    public AvatarGender AvatarGender;
 
     [Header("New Character PelvisBone")]
     public GameObject pelvisBoneNewCharacter;
 
+    private CharacterHandler.AvatarData _avatarData;
     private void Awake()
     {
         //instance = this;
@@ -143,12 +147,10 @@ public class CharacterBodyParts : MonoBehaviour
         //IntCharacterBones();
     }
 
-    
     public void TextureForShirt(Texture texture)
     {
         body.materials[0].SetTexture(shirt_TextureName, texture);
     }
-
 
     // Set texture For 
     public void TextureForPant(Texture texture)
@@ -166,16 +168,15 @@ public class CharacterBodyParts : MonoBehaviour
         body.materials[0].SetTexture(Glove_TextureName, texture);
     }
 
-    // Set Default Texture for player
+    // Set Default Texture for all Items player
     public void DefaultTexture(bool ApplyClothMask = true, string _gender = "")
     {
 
         if (ConstantsHolder.xanaConstants.isNFTEquiped)
             DefaultTextureForBoxer(ApplyClothMask);
         else
-            DefaultTextureForNewCharacter(ApplyClothMask, _gender);
+            DefaultTextureForNewCharacter();
     }
-
     void DefaultTextureForBoxer(bool ApplyClothMask = true)
     {
         if (ApplyClothMask)
@@ -215,21 +216,19 @@ public class CharacterBodyParts : MonoBehaviour
         RemoveMustacheTexture(null, null);
         RemoveEyeLidTexture(null, null);
     }
-
-
-    void DefaultTextureForNewCharacter(bool ApplyClothMask = true, string _gender = "")
+    void DefaultTextureForNewCharacter()
     {
-        CharacterHandler.AvatarData avatarData = CharacterHandler.instance.GetActiveAvatarData();
-        
+        _avatarData = GetAvatarData();
+
         body.materials[0].SetTexture(Shoes_TextureName, null);
-        if (ApplyClothMask)
+        //if (ApplyClothMask)
         {
-            if (avatarData.DPent_Texture != null)
-                body.materials[0].SetTexture(Pent_TextureName, avatarData.DPent_Texture);
-            if (avatarData.DShirt_Texture != null)
-                body.materials[0].SetTexture(shirt_TextureName, avatarData.DShirt_Texture);
-            if (avatarData.DShoe_Texture != null)
-                body.materials[0].SetTexture(Shoes_TextureName, avatarData.DShoe_Texture);
+            if (_avatarData.DPent_Texture != null)
+                body.materials[0].SetTexture(Pent_TextureName, _avatarData.DPent_Texture);
+            if (_avatarData.DShirt_Texture != null)
+                body.materials[0].SetTexture(shirt_TextureName, _avatarData.DShirt_Texture);
+            if (_avatarData.DShoe_Texture != null)
+                body.materials[0].SetTexture(Shoes_TextureName, _avatarData.DShoe_Texture);
         }
 
         #region #region Xana Avatar 1.0 //--> remove for xana avatar2.0
@@ -257,6 +256,46 @@ public class CharacterBodyParts : MonoBehaviour
         //RemoveMustacheTexture(null, null);
         //RemoveEyeLidTexture(null, null);
         #endregion
+    }
+
+    // Set Default Texture for Sinfle Item player
+    public void DefaultTextureForNewCharacter_Single(string itemType)
+    {
+        _avatarData = GetAvatarData();
+
+        Material mat = this.body.materials[0];
+        switch (itemType)
+        {
+            case "Pent":
+                if (_avatarData.DPent_Texture != null)
+                    mat.SetTexture(Pent_TextureName, _avatarData.DPent_Texture);
+                break;
+
+            case "Shirt":
+                if (_avatarData.DShirt_Texture != null)
+                    mat.SetTexture(shirt_TextureName, _avatarData.DShirt_Texture);
+                break;
+
+            case "Shoes":
+                if (_avatarData.DShoe_Texture != null)
+                    mat.SetTexture(Shoes_TextureName, _avatarData.DShoe_Texture);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private CharacterHandler.AvatarData GetAvatarData()
+    {
+        if (AvatarGender == AvatarGender.Male)
+        {
+            return CharacterHandler.instance.maleAvatarData;
+        }
+        else
+        {
+            return CharacterHandler.instance.femaleAvatarData;
+        }
     }
 
 
@@ -426,7 +465,15 @@ public class CharacterBodyParts : MonoBehaviour
                 {
                     print("---- AxesDetails : " + item.workingAxes);
 
-                    Transform bone = BlendShapeHolder.instance.allBlendShapes[morphsList[i]].boneObj.transform;
+                    Transform bone = null;
+                    if (CharacterHandler.instance.activePlayerGender == AvatarGender.Male)
+                    {
+                        bone = BlendShapeHolder.instance.allBlendShapes[morphsList[i]].maleBoneObj.transform;
+                    }
+                    else
+                    {
+                        bone = BlendShapeHolder.instance.allBlendShapes[morphsList[i]].femaleBoneObj.transform;
+                    }
                     // Has only 2 slider x & y
                     // If z axis need to modify than use above mention sliders[x,y]
                     if (item.workingAxes == AxesDetails.z)
@@ -745,45 +792,39 @@ public class CharacterBodyParts : MonoBehaviour
     }
     public void ChangeHairColor(Color color)
     {
-        // print("Change Hair From Slider : " + color);
-        if (avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("_Band"))
+        Material[] _materials = avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials;
+        if (_materials.Length > 1) // In case Of Hat, Pins, bags there are 2 materials
         {
-            // For Band using Eye Shader so variable name is Changed 
-            // Variable is equal to eyename
-            avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Eye_ColorName, color);
-        }
-        else if (avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials.Length > 1) // In case Of Hat there is 2 material
-        {
-            if (avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Cap") ||
-               avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Hat"))
-                avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[1].SetColor(Hair_ColorName, color);
-            else
-                avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, color);
+            foreach (var material in _materials)
+            {
+                if (!new[] { "Band", "Cap", "Hat", "Pin", "Clip", "Scarf", "Pony", "Accessories", "Ribbon", "Beads" }
+                    .Any(item => material.name.IndexOf(item, StringComparison.OrdinalIgnoreCase) >= 0))
+                {
+                    material.SetColor(Hair_ColorName, color);
+                }
+            }
         }
         else
-            avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, color);
-
+            _materials[0].SetColor(Hair_ColorName, color);
     }
     public void ChangeHairColor(int colorId)
     {
         //print("Change Hair From Color Panel : " + hairColor[colorId]);
-        if (avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("_Band"))
+       
+        Material[] _materials = avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials;
+        if (_materials.Length > 1) // In case Of Hat, Pins, bags there are 2 materials
         {
-            // For Band using Eye Shader so variable name is Changed 
-            // Variable is equal to eyename
-            avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Eye_ColorName, hairColor[colorId]);
-        }
-        else if (avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials.Length > 1) // In case Of Hat there is 2 material
-        {
-            if (avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Cap") ||
-               avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Hat"))
-                avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[1].SetColor(Hair_ColorName, hairColor[colorId]);
-            else
-                avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, hairColor[colorId]);
+            foreach (var material in _materials)
+            {
+                if (!new[] { "Band", "Cap", "Hat", "Pin", "Clip", "Scarf", "Pony", "Accessories", "Ribbon", "Beads" }
+                     .Any(item => material.name.IndexOf(item, StringComparison.OrdinalIgnoreCase) >= 0))
+                {
+                    material.SetColor(Hair_ColorName, hairColor[colorId]);
+                }
+            }
         }
         else
-            avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, hairColor[colorId]);
-
+            _materials[0].SetColor(Hair_ColorName, hairColor[colorId]);
     }
     public void ChangeEyeColor(Color color)
     {
@@ -1009,30 +1050,18 @@ public class CharacterBodyParts : MonoBehaviour
                 AvatarController ac = applyOn.GetComponent<AvatarController>();
                 if (ac.wornHair != null)
                 {
-                    //ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
-                    if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("_Band"))
+                    Material material = ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0];
+                    if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials.Length > 1) // In case Of Hat there is 2 material
                     {
-                        // For Band using Eye Shader so variable name is Changed 
-                        // Variable is equal to eyename
-                        ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Eye_ColorName, _color);
-                    }
-                    else if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials.Length > 1) // In case Of Hat there is 2 material
-                    {
-                        if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Cap") ||
-                           ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Hat"))
+                        if (material.name.Contains("Cap") || material.name.Contains("Hat") || material.name.Contains("Pins"))
                             ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[1].SetColor(Hair_ColorName, _color);
                         else
-                            ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
+                            material.SetColor(Hair_ColorName, _color);
                     }
                     else
-                        ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
+                        material.SetColor(Hair_ColorName, _color);
                 }
 
-                // }
-                //else if(hairColorai)
-                //{
-                //    avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
-                //}
                 break;
 
             case SliderType.EyeBrowColor:
@@ -1131,59 +1160,59 @@ public class CharacterBodyParts : MonoBehaviour
     {
         // BonesData.Clear();
         // Eye
-        foreach (var bone in BothEyes)
-        {
-            BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
-        }
+        //foreach (var bone in BothEyes)
+        //{
+        //    BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
+        //}
 
-        // Eye Inner
-        foreach (var bone in EyeIner)
-        {
-            BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
-        }
+        //// Eye Inner
+        //foreach (var bone in EyeIner)
+        //{
+        //    BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
+        //}
 
-        // Eye out
-        foreach (var bone in EyesOut)
-        {
-            BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
-        }
+        //// Eye out
+        //foreach (var bone in EyesOut)
+        //{
+        //    BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
+        //}
 
-        // Lips
-        foreach (var bone in BothLips)
-        {
-            BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
-        }
+        //// Lips
+        //foreach (var bone in BothLips)
+        //{
+        //    BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
+        //}
 
         Transform singleBone;
-        // jaw
-        singleBone = JBone.transform;
-        BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
-        // head
-        singleBone = head.gameObject.transform;
-        BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
-        // nose
-        singleBone = Nose.transform;
-        BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
-        // mouth
-        singleBone = Lips.transform;
-        BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
-        // Fore head
-        singleBone = ForeHead.transform;
-        BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
-        // Head all
+        //// Head all
         singleBone = headAll.transform;
         BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
-        //[WaqasAhmad] New Bone Add After character Scaling From Design End
-        singleBone = headAll.transform.transform.parent.transform;
-        BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
+        // jaw
+        //singleBone = JBone.transform;
+        //BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
+        //// head
+        //singleBone = head.gameObject.transform;
+        //BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
+        //// nose
+        //singleBone = Nose.transform;
+        //BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
+        //// mouth
+        //singleBone = Lips.transform;
+        //BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
+        //// Fore head
+        //singleBone = ForeHead.transform;
+        //BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
+        ////[WaqasAhmad] New Bone Add After character Scaling From Design End
+        //singleBone = headAll.transform.transform.parent.transform;
+        //BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
 
 
 
         // Fat
-        foreach (var bone in _scaleBodyParts)
-        {
-            BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
-        }
+        //foreach (var bone in _scaleBodyParts)
+        //{
+        //    BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
+        //}
         //// saving default Transfrom of bones
         //foreach (var item in BonesData)
         //{
@@ -1196,7 +1225,7 @@ public class CharacterBodyParts : MonoBehaviour
 
     public void ApplyMaskTexture(string type, Texture texture, GameObject applyOn)
     {
-        if (type.Contains("Chest") || type.Contains("Shirt") || type.Contains("arabic"))
+        if (type.Contains("Chest") || type.Contains("Shirt") || type.Contains("arabic") || type.Contains("Full_Costume", System.StringComparison.CurrentCultureIgnoreCase))
         {
             applyOn.GetComponent<CharacterBodyParts>().TextureForShirt(texture);
 
@@ -1429,23 +1458,14 @@ public class CharacterBodyParts : MonoBehaviour
     }
     public void LoadBlendShapes(SavingCharacterDataClass data, GameObject applyOn)
     {
-        SkinnedMeshRenderer effectedHead = applyOn.GetComponent<CharacterBodyParts>().head;
+        CharacterBodyParts applyOnBodyParts = applyOn.GetComponent<CharacterBodyParts>();
+        SkinnedMeshRenderer effectedHead = applyOnBodyParts.head;
+
         //blend shapes
         for (int i = 0; i < effectedHead.sharedMesh.blendShapeCount - 1; i++)
         {
             if (data.FaceBlendsShapes != null && data.FaceBlendsShapes.Length > 0)
             {
-                //if (i < data.FaceBlendsShapes.Length)
-                //{
-
-                //    if (i == 32)
-                //        effectedHead.SetBlendShapeWeight(i, 0);
-                //    else
-                //        effectedHead.SetBlendShapeWeight(i, data.FaceBlendsShapes[i]);
-                //}
-                //else
-                //    effectedHead.SetBlendShapeWeight(i, 0);
-
                 // Added By WaqasAhmad
                 // if BlendCount & Blend In File are Same Then Assign Blend Value
                 // Else Set Blend Values to Default
@@ -1460,9 +1480,21 @@ public class CharacterBodyParts : MonoBehaviour
                 }
             }
         }
+        //appling bones data
+        for (int i = 0; i < data.SavedBones.Count; i++)
+        {
+            applyOnBodyParts.headAll.transform.localScale = data.SavedBones[i].Scale;
+        }
         if (GameManager.Instance.eyesBlinking != null)          // Added by Ali Hamza 
             GameManager.Instance.eyesBlinking.StoreBlendShapeValues();
     }
+
+    public void ApplyBlendShapesFromStore(GameObject applyOn, int blendshapeIndex, int value)
+    {
+        SkinnedMeshRenderer blendRender = applyOn.GetComponent<SkinnedMeshRenderer>();
+        blendRender.SetBlendShapeWeight(blendshapeIndex, value);
+    }
+
     public void ApplyBlendShapeEyesValues(GameObject applyOn, List<BlendShapeContainer> data, Vector3 eyesPos, float rotationz)
     {
         SkinnedMeshRenderer blendRender = applyOn.GetComponent<SkinnedMeshRenderer>();

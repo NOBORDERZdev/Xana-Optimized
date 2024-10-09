@@ -11,7 +11,7 @@ public class IOS_Screen_Switcher : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (Application.isEditor)
+        if (Application.isEditor && WorldItemView.m_EnvName.Contains("D_Infinity_Labo"))
         {
             m_filter.transform.localRotation = Quaternion.Euler(0f, 0.426f, 180f);
         }

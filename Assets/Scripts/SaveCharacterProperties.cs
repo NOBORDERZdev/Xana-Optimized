@@ -26,6 +26,8 @@ public class SaveCharacterProperties : MonoBehaviour
     }
     public void Start()
     {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            return;
         StartLocal();
 
         SaveItemList.faceMorphed = false;
@@ -170,8 +172,12 @@ public class SaveCharacterProperties : MonoBehaviour
             SaveItemList.myItemObj.Add(new Item(characterController.wornPantId, characterController.wornPant.name, "Legs"));
         if(characterController.wornShirt!=null)
             SaveItemList.myItemObj.Add(new Item(characterController.wornShirtId, characterController.wornShirt.name, "Chest"));
-        if(characterController.wornHair!=null)
+        if (characterController.wornHair != null)
+        {
             SaveItemList.myItemObj.Add(new Item(characterController.wornHairId, characterController.wornHair.name, "Hair"));
+            SaveItemList.HairColor = charcterBodyParts.GetHairColor();
+            InventoryManager.instance.itemData.hair_color = SaveItemList.HairColor;
+        }
         if(characterController.wornShoes!=null)
             SaveItemList.myItemObj.Add(new Item(characterController.wornShoesId, characterController.wornShoes.name, "Feet"));
         if (characterController.wornEyeWearable != null)
@@ -196,12 +202,16 @@ public class SaveCharacterProperties : MonoBehaviour
         SaveItemList.LipsColorPaletteValue = characterController.lipsColorPaletteId;
         SaveItemList.BodyFat = characterController.bodyFat;
         SaveItemList.MakeupValue = characterController.makeupId;
-        for (int i = 0; i < GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount; i++)
+        SaveItemList.avatarType = "NewAvatar";
+        int totalBlendShapes = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount;
+        SaveItemList.FaceBlendsShapes = new float[totalBlendShapes];
+
+        for (int i = 0; i < totalBlendShapes; i++)
         {
-            if (i < SaveItemList.FaceBlendsShapes.Length)
+            //if (i < SaveItemList.FaceBlendsShapes.Length)
                 SaveItemList.FaceBlendsShapes[i] = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(i);
         }
-        SaveItemList.SavedBones.Clear();
+        SaveItemList.SavedBones.Clear(); // Not Using Bones
         for (int i = 0; i < charcterBodyParts.BonesData.Count; i++)
         {
             Transform bone = charcterBodyParts.BonesData[i].Obj.transform;
@@ -216,6 +226,7 @@ public class SaveCharacterProperties : MonoBehaviour
 
         SaveItemList.ai_gender = InventoryManager.instance.itemData.gender;
         SaveItemList.charactertypeAi = InventoryManager.instance.itemData.CharactertypeAi;
+        
         SaveItemList.hair_color = InventoryManager.instance.itemData.hair_color;
         SaveItemList.lip_color = InventoryManager.instance.itemData.lips_color;
         SaveItemList.skin_color = InventoryManager.instance.itemData.skin_color;
@@ -261,7 +272,6 @@ public class SaveCharacterProperties : MonoBehaviour
                 //_CharacterData.eyeMorphed = SaveItemList.eyeMorphed;
                 //_CharacterData.noseMorphed = SaveItemList.noseMorphed;
                 //_CharacterData.lipMorphed = SaveItemList.lipMorphed;
-                //_CharacterData.SavedBones = SaveItemList.SavedBones;
                 //_CharacterData.Skin = charcterBodyParts.GetBodyColor();
                 //_CharacterData.SkinGerdientColor = charcterBodyParts.GetSkinGredientColor();
                 //_CharacterData.SkinId = SaveItemList.SkinId;
@@ -277,12 +287,14 @@ public class SaveCharacterProperties : MonoBehaviour
                 //_CharacterData.eyeLashesName = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().materials[3].GetTexture("_BaseMap").name;
                 //_CharacterData.makeupName = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().materials[2].GetTexture("_Base_Texture").name;
 
-                //_CharacterData.FaceBlendsShapes = SaveItemList.FaceBlendsShapes;
             }
-
+            _CharacterData.FaceBlendsShapes = SaveItemList.FaceBlendsShapes;
             _CharacterData.ai_gender = SaveItemList.ai_gender;
             _CharacterData.charactertypeAi = SaveItemList.charactertypeAi;
+
             _CharacterData.hair_color = SaveItemList.hair_color;
+            _CharacterData.HairColor = SaveItemList.HairColor;
+
             _CharacterData.lip_color = SaveItemList.lip_color;
             _CharacterData.skin_color = SaveItemList.skin_color;
             _CharacterData.faceItemData = SaveItemList.faceItemData;
@@ -350,14 +362,14 @@ public class SaveCharacterProperties : MonoBehaviour
             SaveItemList.gender = _CharacterData.gender;
 
             float[] blendValues = new float[GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount];
-            for (int i = 0; i < GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount; i++)
-            {
-                if (!_sliderindexes.ContainsIndex(i))
-                {
-                    blendValues[i] = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(i);
-                    GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(i, 0);
-                }
-            }
+            //for (int i = 0; i < GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount; i++)
+            //{
+            //    if (!_sliderindexes.ContainsIndex(i))
+            //    {
+            //        blendValues[i] = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(i);
+            //        GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(i, 0);
+            //    }
+            //}
 
             SaveItemList.FaceBlendsShapes = blendValues;
             AvatarCustomizationManager.Instance.UpdateChBodyShape(_CharacterData.BodyFat);

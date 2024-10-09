@@ -5,9 +5,11 @@ using System.Linq;
 using DG.Tweening;
 using Models;
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class GamificationComponentData : MonoBehaviourPunCallbacks
 {
@@ -47,7 +49,6 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     //Orientation Changer
     public CanvasGroup landscapeCanvas;
     public CanvasGroup potraitCanvas;
-    bool isPotrait = false;
 
     internal IComponentBehaviour activeComponent;
 
@@ -98,6 +99,22 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     [Tooltip("What layers the character uses as ground")]
     public LayerMask GroundLayers;
 
+    internal List<ItemData> MultiplayerComponentData = new List<ItemData>();
+    public MultiplayerComponent MultiplayerComponent;
+
+    bool isPotrait = false;
+
+    #region XANA PARTY WORLD
+    public GameObject MultiplayerComponente;
+    public StartPoint StartPoint;
+    public bool isRaceStarted = false;
+    public bool SinglePlayer = false;
+    public List<XanaItem> MultiplayerComponentstoSet = new List<XanaItem>();
+    internal Rigidbody PlayerRigidBody;
+    internal bool IsGrounded;
+
+    bool IsAllPlayersRaceFinished = true;
+    #endregion
     private void Awake()
     {
         instance = this;
@@ -115,10 +132,22 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         OrientationChange(false);
         warpComponentList.Clear();
         WarpComponentLocationUpdate += UpdateWarpFunctionData;
-
+        SceneManager.sceneLoaded += OnSceneLoaded;
         //reset ignore layer collision on scene load
         Physics.IgnoreLayerCollision(9, 22, false);
         ZoomControl = true;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Check if the loaded scene is the one where you want to start the XANA party race
+        // Call StartXANAPartyRace here
+        if (scene.name == "Builder")
+        {
+            print("!!! call from Scene Loaded");
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && !isRaceStarted)
+                StartXANAPartyRace();
+        }
     }
 
     public override void OnDisable()
@@ -130,7 +159,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         BuilderEventManager.RPCcallwhenPlayerJoin -= GetRPC;
 
         WarpComponentLocationUpdate -= UpdateWarpFunctionData;
-
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void PlayerSpawnBlindfoldedDisplay()
@@ -151,6 +180,17 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     public float MapValue(float oldValue, float oldMin, float oldMax, float newMin, float newMax)
     {
         return (oldValue - oldMin) * (newMax - newMin) / (oldMax - oldMin) + newMin;
+    }
+
+    public TextureFormat GetTextureFormat()
+    {
+#if UNITY_ANDROID || UNITY_IOS
+        return TextureFormat.ASTC_8x8;
+#elif UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
+        return TextureFormat.ETC2_RGBA8Crunched;
+#elif UNITY_WEBGL
+        return TextureFormat.ETC2_RGBA8Crunched;
+#endif
     }
 
     #region OrientationChange
@@ -225,10 +265,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
                     if (startKey == data2.warpPortalEndKeyValue && startKey != "")
                     {
                         Vector3 endPoint = warpFunctionComponent2.transform.position;
-                        endPoint.y += warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
+                        endPoint.y += warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y;
                         UpdateEndPortalLocations(data1.warpPortalDataEndPoint, startKey, endPoint);
                         Vector3 startPoint = warpFunctionComponent1.transform.position;
-                        startPoint.y += warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
+                        startPoint.y += warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y;
                         UpdateStartPortalLocations(data2.warpPortalDataStartPoint, startKey, startPoint);
                     }
                 }
@@ -238,10 +278,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
                     if (endKey == data2.warpPortalStartKeyValue && endKey != "")
                     {
                         Vector3 endPoint = warpFunctionComponent1.transform.position;
-                        endPoint.y += warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
+                        endPoint.y += warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y;
                         UpdateEndPortalLocations(data2.warpPortalDataEndPoint, endKey, endPoint);
                         Vector3 startPoint = warpFunctionComponent2.transform.position;
-                        startPoint.y += warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
+                        startPoint.y += warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y;
                         UpdateStartPortalLocations(data1.warpPortalDataStartPoint, endKey, startPoint);
                     }
                 }
@@ -368,24 +408,154 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
         multiplayerComponentdatas.multiplayerComponents.Add(multiplayerComponentData);
         string json = JsonUtility.ToJson(multiplayerComponentdatas);
-        //Debug.LogError(json);
-        hash.Add("gamificationMultiplayerComponentDatas", json);
+
+        // Split the JSON string into smaller chunks
+        const int chunkSize = 30000; // Ensure each chunk is well below the 32767 limit
+        int totalChunks = (json.Length + chunkSize - 1) / chunkSize;
+
+        for (int i = 0; i < totalChunks; i++)
+        {
+            string chunkKey = $"gamificationMultiplayerComponentDatas_{i}";
+            string chunkValue = json.Substring(i * chunkSize, Math.Min(chunkSize, json.Length - i * chunkSize));
+            hash[chunkKey] = chunkValue;
+        }
+
+        // Store the total number of chunks
+        hash["gamificationMultiplayerComponentDatas_TotalChunks"] = totalChunks;
+
         PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
     }
 
+
     public void MasterClientSwitched(Player newMasterClient)
     {
-        if (!withMultiplayer)
-            return;
+        //if (!withMultiplayer)
+        //    return;
 
-        if (PhotonNetwork.LocalPlayer == newMasterClient)
+        //if (PhotonNetwork.LocalPlayer == newMasterClient)
+        //{
+        //    foreach (XanaItem xanaItem in multiplayerComponentsxanaItems)
+        //    {
+        //        if (!xanaItem.itemData.addForceComponentData.isActive || !xanaItem.itemData.translateComponentData.avatarTriggerToggle)
+        //            xanaItem.SetData(xanaItem.itemData);
+        //    }
+        //}
+    }
+
+    public void StartXANAPartyRace()
+    {
+        if (GameplayEntityLoader.instance)
         {
-            foreach (XanaItem xanaItem in multiplayerComponentsxanaItems)
+            GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC("RPC_AddPlayerID", RpcTarget.AllBuffered, int.Parse(ConstantsHolder.userId));
+        }
+        if (Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) == XANAPartyManager.Instance.ActivePlayerInCurrentLevel)//ConstantsHolder.XanaPartyMaxPlayers)
+        {
+            StartCoroutine(WaitForWorldLoadingAllPlayer());
+        }
+    }
+
+    IEnumerator WaitForWorldLoadingAllPlayer()
+    {
+        bool allPalyerReady = false;
+        while (!allPalyerReady)
+        {
+            yield return new WaitForSeconds(0.5f);
+            foreach (Player player in PhotonNetwork.PlayerList)
             {
-                if (!xanaItem.itemData.addForceComponentData.isActive || !xanaItem.itemData.translateComponentData.avatarTriggerToggle)
-                    xanaItem.SetData(xanaItem.itemData);
+                if (player.CustomProperties.TryGetValue("IsReady", out object isReady))
+                {
+                    allPalyerReady = (bool)isReady;
+                    if (!allPalyerReady) break;
+                }
+                else
+                {
+                    allPalyerReady = false; break;
+                }
             }
         }
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (XANAPartyManager.Instance.GameIndex == 0)
+            {
+                StartCoroutine(XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().SendingUsersIdsAtStartOfRace());
+            }
+            else
+            {
+                this.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All, XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().RaceID);
+                isRaceStarted = true;
+            }
+        }
+    }
+
+
+    [PunRPC]
+    void StartGameRPC(int raceId)
+    {
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().RaceID = raceId;
+        new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 1f);
+    }
+
+    public void TriggerRaceStatusUpdate()
+    {
+        this.GetComponent<PhotonView>().RPC(nameof(UpdateRaceStatus), RpcTarget.All);
+    }
+
+    [PunRPC]
+    void UpdateRaceStatus()
+    {
+        var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
+        xanaPartyMulitplayer.RaceFinishCount++;
+        //int currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+        PenpenzLpManager ref_PenpenzLpManager = XANAPartyManager.Instance.GetComponent<PenpenzLpManager>();
+        ref_PenpenzLpManager.RaceFinishTime.Add(DateTimeOffset.Now.ToUnixTimeMilliseconds());
+
+
+        if (xanaPartyMulitplayer.RaceFinishCount >= XANAPartyManager.Instance.ActivePlayerInCurrentLevel)//ref_PenpenzLpManager.RaceStartWithPlayers)//currentPlayers)
+        {
+            XANAPartyManager.Instance.GameIndex++;
+            StartCoroutine(ref_PenpenzLpManager.PrintLeaderboard());
+        }
+    }
+
+    public void UpdateRaceStatusIfPlayerLeaveWithoutCompletiting(bool raceFinishStatus)
+    {
+        var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
+
+        for (int i = 0; i < MutiplayerController.instance.playerobjects.Count; i++)
+        {
+            if (!MutiplayerController.instance.playerobjects[i].GetComponent<XANAPartyMulitplayer>().isRaceFinished)
+            {
+                IsAllPlayersRaceFinished = false;
+            }
+        }
+        if (IsAllPlayersRaceFinished)
+        {
+            XANAPartyManager.Instance.GameIndex++;
+            StartCoroutine(XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PrintLeaderboard());
+        }
+    }
+
+    public IEnumerator MovePlayersToNextGame()
+    {
+        yield return new WaitForSeconds(10f);
+        var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
+        xanaPartyMulitplayer.ResetValuesOnCompleteRace();
+        xanaPartyMulitplayer.StartCoroutine(xanaPartyMulitplayer.MovePlayersToRandomGame());
+    }
+
+    [PunRPC]
+    public void BackToLobby()
+    {
+        StartCoroutine(triggerBackToLobby());
+    }
+    IEnumerator triggerBackToLobby()
+    {
+        GameObject tempPenguin = GameplayEntityLoader.instance.PenguinPlayer;
+        if (tempPenguin.GetComponent<PhotonView>().IsMine && !PhotonNetwork.IsMasterClient)
+        {
+            yield return new WaitForSeconds(3.5f);
+        }
+        StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().MoveToLobby());
     }
     #endregion
 }

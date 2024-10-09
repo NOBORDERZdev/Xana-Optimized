@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 using System.IO;
+using AdvancedInputFieldPlugin;
+using System.Text.RegularExpressions;
+using DG.Tweening;
+using SuperSimple;
 
 public class SNSSettingController : MonoBehaviour
 {
@@ -20,12 +25,12 @@ public class SNSSettingController : MonoBehaviour
     [Header("My Account Personal Information References")]
     public GameObject myAccountPersonalInfoScreen;
     [SerializeField] private GameObject personalInfoPublicIDObj;
-
     [SerializeField] private GameObject personalInfoEmailObj;
     [SerializeField] private GameObject personalInfoPhoneNumberObj;
-    [SerializeField] private TextMeshProUGUI personalInfoEmailText;
-    [SerializeField] private TextMeshProUGUI personalInfoPhoneNumberText;
-    [SerializeField] private TextMeshProUGUI personalInfoPublicaddressText;
+    public TextMeshProUGUI personalInfoEmailText;
+    public TextMeshProUGUI personalInfoPhoneNumberText;
+    public TextMeshProUGUI personalInfoPublicaddressText;
+    public GameObject Questbutton;
 
     [Header("Confirmation Panel for delete Account")]
     public GameObject deleteAccountPopup;
@@ -34,15 +39,36 @@ public class SNSSettingController : MonoBehaviour
     [Header("Simultaneous Connections Items")]
     public Image btnImageOn;
     public Image btnImageOff;
-    //public Sprite offBtn, onBtn;
 
+    [Space]
+    [Header("Contact Support Items")]
+    public ContactSupportController ContactSupportHandle;
+    public GameObject ContactSupportPanelRef;
+    public AdvancedInputField UserEmailInputField;
+    public AdvancedInputField EmailSubjectInputField;
+    public AdvancedInputField EmailBodyInputField;
+    public TextMeshProUGUI EmailText;
+    public TextMeshProUGUI EmailErrorMsgText;
+    public TextMeshProUGUI EmailSubjectErrorMsgText;
+    public TextMeshProUGUI EmailBodyErrorMsgText;
+    public Button SendEmailBtn;
+    private Tween fadeTween;
+    private bool isEmail;
+
+    public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
+
+    //public Sprite offBtn, onBtn;
+    
 
     #region Setting Screen.......
     //this method is used to Open Setting Screen.......
     public void OnClickSettingOpen()
     {
+
+        FeedUIController.Instance.footerCan.SetActive(false);
         settingScreen.SetActive(true);
         SettingScreenSetup();
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.MainSetting);
     }
 
     //this method is used to Setup Setting Screen.......
@@ -54,7 +80,10 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to Close Setting Screen......
     public void OnClickSettingClose()
     {
+
+        FeedUIController.Instance.footerCan.SetActive(true);
         settingScreen.SetActive(false);
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Othertabs);
     }
 
     //this method is used to My Account Button click.......
@@ -62,12 +91,15 @@ public class SNSSettingController : MonoBehaviour
     {
         OnClickSettingClose();
         myAccountScreen.SetActive(true);
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.SubSetting);
     }
 
     //this method is used to My Account Screen Back Button Click.......
     public void OnClickMyAccountBackButton()
     {
         OnClickSettingOpen();
+        myAccountScreen.SetActive(false);
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.MainSetting);
     }
 
     //this method is used to terms and policy.......
@@ -162,7 +194,7 @@ public class SNSSettingController : MonoBehaviour
         {
             SimultaneousConnectionButton();
         }
-        GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveAllFriends();
+        //GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveAllFriends();
         PlayerPrefs.SetInt("shownWelcome", 0);
         PlayerPrefs.SetString("UserNameAndPassword", "");
         GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
@@ -273,8 +305,82 @@ public class SNSSettingController : MonoBehaviour
             btnImageOff.gameObject.SetActive(false);
         }
     }
+
+    private void Start()
+    {
+        UserEmailInputField.OnValueChanged.AddListener(OnValueChanged);
+    }
+
+    public void OnValueChanged(string newText)
+    {
+        isEmail = Regex.IsMatch(newText, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", RegexOptions.IgnoreCase);
+        // Check if the entered string matches your desired value
+
+        if (isEmail)
+        {
+            EmailText.color = Color.black;
+            SendEmailBtn.interactable = isEmail;
+        }
+        else
+        {
+            EmailText.color = Color.red;
+            SendEmailBtn.interactable = isEmail;
+        }
+    }
+
     private void OnEnable()
     {
         CheckBtnStatus(PlayerPrefs.GetInt("ShowLiveUserCounter"));
+        QuestDataHandler.Instance.MyQuestButton = Questbutton;
+        QuestDataHandler.Instance.QuestButton();
+    }
+
+    public void OnClickContactSupportBtn()
+    {
+
+        UserEmailInputField.Clear();
+        EmailSubjectInputField.Clear();
+        EmailBodyInputField.Clear();
+        SendEmailBtn.interactable = false;
+        ContactSupportPanelRef.SetActive(true);
+    }
+
+    public void OnClickSendEmail()
+    {
+        if (!string.IsNullOrEmpty(EmailSubjectInputField.Text) && !string.IsNullOrWhiteSpace(EmailSubjectInputField.Text))
+        {
+            if (!string.IsNullOrEmpty(EmailBodyInputField.Text) && !string.IsNullOrWhiteSpace(EmailBodyInputField.Text))
+            {
+                string userEmailBodyText = "User Provided Email: " + UserEmailInputField.GetText() + "\n" + EmailBodyInputField.GetText();
+                ContactSupportHandle.SendEmail(EmailSubjectInputField.Text, userEmailBodyText);
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            }
+            else
+            {
+                PlayErrorMsgAnim(EmailBodyErrorMsgText);
+            }
+        }
+        else
+        {
+            PlayErrorMsgAnim(EmailSubjectErrorMsgText);
+        }
+    }
+
+    public void PlayErrorMsgAnim(TextMeshProUGUI _errorMsgText)
+    {
+        if (fadeTween != null)
+        {
+            fadeTween.Restart();
+        }
+        else
+        {
+            fadeTween = _errorMsgText.DOFade(1, 1).OnComplete(() =>
+            {
+                fadeTween = _errorMsgText.DOFade(0, 4).OnComplete(() =>
+                {
+                    fadeTween = null;
+                });
+            });
+        }
     }
 }

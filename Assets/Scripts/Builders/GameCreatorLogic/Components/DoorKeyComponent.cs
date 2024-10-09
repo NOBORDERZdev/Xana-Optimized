@@ -24,7 +24,7 @@ public class DoorKeyComponent : ItemComponent
             if (isCollisionHandled)
                 return;
             if (TimeStats.playerCanvas == null)
-                Instantiate(GamificationComponentData.instance.playerCanvas);
+                TimeStats.playerCanvas = Instantiate(GamificationComponentData.instance.playerCanvas);
 
             if (TimeStats.playerCanvas.transform.parent != GamificationComponentData.instance.nameCanvas.transform)
             {

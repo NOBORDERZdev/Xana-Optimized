@@ -339,7 +339,15 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void BacktoAvatarSelectionPanel()
     {
-        InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        }
+        else
+        {
+            InventoryManager.instance.StartPanel_PresetParentPanelSummit.SetActive(true);
+        }
+       
     }
 
     public void LoginScreenClicked(int btn)
@@ -435,7 +443,7 @@ public class UserRegisterationManager : MonoBehaviour
             ConnectionEstablished_popUp.SetActive(true);
 
             Invoke(nameof(showPresetPanel), 1f);
-            DynamicEventManager.deepLink?.Invoke("Moralis side");
+            //DynamicEventManager.deepLink?.Invoke("Moralis side");
 
             if (InventoryManager.instance != null)
                 InventoryManager.instance.WalletLoggedinCall();
@@ -456,7 +464,7 @@ public class UserRegisterationManager : MonoBehaviour
     IEnumerator WaitForDeepLink()
     {
         yield return new WaitForSeconds(2);
-        DynamicEventManager.deepLink?.Invoke("moralis wait and come");
+        //DynamicEventManager.deepLink?.Invoke("moralis wait and come");
     }
     /// <summary>
     /// To show preset panel if playe login form wallet and on perset is applied
@@ -1052,7 +1060,7 @@ public class UserRegisterationManager : MonoBehaviour
             if (PlayerPrefs.GetInt("IsProcessComplete") == 1 && PlayerPrefs.GetInt("iSignup") == 1)
             {
                 PlayerPrefs.SetInt("RegistrationOnce", 1);
-                DynamicEventManager.deepLink?.Invoke("Sign Up Flow");
+                //DynamicEventManager.deepLink?.Invoke("Sign Up Flow");
             }
         }
     }
@@ -1254,7 +1262,7 @@ public class UserRegisterationManager : MonoBehaviour
 
 
         PlayerPrefs.Save();
-        UserPassManager.Instance.testing = false;
+        //UserPassManager.Instance.testing = false; // Forces Enabled
         yield return StartCoroutine(WaitAndLogout());
         yield return StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
         ConstantsGod.UserRoles = new List<string>() { "Guest" };
@@ -2785,7 +2793,7 @@ public class UserRegisterationManager : MonoBehaviour
         if (PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetInt("IsProcessComplete") == 0 && PlayerPrefs.GetInt("iSignup") == 0)
         {
             Debug.LogError("Set Name for Guest User");
-            DynamicEventManager.deepLink?.Invoke("come from Guest Registration");
+            //DynamicEventManager.deepLink?.Invoke("come from Guest Registration");
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, Localusername);
             currentSelectedNxtButton.interactable = true;
             UsernamescreenLoader.SetActive(false);
@@ -3363,7 +3371,7 @@ public class UserRegisterationManager : MonoBehaviour
                         ConstantsGod.AUTH_TOKEN = myObject1.data.token;
                         if (PlayerPrefs.GetInt("shownWelcome") == 1)
                         {
-                            DynamicEventManager.deepLink?.Invoke("Guest login");
+                            //DynamicEventManager.deepLink?.Invoke("Guest login");
                         }
                         if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "djevent" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
                         {
@@ -3424,19 +3432,19 @@ public class UserRegisterationManager : MonoBehaviour
                         savePasswordList.instance.saveData(LoginEmailOrPhone.Text.Trim(), LoginPassword.Text.Trim());
                     }
 
-                    PlayerPrefs.SetInt("WalletLogin", 0);
+                    //PlayerPrefs.SetInt("WalletLogin", 0); //  in Each case now we are login with Wallet
                     ConstantsGod.AUTH_TOKEN = myObject1.data.token;
                     PlayerPrefs.SetString("LoginTokenxanalia", myObject1.data.xanaliaToken);
-                    DynamicEventManager.deepLink?.Invoke("Login user here");
+                    //DynamicEventManager.deepLink?.Invoke("Login user here");
 
                     if (myObject1.data.isAdmin)
                     {
                         UserPassManager.Instance.testing = true;
                     }
-                    else
-                    {
-                        UserPassManager.Instance.testing = false;
-                    }
+                    //else  // Forces Enabled
+                    //{
+                    //    UserPassManager.Instance.testing = false;
+                    //}
                     if (PlayerPrefs.GetString("LoginTokenxanalia") != "" && XanaliaBool)
                     {
                         WalletConnectDataClasses.NFTListMainNet NFTCreateJsonMain = new WalletConnectDataClasses.NFTListMainNet();
@@ -3793,7 +3801,10 @@ public class UserRegisterationManager : MonoBehaviour
         usernamePanal.SetActive(false);
         GetOwnedNFTsFromAPI();
         PlayerPrefs.Save();
-        StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
+        }
         if (GameManager.Instance.UiManager != null)//rik
         {
             GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();

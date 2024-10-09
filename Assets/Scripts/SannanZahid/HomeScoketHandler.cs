@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 using System.Collections;
 using Newtonsoft.Json;
 using SimpleJSON;
+using XanaAi;
 
 public class HomeScoketHandler : MonoBehaviour
 {
@@ -115,7 +116,17 @@ public class HomeScoketHandler : MonoBehaviour
         string FinalUrl = PrepareApiURL("SocketFriendUpdate");
         // Debug.LogError("Prepared URL SendSocketIdOfUserForPost ----> " + FinalUrl);
         WWWForm form = new WWWForm();
-        form.AddField("userId", int.Parse(ConstantsHolder.userId));
+
+        try
+        {
+            form.AddField("userId", int.Parse(ConstantsHolder.userId));
+        }
+        catch (FormatException e)
+        {
+            Debug.Log("<color=red> Error parsing userId: " + e.Message + "</color>");
+            yield break; // Exit the coroutine if parsing fails
+        }
+
         form.AddField("socketId", socketId);
         using (UnityWebRequest www = UnityWebRequest.Post(FinalUrl, form))
         {
@@ -127,16 +138,17 @@ public class HomeScoketHandler : MonoBehaviour
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
                 //Debug.LogError("SendSocketIdOfUserForPost ---->   ERROR  ----->  "+ www.downloadHandler.text);
-               // Debug.Log("Error PostSocket ID update  --->  " + www.downloadHandler.text);
+                // Debug.Log("Error PostSocket ID update  --->  " + www.downloadHandler.text);
             }
             else
             {
                 Manager.Socket.On<string>("send_new_cloth_info", HomeFriendClothUpdate);
-               // Debug.Log("SendSocketIdOfUserForPost Success ---->  " + www.downloadHandler.text);
+                // Debug.Log("SendSocketIdOfUserForPost Success ---->  " + www.downloadHandler.text);
             }
             www.Dispose();
         }
     }
+
 
     /// <summary>
     /// To connect SNS Sockets
@@ -156,7 +168,8 @@ public class HomeScoketHandler : MonoBehaviour
     /// <param name="response"></param>
     void SnSUpate(string response) {
         userInfoUpdate userInfoUpdate = JsonConvert.DeserializeObject<userInfoUpdate>(response);
-        SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
+        if (SNS_APIController.Instance)
+            SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
     }
 
     /// <summary>
@@ -166,7 +179,8 @@ public class HomeScoketHandler : MonoBehaviour
     void UpdateFollowerFollowing(string response)
     {
         userFollowerFollowing userInfoUpdate = JsonConvert.DeserializeObject<userFollowerFollowing>(response);
-        SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
+        if(SNS_APIController.Instance)
+            SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
     }
 
     /// <summary>

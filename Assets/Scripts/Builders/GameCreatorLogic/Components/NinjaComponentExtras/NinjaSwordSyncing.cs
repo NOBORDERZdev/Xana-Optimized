@@ -36,8 +36,8 @@ public class NinjaSwordSyncing : MonoBehaviourPun
         swordHook = GetComponentInParent<CharacterBodyParts>().pelvisBoneNewCharacter.transform;
         anim = GetComponentInParent<IKMuseum>().GetComponent<Animator>();
         this.transform.SetParent(swordHook, false);
-        this.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
-        this.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
+        this.transform.localPosition = new Vector3(-0.17f, 0.06f, 0.03f);
+        this.transform.localRotation = new Quaternion(0.89543f, -0.21528f, 0.28035f, -0.27066f);
         isInitiated = true;
     }
 
@@ -64,8 +64,10 @@ public class NinjaSwordSyncing : MonoBehaviourPun
             anim.CrossFade("Withdrawing", 0.2f);
             yield return new WaitForSecondsRealtime(1.3f);
             this.transform.SetParent(swordHook, false);
-            this.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
-            this.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
+            //this.transform.localPosition = new Vector3(-0.155000004f, 0.0500000007f, 0.023f);
+            //this.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
+            this.transform.localPosition = new Vector3(-0.17f, 0.06f, 0.03f);
+            this.transform.localRotation = new Quaternion(0.89543f, -0.21528f, 0.28035f, -0.27066f);
         }
         if (isDrawSword)
         {

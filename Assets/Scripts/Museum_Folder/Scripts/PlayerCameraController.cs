@@ -3,14 +3,12 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.InputSystem;
 using TouchPhase = UnityEngine.TouchPhase;
-using Metaverse;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Collections;
 
 public class PlayerCameraController : MonoBehaviour
 {
-    public enum OrientationType { Landscape, Portrait };
-    public OrientationType orientationType;
     [Space(5)]
     public float lookSpeed;
     public float lookSpeedd;
@@ -64,16 +62,16 @@ public class PlayerCameraController : MonoBehaviour
     [HideInInspector]
     public bool isReturn = false;
 
+    private bool EnableRecenter = false,startRecentering = true;
+    private Coroutine RecenterTime;
     private void OnEnable()
     {
         controls.Enable();
-        ScreenOrientationManager.switchOrientation += SwitchOrientation;
         BuilderEventManager.ChangeCameraHeight += ChangeCameraHeight;
     }
     private void OnDisable()
     {
         controls.Disable();
-        ScreenOrientationManager.switchOrientation -= SwitchOrientation;
         BuilderEventManager.ChangeCameraHeight -= ChangeCameraHeight;
 
     }
@@ -113,14 +111,6 @@ public class PlayerCameraController : MonoBehaviour
             zoomScrollVal = originalOrbits[1].m_Radius;
         }
         camRender = ReferencesForGamePlay.instance.randerCamera.gameObject;
-    }
-
-    void SwitchOrientation()
-    {
-        if (orientationType.Equals(OrientationType.Landscape))
-            orientationType = OrientationType.Portrait;
-        else if (orientationType.Equals(OrientationType.Portrait))
-            orientationType = OrientationType.Landscape;
     }
 
     public void AllowControl()
@@ -314,12 +304,49 @@ public class PlayerCameraController : MonoBehaviour
         {
             MoveCamera(delta);            // Rotate camera on the base input
         }
+        if (delta == Vector2.zero)
+        {
+            if (startRecentering)
+            {
+                cinemachine.m_RecenterToTargetHeading.m_enabled = EnableRecenter;
+            }
+            else
+            {
+
+                if (EnableRecenter)
+                {
+                    startRecentering = true;
+                    if (RecenterTime != null) { StopCoroutine(RecenterTime); }
+                    RecenterTime = StartCoroutine(updateRecenterTime());
+                  
+                }
+            }
+
+        }
+        else
+        {
+            cinemachine.m_RecenterToTargetHeading.m_enabled = false;
+            startRecentering = false;
+            cinemachine.m_RecenterToTargetHeading.m_RecenteringTime = .5f;
+        }
+
     }
     private void MoveCamera(Vector2 delta)
     {
         cinemachine.m_XAxis.Value += delta.x * 10 * lookSpeedd * Time.deltaTime;
         cinemachine.m_YAxis.Value += -delta.y * 0.08f * lookSpeedd * Time.deltaTime;
     }
+
+    private IEnumerator updateRecenterTime()
+    {
+       
+  
+        
+        yield return new WaitForSeconds(1f);
+        cinemachine.m_RecenterToTargetHeading.m_RecenteringTime = 0.1f;
+        RecenterTime = null;
+    }
+
     void CameraControls_Mobile()
     {
         Longtouch();
@@ -448,5 +475,20 @@ public class PlayerCameraController : MonoBehaviour
         cinemachine.m_Orbits[1].m_Height = height2;
         cinemachine.m_Orbits[2].m_Height = height3;
     }
+
+    public void EnableCameraRecenter()
+    {
+        cinemachine.m_RecenterToTargetHeading.m_RecenteringTime = 0.1f;
+
+        cinemachine.m_RecenterToTargetHeading.m_enabled = true;
+        EnableRecenter = true;   
+        
+    }
+    public void DisableCameraRecenter()
+    {
+        cinemachine.m_RecenterToTargetHeading.m_enabled = false;
+        EnableRecenter = false;
+    }
+
 
 }

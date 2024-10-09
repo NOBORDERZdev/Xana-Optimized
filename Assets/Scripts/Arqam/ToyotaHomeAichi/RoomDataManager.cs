@@ -6,6 +6,16 @@ public class RoomDataManager : MonoBehaviour
 {
     public Dictionary<string, List<GameObject>> roomDictionary = new Dictionary<string, List<GameObject>>();
 
+    private void Start()
+    {
+        InRoomSoundHandler.playerInRoom += UpdateRoomData;
+        BuilderEventManager.AfterWorldInstantiated += HideAllRoom;
+    }
+    private void OnDisable()
+    {
+        InRoomSoundHandler.playerInRoom -= UpdateRoomData;
+        BuilderEventManager.AfterWorldInstantiated -= HideAllRoom;
+    }
     public void RegisterRoom(string objectKey, GameObject roomObject)
     {
 
@@ -49,19 +59,6 @@ public class RoomDataManager : MonoBehaviour
                 roomObject.SetActive(false);
         }
     }
-
-
-    private void Start()
-    {
-        InRoomSoundHandler.playerInRoom += UpdateRoomData;
-        BuilderEventManager.AfterWorldInstantiated += HideAllRoom;
-    }
-    private void OnDisable()
-    {
-        InRoomSoundHandler.playerInRoom -= UpdateRoomData;
-        BuilderEventManager.AfterWorldInstantiated -= HideAllRoom;
-    }
-
     private void UpdateRoomData(bool playerInRoom, string roomName)
     {
         if (playerInRoom)

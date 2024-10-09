@@ -102,7 +102,8 @@ public class Swipe_menu : MonoBehaviour
         if (SelectedOBJ != null)
         {
             GameManager.Instance.HomeCameraInputHandler(true);
-            UserLoginSignupManager.instance.selectedPresetImage.sprite= SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
+            UserLoginSignupManager.instance.SelectedPresetImage.sprite= SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
+            UserLoginSignupManager.instance.SelectPresetImageforEditProfil.sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
             //UserRegisterationManager.instance.LogoImage.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
             //UserRegisterationManager.instance.LogoImage2.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
             //UserRegisterationManager.instance.LogoImage3.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;

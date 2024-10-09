@@ -9,8 +9,9 @@ using System.Security.Principal;
 using static WalletLogin;
 using static System.Net.WebRequestMethods;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
-public class Web3AuthCustom : Singleton<Web3AuthCustom>
+public class Web3AuthCustom : MonoBehaviour
 {
   
     [Header("Web3Auth Project settings")]
@@ -36,7 +37,23 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     internal string msg1 ,msg2,currentLan;
     public List<Button> myButtons;
     public float cooldownTime;
+    public static Web3AuthCustom Instance;
+    public Action<string> onLoginAction;
+   
 
+    private void Awake()
+    {
+        Instance = this;
+        //if(Instance==null)
+        //{
+        //    Instance = this;
+        //    DontDestroyOnLoad(this);
+        //}
+        //else
+        //{
+        //    Destroy(this.gameObject);
+        //}
+    }
 
     private void Start()
     {
@@ -69,8 +86,6 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             loginSubVerifierEmail = "ppp-passwordless-login";
             loginSubVerifierGoole= "ppp-google-login";
             loginSubVerifierApple = "ppp-apple-login";
-           // loginSubVerifierLine = "ppp-line-login";
-            //...
             clientIdEmail = "kV31v4CokK8xEHgNcHki1nAVDCh3Friu";
             clientIdGoole = "792163717588-h9t0is3ng39opqmt1meflma087ov18k3.apps.googleusercontent.com";
             clientIdApple = "QRQW2fY3167OZTzreWBqHTBQU7gGXUD0";
@@ -103,15 +118,6 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             typeOfLogin = TypeOfLogin.APPLE,
         };
 
-        //var LineConfigItem = new LoginConfigItem()
-        //{
-        //    verifier = loginVerifier,
-        //    verifierSubIdentifier = loginSubVerifierLine,
-        //    clientId = clientIdLine,
-        //    typeOfLogin = TypeOfLogin.LINE,
-        //};
-
-
         web3Auth.setOptions(new Web3AuthOptions()
         {
             clientId = ClientId,
@@ -128,7 +134,6 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
                  { "google", GoogleConfig },
                 { "jwt", EmailPasswordlessConfigItem },
                 { "apple", AppleConfigItem },
-               // { "line" , LineConfigItem }
             }
         });
         web3Auth.onLogin += onLogin;
@@ -139,6 +144,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
 
     public void PasswordLessEmailLogin(bool isnewreg)
     {
+        WebViewManager.Instance.WebViewBool = true;
         var selectedProvider = Provider.JWT;
         isNewReg = isnewreg;
         var options = new LoginParams()
@@ -154,6 +160,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
                 ui_locales=currentLan,
                 prompt = Prompt.LOGIN,
             }
+
         };
         foreach (Button button in myButtons)
         {
@@ -167,6 +174,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     
     public void GoogleLogin(bool isnewreg)
     {
+        WebViewManager.Instance.WebViewBool = false;
         var selectedProvider = Provider.GOOGLE;
         isNewReg = isnewreg;
 
@@ -188,6 +196,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
 
     public void AppleLogin(bool isnewreg)
     {
+        WebViewManager.Instance.WebViewBool = false;
         var selectedProvider = Provider.APPLE;
         isNewReg = isnewreg;
         var options = new LoginParams()
@@ -212,33 +221,39 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         web3Auth.login(options);
     }
 
-    //public void LineLogin(bool isnewreg)
-    //{
-    //    var selectedProvider = Provider.LINE;
-    //    isNewReg = isnewreg;
-    //    var options = new LoginParams()
-    //    {
-    //        loginProvider = selectedProvider,
-    //        extraLoginOptions = new ExtraLoginOptions()
-    //        {
-    //            domain = domainsLine,
-    //            verifierIdField = "email",
-    //            isVerifierIdCaseSensitive = false,
-    //            connection = "line",
-    //           prompt = Prompt.LOGIN,
-    //        }
-    //    };
-
-
-    //    web3Auth.login(options);
-    //}
-
     private void onLogin(Web3AuthResponse response)
     {
-       
+#if UNITY_IOS
+
+        if (PlayerPrefs.GetInt("PlayerLoginFlag") == 1)
+            PlayerPrefs.SetInt("FirstTimeappOpen", 1);
+
+        if (PlayerPrefs.GetInt("PlayerLoginFlag") == 0)
+            return;
+
+#endif
+        GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
+        //UserLoginSignupManager.instance.StartCoroutine(UserLoginSignupManager.instance.LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
+        ConstantsHolder.xanaConstants.LoggedInAsGuest = false;
         Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
-        userInfo = response.userInfo;
+
+        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly && !ConstantsHolder.xanaConstants.isBackFromWorld)
+        {
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+            }
+        }
+
+
+            userInfo = response.userInfo;
         privateKey = response.privKey;
+        PlayerPrefs.SetString("LoggedInMail", response.userInfo.email);
+        onLoginAction?.Invoke(userInfo.email);
         publicAdress = EthECKey.GetPublicAddress(privateKey);
         GetSignature();
         updateConsole(JsonConvert.SerializeObject(response, Formatting.Indented));
@@ -246,7 +261,6 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         Web3AuthSociallogin type = Web3AuthSociallogin.None;
         try
         {
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
             if (isNewReg)
             {
                 type = Web3AuthSociallogin.NewRegistration;
@@ -265,6 +279,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
 
                 case Web3AuthSociallogin.Login:
                     UserLoginSignupManager.instance.emailOrWalletLoginPanel.SetActive(false);
+                    UserLoginSignupManager.instance.signUpPanel.SetActive(false);
                     ConnectWallet.instance.StartCoroutine(ConnectWallet.instance.SaveChainSafeNonce(mysignature1, publicAdress, msg1));
 
                     break;
@@ -272,6 +287,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
 
                 case Web3AuthSociallogin.NewRegistration:
                     UserLoginSignupManager.instance.signUpPanel.SetActive(false);
+                    UserLoginSignupManager.instance.emailOrWalletLoginPanel.SetActive(false);
                     ConnectWallet.instance.StartCoroutine(ConnectWallet.instance.SaveChainSafeNonce(mysignature1, publicAdress, msg1));
 
                     break;
@@ -283,7 +299,15 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         }
         catch (Exception ex)
         {
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+            }
+            UserLoginSignupManager.instance.emailOrWalletLoginPanel.SetActive(true);
 
         }
 

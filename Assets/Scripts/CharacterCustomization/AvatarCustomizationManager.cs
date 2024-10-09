@@ -70,14 +70,22 @@ public class AvatarCustomizationManager : MonoBehaviour
 
     public void RotateAvatar()
     {
+        //m_MainCharacter = GameManager.Instance.mainCharacter;
         if (AvatarCustomizationUIHandler.Instance.headCamera.activeSelf)
             m_CharacterRotationSpeed = 1.3f;
         else
             m_CharacterRotationSpeed = 2.5f;
+
         if (m_MainCharacter.activeInHierarchy)
         {
             m_MainCharacter.transform.rotation *= Quaternion.Euler(Vector3.up * -Input.GetAxis("Mouse X") * m_CharacterRotationSpeed);
         }
+        else
+        {
+            // Update Reference
+            m_MainCharacter = GameManager.Instance.mainCharacter;
+        }
+       
         //if (Input.GetMouseButton(0))
         //{
             //if (Input.mousePosition.y > Screen.height / 2 && Input.mousePosition.y < Screen.height - (Screen.height / 12) && GetMousePositionForAvatar() && Input.mousePosition.x > Screen.width / 2 && Input.mousePosition.x < Screen.width - (Screen.width / 2) && GetMousePositionForAvatar())

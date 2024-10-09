@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UIElements;
 using System.Linq;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
@@ -16,7 +15,8 @@ public class PostScreenInput : MonoBehaviour
    [SerializeField] Color placeHolderColor = new Vector4();
    [SerializeField] Color normalColor = new Vector4();
    [SerializeField]  ContentSizeFitter BubbleContentSizeFitter;
-   int maxWidth = 270;
+   [SerializeField] TMP_Text ButtonTextRefrence;
+    int maxWidth = 270;
     int maxHeight = 125;
     float characterOffset = 5.0f;
 
@@ -52,6 +52,7 @@ public class PostScreenInput : MonoBehaviour
         ActiveInputFeild();
         StartCoroutine(SetBubblePos());
         bubbleHeightCheck = false;
+        bubbleImage.GetComponent<Image>().pixelsPerUnitMultiplier = 0.81f;
     }
 
     private void Start(){ 
@@ -67,11 +68,17 @@ public class PostScreenInput : MonoBehaviour
             {
                 GameManager.Instance.userAnimationPostFeature.postButton.interactable = true;
                 GameManager.Instance.userAnimationPostFeature.postButtonText.color=Color.white;
+                ButtonTextRefrence.characterSpacing = 7.5f;
+                ButtonTextRefrence.outlineWidth = 0.18f;
+                ButtonTextRefrence.outlineColor = Color.white;
+                
+                
             }
             ShowText.text = inputField.text;
             ShowText.color = normalColor;
 
             // Check if the text contains an Emoji
+
             if (ContainsEmoji(ShowText.text))
             {
                 ShowText.lineSpacing = 1.0f;
@@ -89,6 +96,9 @@ public class PostScreenInput : MonoBehaviour
             {
                 GameManager.Instance.userAnimationPostFeature.postButton.interactable = false;
                 GameManager.Instance.userAnimationPostFeature.postButtonText.color = placeHolderColor;
+                ButtonTextRefrence.characterSpacing = 4f;
+                ButtonTextRefrence.outlineWidth = 0f;
+               
             }
             ShowText.text = placeHolderText;
             ShowText.color = placeHolderColor;
@@ -128,6 +138,11 @@ public class PostScreenInput : MonoBehaviour
         {
             bubbleParent.anchorMin = new Vector2(0.1080481f, 0.6324353f);
             bubbleParent.anchorMax = new Vector2(0.8262953f, 0.8127741f);
+            bubbleImage.GetComponent<Image>().pixelsPerUnitMultiplier = 0.81f;
+        }
+        if (ShowText.text.Count() > 35)
+        {
+            bubbleImage.GetComponent<Image>().pixelsPerUnitMultiplier = 0.6f;
         }
         if (ShowText.text.Count() >= 70)
         {

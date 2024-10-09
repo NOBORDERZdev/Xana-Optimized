@@ -1,17 +1,17 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using Photon.Voice.PUN;
 using Photon.Voice.Unity;
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.XR.WSA;
-
-public class XanaVoiceChat : MonoBehaviour
+#if UNITY_IOS
+using UnityEngine.iOS;
+#endif
+public class XanaVoiceChat : MonoBehaviourPunCallbacks
 {
     [Header("UI Elements")]
     public GameObject micOnBtn;
@@ -21,7 +21,7 @@ public class XanaVoiceChat : MonoBehaviour
     public Sprite micOnSprite;
     public Sprite micOffSprite;
 
-    private VoiceConnection voiceConnection;
+    private PunVoiceClient _punVoiceClient;
     public Recorder recorder;
     public Speaker speaker;
 
@@ -39,20 +39,8 @@ public class XanaVoiceChat : MonoBehaviour
     public string MicroPhoneDevice;
     public int index;
 
-
     public void Awake()
     {
-        // Commented by WaqasAhmad
-        //if (instance)
-        //{
-        //    instance.Start();
-        //    DestroyImmediate(this.gameObject);
-        //}
-        //else
-        //{
-        //    instance = this;
-        //}
-
         if (instance == null)
         {
             instance = this;
@@ -60,108 +48,156 @@ public class XanaVoiceChat : MonoBehaviour
     }
     private void OnEnable()
     {
+        BuilderEventManager.AfterPlayerInstantiated += CheckMicPermission;
         // Added by Waqas Ahmad
         if (instance != this && instance.recorder != null)
         {
+            //if (instance.recorder.TransmitEnabled)
+            //{
+            //    Invoke("TurnOnMic", 0.25f);
 
-            if (instance.recorder.TransmitEnabled)
+            //}
+            //else
+            //{
+            //    Invoke("TurnOffMic", 0.25f);
+
+            //}
+
+            instance = this;
+            if (Permission.HasUserAuthorizedPermission(Permission.Microphone))
             {
-                Invoke("TurnOnMic", 0.25f);
+                StartCoroutine(instance.SetMic());
+            }
+        }
+    }
+    private void OnDisable()
+    {
+        BuilderEventManager.AfterPlayerInstantiated -= CheckMicPermission;
+        if (_punVoiceClient != null)
+            _punVoiceClient.Client.StateChanged -= VoiceClientStateChanged;
+    }
 
+    private void CheckMicPermission()
+    {
+        if (!ScreenOrientationManager._instance.isPotrait)
+        {
+            // There is two instance of this script
+            // one used for Landscape & one for Portrait
+            // Already Called For Landscape no need to call again.
+            if (Application.isEditor)
+            {
+                SetMicByBtn();
+                //PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
+                //PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
+                //PermissionPopusSystem.Instance.OpenPermissionScreen();
             }
             else
             {
-                Invoke("TurnOffMic", 0.25f);
-
+#if UNITY_ANDROID
+                if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+                {
+                    PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
+                    PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
+                    PermissionPopusSystem.Instance.OpenPermissionScreen();
+                }
+                else
+                {
+                    StartCoroutine(SetMic());
+                }
+#elif UNITY_IOS
+                if(!Application.HasUserAuthorization(UserAuthorization.Microphone) && PlayerPrefs.GetInt("MicPermission", 0) == 0){
+                      PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
+                    PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
+                    PermissionPopusSystem.Instance.OpenPermissionScreen();
+                }
+                else
+                {
+                    StartCoroutine(SetMic());
+                }
+#endif
             }
-
-            instance = this;
-            instance.Start();
         }
-
-        //if (ConstantsHolder.xanaConstants.mic == 1)
-        //{
-        //    TurnOnMic();
-        //}
-        //else
-        //{
-        //    TurnOffMic();
-        //}
-        //voiceConnection.SpeakerLinked += OnSpeakerCreated;
-        //voiceConnection.Client.AddCallbackTarget(this);
     }
 
-
-    private void Start()
+    public void SetMicByBtn()
     {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            return;
+        }
+        PermissionPopusSystem.Instance.onCloseAction -= SetMicByBtn;
+#if UNITY_IOS
+    Application.RequestUserAuthorization(UserAuthorization.Microphone);
+#endif
+        if (this != null)
+        {
+            StartCoroutine(SetMic());
+        }
+        else
+        {
+            Debug.LogWarning("XanaVoiceChat instance has been destroyed, cannot start SetMic coroutine.");
+        }
+    }
+
+    private IEnumerator SetMic()
+    {
+#if UNITY_IOS
+        PlayerPrefs.SetInt("MicPermission", 1);
+#endif
+
+        //Adding delay because of loading screen stuck issue in rotation by getting permission popup. // Sohaib
+        yield return new WaitForSeconds(2f);
+
         Debug.Log("Xana VoiceChat Start");
         recorder = GameObject.FindObjectOfType<Recorder>();
-        voiceConnection = GetComponent<VoiceConnection>();
-
-        //InvokeRepeating(nameof(MicroPhoneName), 2f, 2f);
+        _punVoiceClient = recorder.GetComponent<PunVoiceClient>();
+        _punVoiceClient.Client.StateChanged += this.VoiceClientStateChanged;
 
         if (!ScreenOrientationManager._instance.isPotrait)
         {
             // There is two instance of this script
             // one used for Landscape & one for Portrait
             // Already Called For Landscape no need to call again.
-
             if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
             {
                 Permission.RequestUserPermission(Permission.Microphone);
             }
         }
-        //Debug.Log("Environment name: " + FeedEventPrefab.m_EnvName + "   " + FeedEventPrefab.m_EnvName.Contains("Xana Festival") + "   " + FeedEventPrefab.m_EnvName.Equals("Xana Festival"));
-        if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("BreakingDown Arena"))
+        while (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
         {
-            StopRecorder();
-            Debug.Log("Its an Event Scene");
+            yield return new WaitForSeconds(1f);
+        }
+
+        if (recorder != null)
+        {
             TurnOffMic();
             ConstantsHolder.xanaConstants.mic = 0;
         }
+
+        if (ConstantsHolder.xanaConstants.pushToTalk)
+        {
+            micOffBtn.AddComponent<PushToTalk>();
+            micOffBtnPotrait.AddComponent<PushToTalk>();
+            TurnOffMic();
+        }
         else
         {
-            //#if UNITY_ANDROID
-            if (recorder != null)
-            {
-                recorder.AutoStart = true;
-                recorder.Init(voiceConnection);
-            }
-            //#endif
             MicToggleOff = TurnOnMic;
             MicToggleOn = TurnOffMic;
 
-            Debug.Log("its not an event");
-
-            //micOffBtn = GameObject.Find("MicOffToggle");
-            //micOnBtn = GameObject.Find("MicToggle");
             micOffBtn.GetComponent<Button>().onClick.AddListener(MicToggleOff);
             micOffBtnPotrait.GetComponent<Button>().onClick.AddListener(MicToggleOff);
             micOnBtn.GetComponent<Button>().onClick.AddListener(MicToggleOn);
             micOnBtnPotrait.GetComponent<Button>().onClick.AddListener(MicToggleOn);
-            if (ConstantsHolder.xanaConstants.EnviornmentName == "DJ Event")
-            {
-                micOffBtn.SetActive(false);
-                micOffBtnPotrait.SetActive(false);
-                micOnBtn.SetActive(false);
-                micOnBtnPotrait.SetActive(false);
-                ConstantsHolder.xanaConstants.mic = 0;
-            }
-            StartCoroutine(CheckVoiceConnect());
+
         }
+
     }
 
-    public void MicroPhoneName()
-    {
-        for (int i = 0; i < Microphone.devices.Length; i++)
-        {
-            Debug.Log(i + " Microphone " + Microphone.devices[i]);
-        }
-        Debug.Log("MicroPhoneDevice" + MicroPhoneDevice);
-        Debug.Log("Recorder MicroPhone Name" + recorder.MicrophoneDevice.Name);
-    }
     public void TurnOnMic()
     {
+        if (ConstantsHolder.xanaConstants.mic == 0) // to confrim is correct value or not 
+            ConstantsHolder.xanaConstants.mic = PlayerPrefs.GetInt("micSound");
 
         if (ConstantsHolder.xanaConstants.mic == 0)
         {
@@ -169,69 +205,76 @@ public class XanaVoiceChat : MonoBehaviour
             Destroy(go, 1.5f);
             return;
         }
-
-        print("Turn on mic");
         micOffBtn.SetActive(false);
         micOffBtnPotrait.SetActive(false);
         micOnBtn.SetActive(true);
         micOnBtnPotrait.SetActive(true);
         if (recorder != null)
-            recorder.TransmitEnabled = true;
-
-
-    }
-
-    public void StopRecorder()
-    {
-        Debug.Log("StopRecorder");
-        if (recorder != null)
         {
-            recorder.AutoStart = recorder.TransmitEnabled = false;
-            recorder.StopRecording();
-            recorder.Init(voiceConnection);
+            recorder.TransmitEnabled = true;
+            recorder.RecordingEnabled = true;
+            // recorder.enabled = true;
+
         }
+        //_punVoiceClient.enabled = true;
+        //if (_punVoiceClient.ClientState == Photon.Realtime.ClientState.PeerCreated
+        //             || _punVoiceClient.ClientState == Photon.Realtime.ClientState.Disconnected)
+        //{
+        //    _punVoiceClient.ConnectAndJoinRoom();
+        //}
+
+        VoiceClientStateChanged(ClientState.Joining, ClientState.Joined); // manually calling this method to force audio to speaker
     }
 
     public void TurnOffMic()
     {
-        print("Turn off mic");
         micOffBtn.SetActive(true);
         micOffBtnPotrait.SetActive(true);
         micOnBtn.SetActive(false);
         micOnBtnPotrait.SetActive(false);
-        if(recorder != null)
-        recorder.TransmitEnabled = false;
-    }
-
-
-
-    public void UpdateMicButton()
-    {
-        StartCoroutine(CheckVoiceConnect());
-    }
-
-    private void OnDisable()
-    {
-        //voiceConnection.SpeakerLinked -= OnSpeakerCreated;
-        //voiceConnection.Client.RemoveCallbackTarget(this);
-    }
-
-    protected virtual void OnSpeakerCreated(Speaker _speaker)
-    {
-        Debug.Log("Speaker is Created");
-        speaker = _speaker;
-    }
-
-    IEnumerator CheckVoiceConnect()
-    {
-        while (!PhotonVoiceNetwork.Instance.Client.IsConnected)
+        if (recorder != null)
         {
-            //Debug.Log("Still Connecting");
-            yield return null;
+            recorder.TransmitEnabled = false;
+            recorder.RecordingEnabled = false;
         }
-        //recorder.TransmitEnabled = true;
-        recorder.DebugEchoMode = false;
-        if (ConstantsHolder.xanaConstants.mic == 1)
+        //if (_punVoiceClient.ClientState == Photon.Realtime.ClientState.Joined)
+        //{
+        //    _punVoiceClient.Disconnect();
+        //}
+        // _punVoiceClient.enabled = false;
+        //  recorder.enabled = false;
+    }
+
+    //Overriding methods for push to talk 
+    public async void PushToTalk(bool canTalk)
+    {
+        if (canTalk)
+        {
+            micOffBtn.transform.GetChild(0).gameObject.SetActive(false);
+            micOffBtnPotrait.transform.GetChild(0).gameObject.SetActive(false);
+            if (recorder != null)
+                recorder.TransmitEnabled = true;
+
+        }
+        else
+        {
+            micOffBtn.transform.GetChild(0).gameObject.SetActive(true);
+            micOffBtnPotrait.transform.GetChild(0).gameObject.SetActive(true);
+            while (recorder.IsCurrentlyTransmitting)
+            {
+                await Task.Delay(1000);
+            }
+            if (recorder != null)
+                recorder.TransmitEnabled = false;
+
+        }
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+
+        base.OnDisconnected(cause);
+        if (ConstantsHolder.xanaConstants.mic == 1 && !ConstantsHolder.xanaConstants.pushToTalk)
         {
             TurnOnMic();
         }
@@ -239,59 +282,25 @@ public class XanaVoiceChat : MonoBehaviour
         {
             TurnOffMic();
         }
-        //GetLocalSpeaker();
-        //ToggleVoiceChat(false);
     }
 
-    void GetLocalSpeaker()
+    public override void OnConnected()
     {
-        Debug.Log("Checking if local speaker ready");
-        StartCoroutine(WaitAndSearchForLocalSpeaker());
-    }
-
-    IEnumerator WaitAndSearchForLocalSpeaker()
-    {
-        Speaker[] _speaker = FindObjectsOfType<Speaker>(); ;
-
-        while (speaker == null)
-        {
-            //  Debug.Log("Get Local Speaker: " + _speaker.Length);
-
-            yield return null;
-
-            //if (voiceConnection.speak.Count != 0)
-            //    speaker = voiceConnection.linkedSpeakers[0];
+        base.OnConnected();
+#if UNITY_IOS
+        if ((Device.generation.ToString()).IndexOf("iPhone") > -1)//for iphones only
+        { 
+            iPhoneSpeaker.ForceToSpeaker();
         }
-
-        ToggleVoiceChat(false);
-    }
-
-    public void ToggleMic(bool _useMic)
-    {
-        //if (_useMic && !canTalk)
-        //{
-        //    ShowVoiceChatDialogBox();
-        //    return;
-        //}
-
-        //useMic = _useMic;
-
-        //if (useMic)
-        //{
-
-
-        //    micOnBtn.SetActive(true);
-        //    micOffBtn.SetActive(false);
-
-        //    recorder.TransmitEnabled = true;
-        //}
-        //else
-        //{
-        //    micOnBtn.SetActive(false);
-        //    micOffBtn.SetActive(true);
-
-        //    recorder.TransmitEnabled = false;
-        //}
+#endif
+        if (ConstantsHolder.xanaConstants.mic == 1 && !ConstantsHolder.xanaConstants.pushToTalk)
+        {
+            TurnOnMic();
+        }
+        else
+        {
+            TurnOffMic();
+        }
     }
 
     void ShowVoiceChatDialogBox()
@@ -312,36 +321,23 @@ public class XanaVoiceChat : MonoBehaviour
 #endif
     }
 
-    public void ToggleVoiceChat(bool _canTalk)
+    private async void VoiceClientStateChanged(ClientState fromState, ClientState toState)
     {
-        canTalk = _canTalk;
-
-        if (!canTalk)
+        // print("!! fromState" + fromState);
+        // print("!! toState" + toState);
+        if (fromState == ClientState.Joining && toState == ClientState.Joined)
         {
-            Debug.Log("Speaker: " + speaker);
-
-            if (speaker != null)
-            {
-                speaker.GetComponent<AudioSource>().mute = true;
-
-            }
-            if (recorder != null)
-            {
-                ToggleMic(false);
-            }
+            //   print("!!!!!!!!  FROCE CALL");
+            await Task.Delay(2000);
+            // Handle state changes if needed
+#if UNITY_IOS
+        if ((Device.generation.ToString()).IndexOf("iPhone") > -1)
+        {
+            // For iPhones only
+            Debug.Log("Forcing audio to speaker...");
+            iPhoneSpeaker.ForceToSpeaker();
         }
-        else
-        {
-            if (speaker != null)
-            {
-                speaker.GetComponent<AudioSource>().mute = false;
-            }
-            if (recorder != null)
-            {
-                //ToggleMic(true);
-            }
+#endif
         }
     }
-
-
 }

@@ -42,6 +42,7 @@ public class ProfilePictureManager : MonoBehaviour
     public IEnumerator IEMakeProfilePicture(string userName)
     {
         //Debug.LogError("IEMakeProfilePicture: " + userName);
+        createProfileObject.SetActive(true);
         profileBGImg.color = profileBGColors[UnityEngine.Random.Range(0, profileBGColors.Length)];
         userName = userName.Replace(" ", "");
 
@@ -104,6 +105,7 @@ public class ProfilePictureManager : MonoBehaviour
             if (MyProfileDataManager.Instance)
                 MyProfileDataManager.Instance.profileImage.sprite = profileImage.sprite;
         }
+        createProfileObject.SetActive(false);
     }
     public UploadFileRoot uploadFileRoot=new UploadFileRoot();
     public void UploadProfile(UploadFileRoot uploadFile)

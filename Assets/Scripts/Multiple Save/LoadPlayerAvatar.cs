@@ -129,6 +129,7 @@ public class LoadPlayerAvatar : ServerSideUserDataHandler
     public void CloseAvatarPanel()
     {
         mainPanel.SetActive(false);
+        callAPIOneMoreTime = true;
     }
 
     public void OpenPlayerNamePanel()
@@ -182,7 +183,7 @@ public class LoadPlayerAvatar : ServerSideUserDataHandler
         clickObject.transform.GetChild(1).gameObject.SetActive(true);
     }
 
-
+    bool callAPIOneMoreTime = true;
 
     IEnumerator GetAvatarData_Server(int pageNo, int noOfRecords)   // check if  data Exist
     {
@@ -195,7 +196,7 @@ public class LoadPlayerAvatar : ServerSideUserDataHandler
         {
             yield return null;
         }
-        //Debug.Log("Get all Avatar :- " + www.downloadHandler.text);
+        Debug.Log("Get all Avatar :- " + www.downloadHandler.text);
         string str = www.downloadHandler.text;
         Root getdata = new Root();
         getdata = JsonUtility.FromJson<Root>(str);
@@ -214,51 +215,63 @@ public class LoadPlayerAvatar : ServerSideUserDataHandler
                 }
                 else
                 {
-                    // write latest json data to file
-                    for (int c = 0; c < getdata.data.rows.Count; c++)
+                    if(getdata.data.rows.Count > 0)
                     {
-                        //Debug.Log(getdata.data.rows[c].id.ToString()+"-------"+ getdata.data.rows[c].thumbnail);
-                        if (!string.IsNullOrEmpty(getdata.data.rows[c].id.ToString()) && !string.IsNullOrEmpty(getdata.data.rows[c].thumbnail))
+                        // write latest json data to file
+                        for (int c = 0; c < getdata.data.rows.Count; c++)
                         {
-                            GameObject avatarInstance = Instantiate(avatarPrefab);
-                            avatarInstance.transform.SetParent(contentParent.transform);
-                            avatarInstance.transform.localPosition = Vector3.zero;
-                            avatarInstance.transform.localScale = Vector3.one;
-                            avatarInstance.transform.localRotation = Quaternion.identity;
-
-                            if (pageNo == 1 && noOfRecords == 1)
+                            //Debug.Log(getdata.data.rows[c].id.ToString()+"-------"+ getdata.data.rows[c].thumbnail);
+                            if (!string.IsNullOrEmpty(getdata.data.rows[c].id.ToString()) && !string.IsNullOrEmpty(getdata.data.rows[c].thumbnail))
                             {
-                                avatarInstance.transform.SetAsFirstSibling();
-                                avatarId = getdata.data.rows[c].id.ToString();
+                                GameObject avatarInstance = Instantiate(avatarPrefab);
+                                avatarInstance.transform.SetParent(contentParent.transform);
+                                avatarInstance.transform.localPosition = Vector3.zero;
+                                avatarInstance.transform.localScale = Vector3.one;
+                                avatarInstance.transform.localRotation = Quaternion.identity;
+
+                                if (pageNo == 1 && noOfRecords == 1)
+                                {
+                                    avatarInstance.transform.SetAsFirstSibling();
+                                    avatarId = getdata.data.rows[c].id.ToString();
+                                }
+
+                                avatarInstance.GetComponent<SavedPlayerDataJson>().id = getdata.data.rows[c].id.ToString();
+                                avatarInstance.GetComponent<SavedPlayerDataJson>().name = getdata.data.rows[c].name;
+                                avatarInstance.GetComponent<SavedPlayerDataJson>().playerName.text = getdata.data.rows[c].name;
+                                avatarInstance.GetComponent<SavedPlayerDataJson>().avatarJson = JsonUtility.ToJson(getdata.data.rows[c].json, true);
+                                string thumbnailLink = getdata.data.rows[c].thumbnail;
+                                avatarInstance.GetComponent<SavedPlayerDataJson>().avatarThumbnailLink = thumbnailLink;
+
+                                GameObject imageObject = avatarInstance.GetComponent<SavedPlayerDataJson>().ImageObject;
+                                GameObject loader = avatarInstance.GetComponent<SavedPlayerDataJson>().ImageDownloadingLoader;
+                                loader.SetActive(true);
+                                if (!string.IsNullOrEmpty(thumbnailLink) && thumbnailLink.Contains("http"))
+                                    StartCoroutine(DownloadThumbnail(thumbnailLink, imageObject, loader));
+
+                                avatarInstance.GetComponent<Button>().onClick.AddListener(() => HighLightSelected(avatarInstance));
+                                if (pageNo == 1 && noOfRecords == 1)
+                                {
+                                    HighLightSelected(avatarInstance);
+                                }
+                                avatarInstance.gameObject.name = getdata.data.rows[c].id.ToString();
                             }
+                        }
 
-                            avatarInstance.GetComponent<SavedPlayerDataJson>().id = getdata.data.rows[c].id.ToString();
-                            avatarInstance.GetComponent<SavedPlayerDataJson>().name = getdata.data.rows[c].name;
-                            avatarInstance.GetComponent<SavedPlayerDataJson>().playerName.text = getdata.data.rows[c].name;
-                            avatarInstance.GetComponent<SavedPlayerDataJson>().avatarJson = JsonUtility.ToJson(getdata.data.rows[c].json, true);
-                            string thumbnailLink = getdata.data.rows[c].thumbnail;
-                            avatarInstance.GetComponent<SavedPlayerDataJson>().avatarThumbnailLink = thumbnailLink;
-
-                            GameObject imageObject = avatarInstance.GetComponent<SavedPlayerDataJson>().ImageObject;
-                            GameObject loader = avatarInstance.GetComponent<SavedPlayerDataJson>().ImageDownloadingLoader;
-                            loader.SetActive(true);
-                            if (!string.IsNullOrEmpty(thumbnailLink) && thumbnailLink.Contains("http"))
-                                StartCoroutine(DownloadThumbnail(thumbnailLink, imageObject, loader));
-
-                            avatarInstance.GetComponent<Button>().onClick.AddListener(() => HighLightSelected(avatarInstance));
-                            if (pageNo == 1 && noOfRecords == 1)
-                            {
-                                HighLightSelected(avatarInstance);
-                            }
-                            avatarInstance.gameObject.name = getdata.data.rows[c].id.ToString();
+                        //File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(getdata.data.rows[0].json));
+                        yield return new WaitForSeconds(0.1f);
+                        currentpageNum++;
+                        loadNewPage = true;
+                    }else
+                    {
+                        if (callAPIOneMoreTime)
+                        {
+                            callAPIOneMoreTime = false;
+                            loadNewPage = true;
+                            currentpageNum = 1; pageSize = 50;
+                            print("Waqas Here And API is called");
                         }
                     }
-
-
-                    //File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(getdata.data.rows[0].json));
-                    yield return new WaitForSeconds(0.1f);
-                    currentpageNum++;
-                    loadNewPage = true;
+                    
                     yield return StartCoroutine(offLoader());
                     www.Dispose();
                     NewAvatarBtn.transform.SetSiblingIndex(0);// to set new avatar button always on top
@@ -513,6 +526,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
                     {
                         if (!string.IsNullOrEmpty(currentlink))   // if link is empty thn dont call it
                         {
+                            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().WearDefaultItem(_CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.gameObject, _CharacterData.gender);
                             //  Debug.Log("Downloading --- " + _CharacterData.myItemObj[i].ItemLink + " Link " + _CharacterData.myItemObj[i].ItemType);
                             string _temptype = _CharacterData.myItemObj[i].Slug;
 
@@ -522,7 +536,8 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
                             itemobj.assetLinkIos = _CharacterData.myItemObj[i].ItemLinkIOS;
                             itemobj.assetLinkAndroid = _CharacterData.myItemObj[i].ItemLinkAndroid;
 
-                            if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
+                            if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase) &&
+                                !_CharacterData.myItemObj[i].ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
                             {
                                 StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType, _CharacterData.gender != null ? _CharacterData.gender : "Male", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), Color.clear));
                             }
@@ -626,11 +641,12 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
 
     }
 
-    bool loadNewPage = true;
+    public bool loadNewPage = true;
     public void CheckForPagination()
     {
         if (loadNewPage && avatarScrollRect.verticalNormalizedPosition < -0f)
         {
+            Debug.Log("Load New Page....." +loadNewPage);
             loadNewPage = false;
             StartCoroutine(GetAvatarData_Server(currentpageNum, pageSize));
         }

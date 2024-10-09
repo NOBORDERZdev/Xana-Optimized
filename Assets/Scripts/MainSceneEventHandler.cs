@@ -7,4 +7,15 @@ public static class MainSceneEventHandler
     public static Action OpenPresetPanel;
     //Events 
     public static Action OnSucessFullLogin;
+
+    public static Action OnBackRefAssign;
+
+    //when back from Gameplay scene this action release unused memory after loading all scenes
+    public static Action MemoryRelaseAfterLoading;
+
+    public static Action BackHomeSucessfully;
+
+    public static Action MakeScreenSpaceAdditive;
+
+    public static Action OpenLandingScene;
 }

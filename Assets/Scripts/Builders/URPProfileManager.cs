@@ -7,19 +7,19 @@ public class URPProfileManager : MonoBehaviour
     public RenderPipelineAsset builderProfile;
 
 
-    private void Start()
-    {
-        if(ConstantsHolder.xanaConstants.isBuilderScene)
-        {
-            if (QualitySettings.renderPipeline != builderProfile)
-                ApplyBuilderSetting();
-        }
-        else
-        {
-            if (QualitySettings.renderPipeline != xanaProfile)
-                ApplyXanaSetting();
-        }
-    }
+    //private void Start()
+    //{
+    //    if(ConstantsHolder.xanaConstants.isBuilderScene)
+    //    {
+    //        if (QualitySettings.renderPipeline != builderProfile)
+    //            ApplyBuilderSetting();
+    //    }
+    //    else
+    //    {
+    //        if (QualitySettings.renderPipeline != xanaProfile)
+    //            ApplyXanaSetting();
+    //    }
+    //}
 
     public void ApplyXanaSetting()
     {

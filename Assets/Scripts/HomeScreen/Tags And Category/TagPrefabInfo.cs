@@ -1,16 +1,17 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class TagPrefabInfo : MonoBehaviour
 {
-
+    [SerializeField]
+    private Color _selectedColor;
     public TextMeshProUGUI tagName;
     public TextMeshProUGUI tagNameHighlighter;
     public GameObject hightLighter;
     [HideInInspector]
     public GameObject descriptionPanel;
-
     public void ClickOnTag()
     {
         SearchWorldUIController.OpenSearchPanel?.Invoke(tagName.text);
@@ -25,7 +26,7 @@ public class TagPrefabInfo : MonoBehaviour
         isSelected = !isSelected;   
         if (isSelected)
         {
-            GetComponent<UnityEngine.UI.Image>().color = new Color(0.15f, 0.15f, 0.15f, 1);// Color.black;
+            GetComponent<Image>().color = _selectedColor;
             tagName.color = Color.white;
 
             if(!MyProfileDataManager.Instance.userSelectedTags.Contains(tagName.text))
@@ -33,7 +34,7 @@ public class TagPrefabInfo : MonoBehaviour
         }
         else
         {
-            GetComponent<UnityEngine.UI.Image>().color = Color.white;
+            GetComponent<Image>().color = Color.white;
             tagName.color = Color.black; 
 
             if (MyProfileDataManager.Instance.userSelectedTags.Contains(tagName.text))

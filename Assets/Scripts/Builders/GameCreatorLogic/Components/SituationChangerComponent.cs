@@ -22,6 +22,8 @@ public class SituationChangerComponent : ItemComponent
     bool running = false;
     private float againTouchDealy = .5f;
 
+    bool _collideWithComponent;
+
     private void OnEnable()
     {
         BuilderEventManager.DisableSituationLight += ResetSituation;
@@ -60,22 +62,22 @@ public class SituationChangerComponent : ItemComponent
 
             IsAgainTouchable = false;
 
-            if (GamificationComponentData.instance.withMultiplayer)
-            {
-                if (!situationChangerComponentData.isOff && !isRuninig)
-                {
-                    UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
-                    utccounterValue.UTCTime = DateTime.UtcNow.ToString();
-                    utccounterValue.CounterValue = defaultTimer;
-                    BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(0);
-                    var hash = new ExitGames.Client.Photon.Hashtable();
-                    hash["situationChangerComponent"] = JsonUtility.ToJson(utccounterValue);
-                    PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
-                }
-                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
-            }
-            else
-                PlayBehaviour();
+            //if (GamificationComponentData.instance.withMultiplayer)
+            //{
+            //    if (!situationChangerComponentData.isOff && !isRuninig)
+            //    {
+            //        UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
+            //        utccounterValue.UTCTime = DateTime.UtcNow.ToString();
+            //        utccounterValue.CounterValue = defaultTimer;
+            //        BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(0);
+            //        var hash = new ExitGames.Client.Photon.Hashtable();
+            //        hash["situationChangerComponent"] = JsonUtility.ToJson(utccounterValue);
+            //        PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+            //    }
+            //    GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
+            //}
+            //else
+            PlayBehaviour();
         }
     }
 
@@ -101,6 +103,11 @@ public class SituationChangerComponent : ItemComponent
     #region BehaviourControl
     private void StartComponent()
     {
+
+        if (_collideWithComponent)
+            return;
+        _collideWithComponent = true;
+        Invoke(nameof(CollideWithComponet), 0.5f);
         GetLightData();
         if (!isRuninig)
         {
@@ -112,26 +119,26 @@ public class SituationChangerComponent : ItemComponent
         {
             ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
         }
-        else
-        {
-            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("situationChangerComponent", out object situationChangerComponent) && !situationChangerComponentData.isOff)
-            {
-                UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
-                utccounterValue = JsonUtility.FromJson<UTCTimeCounterValue>(situationChangerComponent.ToString());
-                DateTime dateTimeRPC = DateTime.Parse(utccounterValue.UTCTime);
-                DateTime currentDateTime = DateTime.UtcNow;
-                TimeSpan diff = currentDateTime - dateTimeRPC;
-                timeDiff = (diff.Minutes * 60) + diff.Seconds;
+        //else
+        //{
+        //    if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("situationChangerComponent", out object situationChangerComponent) && !situationChangerComponentData.isOff)
+        //    {
+        //        UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
+        //        utccounterValue = JsonUtility.FromJson<UTCTimeCounterValue>(situationChangerComponent.ToString());
+        //        DateTime dateTimeRPC = DateTime.Parse(utccounterValue.UTCTime);
+        //        DateTime currentDateTime = DateTime.UtcNow;
+        //        TimeSpan diff = currentDateTime - dateTimeRPC;
+        //        timeDiff = (diff.Minutes * 60) + diff.Seconds;
 
-                BuilderEventManager.OnBlindComponentTriggerEnter?.Invoke(0);
+        //        BuilderEventManager.OnBlindComponentTriggerEnter?.Invoke(0);
 
-                if (timeDiff >= 0 && timeDiff < utccounterValue.CounterValue + 1)
-                    utccounterValue.CounterValue = utccounterValue.CounterValue - timeDiff;
-                else
-                    return;
-                time = utccounterValue.CounterValue;
-            }
-        }
+        //        if (timeDiff >= 0 && timeDiff < utccounterValue.CounterValue + 1)
+        //            utccounterValue.CounterValue = utccounterValue.CounterValue - timeDiff;
+        //        else
+        //            return;
+        //        time = utccounterValue.CounterValue;
+        //    }
+        //}
 
         //if (time == 0 && !situationChangerComponentData.isOff)
         //{
@@ -155,6 +162,12 @@ public class SituationChangerComponent : ItemComponent
         SituationStarter(this.situationChangerComponentData.isOff, _light, _lightsIntensity, timeCheck, this.gameObject);
 
     }
+
+    void CollideWithComponet()
+    {
+        _collideWithComponent = false;
+    }
+
     private void StopComponent()
     {
         // when time completed then component is removed from the item so we dont put here the code
@@ -292,11 +305,11 @@ public class SituationChangerComponent : ItemComponent
         GetLightData();
         if (dimmerCoroutine != null)
         {
-            StopCoroutine(dimmerCoroutine);
-            dimmerCoroutine = null;
-            isRuninig = false;
-            canRun = false;
-            GamificationComponentData.instance.isNight = false;
+            //StopCoroutine(dimmerCoroutine);
+            //dimmerCoroutine = null;
+            //isRuninig = false;
+            //canRun = false;
+            //GamificationComponentData.instance.isNight = false;
             if (GamificationComponentData.instance.isBlindToogle)
                 GamificationComponentData.instance.isBlindToogle = false;
             SetDayMode(_light, _lightsIntensity);

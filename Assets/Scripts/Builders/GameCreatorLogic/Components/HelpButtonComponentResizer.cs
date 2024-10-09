@@ -28,9 +28,10 @@ public class HelpButtonComponentResizer : MonoBehaviour
     private int bottomPosition = -9;
     internal void Init()
     {
-        isInfoTextWritten = true;
-        Invoke(nameof(InfoPopupUILinesCount), 0.01f);
-        StartCoroutine(StoryNarration());
+        isInfoTextWritten = false;
+        contentText.text = msg;
+        Invoke(nameof(InfoPopupUILinesCount), 0.1f);
+        //StartCoroutine(StoryNarration());
     }
 
     void InfoPopupUILinesCount()
@@ -82,7 +83,7 @@ public class HelpButtonComponentResizer : MonoBehaviour
 
     private IEnumerator CheckJapaneseRoutine()
     {
-        yield return new WaitForSeconds(1f); //Wait for the text to be set
+        yield return new WaitForSeconds(0.15f); //Wait for the text to be set
         switch (LocalizationManager._instance.IsJapanese(contentText.text))
         {
             case false:

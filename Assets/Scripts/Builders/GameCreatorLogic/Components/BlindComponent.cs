@@ -22,6 +22,7 @@ public class BlindComponent : ItemComponent
     GameObject playerObject;
     Coroutine dimLightsCoroutine;
 
+    bool _collideWithComponent;
     void GetLightsData()
     {
         _light = FindObjectsOfType<Light>();
@@ -50,21 +51,21 @@ public class BlindComponent : ItemComponent
 
             IsAgainTouchable = false;
 
-            if (GamificationComponentData.instance.withMultiplayer)
-            {
-                if (!blindToggle && !isRunning)
-                {
-                    UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
-                    utccounterValue.UTCTime = DateTime.UtcNow.ToString();
-                    utccounterValue.CounterValue = blindComponentData.time + 1;
-                    var hash = new ExitGames.Client.Photon.Hashtable();
-                    hash["blindComponent"] = JsonUtility.ToJson(utccounterValue);
-                    PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
-                }
-                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
-            }
-            else
-                StartComponent();
+            //if (GamificationComponentData.instance.withMultiplayer)
+            //{
+            //    if (!blindToggle && !isRunning)
+            //    {
+            //        UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
+            //        utccounterValue.UTCTime = DateTime.UtcNow.ToString();
+            //        utccounterValue.CounterValue = blindComponentData.time + 1;
+            //        var hash = new ExitGames.Client.Photon.Hashtable();
+            //        hash["blindComponent"] = JsonUtility.ToJson(utccounterValue);
+            //        PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+            //    }
+            //    GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
+            //}
+            //else
+            StartComponent();
         }
     }
 
@@ -150,6 +151,10 @@ public class BlindComponent : ItemComponent
     #region BehaviourControl
     private void StartComponent()
     {
+        if (_collideWithComponent)
+            return;
+        _collideWithComponent = true;
+        Invoke(nameof(CollideWithComponet), 0.5f);
         GetLightsData();
         if (TimeStats.playerCanvas.transform.parent != GamificationComponentData.instance.nameCanvas.transform)
         {
@@ -166,23 +171,23 @@ public class BlindComponent : ItemComponent
         {
             ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
         }
-        else
-        {
-            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("blindComponent", out object blindComponentObj) && !blindToggle && GamificationComponentData.instance.withMultiplayer)
-            {
-                UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
-                utccounterValue = JsonUtility.FromJson<UTCTimeCounterValue>(blindComponentObj.ToString());
-                DateTime dateTimeRPC = DateTime.Parse(utccounterValue.UTCTime);
-                DateTime currentDateTime = DateTime.UtcNow;
-                TimeSpan diff = currentDateTime - dateTimeRPC;
-                timeDiff = (diff.Minutes * 60) + diff.Seconds;
-                if (timeDiff >= 0 && timeDiff < utccounterValue.CounterValue + 1)
-                    utccounterValue.CounterValue = utccounterValue.CounterValue - timeDiff;
-                else
-                    return;
-                time = utccounterValue.CounterValue;
-            }
-        }
+        //else
+        //{
+        //    if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("blindComponent", out object blindComponentObj) && !blindToggle && GamificationComponentData.instance.withMultiplayer)
+        //    {
+        //        UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
+        //        utccounterValue = JsonUtility.FromJson<UTCTimeCounterValue>(blindComponentObj.ToString());
+        //        DateTime dateTimeRPC = DateTime.Parse(utccounterValue.UTCTime);
+        //        DateTime currentDateTime = DateTime.UtcNow;
+        //        TimeSpan diff = currentDateTime - dateTimeRPC;
+        //        timeDiff = (diff.Minutes * 60) + diff.Seconds;
+        //        if (timeDiff >= 0 && timeDiff < utccounterValue.CounterValue + 1)
+        //            utccounterValue.CounterValue = utccounterValue.CounterValue - timeDiff;
+        //        else
+        //            return;
+        //        time = utccounterValue.CounterValue;
+        //    }
+        //}
 
         //if (time == 0 && !blindToggle)
         //{
@@ -237,6 +242,12 @@ public class BlindComponent : ItemComponent
         }
 
     }
+
+    void CollideWithComponet()
+    {
+        _collideWithComponent = false;
+    }
+
     private void StopComponent()
     {
         //TimeStats._blindComponentStop?.Invoke();

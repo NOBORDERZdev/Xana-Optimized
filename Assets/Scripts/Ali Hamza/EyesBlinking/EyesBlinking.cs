@@ -11,7 +11,7 @@ public class EyesBlinking : MonoBehaviour
     [HideInInspector]
     public float blinkingRate;
     [HideInInspector]
-    public bool isEyeClose = false;
+    public bool AreEyesClosed = false;
     [Range(2f, 3f)]
     public float waitTime;
     [Range(0.1f, 0.2f)]
@@ -62,37 +62,34 @@ public class EyesBlinking : MonoBehaviour
 
     public IEnumerator BlinkingStartRoutine()
     {
-        if (isBlinking && AllEyeBlendShapes.Count != 0)  
+
+        if (isBlinking && AllEyeBlendShapes.Count != 0)
         {
-            while (isEyeClose)
+            while (!AreEyesClosed)
             {
-                for (int i = 0; i < AllEyeBlendShapes.Count && AllEyeBlendShapes[i].value != 8 && AllEyeBlendShapes[i].value != 9; i++)
-                {
-                    blendHolder.SetBlendShapeWeight(i, Mathf.Lerp(blendHolder.GetBlendShapeWeight(i), 0, Time.deltaTime * blinkingRate));
-                }
+                UpdateBlendShapes(0);
                 currentBlendWeight += Time.deltaTime * blinkingRate;
                 if (currentBlendWeight >= 100f)
                 {
                     currentBlendWeight = 100f;
-                    isEyeClose = false;
+                    AreEyesClosed = true;
                 }
 
                 blendHolder.SetBlendShapeWeight(8, currentBlendWeight);  // Set the blend shape weight for the left eye
                 blendHolder.SetBlendShapeWeight(9, currentBlendWeight);  // Set the blend shape weight for the right eye
             }
             yield return new WaitForSeconds(blinkingSpeed);
-            while (!isEyeClose)
+            while (AreEyesClosed)
             {
                 currentBlendWeight -= Time.deltaTime * blinkingRate;
                 if (currentBlendWeight <= 0f)
                 {
                     currentBlendWeight = 0f;
-                    isEyeClose = true;
+                    AreEyesClosed = false;
                 }
-                for (int i = 0; i < AllEyeBlendShapes.Count; i++)
-                {
-                    blendHolder.SetBlendShapeWeight(AllEyeBlendShapes[i].index, currentBlendWeight);
-                }
+                UpdateBlendShapesToOriginal();
+                blendHolder.SetBlendShapeWeight(8, currentBlendWeight);
+                blendHolder.SetBlendShapeWeight(9, currentBlendWeight);
             }
             isCoroutineRunning = true;
             yield return new WaitForSeconds(waitTime);
@@ -100,6 +97,25 @@ public class EyesBlinking : MonoBehaviour
                 StartCoroutine(BlinkingStartRoutine());
         }
         isCoroutineRunning = false;
+    }
+
+    private void UpdateBlendShapes(float targetWeight)
+    {
+        foreach (var blendShape in AllEyeBlendShapes)
+        {
+            if (blendShape.index == 8 || blendShape.index == 9) continue;
+            float currentWeight = blendHolder.GetBlendShapeWeight(blendShape.index);
+            blendHolder.SetBlendShapeWeight(blendShape.index, Mathf.Lerp(currentWeight, targetWeight, Time.deltaTime * blinkingRate));
+        }
+    }
+    private void UpdateBlendShapesToOriginal()
+    {
+        foreach (var blendShape in AllEyeBlendShapes)
+        {
+            if (blendShape.index == 8 || blendShape.index == 9) continue;
+            float currentWeight = blendHolder.GetBlendShapeWeight(blendShape.index);
+            blendHolder.SetBlendShapeWeight(blendShape.index, Mathf.Lerp(currentWeight, blendShape.value, Time.deltaTime * blinkingRate));
+        }
     }
     private void OnDisable()
     {

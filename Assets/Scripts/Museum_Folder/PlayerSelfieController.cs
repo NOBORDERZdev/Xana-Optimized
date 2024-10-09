@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
 using System;
-using Metaverse;
 using UnityEngine.Rendering.Universal;
 
 public class PlayerSelfieController : MonoBehaviour
@@ -43,7 +42,7 @@ public class PlayerSelfieController : MonoBehaviour
 
     [Header("Disable camera movement")]
     public bool disablecamera;
-   
+
     public GameObject[] OnFeatures;
     public GameObject[] OffFeatures;
     public GameObject selfiePanel;
@@ -51,8 +50,13 @@ public class PlayerSelfieController : MonoBehaviour
     public GameObject Exit;
     [HideInInspector]
     public bool isReconnecting;
+    [Space(5)]
+    public GameObject permissionPopupLandscape;
+    public GameObject permissionPopupPotrait;
 
-    
+    public static event Action OnSelfieButtonPressed;
+
+
     public void SwitchFromSelfieControl()
     {
 
@@ -114,18 +118,10 @@ public class PlayerSelfieController : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance != null && Instance != this)
-        {
-            if (Instance.m_IKLookAt != null)
-                m_IKLookAt = Instance.m_IKLookAt;
 
-            if (Instance.m_CharacterParent != null)
-                m_CharacterParent = Instance.m_CharacterParent;
+        if (Instance == null)
+            Instance = this;
 
-            ReassignValues_OnOrientationChange();
-        }
-
-        Instance = this;
     }
 
     void ReassignValues_OnOrientationChange()
@@ -138,9 +134,18 @@ public class PlayerSelfieController : MonoBehaviour
 
     public void OnEnable()
     {
-        if(Instance != this)
-            Instance = this;
+        if (Instance != null && Instance != this)
+        {
+            if (Instance.m_IKLookAt != null)
+                m_IKLookAt = Instance.m_IKLookAt;
 
+            if (Instance.m_CharacterParent != null)
+                m_CharacterParent = Instance.m_CharacterParent;
+
+            ReassignValues_OnOrientationChange();
+        }
+
+        Instance = this;
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OnSelfieButton += EnbaleSelfieFeature;
     }
 
@@ -209,6 +214,7 @@ public class PlayerSelfieController : MonoBehaviour
 #endif
 #if UNITY_ANDROID
             if (Input.touchCount != 0 && Input.touchCount <= 1) // to check single touch
+                // Muneeb: Just say: if (Input.touchCount == 1)
             {
 
                 Touch l_Touch = Input.GetTouch(0);
@@ -278,14 +284,14 @@ public class PlayerSelfieController : MonoBehaviour
     }
 
 
-    public void InitializeCharacter(GameObject l_SelfieStick, GameObject l_Parent, GameObject l_IkTarget, GameObject l_IKReference,GameObject Lookatorder)
+    public void InitializeCharacter(GameObject l_SelfieStick, GameObject l_Parent, GameObject l_IkTarget, GameObject l_IKReference, GameObject Lookatorder)
     {
         m_SelfieStick = l_SelfieStick;
         m_CharacterParent = l_Parent;
         m_IKObject = l_IkTarget;
         m_IKComponenet = l_IKReference;
-        m_IKLookAt= Lookatorder;
-        
+        m_IKLookAt = Lookatorder;
+
         //UpdateSelfieFOV();
 
         int l_PlayerID = 0;
@@ -341,18 +347,20 @@ public class PlayerSelfieController : MonoBehaviour
     {
         if (EmoteAnimationHandler.Instance)
             EmoteAnimationHandler.Instance.clearAnimation?.Invoke();
+
+        m_IsSelfieFeatureActive = true;
         StartCoroutine(EnableSelfieWithDelay());
-       
+
 
     }
 
     IEnumerator EnableSelfieWithDelay()
     {
         yield return new WaitForSeconds(.3f);
-        
+
         m_PlayerController.GetComponent<PlayerController>().SwitchToSelfieMode();
 #if UNITY_EDITOR
-        m_IsSelfieFeatureActive = true;
+        // m_IsSelfieFeatureActive = true;
         m_IKComponenet.GetComponent<IKMuseum>().EnableIK();
 
         GetRenderTexture();
@@ -381,7 +389,7 @@ public class PlayerSelfieController : MonoBehaviour
 #elif UNITY_ANDROID || UNITY_IOS
         if (Input.touchCount <= 1)
         {
-            m_IsSelfieFeatureActive = true;
+          //  m_IsSelfieFeatureActive = true;
             m_IKComponenet.GetComponent<IKMuseum>().EnableIK();
             
             GetRenderTexture();
@@ -415,7 +423,7 @@ public class PlayerSelfieController : MonoBehaviour
             screenShotCameraCapture = m_IKComponenet.GetComponent<IKMuseum>().selfieCamera.transform.GetChild(0).GetComponent<Camera>();    // my changes 
             //m_RenderTexture.width = 960;
             //m_RenderTexture.height = 540;
-            newRenderTexture = new RenderTexture(960, 540,0,UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm);
+            newRenderTexture = new RenderTexture(960, 540, 0, UnityEngine.Experimental.Rendering.GraphicsFormat.R16G16B16A16_SFloat);
             newRenderTexture.antiAliasing = 4;
             newRenderTexture.useMipMap = true;
             newRenderTexture.filterMode = FilterMode.Trilinear;
@@ -436,7 +444,7 @@ public class PlayerSelfieController : MonoBehaviour
             screenShotCameraCapture = m_IKComponenet.GetComponent<IKMuseum>().selfieCamera.transform.GetChild(2).GetComponent<Camera>();    // my changes 
             //m_RenderTexture.width = 730;
             //m_RenderTexture.height = 1580;
-            newRenderTexture = new RenderTexture(730, 1580, 0, UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm);
+            newRenderTexture = new RenderTexture(730, 1580, 0, UnityEngine.Experimental.Rendering.GraphicsFormat.R16G16B16A16_SFloat);
             newRenderTexture.antiAliasing = 4;
             newRenderTexture.useMipMap = true;
             newRenderTexture.filterMode = FilterMode.Trilinear;
@@ -468,21 +476,22 @@ public class PlayerSelfieController : MonoBehaviour
     IEnumerator InputDelay()
     {
         yield return new WaitForSeconds(0.05f);
-        m_PlayerController.GetComponent<PlayerController>().vertical = 0;
+        if(m_PlayerController!=null)
+            m_PlayerController.GetComponent<PlayerController>().vertical = 0;
 
     }
 
     public void DisableSelfieFeature()
     {
 
-        GamePlayButtonEvents.inst.UpdateSelfieBtn(true);
+        // GamePlayButtonEvents.inst.UpdateSelfieBtn(true);
         m_PlayerController.GetComponent<PlayerController>().gyroButton.SetActive(false);
         m_PlayerController.GetComponent<PlayerController>().gyroButton_Portait.SetActive(false);
 
 #if UNITY_EDITOR
 
         m_IsSelfieFeatureActive = false;
-        
+
         if (m_IKComponenet != null && m_IKComponenet.GetComponent<IKMuseum>())
             m_IKComponenet.GetComponent<IKMuseum>().DisableIK();
         ChangeCloseObjectsState(true);
@@ -558,7 +567,8 @@ public class PlayerSelfieController : MonoBehaviour
             }
 
            
-            newRenderTexture.Release();
+            if (newRenderTexture) newRenderTexture.Release(); // caused a null-ref when user was falling and touching the screen.
+                                                              // unneccessary, as the render texture is being destroyed below.
 
 
             StartCoroutine(SetMuseumRaycasterBoolean());
@@ -582,8 +592,9 @@ public class PlayerSelfieController : MonoBehaviour
             screenShotCameraCapture.targetTexture = null;
             screenShotCameraCapture.transform.GetChild(0).GetComponent<Camera>().targetTexture = null;
         }
-        if(newRenderTexture)
+        if (newRenderTexture)
             newRenderTexture.Release();
+        Destroy(newRenderTexture);
         Resources.UnloadUnusedAssets();
         GC.Collect();
     }
@@ -640,6 +651,10 @@ public class PlayerSelfieController : MonoBehaviour
         m_IsSelfieFeatureActive = false;
         StartPanelBlinkAnimation();
         disablecamera = false;
+        if (OnSelfieButtonPressed != null)
+        {
+            OnSelfieButtonPressed.Invoke();
+        }
     }
 
 
@@ -665,8 +680,49 @@ public class PlayerSelfieController : MonoBehaviour
 
     public int picCount;
 
+    public void CheckPermissionStatus()
+    {
+        if (Application.isEditor)
+        {
+            PermissionPopusSystem.Instance.onCloseAction += SaveImageLocally;
+            PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+            PermissionPopusSystem.Instance.OpenPermissionScreen();
+        }
+        else
+        {
+            NativeGallery.Permission permission = NativeGallery.CheckPermission(NativeGallery.PermissionType.Read, NativeGallery.MediaType.Image);
+#if UNITY_ANDROID
+            if (permission == NativeGallery.Permission.ShouldAsk)
+            {
+                PermissionPopusSystem.Instance.onCloseAction += SaveImageLocally;
+                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+                PermissionPopusSystem.Instance.OpenPermissionScreen();
+            }
+            else
+            {
+                SaveImageLocally();
+            }
+#elif UNITY_IOS
+                if(PlayerPrefs.GetInt("SavePic", 0) == 0){
+                     PermissionPopusSystem.Instance.onCloseAction += SaveImageLocally;
+            PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Gallery;
+            PermissionPopusSystem.Instance.OpenPermissionScreen();
+                }
+                else
+                {
+                    SaveImageLocally();
+                }
+#endif
+        }
+    }
+
     public void SaveImageLocally()
     {
+        PermissionPopusSystem.Instance.onCloseAction -= SaveImageLocally;
+#if UNITY_IOS
+        PlayerPrefs.SetInt("SavePic", 1);
+#endif
+
         byte[] l_Bytes = m_Texture2D.EncodeToPNG();
 
 #if UNITY_EDITOR

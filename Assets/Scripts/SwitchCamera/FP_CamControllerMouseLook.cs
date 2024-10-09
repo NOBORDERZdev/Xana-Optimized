@@ -41,10 +41,15 @@ public class FP_CamControllerMouseLook : MonoBehaviour
         playerBody = transform.GetComponentInParent<PlayerController>().gameObject.transform;
 
     }
+
+    private void OnEnable()
+    {
+        transform.localRotation = new Quaternion(0,0,0, 0);
+    }
     // Update is called once per frame
     void Update()
     {
-        if (!playerController.isFirstPerson && !playerController.m_FreeFloatCam)
+        if (!playerController.isFirstPerson && !playerController.m_FreeFloatCam) 
             return;
         if (!Application.isEditor && IsPointerOverUI() && !_allowSyncedControl)
         {
@@ -67,8 +72,18 @@ public class FP_CamControllerMouseLook : MonoBehaviour
             mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
             xRotation -= mouseY;
             xRotation = Mathf.Clamp(xRotation, -90f, 55f);
-            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-            playerBody.Rotate(Vector3.up * (mouseX));
+           
+            if (!ConstantsHolder.DisableFppRotation)
+            {
+                transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+                playerBody.Rotate(Vector3.up * (mouseX));
+            }
+            else
+            {
+              //  transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+              //  transform.Rotate(Vector3.up * (mouseX));
+            }
+
         }
 #elif UNITY_IOS || UNITY_ANDROID
         if (_allowRotation)
@@ -136,7 +151,8 @@ public class FP_CamControllerMouseLook : MonoBehaviour
     {
 
         delta = Vector2.zero;
-        if (playerController.horizontal != 0 && playerController.vertical != 0)//&& Input.touchCount > 0)
+        
+        if (playerController.horizontal != 0 || playerController.vertical != 0)//&& Input.touchCount > 0)
         {
             if (Input.touchCount > 1)
             {
@@ -160,7 +176,7 @@ public class FP_CamControllerMouseLook : MonoBehaviour
                 if (t.phase == TouchPhase.Moved /*&& t.position.x > 500*/) // && (playerController.horizontal == 0 && playerController.vertical == 0))
                 {
                     delta = Input.GetTouch(0).deltaPosition;
-                    _allowSyncedControl = true;
+                    _allowSyncedControl = false;
                 }
                 else
                 {
@@ -211,37 +227,43 @@ public class FP_CamControllerMouseLook : MonoBehaviour
 
     private void MoveCameraFreeFloat()
     {
-
         // Get touch count
-        int touchCount = Input.touchCount;
+        int _touchCount = Input.touchCount;
 
         // Check for touch input
-        if (touchCount > 0)
+        if (_touchCount > 0)
         {
             // Get the first touch position
-            Touch touch = Input.GetTouch(0);
-            Vector2 touchDelta = touch.deltaPosition;
+            Vector2 _touchDelta = delta;
 
             // Rotate the camera horizontally (around the y-axis)
-            yRotation += touchDelta.x * touchSensitivity;
-            transform.rotation = Quaternion.Euler(xRotation, yRotation, 0f);
+            yRotation += _touchDelta.x * touchSensitivity;
 
             // Calculate vertical rotation
-            xRotation -= touchDelta.y * touchSensitivity;
+            xRotation -= _touchDelta.y * touchSensitivity;
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-            // Rotate the camera vertically (around the x-axis)
-            transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
+            // Smooth the rotation
+            Quaternion targetRotation = Quaternion.Euler(xRotation, yRotation, 0f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * sensitivity);
         }
-
-
     }
     private void MoveCamera(Vector2 delta)
     {
         xRotation -= delta.y * 10 * PlayerCameraController.instance.lookSpeedd * Time.deltaTime;
         xRotation = Mathf.Clamp(xRotation, -90f, 55f);
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        playerBody.Rotate(Vector3.up * (delta.x * 10 * PlayerCameraController.instance.lookSpeedd * Time.deltaTime));
+       
+        if (!ConstantsHolder.DisableFppRotation)
+        {
+            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            playerBody.Rotate(Vector3.up * (delta.x * 10 * PlayerCameraController.instance.lookSpeedd * Time.deltaTime));
+        }
+        else
+        {  yRotation+= delta.x * 10 * PlayerCameraController.instance.lookSpeedd * Time.deltaTime;
+            transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
+           
+             //  transform.Rotate(new Vector3(xRotation ,1*(delta.x * 10 * PlayerCameraController.instance.lookSpeedd * Time.deltaTime),0f));
+        }
     }
 
     public void OnToggle()
@@ -299,8 +321,16 @@ public class FP_CamControllerMouseLook : MonoBehaviour
     //rotate the camera rigt and left (y rotation)
     public void RotateRightLeft(float axis)
     {
-        playerBody.RotateAround(transform.position, Vector3.up, -axis * Time.deltaTime);
+        if (!ConstantsHolder.DisableFppRotation)
+        {
+            playerBody.RotateAround(transform.position, Vector3.up, -axis * Time.deltaTime);
+        }
+        else
+        {
+            transform.RotateAround(transform.position, Vector3.up, -axis * Time.deltaTime);
+        }
     }
+  
 
 
     public bool IsPointerOverUI()

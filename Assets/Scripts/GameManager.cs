@@ -6,9 +6,13 @@ using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine.UI;
+using System;
+using UnityEngine.Rendering.Universal;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    [SerializeField]
+    private UniversalRenderPipelineAsset _homeScreenURPAsset;
     [Header("Character")]
     public GameObject mainCharacter;
     public AvatarController avatarController;
@@ -31,6 +35,7 @@ public class GameManager : MonoBehaviour
     public bool OnceGuestBool;
     public bool OnceLoginBool;
     public bool isTabSwitched = false;
+    public bool isAllSceneLoaded = false;
     [Header("Camera Work")]
     public GameObject faceMorphCam;
     public GameObject headCam;
@@ -59,6 +64,7 @@ public class GameManager : MonoBehaviour
     internal string selectedPresetData="";
     private void Awake()
     {
+        Debug.Log("GameManager Awake");
         if (Instance == null)
             Instance = this;
         PlayerPrefs.SetInt("presetPanel", 0);  // was loggedin as account 
@@ -67,6 +73,8 @@ public class GameManager : MonoBehaviour
            additiveScenesManager = FindObjectOfType<AdditiveScenesLoader>();
         }
     }
+
+    
     
     public void HomeCameraInputHandler(bool flag)
     {
@@ -143,9 +151,20 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-       // Application.targetFrameRate = 60;
+        Application.targetFrameRate = 30;
         OnceGuestBool = false;
         OnceLoginBool = false;
+        if (QualitySettings.GetQualityLevel() != 4)
+        {
+            //PlayerPrefs.SetInt("QualitySettings", index);
+            QualitySettings.SetQualityLevel(4);
+            QualitySettings.renderPipeline = _homeScreenURPAsset;
+        }
+
+        if (QuestDataHandler.Instance) // If Null then find object
+        {
+            QuestDataHandler.Instance.CheckForTaskCDomplete();
+        }
     }
     IEnumerator WaitForInstancefromWorld()
     {
@@ -156,7 +175,7 @@ public class GameManager : MonoBehaviour
     }
     public void NotNowOfSignManager()
     {
-      UiManager.LoginRegisterScreen.GetComponent<OnEnableDisable>().ClosePopUp();
+        UserLoginSignupManager.instance.LoginRegisterScreen.SetActive(false);
        
         if (UiManager.HomePage.activeInHierarchy )
             UiManager.HomePage.SetActive(false);
@@ -180,20 +199,19 @@ public class GameManager : MonoBehaviour
         UiManager.AvaterButtonCustomPushed();
         AvatarCustomizationUIHandler.Instance.LoadMyClothCustomizationPanel();
         //Debug.Log("IsLoggedIn VALUEeeeeeeeee" + (PlayerPrefs.GetInt("IsLoggedIn")));
-        if (ConstantsHolder.loggedIn) 
+        if (ConstantsHolder.loggedIn || ConstantsHolder.xanaConstants.LoggedInAsGuest) 
         {
             UiManager.HomePage.SetActive(false);
             InventoryManager.instance.SignUpAndLoginPanel(3);
             BGPlane.SetActive(true);
         }
-        else
-        {
-            //UserRegisterationManager.instance.checkbool_preser_start = true;
-            //PlayerPrefs.SetInt("IsChanged", 0);  
-            //UserRegisterationManager.instance.OpenUIPanal(17);
+        //else  // Disable Guest Sceniro
+        //{
+        //    //UserRegisterationManager.instance.checkbool_preser_start = true;
+        //    //PlayerPrefs.SetInt("IsChanged", 0);  
+        //    //UserRegisterationManager.instance.OpenUIPanal(17);
 
-            UserLoginSignupManager.instance.ShowWelcomeScreen();
-        }
+        //UserLoginSignupManager.instance.ShowWelcomeScreen();
         InventoryManager.instance.AvatarUpdated.SetActive(false);
         InventoryManager.instance.AvatarSaved.SetActive(false);
         InventoryManager.instance.AvatarSavedGuest.SetActive(false);
@@ -237,10 +255,11 @@ public class GameManager : MonoBehaviour
     {
         UiManager.HomePage.SetActive(true);
         BGPlane.SetActive(false);
+        ResetSelectedItems();
     }
     public void ChangeCharacterAnimationState(bool l_State)
     {    
-        m_CharacterAnimator.SetBool("Idle", l_State);
+        m_CharacterAnimator.SetBool("IdleMenu", l_State);
     }
     public void ResetCharacterAnimationController()
     {
@@ -257,6 +276,37 @@ public class GameManager : MonoBehaviour
     public void UpdatePlayerName(string newName)
     {
         mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(newName);
+    }
+
+    public void ResetSelectedItems()
+    {
+        // Get Reference of all Clicked Items
+        int count = StoreUndoRedo.obj.data.Count;
+        for (int i = 0; i < count; i++)
+        {
+            var data = StoreUndoRedo.obj.data[i];
+            if (data.actionObject)
+            {
+                var avatarBtn = data.actionObject.GetComponent<AvatarBtn>();
+                var presetBtn = data.actionObject.GetComponent<PresetData_Jsons>();
+                var image = data.actionObject.GetComponent<Image>();
+
+                if (presetBtn != null)
+                {
+                    presetBtn.transform.GetChild(0).gameObject.SetActive(false);
+                    PresetData_Jsons.clickname = "";
+                }
+                else if (avatarBtn != null && image != null)
+                {
+                    image.color = new Color(1, 1, 1, 0);
+                }
+                else if (!data.methodName.Equals("BtnClicked") && image != null)
+                {
+                    image.enabled = false;
+                }
+            }
+
+        }
     }
 
     //public void ActivateAvatarByGender(string gender)

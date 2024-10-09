@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.22834736, g: 0.26157, b: 0.33361256, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -396,6 +395,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50b02ed81d5cae849baeaa562179cb75, type: 3}
+--- !u!1001 &30849626
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1825677271}
+    m_Modifications:
+    - target: {fileID: 4850253601013323066, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_Name
+      value: Airin (FactoryRoom)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_RootOrder
+      value: 39
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -38.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -21.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.990998
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.13387656
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 15.387
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
 --- !u!1 &31040831
 GameObject:
   m_ObjectHideFlags: 0
@@ -1016,6 +1072,51 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.6, y: 0.18264756, z: 0.95}
   m_Center: {x: -2.1377857, y: 0.17926584, z: 0.014620295}
+--- !u!1 &97393016
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 97393017}
+  - component: {fileID: 97393018}
+  m_Layer: 0
+  m_Name: FB_PushNotificationSender
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &97393017
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97393016}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1963513464}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &97393018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97393016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d96f74fd3956d140b13b4349e90bc60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recipientToken: RECIPIENT_FCM_TOKEN
 --- !u!1 &101637502
 GameObject:
   m_ObjectHideFlags: 0
@@ -1245,7 +1346,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4164266083503483546, guid: 0dd27967ac8956a42abece66776eb644, type: 3}
       propertyPath: m_RootOrder
-      value: 23
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 4164266083503483546, guid: 0dd27967ac8956a42abece66776eb644, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2037,34 +2138,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainStage_NFT's
       objectReference: {fileID: 0}
-    - target: {fileID: 6932195789214149364, guid: d4576104039a9184899b697888f36c44, type: 3}
-      propertyPath: liveVideoPlay.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6932195789214149364, guid: d4576104039a9184899b697888f36c44, type: 3}
-      propertyPath: liveVideoPlay.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6932195789214149364, guid: d4576104039a9184899b697888f36c44, type: 3}
-      propertyPath: liveVideoPlay.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 151825901}
-    - target: {fileID: 6932195789214149364, guid: d4576104039a9184899b697888f36c44, type: 3}
-      propertyPath: liveVideoPlay.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6932195789214149364, guid: d4576104039a9184899b697888f36c44, type: 3}
-      propertyPath: liveVideoPlay.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ActiveDirectionalSound
-      objectReference: {fileID: 0}
-    - target: {fileID: 6932195789214149364, guid: d4576104039a9184899b697888f36c44, type: 3}
-      propertyPath: liveVideoPlay.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: AvProDirectionalSound, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 6932195789214149364, guid: d4576104039a9184899b697888f36c44, type: 3}
-      propertyPath: liveVideoPlay.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4576104039a9184899b697888f36c44, type: 3}
 --- !u!4 &151825900 stripped
@@ -2072,17 +2145,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5026257660059112763, guid: d4576104039a9184899b697888f36c44, type: 3}
   m_PrefabInstance: {fileID: 151825899}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &151825901 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5228478994173219951, guid: d4576104039a9184899b697888f36c44, type: 3}
-  m_PrefabInstance: {fileID: 151825899}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11a695eefa4c7984abf4719a5bb1c9b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &155475503
 GameObject:
   m_ObjectHideFlags: 0
@@ -3126,72 +3188,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 14.057471, y: 3.7375145, z: 0.8530235}
   m_Center: {x: 12.901058, y: 1.4173651, z: -36.427578}
---- !u!1001 &203186639
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1825677271}
-    m_Modifications:
-    - target: {fileID: 3852839932239906076, guid: 9e9698cf51009e14ba8403c7b6e8154b, type: 3}
-      propertyPath: m_Name
-      value: HCR_GFX
-      objectReference: {fileID: 0}
-    - target: {fileID: 3852839932239906076, guid: 9e9698cf51009e14ba8403c7b6e8154b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8911414538857606563, guid: 9e9698cf51009e14ba8403c7b6e8154b, type: 3}
-      propertyPath: m_RootOrder
-      value: 21
-      objectReference: {fileID: 0}
-    - target: {fileID: 8911414538857606563, guid: 9e9698cf51009e14ba8403c7b6e8154b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 5.6050158
-      objectReference: {fileID: 0}
-    - target: {fileID: 8911414538857606563, guid: 9e9698cf51009e14ba8403c7b6e8154b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.392
-      objectReference: {fileID: 0}
-    - target: {fileID: 8911414538857606563, guid: 9e9698cf51009e14ba8403c7b6e8154b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -31.489975
-      objectReference: {fileID: 0}
-    - target: {fileID: 8911414538857606563, guid: 9e9698cf51009e14ba8403c7b6e8154b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.0000029294772
-      objectReference: {fileID: 0}
-    - target: {fileID: 8911414538857606563, guid: 9e9698cf51009e14ba8403c7b6e8154b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -6.123252e-17
-      objectReference: {fileID: 0}
-    - target: {fileID: 8911414538857606563, guid: 9e9698cf51009e14ba8403c7b6e8154b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8911414538857606563, guid: 9e9698cf51009e14ba8403c7b6e8154b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 6.123252e-17
-      objectReference: {fileID: 0}
-    - target: {fileID: 8911414538857606563, guid: 9e9698cf51009e14ba8403c7b6e8154b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8911414538857606563, guid: 9e9698cf51009e14ba8403c7b6e8154b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8911414538857606563, guid: 9e9698cf51009e14ba8403c7b6e8154b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 9e9698cf51009e14ba8403c7b6e8154b, type: 3}
---- !u!4 &203186640 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8911414538857606563, guid: 9e9698cf51009e14ba8403c7b6e8154b, type: 3}
-  m_PrefabInstance: {fileID: 203186639}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &205902008
 GameObject:
   m_ObjectHideFlags: 0
@@ -4121,6 +4117,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 272887647}
   m_CullTransparentMesh: 1
+--- !u!1 &276765226
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 276765227}
+  - component: {fileID: 276765228}
+  m_Layer: 0
+  m_Name: Voice Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &276765227
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276765226}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -15.22481, y: 1.6917216, z: -1.0786209}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1963513464}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &276765228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276765226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a34714778a7ade042819badc8200d994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recorder: {fileID: 0}
 --- !u!1 &277711051
 GameObject:
   m_ObjectHideFlags: 0
@@ -8605,6 +8646,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1825677271}
     m_Modifications:
+    - target: {fileID: 3387201968372387423, guid: 416953610c6c81a4f940a5f78e8cd185, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3470094043432856108, guid: 416953610c6c81a4f940a5f78e8cd185, type: 3}
       propertyPath: m_RootOrder
       value: 20
@@ -9154,6 +9199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 1
   roomName: 
+  PlayerCount: 0
 --- !u!65 &578122057
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9361,7 +9407,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 738940346299144454, guid: e09234fa5f5184b49848ad3069b3608a, type: 3}
       propertyPath: m_RootOrder
-      value: 27
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 738940346299144454, guid: e09234fa5f5184b49848ad3069b3608a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9767,6 +9813,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 611507823}
   m_CullTransparentMesh: 1
+--- !u!1001 &613895835
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1825677271}
+    m_Modifications:
+    - target: {fileID: 4850253601013323066, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_Name
+      value: Airin (AechitecRoom)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_RootOrder
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -33.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.14285363
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.9897438
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 196.426
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
 --- !u!1 &615636736
 GameObject:
   m_ObjectHideFlags: 0
@@ -10167,17 +10270,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1825677271}
     m_Modifications:
-    - target: {fileID: 919365867221814691, guid: 922709a5788f2f247a62f691680acbab, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 919365867239843656, guid: 922709a5788f2f247a62f691680acbab, type: 3}
       propertyPath: m_Name
       value: FactoryTourRoom_NFT's
-      objectReference: {fileID: 0}
-    - target: {fileID: 919365867239843656, guid: 922709a5788f2f247a62f691680acbab, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919365867239843658, guid: 922709a5788f2f247a62f691680acbab, type: 3}
       propertyPath: m_RootOrder
@@ -10222,38 +10317,6 @@ PrefabInstance:
     - target: {fileID: 919365867239843658, guid: 922709a5788f2f247a62f691680acbab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919365867746387216, guid: 922709a5788f2f247a62f691680acbab, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -11.98
-      objectReference: {fileID: 0}
-    - target: {fileID: 919365867746387216, guid: 922709a5788f2f247a62f691680acbab, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 19.528
-      objectReference: {fileID: 0}
-    - target: {fileID: 919365867746387216, guid: 922709a5788f2f247a62f691680acbab, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.650778
-      objectReference: {fileID: 0}
-    - target: {fileID: 919365867746387216, guid: 922709a5788f2f247a62f691680acbab, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.27656463
-      objectReference: {fileID: 0}
-    - target: {fileID: 919365867746387216, guid: 922709a5788f2f247a62f691680acbab, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.650778
-      objectReference: {fileID: 0}
-    - target: {fileID: 919365867746387216, guid: 922709a5788f2f247a62f691680acbab, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.27656463
-      objectReference: {fileID: 0}
-    - target: {fileID: 919365867746387216, guid: 922709a5788f2f247a62f691680acbab, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -46.049
-      objectReference: {fileID: 0}
-    - target: {fileID: 919365867746387217, guid: 922709a5788f2f247a62f691680acbab, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 922709a5788f2f247a62f691680acbab, type: 3}
@@ -11312,6 +11375,71 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5.2625194, y: 0.18264756, z: 1.075217}
   m_Center: {x: -2.1377857, y: 0.17926584, z: 0.014620295}
+--- !u!1001 &709154445
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1825677271}
+    m_Modifications:
+    - target: {fileID: 4850253601013323066, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_Name
+      value: Airin (LandInfoRoom)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_RootOrder
+      value: 41
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1400001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.1400001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -7.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.6109095
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7917004
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 255.311
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
 --- !u!1001 &710451508
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12229,7 +12357,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7292434236655411754, guid: aab29fce1898baf4488327883f2234c9, type: 3}
       propertyPath: m_RootOrder
-      value: 30
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 7292434236655411754, guid: aab29fce1898baf4488327883f2234c9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14164,7 +14292,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5830261827611637721, guid: 086855c48d84ff14c9a5fe41a816435c, type: 3}
       propertyPath: m_RootOrder
-      value: 28
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 5830261827611637721, guid: 086855c48d84ff14c9a5fe41a816435c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16762,7 +16890,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4354894771188486187, guid: 24633d56625687043aaf92f630d81b0f, type: 3}
       propertyPath: m_RootOrder
-      value: 31
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4354894771188486187, guid: 24633d56625687043aaf92f630d81b0f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17014,6 +17142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 0
   roomName: Home
+  PlayerCount: 0
 --- !u!1 &1057254425
 GameObject:
   m_ObjectHideFlags: 0
@@ -17466,6 +17595,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 0
   roomName: LandInfo
+  PlayerCount: 0
 --- !u!65 &1101256834
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19018,6 +19148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 1
   roomName: 
+  PlayerCount: 0
 --- !u!65 &1169715770
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20993,7 +21124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5248345510596490629, guid: 6774c5b7a96f5694c8b1964b6298de00, type: 3}
       propertyPath: m_RootOrder
-      value: 22
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 5248345510596490629, guid: 6774c5b7a96f5694c8b1964b6298de00, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21955,7 +22086,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4933005550429075648, guid: 24fdecdf404f06f4a9d76659e64be7c9, type: 3}
       propertyPath: m_RootOrder
-      value: 24
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 4933005550429075648, guid: 24fdecdf404f06f4a9d76659e64be7c9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23289,7 +23420,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7519184663586091737, guid: 42ca4a3d9d85e53408d1ba29deb4dc49, type: 3}
       propertyPath: m_RootOrder
-      value: 26
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7519184663586091737, guid: 42ca4a3d9d85e53408d1ba29deb4dc49, type: 3}
       propertyPath: m_LocalPosition.x
@@ -24543,6 +24674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 1
   roomName: 
+  PlayerCount: 0
 --- !u!65 &1556253251
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24613,14 +24745,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1825677271}
     m_Modifications:
-    - target: {fileID: 5036408314515547484, guid: 4257652915f6b494484e15649d8a4210, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6097481096430533808, guid: 4257652915f6b494484e15649d8a4210, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6843167324293545584, guid: 4257652915f6b494484e15649d8a4210, type: 3}
       propertyPath: m_Name
       value: ArchitecturalRoom_NFT's
@@ -25539,7 +25663,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6506188819662524466, guid: 3b23a2d20ee3a6c4eb025896824036b9, type: 3}
       propertyPath: m_RootOrder
-      value: 32
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 6506188819662524466, guid: 3b23a2d20ee3a6c4eb025896824036b9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26301,6 +26425,63 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4912434201745448579, guid: 9485492c7f3e25045be6a0bca5fd36fb, type: 3}
+--- !u!1001 &1715233407
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1825677271}
+    m_Modifications:
+    - target: {fileID: 4850253601013323066, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_Name
+      value: Airin (MainStage)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_RootOrder
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -21.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.185
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -15.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
 --- !u!1 &1716806078
 GameObject:
   m_ObjectHideFlags: 0
@@ -26351,6 +26532,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 0
   roomName: Architec
+  PlayerCount: 0
 --- !u!65 &1716806081
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26916,6 +27098,72 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.66155624, y: 2.3476486, z: 1.6126175}
   m_Center: {x: 7.104144, y: 0.72243214, z: -37.053616}
+--- !u!1001 &1763308384
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1825677271}
+    m_Modifications:
+    - target: {fileID: 3250756013491048068, guid: a05cbc267b58d3845a4935499bae672c, type: 3}
+      propertyPath: m_Name
+      value: THA_Meeting_Room
+      objectReference: {fileID: 0}
+    - target: {fileID: 5180859763852045360, guid: a05cbc267b58d3845a4935499bae672c, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6998350683907781782, guid: a05cbc267b58d3845a4935499bae672c, type: 3}
+      propertyPath: m_RootOrder
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 6998350683907781782, guid: a05cbc267b58d3845a4935499bae672c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6998350683907781782, guid: a05cbc267b58d3845a4935499bae672c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6998350683907781782, guid: a05cbc267b58d3845a4935499bae672c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -19.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6998350683907781782, guid: a05cbc267b58d3845a4935499bae672c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6998350683907781782, guid: a05cbc267b58d3845a4935499bae672c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6998350683907781782, guid: a05cbc267b58d3845a4935499bae672c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6998350683907781782, guid: a05cbc267b58d3845a4935499bae672c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6998350683907781782, guid: a05cbc267b58d3845a4935499bae672c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6998350683907781782, guid: a05cbc267b58d3845a4935499bae672c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6998350683907781782, guid: a05cbc267b58d3845a4935499bae672c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a05cbc267b58d3845a4935499bae672c, type: 3}
+--- !u!4 &1763308385 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6998350683907781782, guid: a05cbc267b58d3845a4935499bae672c, type: 3}
+  m_PrefabInstance: {fileID: 1763308384}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1767763618
 GameObject:
   m_ObjectHideFlags: 0
@@ -27816,7 +28064,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 243788308979855257, guid: 5bd7e85966c047040a234f11a300481d, type: 3}
       propertyPath: m_RootOrder
-      value: 29
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 243788308979855257, guid: 5bd7e85966c047040a234f11a300481d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27873,6 +28121,74 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 243788308979855257, guid: 5bd7e85966c047040a234f11a300481d, type: 3}
   m_PrefabInstance: {fileID: 1814636345}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1822113595
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1822113598}
+  - component: {fileID: 1822113597}
+  - component: {fileID: 1822113596}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1822113596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822113595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &1822113597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822113595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &1822113598
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822113595}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1824080112
 GameObject:
   m_ObjectHideFlags: 0
@@ -27968,7 +28284,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd617247844f1b447a0320228ca36a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldJson: 
+  worldJson: '{"SceneObjects":[{"addressableKey":"THA_Design","name":"THA_Design","position":{"x":-35.90888214111328,"y":3.609909772872925,"z":-28.681283950805665},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-35.913818359375,"y":3.609909772872925,"z":-28.909215927124025},"m_Extent":{"x":6.453857421875,"y":3.3249101638793947,"z":10.170942306518555}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"THA_pCylinder5","name":"THA_pCylinder5","position":{"x":-35.75796127319336,"y":7.539569854736328,"z":-28.984533309936525},"rotation":{"x":0.0,"y":-1.0,"z":0.0,"w":0.000002950429461634485},"scale":{"x":1.0803226232528687,"y":1.0803226232528687,"z":1.0803226232528687},"objectBound":{"m_Center":{"x":-35.75796127319336,"y":5.736411094665527,"z":-28.984533309936525},"m_Extent":{"x":1.6946927309036255,"y":0.1021239161491394,"z":1.6854099035263062}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"THA_Chess_table01","name":"THA_Chess_table01","position":{"x":-17.469825744628908,"y":0.1400136947631836,"z":-10.91433334350586},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-17.469825744628908,"y":0.1400136947631836,"z":-10.91433334350586},"m_Extent":{"x":7.725444793701172,"y":0.35094934701919558,"z":3.3731026649475099}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"THA_MainStageChair01","name":"THA_MainStageChair01","position":{"x":-17.554000854492189,"y":0.2460000067949295,"z":-10.303000450134278},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-17.537145614624025,"y":0.24599549174308778,"z":-10.228294372558594},"m_Extent":{"x":8.745748519897461,"y":0.47918301820755007,"z":3.726386547088623}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"THA_Lamp","name":"THA_Lamp","position":{"x":-18.26953125,"y":0.8720579147338867,"z":-17.388965606689454},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-18.26953125,"y":0.4774400591850281,"z":-17.38896369934082},"m_Extent":{"x":6.262257099151611,"y":0.6897056698799133,"z":3.9268245697021486}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"THA_TV","name":"THA_TV","position":{"x":-18.5096435546875,"y":3.1500000953674318,"z":-21.463682174682618},"rotation":{"x":0.0,"y":0.07544279843568802,"z":0.0,"w":0.997150182723999},"scale":{"x":1.600000023841858,"y":2.0,"z":1.600000023841858},"objectBound":{"m_Center":{"x":-18.441715240478517,"y":3.149996042251587,"z":-21.024398803710939},"m_Extent":{"x":4.990016937255859,"y":2.9691824913024904,"z":1.136495590209961}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"LIR_BannerPiller","name":"LIR_BannerPiller","position":{"x":0.423991858959198,"y":2.4006998538970949,"z":-7.415999889373779},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.4239906668663025,"y":2.4006996154785158,"z":-7.41599178314209},"m_Extent":{"x":7.21003532409668,"y":2.089719772338867,"z":2.595116138458252}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"LIR_Base","name":"LIR_Base","position":{"x":0.4250006079673767,"y":0.336382657289505,"z":-1.210700273513794},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.42080050706863406,"y":0.336382657289505,"z":-1.210700273513794},"m_Extent":{"x":2.7159342765808107,"y":0.018050573766231538,"z":5.323297023773193}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"LIR_CeilingDesign","name":"LIR_CeilingDesign","position":{"x":0.4826032519340515,"y":6.0389299392700199,"z":-0.3600732684135437},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.4826032519340515,"y":6.0389299392700199,"z":-0.3600727915763855},"m_Extent":{"x":7.103527069091797,"y":0.40464383363723757,"z":7.524518013000488}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"LIR_Compass","name":"LIR_Compass","position":{"x":0.3526672124862671,"y":0.46563687920570376,"z":6.132601261138916},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.3526672124862671,"y":0.46563684940338137,"z":6.132601261138916},"m_Extent":{"x":5.728157043457031,"y":0.0,"z":1.6054846048355103}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"LIR_Screen1","name":"LIR_Screen1","position":{"x":7.605000019073486,"y":2.0129001140594484,"z":3.075000047683716},"rotation":{"x":-6.12325213002707e-17,"y":1.0,"z":6.12325213002707e-17,"w":0.0000029294772048160668},"scale":{"x":1.2121000289916993,"y":1.1546711921691895,"z":1.1975914239883423},"objectBound":{"m_Center":{"x":7.605000019073486,"y":2.0129001140594484,"z":3.075000047683716},"m_Extent":{"x":0.000026531984985922463,"y":1.2355189323425294,"z":4.402181148529053}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"LIR_Screen2","name":"LIR_Screen2","position":{"x":0.3600004315376282,"y":0.2799997329711914,"z":2.559999704360962},"rotation":{"x":-6.12325213002707e-17,"y":1.0,"z":6.12325213002707e-17,"w":0.0000029294772048160668},"scale":{"x":1.2121000289916993,"y":1.2121000289916993,"z":1.2121000289916993},"objectBound":{"m_Center":{"x":-6.498373985290527,"y":2.5167315006256105,"z":2.5103423595428469},"m_Extent":{"x":0.00003837919939542189,"y":0.49149152636528017,"z":6.501196384429932}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"LIR_Table","name":"LIR_Table","position":{"x":0.47500044107437136,"y":0.859419584274292,"z":6.214999675750732},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.47500044107437136,"y":0.859419584274292,"z":6.214999675750732},"m_Extent":{"x":6.394803524017334,"y":0.5455360412597656,"z":2.2822601795196535}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"LIR_Truss","name":"LIR_Truss","position":{"x":0.43983298540115359,"y":6.6529998779296879,"z":-0.3600047826766968},"rotation":{"x":-6.12325213002707e-17,"y":1.0,"z":6.12325213002707e-17,"w":0.0000029294772048160668},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.43983274698257449,"y":6.6529998779296879,"z":-0.360005259513855},"m_Extent":{"x":7.5265793800354,"y":0.28182098269462588,"z":10.170961380004883}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"LIR_WallDesign","name":"LIR_WallDesign","position":{"x":0.13799694180488587,"y":2.0482561588287355,"z":2.7838149070739748},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.13799694180488587,"y":2.0482561588287355,"z":2.7838149070739748},"m_Extent":{"x":7.644750595092773,"y":1.9286495447158814,"z":7.048828601837158}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"HCR_Screen1","name":"HCR_Screen1","position":{"x":-6.81700325012207,"y":2.0157999992370607,"z":-32.709598541259769},"rotation":{"x":6.123233601181349e-17,"y":0.0000058859577620751228,"z":6.123268011894832e-17,"w":-1.0},"scale":{"x":1.2121000289916993,"y":1.1593431234359742,"z":1.2038707733154297},"objectBound":{"m_Center":{"x":-6.81700325012207,"y":2.0157999992370607,"z":-32.709598541259769},"m_Extent":{"x":0.000052833631343673915,"y":1.2405179738998414,"z":4.425263404846191}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"HCR_Screen2","name":"HCR_Screen2","position":{"x":0.4279974699020386,"y":0.2799997329711914,"z":-32.18618392944336},"rotation":{"x":6.123233601181349e-17,"y":0.0000058859577620751228,"z":6.123268011894832e-17,"w":-1.0},"scale":{"x":1.2121000289916993,"y":1.2121000289916993,"z":1.2121000289916993},"objectBound":{"m_Center":{"x":7.286372184753418,"y":2.5167315006256105,"z":-32.1364860534668},"m_Extent":{"x":0.00007682052091695368,"y":0.49149152636528017,"z":6.501196384429932}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"HCR_WallDesign","name":"HCR_WallDesign","position":{"x":0.6499999761581421,"y":2.0482561588287355,"z":-32.40999984741211},"rotation":{"x":0.0,"y":1.0,"z":0.0,"w":0.000002950429461634485},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.6499999761581421,"y":2.0482561588287355,"z":-32.40999984741211},"m_Extent":{"x":7.644792079925537,"y":1.9286495447158814,"z":7.0488739013671879}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"HCR_DisplayBanner","name":"HCR_DisplayBanner","position":{"x":0.4549131393432617,"y":3.382985830307007,"z":-27.31255340576172},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.4546852111816406,"y":3.3829855918884279,"z":-27.31674575805664},"m_Extent":{"x":6.585926055908203,"y":3.053985118865967,"z":7.693772315979004}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"HCR_DisplayHolder","name":"HCR_DisplayHolder","position":{"x":0.7659053802490234,"y":1.4811903238296509,"z":-30.74342155456543},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.7649335861206055,"y":1.4811903238296509,"z":-30.744394302368165},"m_Extent":{"x":4.396508693695068,"y":1.1571733951568604,"z":5.327188491821289}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"HCR_Door","name":"HCR_Door","position":{"x":0.5551595687866211,"y":2.0023999214172365,"z":-35.97111129760742},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.5551595687866211,"y":2.0023999214172365,"z":-35.97111129760742},"m_Extent":{"x":6.530322074890137,"y":1.7104499340057374,"z":2.9464128017425539}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"HCR_Logo","name":"HCR_Logo","position":{"x":0.4761800765991211,"y":0.997046709060669,"z":-28.172168731689454},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.4761800765991211,"y":0.997046709060669,"z":-28.172168731689454},"m_Extent":{"x":6.453855037689209,"y":0.7000466585159302,"z":9.049773216247559}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"HCR_Truss","name":"HCR_Truss","position":{"x":0.4399995803833008,"y":6.664999961853027,"z":-28.710004806518556},"rotation":{"x":-6.12325213002707e-17,"y":1.0,"z":6.12325213002707e-17,"w":0.0000029294772048160668},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.4399993419647217,"y":6.6650004386901859,"z":-28.710004806518556},"m_Extent":{"x":7.526638507843018,"y":0.28182098269462588,"z":10.171004295349121}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"ARC_Screen1","name":"ARC_Screen1","position":{"x":-28.426000595092775,"y":2.0125999450683595,"z":3.0385000705718996},"rotation":{"x":-6.12325213002707e-17,"y":1.0,"z":6.12325213002707e-17,"w":0.0000029294772048160668},"scale":{"x":1.2121000289916993,"y":1.1626307964324952,"z":1.187666416168213},"objectBound":{"m_Center":{"x":-28.426000595092775,"y":2.0125999450683595,"z":3.0385000705718996},"m_Extent":{"x":0.000026318233722122386,"y":1.2440358400344849,"z":4.365698337554932}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"ARC_Screen2","name":"ARC_Screen2","position":{"x":-35.644996643066409,"y":0.2799997329711914,"z":2.559999704360962},"rotation":{"x":-6.12325213002707e-17,"y":1.0,"z":6.12325213002707e-17,"w":0.0000029294772048160668},"scale":{"x":1.2121000289916993,"y":1.2121000289916993,"z":1.2121000289916993},"objectBound":{"m_Center":{"x":-42.50337219238281,"y":2.5167315006256105,"z":2.5103423595428469},"m_Extent":{"x":0.00003837919939542189,"y":0.49149152636528017,"z":6.501196384429932}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"ARC_WallDesign","name":"ARC_WallDesign","position":{"x":-35.86700439453125,"y":2.0482561588287355,"z":2.7838149070739748},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-35.86700439453125,"y":2.0482561588287355,"z":2.7838149070739748},"m_Extent":{"x":7.644750595092773,"y":1.9286495447158814,"z":7.048828601837158}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"ARC_Banner_Design","name":"ARC_Banner_Design","position":{"x":-35.62999725341797,"y":2.264523506164551,"z":-6.87999963760376},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-35.62999725341797,"y":2.264523506164551,"z":-6.87999963760376},"m_Extent":{"x":4.848634719848633,"y":1.5405232906341553,"z":0.11905578523874283}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"ARC_BannerColum","name":"ARC_BannerColum","position":{"x":-35.8895263671875,"y":2.1553285121917726,"z":-2.2707605361938478},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-35.874359130859378,"y":2.1553285121917726,"z":-2.2238948345184328},"m_Extent":{"x":5.650865077972412,"y":1.7783284187316895,"z":2.1768949031829836}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"ARC_DisplayBanner","name":"ARC_DisplayBanner","position":{"x":-35.697998046875,"y":3.12015962600708,"z":-0.019898295402526857},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-35.697998046875,"y":3.12015962600708,"z":-0.019898295402526857},"m_Extent":{"x":7.071059226989746,"y":3.3062782287597658,"z":9.26826286315918}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"ARC_Hologram","name":"ARC_Hologram","position":{"x":-35.61000061035156,"y":2.302999973297119,"z":4.624000072479248},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-35.61000061035156,"y":2.302999973297119,"z":4.62399959564209},"m_Extent":{"x":1.0701985359191895,"y":0.901850700378418,"z":1.0701985359191895}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"ARC_Table","name":"ARC_Table","position":{"x":-35.58899688720703,"y":0.38393324613571169,"z":4.577000141143799},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-35.58898162841797,"y":0.9707805514335632,"z":4.576999187469482},"m_Extent":{"x":1.7440857887268067,"y":0.5877280235290527,"z":1.5138118267059327}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"ARC_Truss","name":"ARC_Truss","position":{"x":-35.72016906738281,"y":6.6529998779296879,"z":-0.5402163863182068},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-35.72016906738281,"y":6.653000354766846,"z":-0.5402159094810486},"m_Extent":{"x":7.526577949523926,"y":0.28182098269462588,"z":10.030397415161133}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"THA_Meeting_Room","name":"THA_Meeting_Room","position":{"x":0.0,"y":0.0,"z":-19.75},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.4423651695251465,"y":5.808746814727783,"z":-32.607139587402347},"m_Extent":{"x":7.66834831237793,"y":5.930747032165527,"z":25.88360595703125}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"MainStage_NFT''s","name":"MainStage_NFT''s","position":{"x":-17.600000381469728,"y":-13.699999809265137,"z":79.30000305175781},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-21.629980087280275,"y":-3.003209114074707,"z":46.2939567565918},"m_Extent":{"x":20.65501594543457,"y":10.69679069519043,"z":68.23004913330078}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"FactoryTourRoom_NFT''s","name":"FactoryTourRoom_NFT''s","position":{"x":-17.600000381469728,"y":-13.699999809265137,"z":79.30000305175781},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-94.72929382324219,"y":3.833926200866699,"z":18.01446533203125},"m_Extent":{"x":77.12928771972656,"y":17.533926010131837,"z":61.28553771972656}},"priority":2,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"HomeConsultingRoom_NFT''s","name":"HomeConsultingRoom_NFT''s","position":{"x":6.269999980926514,"y":-13.699999809265137,"z":69.4000015258789},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-10.645000457763672,"y":-4.957057952880859,"z":19.312084197998048},"m_Extent":{"x":16.915000915527345,"y":8.742941856384278,"z":50.087913513183597}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"LandInfoRoom_NFT''s","name":"LandInfoRoom_NFT''s","position":{"x":6.269999980926514,"y":-13.699999809265137,"z":69.4000015258789},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":2.2492780685424806,"y":-4.957057952880859,"z":28.3214054107666},"m_Extent":{"x":4.020721912384033,"y":8.742941856384278,"z":41.07859420776367}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"ArchitecturalRoom_NFT''s","name":"ArchitecturalRoom_NFT''s","position":{"x":6.269999980926514,"y":-13.699999809265137,"z":69.4000015258789},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-18.318071365356447,"y":-3.9319639205932619,"z":21.323001861572267},"m_Extent":{"x":24.588071823120118,"y":9.768035888671875,"z":48.07699966430664}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"Airin
+    Avatar","name":"Airin (MainStage)","position":{"x":-21.469999313354493,"y":-0.1850000023841858,"z":-15.75},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.1399999856948853,"y":1.1399999856948853,"z":1.1399999856948853},"objectBound":{"m_Center":{"x":-21.470909118652345,"y":0.6480525732040405,"z":-15.761042594909668},"m_Extent":{"x":0.7348709106445313,"y":0.9349983930587769,"z":0.30285167694091799}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"Airin
+    Avatar","name":"Airin (FactoryRoom)","position":{"x":-38.5099983215332,"y":0.33000001311302187,"z":-21.950000762939454},"rotation":{"x":0.0,"y":0.13387656211853028,"z":0.0,"w":0.9909980297088623},"scale":{"x":1.1399999856948853,"y":1.1399999856948853,"z":1.1399999856948853},"objectBound":{"m_Center":{"x":-38.5138053894043,"y":1.1630526781082154,"z":-21.960407257080079},"m_Extent":{"x":0.7888641357421875,"y":0.9349983930587769,"z":0.4869880676269531}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"Airin
+    Avatar","name":"Airin (AechitecRoom)","position":{"x":-33.189998626708987,"y":0.33000001311302187,"z":-6.769999980926514},"rotation":{"x":0.0,"y":0.9897438287734985,"z":0.0,"w":-0.14285363256931306},"scale":{"x":1.1399999856948853,"y":1.1399999856948853,"z":1.1399999856948853},"objectBound":{"m_Center":{"x":-33.186004638671878,"y":1.1630526781082154,"z":-6.759664535522461},"m_Extent":{"x":0.790496826171875,"y":0.9349983930587769,"z":0.49829530715942385}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"Airin
+    Avatar","name":"Airin (LandInfoRoom)","position":{"x":2.8399999141693117,"y":0.33000001311302187,"z":-7.110000133514404},"rotation":{"x":0.0,"y":0.7917004227638245,"z":0.0,"w":-0.6109095215797424},"scale":{"x":1.1400001049041749,"y":1.1399999856948853,"z":1.1400001049041749},"objectBound":{"m_Center":{"x":2.8509130477905275,"y":1.1630526781082154,"z":-7.10807991027832},"m_Extent":{"x":0.4792945384979248,"y":0.9349983930587769,"z":0.7876486778259277}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]},{"addressableKey":"Airin
+    Avatar","name":"Airin (HoomConsulRoom)","position":{"x":-1.7699999809265137,"y":0.33000001311302187,"z":-25.670000076293947},"rotation":{"x":0.0,"y":-0.1864957958459854,"z":0.0,"w":-0.9824557900428772},"scale":{"x":1.1399999856948853,"y":1.1399999856948853,"z":1.1399999856948853},"objectBound":{"m_Center":{"x":-1.7748932838439942,"y":1.1630526781082154,"z":-25.679941177368165},"m_Extent":{"x":0.7947092056274414,"y":0.9349983930587769,"z":0.5510768890380859}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}]}]}'
   assetsParent: {fileID: 1825677271}
 --- !u!4 &1825677271
 Transform:
@@ -28003,7 +28324,6 @@ Transform:
   - {fileID: 1535299092}
   - {fileID: 2035494783}
   - {fileID: 537224379}
-  - {fileID: 203186640}
   - {fileID: 1285414347}
   - {fileID: 109834389}
   - {fileID: 1358924104}
@@ -28015,11 +28335,17 @@ Transform:
   - {fileID: 745219179}
   - {fileID: 1036814814}
   - {fileID: 1646544075}
+  - {fileID: 1763308385}
   - {fileID: 151825900}
   - {fileID: 646298938}
   - {fileID: 5026257660404863338}
   - {fileID: 2029369479611385344}
   - {fileID: 1566838506}
+  - {fileID: 6264180688519818566}
+  - {fileID: 5066543170284566467}
+  - {fileID: 1943109310624585153}
+  - {fileID: 4308491013549304761}
+  - {fileID: 1035637761642981578}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -28118,6 +28444,38 @@ PrefabInstance:
     - target: {fileID: 669441089965127565, guid: 16230bab062713d4281129057103cb39, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1860204138818915026, guid: 16230bab062713d4281129057103cb39, type: 3}
+      propertyPath: actionForCompanyUser.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1860204138818915026, guid: 16230bab062713d4281129057103cb39, type: 3}
+      propertyPath: actionForCompanyUser.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1860204138818915026, guid: 16230bab062713d4281129057103cb39, type: 3}
+      propertyPath: actionForCompanyUser.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1860204138818915026, guid: 16230bab062713d4281129057103cb39, type: 3}
+      propertyPath: actionForCompanyUser.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1860204138818915026, guid: 16230bab062713d4281129057103cb39, type: 3}
+      propertyPath: actionForCompanyUser.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 1860204138818915026, guid: 16230bab062713d4281129057103cb39, type: 3}
+      propertyPath: actionForCompanyUser.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1860204138818915026, guid: 16230bab062713d4281129057103cb39, type: 3}
+      propertyPath: actionForCompanyUser.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1860204138818915026, guid: 16230bab062713d4281129057103cb39, type: 3}
+      propertyPath: actionForCompanyUser.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5984769952214371200, guid: 16230bab062713d4281129057103cb39, type: 3}
       propertyPath: m_Name
@@ -29538,7 +29896,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &1914567118
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -29555,7 +29913,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1926230413
 GameObject:
   m_ObjectHideFlags: 0
@@ -30043,7 +30402,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 933532940336508982, guid: 9a432053126622d4bba28b42e48a652a, type: 3}
       propertyPath: m_RootOrder
-      value: 25
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 933532940336508982, guid: 9a432053126622d4bba28b42e48a652a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -30478,6 +30837,8 @@ Transform:
   - {fileID: 1836847912}
   - {fileID: 2016802180}
   - {fileID: 1980016174}
+  - {fileID: 97393017}
+  - {fileID: 276765227}
   m_Father: {fileID: 1108251053}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -30594,6 +30955,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 0
   roomName: Factory
+  PlayerCount: 0
 --- !u!1001 &1966728555
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30839,7 +31201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cd581ca65668c842966576998006b10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldName: 
+  worldName: D_Infinity_Labo
   forXanaDefaultAnalytics: 0
 --- !u!1 &1980761659
 GameObject:
@@ -30980,6 +31342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 1
   roomName: 
+  PlayerCount: 0
 --- !u!65 &1992673588
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31353,7 +31716,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da8386febc4935240979967489f859b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nearValue: 0.05
+  NearValue: 0.3
 --- !u!1 &2020529580
 GameObject:
   m_ObjectHideFlags: 0
@@ -32207,6 +32570,63 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.19, y: 0.32, z: 0.23}
   m_Center: {x: -2.1377857, y: 0.17926584, z: 0.014620295}
+--- !u!1001 &2065925578
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1825677271}
+    m_Modifications:
+    - target: {fileID: 4850253601013323066, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_Name
+      value: Airin (HoomConsulRoom)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_RootOrder
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -25.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.9824558
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.1864958
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 381.497
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
 --- !u!1 &2071035103
 GameObject:
   m_ObjectHideFlags: 0
@@ -33033,6 +33453,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1300640267994184526}
   m_Mesh: {fileID: -7460523315086485954, guid: ba78bdbbef871b24c9ec5b7c9b9d76a9, type: 3}
+--- !u!1 &366062202471690864 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4850253601013323066, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+  m_PrefabInstance: {fileID: 2065925578}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &419231033502176740
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -33130,6 +33555,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+--- !u!4 &1035637761642981578 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+  m_PrefabInstance: {fileID: 2065925578}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1186407347678007084
 Transform:
   m_ObjectHideFlags: 0
@@ -33145,6 +33575,11 @@ Transform:
   m_Father: {fileID: 6863980763914121364}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1278071439437074299 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4850253601013323066, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+  m_PrefabInstance: {fileID: 613895835}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1300640267994184526
 GameObject:
   m_ObjectHideFlags: 0
@@ -33421,6 +33856,11 @@ Transform:
   m_Father: {fileID: 7610367634906606556}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1943109310624585153 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+  m_PrefabInstance: {fileID: 613895835}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2029369479611385344 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6737258262425926017, guid: 30c2102b8749656449434f26dbfe03dc, type: 3}
@@ -33500,7 +33940,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2887387006730567839
 Transform:
   m_ObjectHideFlags: 0
@@ -33609,6 +34049,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+--- !u!1 &3495080366155362563 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4850253601013323066, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+  m_PrefabInstance: {fileID: 709154445}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3794718841326301483
 Transform:
   m_ObjectHideFlags: 0
@@ -33624,6 +34069,11 @@ Transform:
   m_Father: {fileID: 7610367634906606556}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4308491013549304761 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+  m_PrefabInstance: {fileID: 709154445}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4449957917524647295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33842,6 +34292,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5026257660059112763, guid: ce3aa5a2a670f8d4d954d06de2ae4a89, type: 3}
   m_PrefabInstance: {fileID: 7458102062467904849}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &5066543170284566467 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+  m_PrefabInstance: {fileID: 30849626}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5173193294531487624
 GameObject:
   m_ObjectHideFlags: 0
@@ -33933,6 +34388,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3388939758524937764}
   m_Mesh: {fileID: 5302568919011541938, guid: 0339f1f83865da040b2765d16145d596, type: 3}
+--- !u!1 &5549607404251803001 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4850253601013323066, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+  m_PrefabInstance: {fileID: 30849626}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5851524823202148372
 GameObject:
   m_ObjectHideFlags: 0
@@ -34404,6 +34864,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7038848826318616218}
   m_Mesh: {fileID: 3369316746193770658, guid: 0339f1f83865da040b2765d16145d596, type: 3}
+--- !u!4 &6264180688519818566 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5189377533677997952, guid: 93134dc9ff3cbb04391440524b43e39e, type: 3}
+  m_PrefabInstance: {fileID: 1715233407}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6394970570836423345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 366062202471690864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85567959ff4d8004bbd7f0713371a638, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomName: Home
+--- !u!114 &6405615660512165480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278071439437074299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85567959ff4d8004bbd7f0713371a638, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomName: Architec
 --- !u!4 &6520959915734362798
 Transform:
   m_ObjectHideFlags: 0
@@ -34508,6 +34999,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1825677271}
     m_Modifications:
+    - target: {fileID: 477278832424118449, guid: ce3aa5a2a670f8d4d954d06de2ae4a89, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -87.91
+      objectReference: {fileID: 0}
     - target: {fileID: 5026257660059112763, guid: ce3aa5a2a670f8d4d954d06de2ae4a89, type: 3}
       propertyPath: m_RootOrder
       value: 35
@@ -34696,6 +35191,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -34765,6 +35261,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5851524823202148372}
   m_Mesh: {fileID: -7523848125922048260, guid: 2661f3f269b8b364090bfb7cfb89e95f, type: 3}
+--- !u!114 &8556438476149899074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5549607404251803001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85567959ff4d8004bbd7f0713371a638, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomName: Factory
 --- !u!114 &8649491608395984250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34779,3 +35288,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   downloadKey: ARC_Monitor
   objectPriority: 0
+--- !u!114 &8779991368519401504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3495080366155362563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85567959ff4d8004bbd7f0713371a638, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomName: LandInfo

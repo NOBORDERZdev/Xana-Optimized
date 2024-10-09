@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9041244822813357972}
   - component: {fileID: 1221520896981569266}
   - component: {fileID: 392073684419107024}
+  - component: {fileID: 149246681737200451}
   m_Layer: 9
   m_Name: Colliders
   m_TagString: Item
@@ -44,8 +45,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6.435949, y: 10.834816, z: 6.1962366}
-  m_Center: {x: -0.03373933, y: 9.203226, z: 0.1976428}
+  m_Size: {x: 6.435949, y: 10.812777, z: 6.1962366}
+  m_Center: {x: -0.03373933, y: 9.192206, z: 0.1976428}
 --- !u!65 &392073684419107024
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -59,6 +60,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 6.4359493, y: 3.8546238, z: 7.059923}
   m_Center: {x: 0, y: 1.8490174, z: -0.11353648}
+--- !u!65 &149246681737200451
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 459988302717835918}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6.6317043, y: 0.43582535, z: 7.478653}
+  m_Center: {x: 0, y: 14.402884, z: 0}
 --- !u!1 &6791626732207446514
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,9 +351,11 @@ MonoBehaviour:
   itemType: 0
   itemCategory: 0
   itemThemes: 
+  componentsAttachedToItem: 
   bottomTransform: 0
   isValid: 0
   isPlaced: 0
+  isCurrentSpawnPoint: 0
   IsItemLocked: 0
   IsItemVisible: 0
   hasParent: 0

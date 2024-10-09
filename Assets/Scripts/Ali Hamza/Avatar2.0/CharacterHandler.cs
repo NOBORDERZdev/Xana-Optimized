@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static InventoryManager;
+//using static InventoryManager;
 
 public class CharacterHandler : MonoBehaviour
 {
@@ -28,16 +28,28 @@ public class CharacterHandler : MonoBehaviour
         switch (gender)
         {
             case "Male":
-                maleAvatarData.avatar_parent.gameObject.SetActive(true);
-                femaleAvatarData.avatar_parent.gameObject.SetActive(false);
-                UpdateAvatarRefrences(maleAvatarData);
+                if (femaleAvatarData.avatar_parent)
+                    femaleAvatarData.avatar_parent.gameObject.SetActive(false);
+                if (maleAvatarData.avatar_parent)
+                {
+                    maleAvatarData.avatar_parent.gameObject.SetActive(true);
+                    UpdateAvatarRefrences(maleAvatarData);
+                }
                 break;
             case "Female":
-                maleAvatarData.avatar_parent.gameObject.SetActive(false);
-                femaleAvatarData.avatar_parent.gameObject.SetActive(true);
-                UpdateAvatarRefrences(femaleAvatarData);
+                if(maleAvatarData.avatar_parent)
+                    maleAvatarData.avatar_parent.gameObject.SetActive(false);
+                if (femaleAvatarData.avatar_parent)
+                {
+                    femaleAvatarData.avatar_parent.gameObject.SetActive(true);
+                    UpdateAvatarRefrences(femaleAvatarData);
+                }
                 break;
         }
+
+        //InventoryManager.upateAssetOnGenderChanged?.Invoke();
+        //if(ConstantsHolder.xanaConstants.isStoreActive)
+
     }
 
     private void UpdateAvatarRefrences(AvatarData _avatarData)
@@ -60,17 +72,31 @@ public class CharacterHandler : MonoBehaviour
             GameManager.Instance.m_CharacterAnimator = _avatarData.avatar_animator;
             GameManager.Instance.avatarController = _avatarData.avatar_parent.GetComponent<AvatarController>();
             GameManager.Instance.characterBodyParts = _avatarData.avatar_parent.GetComponent<CharacterBodyParts>();
-            GameManager.Instance.m_CharacterAnimator.SetBool("Action", true);
-            GameManager.Instance.ActorManager.Init();
             GameManager.Instance.eyesBlinking = _avatarData.avatar_parent.GetComponent<EyesBlinking>();
+
+
+            if (!ConstantsHolder.xanaConstants.isStoreActive)
+            {
+                GameManager.Instance.m_CharacterAnimator.SetBool("Action", true);
+                GameManager.Instance.ActorManager.Init();
+            }
+            else
+            {
+                GameManager.Instance.m_CharacterAnimator.SetBool("IdleMenu", true);
+            }
+
         }
-        if (SaveCharacterProperties.instance != null)
+        if (SaveCharacterProperties.instance != null && GameManager.Instance != null)
         {
             SaveCharacterProperties.instance.charcterBodyParts = GameManager.Instance.characterBodyParts;
             SaveCharacterProperties.instance.characterController = GameManager.Instance.avatarController;
+            if (SaveCharacterProperties.instance.characterController.name.Contains("Female"))
+                SaveCharacterProperties.instance.SaveItemList.gender = "Female";
+            else
+                SaveCharacterProperties.instance.SaveItemList.gender = "Male";
         }
         
-        if (playerNameCanvas && playerPostCanvas)
+        if (playerNameCanvas && playerPostCanvas && !ConstantsHolder.xanaConstants.isStoreActive)
         {
             UpdateNameAndPostTarget(_avatarData.avatar_parent);   // Update the target of the name and post canvas to the active player
         }

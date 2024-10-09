@@ -109,7 +109,8 @@ public class UserAnimationPostFeature : MonoBehaviour
     public void ChangeMoodView(int index)
     {
        _selectedCategory = (ActorBehaviour.Category)index;
-      //  Debug.LogError("_selectedCategory ---> " + _selectedCategory.ToString());
+        //  Debug.LogError("_selectedCategory ---> " + _selectedCategory.ToString());
+        UnselectAllMoodView();
         InstantiateMoodsToUIHolder();
     }
     public string MoodSelected = default;
@@ -151,6 +152,11 @@ public class UserAnimationPostFeature : MonoBehaviour
             print("________________________ else ");
             GameManager.Instance.moodManager.ViewMoodActionAnimation(moodName + " Idle " + UnityEngine.Random.Range(1, 3), moodName, _animator.overrideController, _animator.transform.GetComponent<Animator>());
         }
+    }
+    public void UnselectAllMoodView()
+    {
+        foreach (Transform item in MoodTabList)
+            item.GetComponent<MoodTabItemView>()._selectionImage.gameObject.SetActive(false);
     }
 }
 [System.Serializable]

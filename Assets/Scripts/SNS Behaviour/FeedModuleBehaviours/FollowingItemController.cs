@@ -23,6 +23,7 @@ public class FollowingItemController : MonoBehaviour
 
     [SerializeField] GameObject MakeBfBtn;
     [SerializeField] GameObject RemoveBfBtn;
+    public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
 
     public Sprite defaultSP;
     int userId ;
@@ -206,6 +207,7 @@ public class FollowingItemController : MonoBehaviour
         }
 
         OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData);
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.FriendsProfile);
     }
 
     public void DressUpUserAvatar()
@@ -327,6 +329,8 @@ public class FollowingItemController : MonoBehaviour
                Debug.Log("user unfollow success data:" + data);
                 //searchUserRow.isFollowing = false;
                 FollowFollowingSetUp(false);
+                if (SNS_APIManager.Instance.BFCount > 0)
+                    SNS_APIManager.Instance.BFCount -= 1;
             }
         }
     }

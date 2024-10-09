@@ -13,27 +13,35 @@ public class AvProDirectionalSound : MonoBehaviour
     [Range(0.2f, 0.5f)]
     public float updateInterval = 0.5f; // Time interval for volume update
 
-    private Transform playerCam; // Reference to your player object or camera
+    public Transform playerCam; // Reference to your player object or camera
     private WaitForSeconds updateDelay;
-    private Coroutine volumeCoroutine;
+    public Coroutine volumeCoroutine;
     public MediaPlayer activePlayer;
     public AudioSource audioSource;
     private float defaultMaxDis = 0;
     private Slider landscapeSlider;
     private float sliderValue = 0f;
+    public SPAAIHandler PlayerTriggerCheck;
 
 
     private void OnEnable()
     {
+        AvatarSpawnerOnDisconnect.OninternetDisconnect += VolumeCoroutineUnAssign;
+        AvatarSpawnerOnDisconnect.OninternetConnected += VolumeCoroutineAssigning;
         InRoomSoundHandler.soundAction += Mute_UnMute_Sound;
         ScreenOrientationManager.switchOrientation += ChangeOrientation;
+        if (volumeCoroutine == null)
+            volumeCoroutine = StartCoroutine(AdjustScreenVolume());
     }
     private void OnDisable()
     {
+        AvatarSpawnerOnDisconnect.OninternetDisconnect -= VolumeCoroutineUnAssign;
+        AvatarSpawnerOnDisconnect.OninternetConnected -= VolumeCoroutineAssigning;
         InRoomSoundHandler.soundAction -= Mute_UnMute_Sound;
         ScreenOrientationManager.switchOrientation -= ChangeOrientation;
         if (volumeCoroutine != null)
             StopCoroutine(volumeCoroutine);
+            volumeCoroutine = null;
     }
 
     private void Start()
@@ -67,8 +75,6 @@ public class AvProDirectionalSound : MonoBehaviour
         else
             AddEventTrigger(eventTrigger, EventTriggerType.PointerUp, OnPointerUp);
     }
-
-
    
     void UpdateSliderValue(float value)
     {
@@ -101,19 +107,41 @@ public class AvProDirectionalSound : MonoBehaviour
         }
     }
 
-
     public void ActiveDirectionalSound()
     {
+        playerCam = ReferencesForGamePlay.instance.m_34player.transform;
         if (activePlayer.gameObject.activeSelf)
-            volumeCoroutine = StartCoroutine(AdjustScreenVolume());
+        {
+            if (volumeCoroutine == null)
+            {
+                volumeCoroutine = StartCoroutine(AdjustScreenVolume());
+            }
+        }
+    }
+
+    public void ActivateDirectionalSoundIfNotYet()
+    {
+            if (volumeCoroutine == null)
+            {
+                if (PlayerTriggerCheck.IsPlayerTriggered)
+                {
+                    volumeCoroutine = StartCoroutine(AdjustScreenVolume());
+                }
+            }
     }
 
     IEnumerator AdjustScreenVolume()
     {
-        playerCam = ReferencesForGamePlay.instance.m_34player.transform;
-
         while (true)
         {
+            if (!playerCam)
+            {
+                if (ReferencesForGamePlay.instance.m_34player)
+                {
+                    playerCam = ReferencesForGamePlay.instance.m_34player.transform;
+                }
+            }
+
             if (!activePlayer.gameObject.activeSelf)
             {
                 if (volumeCoroutine != null)
@@ -161,9 +189,9 @@ public class AvProDirectionalSound : MonoBehaviour
             maxDistance = defaultMaxDis;
     }
 
-    private void ChangeOrientation()
+    private void ChangeOrientation(bool IsPortrait)
     {
-        if (ScreenOrientationManager._instance.isPotrait)
+        if (IsPortrait)
         {
             sliderValue = SoundSettings.soundManagerSettings.totalVolumeSliderPotrait.value;
             AddTriggerOnSlider(SoundSettings.soundManagerSettings.totalVolumeSliderPotrait);
@@ -175,5 +203,41 @@ public class AvProDirectionalSound : MonoBehaviour
         }
     }
 
+    public void VolumeCoroutineUnAssign()
+    {
+        activePlayer.AudioVolume = 0f;
+        audioSource.mute = true;
+        if (volumeCoroutine != null)
+        {
+            StopCoroutine(volumeCoroutine);
+            volumeCoroutine = null;
+        }
+    }
 
+    public void VolumeCoroutineAssigning()
+    {
+        StartCoroutine(EnableVideoSound());
+    }
+
+    public IEnumerator EnableVideoSound()
+    {
+        
+        if (!LoadingHandler.Instance.isLoadingComplete)
+        {
+            // Wait for a end of frame
+            yield return null;
+        }
+        Debug.Log("Called This");
+        SoundController.Instance.EffectsSource.mute = false;
+        SoundController.Instance.EffectsSource.volume = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME);
+        yield return new WaitForSeconds(0.5f);
+        if (!ConstantsHolder.isTeleporting) 
+            audioSource.mute = false;
+        else 
+            audioSource.mute = true;
+        if (volumeCoroutine == null)
+        {
+            volumeCoroutine = StartCoroutine(AdjustScreenVolume());
+        }
+    }
 }

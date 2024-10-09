@@ -165,7 +165,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441088401971007}
-  - component: {fileID: 669441088401971006}
+  - component: {fileID: 6971598062031054378}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -190,7 +190,7 @@ Transform:
   m_Father: {fileID: 669441090195528208}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441088401971006
+--- !u!114 &6971598062031054378
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -199,19 +199,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441088401971004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441090509449259}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441088776835392}
   videoPlayer: {fileID: 669441090195528236}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441088403120640
 GameObject:
   m_ObjectHideFlags: 0
@@ -1852,6 +1852,7 @@ GameObject:
   - component: {fileID: 669441088492315049}
   - component: {fileID: 669441088492315051}
   - component: {fileID: 669441088492315048}
+  - component: {fileID: 6757906555691055642}
   m_Layer: 23
   m_Name: Video (5)
   m_TagString: Untagged
@@ -1872,7 +1873,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 669441089441161120}
-  - {fileID: 669441089758056769}
   m_Father: {fileID: 669441088782668489}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2047,6 +2047,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!328 &6757906555691055642
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441088492315047}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 0}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 2
+  m_AspectRatio: 2
+  m_DataSource: 1
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 1
+  m_TargetAudioSources:
+  - {fileID: 669441088492315048}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 0
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
 --- !u!1 &669441088496378821
 GameObject:
   m_ObjectHideFlags: 0
@@ -2668,11 +2703,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441088514341870}
   - component: {fileID: 669441088514341844}
-  - component: {fileID: 669441088514341845}
   - component: {fileID: 669441088514341842}
   - component: {fileID: 669441088514341843}
   - component: {fileID: 669441088514341840}
   - component: {fileID: 669441088514341841}
+  - component: {fileID: 270275276352378070}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -2893,25 +2928,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441088514341845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441088514341871}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441088514341844}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441088514341842
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3056,6 +3072,28 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &270275276352378070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441088514341871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441088514341844}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441088521423123
 GameObject:
   m_ObjectHideFlags: 0
@@ -3641,7 +3679,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -13.699951, y: -13.466553}
+  m_AnchoredPosition: {x: -13.700195, y: -13.466553}
   m_SizeDelta: {x: 37, y: 37}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &669441088555370736
@@ -3729,6 +3767,18 @@ MonoBehaviour:
       - m_Target: {fileID: 5984769952214371202}
         m_TargetAssemblyTypeName: NFT_Holder_Manager, Assembly-CSharp
         m_MethodName: CloseBtnClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5984769952214371202}
+        m_TargetAssemblyTypeName: NFT_Holder_Manager, Assembly-CSharp
+        m_MethodName: CloseAllRatioRefs
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4604,11 +4654,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441088585096813}
   - component: {fileID: 669441088585096787}
-  - component: {fileID: 669441088585096784}
   - component: {fileID: 669441088585096785}
   - component: {fileID: 669441088585096814}
   - component: {fileID: 669441088585096815}
-  - component: {fileID: 669441088585096812}
+  - component: {fileID: 6724081992204700094}
+  - component: {fileID: 7877307537583353161}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -4628,13 +4678,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 669441089791414449}
-  m_RootOrder: 1
+  m_Father: {fileID: 669441089475290890}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 868.952, y: 487.2245}
+  m_AnchoredPosition: {x: -15.75, y: 0}
+  m_SizeDelta: {x: 1200, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &669441088585096787
 MonoBehaviour:
@@ -4829,25 +4879,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441088585096784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441088585096810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441088585096787}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441088585096785
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4968,7 +4999,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 669441088585096810}
   m_CullTransparentMesh: 1
---- !u!114 &669441088585096812
+--- !u!114 &6724081992204700094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441088585096810}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441088585096787}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
+--- !u!114 &7877307537583353161
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4977,21 +5030,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441088585096810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75f3b319d2d69934d8bf545ab45c918d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f17cdc186456a4469a139a104d2ca72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
   _mediaPlayer: {fileID: 669441088585096787}
-  _scaleMode: 2
-  _color: {r: 1, g: 1, b: 1, a: 1}
-  _allowTransparency: 0
-  _useDepth: 0
-  _depth: 0
-  _isAreaFullScreen: 1
-  _areaX: 0
-  _areaY: 0
-  _areaWidth: 1
-  _areaHeight: 1
-  _showAreaInEditor: 1
+  _defaultTexture: {fileID: 8400000, guid: cf8db7ef58bd3ce4f928564026c9d056, type: 2}
+  _uvRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  _setNativeSize: 0
+  _scaleMode: 0
+  _noDefaultDisplay: 0
+  _displayInEditor: 1
 --- !u!1 &669441088588410230
 GameObject:
   m_ObjectHideFlags: 0
@@ -5463,7 +5524,7 @@ MonoBehaviour:
   m_text: "\u7802\u306E\u7F8E\u8853\u9928"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-  m_sharedMaterial: {fileID: 1043263178539073334, guid: 01719f749a4a25e409d8f20016b0effc, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5538,7 +5599,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441088600873967}
-  - component: {fileID: 669441088600873966}
+  - component: {fileID: 3937916252493295762}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -5563,7 +5624,7 @@ Transform:
   m_Father: {fileID: 669441090468958494}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441088600873966
+--- !u!114 &3937916252493295762
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5572,19 +5633,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441088600873964}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441089180536493}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441088943285603}
   videoPlayer: {fileID: 669441090468958465}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441088603501712
 GameObject:
   m_ObjectHideFlags: 0
@@ -8250,7 +8311,7 @@ MonoBehaviour:
   m_text: Author Name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-  m_sharedMaterial: {fileID: 233941157482760815, guid: 7e227ca196be3c145b4525eb511deb93, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9248,7 +9309,7 @@ MonoBehaviour:
   autoPlay: 1
   useTargetAsV3: 0
   endValueFloat: 0
-  endValueV3: {x: 0, y: 0, z: 360}
+  endValueV3: {x: 0, y: 0, z: -360}
   endValueV2: {x: 0, y: 0}
   endValueColor: {r: 1, g: 1, b: 1, a: 1}
   endValueString: 
@@ -9352,11 +9413,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441088776835418}
   - component: {fileID: 669441088776835392}
-  - component: {fileID: 669441088776835393}
   - component: {fileID: 669441088776835422}
   - component: {fileID: 669441088776835423}
   - component: {fileID: 669441088776835420}
-  - component: {fileID: 669441088776835421}
+  - component: {fileID: 730332900324863194}
+  - component: {fileID: 8226450741391653491}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -9376,13 +9437,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 669441090195528208}
-  m_RootOrder: 1
+  m_Father: {fileID: 669441090284322600}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 631.19, y: 471}
+  m_AnchoredPosition: {x: -15.75, y: 0}
+  m_SizeDelta: {x: 1200, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &669441088776835392
 MonoBehaviour:
@@ -9577,25 +9638,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441088776835393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441088776835419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441088776835392}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441088776835422
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9716,7 +9758,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 669441088776835419}
   m_CullTransparentMesh: 1
---- !u!114 &669441088776835421
+--- !u!114 &730332900324863194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441088776835419}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441088776835392}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
+--- !u!114 &8226450741391653491
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9725,21 +9789,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441088776835419}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75f3b319d2d69934d8bf545ab45c918d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f17cdc186456a4469a139a104d2ca72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
   _mediaPlayer: {fileID: 669441088776835392}
-  _scaleMode: 2
-  _color: {r: 1, g: 1, b: 1, a: 1}
-  _allowTransparency: 0
-  _useDepth: 0
-  _depth: 0
-  _isAreaFullScreen: 1
-  _areaX: 0
-  _areaY: 0
-  _areaWidth: 1
-  _areaHeight: 1
-  _showAreaInEditor: 1
+  _defaultTexture: {fileID: 8400000, guid: cf8db7ef58bd3ce4f928564026c9d056, type: 2}
+  _uvRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  _setNativeSize: 0
+  _scaleMode: 0
+  _noDefaultDisplay: 0
+  _displayInEditor: 1
 --- !u!1 &669441088779857291
 GameObject:
   m_ObjectHideFlags: 0
@@ -9867,6 +9939,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441088782668489}
+  - component: {fileID: 275891173793485197}
   m_Layer: 23
   m_Name: 1.1 (landscape)
   m_TagString: Untagged
@@ -9888,6 +9961,7 @@ RectTransform:
   m_Children:
   - {fileID: 669441090117124675}
   - {fileID: 669441088492315046}
+  - {fileID: 669441089758056769}
   m_Father: {fileID: 669441089718018072}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9896,6 +9970,33 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -0.000012397766}
   m_SizeDelta: {x: 1613, y: 480.66797}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &275891173793485197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441088782668486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673ebe6b1ddeec24e90406ca14165962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsLive: 0
+  PlayOnAwake: 1
+  UploadFeatureVideoID: 
+  YoutubeInstance: {fileID: 7947395190253853302}
+  VideoId: 
+  PreferedQuality: 18
+  VideoPlayer: {fileID: 669441088492315049}
+  VideoPlayer1: {fileID: 6757906555691055642}
+  audioSource: {fileID: 669441089758056773}
+  AVProVideoPlayer: {fileID: 669441089758056775}
+  PreRecVideoScreen: {fileID: 0}
+  LiveVideoPlayerScreen: {fileID: 0}
+  AndroidLiveVideoMesh: {fileID: 0}
+  IOSLiveVideoMesh: {fileID: 0}
+  IsInternetDisconnected: 0
 --- !u!1 &669441088788946980
 GameObject:
   m_ObjectHideFlags: 0
@@ -9981,7 +10082,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441088791800906}
-  - component: {fileID: 669441088791800909}
+  - component: {fileID: 6289829599151589621}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -10006,7 +10107,7 @@ Transform:
   m_Father: {fileID: 669441089620203634}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441088791800909
+--- !u!114 &6289829599151589621
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10015,19 +10116,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441088791800907}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441090503599213}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441090118363337}
   videoPlayer: {fileID: 669441089620203637}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441088794577486
 GameObject:
   m_ObjectHideFlags: 0
@@ -11470,7 +11571,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441088861858544}
-  - component: {fileID: 669441088861858547}
+  - component: {fileID: 4742280425850506428}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -11495,7 +11596,7 @@ Transform:
   m_Father: {fileID: 669441088917572248}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441088861858547
+--- !u!114 &4742280425850506428
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11504,19 +11605,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441088861858545}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441088647003992}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441088776835392}
   videoPlayer: {fileID: 669441090195528236}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441088863737000
 GameObject:
   m_ObjectHideFlags: 0
@@ -11972,6 +12073,7 @@ GameObject:
   - component: {fileID: 669441088917572251}
   - component: {fileID: 669441088917572253}
   - component: {fileID: 669441088917572250}
+  - component: {fileID: 7354675347455000718}
   m_Layer: 23
   m_Name: Video (8)
   m_TagString: Untagged
@@ -11992,7 +12094,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 669441088861858544}
-  - {fileID: 669441090170535037}
   m_Father: {fileID: 669441089780945452}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12167,6 +12268,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!328 &7354675347455000718
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441088917572249}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 0}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 2
+  m_AspectRatio: 2
+  m_DataSource: 1
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 1
+  m_TargetAudioSources:
+  - {fileID: 669441088917572250}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 0
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
 --- !u!1 &669441088927618355
 GameObject:
   m_ObjectHideFlags: 0
@@ -12330,6 +12466,7 @@ GameObject:
   - component: {fileID: 669441088934124856}
   - component: {fileID: 669441088934124858}
   - component: {fileID: 669441088934124859}
+  - component: {fileID: 777575682609498777}
   m_Layer: 23
   m_Name: Video (1)
   m_TagString: Untagged
@@ -12350,7 +12487,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 669441089061893728}
-  - {fileID: 669441088942637840}
   m_Father: {fileID: 669441089856664513}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12525,6 +12661,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!328 &777575682609498777
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441088934124854}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 0}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 2
+  m_AspectRatio: 2
+  m_DataSource: 1
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 1
+  m_TargetAudioSources:
+  - {fileID: 669441088934124859}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 0
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
 --- !u!1 &669441088936326846
 GameObject:
   m_ObjectHideFlags: 0
@@ -12706,18 +12877,18 @@ GameObject:
   m_Component:
   - component: {fileID: 669441088942637840}
   - component: {fileID: 669441088942637846}
-  - component: {fileID: 669441088942637847}
   - component: {fileID: 669441088942637844}
   - component: {fileID: 669441088942637845}
   - component: {fileID: 669441088942637842}
-  - component: {fileID: 669441088942637843}
+  - component: {fileID: 7484201410136904696}
+  - component: {fileID: 6215306995554616796}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &669441088942637840
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12730,13 +12901,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 669441088934124857}
-  m_RootOrder: 1
+  m_Father: {fileID: 669441089856664513}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 470, y: 470}
+  m_AnchoredPosition: {x: -15.75, y: 0}
+  m_SizeDelta: {x: 1200, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &669441088942637846
 MonoBehaviour:
@@ -12931,25 +13102,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441088942637847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441088942637841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441088942637846}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441088942637844
 AudioSource:
   m_ObjectHideFlags: 0
@@ -13070,7 +13222,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 669441088942637841}
   m_CullTransparentMesh: 1
---- !u!114 &669441088942637843
+--- !u!114 &7484201410136904696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441088942637841}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441088942637846}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
+--- !u!114 &6215306995554616796
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13079,21 +13253,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441088942637841}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75f3b319d2d69934d8bf545ab45c918d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f17cdc186456a4469a139a104d2ca72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
   _mediaPlayer: {fileID: 669441088942637846}
-  _scaleMode: 2
-  _color: {r: 1, g: 1, b: 1, a: 1}
-  _allowTransparency: 0
-  _useDepth: 0
-  _depth: 0
-  _isAreaFullScreen: 1
-  _areaX: 0
-  _areaY: 0
-  _areaWidth: 1
-  _areaHeight: 1
-  _showAreaInEditor: 0
+  _defaultTexture: {fileID: 8400000, guid: cf8db7ef58bd3ce4f928564026c9d056, type: 2}
+  _uvRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  _setNativeSize: 0
+  _scaleMode: 0
+  _noDefaultDisplay: 0
+  _displayInEditor: 1
 --- !u!1 &669441088943285626
 GameObject:
   m_ObjectHideFlags: 0
@@ -13104,11 +13286,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441088943285629}
   - component: {fileID: 669441088943285603}
-  - component: {fileID: 669441088943285600}
   - component: {fileID: 669441088943285601}
   - component: {fileID: 669441088943285630}
   - component: {fileID: 669441088943285631}
-  - component: {fileID: 669441088943285628}
+  - component: {fileID: 5350612635153865714}
+  - component: {fileID: 3565756554174267013}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -13128,13 +13310,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 669441090468958494}
-  m_RootOrder: 1
+  m_Father: {fileID: 669441089593653042}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 713.34, y: 414.26}
+  m_AnchoredPosition: {x: -15.75, y: 0}
+  m_SizeDelta: {x: 1200, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &669441088943285603
 MonoBehaviour:
@@ -13329,25 +13511,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441088943285600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441088943285626}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441088943285603}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441088943285601
 AudioSource:
   m_ObjectHideFlags: 0
@@ -13468,7 +13631,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 669441088943285626}
   m_CullTransparentMesh: 1
---- !u!114 &669441088943285628
+--- !u!114 &5350612635153865714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441088943285626}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441088943285603}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
+--- !u!114 &3565756554174267013
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13477,21 +13662,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441088943285626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75f3b319d2d69934d8bf545ab45c918d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f17cdc186456a4469a139a104d2ca72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
   _mediaPlayer: {fileID: 669441088943285603}
-  _scaleMode: 2
-  _color: {r: 1, g: 1, b: 1, a: 1}
-  _allowTransparency: 0
-  _useDepth: 0
-  _depth: 0
-  _isAreaFullScreen: 1
-  _areaX: 0
-  _areaY: 0
-  _areaWidth: 1
-  _areaHeight: 1
-  _showAreaInEditor: 1
+  _defaultTexture: {fileID: 8400000, guid: cf8db7ef58bd3ce4f928564026c9d056, type: 2}
+  _uvRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  _setNativeSize: 0
+  _scaleMode: 0
+  _noDefaultDisplay: 0
+  _displayInEditor: 1
 --- !u!1 &669441088948130781
 GameObject:
   m_ObjectHideFlags: 0
@@ -14084,11 +14277,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441088972888253}
   - component: {fileID: 669441088972888227}
-  - component: {fileID: 669441088972888224}
   - component: {fileID: 669441088972888225}
   - component: {fileID: 669441088972888254}
   - component: {fileID: 669441088972888255}
   - component: {fileID: 669441088972888252}
+  - component: {fileID: 4145983674181633440}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -14309,25 +14502,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441088972888224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441088972888250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441088972888227}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441088972888225
 AudioSource:
   m_ObjectHideFlags: 0
@@ -14472,6 +14646,28 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &4145983674181633440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441088972888250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441088972888227}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441088974380221
 GameObject:
   m_ObjectHideFlags: 0
@@ -15191,11 +15387,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441089006650363}
   - component: {fileID: 669441089006650337}
-  - component: {fileID: 669441089006650366}
   - component: {fileID: 669441089006650367}
   - component: {fileID: 669441089006650364}
   - component: {fileID: 669441089006650365}
   - component: {fileID: 669441089006650362}
+  - component: {fileID: 8270685953749430500}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -15416,25 +15612,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441089006650366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441089006650360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441089006650337}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441089006650367
 AudioSource:
   m_ObjectHideFlags: 0
@@ -15579,6 +15756,28 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &8270685953749430500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089006650360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441089006650337}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089011541434
 GameObject:
   m_ObjectHideFlags: 0
@@ -16649,7 +16848,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089061893728}
-  - component: {fileID: 669441089061893731}
+  - component: {fileID: 2726646008036187798}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -16674,7 +16873,7 @@ Transform:
   m_Father: {fileID: 669441088934124857}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441089061893731
+--- !u!114 &2726646008036187798
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -16683,19 +16882,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441089061893729}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441089981549938}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441088942637846}
   videoPlayer: {fileID: 669441088934124856}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089071737103
 GameObject:
   m_ObjectHideFlags: 0
@@ -16706,11 +16905,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441089071737102}
   - component: {fileID: 669441089071737204}
-  - component: {fileID: 669441089071737205}
   - component: {fileID: 669441089071737202}
   - component: {fileID: 669441089071737203}
   - component: {fileID: 669441089071737200}
-  - component: {fileID: 669441089071737201}
+  - component: {fileID: 5156360260175193740}
+  - component: {fileID: 4651289493802488352}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -16730,13 +16929,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 669441089933788806}
-  m_RootOrder: 1
+  m_Father: {fileID: 669441089098050887}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 281.67, y: 491.32}
+  m_AnchoredPosition: {x: -15.75, y: 0}
+  m_SizeDelta: {x: 1200, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &669441089071737204
 MonoBehaviour:
@@ -16931,25 +17130,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441089071737205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441089071737103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441089071737204}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441089071737202
 AudioSource:
   m_ObjectHideFlags: 0
@@ -17070,7 +17250,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 669441089071737103}
   m_CullTransparentMesh: 1
---- !u!114 &669441089071737201
+--- !u!114 &5156360260175193740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089071737103}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441089071737204}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
+--- !u!114 &4651289493802488352
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17079,21 +17281,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441089071737103}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75f3b319d2d69934d8bf545ab45c918d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f17cdc186456a4469a139a104d2ca72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
   _mediaPlayer: {fileID: 669441089071737204}
-  _scaleMode: 2
-  _color: {r: 1, g: 1, b: 1, a: 1}
-  _allowTransparency: 0
-  _useDepth: 0
-  _depth: 0
-  _isAreaFullScreen: 1
-  _areaX: 0
-  _areaY: 0
-  _areaWidth: 1
-  _areaHeight: 1
-  _showAreaInEditor: 1
+  _defaultTexture: {fileID: 8400000, guid: cf8db7ef58bd3ce4f928564026c9d056, type: 2}
+  _uvRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  _setNativeSize: 0
+  _scaleMode: 0
+  _noDefaultDisplay: 0
+  _displayInEditor: 1
 --- !u!1 &669441089079202130
 GameObject:
   m_ObjectHideFlags: 0
@@ -17345,11 +17555,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441089083408375}
   - component: {fileID: 669441089083408381}
-  - component: {fileID: 669441089083408378}
   - component: {fileID: 669441089083408379}
   - component: {fileID: 669441089083408376}
   - component: {fileID: 669441089083408377}
   - component: {fileID: 669441089083408374}
+  - component: {fileID: 2878372047612384872}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -17570,25 +17780,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441089083408378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441089083408372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441089083408381}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441089083408379
 AudioSource:
   m_ObjectHideFlags: 0
@@ -17733,6 +17924,28 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &2878372047612384872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089083408372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441089083408381}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089085676744
 GameObject:
   m_ObjectHideFlags: 0
@@ -18353,6 +18566,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089098050887}
+  - component: {fileID: 4034076806910071666}
   m_Layer: 23
   m_Name: 9.16 (landscape)
   m_TagString: Untagged
@@ -18376,6 +18590,7 @@ RectTransform:
   - {fileID: 669441089933788806}
   - {fileID: 669441089868137462}
   - {fileID: 669441090401256470}
+  - {fileID: 669441089071737102}
   m_Father: {fileID: 669441089501201319}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18384,6 +18599,33 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -0.000012397766}
   m_SizeDelta: {x: 1613, y: 480.66797}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4034076806910071666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089098050884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673ebe6b1ddeec24e90406ca14165962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsLive: 0
+  PlayOnAwake: 1
+  UploadFeatureVideoID: 
+  YoutubeInstance: {fileID: 7947395190253853302}
+  VideoId: 
+  PreferedQuality: 18
+  VideoPlayer: {fileID: 669441089933788809}
+  VideoPlayer1: {fileID: 1221265845017713718}
+  audioSource: {fileID: 669441089071737202}
+  AVProVideoPlayer: {fileID: 669441089071737204}
+  PreRecVideoScreen: {fileID: 0}
+  LiveVideoPlayerScreen: {fileID: 0}
+  AndroidLiveVideoMesh: {fileID: 0}
+  IOSLiveVideoMesh: {fileID: 0}
+  IsInternetDisconnected: 0
 --- !u!1 &669441089098999540
 GameObject:
   m_ObjectHideFlags: 0
@@ -20326,7 +20568,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00012207031}
+  m_AnchoredPosition: {x: 0, y: 0.00061035156}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &669441089183939598
@@ -20583,7 +20825,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089195420527}
-  - component: {fileID: 669441089195420526}
+  - component: {fileID: 2684277050412224477}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -20608,7 +20850,7 @@ Transform:
   m_Father: {fileID: 669441089954164399}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441089195420526
+--- !u!114 &2684277050412224477
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20617,19 +20859,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441089195420524}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441089021137801}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441089222038856}
   videoPlayer: {fileID: 669441089954164398}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089199115077
 GameObject:
   m_ObjectHideFlags: 0
@@ -20952,11 +21194,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441089222038850}
   - component: {fileID: 669441089222038856}
-  - component: {fileID: 669441089222038857}
   - component: {fileID: 669441089222038854}
   - component: {fileID: 669441089222038855}
   - component: {fileID: 669441089222038852}
   - component: {fileID: 669441089222038853}
+  - component: {fileID: 6171829252063547993}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -21177,25 +21419,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441089222038857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441089222038851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441089222038856}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441089222038854
 AudioSource:
   m_ObjectHideFlags: 0
@@ -21340,6 +21563,28 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &6171829252063547993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089222038851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441089222038856}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089228781401
 GameObject:
   m_ObjectHideFlags: 0
@@ -21702,6 +21947,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 201
@@ -23666,7 +23912,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089343291307}
-  - component: {fileID: 669441089343291306}
+  - component: {fileID: 4172742155717531017}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -23691,7 +23937,7 @@ Transform:
   m_Father: {fileID: 669441090351160380}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441089343291306
+--- !u!114 &4172742155717531017
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -23700,19 +23946,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441089343291304}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441089618809749}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441089788892290}
   videoPlayer: {fileID: 669441090351160383}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089368039933
 GameObject:
   m_ObjectHideFlags: 0
@@ -25075,7 +25321,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -123.8, y: -103}
+  m_AnchoredPosition: {x: -123.799805, y: -103}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &669441089416729378
@@ -26106,7 +26352,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089441161120}
-  - component: {fileID: 669441089441161123}
+  - component: {fileID: 5944455150533297825}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -26131,7 +26377,7 @@ Transform:
   m_Father: {fileID: 669441088492315046}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441089441161123
+--- !u!114 &5944455150533297825
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -26140,19 +26386,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441089441161121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441090431963329}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441089758056775}
   videoPlayer: {fileID: 669441088492315049}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089446315192
 GameObject:
   m_ObjectHideFlags: 0
@@ -26859,6 +27105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089475290890}
+  - component: {fileID: 3954181671395087598}
   m_Layer: 23
   m_Name: 16.9 (landscape)
   m_TagString: Untagged
@@ -26880,6 +27127,7 @@ RectTransform:
   m_Children:
   - {fileID: 669441089417957630}
   - {fileID: 669441089791414449}
+  - {fileID: 669441088585096813}
   m_Father: {fileID: 669441089718018072}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -26888,6 +27136,33 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -0.000012397766}
   m_SizeDelta: {x: 1613, y: 480.66797}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3954181671395087598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089475290891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673ebe6b1ddeec24e90406ca14165962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsLive: 0
+  PlayOnAwake: 1
+  UploadFeatureVideoID: 
+  YoutubeInstance: {fileID: 7947395190253853302}
+  VideoId: 
+  PreferedQuality: 18
+  VideoPlayer: {fileID: 669441089791414448}
+  VideoPlayer1: {fileID: 8767321362843402649}
+  audioSource: {fileID: 669441088585096785}
+  AVProVideoPlayer: {fileID: 669441088585096787}
+  PreRecVideoScreen: {fileID: 0}
+  LiveVideoPlayerScreen: {fileID: 0}
+  AndroidLiveVideoMesh: {fileID: 0}
+  IOSLiveVideoMesh: {fileID: 0}
+  IsInternetDisconnected: 0
 --- !u!1 &669441089479672932
 GameObject:
   m_ObjectHideFlags: 0
@@ -27705,7 +27980,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089512327771}
-  - component: {fileID: 669441089512327770}
+  - component: {fileID: 4529274249966964713}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -27730,7 +28005,7 @@ Transform:
   m_Father: {fileID: 669441089791414449}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441089512327770
+--- !u!114 &4529274249966964713
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -27739,19 +28014,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441089512327768}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441088794577842}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441088585096787}
   videoPlayer: {fileID: 669441089791414448}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089512626621
 GameObject:
   m_ObjectHideFlags: 0
@@ -27813,6 +28088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -27832,6 +28108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d49b7c1bcd2e07499844da127be038d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_ForceModuleActive: 0
 --- !u!1 &669441089519647780
 GameObject:
@@ -27842,7 +28119,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089519647783}
-  - component: {fileID: 669441089519647782}
+  - component: {fileID: 6851167804558435947}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -27867,7 +28144,7 @@ Transform:
   m_Father: {fileID: 669441089135672906}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441089519647782
+--- !u!114 &6851167804558435947
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -27876,19 +28153,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441089519647780}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441088597502804}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441088514341844}
   videoPlayer: {fileID: 669441090419844282}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089522927061
 GameObject:
   m_ObjectHideFlags: 0
@@ -28285,7 +28562,7 @@ MonoBehaviour:
   m_text: Author Name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-  m_sharedMaterial: {fileID: 233941157482760815, guid: 7e227ca196be3c145b4525eb511deb93, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -29004,6 +29281,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089593653042}
+  - component: {fileID: 3065165899464588819}
   m_Layer: 23
   m_Name: 16.9 (landscape)
   m_TagString: Untagged
@@ -29027,6 +29305,7 @@ RectTransform:
   - {fileID: 669441090468958494}
   - {fileID: 669441089432427647}
   - {fileID: 669441089812195636}
+  - {fileID: 669441088943285629}
   m_Father: {fileID: 669441089501201319}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -29035,6 +29314,33 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -0.000012397766}
   m_SizeDelta: {x: 1613, y: 480.66797}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3065165899464588819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089593653043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673ebe6b1ddeec24e90406ca14165962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsLive: 0
+  PlayOnAwake: 1
+  UploadFeatureVideoID: 
+  YoutubeInstance: {fileID: 7947395190253853302}
+  VideoId: 
+  PreferedQuality: 18
+  VideoPlayer: {fileID: 669441090468958465}
+  VideoPlayer1: {fileID: 4520590002647543106}
+  audioSource: {fileID: 669441088943285601}
+  AVProVideoPlayer: {fileID: 669441088943285603}
+  PreRecVideoScreen: {fileID: 0}
+  LiveVideoPlayerScreen: {fileID: 0}
+  AndroidLiveVideoMesh: {fileID: 0}
+  IOSLiveVideoMesh: {fileID: 0}
+  IsInternetDisconnected: 0
 --- !u!1 &669441089595545002
 GameObject:
   m_ObjectHideFlags: 0
@@ -29565,6 +29871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -29584,6 +29891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d49b7c1bcd2e07499844da127be038d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_ForceModuleActive: 0
 --- !u!1 &669441089618809745
 GameObject:
@@ -30017,7 +30325,7 @@ MonoBehaviour:
   m_text: "\u7802\u306E\u7F8E\u8853\u9928"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-  m_sharedMaterial: {fileID: 1043263178539073334, guid: 01719f749a4a25e409d8f20016b0effc, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -31954,7 +32262,7 @@ MonoBehaviour:
   autoPlay: 1
   useTargetAsV3: 0
   endValueFloat: 0
-  endValueV3: {x: 0, y: 0, z: 360}
+  endValueV3: {x: 0, y: 0, z: -360}
   endValueV2: {x: 0, y: 0}
   endValueColor: {r: 1, g: 1, b: 1, a: 1}
   endValueString: 
@@ -32441,11 +32749,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441089758056769}
   - component: {fileID: 669441089758056775}
-  - component: {fileID: 669441089758056772}
   - component: {fileID: 669441089758056773}
   - component: {fileID: 669441089758056770}
   - component: {fileID: 669441089758056771}
-  - component: {fileID: 669441089758056768}
+  - component: {fileID: 8972959750797019328}
+  - component: {fileID: 8877543056318025936}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -32465,13 +32773,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 669441088492315046}
-  m_RootOrder: 1
+  m_Father: {fileID: 669441088782668489}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 470, y: 470}
+  m_AnchoredPosition: {x: -15.75, y: 0}
+  m_SizeDelta: {x: 1200, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &669441089758056775
 MonoBehaviour:
@@ -32666,25 +32974,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441089758056772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441089758056798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441089758056775}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441089758056773
 AudioSource:
   m_ObjectHideFlags: 0
@@ -32805,7 +33094,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 669441089758056798}
   m_CullTransparentMesh: 1
---- !u!114 &669441089758056768
+--- !u!114 &8972959750797019328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089758056798}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441089758056775}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
+--- !u!114 &8877543056318025936
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -32814,21 +33125,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441089758056798}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75f3b319d2d69934d8bf545ab45c918d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f17cdc186456a4469a139a104d2ca72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
   _mediaPlayer: {fileID: 669441089758056775}
-  _scaleMode: 2
-  _color: {r: 1, g: 1, b: 1, a: 1}
-  _allowTransparency: 0
-  _useDepth: 0
-  _depth: 0
-  _isAreaFullScreen: 1
-  _areaX: 0
-  _areaY: 0
-  _areaWidth: 1
-  _areaHeight: 1
-  _showAreaInEditor: 1
+  _defaultTexture: {fileID: 8400000, guid: cf8db7ef58bd3ce4f928564026c9d056, type: 2}
+  _uvRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  _setNativeSize: 0
+  _scaleMode: 0
+  _noDefaultDisplay: 0
+  _displayInEditor: 1
 --- !u!1 &669441089763804322
 GameObject:
   m_ObjectHideFlags: 0
@@ -33052,6 +33371,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089780945452}
+  - component: {fileID: 2925051005935257020}
   m_Layer: 23
   m_Name: 4.4 (landscape)
   m_TagString: Untagged
@@ -33073,6 +33393,7 @@ RectTransform:
   m_Children:
   - {fileID: 669441088841832854}
   - {fileID: 669441088917572248}
+  - {fileID: 669441090170535037}
   m_Father: {fileID: 669441089718018072}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -33081,6 +33402,33 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -0.000012397766}
   m_SizeDelta: {x: 1613, y: 480.66797}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2925051005935257020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089780945453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673ebe6b1ddeec24e90406ca14165962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsLive: 0
+  PlayOnAwake: 1
+  UploadFeatureVideoID: 
+  YoutubeInstance: {fileID: 7947395190253853302}
+  VideoId: 
+  PreferedQuality: 18
+  VideoPlayer: {fileID: 669441088917572251}
+  VideoPlayer1: {fileID: 7354675347455000718}
+  audioSource: {fileID: 669441090170535009}
+  AVProVideoPlayer: {fileID: 669441090170535011}
+  PreRecVideoScreen: {fileID: 0}
+  LiveVideoPlayerScreen: {fileID: 0}
+  AndroidLiveVideoMesh: {fileID: 0}
+  IOSLiveVideoMesh: {fileID: 0}
+  IsInternetDisconnected: 0
 --- !u!1 &669441089788892317
 GameObject:
   m_ObjectHideFlags: 0
@@ -33091,11 +33439,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441089788892316}
   - component: {fileID: 669441089788892290}
-  - component: {fileID: 669441089788892291}
   - component: {fileID: 669441089788892288}
   - component: {fileID: 669441089788892289}
   - component: {fileID: 669441089788892318}
   - component: {fileID: 669441089788892319}
+  - component: {fileID: 3093145123157401703}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -33316,25 +33664,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441089788892291
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441089788892317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441089788892290}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441089788892288
 AudioSource:
   m_ObjectHideFlags: 0
@@ -33479,6 +33808,28 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &3093145123157401703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089788892317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441089788892290}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089790685498
 GameObject:
   m_ObjectHideFlags: 0
@@ -33569,6 +33920,7 @@ GameObject:
   - component: {fileID: 669441089791414448}
   - component: {fileID: 669441089791414450}
   - component: {fileID: 669441089791414451}
+  - component: {fileID: 8767321362843402649}
   m_Layer: 23
   m_Name: Video (6)
   m_TagString: Untagged
@@ -33589,7 +33941,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 669441089512327771}
-  - {fileID: 669441088585096813}
   m_Father: {fileID: 669441089475290890}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -33764,6 +34115,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!328 &8767321362843402649
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089791415118}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 0}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 2
+  m_AspectRatio: 2
+  m_DataSource: 1
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 1
+  m_TargetAudioSources:
+  - {fileID: 669441089791414451}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 0
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
 --- !u!1 &669441089796148815
 GameObject:
   m_ObjectHideFlags: 0
@@ -33910,7 +34296,7 @@ MonoBehaviour:
   m_text: "\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -34149,7 +34535,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089814172717}
-  - component: {fileID: 669441089814172716}
+  - component: {fileID: 8477832739935748116}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -34174,7 +34560,7 @@ Transform:
   m_Father: {fileID: 669441089983012453}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441089814172716
+--- !u!114 &8477832739935748116
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -34183,19 +34569,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441089814172714}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441089092455653}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441089936241606}
   videoPlayer: {fileID: 669441089983012452}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089815676557
 GameObject:
   m_ObjectHideFlags: 0
@@ -34747,7 +35133,7 @@ MonoBehaviour:
   m_text: Author Name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-  m_sharedMaterial: {fileID: 233941157482760815, guid: 7e227ca196be3c145b4525eb511deb93, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -34807,7 +35193,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 2.4732666, y: 1.5279427, z: 6.9483643, w: 3.695515}
+  m_margin: {x: -319.763, y: 1.5279427, z: 6.9483643, w: 3.695515}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 1
@@ -35233,7 +35619,7 @@ MonoBehaviour:
   m_text: Author Name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-  m_sharedMaterial: {fileID: 233941157482760815, guid: 7e227ca196be3c145b4525eb511deb93, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -35308,6 +35694,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089856664513}
+  - component: {fileID: 3214390985387445330}
   m_Layer: 23
   m_Name: 1.1 (landscape)
   m_TagString: Untagged
@@ -35331,6 +35718,7 @@ RectTransform:
   - {fileID: 669441088934124857}
   - {fileID: 669441089085892361}
   - {fileID: 669441090187049941}
+  - {fileID: 669441088942637840}
   m_Father: {fileID: 669441089501201319}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -35339,6 +35727,33 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -0.000012397766}
   m_SizeDelta: {x: 1613, y: 480.66797}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3214390985387445330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089856664542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673ebe6b1ddeec24e90406ca14165962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsLive: 0
+  PlayOnAwake: 1
+  UploadFeatureVideoID: 
+  YoutubeInstance: {fileID: 7947395190253853302}
+  VideoId: 
+  PreferedQuality: 18
+  VideoPlayer: {fileID: 669441088934124856}
+  VideoPlayer1: {fileID: 669441088934124856}
+  audioSource: {fileID: 669441088942637844}
+  AVProVideoPlayer: {fileID: 669441088942637846}
+  PreRecVideoScreen: {fileID: 0}
+  LiveVideoPlayerScreen: {fileID: 0}
+  AndroidLiveVideoMesh: {fileID: 0}
+  IOSLiveVideoMesh: {fileID: 0}
+  IsInternetDisconnected: 0
 --- !u!1 &669441089861841852
 GameObject:
   m_ObjectHideFlags: 0
@@ -35694,7 +36109,7 @@ MonoBehaviour:
   m_text: "\u7802\u306E\u7F8E\u8853\u9928"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-  m_sharedMaterial: {fileID: 1043263178539073334, guid: 01719f749a4a25e409d8f20016b0effc, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -35770,11 +36185,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441089880662918}
   - component: {fileID: 669441089880662924}
-  - component: {fileID: 669441089880662925}
   - component: {fileID: 669441089880662922}
   - component: {fileID: 669441089880662923}
   - component: {fileID: 669441089880662920}
-  - component: {fileID: 669441089880662921}
+  - component: {fileID: 8639198559042845477}
+  - component: {fileID: 5250805596263135045}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -35794,13 +36209,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 669441090074065285}
-  m_RootOrder: 1
+  m_Father: {fileID: 669441090297862617}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 277.9535, y: 495.3559}
+  m_AnchoredPosition: {x: -15.75, y: 0}
+  m_SizeDelta: {x: 1200, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &669441089880662924
 MonoBehaviour:
@@ -35995,25 +36410,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441089880662925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441089880662919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441089880662924}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441089880662922
 AudioSource:
   m_ObjectHideFlags: 0
@@ -36134,7 +36530,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 669441089880662919}
   m_CullTransparentMesh: 1
---- !u!114 &669441089880662921
+--- !u!114 &8639198559042845477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089880662919}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441089880662924}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
+--- !u!114 &5250805596263135045
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -36143,21 +36561,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441089880662919}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75f3b319d2d69934d8bf545ab45c918d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f17cdc186456a4469a139a104d2ca72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
   _mediaPlayer: {fileID: 669441089880662924}
-  _scaleMode: 2
-  _color: {r: 1, g: 1, b: 1, a: 1}
-  _allowTransparency: 0
-  _useDepth: 0
-  _depth: 0
-  _isAreaFullScreen: 1
-  _areaX: 0
-  _areaY: 0
-  _areaWidth: 1
-  _areaHeight: 1
-  _showAreaInEditor: 1
+  _defaultTexture: {fileID: 8400000, guid: cf8db7ef58bd3ce4f928564026c9d056, type: 2}
+  _uvRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  _setNativeSize: 0
+  _scaleMode: 0
+  _noDefaultDisplay: 0
+  _displayInEditor: 1
 --- !u!1 &669441089886872496
 GameObject:
   m_ObjectHideFlags: 0
@@ -36193,7 +36619,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0.5625, y: 0}
   m_SizeDelta: {x: 18.875, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -36244,7 +36670,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089888441138}
-  - component: {fileID: 669441089888441141}
+  - component: {fileID: 2448178764991510825}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -36269,7 +36695,7 @@ Transform:
   m_Father: {fileID: 669441089861841855}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441089888441141
+--- !u!114 &2448178764991510825
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -36278,19 +36704,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441089888441139}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441090027322647}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441089083408381}
   videoPlayer: {fileID: 669441089861841854}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089889167105
 GameObject:
   m_ObjectHideFlags: 0
@@ -37588,6 +38014,7 @@ GameObject:
   - component: {fileID: 669441089933788809}
   - component: {fileID: 669441089933788811}
   - component: {fileID: 669441089933788808}
+  - component: {fileID: 1221265845017713718}
   m_Layer: 23
   m_Name: Video (3)
   m_TagString: Untagged
@@ -37608,7 +38035,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 669441090082209453}
-  - {fileID: 669441089071737102}
   m_Father: {fileID: 669441089098050887}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -37783,6 +38209,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!328 &1221265845017713718
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089933788807}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 0}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 2
+  m_AspectRatio: 2
+  m_DataSource: 1
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 1
+  m_TargetAudioSources:
+  - {fileID: 669441089933788808}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 0
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
 --- !u!1 &669441089936241601
 GameObject:
   m_ObjectHideFlags: 0
@@ -37793,11 +38254,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441089936241600}
   - component: {fileID: 669441089936241606}
-  - component: {fileID: 669441089936241607}
   - component: {fileID: 669441089936241604}
   - component: {fileID: 669441089936241605}
   - component: {fileID: 669441089936241602}
   - component: {fileID: 669441089936241603}
+  - component: {fileID: 803281423944212130}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -38018,25 +38479,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441089936241607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441089936241601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441089936241606}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441089936241604
 AudioSource:
   m_ObjectHideFlags: 0
@@ -38181,6 +38623,28 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &803281423944212130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089936241601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441089936241606}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089939817266
 GameObject:
   m_ObjectHideFlags: 0
@@ -38526,7 +38990,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 52.38794, y: -12.000092}
+  m_AnchoredPosition: {x: 52.387695, y: -12.000092}
   m_SizeDelta: {x: 1173.403, y: 882.673}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &669441089954164371
@@ -39216,7 +39680,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -41424,6 +41888,7 @@ GameObject:
   - component: {fileID: 669441090074065284}
   - component: {fileID: 669441090074065286}
   - component: {fileID: 669441090074065287}
+  - component: {fileID: 1204572808021458970}
   m_Layer: 23
   m_Name: Video (7)
   m_TagString: Untagged
@@ -41444,7 +41909,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 669441090178979431}
-  - {fileID: 669441089880662918}
   m_Father: {fileID: 669441090297862617}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -41619,6 +42083,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!328 &1204572808021458970
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441090074065282}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 0}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 2
+  m_AspectRatio: 2
+  m_DataSource: 1
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 1
+  m_TargetAudioSources:
+  - {fileID: 669441090074065287}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 0
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
 --- !u!1 &669441090079993976
 GameObject:
   m_ObjectHideFlags: 0
@@ -41688,7 +42187,7 @@ MonoBehaviour:
   m_text: "\u7802\u306E\u7F8E\u8853\u9928"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-  m_sharedMaterial: {fileID: 1043263178539073334, guid: 01719f749a4a25e409d8f20016b0effc, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -41763,7 +42262,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441090082209453}
-  - component: {fileID: 669441090082209452}
+  - component: {fileID: 3147373607671108371}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -41788,7 +42287,7 @@ Transform:
   m_Father: {fileID: 669441089933788806}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441090082209452
+--- !u!114 &3147373607671108371
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41797,19 +42296,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441090082209450}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441088886424028}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441089071737204}
   videoPlayer: {fileID: 669441089933788809}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441090102486739
 GameObject:
   m_ObjectHideFlags: 0
@@ -42263,11 +42762,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441090118363331}
   - component: {fileID: 669441090118363337}
-  - component: {fileID: 669441090118363334}
   - component: {fileID: 669441090118363335}
   - component: {fileID: 669441090118363332}
   - component: {fileID: 669441090118363333}
   - component: {fileID: 669441090118363330}
+  - component: {fileID: 6919302042790068841}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -42488,25 +42987,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441090118363334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441090118363328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441090118363337}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441090118363335
 AudioSource:
   m_ObjectHideFlags: 0
@@ -42651,6 +43131,28 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &6919302042790068841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441090118363328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441090118363337}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441090121180808
 GameObject:
   m_ObjectHideFlags: 0
@@ -43078,6 +43580,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 201
@@ -43131,7 +43634,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441090169741111}
-  - component: {fileID: 669441090169741110}
+  - component: {fileID: 2251794673472236132}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -43156,7 +43659,7 @@ Transform:
   m_Father: {fileID: 669441089462963917}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441090169741110
+--- !u!114 &2251794673472236132
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43165,19 +43668,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441090169741108}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441090302402118}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441088514341844}
   videoPlayer: {fileID: 669441090419844282}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441090170535034
 GameObject:
   m_ObjectHideFlags: 0
@@ -43188,11 +43691,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441090170535037}
   - component: {fileID: 669441090170535011}
-  - component: {fileID: 669441090170535008}
   - component: {fileID: 669441090170535009}
   - component: {fileID: 669441090170535038}
   - component: {fileID: 669441090170535039}
-  - component: {fileID: 669441090170535036}
+  - component: {fileID: 9205115752037693937}
+  - component: {fileID: 4984718511003257662}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -43212,13 +43715,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 669441088917572248}
-  m_RootOrder: 1
+  m_Father: {fileID: 669441089780945452}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 652.4899, y: 488.992}
+  m_AnchoredPosition: {x: -15.75, y: 0}
+  m_SizeDelta: {x: 1200, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &669441090170535011
 MonoBehaviour:
@@ -43413,25 +43916,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441090170535008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441090170535034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441090170535011}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441090170535009
 AudioSource:
   m_ObjectHideFlags: 0
@@ -43552,7 +44036,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 669441090170535034}
   m_CullTransparentMesh: 1
---- !u!114 &669441090170535036
+--- !u!114 &9205115752037693937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441090170535034}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441090170535011}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
+--- !u!114 &4984718511003257662
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43561,21 +44067,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441090170535034}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75f3b319d2d69934d8bf545ab45c918d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f17cdc186456a4469a139a104d2ca72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
   _mediaPlayer: {fileID: 669441090170535011}
-  _scaleMode: 2
-  _color: {r: 1, g: 1, b: 1, a: 1}
-  _allowTransparency: 0
-  _useDepth: 0
-  _depth: 0
-  _isAreaFullScreen: 1
-  _areaX: 0
-  _areaY: 0
-  _areaWidth: 1
-  _areaHeight: 1
-  _showAreaInEditor: 1
+  _defaultTexture: {fileID: 8400000, guid: cf8db7ef58bd3ce4f928564026c9d056, type: 2}
+  _uvRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  _setNativeSize: 0
+  _scaleMode: 0
+  _noDefaultDisplay: 0
+  _displayInEditor: 1
 --- !u!1 &669441090174477786
 GameObject:
   m_ObjectHideFlags: 0
@@ -43665,7 +44179,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441090178979431}
-  - component: {fileID: 669441090178979430}
+  - component: {fileID: 4815047491420735643}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -43690,7 +44204,7 @@ Transform:
   m_Father: {fileID: 669441090074065285}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441090178979430
+--- !u!114 &4815047491420735643
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43699,19 +44213,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441090178979428}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441088675306461}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441089880662924}
   videoPlayer: {fileID: 669441090074065284}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441090186412303
 GameObject:
   m_ObjectHideFlags: 0
@@ -43875,7 +44389,7 @@ MonoBehaviour:
   m_text: "\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -44186,6 +44700,7 @@ GameObject:
   - component: {fileID: 669441090195528236}
   - component: {fileID: 669441090195528238}
   - component: {fileID: 669441090195528239}
+  - component: {fileID: 823579070974700742}
   m_Layer: 23
   m_Name: Video (4)
   m_TagString: Untagged
@@ -44206,7 +44721,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 669441088401971007}
-  - {fileID: 669441088776835418}
   m_Father: {fileID: 669441090284322600}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -44381,6 +44895,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!328 &823579070974700742
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441090195528237}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 0}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 2
+  m_AspectRatio: 2
+  m_DataSource: 1
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 1
+  m_TargetAudioSources:
+  - {fileID: 669441090195528239}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 0
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
 --- !u!1 &669441090204679694
 GameObject:
   m_ObjectHideFlags: 0
@@ -45673,7 +46222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441090280671326}
-  - component: {fileID: 669441090280671297}
+  - component: {fileID: 3280101716399862326}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -45698,7 +46247,7 @@ Transform:
   m_Father: {fileID: 669441090419844286}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441090280671297
+--- !u!114 &3280101716399862326
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45707,19 +46256,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441090280671327}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441088571620210}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 669441088514341844}
   videoPlayer: {fileID: 669441090419844282}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441090284322601
 GameObject:
   m_ObjectHideFlags: 0
@@ -45729,6 +46278,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441090284322600}
+  - component: {fileID: 7470077360310020999}
   m_Layer: 23
   m_Name: 4.4 (landscape)
   m_TagString: Untagged
@@ -45752,6 +46302,7 @@ RectTransform:
   - {fileID: 669441090195528208}
   - {fileID: 669441088956788033}
   - {fileID: 669441090446798460}
+  - {fileID: 669441088776835418}
   m_Father: {fileID: 669441089501201319}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -45760,6 +46311,33 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -0.000012397766}
   m_SizeDelta: {x: 1613, y: 480.66797}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7470077360310020999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441090284322601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673ebe6b1ddeec24e90406ca14165962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsLive: 0
+  PlayOnAwake: 1
+  UploadFeatureVideoID: 
+  YoutubeInstance: {fileID: 7947395190253853302}
+  VideoId: 
+  PreferedQuality: 18
+  VideoPlayer: {fileID: 669441090195528236}
+  VideoPlayer1: {fileID: 823579070974700742}
+  audioSource: {fileID: 669441088776835422}
+  AVProVideoPlayer: {fileID: 669441088776835392}
+  PreRecVideoScreen: {fileID: 0}
+  LiveVideoPlayerScreen: {fileID: 0}
+  AndroidLiveVideoMesh: {fileID: 0}
+  IOSLiveVideoMesh: {fileID: 0}
+  IsInternetDisconnected: 0
 --- !u!1 &669441090297823528
 GameObject:
   m_ObjectHideFlags: 0
@@ -45891,6 +46469,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441090297862617}
+  - component: {fileID: 1037948507670678739}
   m_Layer: 23
   m_Name: 9.16 (landscape)
   m_TagString: Untagged
@@ -45912,6 +46491,7 @@ RectTransform:
   m_Children:
   - {fileID: 669441088583688408}
   - {fileID: 669441090074065285}
+  - {fileID: 669441089880662918}
   m_Father: {fileID: 669441089718018072}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -45920,6 +46500,33 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -0.000012397766}
   m_SizeDelta: {x: 1613, y: 480.66797}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1037948507670678739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441090297862614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673ebe6b1ddeec24e90406ca14165962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsLive: 0
+  PlayOnAwake: 1
+  UploadFeatureVideoID: 
+  YoutubeInstance: {fileID: 7947395190253853302}
+  VideoId: 
+  PreferedQuality: 18
+  VideoPlayer: {fileID: 669441090074065284}
+  VideoPlayer1: {fileID: 1204572808021458970}
+  audioSource: {fileID: 669441089880662922}
+  AVProVideoPlayer: {fileID: 669441089880662924}
+  PreRecVideoScreen: {fileID: 0}
+  LiveVideoPlayerScreen: {fileID: 0}
+  AndroidLiveVideoMesh: {fileID: 0}
+  IOSLiveVideoMesh: {fileID: 0}
+  IsInternetDisconnected: 0
 --- !u!1 &669441090302402114
 GameObject:
   m_ObjectHideFlags: 0
@@ -47625,6 +48232,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 20
@@ -48147,7 +48755,7 @@ MonoBehaviour:
   m_text: "\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -49903,7 +50511,7 @@ MonoBehaviour:
   m_text: "\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -50382,6 +50990,7 @@ GameObject:
   - component: {fileID: 669441090468958465}
   - component: {fileID: 669441090468958467}
   - component: {fileID: 669441090468958464}
+  - component: {fileID: 4520590002647543106}
   m_Layer: 23
   m_Name: Video (2)
   m_TagString: Untagged
@@ -50402,7 +51011,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 669441088600873967}
-  - {fileID: 669441088943285629}
   m_Father: {fileID: 669441089593653042}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -50577,6 +51185,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!328 &4520590002647543106
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441090468958495}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 0}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 2
+  m_AspectRatio: 2
+  m_DataSource: 1
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 1
+  m_TargetAudioSources:
+  - {fileID: 669441090468958464}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 0
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
 --- !u!1 &669441090469118516
 GameObject:
   m_ObjectHideFlags: 0
@@ -53009,6 +53652,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5984769952214371201}
   - component: {fileID: 5984769952214371202}
+  - component: {fileID: 7947395190253853302}
   m_Layer: 0
   m_Name: Common_NFT_Data
   m_TagString: Untagged
@@ -53023,7 +53667,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5984769952214371200}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -53224,6 +53868,578 @@ MonoBehaviour:
   PotraiteObj: {fileID: 669441088872153123}
   renderTexture_16x9: {fileID: 8400000, guid: cf8db7ef58bd3ce4f928564026c9d056, type: 2}
   renderTexture_9x16: {fileID: 8400000, guid: 607e7a72a0692fc44a57a4ee5f17d846, type: 2}
-  renderTexture_1x1: {fileID: 8400000, guid: ea9b6b6e56e3f55428deb9951788cc14, type: 2}
-  renderTexture_4x3: {fileID: 8400000, guid: bcde8ad14ab8abd4fa640af7b4e9528f, type: 2}
+  renderTexture_1x1: {fileID: 8400000, guid: bcde8ad14ab8abd4fa640af7b4e9528f, type: 2}
+  renderTexture_4x3: {fileID: 8400000, guid: c699db3093338a64285fc9f4ff16079a, type: 2}
   currentRoom: {fileID: 0}
+  meetingTxtUpdate: {fileID: 0}
+  pushNotification: {fileID: 0}
+  meetingStatus: {fileID: 0}
+  voiceManager: {fileID: 0}
+  Extended_XCS: {fileID: 0}
+  RatioID: 0
+  IsSummit: 0
+  handler: {fileID: 0}
+  RationRefs:
+  - {fileID: 669441089856664542}
+  - {fileID: 669441089593653043}
+  - {fileID: 669441089098050884}
+  - {fileID: 669441090284322601}
+  - {fileID: 669441088782668486}
+  - {fileID: 669441089475290891}
+  - {fileID: 669441090297862614}
+  - {fileID: 669441089780945453}
+  - {fileID: 669441089415685525}
+  - {fileID: 669441090136025617}
+  - {fileID: 669441090223041433}
+  - {fileID: 669441089303444170}
+  - {fileID: 669441089033553569}
+  - {fileID: 669441088779857291}
+  - {fileID: 669441088754633951}
+  - {fileID: 669441090064871851}
+--- !u!114 &7947395190253853302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5984769952214371200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 045da24cfb329ea4890febe9f19362cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InstanceType: 0
+  CustomInstanceUrl: 
+  VideoJson: "[   [     \"invidious.fdn.fr\",     {       \"flag\": \"\U0001F1EB\U0001F1F7\",      
+    \"region\": \"FR\",       \"stats\": {         \"version\": \"2.0\",        
+    \"software\": {           \"name\": \"invidious\",           \"version\": \"2024.07.28-3649d2e3\",          
+    \"branch\": \"master\"         },         \"openRegistrations\": true,        
+    \"usage\": {           \"users\": {             \"total\": 39235,            
+    \"activeHalfyear\": 6547,             \"activeMonth\": 1174           }        
+    },         \"metadata\": {           \"updatedAt\": 1723105276,           \"lastChannelRefreshedAt\":
+    1723105116         },         \"playback\": {           \"totalRequests\": 49942,          
+    \"successfulRequests\": 41244,           \"ratio\": 0.83         }       },      
+    \"cors\": true,       \"api\": true,       \"type\": \"https\",       \"uri\":
+    \"https://invidious.fdn.fr\",       \"monitor\": {         \"token\": \"so3l\",        
+    \"url\": \"https://invidious.fdn.fr\",         \"alias\": \"invidious.fdn.fr\",        
+    \"last_status\": 200,         \"uptime\": 99.677,         \"down\": false,        
+    \"down_since\": null,         \"up_since\": \"2024-08-08T04:50:53Z\",        
+    \"error\": null,         \"period\": 300,         \"apdex_t\": 1.0,         \"string_match\":
+    \"An alternative front-end to YouTube\",         \"enabled\": true,         \"published\":
+    true,         \"disabled_locations\": [],         \"recipients\": [],        
+    \"last_check_at\": \"2024-08-08T08:30:02Z\",         \"next_check_at\": \"2024-08-08T08:35:01Z\",        
+    \"created_at\": \"2024-04-21T20:49:56Z\",         \"mute_until\": \"forever\",        
+    \"favicon_url\": \"https://invidious.fdn.fr/favicon-16x16.png?v=e82c965e\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T07:50:11Z\",          
+    \"expires_at\": \"2024-09-09T07:25:41Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"inv.tux.pizza\",     {      
+    \"flag\": \"\U0001F1FA\U0001F1F8\",       \"region\": \"US\",       \"stats\":
+    {         \"version\": \"2.0\",         \"software\": {           \"name\": \"invidious\",          
+    \"version\": \"2024.04.27-eda7444\",           \"branch\": \"master\"        
+    },         \"openRegistrations\": true,         \"usage\": {           \"users\":
+    {             \"total\": 5715,             \"activeHalfyear\": 3013,            
+    \"activeMonth\": 1088           }         },         \"metadata\": {          
+    \"updatedAt\": 1723092639,           \"lastChannelRefreshedAt\": 1723092269        
+    },         \"playback\": {           \"totalRequests\": 65,           \"successfulRequests\":
+    52,           \"ratio\": 0.8         }       },       \"cors\": true,       \"api\":
+    true,       \"type\": \"https\",       \"uri\": \"https://inv.tux.pizza\",      
+    \"monitor\": {         \"token\": \"kvzi\",         \"url\": \"https://inv.tux.pizza\",        
+    \"alias\": \"inv.tux.pizza\",         \"last_status\": 200,         \"uptime\":
+    99.476,         \"down\": false,         \"down_since\": null,         \"up_since\":
+    \"2024-08-08T04:02:33Z\",         \"error\": null,         \"period\": 300,        
+    \"apdex_t\": 1.0,         \"string_match\": \"An alternative front-end to YouTube\",        
+    \"enabled\": true,         \"published\": true,         \"disabled_locations\":
+    [],         \"recipients\": [           \"email:2371453714\"         ],        
+    \"last_check_at\": \"2024-08-08T08:26:11Z\",         \"next_check_at\": \"2024-08-08T08:31:08Z\",        
+    \"created_at\": \"2024-04-21T20:52:28Z\",         \"mute_until\": \"forever\",        
+    \"favicon_url\": \"https://inv.tux.pizza/favicon-16x16.png?v=eda7444\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T07:51:23Z\",          
+    \"expires_at\": \"2024-10-03T14:11:41Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"invidious.flokinet.to\",    
+    {       \"flag\": \"\U0001F1F7\U0001F1F4\",       \"region\": \"RO\",       \"stats\":
+    {         \"version\": \"2.0\",         \"software\": {           \"name\": \"invidious\",          
+    \"version\": \"2024.05.27-1ae14cc2\",           \"branch\": \"master\"        
+    },         \"openRegistrations\": true,         \"usage\": {           \"users\":
+    {             \"total\": 3972,             \"activeHalfyear\": 1382,            
+    \"activeMonth\": 502           }         },         \"metadata\": {          
+    \"updatedAt\": 1723105225,           \"lastChannelRefreshedAt\": 1723065255        
+    },         \"playback\": {           \"totalRequests\": 135,           \"successfulRequests\":
+    15,           \"ratio\": 0.11         }       },       \"cors\": false,      
+    \"api\": false,       \"type\": \"https\",       \"uri\": \"https://invidious.flokinet.to\",      
+    \"monitor\": {         \"token\": \"effg\",         \"url\": \"https://invidious.flokinet.to\",        
+    \"alias\": \"invidious.flokinet.to\",         \"last_status\": 200,         \"uptime\":
+    97.813,         \"down\": false,         \"down_since\": null,         \"up_since\":
+    \"2024-08-08T07:38:34Z\",         \"error\": null,         \"period\": 300,        
+    \"apdex_t\": 1.0,         \"string_match\": \"An alternative front-end to YouTube\",        
+    \"enabled\": true,         \"published\": true,         \"disabled_locations\":
+    [],         \"recipients\": [           \"email:2371453714\"         ],        
+    \"last_check_at\": \"2024-08-08T08:28:16Z\",         \"next_check_at\": \"2024-08-08T08:33:15Z\",        
+    \"created_at\": \"2024-04-21T20:52:37Z\",         \"mute_until\": \"forever\",        
+    \"favicon_url\": \"https://invidious.flokinet.to/favicon-16x16.png?v=e0ce59d3\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T07:43:39Z\",          
+    \"expires_at\": \"2024-09-20T20:05:14Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"invidious.privacydev.net\",    
+    {       \"flag\": \"\U0001F1EB\U0001F1F7\",       \"region\": \"FR\",       \"stats\":
+    {         \"version\": \"2.0\",         \"software\": {           \"name\": \"invidious\",          
+    \"version\": \"2024.05.27-1ae14cc2\",           \"branch\": \"master\"        
+    },         \"openRegistrations\": true,         \"usage\": {           \"users\":
+    {             \"total\": 3392,             \"activeHalfyear\": 1272,            
+    \"activeMonth\": 490           }         },         \"metadata\": {          
+    \"updatedAt\": 1723105813,           \"lastChannelRefreshedAt\": 1723105245        
+    },         \"playback\": {           \"totalRequests\": 19,           \"successfulRequests\":
+    19,           \"ratio\": 1.0         }       },       \"cors\": true,       \"api\":
+    true,       \"type\": \"https\",       \"uri\": \"https://invidious.privacydev.net\",      
+    \"monitor\": {         \"token\": \"t1nl\",         \"url\": \"https://invidious.privacydev.net\",        
+    \"alias\": \"invidious.privacydev.net\",         \"last_status\": 200,        
+    \"uptime\": 98.699,         \"down\": false,         \"down_since\": null,        
+    \"up_since\": \"2024-08-07T21:28:47Z\",         \"error\": null,         \"period\":
+    300,         \"apdex_t\": 1.0,         \"string_match\": \"An alternative front-end
+    to YouTube\",         \"enabled\": true,         \"published\": true,        
+    \"disabled_locations\": [],         \"recipients\": [           \"email:2371453714\"        
+    ],         \"last_check_at\": \"2024-08-08T08:25:50Z\",         \"next_check_at\":
+    \"2024-08-08T08:30:49Z\",         \"created_at\": \"2024-04-21T20:52:47Z\",        
+    \"mute_until\": \"forever\",         \"favicon_url\": \"https://invidious.privacydev.net/favicon-16x16.png?v=e0ce59d3\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T07:41:02Z\",          
+    \"expires_at\": \"2024-10-26T21:09:21Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"invidious.protokolla.fi\",    
+    {       \"flag\": \"\U0001F1EB\U0001F1EE\",       \"region\": \"FI\",       \"stats\":
+    {         \"version\": \"2.0\",         \"software\": {           \"name\": \"invidious\",          
+    \"version\": \"2024.04.27-eda7444\",           \"branch\": \"master\"        
+    },         \"openRegistrations\": true,         \"usage\": {           \"users\":
+    {             \"total\": 2678,             \"activeHalfyear\": 1160,            
+    \"activeMonth\": 308           }         },         \"metadata\": {          
+    \"updatedAt\": 1723105613,           \"lastChannelRefreshedAt\": 1723103116        
+    },         \"playback\": {}       },       \"cors\": true,       \"api\": true,      
+    \"type\": \"https\",       \"uri\": \"https://invidious.protokolla.fi\",      
+    \"monitor\": {         \"token\": \"fl6e\",         \"url\": \"https://invidious.protokolla.fi\",        
+    \"alias\": \"invidious.protokolla.fi\",         \"last_status\": 200,        
+    \"uptime\": 100.0,         \"down\": false,         \"down_since\": null,        
+    \"up_since\": \"2024-08-02T03:04:35Z\",         \"error\": null,         \"period\":
+    300,         \"apdex_t\": 1.0,         \"string_match\": \"An alternative front-end
+    to YouTube\",         \"enabled\": true,         \"published\": true,        
+    \"disabled_locations\": [],         \"recipients\": [           \"email:2371453714\"        
+    ],         \"last_check_at\": \"2024-08-08T08:25:43Z\",         \"next_check_at\":
+    \"2024-08-08T08:30:40Z\",         \"created_at\": \"2024-04-21T20:53:23Z\",        
+    \"mute_until\": \"forever\",         \"favicon_url\": \"https://invidious.protokolla.fi/favicon-16x16.png?v=eda7444\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T08:10:48Z\",          
+    \"expires_at\": \"2024-10-19T08:57:21Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"invidious.nerdvpn.de\",    
+    {       \"flag\": \"\U0001F1FA\U0001F1E6\",       \"region\": \"UA\",       \"stats\":
+    {         \"version\": \"2.0\",         \"software\": {           \"name\": \"invidious\",          
+    \"version\": \"2024.08.07-90e94d4e\",           \"branch\": \"nerdvpn\"        
+    },         \"openRegistrations\": true,         \"usage\": {           \"users\":
+    {             \"total\": 2649,             \"activeHalfyear\": 961,            
+    \"activeMonth\": 130           }         },         \"metadata\": {          
+    \"updatedAt\": 1723105825,           \"lastChannelRefreshedAt\": 1723104232        
+    },         \"playback\": {}       },       \"cors\": true,       \"api\": true,      
+    \"type\": \"https\",       \"uri\": \"https://invidious.nerdvpn.de\",       \"monitor\":
+    {         \"token\": \"oo85\",         \"url\": \"https://invidious.nerdvpn.de\",        
+    \"alias\": \"invidious.nerdvpn.de\",         \"last_status\": 200,         \"uptime\":
+    63.024,         \"down\": false,         \"down_since\": null,         \"up_since\":
+    \"2024-08-07T11:01:39Z\",         \"error\": null,         \"period\": 300,        
+    \"apdex_t\": 1.0,         \"string_match\": \"An alternative front-end to YouTube\",        
+    \"enabled\": true,         \"published\": true,         \"disabled_locations\":
+    [],         \"recipients\": [           \"email:2371453714\"         ],        
+    \"last_check_at\": \"2024-08-08T08:25:36Z\",         \"next_check_at\": \"2024-08-08T08:30:33Z\",        
+    \"created_at\": \"2024-04-21T20:52:06Z\",         \"mute_until\": \"forever\",        
+    \"favicon_url\": \"https://invidious.nerdvpn.de/favicon-16x16.png?v=e82c965e\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T08:15:39Z\",          
+    \"expires_at\": \"2024-12-23T22:59:00Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"invidious.private.coffee\",    
+    {       \"flag\": \"\U0001F1E6\U0001F1F9\",       \"region\": \"AT\",       \"stats\":
+    {         \"version\": \"2.0\",         \"software\": {           \"name\": \"invidious\",          
+    \"version\": \"2024.04.27-eda7444c\",           \"branch\": \"(HEAD detached
+    at v2.20240427)\"         },         \"openRegistrations\": true,         \"usage\":
+    {           \"users\": {             \"total\": 2237,             \"activeHalfyear\":
+    1583,             \"activeMonth\": 721           }         },         \"metadata\":
+    {           \"updatedAt\": 1723105361,           \"lastChannelRefreshedAt\":
+    1723103377         },         \"playback\": {}       },       \"cors\": true,      
+    \"api\": true,       \"type\": \"https\",       \"uri\": \"https://invidious.private.coffee\",      
+    \"monitor\": {         \"token\": \"soor\",         \"url\": \"https://invidious.private.coffee\",        
+    \"alias\": \"invidious.private.coffee\",         \"last_status\": 200,        
+    \"uptime\": 99.877,         \"down\": false,         \"down_since\": null,        
+    \"up_since\": \"2024-08-04T22:49:21Z\",         \"error\": null,         \"period\":
+    300,         \"apdex_t\": 1.0,         \"string_match\": \"An alternative front-end
+    to YouTube\",         \"enabled\": true,         \"published\": true,        
+    \"disabled_locations\": [],         \"recipients\": [           \"email:2371453714\"        
+    ],         \"last_check_at\": \"2024-08-08T08:28:40Z\",         \"next_check_at\":
+    \"2024-08-08T08:33:38Z\",         \"created_at\": \"2024-04-21T20:53:45Z\",        
+    \"mute_until\": \"forever\",         \"favicon_url\": \"https://invidious.private.coffee/favicon-16x16.png?v=e0ce59d3\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T08:18:48Z\",          
+    \"expires_at\": \"2024-10-23T13:22:26Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"invidious.jing.rocks\",    
+    {       \"flag\": \"\U0001F1EF\U0001F1F5\",       \"region\": \"JP\",       \"stats\":
+    {         \"version\": \"2.0\",         \"software\": {           \"name\": \"invidious\",          
+    \"version\": \"2024.07.27-90e94d4e\",           \"branch\": \"master\"        
+    },         \"openRegistrations\": true,         \"usage\": {           \"users\":
+    {             \"total\": 2198,             \"activeHalfyear\": 2184,            
+    \"activeMonth\": 795           }         },         \"metadata\": {          
+    \"updatedAt\": 1723105749,           \"lastChannelRefreshedAt\": 1723104509        
+    },         \"playback\": {           \"totalRequests\": 281,           \"successfulRequests\":
+    274,           \"ratio\": 0.98         }       },       \"cors\": true,      
+    \"api\": true,       \"type\": \"https\",       \"uri\": \"https://invidious.jing.rocks\",      
+    \"monitor\": {         \"token\": \"cfds\",         \"url\": \"https://invidious.jing.rocks\",        
+    \"alias\": \"invidious.jing.rocks\",         \"last_status\": 200,         \"uptime\":
+    99.582,         \"down\": false,         \"down_since\": null,         \"up_since\":
+    \"2024-08-04T23:19:08Z\",         \"error\": null,         \"period\": 300,        
+    \"apdex_t\": 1.0,         \"string_match\": \"An alternative front-end to YouTube\",        
+    \"enabled\": true,         \"published\": true,         \"disabled_locations\":
+    [],         \"recipients\": [           \"email:2371453714\"         ],        
+    \"last_check_at\": \"2024-08-08T08:27:18Z\",         \"next_check_at\": \"2024-08-08T08:32:15Z\",        
+    \"created_at\": \"2024-04-21T20:54:18Z\",         \"mute_until\": \"forever\",        
+    \"favicon_url\": \"https://invidious.jing.rocks/favicon-16x16.png?v=e82c965e\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T07:42:42Z\",          
+    \"expires_at\": \"2024-09-03T15:09:07Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"invidious.perennialte.ch\",    
+    {       \"flag\": \"\U0001F1E6\U0001F1FA\",       \"region\": \"AU\",       \"stats\":
+    {         \"version\": \"2.0\",         \"software\": {           \"name\": \"invidious\",          
+    \"version\": \"2024.07.27-90e94d4\",           \"branch\": \"master\"        
+    },         \"openRegistrations\": true,         \"usage\": {           \"users\":
+    {             \"total\": 1850,             \"activeHalfyear\": 1223,            
+    \"activeMonth\": 388           }         },         \"metadata\": {          
+    \"updatedAt\": 1723105815,           \"lastChannelRefreshedAt\": 1723100518        
+    },         \"playback\": {}       },       \"cors\": true,       \"api\": true,      
+    \"type\": \"https\",       \"uri\": \"https://invidious.perennialte.ch\",      
+    \"monitor\": {         \"token\": \"8uie\",         \"url\": \"https://invidious.perennialte.ch\",        
+    \"alias\": \"invidious.perennialte.ch\",         \"last_status\": 200,        
+    \"uptime\": 100.0,         \"down\": false,         \"down_since\": null,        
+    \"up_since\": \"2024-08-08T01:02:36Z\",         \"error\": null,         \"period\":
+    300,         \"apdex_t\": 1.0,         \"string_match\": \"An alternative front-end
+    to YouTube\",         \"enabled\": true,         \"published\": true,        
+    \"disabled_locations\": [],         \"recipients\": [           \"email:2371453714\"        
+    ],         \"last_check_at\": \"2024-08-08T08:25:37Z\",         \"next_check_at\":
+    \"2024-08-08T08:30:35Z\",         \"created_at\": \"2024-04-21T20:54:06Z\",        
+    \"mute_until\": \"forever\",         \"favicon_url\": \"https://invidious.perennialte.ch/favicon-16x16.png?v=90e94d4\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T07:45:53Z\",          
+    \"expires_at\": \"2024-10-01T17:37:29Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"yt.artemislena.eu\",    
+    {       \"flag\": \"\U0001F1E9\U0001F1EA\",       \"region\": \"DE\",       \"stats\":
+    {         \"version\": \"2.0\",         \"software\": {           \"name\": \"invidious\",          
+    \"version\": \"2024.04.27-eda7444\",           \"branch\": \"master\"        
+    },         \"openRegistrations\": false,         \"usage\": {           \"users\":
+    {             \"total\": 1585,             \"activeHalfyear\": 4,            
+    \"activeMonth\": 0           }         },         \"metadata\": {           \"updatedAt\":
+    1723105802,           \"lastChannelRefreshedAt\": 1723087724         },        
+    \"playback\": {}       },       \"cors\": true,       \"api\": true,       \"type\":
+    \"https\",       \"uri\": \"https://yt.artemislena.eu\",       \"monitor\": {        
+    \"token\": \"bc69\",         \"url\": \"https://yt.artemislena.eu\",        
+    \"alias\": \"yt.artemislena.eu\",         \"last_status\": 200,         \"uptime\":
+    99.587,         \"down\": false,         \"down_since\": null,         \"up_since\":
+    \"2024-08-08T05:22:32Z\",         \"error\": null,         \"period\": 300,        
+    \"apdex_t\": 1.0,         \"string_match\": \"An alternative front-end to YouTube\",        
+    \"enabled\": true,         \"published\": true,         \"disabled_locations\":
+    [],         \"recipients\": [           \"email:2371453714\"         ],        
+    \"last_check_at\": \"2024-08-08T08:26:32Z\",         \"next_check_at\": \"2024-08-08T08:31:30Z\",        
+    \"created_at\": \"2024-04-21T20:53:36Z\",         \"mute_until\": \"forever\",        
+    \"favicon_url\": \"https://yt.artemislena.eu/favicon-16x16.png?v=eda7444\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T08:16:35Z\",          
+    \"expires_at\": \"2024-09-10T11:22:42Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"invidious.materialio.us\",    
+    {       \"flag\": \"\U0001F1F3\U0001F1FF\",       \"region\": \"NZ\",       \"stats\":
+    {         \"version\": \"2.0\",         \"software\": {           \"name\": \"invidious\",          
+    \"version\": \"2024.04.27-eda7444\",           \"branch\": \"master\"        
+    },         \"openRegistrations\": true,         \"usage\": {           \"users\":
+    {             \"total\": 1408,             \"activeHalfyear\": 1408,            
+    \"activeMonth\": 525           }         },         \"metadata\": {          
+    \"updatedAt\": 1723105863,           \"lastChannelRefreshedAt\": 1723105863        
+    },         \"playback\": {}       },       \"cors\": false,       \"api\": true,      
+    \"type\": \"https\",       \"uri\": \"https://invidious.materialio.us\",      
+    \"monitor\": {         \"token\": \"y6zr\",         \"url\": \"https://invidious.materialio.us\",        
+    \"alias\": \"invidious.materialio.us\",         \"last_status\": 200,        
+    \"uptime\": 99.431,         \"down\": false,         \"down_since\": null,        
+    \"up_since\": \"2024-08-06T23:05:28Z\",         \"error\": null,         \"period\":
+    300,         \"apdex_t\": 1.0,         \"string_match\": \"\",         \"enabled\":
+    true,         \"published\": true,         \"disabled_locations\": [],        
+    \"recipients\": [],         \"last_check_at\": \"2024-08-08T08:27:06Z\",        
+    \"next_check_at\": \"2024-08-08T08:32:05Z\",         \"created_at\": \"2024-04-22T02:23:58Z\",        
+    \"mute_until\": null,         \"favicon_url\": \"https://invidious.materialio.us/favicon-16x16.png?v=eda7444\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T08:17:11Z\",          
+    \"expires_at\": \"2024-10-27T20:53:16Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"invidious.reallyaweso.me\",    
+    {       \"flag\": \"\U0001F1E9\U0001F1EA\",       \"region\": \"DE\",       \"stats\":
+    {         \"version\": \"2.0\",         \"software\": {           \"name\": \"invidious\",          
+    \"version\": \"2024.07.27-90e94d4\",           \"branch\": \"master\"        
+    },         \"openRegistrations\": true,         \"usage\": {           \"users\":
+    {             \"total\": 1123,             \"activeHalfyear\": 1123,            
+    \"activeMonth\": 602           }         },         \"metadata\": {          
+    \"updatedAt\": 1723105861,           \"lastChannelRefreshedAt\": 1723104776        
+    },         \"playback\": {}       },       \"cors\": false,       \"api\": true,      
+    \"type\": \"https\",       \"uri\": \"https://invidious.reallyaweso.me\",      
+    \"monitor\": {         \"token\": \"nzff\",         \"url\": \"https://invidious.reallyaweso.me\",        
+    \"alias\": \"invidious.reallyaweso.me\",         \"last_status\": 200,        
+    \"uptime\": 99.354,         \"down\": false,         \"down_since\": null,        
+    \"up_since\": \"2024-08-07T22:11:40Z\",         \"error\": null,         \"period\":
+    300,         \"apdex_t\": 0.5,         \"string_match\": \"An alternative front-end
+    to YouTube\",         \"enabled\": true,         \"published\": true,        
+    \"disabled_locations\": [],         \"recipients\": [           \"email:2371453714\"        
+    ],         \"last_check_at\": \"2024-08-08T08:28:37Z\",         \"next_check_at\":
+    \"2024-08-08T08:33:36Z\",         \"created_at\": \"2024-04-22T21:35:11Z\",        
+    \"mute_until\": \"forever\",         \"favicon_url\": \"https://invidious.reallyaweso.me/favicon-16x16.png?v=90e94d4\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T08:18:42Z\",          
+    \"expires_at\": \"2024-10-20T11:37:39Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"inv.in.projectsegfau.lt\",    
+    {       \"flag\": \"\U0001F1EE\U0001F1F3\",       \"region\": \"IN\",       \"stats\":
+    {         \"version\": \"2.0\",         \"software\": {           \"name\": \"invidious\",          
+    \"version\": \"2024.04.27-eda7444\",           \"branch\": \"master\"        
+    },         \"openRegistrations\": true,         \"usage\": {           \"users\":
+    {             \"total\": 972,             \"activeHalfyear\": 406,            
+    \"activeMonth\": 179           }         },         \"metadata\": {          
+    \"updatedAt\": 1723105861,           \"lastChannelRefreshedAt\": 1723104286        
+    },         \"playback\": {}       },       \"cors\": true,       \"api\": true,      
+    \"type\": \"https\",       \"uri\": \"https://inv.in.projectsegfau.lt\",      
+    \"monitor\": {         \"token\": \"cyxc\",         \"url\": \"https://inv.in.projectsegfau.lt\",        
+    \"alias\": \"inv.in.projectsegfau.lt\",         \"last_status\": 200,        
+    \"uptime\": 80.898,         \"down\": false,         \"down_since\": null,        
+    \"up_since\": \"2024-08-08T00:06:06Z\",         \"error\": null,         \"period\":
+    300,         \"apdex_t\": 1.0,         \"string_match\": \"An alternative front-end
+    to YouTube\",         \"enabled\": true,         \"published\": true,        
+    \"disabled_locations\": [],         \"recipients\": [],         \"last_check_at\":
+    \"2024-08-08T08:29:36Z\",         \"next_check_at\": \"2024-08-08T08:34:36Z\",        
+    \"created_at\": \"2024-04-21T02:35:26Z\",         \"mute_until\": null,        
+    \"favicon_url\": \"https://inv.in.projectsegfau.lt/favicon-16x16.png?v=eda7444\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T07:44:49Z\",          
+    \"expires_at\": \"2024-09-10T09:10:04Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"iv.datura.network\",    
+    {       \"flag\": \"\U0001F1EB\U0001F1EE\",       \"region\": \"FI\",       \"stats\":
+    {         \"version\": \"2.0\",         \"software\": {           \"name\": \"invidious\",          
+    \"version\": \"2024.04.27-eda7444\",           \"branch\": \"master\"        
+    },         \"openRegistrations\": true,         \"usage\": {           \"users\":
+    {             \"total\": 863,             \"activeHalfyear\": 863,            
+    \"activeMonth\": 298           }         },         \"metadata\": {          
+    \"updatedAt\": 1723105302,           \"lastChannelRefreshedAt\": 1723105302        
+    },         \"playback\": {}       },       \"cors\": true,       \"api\": true,      
+    \"type\": \"https\",       \"uri\": \"https://iv.datura.network\",       \"monitor\":
+    {         \"token\": \"2juu\",         \"url\": \"https://iv.datura.network\",        
+    \"alias\": \"iv.datura.network\",         \"last_status\": 200,         \"uptime\":
+    99.738,         \"down\": false,         \"down_since\": null,         \"up_since\":
+    \"2024-08-06T14:13:16Z\",         \"error\": null,         \"period\": 300,        
+    \"apdex_t\": 1.0,         \"string_match\": \"An alternative front-end to YouTube\",        
+    \"enabled\": true,         \"published\": true,         \"disabled_locations\":
+    [],         \"recipients\": [           \"email:2371453714\"         ],        
+    \"last_check_at\": \"2024-08-08T08:27:27Z\",         \"next_check_at\": \"2024-08-08T08:32:26Z\",        
+    \"created_at\": \"2024-04-21T20:54:57Z\",         \"mute_until\": \"forever\",        
+    \"favicon_url\": \"https://iv.datura.network/favicon-16x16.png?v=eda7444\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T07:47:44Z\",          
+    \"expires_at\": \"2024-08-19T10:25:19Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"invidious.darkness.services\",    
+    {       \"flag\": \"\U0001F1FA\U0001F1F8\",       \"region\": \"US\",       \"stats\":
+    {         \"version\": \"2.0\",         \"software\": {           \"name\": \"invidious\",          
+    \"version\": \"2024.04.27-eda7444\",           \"branch\": \"master\"        
+    },         \"openRegistrations\": true,         \"usage\": {           \"users\":
+    {             \"total\": 853,             \"activeHalfyear\": 853,            
+    \"activeMonth\": 565           }         },         \"metadata\": {          
+    \"updatedAt\": 1723105387,           \"lastChannelRefreshedAt\": 1723105387        
+    },         \"playback\": {}       },       \"cors\": true,       \"api\": true,      
+    \"type\": \"https\",       \"uri\": \"https://invidious.darkness.services\",      
+    \"monitor\": {         \"token\": \"fhth\",         \"url\": \"https://invidious.darkness.services\",        
+    \"alias\": \"invidious.darkness.services\",         \"last_status\": 200,        
+    \"uptime\": 92.138,         \"down\": false,         \"down_since\": null,        
+    \"up_since\": \"2024-08-07T15:23:05Z\",         \"error\": null,         \"period\":
+    300,         \"apdex_t\": 1.0,         \"string_match\": \"An alternative front-end
+    to YouTube\",         \"enabled\": true,         \"published\": true,        
+    \"disabled_locations\": [],         \"recipients\": [],         \"last_check_at\":
+    \"2024-08-08T08:29:15Z\",         \"next_check_at\": \"2024-08-08T08:34:14Z\",        
+    \"created_at\": \"2024-04-22T01:55:13Z\",         \"mute_until\": null,        
+    \"favicon_url\": \"https://invidious.darkness.services/favicon-16x16.png?v=eda7444\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T07:59:26Z\",          
+    \"expires_at\": \"2024-10-22T05:42:33Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"yt.drgnz.club\",     {      
+    \"flag\": \"\U0001F1E8\U0001F1FF\",       \"region\": \"CZ\",       \"stats\":
+    {         \"version\": \"2.0\",         \"software\": {           \"name\": \"invidious\",          
+    \"version\": \"2024.07.27-90e94d4e\",           \"branch\": \"master\"        
+    },         \"openRegistrations\": false,         \"usage\": {           \"users\":
+    {             \"total\": 2,             \"activeHalfyear\": 2,             \"activeMonth\":
+    1           }         },         \"metadata\": {           \"updatedAt\": 1723105804,          
+    \"lastChannelRefreshedAt\": 1723104031         },         \"playback\": {}      
+    },       \"cors\": true,       \"api\": true,       \"type\": \"https\",      
+    \"uri\": \"https://yt.drgnz.club\",       \"monitor\": {         \"token\": \"cvoa\",        
+    \"url\": \"https://yt.drgnz.club\",         \"alias\": \"yt.drgnz.club\",        
+    \"last_status\": 200,         \"uptime\": 98.525,         \"down\": false,        
+    \"down_since\": null,         \"up_since\": \"2024-08-08T08:03:19Z\",        
+    \"error\": null,         \"period\": 300,         \"apdex_t\": 1.0,         \"string_match\":
+    \"An alternative front-end to YouTube\",         \"enabled\": true,         \"published\":
+    true,         \"disabled_locations\": [],         \"recipients\": [          
+    \"email:2371453714\"         ],         \"last_check_at\": \"2024-08-08T08:28:11Z\",        
+    \"next_check_at\": \"2024-08-08T08:33:11Z\",         \"created_at\": \"2024-04-21T20:55:05Z\",        
+    \"mute_until\": \"forever\",         \"favicon_url\": \"https://yt.drgnz.club/favicon-16x16.png?v=e82c965e\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T07:03:48Z\",          
+    \"expires_at\": \"2024-10-31T02:00:57Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"yewtu.be\",     {      
+    \"flag\": \"\U0001F1E9\U0001F1EA\",       \"region\": \"DE\",       \"stats\":
+    {         \"version\": \"2.0\",         \"software\": {           \"name\": \"invidious\",          
+    \"version\": \"2024.08.08-457d0ef\",           \"branch\": \"master\"        
+    },         \"openRegistrations\": false,         \"usage\": {           \"users\":
+    {             \"total\": 1,             \"activeHalfyear\": 0,             \"activeMonth\":
+    0           }         },         \"metadata\": {           \"updatedAt\": 1723105222,          
+    \"lastChannelRefreshedAt\": 1723104100         },         \"playback\": {}      
+    },       \"cors\": false,       \"api\": false,       \"type\": \"https\",      
+    \"uri\": \"https://yewtu.be\",       \"monitor\": {         \"token\": \"0h16\",        
+    \"url\": \"https://yewtu.be/\",         \"alias\": \"yewtu.be\",         \"last_status\":
+    200,         \"uptime\": 99.911,         \"down\": false,         \"down_since\":
+    null,         \"up_since\": \"2024-08-05T23:50:28Z\",         \"error\": null,        
+    \"period\": 300,         \"apdex_t\": 1.0,         \"string_match\": \"An alternative
+    front-end to YouTube\",         \"enabled\": true,         \"published\": true,        
+    \"disabled_locations\": [],         \"recipients\": [],         \"last_check_at\":
+    \"2024-08-08T08:25:39Z\",         \"next_check_at\": \"2024-08-08T08:30:38Z\",        
+    \"created_at\": \"2024-04-02T14:07:44Z\",         \"mute_until\": null,        
+    \"favicon_url\": \"https://yewtu.be/favicon-16x16.png?v=ce71835\",         \"custom_headers\":
+    {},         \"http_verb\": \"GET/HEAD\",         \"http_body\": \"\",        
+    \"ssl\": {           \"tested_at\": \"2024-08-08T07:40:59Z\",           \"expires_at\":
+    \"2024-12-20T22:59:00Z\",           \"valid\": true,           \"error\": null        
+    }       }     }   ],   [     \"invidious.incogniweb.net\",     {       \"flag\":
+    \"\U0001F1FA\U0001F1F8\",       \"region\": \"US\",       \"stats\": {        
+    \"version\": \"2.0\",         \"software\": {           \"name\": \"invidious\",          
+    \"version\": \"2024.07.27-90e94d4e\",           \"branch\": \"master\"        
+    },         \"openRegistrations\": false,         \"usage\": {           \"users\":
+    {             \"total\": 1,             \"activeHalfyear\": 1,             \"activeMonth\":
+    1           }         },         \"metadata\": {           \"updatedAt\": 1723105832,          
+    \"lastChannelRefreshedAt\": 1723104095         },         \"playback\": {          
+    \"totalRequests\": 35,           \"successfulRequests\": 15,           \"ratio\":
+    0.43         }       },       \"cors\": true,       \"api\": true,       \"type\":
+    \"https\",       \"uri\": \"https://invidious.incogniweb.net\",       \"monitor\":
+    {         \"token\": \"2o5g\",         \"url\": \"https://invidious.incogniweb.net\",        
+    \"alias\": \"invidious.incogniweb.net\",         \"last_status\": 200,        
+    \"uptime\": 99.293,         \"down\": false,         \"down_since\": null,        
+    \"up_since\": \"2024-08-06T17:11:46Z\",         \"error\": null,         \"period\":
+    300,         \"apdex_t\": 0.5,         \"string_match\": \"An alternative front-end
+    to YouTube\",         \"enabled\": true,         \"published\": true,        
+    \"disabled_locations\": [],         \"recipients\": [           \"email:2371453714\"        
+    ],         \"last_check_at\": \"2024-08-08T08:25:54Z\",         \"next_check_at\":
+    \"2024-08-08T08:30:51Z\",         \"created_at\": \"2024-04-22T21:34:15Z\",        
+    \"mute_until\": \"forever\",         \"favicon_url\": \"https://invidious.incogniweb.net/favicon-16x16.png?v=e82c965e\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T08:20:56Z\",          
+    \"expires_at\": \"2024-10-22T01:05:00Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"iv.melmac.space\",    
+    {       \"flag\": \"\U0001F1E9\U0001F1EA\",       \"region\": \"DE\",       \"stats\":
+    {         \"version\": \"2.0\",         \"software\": {           \"name\": \"invidious\",          
+    \"version\": \"2024.07.27-90e94d4e\",           \"branch\": \"master\"        
+    },         \"openRegistrations\": false,         \"usage\": {           \"users\":
+    {             \"total\": 0,             \"activeHalfyear\": 0,             \"activeMonth\":
+    0           }         },         \"metadata\": {           \"updatedAt\": 1723105442,          
+    \"lastChannelRefreshedAt\": 0         },         \"playback\": {           \"totalRequests\":
+    288,           \"successfulRequests\": 211,           \"ratio\": 0.73        
+    }       },       \"cors\": true,       \"api\": true,       \"type\": \"https\",      
+    \"uri\": \"https://iv.melmac.space\",       \"monitor\": {         \"token\":
+    \"bgpj\",         \"url\": \"https://iv.melmac.space\",         \"alias\": \"iv.melmac.space\",        
+    \"last_status\": 200,         \"uptime\": 98.884,         \"down\": false,        
+    \"down_since\": null,         \"up_since\": \"2024-08-06T20:14:23Z\",        
+    \"error\": null,         \"period\": 300,         \"apdex_t\": 1.0,         \"string_match\":
+    \"An alternative front-end to YouTube\",         \"enabled\": true,         \"published\":
+    true,         \"disabled_locations\": [],         \"recipients\": [          
+    \"email:2371453714\"         ],         \"last_check_at\": \"2024-08-08T08:25:35Z\",        
+    \"next_check_at\": \"2024-08-08T08:30:34Z\",         \"created_at\": \"2024-04-21T20:55:18Z\",        
+    \"mute_until\": \"forever\",         \"favicon_url\": \"https://iv.melmac.space/favicon-16x16.png?v=e82c965e\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T08:05:45Z\",          
+    \"expires_at\": \"2024-10-13T07:30:39Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"inv.nadeko.net\",    
+    {       \"flag\": \"\U0001F1E8\U0001F1F1\",       \"region\": \"CL\",       \"stats\":
+    null,       \"cors\": null,       \"api\": null,       \"type\": \"https\",      
+    \"uri\": \"https://inv.nadeko.net\",       \"monitor\": {         \"token\":
+    \"sesu\",         \"url\": \"https://inv.nadeko.net\",         \"alias\": \"inv.nadeko.net\",        
+    \"last_status\": null,         \"uptime\": 80.12,         \"down\": true,        
+    \"down_since\": \"2024-08-02T05:45:18Z\",         \"up_since\": null,        
+    \"error\": \"Connection timeout (10 seconds)\",         \"period\": 300,        
+    \"apdex_t\": 1.0,         \"string_match\": \"An alternative front-end to YouTube\",        
+    \"enabled\": true,         \"published\": true,         \"disabled_locations\":
+    [],         \"recipients\": [           \"email:2371453714\"         ],        
+    \"last_check_at\": \"2024-08-08T08:26:27Z\",         \"next_check_at\": \"2024-08-08T08:31:25Z\",        
+    \"created_at\": \"2024-04-21T20:53:06Z\",         \"mute_until\": \"forever\",        
+    \"favicon_url\": \"https://inv.nadeko.net/favicon-16x16.png?v=ddfb8e7\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-02T05:30:22Z\",          
+    \"expires_at\": \"2024-10-23T19:27:46Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"invidious.drgns.space\",    
+    {       \"flag\": \"\U0001F1FA\U0001F1F8\",       \"region\": \"US\",       \"stats\":
+    null,       \"cors\": null,       \"api\": null,       \"type\": \"https\",      
+    \"uri\": \"https://invidious.drgns.space\",       \"monitor\": {         \"token\":
+    \"gc16\",         \"url\": \"https://invidious.drgns.space\",         \"alias\":
+    \"invidious.drgns.space\",         \"last_status\": 200,         \"uptime\":
+    0.0,         \"down\": true,         \"down_since\": \"2024-07-07T06:11:02Z\",        
+    \"up_since\": null,         \"error\": \"Couldn't find the configured string\",        
+    \"period\": 300,         \"apdex_t\": 1.0,         \"string_match\": \"An alternative
+    front-end to YouTube\",         \"enabled\": true,         \"published\": true,        
+    \"disabled_locations\": [],         \"recipients\": [           \"email:2371453714\"        
+    ],         \"last_check_at\": \"2024-08-08T08:27:32Z\",         \"next_check_at\":
+    \"2024-08-08T08:32:32Z\",         \"created_at\": \"2024-04-21T20:54:12Z\",        
+    \"mute_until\": \"forever\",         \"favicon_url\": \"https://redirect.invidious.io/favicon.ico\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T08:07:41Z\",          
+    \"expires_at\": \"2024-09-11T20:48:34Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"invidious.privacyredirect.com\",    
+    {       \"flag\": \"\U0001F1EB\U0001F1EE\",       \"region\": \"FI\",       \"stats\":
+    {         \"version\": \"2.0\",         \"software\": {           \"name\": \"invidious\",          
+    \"version\": \"2024.04.27-eda7444\",           \"branch\": \"master\"        
+    },         \"openRegistrations\": false,         \"usage\": {           \"users\":
+    {             \"total\": 0,             \"activeHalfyear\": 0,             \"activeMonth\":
+    0           }         },         \"metadata\": {           \"updatedAt\": 1723105801,          
+    \"lastChannelRefreshedAt\": 0         },         \"playback\": {}       },      
+    \"cors\": true,       \"api\": true,       \"type\": \"https\",       \"uri\":
+    \"https://invidious.privacyredirect.com\",       \"monitor\": {         \"token\":
+    \"xo2t\",         \"url\": \"https://invidious.privacyredirect.com\",        
+    \"alias\": \"invidious.privacyredirect.com\",         \"last_status\": 200,        
+    \"uptime\": 99.872,         \"down\": false,         \"down_since\": null,        
+    \"up_since\": \"2024-08-06T19:12:06Z\",         \"error\": null,         \"period\":
+    300,         \"apdex_t\": 1.0,         \"string_match\": \"An alternative front-end
+    to YouTube\",         \"enabled\": true,         \"published\": true,        
+    \"disabled_locations\": [],         \"recipients\": [           \"email:2371453714\"        
+    ],         \"last_check_at\": \"2024-08-08T08:27:56Z\",         \"next_check_at\":
+    \"2024-08-08T08:32:53Z\",         \"created_at\": \"2024-04-21T20:55:32Z\",        
+    \"mute_until\": \"forever\",         \"favicon_url\": \"https://invidious.privacyredirect.com/favicon-16x16.png?v=eda7444\",        
+    \"custom_headers\": {},         \"http_verb\": \"GET/HEAD\",         \"http_body\":
+    \"\",         \"ssl\": {           \"tested_at\": \"2024-08-08T08:18:03Z\",          
+    \"expires_at\": \"2024-09-15T18:39:18Z\",           \"valid\": true,          
+    \"error\": null         }       }     }   ],   [     \"http://pjsfhqamc7k6htnumrvn4cwqqdoggeepj7u5viyimgnxg3gar72q.b32.i2p\",    
+    {       \"flag\": \"\U0001F1EB\U0001F1F7\",       \"region\": \"FR\",       \"stats\":
+    null,       \"cors\": null,       \"api\": null,       \"type\": \"i2p\",      
+    \"uri\": \"http://pjsfhqamc7k6htnumrvn4cwqqdoggeepj7u5viyimgnxg3gar72q.b32.i2p\",      
+    \"monitor\": null     }   ],   [     \"http://pjsfi2szfkb4guqzmfmlyq4no46fayertjrwt4h2uughccrh2lvq.b32.i2p\",    
+    {       \"flag\": \"\U0001F1F1\U0001F1FA\",       \"region\": \"LU\",       \"stats\":
+    null,       \"cors\": null,       \"api\": null,       \"type\": \"i2p\",      
+    \"uri\": \"http://pjsfi2szfkb4guqzmfmlyq4no46fayertjrwt4h2uughccrh2lvq.b32.i2p\",      
+    \"monitor\": null     }   ],   [     \"zzlsbhhfvwg3oh36tcvx4r7n6jrw7zibvyvfxqlodcwn3mfrvzuq.b32.i2p\",    
+    {       \"flag\": \"\U0001F1E8\U0001F1F1\",       \"region\": \"CL\",       \"stats\":
+    null,       \"cors\": null,       \"api\": null,       \"type\": \"i2p\",      
+    \"uri\": \"http://zzlsbhhfvwg3oh36tcvx4r7n6jrw7zibvyvfxqlodcwn3mfrvzuq.b32.i2p\",      
+    \"monitor\": null     }   ],   [     \"grwp24hodrefzvjjuccrkw3mjq4tzhaaq32amf33dzpmuxe7ilepcmad.onion\",    
+    {       \"flag\": \"\U0001F1FA\U0001F1F8\",       \"region\": \"US\",       \"stats\":
+    null,       \"cors\": null,       \"api\": null,       \"type\": \"onion\",      
+    \"uri\": \"http://grwp24hodrefzvjjuccrkw3mjq4tzhaaq32amf33dzpmuxe7ilepcmad.onion\",      
+    \"monitor\": null     }   ],   [     \"ng27owmagn5amdm7l5s3rsqxwscl5ynppnis5dqcasogkyxcfqn7psid.onion\",    
+    {       \"flag\": \"\U0001F1E9\U0001F1EA\",       \"region\": \"DE\",       \"stats\":
+    null,       \"cors\": null,       \"api\": null,       \"type\": \"onion\",      
+    \"uri\": \"http://ng27owmagn5amdm7l5s3rsqxwscl5ynppnis5dqcasogkyxcfqn7psid.onion\",      
+    \"monitor\": null     }   ],   [     \"invidious.g4c3eya4clenolymqbpgwz3q3tawoxw56yhzk4vugqrl6dtu3ejvhjid.onion\",    
+    {       \"flag\": \"\U0001F1EB\U0001F1F7\",       \"region\": \"FR\",       \"stats\":
+    null,       \"cors\": null,       \"api\": null,       \"type\": \"onion\",      
+    \"uri\": \"http://invidious.g4c3eya4clenolymqbpgwz3q3tawoxw56yhzk4vugqrl6dtu3ejvhjid.onion\",      
+    \"monitor\": null     }   ],   [     \"inv.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion\",    
+    {       \"flag\": \"\U0001F1E9\U0001F1EA\",       \"region\": \"DE\",       \"stats\":
+    null,       \"cors\": null,       \"api\": null,       \"type\": \"onion\",      
+    \"uri\": \"http://inv.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion\",      
+    \"monitor\": null     }   ],   [     \"inv.nadekonw7plitnjuawu6ytjsl7jlglk2t6pyq6eftptmiv3dvqndwvyd.onion\",    
+    {       \"flag\": \"\U0001F1E8\U0001F1F1\",       \"region\": \"CL\",       \"stats\":
+    null,       \"cors\": null,       \"api\": null,       \"type\": \"onion\",      
+    \"uri\": \"http://inv.nadekonw7plitnjuawu6ytjsl7jlglk2t6pyq6eftptmiv3dvqndwvyd.onion\",      
+    \"monitor\": null     }   ],   [     \"nerdvpneaggggfdiurknszkbmhvjndks5z5k3g5yp4nhphflh3n3boad.onion\",    
+    {       \"flag\": \"\U0001F1FA\U0001F1E6\",       \"region\": \"UA\",       \"stats\":
+    null,       \"cors\": null,       \"api\": null,       \"type\": \"onion\",      
+    \"uri\": \"http://nerdvpneaggggfdiurknszkbmhvjndks5z5k3g5yp4nhphflh3n3boad.onion\",      
+    \"monitor\": null     }   ] ]"

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon;
 using Photon.Pun;
-using Metaverse;
 using System;
 using System.Linq;
 using TMPro;
@@ -12,6 +11,7 @@ using UnityEngine.Networking;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using Photon.Voice.PUN;
+using UnityEngine.Animations.Rigging;
 
 public class ArrowManager : MonoBehaviourPunCallbacks
 {
@@ -22,7 +22,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     Transform mainPlayerParent;
     private bool iscashed = false;
     Dictionary<object, object> cashed_data = new Dictionary<object, object>();
-
 
     public bool isBear;
     public TMPro.TextMeshProUGUI PhotonUserName;
@@ -39,8 +38,8 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     public delegate void CommentDelegate(string iconUrl);
     public static event ReactionDelegate ReactionDelegateButtonClickEvent;
     public static event CommentDelegate CommentDelegateButtonClickEvent;
-    public delegate void UserNameToggleDeligate(int userNameToggleConstant);
-    public static event UserNameToggleDeligate userNameToggleDelegate;
+
+
     public static int viewID;
     public static string parentTransform;
 
@@ -61,72 +60,63 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     }
     void Start()
     {
-
-        //if (ConstantsHolder.xanaConstants.userName == 1)
-        //{
-        //    PhotonUserName.enabled = true;
-        //}
-        //else {
-
-        //    PhotonUserName.enabled = false;
-        //}
         nameCanvas = PhotonUserName.GetComponentInParent<Canvas>();
-        if (XanaChatSystem.instance.UserName.Length > 12)
+        try
         {
-            PhotonNetwork.NickName = XanaChatSystem.instance.UserName.Substring(0, 12) + "...";
+            if (ConstantsHolder.userName.Length > 12)
+            {
+                PhotonNetwork.NickName = ConstantsHolder.userName.Substring(0, 12) + "...";
+            }
+            else
+            {
+                PhotonNetwork.NickName = ConstantsHolder.userName;
+            }
         }
-        else
+        catch(Exception e)
         {
-            PhotonNetwork.NickName = XanaChatSystem.instance.UserName;
+            PhotonNetwork.NickName = ConstantsHolder.userName;
         }
-
+       
         arrow = Resources.Load<GameObject>("Arrow");
-        clientMat = Resources.Load<Material>("Material #27");
-        playerMat = Resources.Load<Material>("Material #25");
-        mainPlayerParent = AvatarSpawnerOnDisconnect.Instance.spawnPoint.transform;
-        print("nick name 3 4==" + XanaChatSystem.instance.UserName);
+        Material _mat = Resources.Load<Material>("Material #25");
+        clientMat = playerMat = _mat;
+        //clientMat = Resources.Load<Material>("Material #27");
+        //playerMat = Resources.Load<Material>("Material #25");
         if (this.GetComponent<PhotonView>().IsMine)
         {
             if (ConstantsHolder.xanaConstants.isBuilderScene)
                 GamificationComponentData.instance.nameCanvas = PhotonUserName.GetComponentInParent<Canvas>();
+            if(SMBCManager.Instance)
+                SMBCManager.Instance.NameCanvas= PhotonUserName.GetComponentInParent<Canvas>();
             if (AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer == null)
             {
-                this.transform.parent = mainPlayerParent;
-                this.transform.localPosition = new Vector3(0, -0.081f, 0);
-                this.transform.localEulerAngles = new Vector3(0, 0, 0);
-                AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = this.gameObject;
-                print("nick name 3==" + XanaChatSystem.instance.UserName);
+                if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+                {
+                    AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = this.gameObject;
+                }
                 PhotonUserName.text = PhotonNetwork.NickName;
 
-                //if ((!string.IsNullOrEmpty(PlayerPrefs.GetString(ConstantsGod.ReactionThumb)))
-                //    && !PlayerPrefs.GetString(ConstantsGod.ReactionThumb).Equals(ConstantsGod.ReactionThumb))
-                //{
-                //    //StartCoroutine(LoadSpriteEnv(PlayerPrefs.GetString(ConstantsGod.ReactionThumb),reactionUi));
-                //    sendDataReactionUrl(PlayerPrefs.GetString(ConstantsGod.ReactionThumb));
-                //}
-
-
-
-                AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().animator = this.GetComponent<Animator>();
-                //AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<EmoteAnimationHandler>().animatorremote = this.GetComponent<Animator>();
-                AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().playerRig = GetComponent<FirstPersonJump>().jumpRig;
-
-                AvatarSpawnerOnDisconnect.Instance.Defaultanimator = AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
+                if(!ConstantsHolder.isPenguin || !ConstantsHolder.xanaConstants.isXanaPartyWorld || !ConstantsHolder.xanaConstants.isSoftBankGame)
+                {
+                    AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().animator = this.GetComponent<Animator>();
+                    if (this.GetComponent<Animator>())
+                    ActionAnimationApplyToPlayer.PlayerAnimatorInitializer?.Invoke(this.GetComponent<Animator>().runtimeAnimatorController);
+                    AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().playerRig = GetComponent<FirstPersonJump>().jumpRig;
+                }
             }
         }
-        StartCoroutine(WaitForArrowIntanstiate(this.transform, !this.GetComponent<PhotonView>().IsMine));
-        Debug.Log("call arrow");
-        //GameObject myobj = GameObject.FindGameObjectWithTag("PhotonLocalPlayer");
-        //Debug.Log("Arrow manager for is mine " + myobj.GetComponent<PhotonView>().IsMine + "view id object==" + myobj.GetComponent<PhotonView>().ViewID);
-        //myobj.GetComponent<RPCCallforBufferPlayers>().sendData();
-
-        try
+           StartCoroutine(WaitForArrowIntanstiate(this.transform, !this.GetComponent<PhotonView>().IsMine));
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld || !ConstantsHolder.xanaConstants.isSoftBankGame)
         {
-            AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
-        }
-        catch (Exception e)
-        {
-            print(e.Message);
+            try
+            {
+                if (AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer)
+                    AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
+            }
+            catch (Exception e)
+            {
+                print(e.Message);
+            }
         }
         VoiceView = GetComponent<PhotonVoiceView>();
     }
@@ -137,13 +127,11 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         {
             if (VoiceView.IsSpeaking)
             {
-                //Debug.Log("Speaker in use true");
                 VoiceImage.gameObject.SetActive(true);
                 IsSpeak = true;
             }
             else
             {
-                // Debug.Log("Speaker in use false");
                 VoiceImage.gameObject.SetActive(false);
                 IsSpeak = false;
             }
@@ -153,10 +141,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     {
         ReactionDelegateButtonClickEvent?.Invoke(url);
     }
-    public static void OnInvokeUsername(int userNameToggle)
-    {
-        userNameToggleDelegate?.Invoke(userNameToggle);
-    }
+   
     public static void OnInvokeCommentButtonClickEvent(string text)
     {
 
@@ -164,61 +149,62 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     }
 
 
-    private void OnEnable()
+    public override void OnEnable()
     {
-        ReactionDelegateButtonClickEvent += OnChangeReactionIcon;
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            ReactionDelegateButtonClickEvent += OnChangeReactionIcon;
+        }
         CommentDelegateButtonClickEvent += OnChangeText;
-        userNameToggleDelegate += OnChangeUsernameToggle;
+        ConstantsHolder.userNameToggleDelegate += OnChangeUsernameToggle;
+        OnChangeUsernameToggle(ConstantsHolder.xanaConstants.userNameVisibilty);
+        base.OnEnable();
 
     }
 
-    private void OnDisable()
+    public override void OnDisable ()
     {
-        ReactionDelegateButtonClickEvent -= OnChangeReactionIcon;
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld || !ConstantsHolder.xanaConstants.isSoftBankGame)
+        {
+            ReactionDelegateButtonClickEvent -= OnChangeReactionIcon;
+        }
         CommentDelegateButtonClickEvent -= OnChangeText;
-        userNameToggleDelegate -= OnChangeUsernameToggle;
+        ConstantsHolder.userNameToggleDelegate -= OnChangeUsernameToggle;
+        base.OnDisable();
 
     }
 
 
     private void OnChangeReactionIcon(string url)
     {
-
-        Debug.Log($"sendDataReactionUrl {url}");
-        if ((!string.IsNullOrEmpty(url))
-                  /*  && !PlayerPrefs.GetString(url).Equals(url)*/)
+        if ((!string.IsNullOrEmpty(url)))
         {
-
-            //sendDataReactionUrl(url);
-
             gameObject.GetComponent<PhotonView>().RPC("sendDataReactionUrl", RpcTarget.All, url, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
         }
     }
     private void OnChangeUsernameToggle(int userNameToggleConstant)
     {
+        if (userNameToggleConstant == 1)
+        {
+            Debug.Log("Onbtn:" + ReferencesForGamePlay.instance.onBtnUsername);
+            PhotonUserName.enabled = true;
 
+        }
+        else
+        {
+            Debug.Log("Offbtn:" + ReferencesForGamePlay.instance.onBtnUsername);
+            PhotonUserName.enabled = false;
+        }
 
-        //sendDataReactionUrl(url);
-
-        gameObject.GetComponent<PhotonView>().RPC("sendDataUserNAmeToggle", RpcTarget.All, userNameToggleConstant, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
-
-
+        //  gameObject.GetComponent<PhotonView>().RPC("sendDataUserNAmeToggle", RpcTarget.All, userNameToggleConstant, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);  Zeel Commented We have to disable for our side oly why we are disabling for all other players as well
     }
     private void OnChangeText(string text)
     {
-        Debug.Log($"sendDatatext {text}");
-
-        if (!string.IsNullOrEmpty(text)
-                 )
+        if (!string.IsNullOrEmpty(text))
         {
             gameObject.GetComponent<PhotonView>().RPC("sendDataChatMsg", RpcTarget.All, text, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
             text = string.Empty;
         }
-        //if ((!string.IsNullOrEmpty(text))
-        //          /*  && !PlayerPrefs.GetString(url).Equals(url)*/)
-        //{
-        //    sendDataReactionUrl(text);
-        //}
     }
 
     IEnumerator LoadSpriteEnv(string ImageUrl, int id)
@@ -230,8 +216,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         {
             if (gameObject.GetComponent<PhotonView>().ViewID == id)
             {
-
-                Debug.Log("photon objects reaction====" + ImageUrl);
                 using (WWW www = new WWW(ImageUrl))
                 {
 
@@ -359,7 +343,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         if (gameObject.GetComponent<PhotonView>().ViewID == id)
         {
             //Debug.Log("USERNAME VALUE:" + ConstantsHolder.xanaConstants.userName);
-            if (ToggleConstant == 0)
+            if (ToggleConstant == 1)
             {
                 Debug.Log("Onbtn:" + ReferencesForGamePlay.instance.onBtnUsername);
                 PhotonUserName.enabled = true;
@@ -378,6 +362,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void sendDataChatMsg(string chat, int viewId)
     {
+        Debug.LogError("RPC chat :- "+chat+"--"+viewId);
         PlayerPrefs.SetString(ConstantsGod.ReactionThumb, "");
         reactionUi.SetActive(false);
         if (chatco != null)
@@ -408,6 +393,8 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     IEnumerator WaitForArrowIntanstiate(Transform parent, bool isOtherPlayer)
     {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld && isOtherPlayer)
+            PhotonUserName.gameObject.SetActive(false);
         yield return new WaitForSeconds(1.0f);
         InstantiateArrow(this.transform, !this.GetComponent<PhotonView>().IsMine);
     }
@@ -425,14 +412,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     public void InstantiateArrow(Transform parent, bool isOtherPlayer)
     {
-        if (XanaChatSystem.instance.UserName.Length > 12)
-        {
-            PhotonNetwork.NickName = XanaChatSystem.instance.UserName.Substring(0, 12) + "...";
-        }
-        else
-        {
-            PhotonNetwork.NickName = XanaChatSystem.instance.UserName;
-        }
 
         GameObject go = Instantiate(arrow, parent);
         go.layer = 17;
@@ -450,17 +429,33 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             go.transform.localPosition = new Vector3(-0.27f, 0.37f, -10.03f);
             go.transform.localEulerAngles = new Vector3(-85, -113.1f, -65);
             go.transform.localScale = new Vector3(2.35f, 2f, 1);
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            {
+                PhotonUserName.gameObject.SetActive(true);
+            }
 
             //go.AddComponent<ChangeGear>();
             // go.AddComponent<Equipment>();
             //  GameObject.FindGameObjectWithTag("DCloth").GetComponent<DefaultClothes>()._DefaultInitializer();
         }
-        else
+        //else
         {
+            if(ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
+            {
+                go.transform.localPosition = new Vector3(-1.6f, -1.46f, -50f);
+                go.transform.localEulerAngles = new Vector3(-85, -113.1f, -65);
+                go.transform.localScale = new Vector3(10.0f, 10f, 1);
+            }
+            else
+            {
+                // Old Default Position = Vector3(-0.74f, 0.1f, -26f);
+                // Old Default Scale = Vector3(6.0f, 5.25f, 1);
 
-            go.transform.localPosition = new Vector3(-0.74f, 0.1f, -26f);
-            go.transform.localEulerAngles = new Vector3(-85, -113.1f, -65);
-            go.transform.localScale = new Vector3(6.0f, 5.25f, 1);
+                go.transform.localPosition = new Vector3(-.98f, 0.43f, -18.73f);
+                go.transform.localEulerAngles = new Vector3(-85, -113.1f, -65);
+                go.transform.localScale = new Vector3(4.0f, 3.8f, 1); 
+            }
+            
 
             //EmoteAnimationHandler.Instance.controller = (AnimatorController)EmoteAnimationHandler.Instance.animator.runtimeAnimatorController;
             //// var state = controller.layers[0].stateMachine.defaultState;
@@ -477,19 +472,21 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             //}catch()
             //EmoteAnimationHandler.Instance.controller.SetStateEffectiveMotion(state, EmoteAnimationHandler.Instance.spawnCharacterObject.transform.GetComponent<Animation>().clip);
         }
+        go.GetComponent<MeshRenderer>().material = playerMat;
 
-        if (isOtherPlayer)
-        {
-            go.GetComponent<MeshRenderer>().material = clientMat;
 
-            //go.AddComponent<ChangeGear>();
-            // go.AddComponent<Equipment>();
-            //  GameObject.FindGameObjectWithTag("DCloth").GetComponent<DefaultClothes>()._DefaultInitializer();
-        }
-        else
-        {
-            go.GetComponent<MeshRenderer>().material = playerMat;
-        }
+        //if (isOtherPlayer)
+        //{
+        //    go.GetComponent<MeshRenderer>().material = clientMat;
+
+        //    //go.AddComponent<ChangeGear>();
+        //    // go.AddComponent<Equipment>();
+        //    //  GameObject.FindGameObjectWithTag("DCloth").GetComponent<DefaultClothes>()._DefaultInitializer();
+        //}
+        //else
+        //{
+        //    go.GetComponent<MeshRenderer>().material = playerMat;
+        //}
 
         if (isBear)
         {
@@ -509,8 +506,30 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     }
 
 
+    #region ToyotaMeetingArea
+    public void UpdateMeetingTxt(string message)
+    {
+        this.GetComponent<PhotonView>().RPC("RemoteUpdateTxt", RpcTarget.AllBuffered, message); //ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID
+    }
+
+    [PunRPC]
+    public void RemoteUpdateTxt(string message) //, int ViewID
+    {
+        if (NFT_Holder_Manager.instance && NFT_Holder_Manager.instance.meetingTxtUpdate != null)
+            NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt(message);
+    }
 
 
-
+    public void ChangeVoiceGroup(int ViewID, byte newGroup)
+    {
+        this.GetComponent<PhotonView>().RPC("RemoteChangeVoice", RpcTarget.All, ViewID, newGroup);
+    }
+    [PunRPC]
+    public void RemoteChangeVoice(int ViewID, byte newGroup) //, int ViewID
+    {
+        if (gameObject.GetComponent<PhotonView>().ViewID == ViewID)
+            FindObjectOfType<VoiceManager>().SetVoiceGroup(newGroup);
+    }
+    #endregion
 
 }
