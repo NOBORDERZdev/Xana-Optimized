@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
 using static XANASummitDataContainer;
+using SuperStar.Helpers;
 
 public class MoveMaptoCenter : MonoBehaviour
 {
@@ -144,7 +145,7 @@ public class MoveMaptoCenter : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(dome.world360Image))
             {
-                string ThumbnailUrl = dome.world360Image + "?width=512?height=256";
+                string ThumbnailUrl = dome.world360Image + "?width=" + ConstantsHolder.DomeImageCompression;
                 StartCoroutine(DownloadTexture(ThumbnailUrl));
                 selectedWorldBannerImage.transform.parent.gameObject.SetActive(true);
             }
@@ -201,14 +202,32 @@ public class MoveMaptoCenter : MonoBehaviour
     }
     IEnumerator DownloadTexture(string ThumbnailUrl)
     {
-        UnityWebRequest request = UnityWebRequestTexture.GetTexture(ThumbnailUrl);
-        request.SendWebRequest();
-        while (!request.isDone)
+        if (AssetCache.Instance.HasFile(ThumbnailUrl))
         {
-            yield return null;
+            AssetCache.Instance.LoadSpriteIntoImage(selectedWorldBannerImage, ThumbnailUrl, changeAspectRatio: true);
+
         }
-        Texture2D texture2D = DownloadHandlerTexture.GetContent(request);
-        selectedWorldBannerImage.sprite = ConvertToSprite(texture2D);
+        else
+        {
+            AssetCache.Instance.EnqueueOneResAndWait(ThumbnailUrl, ThumbnailUrl, (success) =>
+            {
+                if (success)
+                {
+                    AssetCache.Instance.LoadSpriteIntoImage(selectedWorldBannerImage, ThumbnailUrl, changeAspectRatio: true);
+
+                }
+            });
+        }
+        yield return null;
+        //UnityWebRequest request = UnityWebRequestTexture.GetTexture(ThumbnailUrl);
+        //request.SendWebRequest();
+        //while (!request.isDone)
+        //{
+        //    yield return null;
+        //}
+        //Texture2D texture2D = DownloadHandlerTexture.GetContent(request);
+        //selectedWorldBannerImage.sprite = ConvertToSprite(texture2D);
+        //request.Dispose();
     }
     IEnumerator GetVisitorCount(string worldId)
     {
