@@ -59,6 +59,7 @@ public class SaveParentObjectsToJson : EditorWindow
             data.position = rootObject.transform.localPosition;
             data.rotation = rootObject.transform.rotation;
             data.scale = rootObject.transform.localScale;
+            data.isstatic = rootObject.gameObject.isStatic;
             data.objectBound = CalculateBoundsWithChildren(rootObject.transform);
             data.tagName = rootObject.tag;
             data.layerIndex = rootObject.gameObject.layer;

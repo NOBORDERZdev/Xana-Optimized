@@ -77,7 +77,7 @@ public class OnTriggerSceneSwitch : MonoBehaviour
     }
 
     async void DisableCollider()
-    {
+    {   
         await Task.Delay(2000);
         alreadyTriggered = false;
     }

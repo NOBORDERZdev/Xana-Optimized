@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -45,25 +46,29 @@ public class CarNavigationManager : MonoBehaviour
 
 
     }
-    public IEnumerator TPlayer(GameObject Car, GameObject Players, CarStopTrigger triger)
+    public async Task TPlayer(GameObject Car, GameObject Players, CarStopTrigger triger)
     {
 
-        yield return new WaitForSeconds(1.5f);
+       await new WaitForSeconds(1.5f);
         var car = Car.GetComponent<SplineFollower>();
         XANASummitSceneLoading.OnJoinSubItem?.Invoke(false);
+        var playerrpc = Players.GetComponent<SummitPlayerRPC>();
+        if (playerrpc.joiningCar||playerrpc.isInsideCAr) { triger.Pop(); return; }
         if (car.DriverSeatEmpty)
         {
-            Players.GetComponent<SummitPlayerRPC>().EnterCar(car.View.ViewID, true);
+            playerrpc.joiningCar = true;
+            playerrpc.EnterCar(car.View.ViewID, true);
             triger.Pop();
             car.DriverSeatEmpty = false;
-            yield break;
+            return;
         }else
         if (car.PasengerSeatEmty)
         {
+            playerrpc.joiningCar = true;
             Players.GetComponent<SummitPlayerRPC>().EnterCar(car.View.ViewID, false);
             triger.Pop();
             car.PasengerSeatEmty = false;
-            yield break;
+           return;
         }
         //teleport to car pending.....
 

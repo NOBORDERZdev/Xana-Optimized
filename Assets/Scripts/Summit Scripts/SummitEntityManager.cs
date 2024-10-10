@@ -35,7 +35,7 @@ public class SummitEntityManager : MonoBehaviour, IMatchmakingCallbacks
       
     }
 
-    public async Task InstantiateCAR()
+    public async void InstantiateCAR()
     {
         if(!PhotonNetwork.IsMasterClient || CarNavigationManager.CarNavigationInstance.Cars.Count>0) { return; }
             CarSpline = SplineDone.Instance;

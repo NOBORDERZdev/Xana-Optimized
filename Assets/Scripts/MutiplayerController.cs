@@ -556,6 +556,8 @@ namespace Photon.Pun.Demo.PunBasics
         {
 
             playerobjects.Clear();
+            if(CarNavigationManager.CarNavigationInstance)
+            CarNavigationManager.CarNavigationInstance.Cars.Clear();
 
         }
 
