@@ -148,7 +148,7 @@ public class UIHandler : MonoBehaviour
             if (PlayerPrefs.HasKey("TermsConditionAgreement"))
             {
                 IsSplashActive = false;
-                //StartCoroutine(IsSplashEnable(false, 3f));
+                StartCoroutine(IsSplashEnable(false, 10f));
                 if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
                 {
                     if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
