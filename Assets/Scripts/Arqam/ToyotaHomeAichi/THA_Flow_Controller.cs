@@ -25,18 +25,20 @@ public class THA_Flow_Controller : MonoBehaviour
         WalletBtn.SetActive(false);
         GoogleBtn.SetActive(false);
         AppleBtn.SetActive(false);
-        //MainSceneEventHandler.OpenLandingScene += OpenLandingScene;
-
-        //if (ConstantsHolder.xanaConstants.isBackFromWorld)
-        //{
+       
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1 || PlayerPrefs.GetInt("WalletLogin") == 1)
         {
             if (!ConstantsHolder.xanaConstants.isBackFromWorld)
                 Web3AuthCustom.Instance.onLoginAction += AfterLogin;
             DeleteAcc_Screen.SetActive(true);
         }
+        if (PlayerPrefs.GetInt("WalletLogin") == 0)
+        {
+            DeleteAcc_Screen.SetActive(false);
+            InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        }
         LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
-        //}       
+
     }
 
     private void Start()

@@ -193,7 +193,7 @@ public class InventoryManager : MonoBehaviour
         saveButton = LoadPlayerAvatar.instance_loadplayer.saveButton.gameObject;
         //saveStoreBtnImage = SaveStoreBtn.GetComponent<Image>();
         //saveStoreBtnButton = SaveStoreBtn.GetComponent<Button>();
-        CheckAPILoaded = false; 
+        CheckAPILoaded = false;
         if (PlayerPrefs.GetInt("WalletLogin") != 1)
         {
             GetAllMainCategories();
@@ -204,6 +204,8 @@ public class InventoryManager : MonoBehaviour
             if (AvatarSaved)
                 AvatarSaved.SetActive(false);
             SetPresetValue();
+           
+            StartPanel_PresetParentPanel.SetActive(false);
         }
 
         if (ConstantsHolder.xanaConstants.screenType == ConstantsHolder.ScreenType.TabScreen)
@@ -351,7 +353,7 @@ public class InventoryManager : MonoBehaviour
             {
                 _storeSaveBtn.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData((IsSucess) => { }));
             }
-            
+
             if (LoadPlayerAvatar.instance_loadplayer != null)
                 _storeSaveBtn.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
 
@@ -390,7 +392,7 @@ public class InventoryManager : MonoBehaviour
             {
                 _storeSaveBtn.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData((IsSucess) => { }));
             }
-            
+
             if (LoadPlayerAvatar.instance_loadplayer != null)
                 _storeSaveBtn.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
             saveButton.GetComponent<Button>().onClick.AddListener(OnSaveBtnClicked);
@@ -630,7 +632,7 @@ public class InventoryManager : MonoBehaviour
         }
 
         ResetDownloadCount();
-        
+
         if (LoadingHandler.Instance)
             LoadingHandler.Instance.storeLoadingScreen.SetActive(false);
 
@@ -793,7 +795,7 @@ public class InventoryManager : MonoBehaviour
             myObj.order = _order;
             myObj.sort = sortingType;
 
-            if(CharacterHandler.instance.activePlayerGender == AvatarGender.Male)
+            if (CharacterHandler.instance.activePlayerGender == AvatarGender.Male)
                 myObj.gender = 0;
             else
                 myObj.gender = 1;
@@ -4324,7 +4326,7 @@ public class InventoryManager : MonoBehaviour
                     if (ConstantsHolder.xanaConstants.shoes != "")
                     {
                         GameObject currentShoes = GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornShoes;
-                        if (currentShoes &&   GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornShoes.name == "MDshoes")
+                        if (currentShoes && GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornShoes.name == "MDshoes")
                         {
                             for (int i = 0; i < AllCategoriesData[7].parentObj.transform.childCount; i++)
                             {
