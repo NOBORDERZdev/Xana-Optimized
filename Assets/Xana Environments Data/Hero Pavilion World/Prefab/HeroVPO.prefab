@@ -1,0 +1,584 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5491270931417967098
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5491270931417967099}
+  - component: {fileID: 2114181000678790744}
+  m_Layer: 0
+  m_Name: HeroVPO
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5491270931417967099
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5491270931417967098}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6295291830261119085}
+  - {fileID: 2567844944792609577}
+  - {fileID: 3113519352668834510}
+  - {fileID: 8987364177595078151}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2114181000678790744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5491270931417967098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: HeroVPO
+  objectPriority: 0
+--- !u!1001 &3890908920523645960
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5491270931417967099}
+    m_Modifications:
+    - target: {fileID: 1816433124435317031, guid: c210abfffc53b6f4687d25d81a988fc4, type: 3}
+      propertyPath: m_Name
+      value: HRS_Frame
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107269123026197605, guid: c210abfffc53b6f4687d25d81a988fc4, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107269123026197605, guid: c210abfffc53b6f4687d25d81a988fc4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.007546196
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107269123026197605, guid: c210abfffc53b6f4687d25d81a988fc4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.007546196
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107269123026197605, guid: c210abfffc53b6f4687d25d81a988fc4, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.007546196
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107269123026197605, guid: c210abfffc53b6f4687d25d81a988fc4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.8492
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107269123026197605, guid: c210abfffc53b6f4687d25d81a988fc4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.4602996
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107269123026197605, guid: c210abfffc53b6f4687d25d81a988fc4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.350099
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107269123026197605, guid: c210abfffc53b6f4687d25d81a988fc4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107269123026197605, guid: c210abfffc53b6f4687d25d81a988fc4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107269123026197605, guid: c210abfffc53b6f4687d25d81a988fc4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107269123026197605, guid: c210abfffc53b6f4687d25d81a988fc4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107269123026197605, guid: c210abfffc53b6f4687d25d81a988fc4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107269123026197605, guid: c210abfffc53b6f4687d25d81a988fc4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -180
+      objectReference: {fileID: 0}
+    - target: {fileID: 7107269123026197605, guid: c210abfffc53b6f4687d25d81a988fc4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c210abfffc53b6f4687d25d81a988fc4, type: 3}
+--- !u!4 &6295291830261119085 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7107269123026197605, guid: c210abfffc53b6f4687d25d81a988fc4, type: 3}
+  m_PrefabInstance: {fileID: 3890908920523645960}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5491270930418460515
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5491270931417967099}
+    m_Modifications:
+    - target: {fileID: 1948039019143160951, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_Name
+      value: SummitVideoPlayerHandler (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2286232385020354246, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: NormalPlayer
+      value: 
+      objectReference: {fileID: 338335160774641614}
+    - target: {fileID: 2286232385020354246, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: LiveStreamPlayer
+      value: 
+      objectReference: {fileID: 338335159889839794}
+    - target: {fileID: 2286232385020354246, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: mediaPlayerAudioSource
+      value: 
+      objectReference: {fileID: 338335159889839792}
+    - target: {fileID: 2286232385020354246, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: videoPlayerAudioSource
+      value: 
+      objectReference: {fileID: 338335160774641608}
+    - target: {fileID: 3141503287995704522, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: PreferedQuality
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3141503287995704522, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: IOSLiveVideoMesh
+      value: 
+      objectReference: {fileID: -1875780437015597444, guid: a91b0d1f48cd8ce46ad2981770544747, type: 3}
+    - target: {fileID: 3141503287995704522, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: PreRecVideoScreen
+      value: 
+      objectReference: {fileID: 8464273154367628819}
+    - target: {fileID: 3141503287995704522, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: AndroidLiveVideoMesh
+      value: 
+      objectReference: {fileID: -1875780437015597444, guid: 8ebf524abb2d17743967a5f7084055c4, type: 3}
+    - target: {fileID: 3141503287995704522, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: LiveVideoPlayerScreen
+      value: 
+      objectReference: {fileID: 1955024062111412625}
+    - target: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226123731516465619, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: MaxDistance
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226123731516465619, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: MinDistance
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226123731516465620, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: _renderer
+      value: 
+      objectReference: {fileID: 1899513472002380924}
+    - target: {fileID: 5226123732447689054, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: VideoJson
+      value: "{\"type\":\"scheduled\",\"title\":\"SAJNI RE MASHUP | DJ JITS | ARIJIT
+        SONGH | VISHAL MISHRA | DARSHAN RAVAL\",\"videoId\":\"ewrh-7BIDWw\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/ewrh-7BIDWw/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/ewrh-7BIDWw/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/ewrh-7BIDWw/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/ewrh-7BIDWw/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/ewrh-7BIDWw/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/ewrh-7BIDWw/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/ewrh-7BIDWw/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/ewrh-7BIDWw/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/ewrh-7BIDWw/3.jpg\",\"width\":120,\"height\":90}],\"storyboards\":[{\"url\":\"/api/v1/storyboards/ewrh-7BIDWw?width=48&height=27\",\"templateUrl\":\"https://i.ytimg.com/sb/ewrh-7BIDWw/storyboard3_L0/default.jpg?sqp=-oaymwENSDfyq4qpAwVwAcABBqLzl_8DBgiWuKK2Bg%3D%3D&sigh=rs%24AOn4CLDmUtip8_XIz_MNhoy1hC5w9By_zA\",\"width\":48,\"height\":27,\"count\":100,\"interval\":3400,\"storyboardWidth\":10,\"storyboardHeight\":10,\"storyboardCount\":1},{\"url\":\"/api/v1/storyboards/ewrh-7BIDWw?width=80&height=45\",\"templateUrl\":\"https://i.ytimg.com/sb/ewrh-7BIDWw/storyboard3_L1/M$M.jpg?sqp=-oaymwENSDfyq4qpAwVwAcABBqLzl_8DBgiWuKK2Bg%3D%3D&sigh=rs%24AOn4CLDpHfTy_skzB71GR2cX7YZfYpF-WA\",\"width\":80,\"height\":45,\"count\":69,\"interval\":5000,\"storyboardWidth\":10,\"storyboardHeight\":10,\"storyboardCount\":1},{\"url\":\"/api/v1/storyboards/ewrh-7BIDWw?width=160&height=90\",\"templateUrl\":\"https://i.ytimg.com/sb/ewrh-7BIDWw/storyboard3_L2/M$M.jpg?sqp=-oaymwENSDfyq4qpAwVwAcABBqLzl_8DBgiWuKK2Bg%3D%3D&sigh=rs%24AOn4CLBU5g5tcTEC17a4EMuSJlUuCdPhQQ\",\"width\":160,\"height\":90,\"count\":69,\"interval\":5000,\"storyboardWidth\":5,\"storyboardHeight\":5,\"storyboardCount\":3},{\"url\":\"/api/v1/storyboards/ewrh-7BIDWw?width=320&height=180\",\"templateUrl\":\"https://i.ytimg.com/sb/ewrh-7BIDWw/storyboard3_L3/M$M.jpg?sqp=-oaymwENSDfyq4qpAwVwAcABBqLzl_8DBgiWuKK2Bg%3D%3D&sigh=rs%24AOn4CLAYWFX1rwWMSgowZ1I-GUfj2j-bJw\",\"width\":320,\"height\":180,\"count\":69,\"interval\":5000,\"storyboardWidth\":3,\"storyboardHeight\":3,\"storyboardCount\":8}],\"description\":\"Song
+        :- Sajni Re (Mashup)\\nArtist :- Dj Jits\\n\\n-----------------------------------------------\\n\\nOriginal
+        song credits: \\n\\nAll rights belongs to the original creator \\n\\nNB -
+        DON'T RE-UPLOAD MY VIDEOS. OTHERWISE YOU WILL GET COPYRIGHT STRIKE RIGHT
+        AWAY.\\n\\n---------------------------------------------\\n\\nShow Your Support
+        Here :: \\nFacebook : https://www.facebook.com/jits4u \\nInstagram : https://www.instagram.com/djjits
+        \\n\\n---------------------------------------------\\n\\nDISCLAIMER : This
+        Following Audio/Video is Strictly meant for Promotional and Entertainment
+        Purpose. We Do not Wish to make any Commercial Use of this & Intended to
+        Showcase the Creativity Of the Artist Involved.\\n\\n* *The original Copyright(s)
+        is (are) Solely owned by the Companies/Original-Artist(s)/Record-label(s).\\n\\nAll
+        the contents are intended to Showcase the creativity of the Artist involved
+        and is strictly done for promotional purpose.\\n\\n@djjits \\n\\n#sajnire
+        #newmashup #trendingmashup #2024 #bollywoodmashup #trendingsong #mashup #trending
+        #bollywood #newbollywoodmashup #arijitsinghmashup #arijitsingh #vishalmishra
+        #darshanraval #sajnisong #sajni\",\"descriptionHtml\":\"Song :- Sajni Re
+        (Mashup)\\nArtist :- Dj Jits\\n\\n-----------------------------------------------\\n\\nOriginal
+        song credits: \\n\\nAll rights belongs to the original creator \\n\\nNB -
+        DON&#39;T RE-UPLOAD MY VIDEOS. OTHERWISE YOU WILL GET COPYRIGHT STRIKE RIGHT
+        AWAY.\\n\\n---------------------------------------------\\n\\nShow Your Support
+        Here :: \\nFacebook : <a href=\\\"https://www.facebook.com/jits4u\\\">www.facebook.com/jits4u</a>
+        \\nInstagram : <a href=\\\"https://www.instagram.com/djjits\\\">www.instagram.com/djjits</a>
+        \\n\\n---------------------------------------------\\n\\nDISCLAIMER : This
+        Following Audio/Video is Strictly meant for Promotional and Entertainment
+        Purpose. We Do not Wish to make any Commercial Use of this &amp; Intended
+        to Showcase the Creativity Of the Artist Involved.\\n\\n* *The original Copyright(s)
+        is (are) Solely owned by the Companies/Original-Artist(s)/Record-label(s).\\n\\nAll
+        the contents are intended to Showcase the creativity of the Artist involved
+        and is strictly done for promotional purpose.\\n\\n<a href=\\\"/@djjits\\\">\u202A@djjits\u202C</a>
+        \\n\\n<a href=\\\"/hashtag/sajnire\\\">#sajnire</a> <a href=\\\"/hashtag/newmashup\\\">#newmashup</a>
+        <a href=\\\"/hashtag/trendingmashup\\\">#trendingmashup</a> <a href=\\\"/hashtag/2024\\\">#2024</a>
+        <a href=\\\"/hashtag/bollywoodmashup\\\">#bollywoodmashup</a> <a href=\\\"/hashtag/trendingsong\\\">#trendingsong</a>
+        <a href=\\\"/hashtag/mashup\\\">#mashup</a> <a href=\\\"/hashtag/trending\\\">#trending</a>
+        <a href=\\\"/hashtag/bollywood\\\">#bollywood</a> <a href=\\\"/hashtag/newbollywoodmashup\\\">#newbollywoodmashup</a>
+        <a href=\\\"/hashtag/arijitsinghmashup\\\">#arijitsinghmashup</a> <a href=\\\"/hashtag/arijitsingh\\\">#arijitsingh</a>
+        <a href=\\\"/hashtag/vishalmishra\\\">#vishalmishra</a> <a href=\\\"/hashtag/darshanraval\\\">#darshanraval</a>
+        <a href=\\\"/hashtag/sajnisong\\\">#sajnisong</a> <a href=\\\"/hashtag/sajni\\\">#sajni</a>\",\"published\":1717632000,\"publishedText\":\"3
+        months ago\",\"keywords\":[],\"viewCount\":1073875,\"likeCount\":9364,\"dislikeCount\":0,\"paid\":false,\"premium\":false,\"isFamilyFriendly\":true,\"allowedRegions\":[\"AD\",\"AE\",\"AF\",\"AG\",\"AI\",\"AL\",\"AM\",\"AO\",\"AQ\",\"AR\",\"AS\",\"AT\",\"AU\",\"AW\",\"AX\",\"AZ\",\"BA\",\"BB\",\"BD\",\"BE\",\"BF\",\"BG\",\"BH\",\"BI\",\"BJ\",\"BL\",\"BM\",\"BN\",\"BO\",\"BQ\",\"BR\",\"BS\",\"BT\",\"BV\",\"BW\",\"BY\",\"BZ\",\"CA\",\"CC\",\"CD\",\"CF\",\"CG\",\"CH\",\"CI\",\"CK\",\"CL\",\"CM\",\"CN\",\"CO\",\"CR\",\"CU\",\"CV\",\"CW\",\"CX\",\"CY\",\"CZ\",\"DE\",\"DJ\",\"DK\",\"DM\",\"DO\",\"DZ\",\"EC\",\"EE\",\"EG\",\"EH\",\"ER\",\"ES\",\"ET\",\"FI\",\"FJ\",\"FK\",\"FM\",\"FO\",\"FR\",\"GA\",\"GB\",\"GD\",\"GE\",\"GF\",\"GG\",\"GH\",\"GI\",\"GL\",\"GM\",\"GN\",\"GP\",\"GQ\",\"GR\",\"GS\",\"GT\",\"GU\",\"GW\",\"GY\",\"HK\",\"HM\",\"HN\",\"HR\",\"HT\",\"HU\",\"ID\",\"IE\",\"IL\",\"IM\",\"IN\",\"IO\",\"IQ\",\"IR\",\"IS\",\"IT\",\"JE\",\"JM\",\"JO\",\"JP\",\"KE\",\"KG\",\"KH\",\"KI\",\"KM\",\"KN\",\"KP\",\"KR\",\"KW\",\"KY\",\"KZ\",\"LA\",\"LB\",\"LC\",\"LI\",\"LK\",\"LR\",\"LS\",\"LT\",\"LU\",\"LV\",\"LY\",\"MA\",\"MC\",\"MD\",\"ME\",\"MF\",\"MG\",\"MH\",\"MK\",\"ML\",\"MM\",\"MN\",\"MO\",\"MP\",\"MQ\",\"MR\",\"MS\",\"MT\",\"MU\",\"MV\",\"MW\",\"MX\",\"MY\",\"MZ\",\"NA\",\"NC\",\"NE\",\"NF\",\"NG\",\"NI\",\"NL\",\"NO\",\"NP\",\"NR\",\"NU\",\"NZ\",\"OM\",\"PA\",\"PE\",\"PF\",\"PG\",\"PH\",\"PK\",\"PL\",\"PM\",\"PN\",\"PR\",\"PS\",\"PT\",\"PW\",\"PY\",\"QA\",\"RE\",\"RO\",\"RS\",\"RU\",\"RW\",\"SA\",\"SB\",\"SC\",\"SD\",\"SE\",\"SG\",\"SH\",\"SI\",\"SJ\",\"SK\",\"SL\",\"SM\",\"SN\",\"SO\",\"SR\",\"SS\",\"ST\",\"SV\",\"SX\",\"SY\",\"SZ\",\"TC\",\"TD\",\"TF\",\"TG\",\"TH\",\"TJ\",\"TK\",\"TL\",\"TM\",\"TN\",\"TO\",\"TR\",\"TT\",\"TV\",\"TW\",\"TZ\",\"UA\",\"UG\",\"UM\",\"US\",\"UY\",\"UZ\",\"VA\",\"VC\",\"VE\",\"VG\",\"VI\",\"VN\",\"VU\",\"WF\",\"WS\",\"YE\",\"YT\",\"ZA\",\"ZM\",\"ZW\"],\"genre\":\"Music\",\"genreUrl\":null,\"author\":\"DJ
+        JITS\",\"authorId\":\"UCFyrcRs4tifVc7GzwCCTWpA\",\"authorUrl\":\"/channel/UCFyrcRs4tifVc7GzwCCTWpA\",\"authorVerified\":true,\"authorThumbnails\":[{\"url\":\"https://yt3.ggpht.com/bvC-BgX2ygFt0ibfeiNF49zDT-nYnqjWUsU78sJkEjK5qdT8-zE97xKTMxHRcwU1Pn8O8e5mAg=s32-c-k-c0x00ffffff-no-rj\",\"width\":32,\"height\":32},{\"url\":\"https://yt3.ggpht.com/bvC-BgX2ygFt0ibfeiNF49zDT-nYnqjWUsU78sJkEjK5qdT8-zE97xKTMxHRcwU1Pn8O8e5mAg=s48-c-k-c0x00ffffff-no-rj\",\"width\":48,\"height\":48},{\"url\":\"https://yt3.ggpht.com/bvC-BgX2ygFt0ibfeiNF49zDT-nYnqjWUsU78sJkEjK5qdT8-zE97xKTMxHRcwU1Pn8O8e5mAg=s76-c-k-c0x00ffffff-no-rj\",\"width\":76,\"height\":76},{\"url\":\"https://yt3.ggpht.com/bvC-BgX2ygFt0ibfeiNF49zDT-nYnqjWUsU78sJkEjK5qdT8-zE97xKTMxHRcwU1Pn8O8e5mAg=s100-c-k-c0x00ffffff-no-rj\",\"width\":100,\"height\":100},{\"url\":\"https://yt3.ggpht.com/bvC-BgX2ygFt0ibfeiNF49zDT-nYnqjWUsU78sJkEjK5qdT8-zE97xKTMxHRcwU1Pn8O8e5mAg=s176-c-k-c0x00ffffff-no-rj\",\"width\":176,\"height\":176},{\"url\":\"https://yt3.ggpht.com/bvC-BgX2ygFt0ibfeiNF49zDT-nYnqjWUsU78sJkEjK5qdT8-zE97xKTMxHRcwU1Pn8O8e5mAg=s512-c-k-c0x00ffffff-no-rj\",\"width\":512,\"height\":512}],\"subCountText\":\"42.9K\",\"lengthSeconds\":340,\"allowRatings\":true,\"rating\":0,\"isListed\":true,\"liveNow\":false,\"isPostLiveDvr\":false,\"isUpcoming\":false,\"dashUrl\":\"https://inv.nadeko.net/api/manifest/dash/id/ewrh-7BIDWw\",\"adaptiveFormats\":[{\"init\":\"0-722\",\"index\":\"723-1174\",\"bitrate\":\"130983\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=140&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=audio%2Fmp4&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=5502792&ratebypass=yes&dur=339.963&lmt=1724438222800532&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4532434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRQIhANUHL_3FFbqSLsTCP7jHIY1uONiRd7SEWv0eQSa9fZ3ZAiAw-aL6cMIuTnYsD1xAkgDhFn7v8bZ083TCpUzleSd5-g%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"140\",\"type\":\"audio/mp4;
+        codecs=\\\"mp4a.40.2\\\"\",\"clen\":\"5502792\",\"lmt\":\"1724438222800532\",\"projectionType\":\"RECTANGULAR\",\"container\":\"m4a\",\"encoding\":\"aac\",\"audioQuality\":\"AUDIO_QUALITY_MEDIUM\",\"audioSampleRate\":44100,\"audioChannels\":2},{\"init\":\"0-265\",\"index\":\"266-840\",\"bitrate\":\"60141\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=249&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=audio%2Fwebm&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=2298532&ratebypass=yes&dur=339.921&lmt=1724439575991730&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4532434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRQIgX923s7BnsQk7SZANxKFx9ZsYLBAlNV4hbofTQBKtDJoCIQD5OWNRa47EFZpuAze_5yeAHr9HfAKKNQC35Uo6Ef65eQ%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"249\",\"type\":\"audio/webm;
+        codecs=\\\"opus\\\"\",\"clen\":\"2298532\",\"lmt\":\"1724439575991730\",\"projectionType\":\"RECTANGULAR\",\"container\":\"webm\",\"encoding\":\"opus\",\"audioQuality\":\"AUDIO_QUALITY_LOW\",\"audioSampleRate\":48000,\"audioChannels\":2},{\"init\":\"0-265\",\"index\":\"266-840\",\"bitrate\":\"80369\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=250&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=audio%2Fwebm&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=3033133&ratebypass=yes&dur=339.921&lmt=1724439547424017&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4532434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRAIgbUpnpAZd5eicODDmUuHAImmMZ3TQsIrK6eUhbuwSvp8CIC7YBKWeimBu92S1cPS1g6hLX4YJTz8r-IZ7ZBOUtB2g&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"250\",\"type\":\"audio/webm;
+        codecs=\\\"opus\\\"\",\"clen\":\"3033133\",\"lmt\":\"1724439547424017\",\"projectionType\":\"RECTANGULAR\",\"container\":\"webm\",\"encoding\":\"opus\",\"audioQuality\":\"AUDIO_QUALITY_LOW\",\"audioSampleRate\":48000,\"audioChannels\":2},{\"init\":\"0-265\",\"index\":\"266-840\",\"bitrate\":\"152829\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=251&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=audio%2Fwebm&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=5931584&ratebypass=yes&dur=339.921&lmt=1724439563745514&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4532434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRQIhAKR3zsvAZXBfVP2Fq-4kQm6oGpe7VTRbGIWDvXIMyh45AiBLsbVyBlkfCq75M_s0vXpGB1GNVnIScNPGTp80SkIisw%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"251\",\"type\":\"audio/webm;
+        codecs=\\\"opus\\\"\",\"clen\":\"5931584\",\"lmt\":\"1724439563745514\",\"projectionType\":\"RECTANGULAR\",\"container\":\"webm\",\"encoding\":\"opus\",\"audioQuality\":\"AUDIO_QUALITY_MEDIUM\",\"audioSampleRate\":48000,\"audioChannels\":2},{\"init\":\"0-738\",\"index\":\"739-1382\",\"bitrate\":\"39718\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=160&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C278%2C394%2C395%2C396%2C397%2C398%2C399&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=video%2Fmp4&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=1263365&ratebypass=yes&dur=339.899&lmt=1724440406395045&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4535434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRAIgSV407cat-UmZ6mIVQQn-dAbruiTqOqRy82uCpx_nhvMCIGUNHfwZ-fcH3VysCH-P7hLex5GpnG1rrt6CeFqBOxRy&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"160\",\"type\":\"video/mp4;
+        codecs=\\\"avc1.4d400c\\\"\",\"clen\":\"1263365\",\"lmt\":\"1724440406395045\",\"projectionType\":\"RECTANGULAR\",\"fps\":30,\"size\":\"256x144\",\"resolution\":\"144p\",\"qualityLabel\":\"144p\",\"container\":\"mp4\",\"encoding\":\"h264\"},{\"init\":\"0-217\",\"index\":\"218-1076\",\"bitrate\":\"59126\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=278&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C278%2C394%2C395%2C396%2C397%2C398%2C399&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=video%2Fwebm&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=2036038&ratebypass=yes&dur=339.899&lmt=1724441394058066&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4535434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRgIhALC_zCfsGvQpH1eogFpJcLiiRpTywmv1ZTitXuf3zLrRAiEA7oDTM1U6eEKIS1uxuA-Qxo0nIJ1nI1nR2Kcnm7WttiI%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"278\",\"type\":\"video/webm;
+        codecs=\\\"vp9\\\"\",\"clen\":\"2036038\",\"lmt\":\"1724441394058066\",\"projectionType\":\"RECTANGULAR\",\"fps\":30,\"size\":\"256x144\",\"resolution\":\"144p\",\"qualityLabel\":\"144p\",\"container\":\"webm\",\"encoding\":\"vp9\",\"colorInfo\":{\"primaries\":\"COLOR_PRIMARIES_BT709\",\"transferCharacteristics\":\"COLOR_TRANSFER_CHARACTERISTICS_BT709\",\"matrixCoefficients\":\"COLOR_MATRIX_COEFFICIENTS_BT709\"}},{\"init\":\"0-699\",\"index\":\"700-1343\",\"bitrate\":\"45564\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=394&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C278%2C394%2C395%2C396%2C397%2C398%2C399&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=video%2Fmp4&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=1318499&ratebypass=yes&dur=339.899&lmt=1724439738109022&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4537434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRQIhAKf7a22X1RW8eHGIH4bGKTFifkH5IqNkVNUR9HkgZ4M3AiBYMaVDV_cfkzM1cXuV77Mf4_p1boBzBCk6w4Taw0r-VQ%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"394\",\"type\":\"video/mp4;
+        codecs=\\\"av01.0.00M.08\\\"\",\"clen\":\"1318499\",\"lmt\":\"1724439738109022\",\"projectionType\":\"RECTANGULAR\",\"fps\":30,\"size\":\"256x144\",\"resolution\":\"144p\",\"qualityLabel\":\"144p\",\"container\":\"mp4\",\"encoding\":\"av01.0.05M.08\",\"colorInfo\":{\"primaries\":\"COLOR_PRIMARIES_BT709\",\"transferCharacteristics\":\"COLOR_TRANSFER_CHARACTERISTICS_BT709\",\"matrixCoefficients\":\"COLOR_MATRIX_COEFFICIENTS_BT709\"}},{\"init\":\"0-739\",\"index\":\"740-1383\",\"bitrate\":\"48204\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=133&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C278%2C394%2C395%2C396%2C397%2C398%2C399&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=video%2Fmp4&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=1543083&ratebypass=yes&dur=339.899&lmt=1724440406493300&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4535434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRgIhAPCIVe0do9kzpcHgspnWRv2KXg95T43qFSJqtgc8AZLOAiEAnT-AZWNOJQBaqcOohD8r23k2nkh5Jb3Hh5QIE3p9RW4%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"133\",\"type\":\"video/mp4;
+        codecs=\\\"avc1.4d4015\\\"\",\"clen\":\"1543083\",\"lmt\":\"1724440406493300\",\"projectionType\":\"RECTANGULAR\",\"fps\":30,\"size\":\"426x240\",\"resolution\":\"240p\",\"qualityLabel\":\"240p\",\"container\":\"mp4\",\"encoding\":\"h264\"},{\"init\":\"0-217\",\"index\":\"218-1076\",\"bitrate\":\"55062\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=242&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C278%2C394%2C395%2C396%2C397%2C398%2C399&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=video%2Fwebm&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=1809592&ratebypass=yes&dur=339.899&lmt=1724441392930635&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4535434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRgIhANO0Eni2uLhuy3-eI69qUvxnfCU6-QxQDVj83rpJHX1SAiEA6TMX8Ue0_Sm6e_643vUmv5Uhncy8sT2eDBFN3MjPqwc%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"242\",\"type\":\"video/webm;
+        codecs=\\\"vp9\\\"\",\"clen\":\"1809592\",\"lmt\":\"1724441392930635\",\"projectionType\":\"RECTANGULAR\",\"fps\":30,\"size\":\"426x240\",\"resolution\":\"240p\",\"qualityLabel\":\"240p\",\"container\":\"webm\",\"encoding\":\"vp9\",\"colorInfo\":{\"primaries\":\"COLOR_PRIMARIES_BT709\",\"transferCharacteristics\":\"COLOR_TRANSFER_CHARACTERISTICS_BT709\",\"matrixCoefficients\":\"COLOR_MATRIX_COEFFICIENTS_BT709\"}},{\"init\":\"0-699\",\"index\":\"700-1343\",\"bitrate\":\"46092\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=395&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C278%2C394%2C395%2C396%2C397%2C398%2C399&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=video%2Fmp4&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=1532416&ratebypass=yes&dur=339.899&lmt=1724439745623076&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4537434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRAIgRxnyXmKeZEjtfjHS2uEd-XrvSBHe40JfbbZPaiAQlGQCIBdbaOM1h6OnmkclYjvuu4MKhFcAN6_fjJJOhTbaWp8o&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"395\",\"type\":\"video/mp4;
+        codecs=\\\"av01.0.00M.08\\\"\",\"clen\":\"1532416\",\"lmt\":\"1724439745623076\",\"projectionType\":\"RECTANGULAR\",\"fps\":30,\"size\":\"426x240\",\"resolution\":\"240p\",\"qualityLabel\":\"240p\",\"container\":\"mp4\",\"encoding\":\"av01.0.05M.08\",\"colorInfo\":{\"primaries\":\"COLOR_PRIMARIES_BT709\",\"transferCharacteristics\":\"COLOR_TRANSFER_CHARACTERISTICS_BT709\",\"matrixCoefficients\":\"COLOR_MATRIX_COEFFICIENTS_BT709\"}},{\"init\":\"0-740\",\"index\":\"741-1384\",\"bitrate\":\"62953\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=134&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C278%2C394%2C395%2C396%2C397%2C398%2C399&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=video%2Fmp4&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=2109661&ratebypass=yes&dur=339.899&lmt=1724440408111286&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4535434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRQIgEUDQJ93Dp4ttMoOjIlTj2QqAfIltHSsgx8KGT3VlCrICIQCSZFcFarWNvTZB79E847tN7uhNWZqKx-Q9YeO1yotO8w%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"134\",\"type\":\"video/mp4;
+        codecs=\\\"avc1.4d401e\\\"\",\"clen\":\"2109661\",\"lmt\":\"1724440408111286\",\"projectionType\":\"RECTANGULAR\",\"fps\":30,\"size\":\"640x360\",\"resolution\":\"360p\",\"qualityLabel\":\"360p\",\"container\":\"mp4\",\"encoding\":\"h264\"},{\"init\":\"0-219\",\"index\":\"220-1078\",\"bitrate\":\"84701\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=243&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C278%2C394%2C395%2C396%2C397%2C398%2C399&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=video%2Fwebm&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=2751325&ratebypass=yes&dur=339.899&lmt=1724441393412430&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4535434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRQIhAM78om8lRuz0OgfBcfETY2Wekgh8gmU9tBXqmU6E0fDvAiA269Tx69JwI0IacPVYdqiypXKCK0ZXlw12NaYj0BVdnQ%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"243\",\"type\":\"video/webm;
+        codecs=\\\"vp9\\\"\",\"clen\":\"2751325\",\"lmt\":\"1724441393412430\",\"projectionType\":\"RECTANGULAR\",\"fps\":30,\"size\":\"640x360\",\"resolution\":\"360p\",\"qualityLabel\":\"360p\",\"container\":\"webm\",\"encoding\":\"vp9\",\"colorInfo\":{\"primaries\":\"COLOR_PRIMARIES_BT709\",\"transferCharacteristics\":\"COLOR_TRANSFER_CHARACTERISTICS_BT709\",\"matrixCoefficients\":\"COLOR_MATRIX_COEFFICIENTS_BT709\"}},{\"init\":\"0-699\",\"index\":\"700-1343\",\"bitrate\":\"72652\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=396&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C278%2C394%2C395%2C396%2C397%2C398%2C399&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=video%2Fmp4&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=2351868&ratebypass=yes&dur=339.899&lmt=1724439700194250&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4537434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRgIhANUM1k2jGHwzm4oHj59JWWNmYFNcFVT2gO2F5UuyhqFYAiEA-oXNVw7A9Ce0M_J-v5wgKCppZBpHuYOjET9chQA0AoQ%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"396\",\"type\":\"video/mp4;
+        codecs=\\\"av01.0.01M.08\\\"\",\"clen\":\"2351868\",\"lmt\":\"1724439700194250\",\"projectionType\":\"RECTANGULAR\",\"fps\":30,\"size\":\"640x360\",\"resolution\":\"360p\",\"qualityLabel\":\"360p\",\"container\":\"mp4\",\"encoding\":\"av01.0.05M.08\",\"colorInfo\":{\"primaries\":\"COLOR_PRIMARIES_BT709\",\"transferCharacteristics\":\"COLOR_TRANSFER_CHARACTERISTICS_BT709\",\"matrixCoefficients\":\"COLOR_MATRIX_COEFFICIENTS_BT709\"}},{\"init\":\"0-740\",\"index\":\"741-1384\",\"bitrate\":\"80369\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=135&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C278%2C394%2C395%2C396%2C397%2C398%2C399&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=video%2Fmp4&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=2684553&ratebypass=yes&dur=339.899&lmt=1724440405223828&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4535434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRAIgAM2kRhx7mFN059zEO5-fxlIlv8v1xIXYd_QW4qNe2N8CIEhzSXxVtkPp2KiN9PJIUXa7Qnf8vBDuUF99BvE5Nvdo&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"135\",\"type\":\"video/mp4;
+        codecs=\\\"avc1.4d401f\\\"\",\"clen\":\"2684553\",\"lmt\":\"1724440405223828\",\"projectionType\":\"RECTANGULAR\",\"fps\":30,\"size\":\"854x480\",\"resolution\":\"480p\",\"qualityLabel\":\"480p\",\"container\":\"mp4\",\"encoding\":\"h264\"},{\"init\":\"0-219\",\"index\":\"220-1079\",\"bitrate\":\"107418\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=244&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C278%2C394%2C395%2C396%2C397%2C398%2C399&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=video%2Fwebm&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=3464462&ratebypass=yes&dur=339.899&lmt=1724441392786831&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4535434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRgIhAKYEEprr1ht8wkgIQmMkpnHPgeJrbsi8eqSHUd7oqe_-AiEA0w_-iaz7HJRirBZgsesU0Jr4DIsvEWyqPbi60WtXsY4%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"244\",\"type\":\"video/webm;
+        codecs=\\\"vp9\\\"\",\"clen\":\"3464462\",\"lmt\":\"1724441392786831\",\"projectionType\":\"RECTANGULAR\",\"fps\":30,\"size\":\"854x480\",\"resolution\":\"480p\",\"qualityLabel\":\"480p\",\"container\":\"webm\",\"encoding\":\"vp9\",\"colorInfo\":{\"primaries\":\"COLOR_PRIMARIES_BT709\",\"transferCharacteristics\":\"COLOR_TRANSFER_CHARACTERISTICS_BT709\",\"matrixCoefficients\":\"COLOR_MATRIX_COEFFICIENTS_BT709\"}},{\"init\":\"0-699\",\"index\":\"700-1343\",\"bitrate\":\"102970\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=397&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C278%2C394%2C395%2C396%2C397%2C398%2C399&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=video%2Fmp4&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=3285215&ratebypass=yes&dur=339.899&lmt=1724440102589884&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4537434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRgIhAO8P7jN2CBr_xOVrXuACu7kB79Ds5pPlXFs_APJcUlZHAiEAw2bf75fuWJ-7o9fBuDmQXtY2nrm9epJ_fzFKxwnmWjs%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"397\",\"type\":\"video/mp4;
+        codecs=\\\"av01.0.04M.08\\\"\",\"clen\":\"3285215\",\"lmt\":\"1724440102589884\",\"projectionType\":\"RECTANGULAR\",\"fps\":30,\"size\":\"854x480\",\"resolution\":\"480p\",\"qualityLabel\":\"480p\",\"container\":\"mp4\",\"encoding\":\"av01.0.05M.08\",\"colorInfo\":{\"primaries\":\"COLOR_PRIMARIES_BT709\",\"transferCharacteristics\":\"COLOR_TRANSFER_CHARACTERISTICS_BT709\",\"matrixCoefficients\":\"COLOR_MATRIX_COEFFICIENTS_BT709\"}},{\"init\":\"0-739\",\"index\":\"740-1383\",\"bitrate\":\"122531\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=136&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C278%2C394%2C395%2C396%2C397%2C398%2C399&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=video%2Fmp4&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=4069424&ratebypass=yes&dur=339.899&lmt=1724440405293578&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4535434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRgIhAL2yJYbt15YhflHIiG2qXugHqs_ABw_JIyKRtpS-DxFiAiEAzfE_ENwiPPwS4obcdv4XYKQBdIEUpdaLXGVglgEIGO0%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"136\",\"type\":\"video/mp4;
+        codecs=\\\"avc1.4d401f\\\"\",\"clen\":\"4069424\",\"lmt\":\"1724440405293578\",\"projectionType\":\"RECTANGULAR\",\"fps\":30,\"size\":\"1280x720\",\"resolution\":\"720p\",\"qualityLabel\":\"720p\",\"container\":\"mp4\",\"encoding\":\"h264\"},{\"init\":\"0-219\",\"index\":\"220-1079\",\"bitrate\":\"138869\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=247&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C278%2C394%2C395%2C396%2C397%2C398%2C399&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=video%2Fwebm&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=4673488&ratebypass=yes&dur=339.899&lmt=1724441393341240&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4535434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRAIgQRT6jLe8_iabHkOJcozU_vzAIrRMTJJQi3Wgqeo0JZ0CIBnE76Yrt5RXxjwWSVVposqFkboaywOTm4qmwfhkP-SU&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"247\",\"type\":\"video/webm;
+        codecs=\\\"vp9\\\"\",\"clen\":\"4673488\",\"lmt\":\"1724441393341240\",\"projectionType\":\"RECTANGULAR\",\"fps\":30,\"size\":\"1280x720\",\"resolution\":\"720p\",\"qualityLabel\":\"720p\",\"container\":\"webm\",\"encoding\":\"vp9\",\"colorInfo\":{\"primaries\":\"COLOR_PRIMARIES_BT709\",\"transferCharacteristics\":\"COLOR_TRANSFER_CHARACTERISTICS_BT709\",\"matrixCoefficients\":\"COLOR_MATRIX_COEFFICIENTS_BT709\"}},{\"init\":\"0-699\",\"index\":\"700-1343\",\"bitrate\":\"157097\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=398&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C278%2C394%2C395%2C396%2C397%2C398%2C399&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=video%2Fmp4&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=4928007&ratebypass=yes&dur=339.899&lmt=1724439808895297&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4537434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRQIga4DnMxlMbHu2O2jPmS3uA2E4To8BTVxNccEq7PgzC44CIQC_Z_diiywP1l7bNSFzG_rKZbDqjIQZ2krbJ5BQX6_UiA%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"398\",\"type\":\"video/mp4;
+        codecs=\\\"av01.0.05M.08\\\"\",\"clen\":\"4928007\",\"lmt\":\"1724439808895297\",\"projectionType\":\"RECTANGULAR\",\"fps\":30,\"size\":\"1280x720\",\"resolution\":\"720p\",\"qualityLabel\":\"720p\",\"colorInfo\":{\"primaries\":\"COLOR_PRIMARIES_BT709\",\"transferCharacteristics\":\"COLOR_TRANSFER_CHARACTERISTICS_BT709\",\"matrixCoefficients\":\"COLOR_MATRIX_COEFFICIENTS_BT709\"}},{\"init\":\"0-741\",\"index\":\"742-1385\",\"bitrate\":\"295391\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=137&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C278%2C394%2C395%2C396%2C397%2C398%2C399&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=video%2Fmp4&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=9726712&ratebypass=yes&dur=339.899&lmt=1724440206324450&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4535434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRgIhAIXHdamN8HL7uy1vvkzhasDwq2e6CEAvRaGrBmPykFfuAiEApN1_6jLkopmD7b4JSIYe-cIe4uhoHsPaENEa1gX3pkk%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"137\",\"type\":\"video/mp4;
+        codecs=\\\"avc1.640028\\\"\",\"clen\":\"9726712\",\"lmt\":\"1724440206324450\",\"projectionType\":\"RECTANGULAR\",\"fps\":30,\"size\":\"1920x1080\",\"resolution\":\"1080p\",\"qualityLabel\":\"1080p\",\"container\":\"mp4\",\"encoding\":\"h264\"},{\"init\":\"0-219\",\"index\":\"220-1079\",\"bitrate\":\"243518\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=248&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C278%2C394%2C395%2C396%2C397%2C398%2C399&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=video%2Fwebm&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=7647764&ratebypass=yes&dur=339.899&lmt=1724440668245332&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4535434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRgIhAOMTaO1d36BH3xC5BXMMI6_SfSIY_8Qld-9tHx4bHkAWAiEA5dZ5e0Q5yF8S0T14CdNiJIeaURKplj1-474yhJVuwrM%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"248\",\"type\":\"video/webm;
+        codecs=\\\"vp9\\\"\",\"clen\":\"7647764\",\"lmt\":\"1724440668245332\",\"projectionType\":\"RECTANGULAR\",\"fps\":30,\"size\":\"1920x1080\",\"resolution\":\"1080p\",\"qualityLabel\":\"1080p\",\"container\":\"webm\",\"encoding\":\"vp9\",\"colorInfo\":{\"primaries\":\"COLOR_PRIMARIES_BT709\",\"transferCharacteristics\":\"COLOR_TRANSFER_CHARACTERISTICS_BT709\",\"matrixCoefficients\":\"COLOR_MATRIX_COEFFICIENTS_BT709\"}},{\"init\":\"0-699\",\"index\":\"700-1343\",\"bitrate\":\"240628\",\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=399&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C278%2C394%2C395%2C396%2C397%2C398%2C399&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFR89WcPCKuNOMPvgnVbcdOUpz05t0TtfZaeJWxlGfD1oVqTTIuM9N4yBNyweoEn-08f52vhZ9Aj&spc=54Mbxf82Pc7mEXX0nRRtjpd1ykJFuyXHgZLzrf938XhU5YkNYGuWLyiX9pmS&vprv=1&svpuc=1&mime=video%2Fmp4&ns=-X7MIloAG1H8p7EZpv0cw9wQ&rqh=1&gir=yes&clen=7468021&ratebypass=yes&dur=339.899&lmt=1724439597797437&mt=1726665215&fvip=3&keepalive=yes&c=WEB&sefc=1&txp=4537434&n=EeeHXU0lz_GG5A&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRgIhAMpMT8uKzoUDqBdI2Ye7fgPjf2uhjHSLXFtCBNmcfBWbAiEAyGK3zsdXlGHW69ntjxjGMvUD4RKHRWsBF6Fad_6RPo4%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"399\",\"type\":\"video/mp4;
+        codecs=\\\"av01.0.08M.08\\\"\",\"clen\":\"7468021\",\"lmt\":\"1724439597797437\",\"projectionType\":\"RECTANGULAR\",\"fps\":30,\"size\":\"1920x1080\",\"resolution\":\"1080p\",\"qualityLabel\":\"1080p\",\"colorInfo\":{\"primaries\":\"COLOR_PRIMARIES_BT709\",\"transferCharacteristics\":\"COLOR_TRANSFER_CHARACTERISTICS_BT709\",\"matrixCoefficients\":\"COLOR_MATRIX_COEFFICIENTS_BT709\"}}],\"formatStreams\":[{\"url\":\"https://rr4---sn-njaeyn7s.googlevideo.com/videoplayback?expire=1726687186&ei=ctPqZv6-FsKg4dUPgYGPoAE&ip=149.88.104.9&id=o-AJS_dvHd_z66ovbQsUT91sqgo1XS5PQZFlcqDc0YeBve&itag=18&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=58&mm=31%2C26&mn=sn-njaeyn7s%2Csn-bg0ezn7s&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=323750&bui=AXLXGFRkNqGAYOVLOYYCqEvAGJGK1yse9c6Z-GRlhY7T9bbrmuDnEsL1nHcQnn2EyXd4lLjmFpAIoGbJ&spc=54Mbxf81Pc7mEXX0nRRtjpd1ykJFuyTHgZLzrf938XhU5YkNYGuWLyiX9pmSVxc&vprv=1&svpuc=1&mime=video%2Fmp4&ns=x6RPxKYgiPGlynCxyw9RX-IQ&rqh=1&gir=yes&clen=11742742&ratebypass=yes&dur=339.963&lmt=1724440156247230&mt=1726665215&fvip=3&c=WEB&sefc=1&txp=4538434&n=ixgdewpDcoOjSg&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRAIgUqHrnfAFiK8ZIGaWaiGXE8wi7k0ti-hSIJOkKQW8MF4CIGeobFR7t5VCsNYw9d3ezDrBKvzWGCW-gqBLQ0YxYW3o&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABPmVW0wRQIgS8aZ8gXZ0cYxXdLfXbh-CWizTb-x3OFqYOM81Iz7UW0CIQCzbtRdA68cIbuquc2RijVMU0jEI5yBCdmPTvjy2H5Icw%3D%3D&pot=MnTwvKcunuiQyPCET3GCE3gt9-4OzII5GuqNNrQ8QV2BfLHudGs03pC1eyVZDFOOhPvbBnStXev4VD45de1P-QVNsD-XdnRkKKA99PnJ6Q9g4ftco4qnLZQxA4mNVN0rOXXd7Hk-87ax4gUxUxdqBtykQbbVFw%3D%3D&host=rr4---sn-njaeyn7s.googlevideo.com\",\"itag\":\"18\",\"type\":\"video/mp4;
+        codecs=\\\"avc1.42001E, mp4a.40.2\\\"\",\"quality\":\"medium\",\"bitrate\":\"276381\",\"fps\":30,\"size\":\"640x360\",\"resolution\":\"360p\",\"qualityLabel\":\"360p\",\"container\":\"mp4\",\"encoding\":\"h264\"}],\"captions\":[{\"label\":\"Hindi
+        (auto-generated)\",\"language_code\":\"hi\",\"url\":\"/api/v1/captions/ewrh-7BIDWw?label=Hindi+%28auto-generated%29\"}],\"recommendedVideos\":[{\"videoId\":\"qMfutoipjpM\",\"title\":\"Best
+        of Arijit Singhs Collection 2024 Arijit Singh Hits Latest Bollywood Indian
+        songs #arijitsingh\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/qMfutoipjpM/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/qMfutoipjpM/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/qMfutoipjpM/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/qMfutoipjpM/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/qMfutoipjpM/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/qMfutoipjpM/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/qMfutoipjpM/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/qMfutoipjpM/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/qMfutoipjpM/3.jpg\",\"width\":120,\"height\":90}],\"author\":\"Sweet
+        HiNdi\U0001F514\",\"authorUrl\":\"/channel/UCJ3hxQABMARVuLTtayAKhYA\",\"authorId\":\"UCJ3hxQABMARVuLTtayAKhYA\",\"authorVerified\":false,\"lengthSeconds\":0,\"viewCountText\":\"881\",\"viewCount\":0},{\"videoId\":\"DRkGSO_LKA4\",\"title\":\"VIBE
+        OF ROAD TRIP MASHUP | DJ JITS | ARIJIT SINGH | VISHAL MISHRA | MASHUP OF
+        2024\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/DRkGSO_LKA4/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/DRkGSO_LKA4/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/DRkGSO_LKA4/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/DRkGSO_LKA4/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/DRkGSO_LKA4/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/DRkGSO_LKA4/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/DRkGSO_LKA4/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/DRkGSO_LKA4/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/DRkGSO_LKA4/3.jpg\",\"width\":120,\"height\":90}],\"author\":\"DJ
+        JITS\",\"authorUrl\":\"/channel/UCFyrcRs4tifVc7GzwCCTWpA\",\"authorId\":\"UCFyrcRs4tifVc7GzwCCTWpA\",\"authorVerified\":true,\"lengthSeconds\":1188,\"viewCountText\":\"29K\",\"viewCount\":29233},{\"videoId\":\"zNvZ0OBG8ZM\",\"title\":\"Sajni
+        Re Mashup | 2024 | P Lofi Music | Arijit Singh | Romantic Anthem Bollywood\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/zNvZ0OBG8ZM/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/zNvZ0OBG8ZM/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/zNvZ0OBG8ZM/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/zNvZ0OBG8ZM/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/zNvZ0OBG8ZM/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/zNvZ0OBG8ZM/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/zNvZ0OBG8ZM/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/zNvZ0OBG8ZM/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/zNvZ0OBG8ZM/3.jpg\",\"width\":120,\"height\":90}],\"author\":\"P
+        Lofi Music\",\"authorUrl\":\"/channel/UCHxDBd0u9bmKkbGpb6xqEjQ\",\"authorId\":\"UCHxDBd0u9bmKkbGpb6xqEjQ\",\"authorVerified\":false,\"lengthSeconds\":1471,\"viewCountText\":\"1.6M\",\"viewCount\":1657539},{\"videoId\":\"dqODrgwjT48\",\"title\":\"Ibiza
+        Summer Mix 2024 \U0001F353 Best Of Tropical Deep House Music Chill Out Mix
+        2023 \U0001F353 Chillout Lounge\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/dqODrgwjT48/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/dqODrgwjT48/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/dqODrgwjT48/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/dqODrgwjT48/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/dqODrgwjT48/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/dqODrgwjT48/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/dqODrgwjT48/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/dqODrgwjT48/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/dqODrgwjT48/3.jpg\",\"width\":120,\"height\":90}],\"author\":\"Magic
+        Club\",\"authorUrl\":\"/channel/UCAJ1rjf90IFwNGlZUYuoP1Q\",\"authorId\":\"UCAJ1rjf90IFwNGlZUYuoP1Q\",\"authorVerified\":true,\"lengthSeconds\":0,\"viewCountText\":\"598\",\"viewCount\":0},{\"videoId\":\"vnO4COvnpT4\",\"title\":\"Ranbir
+        Kapoor Mashup | Nonstop - Jukebox  | Jay Guldekar | Pehle Bhi Mein\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/vnO4COvnpT4/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/vnO4COvnpT4/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/vnO4COvnpT4/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/vnO4COvnpT4/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/vnO4COvnpT4/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/vnO4COvnpT4/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/vnO4COvnpT4/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/vnO4COvnpT4/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/vnO4COvnpT4/3.jpg\",\"width\":120,\"height\":90}],\"author\":\"Jay
+        Guldekar\",\"authorUrl\":\"/channel/UCNfcq5UHGWlcAPWC0cKfTPg\",\"authorId\":\"UCNfcq5UHGWlcAPWC0cKfTPg\",\"authorVerified\":true,\"lengthSeconds\":2491,\"viewCountText\":\"2.5M\",\"viewCount\":2505737},{\"videoId\":\"zWiilM-86FU\",\"title\":\"Arijit
+        singh || love mashup songs || ( slow x reverb) #slowedandreverb#arjitsingh#arijitsinghjukebox\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/zWiilM-86FU/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/zWiilM-86FU/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/zWiilM-86FU/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/zWiilM-86FU/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/zWiilM-86FU/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/zWiilM-86FU/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/zWiilM-86FU/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/zWiilM-86FU/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/zWiilM-86FU/3.jpg\",\"width\":120,\"height\":90}],\"author\":\"Lofi
+        songs\",\"authorUrl\":\"/channel/UCNMaDqdUKXUTMjM4qyK6BLg\",\"authorId\":\"UCNMaDqdUKXUTMjM4qyK6BLg\",\"authorVerified\":false,\"lengthSeconds\":3272,\"viewCountText\":\"1.1K\",\"viewCount\":1189},{\"videoId\":\"zRoQ_GUI8tY\",\"title\":\"Best
+        Of Arijit Singh 2024 || Arranged by Samar Barman || Arijit Singh Jukebox
+        Songs\U0001F97A\U0001F494\u2728\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/zRoQ_GUI8tY/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/zRoQ_GUI8tY/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/zRoQ_GUI8tY/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/zRoQ_GUI8tY/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/zRoQ_GUI8tY/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/zRoQ_GUI8tY/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/zRoQ_GUI8tY/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/zRoQ_GUI8tY/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/zRoQ_GUI8tY/3.jpg\",\"width\":120,\"height\":90}],\"author\":\"Samar
+        Barman\",\"authorUrl\":\"/channel/UCMf5fxRy64J0fRy0avCRpEQ\",\"authorId\":\"UCMf5fxRy64J0fRy0avCRpEQ\",\"authorVerified\":true,\"lengthSeconds\":3374,\"viewCountText\":\"4.4M\",\"viewCount\":4427491},{\"videoId\":\"RfArIFscn6c\",\"title\":\"Arijit
+        Singh Jukebox 2024 | Hansel D | Best Of Arijit Singh Mashup | Best Travelling
+        Songs\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/RfArIFscn6c/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/RfArIFscn6c/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/RfArIFscn6c/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/RfArIFscn6c/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/RfArIFscn6c/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/RfArIFscn6c/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/RfArIFscn6c/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/RfArIFscn6c/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/RfArIFscn6c/3.jpg\",\"width\":120,\"height\":90}],\"author\":\"Hansel
+        D\",\"authorUrl\":\"/channel/UC_kjj40n5TpP-T72QKG3y6w\",\"authorId\":\"UC_kjj40n5TpP-T72QKG3y6w\",\"authorVerified\":false,\"lengthSeconds\":3578,\"viewCountText\":\"1.3M\",\"viewCount\":1373759},{\"videoId\":\"ksZmsFA3ATA\",\"title\":\"Best
+        Mashup NonStop Love Mashup of Arijit Singh, Jubin Nautiyal, BPraak, AtifAslam
+        ,Neha Kakkar\U0001F49A\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/ksZmsFA3ATA/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/ksZmsFA3ATA/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/ksZmsFA3ATA/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/ksZmsFA3ATA/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/ksZmsFA3ATA/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/ksZmsFA3ATA/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/ksZmsFA3ATA/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/ksZmsFA3ATA/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/ksZmsFA3ATA/3.jpg\",\"width\":120,\"height\":90}],\"author\":\"Bollywood
+        Love Mashup\",\"authorUrl\":\"/channel/UCuBKC7FA-IiAL-ZZZ3trTqg\",\"authorId\":\"UCuBKC7FA-IiAL-ZZZ3trTqg\",\"authorVerified\":false,\"lengthSeconds\":6647,\"viewCountText\":\"191\",\"viewCount\":191},{\"videoId\":\"IOTT7s8RSys\",\"title\":\"Arijit
+        Singh Love Mashup 2024 | B Aarush | Best Of Arijit Singh Mashup | Love Mashup
+        2024\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/IOTT7s8RSys/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/IOTT7s8RSys/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/IOTT7s8RSys/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/IOTT7s8RSys/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/IOTT7s8RSys/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/IOTT7s8RSys/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/IOTT7s8RSys/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/IOTT7s8RSys/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/IOTT7s8RSys/3.jpg\",\"width\":120,\"height\":90}],\"author\":\"B
+        Aarush\",\"authorUrl\":\"/channel/UCa2eYHtnrUjvPy3e29CpQZQ\",\"authorId\":\"UCa2eYHtnrUjvPy3e29CpQZQ\",\"authorVerified\":false,\"lengthSeconds\":2543,\"viewCountText\":\"2.6K\",\"viewCount\":2636},{\"videoId\":\"DEo742BF8eo\",\"title\":\"Best
+        of Arijit Singh Mashup 2024 | Viniick | Arijit Singh Love Songs | Best of
+        Love Songs 2024\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/DEo742BF8eo/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/DEo742BF8eo/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/DEo742BF8eo/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/DEo742BF8eo/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/DEo742BF8eo/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/DEo742BF8eo/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/DEo742BF8eo/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/DEo742BF8eo/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/DEo742BF8eo/3.jpg\",\"width\":120,\"height\":90}],\"author\":\"VINIICK\",\"authorUrl\":\"/channel/UC-UQ-q1_mvuHZndzaiJdxoQ\",\"authorId\":\"UC-UQ-q1_mvuHZndzaiJdxoQ\",\"authorVerified\":true,\"lengthSeconds\":2863,\"viewCountText\":\"879K\",\"viewCount\":879078},{\"videoId\":\"c24pCvCAEbI\",\"title\":\"Arijit
+        Singh Top 7 Song | arjitsingh song #arjitsingh  @SweetHiNdi6688\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/c24pCvCAEbI/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/c24pCvCAEbI/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/c24pCvCAEbI/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/c24pCvCAEbI/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/c24pCvCAEbI/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/c24pCvCAEbI/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/c24pCvCAEbI/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/c24pCvCAEbI/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/c24pCvCAEbI/3.jpg\",\"width\":120,\"height\":90}],\"author\":\"Sweet
+        HiNdi\U0001F514\",\"authorUrl\":\"/channel/UCJ3hxQABMARVuLTtayAKhYA\",\"authorId\":\"UCJ3hxQABMARVuLTtayAKhYA\",\"authorVerified\":false,\"lengthSeconds\":0,\"viewCountText\":\"242\",\"viewCount\":0},{\"videoId\":\"V8AGS_7Opyc\",\"title\":\"Non-Stop
+        Soulmate Love Jukebox | SICKVED Stories | 2024 | Latest of Bollywood\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/V8AGS_7Opyc/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/V8AGS_7Opyc/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/V8AGS_7Opyc/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/V8AGS_7Opyc/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/V8AGS_7Opyc/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/V8AGS_7Opyc/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/V8AGS_7Opyc/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/V8AGS_7Opyc/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/V8AGS_7Opyc/3.jpg\",\"width\":120,\"height\":90}],\"author\":\"SICKVED
+        Stories\",\"authorUrl\":\"/channel/UClzH5my4Zv6QP0Wt7gr6UaQ\",\"authorId\":\"UClzH5my4Zv6QP0Wt7gr6UaQ\",\"authorVerified\":false,\"lengthSeconds\":1495,\"viewCountText\":\"1.7M\",\"viewCount\":1735643},{\"videoId\":\"sHXOUlwSc6Q\",\"title\":\"THE
+        LOVE MASHUP 2024 | Best Mashup of Arijit Singh, Jubin Nautiyal, Atif Aslam\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/sHXOUlwSc6Q/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/sHXOUlwSc6Q/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/sHXOUlwSc6Q/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/sHXOUlwSc6Q/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/sHXOUlwSc6Q/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/sHXOUlwSc6Q/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/sHXOUlwSc6Q/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/sHXOUlwSc6Q/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/sHXOUlwSc6Q/3.jpg\",\"width\":120,\"height\":90}],\"author\":\"Bollywood
+        Love Mashup\",\"authorUrl\":\"/channel/UCNzDPfeNecO1hrRKD9RZnCw\",\"authorId\":\"UCNzDPfeNecO1hrRKD9RZnCw\",\"authorVerified\":false,\"lengthSeconds\":7908,\"viewCountText\":\"2.2K\",\"viewCount\":2288},{\"videoId\":\"fzXV2_vm-6g\",\"title\":\"Arijit
+        Singh Mashup 2024 | Nonstop - Jukebox  | Jay Guldekar | Satranga | Heeriye\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/fzXV2_vm-6g/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/fzXV2_vm-6g/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/fzXV2_vm-6g/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/fzXV2_vm-6g/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/fzXV2_vm-6g/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/fzXV2_vm-6g/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/fzXV2_vm-6g/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/fzXV2_vm-6g/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/fzXV2_vm-6g/3.jpg\",\"width\":120,\"height\":90}],\"author\":\"Jay
+        Guldekar\",\"authorUrl\":\"/channel/UCNfcq5UHGWlcAPWC0cKfTPg\",\"authorId\":\"UCNfcq5UHGWlcAPWC0cKfTPg\",\"authorVerified\":true,\"lengthSeconds\":3731,\"viewCountText\":\"4.5M\",\"viewCount\":4555931},{\"videoId\":\"9h2NFnpTb0g\",\"title\":\"VISHAL
+        MISHRA MASHUP OF 2024 | DJ JITS | PEHLE BHI MAIN | JANIYE | MASHUP OF 2024\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/9h2NFnpTb0g/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/9h2NFnpTb0g/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/9h2NFnpTb0g/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/9h2NFnpTb0g/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/9h2NFnpTb0g/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/9h2NFnpTb0g/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/9h2NFnpTb0g/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/9h2NFnpTb0g/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/9h2NFnpTb0g/3.jpg\",\"width\":120,\"height\":90}],\"author\":\"DJ
+        JITS\",\"authorUrl\":\"/channel/UCFyrcRs4tifVc7GzwCCTWpA\",\"authorId\":\"UCFyrcRs4tifVc7GzwCCTWpA\",\"authorVerified\":true,\"lengthSeconds\":1830,\"viewCountText\":\"4.4K\",\"viewCount\":4408},{\"videoId\":\"huUcUvGp8c4\",\"title\":\"Mind
+        Relax Lofi Mashup | Mind Relaxing Songs | Mind Relax Lofi Song | Slowed And
+        Reverb | Lofi Songs\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/huUcUvGp8c4/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/huUcUvGp8c4/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/huUcUvGp8c4/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/huUcUvGp8c4/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/huUcUvGp8c4/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/huUcUvGp8c4/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/huUcUvGp8c4/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/huUcUvGp8c4/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/huUcUvGp8c4/3.jpg\",\"width\":120,\"height\":90}],\"author\":\"\U0001D400\u24E9\xD8\u043C\",\"authorUrl\":\"/channel/UC7VAgNHbkur1tlwnXgEOUdA\",\"authorId\":\"UC7VAgNHbkur1tlwnXgEOUdA\",\"authorVerified\":false,\"lengthSeconds\":1585,\"viewCountText\":\"15M\",\"viewCount\":15137847},{\"videoId\":\"xzAQU0qSRHM\",\"title\":\"O
+        Maahi Mashup 2.0 | Jay Guldekar | Arijit Singh Mashup\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/xzAQU0qSRHM/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/xzAQU0qSRHM/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/xzAQU0qSRHM/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/xzAQU0qSRHM/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/xzAQU0qSRHM/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/xzAQU0qSRHM/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/xzAQU0qSRHM/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/xzAQU0qSRHM/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/xzAQU0qSRHM/3.jpg\",\"width\":120,\"height\":90}],\"author\":\"Jay
+        Guldekar\",\"authorUrl\":\"/channel/UCNfcq5UHGWlcAPWC0cKfTPg\",\"authorId\":\"UCNfcq5UHGWlcAPWC0cKfTPg\",\"authorVerified\":true,\"lengthSeconds\":2294,\"viewCountText\":\"9.7M\",\"viewCount\":9799476},{\"videoId\":\"y6LbGfmQPkE\",\"title\":\"Best
+        of Arijit Singh Top 10 Superhit Songs 2022   Arijit Singh Soulful Songs1080P
+        HD\",\"videoThumbnails\":[{\"quality\":\"maxres\",\"url\":\"https://inv.nadeko.net/vi/y6LbGfmQPkE/maxres.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"maxresdefault\",\"url\":\"https://inv.nadeko.net/vi/y6LbGfmQPkE/maxresdefault.jpg\",\"width\":1280,\"height\":720},{\"quality\":\"sddefault\",\"url\":\"https://inv.nadeko.net/vi/y6LbGfmQPkE/sddefault.jpg\",\"width\":640,\"height\":480},{\"quality\":\"high\",\"url\":\"https://inv.nadeko.net/vi/y6LbGfmQPkE/hqdefault.jpg\",\"width\":480,\"height\":360},{\"quality\":\"medium\",\"url\":\"https://inv.nadeko.net/vi/y6LbGfmQPkE/mqdefault.jpg\",\"width\":320,\"height\":180},{\"quality\":\"default\",\"url\":\"https://inv.nadeko.net/vi/y6LbGfmQPkE/default.jpg\",\"width\":120,\"height\":90},{\"quality\":\"start\",\"url\":\"https://inv.nadeko.net/vi/y6LbGfmQPkE/1.jpg\",\"width\":120,\"height\":90},{\"quality\":\"middle\",\"url\":\"https://inv.nadeko.net/vi/y6LbGfmQPkE/2.jpg\",\"width\":120,\"height\":90},{\"quality\":\"end\",\"url\":\"https://inv.nadeko.net/vi/y6LbGfmQPkE/3.jpg\",\"width\":120,\"height\":90}],\"author\":\"BS7
+        Gaming YT\",\"authorUrl\":\"/channel/UC29KG5oBRUjArBpY7EptlPg\",\"authorId\":\"UC29KG5oBRUjArBpY7EptlPg\",\"authorVerified\":false,\"lengthSeconds\":2823,\"viewCountText\":\"62M\",\"viewCount\":62880521}]}"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226123732534829227, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: MaxDistance
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226123732534829227, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: MinDistance
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226123732534829229, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_Looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226123732534829229, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_TargetMaterialRenderer
+      value: 
+      objectReference: {fileID: 1354402019464543643}
+    - target: {fileID: 5794338245972623171, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: IsSummitWorld
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: VideoPlayerRef
+      value: 
+      objectReference: {fileID: 7470404472245699497}
+    - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: IsSummitDomeWorld
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+--- !u!82 &338335159889839792 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5226123731516465619, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+  m_PrefabInstance: {fileID: 5491270930418460515}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &338335159889839794 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5226123731516465617, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+  m_PrefabInstance: {fileID: 5491270930418460515}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &338335160774641608 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5226123732534829227, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+  m_PrefabInstance: {fileID: 5491270930418460515}
+  m_PrefabAsset: {fileID: 0}
+--- !u!328 &338335160774641614 stripped
+VideoPlayer:
+  m_CorrespondingSourceObject: {fileID: 5226123732534829229, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+  m_PrefabInstance: {fileID: 5491270930418460515}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7470404472245699497 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3141503287995704522, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+  m_PrefabInstance: {fileID: 5491270930418460515}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673ebe6b1ddeec24e90406ca14165962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &8987364177595078151 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+  m_PrefabInstance: {fileID: 5491270930418460515}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8561389402354610538
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5491270931417967099}
+    m_Modifications:
+    - target: {fileID: 806331105007566494, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_Name
+      value: HRS_Screen_Live
+      objectReference: {fileID: 0}
+    - target: {fileID: 806331105007566494, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.846
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.351
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7922269675019174138, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+    - {fileID: 5361770517866525813, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+--- !u!23 &1899513472002380924 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7821704981494801686, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+  m_PrefabInstance: {fileID: 8561389402354610538}
+  m_PrefabAsset: {fileID: 0}
+--- !u!33 &1955024062111412625 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: 7922269675019174139, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+  m_PrefabInstance: {fileID: 8561389402354610538}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3113519352668834510 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+  m_PrefabInstance: {fileID: 8561389402354610538}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9070394317753880564 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 806331105007566494, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+  m_PrefabInstance: {fileID: 8561389402354610538}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1153647404452203793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9070394317753880564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  _IsSpriteRenderer: 0
+  isMeshRendrer: 1
+  shaderName: Sprites/Default
+  isTerrain: 0
+--- !u!1001 &9099393617099217037
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5491270931417967099}
+    m_Modifications:
+    - target: {fileID: 806331105007566494, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_Name
+      value: HRS_Screen_PR
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.846
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.4599997
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.3509994
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+--- !u!23 &1354402019464543643 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7821704981494801686, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+  m_PrefabInstance: {fileID: 9099393617099217037}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2567844944792609577 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6765914173663787940, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+  m_PrefabInstance: {fileID: 9099393617099217037}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8464273154367628819 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 806331105007566494, guid: 468bdf6598483b84281e25f326e1bee3, type: 3}
+  m_PrefabInstance: {fileID: 9099393617099217037}
+  m_PrefabAsset: {fileID: 0}
