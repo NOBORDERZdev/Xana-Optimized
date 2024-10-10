@@ -13,6 +13,7 @@ public class StayTimeTrackerForSummit : MonoBehaviour
     public string SummitAreaName;
     public int DomeId;
     public int DomeWorldId;
+    public bool IsBuilderWorld = false;
     public enum SummitAreaTrigger
     {
         Central_Area,
@@ -56,7 +57,12 @@ public class StayTimeTrackerForSummit : MonoBehaviour
         if (IsTrackingTimeForExteriorArea)
             worldName = "_XS_" + SummitAreaName;
         else
-            worldName ="_Dome_" + DomeId + "_World_" + DomeWorldId;
+        {
+            if(IsBuilderWorld)
+                worldName = "_Dome_" + DomeId + "_BW_" + DomeWorldId;
+            else
+                worldName = "_Dome_" + DomeId + "_XW_" + DomeWorldId;
+        }
         if (minutes > 0)
             SendFirebaseEventForSummit("ST_" + (minutes) + worldName);
         else

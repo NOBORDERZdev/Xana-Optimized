@@ -150,6 +150,9 @@ public class RaffleTicketHandler : MonoBehaviour
     }
     private void TransferDatatoMainDomeList()
     {
+        if (_summitDomesVisitedByUser.domeVisits == null || _summitDomesVisitedByUser.domeVisits.Count == 0)
+            return;
+
         foreach (var item in _summitDomesVisitedByUser.domeVisits)
         {
             _allVisitedDomeIds.Add(item.domeId);
@@ -170,13 +173,13 @@ public class RaffleTicketHandler : MonoBehaviour
             _earnTicketsInOneCycle += 4;
             _totalNumberOfTickets += _earnTicketsInOneCycle;
             _earnTicketsInOneCycle = 0;
-            StartCoroutine(RewardPopUp("You have earned 5 tickets for visiting 5 unique domes", "05", true, 5f));
+            StartCoroutine(RewardPopUp("You have received your gift!", "05", true, 5f));
         }
         if (_totalNumberOfDomes == _allVisitedDomeIds.Count)
         {
             _earnTicketsInOneCycle += 50;
             _totalNumberOfTickets += _earnTicketsInOneCycle;
-            StartCoroutine(RewardPopUp("You've been awarded 50 raffle tickets for completing each summit dome visit", "50", false, 8f));
+            StartCoroutine(RewardPopUp("You have received your gift!", "50", false, 8f));
             _earnTicketsInOneCycle = 0;
         }
         UpdateUI();

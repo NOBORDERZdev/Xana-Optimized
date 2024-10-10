@@ -14,7 +14,7 @@ public class SummitAnalyticsTrigger : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.transform.parent.name == _lastTriggeredArea)
+        if ( other.gameObject.transform.parent==null || _lastTriggeredArea.IsNullOrEmpty() && other.gameObject.transform.parent.name == _lastTriggeredArea)
             return;
         _lastTriggeredArea = other.gameObject.transform.parent.name;
         if (Enum.TryParse(_lastTriggeredArea, out StayTimeTrackerForSummit.SummitAreaTrigger areaTrigger))

@@ -1074,7 +1074,14 @@ MonoBehaviour:
   minScale: {x: 1, y: 1, z: 1}
   maxScale: {x: 3, y: 3, z: 3}
   isComponentRestricted: 1
-  itemComponentTypes: 02000000040000001f000000
+  itemComponentTypes: 02000000040000001f0000000100000003000000
+  shouldCheckForOverLap: 1
+  layersToCheckForOverLap:
+    serializedVersion: 2
+    m_Bits: 512
+  restrictedLayersWontCheckForOverlap:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &8287798352875429833
 GameObject:
   m_ObjectHideFlags: 0

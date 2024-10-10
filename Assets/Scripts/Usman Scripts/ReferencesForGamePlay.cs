@@ -23,6 +23,7 @@ public class ReferencesForGamePlay : MonoBehaviour
 
     public GameObject m_34player;
     public PlayerController playerControllerNew;
+    public GameObject spawnedSkateBoard;
     public GameObject minimap;
     public GameObject MinimapSummit;
     public GameObject FullscreenMapSummit;
@@ -41,6 +42,7 @@ public class ReferencesForGamePlay : MonoBehaviour
     public GameObject portraitMoveWhileDancingButton;
     public int moveWhileDanceCheck;
     public QualityManager QualityManager;
+    public XanaChatSystem ChatSystemRef;
     // Start is called before the first frame update
     void Awake()
     {
@@ -102,6 +104,11 @@ public class ReferencesForGamePlay : MonoBehaviour
     private void OnEnable()
     {
         instance = this;
+
+        if(m_34player==null)
+        {
+            m_34player=GameplayEntityLoader.instance.player;
+        }
         if (WorldItemView.m_EnvName.Contains("Xana Festival")) // for Xana Festival
         {
             //RoomMaxPlayerCount = (ConstantsHolder.xanaConstants.userLimit - 1);
@@ -240,16 +247,17 @@ public class ReferencesForGamePlay : MonoBehaviour
         foreach (GameObject go in hiddenBtnObjects)
         {
             //go.SetActive(true);
-            if (go.name.Contains("map"))
-            {
-                if (!ConstantsHolder.xanaConstants.IsMuseum && ConstantsHolder.xanaConstants.minimap != 0)
-                    go.SetActive(true);
-            }
-            else
+            //if (go.name.Contains("map"))
+            //{
+            //    if (!ConstantsHolder.xanaConstants.IsMuseum)// && ConstantsHolder.xanaConstants.minimap != 0)
+            //        go.SetActive(true); 
+            //}
+            //else
             {
                 if (!go.GetComponent<CanvasGroup>())
                 {
                     go.AddComponent<CanvasGroup>();
+                    
                 }
                 go.GetComponent<CanvasGroup>().alpha = 1;
             }
@@ -258,9 +266,12 @@ public class ReferencesForGamePlay : MonoBehaviour
         //To enable disable Buttons
         foreach (GameObject go in disableBtnObjects)
         {
-
-            go.SetActive(true);
-
+            if (go.name.Contains("_Summit") && !ConstantsHolder.xanaConstants.EnviornmentName.Equals("XANA Summit"))
+            {
+                go.SetActive(false);
+            }
+            else if (!ConstantsHolder.xanaConstants.IsMuseum && !go.name.Contains("map"))
+                go.SetActive(true);
         }
 
     }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon;
 using Photon.Pun;
-using Metaverse;
 using System;
 using System.Linq;
 using TMPro;
@@ -22,7 +21,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     Transform mainPlayerParent;
     private bool iscashed = false;
     Dictionary<object, object> cashed_data = new Dictionary<object, object>();
-
 
     public bool isBear;
     public TMPro.TextMeshProUGUI PhotonUserName;
@@ -79,8 +77,10 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         }
        
         arrow = Resources.Load<GameObject>("Arrow");
-        clientMat = Resources.Load<Material>("Material #27");
-        playerMat = Resources.Load<Material>("Material #25");
+        Material _mat = Resources.Load<Material>("Material #25");
+        clientMat = playerMat = _mat;
+        //clientMat = Resources.Load<Material>("Material #27");
+        //playerMat = Resources.Load<Material>("Material #25");
         if (this.GetComponent<PhotonView>().IsMine)
         {
             if (ConstantsHolder.xanaConstants.isBuilderScene)
@@ -94,7 +94,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
                 {
                     AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().animator = this.GetComponent<Animator>();
                     AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().playerRig = GetComponent<FirstPersonJump>().jumpRig;
-                    AvatarSpawnerOnDisconnect.Instance.Defaultanimator = AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
                 }
             }
         }
@@ -314,7 +313,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         if (gameObject.GetComponent<PhotonView>().ViewID == id)
         {
             //Debug.Log("USERNAME VALUE:" + ConstantsHolder.xanaConstants.userName);
-            if (ToggleConstant == 0)
+            if (ToggleConstant == 1)
             {
                 Debug.Log("Onbtn:" + ReferencesForGamePlay.instance.onBtnUsername);
                 PhotonUserName.enabled = true;
@@ -403,7 +402,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             // go.AddComponent<Equipment>();
             //  GameObject.FindGameObjectWithTag("DCloth").GetComponent<DefaultClothes>()._DefaultInitializer();
         }
-        else
+        //else
         {
             if(ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
             {
@@ -437,19 +436,21 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             //}catch()
             //EmoteAnimationHandler.Instance.controller.SetStateEffectiveMotion(state, EmoteAnimationHandler.Instance.spawnCharacterObject.transform.GetComponent<Animation>().clip);
         }
+        go.GetComponent<MeshRenderer>().material = playerMat;
 
-        if (isOtherPlayer)
-        {
-            go.GetComponent<MeshRenderer>().material = clientMat;
 
-            //go.AddComponent<ChangeGear>();
-            // go.AddComponent<Equipment>();
-            //  GameObject.FindGameObjectWithTag("DCloth").GetComponent<DefaultClothes>()._DefaultInitializer();
-        }
-        else
-        {
-            go.GetComponent<MeshRenderer>().material = playerMat;
-        }
+        //if (isOtherPlayer)
+        //{
+        //    go.GetComponent<MeshRenderer>().material = clientMat;
+
+        //    //go.AddComponent<ChangeGear>();
+        //    // go.AddComponent<Equipment>();
+        //    //  GameObject.FindGameObjectWithTag("DCloth").GetComponent<DefaultClothes>()._DefaultInitializer();
+        //}
+        //else
+        //{
+        //    go.GetComponent<MeshRenderer>().material = playerMat;
+        //}
 
         if (isBear)
         {

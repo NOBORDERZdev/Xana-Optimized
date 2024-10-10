@@ -6,17 +6,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class ReactDataClass
-{
-    public int id;
-    public string iconUrl;
-}
-
 public class ReactScreen : MonoBehaviour
 {
-
-
     public GameObject reactionScreenParent;
     public GameObject emoteAnimationScreenParent;
     public Transform emoteParent;
@@ -36,17 +27,10 @@ public class ReactScreen : MonoBehaviour
 
     public bool isOpen = false;
 
-
-    //Hardik changes for animation panel
     public GameObject jyostickBtn;
     public GameObject jumpBtn;
     public GameObject BottomBtnParent;
     public GameObject XanaChatObject;
-
-    //end hardik
-    //private Canvas reactScreenCanvas;//riken
-    //private GraphicRaycaster graphicRaycaster;//riken
-
 
     public static ReactScreen Instance;
     private void Awake()
@@ -61,7 +45,6 @@ public class ReactScreen : MonoBehaviour
     {
         if (Instance != null && Instance != this)
             Instance = this;
-
 
     }
     public void OpenPanel()
@@ -85,16 +68,11 @@ public class ReactScreen : MonoBehaviour
                 if (ScreenOrientationManager._instance.isPotrait)
                 {
                     ScreenOrientationManager._instance.joystickInitPosY = jyostickBtn.transform.localPosition.y;
-                    //if (ScreenOrientationManager._instance.isPotrait)
-                    //    ScreenOrientationManager._instance.joystickInitPosY = jyostickBtn.transform.localPosition.y;
-                    //  ReferencesForGamePlay.instance.RotateBtn.interactable = false;
 
                     jyostickBtn.transform.DOLocalMoveY(-50f, 0.1f);
                     jumpBtn.transform.DOLocalMoveY(-30f, 0.1f);
                     reactionScreenParent.transform.DOLocalMoveY(-108f, 0.1f);
                     BottomBtnParent.SetActive(false);
-                    //  XanaChatObject.SetActive(false);
-                    // ReferencesForGamePlay.instance.RotateBtn.interactable = true;
                 }
             }
 
@@ -111,33 +89,21 @@ public class ReactScreen : MonoBehaviour
                 print("Horayyy you have Access");
             }
 
-            //if (!GamePlayUIHandler.inst.actionsContainer.activeInHierarchy)
-            //{
-            //    reactionScreenParent.SetActive(true);
-            //    //if (Input.deviceOrientation == DeviceOrientation.Portrait)
-            //    //{
-
             if (ScreenOrientationManager._instance.isPotrait)
             {
                 ScreenOrientationManager._instance.joystickInitPosY = jyostickBtn.transform.localPosition.y;
-                //if (ScreenOrientationManager._instance.isPotrait)
-                //    ScreenOrientationManager._instance.joystickInitPosY = jyostickBtn.transform.localPosition.y;
-                //  ReferencesForGamePlay.instance.RotateBtn.interactable = false;
                 reactionScreenParent.SetActive(true);
                 jyostickBtn.transform.DOLocalMoveY(-50f, 0.1f);
                 jumpBtn.transform.DOLocalMoveY(-30f, 0.1f);
                 reactionScreenParent.transform.DOLocalMoveY(-108f, 0.1f);
                 BottomBtnParent.SetActive(false);
-                // XanaChatObject.SetActive(false);
-                // ReferencesForGamePlay.instance.RotateBtn.interactable = true;
+
                 BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(-225, true);
                 CheckForInstantiation();
                 reactImage.sprite = react_enable;
                 isOpen = true;
                 HideEmoteScreen();
             }
-            //    }
-            //}
             else
             {
                 reactionScreenParent.SetActive(true);
@@ -147,22 +113,17 @@ public class ReactScreen : MonoBehaviour
                 HideEmoteScreen();
                 BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(-165, false);
             }
-
         }
-
     }
 
     public void ClosePanel()
     {
         if (ScreenOrientationManager._instance.isPotrait)
         {
-            // ReferencesForGamePlay.instance.RotateBtn.interactable = false;
             BottomBtnParent.SetActive(true);
-            // XanaChatObject.SetActive(true);
             reactionScreenParent.transform.DOLocalMoveY(-1500f, 0.1f);
             jyostickBtn.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
             jumpBtn.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
-            //ReferencesForGamePlay.instance.RotateBtn.interactable = true;
         }
         reactionScreenParent.SetActive(false);
     }
@@ -178,14 +139,11 @@ public class ReactScreen : MonoBehaviour
         reactImage.sprite = react_disable;
         if (ScreenOrientationManager._instance.isPotrait)
         {
-            //  ReferencesForGamePlay.instance.RotateBtn.interactable = false;
             BottomBtnParent.SetActive(true);
-            //  XanaChatObject.SetActive(true);
             reactionScreenParent.transform.DOLocalMoveY(-1500f, 0.1f);
             emoteAnimationScreenParent.transform.DOLocalMoveY(-1500f, 0.1f);
             jyostickBtn.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
             jumpBtn.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
-            // ReferencesForGamePlay.instance.RotateBtn.interactable = true;
             BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(225, true);
         }
         else
@@ -200,57 +158,11 @@ public class ReactScreen : MonoBehaviour
     public void ReactButtonClick()
     {
 
-
-        //isOpen = !isOpen;
-        //if (isOpen)
-        //{
-        //    reactImage.sprite = react_enable;
-        //    Reaction_EmotePanel.Instance.ReactionOn();
-        //    reactScreen.SetActive(true);
-        //    CreatePrefab();
-        //}
-        //else
-        //{
-        //    reactImage.sprite = react_disable;
-        //    reactScreen.SetActive(false);
-        //}
-
-        //if (isFromFevButton)
-        //{
-        //    if (isOpen && reactScreenCanvas == null)
-        //    {
-        //        reactScreenCanvas = reactScreen.AddComponent<Canvas>();
-        //        reactScreenCanvas.overrideSorting = true;
-        //        reactScreenCanvas.sortingOrder = 6;
-        //        graphicRaycaster = reactScreen.AddComponent<GraphicRaycaster>();
-        //    }
-        //    else
-        //    {
-        //        Destroy(graphicRaycaster);
-        //        Destroy(reactScreenCanvas);
-        //        graphicRaycaster = null;
-        //        reactScreenCanvas = null;
-        //    }
-        //}
     }
 
-    //this method is used to show emote panel when user click on favorite button.......rik 
     public void OnShowEmotePanelFromFavorite()
     {
-        //if (isOpen)
-        //{
-        //    if (reactScreenCanvas == null)
-        //    {
-        //        reactScreenCanvas = reactionScreenParent.AddComponent<Canvas>();
-        //        graphicRaycaster = reactionScreenParent.AddComponent<GraphicRaycaster>();
-        //        reactScreenCanvas.overrideSorting = true;
-        //        reactScreenCanvas.sortingOrder = 6;
-        //    }
-        //}
-        //else
-        //{
-        //    ReactButtonClick();
-        //}
+
     }
 
     private void Start()
@@ -300,7 +212,6 @@ public class ReactScreen : MonoBehaviour
             try
             {
                 ReactionDetails bean = JsonUtility.FromJson<ReactionDetails>(uwr.downloadHandler.text.ToString().Trim());
-                //Debug.Log("ReactionClass : " + uwr.downloadHandler.text.ToString().Trim());
                 if (bean.success)
                 {
                     reactDataClass.Clear();

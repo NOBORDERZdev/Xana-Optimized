@@ -94,7 +94,14 @@ public class HomeFooterHandler : MonoBehaviour
         {
             gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().OnSelectedClick(0);
         }
-    }
+
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
+        {
+            Image buttonImage = allButtonIcon[2].transform.GetComponent<Image>();
+            buttonImage.color = new Color(0.8f, 0.8f, 0.8f, 1f);
+            allButtonIcon[3].transform.GetComponent<Image>().color = buttonImage.color;
+        }
+     }
 
 
     private void OnEnable()
@@ -157,8 +164,10 @@ public class HomeFooterHandler : MonoBehaviour
             allButtonIcon[2].transform.GetComponent<Image>().color = DisableButtonColor;
             allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = false;
             allButtonIcon[3].transform.GetComponent<Image>().color = DisableButtonColor;
-           // allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
-           // allButtonIcon[4].transform.GetComponent<Image>().color = DisableButtonColor;
+            if (postingBtn != null)
+            {
+                postingBtn.transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.295f);
+            }
         }
         else
         {
@@ -287,6 +296,12 @@ public class HomeFooterHandler : MonoBehaviour
     }
     public void OnClickHomeWorldButton()
     {
+        if (ConstantsHolder.IsXSummitApp)
+        {
+            MainSceneEventHandler.OpenLandingScene?.Invoke();
+            return;
+        }
+
         gameManager.HomeCameraInputHandler(false);
 
         GlobalVeriableClass.callingScreen = "";
@@ -333,8 +348,11 @@ public class HomeFooterHandler : MonoBehaviour
 
             }
             ConstantsHolder.xanaConstants.IsProfileVisit = false;
-            if (notLoadedAgain == false)
+            if (notLoadedAgain == false || ConstantsHolder.xanaConstants.hasWorldTransitionedInternally)
+            {
                 WorldManager.LoadHomeScreenWorlds?.Invoke();
+                ConstantsHolder.xanaConstants.hasWorldTransitionedInternally = false;
+            }
             //FlexibleRect.OnAdjustSize?.Invoke(false);
             DisableSubScreen();
             //WorldManager.instance.ChangeWorld(APIURL.Hot);

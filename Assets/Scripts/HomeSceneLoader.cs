@@ -3,10 +3,12 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun.Demo.PunBasics;
 using Photon.Pun;
-using Metaverse;
 using System.Collections;
 using System;
 using UnityEngine.Scripting;
+using System.Threading.Tasks;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class HomeSceneLoader : MonoBehaviourPunCallbacks
 {
@@ -18,18 +20,18 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     {
         gameManager = GameManager.Instance;
     }
-    private void OnEnable()
+    override public void OnEnable()
     {
         if (GameplayEntityLoader.instance)
         {
             GameplayEntityLoader.instance._uiReferences = this;
         }
-        MainSceneEventHandler.MemoryRelaseAfterLoading += ReleaseUnsedMemory;
+        //MainSceneEventHandler.MemoryRelaseAfterLoading += ReleaseUnsedMemory;
     }
 
-    private void OnDisable()
+    override public void OnDisable()
     {
-        MainSceneEventHandler.MemoryRelaseAfterLoading -= ReleaseUnsedMemory;
+        //MainSceneEventHandler.MemoryRelaseAfterLoading -= ReleaseUnsedMemory;
     }
 
     public void OpenARScene()
@@ -56,10 +58,10 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
             }
         }
     }
-    public void LoadMain(bool changeOritentationChange)
+    public async void LoadMain(bool changeOritentationChange)
     {
-
-        GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
+        LoadingHandler.Instance.DisableVideoLoading();
+        //GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
         disableSoundXanalobby();
         ConstantsHolder.xanaConstants.isBackFromWorld = true;
         if (exitOnce)
@@ -87,6 +89,10 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
                 }
                 LoadingHandler.Instance.ShowLoading();
                 StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(1f,true));
+
+                XanaWorldDownloader.ResetAll();
+
+                await HomeSceneLoader.ReleaseUnsedMemory();
 
                 if (ConstantsHolder.xanaConstants.needToClearMemory)
                     AddressableDownloader.Instance.MemoryManager.RemoveAllAddressables();
@@ -146,16 +152,20 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
         SceneManager.LoadSceneAsync(mainScene);
     }
 
-    public void ReleaseUnsedMemory()
+    public static async Task ReleaseUnsedMemory()
     {
-        StartCoroutine(ReleaseUnsedMemoryDelay());
-    }
-
-    IEnumerator ReleaseUnsedMemoryDelay()
-    {
-        yield return new WaitForSeconds(3f);
+        print("memory released here.. Start");
         GC.Collect();
-        Resources.UnloadUnusedAssets();
-        Debug.LogError("memory released here..");
+        foreach(AsyncOperationHandle async in AddressableDownloader.bundleAsyncOperationHandle)
+        { 
+            if(async.IsValid())
+            Addressables.Release(async);
+        }
+        AddressableDownloader.bundleAsyncOperationHandle.Clear();
+        Caching.ClearCache();
+        AssetBundle.UnloadAllAssetBundles(true);
+        await Resources.UnloadUnusedAssets();
+
+
     }
 }

@@ -99,6 +99,9 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     public static void ArrangeData()
     {
+        builderDataDictionary.Clear();
+        downloadDataQueue.Clear();
+
         for (int i = 0; i < BuilderData.mapData.data.json.otherItems.Count; i++)
         {
             DownloadQueueData temp = new DownloadQueueData();
@@ -217,6 +220,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
+                AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
@@ -264,6 +268,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
+                AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
                 //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
@@ -303,8 +308,9 @@ public class BuilderAssetDownloader : MonoBehaviour
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
+                AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
-                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
+                //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
             else
             {
@@ -391,7 +397,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             if(_itemData.ItemID.Contains("TLP"))
             {
-                BuilderData.SceneTeleportingObjects.Add(newObj);
+                XANASummitDataContainer.SceneTeleportingObjects.Add(newObj);
             }
         }
 
@@ -498,11 +504,11 @@ public class BuilderAssetDownloader : MonoBehaviour
     }
 
 
-    void OnOrientationChange()
+    void OnOrientationChange(bool IsPortrait)
     {
         if (totalAssetCount != downloadedTillNow)
         {
-            if (ScreenOrientationManager._instance.isPotrait)
+            if (IsPortrait)
             {
                 assetDownloadingText.transform.parent.gameObject.SetActive(false);
                 assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(true);
@@ -526,17 +532,25 @@ public class BuilderAssetDownloader : MonoBehaviour
     public void ResetAll()
     {
         stopDownloading = true;
-        foreach (Transform t in assetParent)
+        try
         {
-            Destroy(t.gameObject);
+            foreach (Transform t in assetParent)
+            {
+                Destroy(t.gameObject);
+            }
         }
+        catch(Exception e)
+        {
+            Debug.LogError("Object has destroyed but still trying to access it...");
+        }
+        
 
         downloadDataQueue.Clear();
         builderDataDictionary.Clear();
         BuilderData.mapData = null;
         BuilderData.spawnPoint.Clear();
         BuilderData.preLoadspawnPoint.Clear();
-        BuilderData.SceneTeleportingObjects.Clear();
+        XANASummitDataContainer.SceneTeleportingObjects.Clear();
         downloadedTillNow = 0;
         totalAssetCount = 0;
         dataArranged = false;

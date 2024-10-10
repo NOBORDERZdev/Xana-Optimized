@@ -6,12 +6,15 @@ using UnityEngine;
 
 public class BGMVolumeControlOnTrigger : MonoBehaviour
 {
-    public float bgmMinVolume;
-    public float bgmMaxVolume;
+    public AdvancedYoutubePlayer VideoPlayerController;
+    public bool IsPlayerCollided = false;
 
     private void Start()
     {
-        SetBGMAudioOnTrigger(bgmMaxVolume);
+        if (gameObject.GetComponent<AdvancedYoutubePlayer>())
+        {
+            VideoPlayerController = gameObject.GetComponent<AdvancedYoutubePlayer>();
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -20,7 +23,8 @@ public class BGMVolumeControlOnTrigger : MonoBehaviour
         {
             if (other.gameObject.GetComponent<PhotonView>().IsMine)
             {
-                SetBGMAudioOnTrigger(bgmMinVolume);
+                IsPlayerCollided = true;
+                SetBGMAudioOnTrigger(true);
             }
         }
     }
@@ -31,24 +35,17 @@ public class BGMVolumeControlOnTrigger : MonoBehaviour
         {
             if (other.gameObject.GetComponent<PhotonView>().IsMine)
             {
-                SetBGMAudioOnTrigger(bgmMaxVolume);
+                IsPlayerCollided = false;
+                SetBGMAudioOnTrigger(false);
             }
-            
         }
     }
 
-    void SetBGMAudioOnTrigger(float _volume)
+    public void SetBGMAudioOnTrigger(bool _mute)
     {
-        try
+        if (SoundController.Instance != null)
         {
-            if (SoundController.Instance != null)
-            {
-                SoundController.Instance.EffectsSource.volume = _volume;
-            }
-        }
-        catch (Exception e)
-        {
-
+            SoundController.Instance.EffectsSource.mute = _mute;
         }
     }
 }

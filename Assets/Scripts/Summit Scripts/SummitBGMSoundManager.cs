@@ -25,6 +25,8 @@ public class SummitBGMSoundManager : MonoBehaviour
         //GamePlayButtonEvents.OnExitButtonXANASummit -= StopBGM;
         BuilderEventManager.StopBGM -= StopBGM;
         BuilderEventManager.ResetSummit -= StopBGM;
+        BuilderEventManager.loadBGMDirectly -= SetBGMDirectly;
+
     }
 
     void StartBGMSound()

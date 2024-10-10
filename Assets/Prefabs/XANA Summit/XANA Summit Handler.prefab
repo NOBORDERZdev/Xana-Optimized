@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 2363225616550771679}
   - component: {fileID: 2672589877456597803}
   - component: {fileID: 5177054737458545910}
+  - component: {fileID: 1339195408}
+  - component: {fileID: 1339195409}
   m_Layer: 0
   m_Name: XANA Summit Handler
   m_TagString: Untagged
@@ -49,10 +51,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 844c5b4409cf7ad47b8608255a14315e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stayTimeTrackerForSummit: {fileID: 0}
   multiplayerController: {fileID: 0}
   gameplayEntityLoader: {fileID: 0}
   dataContainer: {fileID: 11400000, guid: 167db53466831ca41b397940080656f9, type: 2}
-  _domeMiniMap: {fileID: 0}
+  _domeMiniMap: {fileID: 5177054737458545910}
 --- !u!114 &2363225616550771673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,22 +68,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c8d2b5bb06b0e24ab2fcd7195bb95ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chatOutPutPenal: {fileID: 0}
-  chatButton: {fileID: 0}
-  chatCloseButton: {fileID: 0}
-  chatNotificationIcon: {fileID: 0}
-  chatDialogBox: {fileID: 0}
-  chatConfirmationPanel: {fileID: 0}
-  ChatPanel: {fileID: 0}
-  UserIdFormPanel: {fileID: 0}
-  InputFieldChat: {fileID: 0}
-  CurrentChannelText: {fileID: 0}
-  PotriatCurrentChannelText: {fileID: 0}
-  ChannelToggleToInstantiate: {fileID: 0}
-  XanaChatLand: {fileID: 0}
-  XanaChatPotrait: {fileID: 0}
-  outline: {fileID: 0}
-  ChatScrollRect: {fileID: 0}
+  LandscapeChatRef: {fileID: 0}
+  PortraitChatRef: {fileID: 0}
   XANASummitDataContainer: {fileID: 11400000, guid: 167db53466831ca41b397940080656f9, type: 2}
 --- !u!114 &2363225616550771678
 MonoBehaviour:
@@ -108,14 +97,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ea13459ee9a2f04ab244e5c04ec94f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  planetOptions: {fileID: 0}
-  videoPlayer: {fileID: 0}
-  planetNames:
-  - TitanPlanet
-  - VormirPlanet
-  - KnowherePlanet
-  launchCounter: {fileID: 0}
-  summitSceneLoading: {fileID: 2363225616550771675}
+  PlanetOptions: {fileID: 0}
+  VideoPlayer: {fileID: 0}
+  LaunchCounter: {fileID: 0}
+  PlanetWorldId_Testnet:
+  - 2872
+  - 2873
+  - 2874
+  PlanetWorldId_Mainnet:
+  - 6383
+  - 6384
+  - 6385
+  SummitSceneLoading: {fileID: 2363225616550771675}
 --- !u!114 &2672589877456597803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,9 +133,310 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38b411adb4757f04a98b54d87ed75545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HighlightedSprite: {fileID: 0}
-  MapDomes: []
-  MapDomes_portrait: []
-  VistedCount: []
+  HighlightedSprite: {fileID: 21300000, guid: 42f99a9a05aa324489944291dd7d671a, type: 3}
+  MapDomes:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  MapDomes_portrait:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  VistedCount:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   ConfirmationPopup: {fileID: 0}
   ConfirmationPopup_Portrait: {fileID: 0}
+--- !u!114 &1339195408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2363225616550771674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac790bbec2a18214ebb824e102e8b0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  XANASummitDataContainer: {fileID: 11400000, guid: 167db53466831ca41b397940080656f9, type: 2}
+--- !u!114 &1339195409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2363225616550771674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e37256efdeb06e04dbc57dc7d2661e16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CarCanvas: {fileID: 0}
+  ExitButtonLandscape: {fileID: 0}
+  ExitButtonPotrait: {fileID: 0}
+  objectsToEnableDisable:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  inviteBtnPortait: {fileID: 0}
+  peopleRect: {fileID: 0}

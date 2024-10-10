@@ -15,7 +15,6 @@ using Photon.Realtime;
 using System.Collections.Generic;
 using System;
 using UnityEngine.SceneManagement;
-using Metaverse;
 using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
@@ -68,7 +67,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "15";
+        string gameVersion = "Summit20";
         #endregion
 
         #region Multtisection Fields
@@ -375,7 +374,7 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 LFF.LoadFile();
             }
-            else { GameplayEntityLoader.instance.SetPlayer(); isShifting = false; DestroyPlayerDelay(); }
+            else { GameplayEntityLoader.instance.SetPlayer(); DestroyPlayerDelay(); }
         }
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
@@ -404,7 +403,7 @@ namespace Photon.Pun.Demo.PunBasics
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
 
-            GameplayEntityLoader.instance._uiReferences.LoadMain(true);
+            //GameplayEntityLoader.instance._uiReferences.LoadMain(true);
         }
 
         public override void OnJoinRandomFailed(short returnCode, string message)
@@ -446,6 +445,8 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 DestroyImmediate(item);
             }
+            await new WaitForEndOfFrame();
+            isShifting = false;
         }
 
 
@@ -461,18 +462,26 @@ namespace Photon.Pun.Demo.PunBasics
             this.SectorName = SectorName;
             Debug.Log("Triggered...." + this.SectorName);
             this.isWheel = isWheel;
-            Destroy(player.GetComponent<PhotonAnimatorView>());
-            Destroy(player.GetComponent<PhotonTransformView>());
-            Destroy(player.GetComponent<PhotonVoiceView>());
-            Destroy(player.GetComponent<PhotonView>());
+            SummitPlayerRPC summitplayer = player.GetComponent<SummitPlayerRPC>();
+            if (summitplayer)
+            {
+                Destroy(summitplayer.AnimatorView);
+                Destroy(summitplayer.VoiceView);
+                Destroy(summitplayer.Transformview);
+                Destroy(summitplayer.view);
+            }
+          
             foreach (var p in playerobjects)
             {
-                Destroy(p.GetComponent<PhotonAnimatorView>());
-                Destroy(p.GetComponent<PhotonTransformView>());
-                Destroy(p.GetComponent<PhotonVoiceView>());
-                Destroy(p.GetComponent<PhotonView>());
+                if (p == player) continue;
+                summitplayer = p.GetComponent<SummitPlayerRPC>();
+                Destroy(summitplayer.AnimatorView);
+                Destroy(summitplayer.VoiceView);
+                Destroy(summitplayer.Transformview);
+                Destroy(summitplayer.view);
             }
-            playerobjects.Clear();
+            XANASummitSceneLoading.OnJoinSubItem?.Invoke(ConstantsHolder.xanaConstants.minimap == 1);
+
             PhotonNetwork.LeaveRoom();
 
         }

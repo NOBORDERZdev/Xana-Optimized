@@ -298,6 +298,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_FacePrefab: {fileID: 2191293745884687467, guid: 4e51e9c406ea0b148a939b22e464faba, type: 3}
   m_MaximumFaceCount: 1
+--- !u!1 &195638581 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8445548264769571871, guid: 24252adead7fb454e8a22ebbb8ba5ae4, type: 3}
+  m_PrefabInstance: {fileID: 8445548262824394702}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &229192379 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 671658732488769703, guid: 3f13c32dba4875c4ab32abeb5f93a0ec, type: 3}
@@ -369,19 +374,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 767a821848c79644b8cf8875e963dda2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTracking: 0
-  _aRPoseDriver: {fileID: 771864184}
-  moveTargetObj: {fileID: 8445548262824394703}
-  playerHead: {fileID: 0}
-  playerBody: {fileID: 0}
-  cameraTransform: {fileID: 771864180}
-  mirrorARFace: {fileID: 1541594209}
-  mirrorARFace2: {fileID: 606153089}
-  headRotation: {x: 0, y: 0, z: 0}
-  bodyRotRatio: 3
-  maleDFaceskinRenderer: {fileID: 1348400443653016443}
-  feMaleDFaceskinRenderer: {fileID: 2334730365463866130}
-  m_ARFaceManager: {fileID: 142880211}
+  AR_PoseDriver: {fileID: 771864184}
+  MoveTargetObj: {fileID: 8445548262824394703}
+  PlayerHead: {fileID: 1518533673}
+  PlayerBody: {fileID: 1815731678}
+  MaleHeadTarget: {fileID: 1518533673}
+  FemaleHeadTarget: {fileID: 643354476}
+  MaleBodyTarget: {fileID: 1815731678}
+  FemaleBodyTarget: {fileID: 195638581}
+  CameraTransform: {fileID: 771864180}
+  MirrorARFace: {fileID: 1541594209}
+  MirrorARFace2: {fileID: 606153089}
+  MaleDFaceskinRenderer: {fileID: 1348400443653016443}
+  FemaleDFaceskinRenderer: {fileID: 2334730365463866130}
+  AR_FaceManager: {fileID: 142880211}
+  _headRotation: {x: 0, y: 0, z: 0}
+  _isTracking: 0
+  _bodyRotRatio: 3
   rotationSpeed: 1
 --- !u!4 &359173530
 Transform:
@@ -575,6 +584,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &643354476 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8445548263517206673, guid: 24252adead7fb454e8a22ebbb8ba5ae4, type: 3}
+  m_PrefabInstance: {fileID: 8445548262824394702}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &757834894
 GameObject:
   m_ObjectHideFlags: 0
@@ -1183,6 +1197,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UserIDfromServer: 0
   localindexfilebuffer: 0
+--- !u!1 &1518533673 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8445548263573805823, guid: 24252adead7fb454e8a22ebbb8ba5ae4, type: 3}
+  m_PrefabInstance: {fileID: 8445548262824394702}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1541594209
 GameObject:
   m_ObjectHideFlags: 0
@@ -1551,6 +1570,11 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
+--- !u!1 &1815731678 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8445548262736015396, guid: 24252adead7fb454e8a22ebbb8ba5ae4, type: 3}
+  m_PrefabInstance: {fileID: 8445548262824394702}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1823534138 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 671658734116773414, guid: 3f13c32dba4875c4ab32abeb5f93a0ec, type: 3}

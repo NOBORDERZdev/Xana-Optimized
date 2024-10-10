@@ -93,23 +93,19 @@ public class Actor : MonoBehaviour
         _PlayerCategory = playerBehaviour.CategoryOfMode;
         foreach (MoveBehaviour move in playerBehaviour.ActorMoveBehaviours)
             SetMoveActions(move);
-
-        if(playerBehaviour.IdleAnimationFlag)
+        
+        if (playerBehaviour != null)
         {
-            transform.eulerAngles = new Vector3(0,180,0);
-            _PlayerAnimator.SetBool("Action", true);
-            _lastAction = true;
+            if (playerBehaviour.IdleAnimationFlag)
+            {
+                transform.eulerAngles = new Vector3(0, 180, 0);
+                _PlayerAnimator.SetBool("Action", true);
+                _lastAction = true;
 
-            StateMoveBehaviour = 2;
+                StateMoveBehaviour = 2;
 
-        }
-        else
-        {
-           // _PlayerAnimator.SetBool("Action", false);
-          //  _lastAction = false;
-
-           // StateMoveBehaviour = 1;
-
+            }
+            
         }
         _PlayerAnimator.SetBool("Menu Action", false);
         //StopAllCoroutines();

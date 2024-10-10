@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using static InventoryManager;
 using System;
 using static StoreUndoRedo;
+using System.Globalization;
 
 public class ItemDetail : MonoBehaviour
 {
@@ -338,7 +339,13 @@ public class ItemDetail : MonoBehaviour
                 this.gameObject.GetComponent<Button>().onClick.AddListener(ItemBtnClicked);
                 this.gameObject.GetComponent<Button>().onClick.AddListener(ResetButtonState);
             }
-            decimal PriceInDecimal = decimal.Parse(price);
+
+            if (string.IsNullOrEmpty(price))
+            {
+                price = "0";
+            }
+
+            decimal PriceInDecimal = decimal.Parse(price,CultureInfo.InvariantCulture);
             int priceint = (int)PriceInDecimal;
             PriceTxt.text = priceint.ToString();
             switch (CategoriesEnumVar)
@@ -539,7 +546,7 @@ public class ItemDetail : MonoBehaviour
 
         string CurrentString = "";
         CurrentString = CategoriesEnumVar.ToString();
-
+        GameManager.Instance.ResetSelectedItems();
 
         switch (CurrentString)
         {
@@ -1226,6 +1233,4 @@ public class ItemDetail : MonoBehaviour
         InventoryManager.instance.GreyRibbonImage.SetActive(false);
         InventoryManager.instance.WhiteRibbonImage.SetActive(true);
     }
-
-
 }

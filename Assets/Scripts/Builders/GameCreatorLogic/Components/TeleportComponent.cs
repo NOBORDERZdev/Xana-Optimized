@@ -16,6 +16,12 @@ public class TeleportComponent : ItemComponent
     public void Init(TeleportComponentData teleportComponentData)
     {
         this._teleportComponentData = teleportComponentData;
+
+        gameObject.AddComponent<OnTriggerSceneSwitch>();
+        gameObject.GetComponent<OnTriggerSceneSwitch>().DomeId = -1;
+        gameObject.GetComponent<OnTriggerSceneSwitch>().WorldId = _teleportComponentData.spaceID;
+        
+
     }
 
     //IEnumerator TimerCountDown()

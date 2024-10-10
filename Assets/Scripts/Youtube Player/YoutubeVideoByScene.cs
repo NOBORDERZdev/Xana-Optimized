@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using static SummitAIChatHandler;
 
 public class YoutubeVideoByScene : MonoBehaviour
 {
@@ -46,7 +47,10 @@ public class YoutubeVideoByScene : MonoBehaviour
                     string incominglink = _response.data.link;
                     if (!incominglink.Equals(" "))
                     {
-                        Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying);
+                        if (_response.data.isYoutubeURL)
+                        {
+                            Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying, _response.data.isYoutubeURL, _response.data.quality);
+                        }
                     }
                     else
                     {

@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class SummitEntityManager : MonoBehaviour, IMatchmakingCallbacks
@@ -34,7 +35,7 @@ public class SummitEntityManager : MonoBehaviour, IMatchmakingCallbacks
       
     }
 
-    public void InstantiateCAR()
+    public async Task InstantiateCAR()
     {
         if(!PhotonNetwork.IsMasterClient) { return; }
             CarSpline = SplineDone.Instance;
@@ -48,11 +49,11 @@ public class SummitEntityManager : MonoBehaviour, IMatchmakingCallbacks
         var obje =   PhotonNetwork.InstantiateRoomObject("Historic_Mickey_Car", CarSpawnpoint.position, Quaternion.identity);
             var splineFollow = obje.GetComponent<SplineFollower>();
             
-            splineFollow.moveAmount = firstSpawn;
+            splineFollow.MoveAmount = firstSpawn;
             firstSpawn = (firstSpawn + distancebetweencar) % length;
             splineFollow.Setup((byte)(80 +i));
-            splineFollow.spline = CarSpline;
-
+            splineFollow.Spline = CarSpline;
+            await Task.Delay(100);
         }
         
     }
@@ -74,7 +75,7 @@ public class SummitEntityManager : MonoBehaviour, IMatchmakingCallbacks
 
     public void OnJoinedRoom()
     {
-       if(PhotonNetwork.IsMasterClient)
+       if(PhotonNetwork.IsMasterClient && ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit")
         {
 
             InstantiateCAR();

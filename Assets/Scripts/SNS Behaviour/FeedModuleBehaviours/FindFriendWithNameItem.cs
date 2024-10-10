@@ -63,12 +63,15 @@ public class FindFriendWithNameItem : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(searchUserRow.avatar) || !string.IsNullOrEmpty(allFollowersRows.follower.avatar))
         {
+            // Remove sprite from asset cache
             AssetCache.Instance.RemoveFromMemory(profileImage.sprite);
             profileImage.sprite = null;
-            //Resources.UnloadUnusedAssets();//every clear.......
-            //Caching.ClearCache();
-            SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+
+            // Unload specific assets
+            SNS_APIManager.Instance.ResourcesUnloadAssetFile();
         }
+
+       
     }
 
     public void SetupData(SearchUserRow searchUserRow1, bool isFromSearch = false)

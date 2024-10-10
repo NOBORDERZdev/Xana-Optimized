@@ -273,6 +273,7 @@ public class ConstantsGod
     public static string MOSTVISITEDTAG = "/world/get-most-visited-tags/";  //pageNumber/pageSize
     public static string FOLLOWWORLD = "/world/mark-favourite-space/";  //:worldId    //same work for both follow world and unfollow world.
     public static string SINGLEWORLDINFO = "/item/get-one-world-data?worldId=";   //:id/:type
+    public static string SINGLEWORLDINFOBYNAME = "/item/get-one-world-data?worldName=";   //:id/:type
 
     #endregion
 
@@ -306,7 +307,9 @@ public class ConstantsGod
     #region PMY World Api's
     public static string toyotaApi = "/toyotaAichiWorlds/get-all-assets-by-worldId/";//"/pmyWorlds/get-all-assets-by-worldId/";
     #endregion
-
+    #region JJ Test World Api's
+    public static string JjTestWorldAssets = "/airin/get-all-assets-by-worldId/"; 
+    #endregion
 
     #region XANA Summit Api's
     public static string GETDOMENPCINFO = "/domes/getDomeNPCInfo/";  //:domeId/:type

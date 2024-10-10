@@ -19703,8 +19703,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.7473755, y: 0.03787963, z: 3.6392212}
-  m_Center: {x: -0.062838554, y: 0.21006808, z: -0.08079243}
+  m_Size: {x: 2.9783769, y: 0.3010252, z: 2.944864}
+  m_Center: {x: 0.00021958351, y: 0.15062049, z: -0.10078776}
 --- !u!1 &6220798828162064957
 GameObject:
   m_ObjectHideFlags: 0
@@ -24587,6 +24587,7 @@ GameObject:
   - component: {fileID: 3856255299075616143}
   - component: {fileID: 7587652993287673695}
   - component: {fileID: 3141745990847859580}
+  - component: {fileID: 7964321174228397271}
   m_Layer: 9
   m_Name: pfTLP0110001
   m_TagString: Item
@@ -24735,6 +24736,37 @@ MonoBehaviour:
   activeBehaviours: []
   activeOnlyIfEnabled: 0
   outlinable: {fileID: 0}
+--- !u!114 &7964321174228397271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6338852704324991212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c33d94ef273f5af4ebf53403b1ca5e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 7587652993287673695}
+  isRotationRestricted: 0
+  allowRotX: 0
+  allowRotY: 0
+  allowRotZ: 0
+  minRotation: {x: 0, y: 0, z: 0}
+  maxRotation: {x: 180, y: 180, z: 180}
+  isScaleRestricted: 0
+  minScale: {x: 0.5, y: 0.5, z: 0.5}
+  maxScale: {x: 5, y: 5, z: 5}
+  isComponentRestricted: 0
+  itemComponentTypes: 0000000001000000020000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f00000003000000
+  shouldCheckForOverLap: 1
+  layersToCheckForOverLap:
+    serializedVersion: 2
+    m_Bits: 512
+  restrictedLayersWontCheckForOverlap:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &6669917300368779627
 GameObject:
   m_ObjectHideFlags: 0

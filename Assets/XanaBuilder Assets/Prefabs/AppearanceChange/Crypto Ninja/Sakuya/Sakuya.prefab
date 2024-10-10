@@ -1982,9 +1982,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3532125829211119243}
-  - component: {fileID: 7486263987628246257}
   - component: {fileID: 3965065316687902355}
   - component: {fileID: 1114140257554195426}
+  - component: {fileID: 8107676016299950495}
   m_Layer: 22
   m_Name: Sakuya
   m_TagString: Untagged
@@ -2011,26 +2011,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &7486263987628246257
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4201701320197669937}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: d21a2e2865324aa498d17855df0778bc, type: 3}
-  m_Controller: {fileID: 9100000, guid: c45d2f8b900c54286b9c93d6a0ad1c6f, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &3965065316687902355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2071,6 +2051,28 @@ MonoBehaviour:
   playerPants: {fileID: 0}
   playerShoes: {fileID: 0}
   playerHead: {fileID: 0}
+  playerEyebrow: []
+--- !u!95 &8107676016299950495
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4201701320197669937}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: d21a2e2865324aa498d17855df0778bc, type: 3}
+  m_Controller: {fileID: 9100000, guid: c45d2f8b900c54286b9c93d6a0ad1c6f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4251583372453895439
 GameObject:
   m_ObjectHideFlags: 0

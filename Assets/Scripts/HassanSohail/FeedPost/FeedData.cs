@@ -104,6 +104,7 @@ public class FeedData : MonoBehaviour
     {
         //print("Getting Click here name" + _feedUserData.name);
         //Debug.Log("Search User id:" + _feedUserData.id);
+        int bodyLayer = LayerMask.NameToLayer("Body");
         SNS_APIManager.Instance.RequestGetUserLatestAvatarData<FeedData>(_feedUserData.id.ToString(), this);
         if (MyProfileDataManager.Instance)
         {
@@ -124,6 +125,7 @@ public class FeedData : MonoBehaviour
             FeedUIController.Instance.AddFriendPanel.SetActive(false);
             //MyProfileDataManager.Instance.gameObject.SetActive(false);
         }
+        ProfileUIHandler.instance._renderTexCamera.GetComponent<Camera>().cullingMask &= ~(1 << bodyLayer);
         ProfileUIHandler.instance.SwitchBetweenUserAndOtherProfileUI(false);
         ProfileUIHandler.instance.SetMainScrollRefs();
         ProfileUIHandler.instance.editProfileBtn.SetActive(false);
@@ -136,7 +138,7 @@ public class FeedData : MonoBehaviour
             ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
         }
         ProfileUIHandler.instance.followProfileBtn.SetActive(true);
-        ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        //ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
 
         AllUserWithFeedRow feedRawData = new AllUserWithFeedRow();
         feedRawData.id = _feedUserData.id;
@@ -192,6 +194,7 @@ public class FeedData : MonoBehaviour
     public void DressUpUserAvatar()
     {
         ////Other player avatar initialization required here
+
         if (SNS_APIManager.Instance.VisitedUserAvatarData != null)
         {
             ProfileUIHandler.instance.SetUserAvatarClothing(SNS_APIManager.Instance.VisitedUserAvatarData.json);

@@ -88,9 +88,9 @@ public class SPAAIDresser : MonoBehaviour
             try
             {
                 AsyncOperationHandle loadObj;//= Addressables.LoadAssetAsync<GameObject>(key.ToLower());
-                bool flag = false;
-                loadObj = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key.ToLower(), ref flag);
-                if (!flag)
+                //bool flag = false;
+                //loadObj = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key.ToLower(), ref flag);
+                //if (!flag)
                     loadObj = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
                 loadObj.Completed += operationHandle =>
                 {
@@ -110,6 +110,7 @@ public class SPAAIDresser : MonoBehaviour
 
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
+            AddressableDownloader.bundleAsyncOperationHandle.Add(handle);
             GameObject loadedObject = handle.Result as GameObject;
             if (loadedObject != null)
             {

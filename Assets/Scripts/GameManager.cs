@@ -199,7 +199,7 @@ public class GameManager : MonoBehaviour
         UiManager.AvaterButtonCustomPushed();
         AvatarCustomizationUIHandler.Instance.LoadMyClothCustomizationPanel();
         //Debug.Log("IsLoggedIn VALUEeeeeeeeee" + (PlayerPrefs.GetInt("IsLoggedIn")));
-        if (ConstantsHolder.loggedIn || UserLoginSignupManager.instance.LoggedInAsGuest) 
+        if (ConstantsHolder.loggedIn || ConstantsHolder.xanaConstants.LoggedInAsGuest) 
         {
             UiManager.HomePage.SetActive(false);
             InventoryManager.instance.SignUpAndLoginPanel(3);
@@ -255,6 +255,7 @@ public class GameManager : MonoBehaviour
     {
         UiManager.HomePage.SetActive(true);
         BGPlane.SetActive(false);
+        ResetSelectedItems();
     }
     public void ChangeCharacterAnimationState(bool l_State)
     {    
@@ -275,6 +276,37 @@ public class GameManager : MonoBehaviour
     public void UpdatePlayerName(string newName)
     {
         mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(newName);
+    }
+
+    public void ResetSelectedItems()
+    {
+        // Get Reference of all Clicked Items
+        int count = StoreUndoRedo.obj.data.Count;
+        for (int i = 0; i < count; i++)
+        {
+            var data = StoreUndoRedo.obj.data[i];
+            if (data.actionObject)
+            {
+                var avatarBtn = data.actionObject.GetComponent<AvatarBtn>();
+                var presetBtn = data.actionObject.GetComponent<PresetData_Jsons>();
+                var image = data.actionObject.GetComponent<Image>();
+
+                if (presetBtn != null)
+                {
+                    presetBtn.transform.GetChild(0).gameObject.SetActive(false);
+                    PresetData_Jsons.clickname = "";
+                }
+                else if (avatarBtn != null && image != null)
+                {
+                    image.color = new Color(1, 1, 1, 0);
+                }
+                else if (!data.methodName.Equals("BtnClicked") && image != null)
+                {
+                    image.enabled = false;
+                }
+            }
+
+        }
     }
 
     //public void ActivateAvatarByGender(string gender)

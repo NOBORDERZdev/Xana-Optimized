@@ -64,13 +64,16 @@ public class XanaVoiceChat : MonoBehaviour
             //}
 
             instance = this;
-            instance.Start();
+            StartCoroutine(instance.Start());
         }
     }
 
 
-    private void Start()
+    private IEnumerator Start()
     {
+        //Adding delay because of loading screen stuck issue in rotation by getting permission popup. // Sohaib
+        yield return new WaitForSeconds(1f);
+
         Debug.Log("Xana VoiceChat Start");
         recorder = GameObject.FindObjectOfType<Recorder>();
         voiceConnection = GetComponent<VoiceConnection>();
@@ -80,7 +83,6 @@ public class XanaVoiceChat : MonoBehaviour
             // There is two instance of this script
             // one used for Landscape & one for Portrait
             // Already Called For Landscape no need to call again.
-
             if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
             {
                 Permission.RequestUserPermission(Permission.Microphone);
@@ -127,6 +129,16 @@ public class XanaVoiceChat : MonoBehaviour
             }
         }
     }
+
+    private IEnumerator GetMicPermission()
+    {
+        yield return new WaitForSeconds(1f);
+        if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+        {
+            Permission.RequestUserPermission(Permission.Microphone);
+        }
+    }
+
     public void TurnOnMic()
     {
         if (ConstantsHolder.xanaConstants.mic == 0)
@@ -215,8 +227,8 @@ public class XanaVoiceChat : MonoBehaviour
         recorder.DebugEchoMode = false;
         if (ConstantsHolder.xanaConstants.mic == 1 && !ConstantsHolder.xanaConstants.pushToTalk)
         {
-            //TurnOnMic();
-            TurnOffMic();  //by defult we will keep mic off in all env
+            TurnOnMic();
+            //TurnOffMic();  //by defult we will keep mic off in all env
         }
         else
         {

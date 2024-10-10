@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static InventoryManager;
+//using static InventoryManager;
 
 public class CharacterHandler : MonoBehaviour
 {
@@ -28,14 +28,22 @@ public class CharacterHandler : MonoBehaviour
         switch (gender)
         {
             case "Male":
-                maleAvatarData.avatar_parent.gameObject.SetActive(true);
-                femaleAvatarData.avatar_parent.gameObject.SetActive(false);
-                UpdateAvatarRefrences(maleAvatarData);
+                if (femaleAvatarData.avatar_parent)
+                    femaleAvatarData.avatar_parent.gameObject.SetActive(false);
+                if (maleAvatarData.avatar_parent)
+                {
+                    maleAvatarData.avatar_parent.gameObject.SetActive(true);
+                    UpdateAvatarRefrences(maleAvatarData);
+                }
                 break;
             case "Female":
-                maleAvatarData.avatar_parent.gameObject.SetActive(false);
-                femaleAvatarData.avatar_parent.gameObject.SetActive(true);
-                UpdateAvatarRefrences(femaleAvatarData);
+                if(maleAvatarData.avatar_parent)
+                    maleAvatarData.avatar_parent.gameObject.SetActive(false);
+                if (femaleAvatarData.avatar_parent)
+                {
+                    femaleAvatarData.avatar_parent.gameObject.SetActive(true);
+                    UpdateAvatarRefrences(femaleAvatarData);
+                }
                 break;
         }
 

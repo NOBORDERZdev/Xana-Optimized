@@ -1,5 +1,4 @@
-﻿using Metaverse;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -156,7 +155,7 @@ public class LoadButtonClick : MonoBehaviour
             {
                 //Debug.Log("this is sit and laying animation tab");
                 //if (EmoteAnimationHandler.Instance.animatorremote != null && EmoteAnimationHandler.Instance.lastAnimClickButton!=null && this.gameObject != EmoteAnimationHandler.Instance.lastAnimClickButton)
-                if (EmoteAnimationHandler.Instance.lastAnimClickButton != null && this.gameObject == EmoteAnimationHandler.Instance.lastAnimClickButton && !this.gameObject.name.Contains("Sit") && !this.gameObject.name.Contains("Laydown") && !this.gameObject.name.Contains("Dance") && !this.gameObject.name.Contains("dance"))
+                if (EmoteAnimationHandler.Instance.lastAnimClickButton != null && this.gameObject == EmoteAnimationHandler.Instance.lastAnimClickButton && !this.gameObject.name.Contains("Sit") && !this.gameObject.name.Contains("Laydown") && !this.gameObject.name.Contains("Dance") && !this.gameObject.name.Contains("dance") && !this.gameObject.name.Contains("Walk"))
                     return;
                 else if (EmoteAnimationHandler.Instance.lastAnimClickButton != null)
                     EmoteAnimationHandler.Instance.lastAnimClickButton.GetComponent<LoadButtonClick>().highlighter.SetActive(false);

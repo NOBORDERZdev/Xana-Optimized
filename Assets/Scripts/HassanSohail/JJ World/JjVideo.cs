@@ -16,13 +16,9 @@ public class JjVideo : MonoBehaviour
     public bool isFromAws;
 
     MeshRenderer screenMesh;
-    // Start is called before the first frame update
     void OnEnable()
     {
         screenMesh = GetComponent<MeshRenderer>();
-        //videoplayer.playOnAwake = false;
-        //videoplayer.errorReceived += ErrorOnVideo;
-        //videoplayer.frameReady += SetSound;
         if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
         {
             Invoke(nameof(WaitPlay), 5);
@@ -34,62 +30,53 @@ public class JjVideo : MonoBehaviour
         }
     }
 
-
     public void CheckForPlayValidPlayer()
     {
         if (isLiveVideo && liveVideoPlayer != null)
         {
-            if (liveVideoPlayer)
-                liveVideoPlayer.SetActive(true);
-            if (preRecordedPlayer)
-                preRecordedPlayer.SetActive(false);
+            liveVideoPlayer?.SetActive(true);
+            preRecordedPlayer?.SetActive(false);
             liveVideoPlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
             liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().GetLivestreamUrl(videoLink);
             liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
             awsVideoplayer.gameObject.SetActive(false);
-
-
         }
         else if (isPrerecoreded && preRecordedPlayer != null)
         {
-            if (liveVideoPlayer)
-                liveVideoPlayer.SetActive(false);
-            if (preRecordedPlayer)
-                preRecordedPlayer.SetActive(true);
+            liveVideoPlayer?.SetActive(false);
+            preRecordedPlayer?.SetActive(true);
             awsVideoplayer.gameObject.SetActive(false);
             liveVideoPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
             liveVideoPlayer.GetComponent<YoutubeSimplified>().Play();
         }
-        else if (isFromAws && awsVideoplayer.gameObject != null)
+        else if (isFromAws && awsVideoplayer != null)
         {
-            // Debug.LogError(videoLink);
-            if (liveVideoPlayer)
-                liveVideoPlayer.SetActive(false);
-            if (preRecordedPlayer)
-                preRecordedPlayer.SetActive(false);
+            liveVideoPlayer?.SetActive(false);
+            preRecordedPlayer?.SetActive(false);
             awsVideoplayer.SetActive(true);
-            awsVideoplayer.GetComponent<VideoPlayer>().playOnAwake = true;
-            awsVideoplayer.GetComponent<VideoPlayer>().isLooping = true;
-            awsVideoplayer.GetComponent<VideoPlayer>().url = videoLink;
-            awsVideoplayer.GetComponent<VideoPlayer>().Play();
+            VideoPlayer videoPlayer = awsVideoplayer.GetComponent<VideoPlayer>();
+            videoPlayer.playOnAwake = true;
+            videoPlayer.isLooping = true;
+            videoPlayer.url = videoLink;
+            videoPlayer.Play();
         }
     }
-
 
     void WaitPlay()
     {
         SetPlayer(videoLink);
     }
 
-    public void SetPlayer(string link)
+    void SetPlayer(string link)
     {
-        awsVideoplayer.GetComponent<VideoPlayer>().url = link;
-        awsVideoplayer.GetComponent<VideoPlayer>().Play();
+        VideoPlayer videoPlayer = awsVideoplayer.GetComponent<VideoPlayer>();
+        videoPlayer.url = link;
+        videoPlayer.Play();
     }
 
     void SetSound(VideoPlayer source, string message)
     {
-
+        // Handle sound settings if needed
     }
 
     private void ErrorOnVideo(VideoPlayer source, string message)

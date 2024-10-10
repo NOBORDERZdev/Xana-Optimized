@@ -7,10 +7,6 @@ public class AvProLiveVideoSoundEnabler : MonoBehaviour
 {
     public SPAAIHandler PlayerTriggerChecker;
     public AvProDirectionalSound DirectionalSoundController;
-    public GameObject PreRecVideoScreen;
-    public MeshFilter LiveVideoPlayerScreen;
-    public Mesh AndroidLiveVideoMesh;
-    public Mesh IOSLiveVideoMesh;
 
     private void OnEnable()
     {
@@ -22,40 +18,24 @@ public class AvProLiveVideoSoundEnabler : MonoBehaviour
         PlayerTriggerChecker.LiveVideoSoundEnabler -= EnableLiveVideoSound;
     }
 
-    void EnableLiveVideoSound(bool _soundEnable)
+    public void EnableLiveVideoSound(bool _soundEnable)
     {
+        DirectionalSoundController.playerCam = ReferencesForGamePlay.instance.m_34player.transform;
         if (_soundEnable)
         {
             DirectionalSoundController.enabled = true;
             DirectionalSoundController.ActiveDirectionalSound();
+            DirectionalSoundController.activePlayer.AudioMuted = false;
         }
         else
         {
             if (DirectionalSoundController.volumeCoroutine != null)
             {
                 StopCoroutine(DirectionalSoundController.volumeCoroutine);
+                DirectionalSoundController.volumeCoroutine = null;
             }
             DirectionalSoundController.enabled = false;
-        }
-    }
-
-    public void EnableVideoScreen(bool _isLiveVideo)
-    {
-        if (_isLiveVideo)
-        {
-
-#if UNITY_ANDROID
-            LiveVideoPlayerScreen.mesh = AndroidLiveVideoMesh;
-#elif UNITY_IOS
-            LiveVideoPlayerScreen.mesh = IOSLiveVideoMesh;
-#endif
-            LiveVideoPlayerScreen.gameObject.SetActive(_isLiveVideo);
-            PreRecVideoScreen.SetActive(!_isLiveVideo);
-        }
-        else
-        {
-            PreRecVideoScreen.SetActive(!_isLiveVideo);
-            LiveVideoPlayerScreen.gameObject.SetActive(_isLiveVideo);
+            DirectionalSoundController.activePlayer.AudioMuted = true;
         }
     }
 }

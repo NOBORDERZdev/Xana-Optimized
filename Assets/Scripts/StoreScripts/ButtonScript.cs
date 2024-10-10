@@ -71,7 +71,7 @@ public class ButtonScript : MonoBehaviour
         // Items which are not downloaded stop them to download
         // because new category is opened
         inventoryManager.StopAllCoroutines();
-        inventoryManager.eyeBrowTapButton.SetActive(false);
+        //inventoryManager.eyeBrowTapButton.SetActive(false);
 
         // InventoryManager.instance.DeletePreviousItems();            // AR changes
         
@@ -87,7 +87,7 @@ public class ButtonScript : MonoBehaviour
         ConstantsHolder.xanaConstants.currentButtonIndex = Index;
         inventoryManager.UpdateXanaConstants();
         inventoryManager.DisableColorPanels();
-        ResetSelectedItems();
+        //ResetSelectedItems();
 
 
         if (Index == 7 && inventoryManager.panelIndex == 1)

@@ -5,13 +5,22 @@ using UnityEngine;
 
 public class OnTriggerSceneSwitch : MonoBehaviour
 {
+    [Tooltip("Set it to -1 if you are manually loading scene")]
     public int DomeId;
-    [Tooltip("This only require when dome id is set to -1")]
+    public string WorldIdTestnet;
+    public string WorldIdMainnet;
+    public GameObject textMeshPro;
+    [HideInInspector]
     public string WorldId;
-    public TMPro.TextMeshPro DomeIndexText;
-
-
     private bool alreadyTriggered;
+
+    private void OnEnable()
+    {
+        if (APIBasepointManager.instance.IsXanaLive)
+            WorldId = WorldIdMainnet;
+        else
+            WorldId = WorldIdTestnet;
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (PhotonNetwork.InRoom)
@@ -23,8 +32,10 @@ public class OnTriggerSceneSwitch : MonoBehaviour
                 {
                     ConstantsHolder.DiasableMultiPartPhoton = true;
                 }
-                if (DomeId == -1 && !string.IsNullOrEmpty(WorldId))
+                if (DomeId == -1)
+                {
                     TriggerSceneLoading(WorldId);
+                }
                 else
                     TriggerSceneLoading();
 
@@ -35,13 +46,13 @@ public class OnTriggerSceneSwitch : MonoBehaviour
 
     void TriggerSceneLoading()
     {
-        GameplayEntityLoader.instance.AssignRaffleTickets(DomeId);
+        //GameplayEntityLoader.instance.AssignRaffleTickets(DomeId);
         BuilderEventManager.LoadNewScene?.Invoke(DomeId, transform.GetChild(0).transform.position);
     }
 
-    void TriggerSceneLoading(string worldId)
+    void TriggerSceneLoading(string WorldId)
     {
-        BuilderEventManager.LoadSceneByName?.Invoke(worldId, transform.GetChild(0).transform.position);
+        BuilderEventManager.LoadSceneByName?.Invoke(WorldId, transform.GetChild(0).transform.position);
     }
 
     async void DisableCollider()

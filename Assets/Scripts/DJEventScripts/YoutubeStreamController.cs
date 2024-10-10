@@ -22,7 +22,7 @@ public class YoutubeStreamController : MonoBehaviour
     private string PrevURL;
     private bool IsOldURL = true;
     public static Action playPrercordedVideo;
-    public StreamYoutubeVideo streamYoutubeVideo;
+    public AdvancedYoutubePlayer streamYoutubeVideo;
     // Start is called before the first frame update
     private void OnEnable()
     {
@@ -76,10 +76,10 @@ public class YoutubeStreamController : MonoBehaviour
 
     private void Start()
     {
-        if (this.GetComponent<StreamYoutubeVideo>() != null)
-        {
-            streamYoutubeVideo = this.GetComponent<StreamYoutubeVideo>();
-        }
+        //if (this.GetComponent<StreamYoutubeVideo>() != null)
+        //{
+        //    streamYoutubeVideo = this.GetComponent<StreamYoutubeVideo>();
+        //}
         //if (videoPlayerAudioSource)
         //    videoPlayerAudioSource.gameObject.GetComponent<VideoPlayer>().targetMaterialRenderer.material.color = new Color32(57, 57, 57, 255);
         //if (NormalPlayer.GetComponent<YoutubeSimplified>().videoPlayer != null)
@@ -138,8 +138,13 @@ public class YoutubeStreamController : MonoBehaviour
         }
         else if (!APIHandler.Data.isPlaying)
         {
+            streamYoutubeVideo.AVProVideoPlayer.enabled = false;
             LiveStreamPlayer.SetActive(false);
             NormalPlayer.gameObject.SetActive(true);
+            if (gameObject.GetComponent<AvProLiveVideoSoundEnabler>())
+            {
+                gameObject.GetComponent<AvProLiveVideoSoundEnabler>().EnableLiveVideoSound(false);
+            }
             //YoutubeSimplified player = NormalPlayer.GetComponent<YoutubeSimplified>();
 
             //LiveStreamPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = new Color32(57, 57, 57, 255);
@@ -178,26 +183,32 @@ public class YoutubeStreamController : MonoBehaviour
     {
         if (APIHandler.Data.IsLive && APIHandler.Data.isPlaying)
         {
+            SetVideoQuality(APIHandler.Data.quality);
             Debug.Log("Hardik changes check");
-            if (GetComponent<AvProLiveVideoSoundEnabler>())
-            {
-                GetComponent<AvProLiveVideoSoundEnabler>().EnableVideoScreen(true);
-            }
-            streamYoutubeVideo.mediaPlayer.enabled = true;
+            streamYoutubeVideo.EnableVideoScreen(true);
+            streamYoutubeVideo.AVProVideoPlayer.enabled = true;
             LiveStreamPlayer.SetActive(true);
             NormalPlayer.gameObject.SetActive(false);
-            if (GetComponent<AvProDirectionalSound>())
+            //if (gameObject.GetComponent<AvProDirectionalSound>())
+            //{
+            //    gameObject.GetComponent<AvProDirectionalSound>().ActivateDirectionalSoundIfNotYet();
+            //}
+            if (gameObject.GetComponent<AvProLiveVideoSoundEnabler>() && 
+                gameObject.GetComponent<AvProDirectionalSound>().PlayerTriggerCheck.IsPlayerTriggered)
             {
-                GetComponent<AvProDirectionalSound>().ActivateDirectionalSoundIfNotYet();
+                gameObject.GetComponent<AvProLiveVideoSoundEnabler>().EnableLiveVideoSound(true);
             }
-
 
             //YoutubePlayerLivestream player = LiveStreamPlayer.GetComponent<YoutubePlayerLivestream>();
             //if (player)
             //{
             //    player.GetLivestreamUrl(APIHandler.Data.URL);
             //}
-            streamYoutubeVideo.StreamYtVideo(APIHandler.Data.URL, APIHandler.Data.IsLive);
+            //streamYoutubeVideo.StreamYtVideo(APIHandler.Data.URL, APIHandler.Data.IsLive);
+            streamYoutubeVideo.VideoId = APIHandler.Data.URL;
+            streamYoutubeVideo.IsLive = APIHandler.Data.IsLive;
+            streamYoutubeVideo.PlayVideo();
+            SetBGMAudioSound();
             if (!WorldItemView.m_EnvName.Contains("Xana Festival") || !WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
             {
                 NormalPlayer.gameObject.SetActive(false);
@@ -206,19 +217,25 @@ public class YoutubeStreamController : MonoBehaviour
         }
         else
         {
-
+            SetVideoQuality(APIHandler.Data.quality);
             //LiveStreamPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = new Color32(57, 57, 57, 255);
-
+            streamYoutubeVideo.EnableVideoScreen(false);
             LiveStreamPlayer.SetActive(false);
+            streamYoutubeVideo.AVProVideoPlayer.enabled = false;
+            streamYoutubeVideo.VideoPlayer.enabled = true;
             NormalPlayer.gameObject.SetActive(true);
 
             //YoutubeSimplified player = NormalPlayer.GetComponent<YoutubeSimplified>();
 
             if (NormalPlayer && APIHandler.Data.isPlaying)
             {
+                streamYoutubeVideo.VideoId = ExtractVideoIdFromUrl(APIHandler.Data.URL);
+                streamYoutubeVideo.IsLive = APIHandler.Data.IsLive;
+                streamYoutubeVideo.PlayVideo();
+                SetBGMAudioSound();
                 //NormalPlayer.url = APIHandler.Data.URL;
                 //NormalPlayer.Play();
-                streamYoutubeVideo.StreamYtVideo(APIHandler.Data.URL, APIHandler.Data.IsLive);
+                //streamYoutubeVideo.StreamYtVideo(APIHandler.Data.URL, APIHandler.Data.IsLive);
             }
             else if (APIHandler.Data.isPlaying == false)
             {
@@ -229,5 +246,59 @@ public class YoutubeStreamController : MonoBehaviour
         }
     }
 
+    public void SetBGMAudioSound()
+    {
+        if (gameObject.GetComponent<BGMVolumeControlOnTrigger>())
+        {
+            if (gameObject.GetComponent<BGMVolumeControlOnTrigger>().IsPlayerCollided)
+            {
+                gameObject.GetComponent<BGMVolumeControlOnTrigger>().SetBGMAudioOnTrigger(true);
+            }
+        }
+    }
+
+    public string ExtractVideoIdFromUrl(string url)
+    {
+        // Find the position of the "v=" parameter
+        int startIndex = url.IndexOf("v=");
+
+        if (startIndex != -1)
+        {
+            // Extract the substring after "v="
+            startIndex += 2; // Move past "v="
+            int endIndex = url.IndexOf('&', startIndex);
+            if (endIndex == -1)
+                endIndex = url.Length;
+
+            // Get the video ID
+            string videoId = url.Substring(startIndex, endIndex - startIndex);
+            return videoId;
+        }
+
+        // If "v=" parameter is not found, handle accordingly (e.g., return null or an error message)
+        return null;
+    }
+
+    public void SetVideoQuality(string _prefQuality)
+    {
+        switch (_prefQuality)
+        {
+            case "HIGH":
+                streamYoutubeVideo.PreferedQuality = AdvancedYoutubePlayer.Quality.HIGH;
+                break;
+            case "HD":
+                streamYoutubeVideo.PreferedQuality = AdvancedYoutubePlayer.Quality.HD;
+                break;
+            case "FULLHD":
+                streamYoutubeVideo.PreferedQuality = AdvancedYoutubePlayer.Quality.FULLHD;
+                break;
+            case "UHD":
+                streamYoutubeVideo.PreferedQuality = AdvancedYoutubePlayer.Quality.UHD;
+                break;
+            default:
+                streamYoutubeVideo.PreferedQuality = AdvancedYoutubePlayer.Quality.Standard;
+                break;
+        }
+    }
 
 }

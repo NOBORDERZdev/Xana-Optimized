@@ -72,6 +72,13 @@ public class AnimationBtn : MonoBehaviour
             print("Horayyy you have Access");
         }
 
+        if (ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().animator)
+        {
+            RuntimeAnimatorController animator = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().animator.runtimeAnimatorController;
+            EmoteAnimationHandler.Instance.controller = animator;
+        }
+
+
         if (!isClose)
         {
 

@@ -25,10 +25,13 @@ public class XLWorldInfo : MonoBehaviour
         imgVideo1x1.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-
+        if (imgVideo1x1.GetComponent<RawImage>().texture != null)
+        {
+            DestroyImmediate(imgVideo1x1.GetComponent<RawImage>().texture, true);
+            imgVideo1x1.GetComponent<RawImage>().texture = null;
+        }
     }
     public void InitData(int index,string imageurl, JjRatio imgvideores, MediaType dataType)
     {
@@ -46,8 +49,7 @@ public class XLWorldInfo : MonoBehaviour
             imgVideo1x1.SetActive(false);
         StartCoroutine(GetSprite(imageLink, (response) =>
         {
-            if (XanaLobbyManager.Instance && response != null)
-                XanaLobbyManager.Instance.WorldsLoadedSprites.Add(response);
+            
             if (_imgVideoRatio == JjRatio.OneXOneWithDes || _imgVideoRatio == JjRatio.OneXOneWithoutDes)
             {
                 if (imgVideo1x1)

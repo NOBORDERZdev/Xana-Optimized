@@ -60,6 +60,11 @@ public class InventoryManager : MonoBehaviour
     public Text TotalGameCoins;
 
     public List<StoreItemHolder> AllCategoriesData;
+    public ScrollRect[] ItemsScrollrect;
+    private int _BottomApiPagaCount = 1;
+    private int _OuterApiPagaCount = 1;
+    private int _ShoesApiPagaCount = 1;
+    private int _HairApiPagaCount = 1;
 
     public List<ItemDetail> TotalBtnlist;
     public List<ItemDetail> CategorieslistHeads;
@@ -657,7 +662,8 @@ public class InventoryManager : MonoBehaviour
         }
 
         ResetDownloadCount();
-        
+        ResetPageIndex();
+
         if (LoadingHandler.Instance)
             LoadingHandler.Instance.storeLoadingScreen.SetActive(false);
 
@@ -667,13 +673,26 @@ public class InventoryManager : MonoBehaviour
     {
         headsDownlaodedCount = 0;
         faceDownlaodedCount = 0;
+        
         innerDownlaodedCount = 0;
+        innerDownlaodedCountFemale = 0;
+
         outerDownlaodedCount = 0;
+        outerDownlaodedCountFemale = 0;
+        
         accesaryDownlaodedCount = 0;
+        
         bottomDownlaodedCount = 0;
+        bottomDownlaodedCountFemale = 0;
+
         socksDownlaodedCount = 0;
+
         shoesDownlaodedCount = 0;
+        shoesDownlaodedCountFemale = 0;
+
         hairDwonloadedCount = 0;
+        hairDwonloadedCountFemale = 0;
+
         LipsColorDwonloadedCount = 0;
         EyesColorDwonloadedCount = 0;
         EyeBrowColorDwonloadedCount = 0;
@@ -800,7 +819,6 @@ public class InventoryManager : MonoBehaviour
             myObj.pageSize = _PageSize;
             return myObj;
         }
-
         public ConvertSubCategoriesToJsonObj CreateTOJSON(string jsonString, int _pageNumber, int _PageSize, string _order)
         {
             ConvertSubCategoriesToJsonObj myObj = new ConvertSubCategoriesToJsonObj();
@@ -810,7 +828,6 @@ public class InventoryManager : MonoBehaviour
             myObj.order = _order;
             return myObj;
         }
-
         public ConvertSubCategoriesToJsonObj CreateTOJSON(string jsonString, int _pageNumber, int _PageSize, string _order, string sortingType)
         {
             ConvertSubCategoriesToJsonObj myObj = new ConvertSubCategoriesToJsonObj();
@@ -829,9 +846,6 @@ public class InventoryManager : MonoBehaviour
     }
     public void SubmitAllItemswithSpecificSubCategory(int GetCategoryIndex, bool check)
     {
-        //AssetBundle.UnloadAllAssetBundles(false);
-        //Resources.UnloadUnusedAssets();
-
         bool Once;
         Once = check;
         if (PreviousSelectionCount != IndexofPanel)
@@ -839,20 +853,25 @@ public class InventoryManager : MonoBehaviour
             PreviousSelectionCount = IndexofPanel;
             Once = true;
         }
-        if (Once)
+        else
+        {
+            Debug.Log("<color=red> Same Button Clicking </color>");
+        }
+        if (Once || loadingItems)
         {
             string result = StringIndexofSubcategories(GetCategoryIndex);
+            int _pagenumber = GetActivePanelPageIndex();
             ConvertSubCategoriesToJsonObj SubCatString = new ConvertSubCategoriesToJsonObj();
-            //string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 41, "asc"));
-            //string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 200, "asc")); // Increase item Waqas Ahmad
-            string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 200, "asc", "name")); // API Update New Parameter added for sorting
+            string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, _pagenumber, 40, "asc", "name")); // API Update New Parameter added for sorting
             if (hitAllItemAPICorountine != null)
                 StopCoroutine(hitAllItemAPICorountine);
             hitAllItemAPICorountine = StartCoroutine(HitALLItemsAPI(ConstantsGod.API_BASEURL + ConstantsGod.GETALLSTOREITEMS, bodyJson));
         }
     }
     public bool loadingItems = false;
-    Coroutine itemLoading, hitAllItemAPICorountine;
+    bool _ResettingAssetList = false;
+
+    Coroutine itemLoading, hitAllItemAPICorountine, _generateCoroutin;
     IEnumerator HitALLItemsAPI(string url, string Jsondata)
     {
         if (apiResponseHolder.CheckResponse(url + Jsondata))
@@ -860,12 +879,16 @@ public class InventoryManager : MonoBehaviour
             GetItemInfoNewAPI JsonDataObj1 = new GetItemInfoNewAPI();
             JsonDataObj1 = JsonUtility.FromJson<GetItemInfoNewAPI>(apiResponseHolder.GetResponse(url + Jsondata));
             dataListOfItems.Clear();
+
+            _ResettingAssetList = true;
+            yield return new WaitForSeconds(0.2f);
+
             dataListOfItems = JsonDataObj1.data[0].items;
             PutDataInOurAPPNewAPI();
             CheckAPILoaded = true; // Already Have the response not calling the API -- Resetting the value
             yield break;
         }
-        Debug.LogError("HitALLItemsAPI");
+        Debug.Log("<color=red> HitALLItemsAPI </color>");
         if (LoadingHandler.Instance)
             LoadingHandler.Instance.storeLoadingScreen.SetActive(true);
         var request = new UnityWebRequest(url, "POST");
@@ -899,7 +922,17 @@ public class InventoryManager : MonoBehaviour
                 {
                     dataListOfItems.Clear();
 
+                    _ResettingAssetList = true;
+                    yield return new WaitForSeconds(0.2f);
+
                     dataListOfItems = JsonDataObj.data[0].items;
+
+                    if(dataListOfItems.Count == 0)
+                    {
+                        UpdateActivePanelPageIndex(false);
+                        yield break;
+                    }
+
                     PutDataInOurAPPNewAPI();
                     apiResponseHolder.AddReponse(url + Jsondata, request.downloadHandler.text);
                     if (LoadingHandler.Instance)
@@ -927,6 +960,172 @@ public class InventoryManager : MonoBehaviour
         }
         request.Dispose();
     }
+    
+    
+
+    public void CheckPageNumberForAssets()
+    {
+        ScrollRect myScroller = GetActiveRect();
+        //Debug.LogError("Scroller Value : " + myScroller.verticalNormalizedPosition);
+        if (loadingItems)
+            return;
+
+        if (myScroller.verticalNormalizedPosition <= 0.1f)
+        {
+            loadingItems = true;
+            int pageIndex = UpdateActivePanelPageIndex();
+            int _downloadedAssetCount = UpdateActivePanelPageIndex(false,true);
+            int _ActivePanelIndex = GetActivePanelIndex();
+
+            // From API we get 40 Assets per page
+            // This check is write to avoid multiple call to API while loading previous once
+            if (_downloadedAssetCount % 40 != 0) 
+            {
+                Debug.Log("<color=red>Items Are Downloading</color>");
+                return;
+            }
+
+            if (_downloadedAssetCount == -1)
+            {
+                loadingItems = false;
+                return;
+            }
+
+            if (pageIndex < 0)
+                return;
+
+            SubmitAllItemswithSpecificSubCategory(SubCategoriesList[_ActivePanelIndex].id, false);
+        }
+    }
+
+    private ScrollRect GetActiveRect()
+    {
+        int _selectedPanel = ConstantsHolder.xanaConstants.currentButtonIndex;
+
+        if (Clothdatabool)
+        {
+            if (_selectedPanel == 3) return ItemsScrollrect[1];  // Outer
+            if (_selectedPanel == 5) return ItemsScrollrect[2]; // Bottom
+            if (_selectedPanel == 7) return ItemsScrollrect[3]; // Shoes
+        }
+        else
+        {
+            return ItemsScrollrect[0]; // Hair Scroll Rect
+        }
+
+        return GetComponent<ScrollRect>();
+    }
+
+    private int GetActivePanelIndex()
+    {
+        int _selectedPanel = ConstantsHolder.xanaConstants.currentButtonIndex;
+        if (Clothdatabool)
+        {
+            if (_selectedPanel == 3) return 3;  // Outer
+            if (_selectedPanel == 5) return 5; // Bottom
+            if (_selectedPanel == 7) return 7; // Shoes
+            else
+                return -1;
+        }
+        else
+        {
+            return 8; // Hair
+        }
+
+    }
+    private int GetActivePanelPageIndex()
+    {
+        int _selectedPanel = ConstantsHolder.xanaConstants.currentButtonIndex;
+        if (Clothdatabool)
+        {
+            if (_selectedPanel == 3) return _OuterApiPagaCount ;  // Outer
+            if (_selectedPanel == 5) return _BottomApiPagaCount; // Bottom
+            if (_selectedPanel == 7) return _ShoesApiPagaCount ; // Shoes
+
+            return 1;
+        }
+        else
+        {
+            return _HairApiPagaCount;
+        }
+    }
+    private int UpdateActivePanelPageIndex(bool addValue = true, bool downloadCount = false)
+    {
+        int _selectedPanel = ConstantsHolder.xanaConstants.currentButtonIndex;
+
+
+        //Debug.LogError("Selected Panel Index: " + _selectedPanel);
+
+        if (downloadCount)
+        {
+            if (Clothdatabool)
+            {
+                if (_selectedPanel == 3) { return GetDownloadedNumber(EnumClass.CategoryEnum.Outer); } // Outer
+                if (_selectedPanel == 5) { return GetDownloadedNumber(EnumClass.CategoryEnum.Bottom); } // Bottom
+                if (_selectedPanel == 7) { return GetDownloadedNumber(EnumClass.CategoryEnum.Shoes); }// Shoes
+
+                return -1; ;
+            }
+            else if (_selectedPanel == 0)
+            {
+                return GetDownloadedNumber(EnumClass.CategoryEnum.HairAvatar);
+            }
+            else
+            {
+                return -1;
+            }
+        }
+        else  if (addValue)
+        {
+            if (Clothdatabool)
+            {
+                if (_selectedPanel == 3) { _OuterApiPagaCount += 1; return _OuterApiPagaCount; } // Outer
+                if (_selectedPanel == 5) { _BottomApiPagaCount += 1; return _BottomApiPagaCount; } // Bottom
+                if (_selectedPanel == 7) { _ShoesApiPagaCount += 1; return _ShoesApiPagaCount; }// Shoes
+
+                return -1;
+            }
+            else if (_selectedPanel == 0)
+            {
+                _HairApiPagaCount += 1; 
+                return _HairApiPagaCount; ;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        else
+        {
+            if (Clothdatabool)
+            {
+                if (_selectedPanel == 3) { _OuterApiPagaCount -= 1; return _selectedPanel; } // Outer
+                if (_selectedPanel == 5) { _BottomApiPagaCount -= 1; return _selectedPanel; } // Bottom
+                if (_selectedPanel == 7) { _ShoesApiPagaCount -= 1; return _selectedPanel; }// Shoes
+
+                return -1; ;
+            }
+            else if (_selectedPanel == 0)
+            {
+                _HairApiPagaCount -= 1;
+                return 8;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+    }
+    private void ResetPageIndex()
+    {
+        _BottomApiPagaCount = 1;
+        _OuterApiPagaCount = 1;
+        _ShoesApiPagaCount = 1;
+        _HairApiPagaCount = 1;
+    }
+
+
+
 
     [System.Serializable]
     public class GetItemInfoNewAPI
@@ -1376,7 +1575,7 @@ public class InventoryManager : MonoBehaviour
 
         }
         BackToMain();
-
+        ResetPageIndex();
         //Transform parentEyeBrowAvatar = ParentOfBtnsAvatarEyeBrows;                 // AH Working
         //if (parentEyeBrowAvatar.childCount > 1)
         //{
@@ -1419,10 +1618,13 @@ public class InventoryManager : MonoBehaviour
     {
         //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
         ConstantsHolder.xanaConstants.isStoreActive = false;
+        ConstantsHolder.xanaConstants._lastClickedBtn = null;
+        PresetData_Jsons.clickname = "";
         isSaveFromreturnHomePopUp = false;
         ReturnHomePopUp.SetActive(false);
         AvatarUpdated.SetActive(false);
         BackToHomeFromCharCustomization();
+        
     }
     public bool isSaveFromreturnHomePopUp;
     public void OnClickSaveAvatarButton()
@@ -1566,7 +1768,7 @@ public class InventoryManager : MonoBehaviour
         }
         AvatarPanel[m_GetIndex].SetActive(true);
         //CheckColorProperty(m_GetIndex);    // Temperarlily Disble Color Panel
-        if (m_GetIndex == 10 /*|| m_GetIndex == 8 EyeBrowPoints*/|| m_GetIndex == 9) //its a preset do nothing
+        if (m_GetIndex != 0) //Dont need to call API for otherthan Hair
         {
             // When Preset click than update the panel index
             PreviousSelectionCount = IndexofPanel;
@@ -2619,7 +2821,7 @@ public class InventoryManager : MonoBehaviour
 
     public void UpdateUserXeny()
     {
-        if (!UserLoginSignupManager.instance.LoggedInAsGuest)
+        if (!ConstantsHolder.xanaConstants.LoggedInAsGuest)
         {
             StartCoroutine(RequestUserXenyDataRoutine());
         }
@@ -3176,27 +3378,32 @@ public class InventoryManager : MonoBehaviour
 
     public void PutDataInOurAPPNewAPI()
     {
+        _ResettingAssetList = false;
         if (itemLoading != null)
             StopCoroutine(itemLoading);
+        TempSubcategoryParent= null;
+        StopCoroutine(PutDataInOurAPPNewAPICoroutine());
         itemLoading = StartCoroutine(PutDataInOurAPPNewAPICoroutine());
 
     }
 
     int myIndexInList;
+
+    Transform TempSubcategoryParent = null;
     public IEnumerator PutDataInOurAPPNewAPICoroutine()
     {
+        print("~~ Coroutine call");
         if (_avatarController == null)
         {
             _avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
         }
-
 
         if (!colorMode)
             yield return null;
         RefreshDefault();
         List<ItemDetail> TempitemDetail;
         TempitemDetail = new List<ItemDetail>();
-        Transform TempSubcategoryParent = null;
+        
         //    //Debug.Log("<color=red>Planel Index: " + IndexofPanel + "</color>");
         switch (IndexofPanel)
         {
@@ -3208,12 +3415,11 @@ public class InventoryManager : MonoBehaviour
 
             case 3: // Outer - Shirts
                 {
-                    //TempSubcategoryParent = ParentOfBtnsForOuter;
                     myIndexInList = IndexofPanel;
                     TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
                     CategorieslistOuter = TempitemDetail;
                     TempEnumVar = EnumClass.CategoryEnum.Outer;
-                    StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                    ActivateGenerateItemsCoroutine(TempSubcategoryParent.transform, CategorieslistOuter);
                     break;
                 }
             case 4: // Presets
@@ -3226,33 +3432,28 @@ public class InventoryManager : MonoBehaviour
                 }
             case 5: // Pants - Bottom
                 {
-                    //TempSubcategoryParent = ParentOfBtnsForBottom;
                     myIndexInList = IndexofPanel;
                     TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
                     TempEnumVar = EnumClass.CategoryEnum.Bottom;
-                    StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                    ActivateGenerateItemsCoroutine(TempSubcategoryParent.transform, TempitemDetail);
                     break;
                 }
             case 7: // Shoes
                 {
-                    //TempSubcategoryParent = ParentOfBtnsForShoes;
                     myIndexInList = IndexofPanel;
                     TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
                     TempEnumVar = EnumClass.CategoryEnum.Shoes;
-                    StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                    ActivateGenerateItemsCoroutine(TempSubcategoryParent.transform, TempitemDetail);
                     break;
                 }
             case 8: // Hairs
                 {
                     if (!colorMode)
                     {
-                        //TempSubcategoryParent = ParentOfBtnsAvatarHairs;
                         myIndexInList = IndexofPanel;
                         TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
                         TempEnumVar = EnumClass.CategoryEnum.HairAvatar;
-                        Debug.Log("Hair Color Button is Temporiry Disable");
-                        //hairColorButton.gameObject.SetActive(true);
-                        StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                        ActivateGenerateItemsCoroutine(TempSubcategoryParent.transform, TempitemDetail);
                     }
                     else
                     {
@@ -3261,12 +3462,14 @@ public class InventoryManager : MonoBehaviour
                         TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
                         TempEnumVar = EnumClass.CategoryEnum.HairAvatarColor;
 
-                        int loopStart = GetDownloadedNumber(TempEnumVar);
-                        for (int i = loopStart; i < characterBodyParts.hairColor.Count; i++)
-                        {
-                            yield return new WaitForEndOfFrame();
-                            InstantiateStoreItems(TempSubcategoryParent.transform, i, characterBodyParts.hairColor[i].ToString(), TempitemDetail);
-                        }
+                        ActivateGenerateItemsCoroutine(TempSubcategoryParent.transform, TempitemDetail);
+
+                        //int loopStart = GetDownloadedNumber(TempEnumVar);
+                        //for (int i = loopStart; i < characterBodyParts.hairColor.Count; i++)
+                        //{
+                        //    yield return new WaitForEndOfFrame();
+                        //    InstantiateStoreItems(TempSubcategoryParent.transform, i, characterBodyParts.hairColor[i].ToString(), TempitemDetail);
+                        //}
                     }
                     break;
                 }
@@ -3290,8 +3493,7 @@ public class InventoryManager : MonoBehaviour
                             else
                                 AllCategoriesData[20].parentObj.transform.GetChild(i).GetComponent<Image>().enabled = false;
                         }
-
-                        StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                        ActivateGenerateItemsCoroutine(TempSubcategoryParent.transform, TempitemDetail);
                     }
                     else
                     {
@@ -3390,39 +3592,71 @@ public class InventoryManager : MonoBehaviour
                         else
                             AllCategoriesData[11].parentObj.transform.GetChild(i).GetComponent<Image>().enabled = false;
                     }
-                    StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                    ActivateGenerateItemsCoroutine(TempSubcategoryParent.transform, TempitemDetail);
                     break;
                 }
         }
 
 
-        if (TempSubcategoryParent != null)
+        if (TempSubcategoryParent != null && TempitemDetail.Count > 0)
         {
-            if (TempitemDetail.Count > 0)
-            {
-                UpdateColor(buttonIndex);
-                if (buttonIndex != -1)
-                {
-                    UpdateStoreSelection(buttonIndex);
-                }
-            }
+           UpdateColor(buttonIndex);
+           if (buttonIndex != -1)
+           {
+             UpdateStoreSelection(buttonIndex);
+           }
         }
     }
-    int localcount = 0;
+    
+    void ActivateGenerateItemsCoroutine(Transform parentObj, List<ItemDetail> TempitemDetail)
+    {
+        if (_generateCoroutin != null)
+            StopCoroutine(_generateCoroutin);
+        _generateCoroutin = StartCoroutine(GenerateItemsBtn(parentObj, TempitemDetail));
+    }
+
     private IEnumerator GenerateItemsBtn(Transform parentObj, List<ItemDetail> TempitemDetail)
     {
-        int loopStart = GetDownloadedNumber(TempEnumVar);
-        for (int i = loopStart; i < dataListOfItems.Count; i++)
+        int _LoopStart = GetDownloadedNumber(TempEnumVar);
+        const int _ItemsPerPage = 40; // Getting 40 items from the server in a single page
+        int _CurrentPageIndex = GetActivePanelPageIndex() - 1;
+        int _MaxItems = (_CurrentPageIndex * _ItemsPerPage) + dataListOfItems.Count;
+
+        // Calculate the starting index for the data list
+        int _StartFromIndex = _MaxItems - dataListOfItems.Count;
+        _ResettingAssetList = false;
+
+        for (int i = _LoopStart; i < _MaxItems; i++)
         {
+            int _DataIndex = i - _StartFromIndex;
+            
+            if (_DataIndex < 0)
+                break;
+
+            // Wait until the end of the frame to instantiate the item
             yield return new WaitForEndOfFrame();
-            InstantiateStoreItems(parentObj, i, "", TempitemDetail, false);
+            if (_ResettingAssetList == false && parentObj == TempSubcategoryParent)
+            {
+                InstantiateStoreItems(parentObj, _DataIndex, string.Empty, TempitemDetail, false);
+            }
+            
         }
+
+        // Indicate that all data has been loaded
+        loadingItems = false;
     }
 
     CharacterHandler _charHandler;
+    int localcount = 0;
     void InstantiateStoreItems(Transform parentObj, int objId, string objName, List<ItemDetail> TempitemDetail, bool useDefaultValue = true)
     {
         localcount++;
+        if (string.IsNullOrEmpty(dataListOfItems[objId].iconLink) && parentObj != TempSubcategoryParent && _ResettingAssetList == false)
+        {
+            Debug.Log("Icon Link is Empty or Parent Object is not same");
+            return;
+        }
+
         _charHandler = CharacterHandler.instance;
         GameObject L_ItemBtnObj = Instantiate(ItemsBtnPrefab, parentObj);
         L_ItemBtnObj.transform.parent = parentObj;
@@ -3479,7 +3713,7 @@ public class InventoryManager : MonoBehaviour
             if ((_charHandler.activePlayerGender == AvatarGender.Male && !dataListOfItems[objId].assetGender.Equals("0")) ||
                 (_charHandler.activePlayerGender == AvatarGender.Female && !dataListOfItems[objId].assetGender.Equals("1")))
             {
-                Debug.Log("Waqas: Gender not Matched With Asset");
+                Debug.Log("Gender not Matched With Asset");
                 L_ItemBtnObj.SetActive(false);
             }
         }
@@ -3516,7 +3750,10 @@ public class InventoryManager : MonoBehaviour
             case EnumClass.CategoryEnum.Socks:
                 return socksDownlaodedCount;
             case EnumClass.CategoryEnum.Shoes:
-                return shoesDownlaodedCount;
+                if (_MyGender == "Female")
+                    return shoesDownlaodedCountFemale;
+                else
+                    return shoesDownlaodedCount;
             case EnumClass.CategoryEnum.HairAvatar:
                 if (_MyGender == "Female")
                     return hairDwonloadedCountFemale;
@@ -3605,7 +3842,7 @@ public class InventoryManager : MonoBehaviour
                 }
             case EnumClass.CategoryEnum.HairAvatar:
                 {
-                    if (_MyGender == "Femle")
+                    if (_MyGender == "Female")
                         hairDwonloadedCountFemale++;
                     else
                         hairDwonloadedCount++;

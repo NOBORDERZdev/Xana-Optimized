@@ -11,7 +11,7 @@ public class UIHandler : MonoBehaviour
      public CanvasGroup Loadinghandler_CanvasRef;
     public GameObject _SplashScreen;
 
-    public Transform _postScreen,_postCamera;
+    public Transform _postScreen,_postCamera, _postScreenBG;
     public bool IsSplashActive = true;
     /*public Transform SecondSliderScrollView;*/
 
@@ -80,6 +80,7 @@ public class UIHandler : MonoBehaviour
             GameManager.Instance.HomeCameraInputHandler(!flag);
 
             _postScreen.gameObject.SetActive(flag);
+            _postScreenBG.gameObject.SetActive(flag);
             HomePage.gameObject.SetActive(!flag);
             _postCamera.gameObject.SetActive(flag);
             ShowFooter(!flag);
@@ -219,6 +220,7 @@ public class UIHandler : MonoBehaviour
                     //AvatarWindowHolder.gameObject.SetActive(false);
                     /*LobbyTabHolder.gameObject.SetActive(false);*/
                     //worldHolder.SetActive(false);
+                    WorldManager.instance.worldSearchManager.searchWorldInput.Clear();
                     searchWorldHolder.SetActive(true);
                   //  HomeWorldTabsHolder.gameObject.SetActive(false);
                     //WorldWorldTabsHolder.gameObject.SetActive(false);
