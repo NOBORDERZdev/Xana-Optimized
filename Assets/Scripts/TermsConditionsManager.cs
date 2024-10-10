@@ -20,10 +20,11 @@ public class TermsConditionsManager : MonoBehaviour
     GameManager gameManager;
     private void OnEnable()
     {
-        CheckForTermsAndCondition();
+        
     }
     private void Start()
     {
+        instance = this;
         Application.targetFrameRate = 30;
         gameManager = GameManager.Instance;
         if (ConstantsHolder.xanaConstants.screenType == ConstantsHolder.ScreenType.TabScreen)
@@ -34,6 +35,7 @@ public class TermsConditionsManager : MonoBehaviour
         if (PlayerPrefs.HasKey("TermsConditionAgreement"))
         {
             mainPanel.SetActive(false);
+           
         }
         else
         {
@@ -100,6 +102,7 @@ public class TermsConditionsManager : MonoBehaviour
             }
         gameManager.UiManager.StartCoroutine(gameManager.UiManager.IsSplashEnable(false, 0.1f));
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
+        UserLoginSignupManager.instance.CheckForAutoLogin();
     }
 
 

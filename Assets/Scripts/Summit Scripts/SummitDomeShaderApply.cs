@@ -31,7 +31,7 @@ public class SummitDomeShaderApply : MonoBehaviour
         clickListener.DomeId = DomeId;
         if (!string.IsNullOrEmpty(ImageUrl))
         {
-            ImageUrl = ImageUrl + "?width=512?height=256";
+            ImageUrl = ImageUrl + "?width="+ConstantsHolder.DomeImageCompression;
             DownloadDomeTexture(ImageUrl);  
         }
         else
@@ -43,7 +43,7 @@ public class SummitDomeShaderApply : MonoBehaviour
         }
         if (!string.IsNullOrEmpty(LogoUrl))
         {
-            ImageUrl = ImageUrl + "?width=256";
+            ImageUrl = ImageUrl + "?width="+ConstantsHolder.DomeImageCompression;
             DownloadLogoTexture(LogoUrl);
         }
     }
@@ -81,6 +81,7 @@ public class SummitDomeShaderApply : MonoBehaviour
 
     void DownloadDomeTexture(string url)
     {
+        Debug.LogError(url);
         if (!string.IsNullOrEmpty(url))
         {
             if (AssetCache.Instance.HasFile(url))
