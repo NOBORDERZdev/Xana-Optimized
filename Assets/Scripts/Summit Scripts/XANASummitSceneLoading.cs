@@ -258,8 +258,14 @@ public class XANASummitSceneLoading : MonoBehaviour
             World = "MUSEUM";
         else
             World = "ENVIRONMENT";
-
-        UserAnalyticsHandler.onGetWorldId?.Invoke(domeGeneralData.worldId, World);
+        if (domeGeneralData.worldType)
+        {
+            UserAnalyticsHandler.onGetWorldId?.Invoke(domeGeneralData.builderWorldId, World);
+        }
+        else
+        {
+            UserAnalyticsHandler.onGetWorldId?.Invoke(domeGeneralData.worldId, World);
+        }
         if (ReferencesForGamePlay.instance.playerControllerNew.isFirstPerson)
         {
             GamePlayUIHandler.inst.OnSwitchCameraClick();
@@ -510,6 +516,14 @@ public class XANASummitSceneLoading : MonoBehaviour
             GamePlayUIHandler.inst.OnSwitchCameraClick();
         }
         //GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
+        string World = "";
+        if (ConstantsHolder.xanaConstants.isBuilderScene)
+            World = "USER";
+        else if (ConstantsHolder.xanaConstants.IsMuseum)
+            World = "MUSEUM";
+        else
+            World = "ENVIRONMENT";
+        UserAnalyticsHandler.onGetWorldId?.Invoke(int.Parse(subWorldInfo.id), World);
         if (ActionManager.IsAnimRunning)
         {
             ActionManager.StopActionAnimation?.Invoke();
