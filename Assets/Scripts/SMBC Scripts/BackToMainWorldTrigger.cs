@@ -1,7 +1,11 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class BackToEarthTrigger : MonoBehaviour
+/// <summary>///
+/// Use on exit portal trigger of sub world to exit to main world.
+/// </summary>
+
+public class BackToMainWorldTrigger : MonoBehaviour
 {
     private bool alreadyTriggered;
     private void OnTriggerEnter(Collider other)
