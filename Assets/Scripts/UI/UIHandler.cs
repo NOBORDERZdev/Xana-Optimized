@@ -56,7 +56,7 @@ public class UIHandler : MonoBehaviour
         _footerCan.GetComponent<CanvasGroup>().alpha = 0.0f;
         _footerCan.GetComponent<CanvasGroup>().interactable = false;
         _footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        _SplashScreen.SetActive(false);
+       //_SplashScreen.SetActive(false);
         _SplashScreen.SetActive(true);
     }
     bool a = false;
@@ -148,7 +148,7 @@ public class UIHandler : MonoBehaviour
             if (PlayerPrefs.HasKey("TermsConditionAgreement"))
             {
                 IsSplashActive = false;
-                StartCoroutine(IsSplashEnable(false, 3f));
+                //StartCoroutine(IsSplashEnable(false, 3f));
                 if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
                 {
                     if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
@@ -301,13 +301,14 @@ public class UIHandler : MonoBehaviour
                     if (apiResponse.data[i].feature_list.TryGetValue("Xsummitbg", out bool status2))
                     {
                         ConstantsHolder.xanaConstants.XSummitBg = status2;
-                        
-                         Invoke("ChangeBackground", 0.3f); // Call ChangeBackground after 2 seconds
-                        
+
+                        XSummitBgChange.ChangeSummitBG(); // Call ChangeBackground after 2 seconds
+
                         if (SceneManager.GetSceneByName("XSummitLoginSignupScene").isLoaded)
                         {
                             UserLoginSignupManager.instance.XSummitBgChange.ChangeSummitBG();
                         }
+                        
                        
                     }
                     if (apiResponse.data[i].feature_list.TryGetValue("XanaChatFlag", out bool status3))
@@ -333,12 +334,21 @@ public class UIHandler : MonoBehaviour
                     //    ConstantsHolder.xanaConstants.chatFlagBtnStatus = apiResponse.data[i].feature_status;
                     //}
                 }
+            Invoke("ChangeBackground", 5f);
         }
         request.Dispose();
     }
     void ChangeBackground()
     {
-        XSummitBgChange.ChangeSummitBG(); // Your method logic here
+        if (PlayerPrefs.HasKey("TermsConditionAgreement"))
+        {
+            UserLoginSignupManager.instance.CheckForAutoLogin();
+
+        }
+        else 
+        {
+            UserLoginSignupManager.instance.termsConditionPanel.SetActive(true);
+        }
     }
 }
 [System.Serializable]
