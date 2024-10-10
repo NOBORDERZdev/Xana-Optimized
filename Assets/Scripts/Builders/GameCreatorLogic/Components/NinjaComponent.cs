@@ -90,6 +90,11 @@ public class NinjaComponent : ItemComponent
     {
         //CollisionEnter();
     }
+    private void OnDestroy()
+    {
+        pc.isNinjaMotion = false;
+        pc.animator.SetBool("isNinjaMotion", false);
+    }
 
     #endregion
 }
