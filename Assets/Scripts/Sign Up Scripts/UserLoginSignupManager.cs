@@ -125,7 +125,7 @@ public class UserLoginSignupManager : MonoBehaviour
         verficationPlaceHolder.OnValueChanged.AddListener(delegate { ValueChangeCheck(); });
         Web3Web2Handler.AllDataFetchedfromServer += Web3EventForNFTData;
 
-        CheckForAutoLogin();
+        //CheckForAutoLogin();
         if (ref_EyesBlinking == null)
             ref_EyesBlinking = GameManager.Instance.mainCharacter.GetComponent<EyesBlinking>();
 
@@ -175,7 +175,7 @@ public class UserLoginSignupManager : MonoBehaviour
     }
 
 
-    void CheckForAutoLogin()
+    public void CheckForAutoLogin()
     {
         // If already logged in than Return
         if (ConstantsHolder.loggedIn)

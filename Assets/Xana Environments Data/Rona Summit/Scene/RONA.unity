@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+  m_AmbientSkyColor: {r: 0.8235294, g: 0.8235294, b: 0.8235294, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -581,7 +581,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 117053445}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.985694, y: 2.4820676, z: -3.4878461}
+  m_LocalPosition: {x: 15.985694, y: 2.5420675, z: -3.4878461}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -605,7 +605,7 @@ Transform:
   - {fileID: 948343795}
   - {fileID: 1156305456}
   - {fileID: 1616377387}
-  m_Father: {fileID: 1430014858}
+  m_Father: {fileID: 2034231893}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &204485321
@@ -1847,14 +1847,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 600898115}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.06, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1471154993}
   - {fileID: 731047633}
   - {fileID: 1117198160}
-  m_Father: {fileID: 1430014858}
+  m_Father: {fileID: 2034231893}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &613802584
@@ -4206,52 +4206,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0.1
   m_ShadowAngle: 0
---- !u!1 &1281891916
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1281891917}
-  - component: {fileID: 1281891918}
-  m_Layer: 0
-  m_Name: Assets
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1281891917
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1281891916}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.06, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1281891918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1281891916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd617247844f1b447a0320228ca36a12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  worldJson: '{"SceneObjects":[{"addressableKey":"RNA_Plants","name":"RNA_Plants","position":{"x":7.925060749053955,"y":0.5114457607269287,"z":0.4219549596309662},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":7.906625747680664,"y":0.5714457631111145,"z":5.233306884765625},"m_Extent":{"x":4.351780891418457,"y":0.49026429653167727,"z":6.899964332580566}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.10825491696596146,"y":0.10825491696596146,"z":0.15536192059516908,"w":0.2638263702392578}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RNA_Room01_Spolight","name":"RNA_Room01_Spolight","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":7.652120590209961,"y":2.65480375289917,"z":8.558557510375977},"m_Extent":{"x":3.7121782302856447,"y":0.1789475679397583,"z":3.285604953765869}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.16878825426101685,"y":0.16878825426101685,"z":0.6788089275360107,"w":-0.0018551286775618792}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RNA_Images_Frame","name":"RNA_Images_Frame","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":5.447741508483887,"y":1.3345658779144288,"z":4.249734878540039},"m_Extent":{"x":5.447741508483887,"y":1.2745659351348878,"z":7.100742340087891}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.1220703125,"y":0.1220703125,"z":0.8486117124557495,"w":0.0}},{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.1748046875,"y":0.1748046875,"z":0.50390625,"w":0.0}},{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.12109375,"y":0.12109375,"z":0.0,"w":0.42291757464408877}},{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.12109375,"y":0.12109375,"z":0.8486117124557495,"w":0.1240234375}},{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.12109375,"y":0.12109375,"z":0.0,"w":0.6690113544464111}},{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.12109375,"y":0.12109375,"z":0.0,"w":0.5459644794464111}},{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.1552734375,"y":0.1552734375,"z":0.0,"w":0.26569101214408877}},{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.0771484375,"y":0.0771484375,"z":0.50390625,"w":0.1767578125}},{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.1083984375,"y":0.1083984375,"z":0.0,"w":0.7920582294464111}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RNA_Door_stand","name":"RNA_Door_stand","position":{"x":11.405430793762207,"y":2.9554967880249025,"z":-1.9203611612319947},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":12.659003257751465,"y":3.0154967308044435,"z":0.8968240022659302},"m_Extent":{"x":1.1762442588806153,"y":3.039334297180176,"z":3.6727702617645265}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.2428499311208725,"y":0.2428499311208725,"z":0.26373299956321719,"w":-0.003845134750008583}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RNA_Place_holder","name":"RNA_Place_holder","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":6.126479148864746,"y":0.974458634853363,"z":6.080514907836914},"m_Extent":{"x":6.126479148864746,"y":0.9144586324691773,"z":6.080514907836914}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":false,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RNA_Ceiling_lamp","name":"RNA_Ceiling_lamp","position":{"x":8.727115631103516,"y":2.8134639263153078,"z":0.27648255228996279},"rotation":{"x":2.1855695919725805e-8,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":10.0,"y":10.0,"z":10.0},"objectBound":{"m_Center":{"x":8.727115631103516,"y":2.8734638690948488,"z":4.686184883117676},"m_Extent":{"x":3.950190782546997,"y":0.6632729172706604,"z":6.5721540451049809}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.07644341886043549,"y":0.07644341886043549,"z":0.5777804255485535,"w":0.17153041064739228}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RNA_Logo","name":"RNA_Logo","position":{"x":13.319999694824219,"y":4.789999961853027,"z":0.9115626215934753},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":13.319999694824219,"y":4.849999904632568,"z":0.9115627408027649},"m_Extent":{"x":0.26450926065444949,"y":1.1177380084991456,"z":2.538455009460449}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.27452731132507326,"y":0.27452731132507326,"z":-0.00379023514688015,"w":-0.00379023514688015}}],"summitDomeInfo":{"domeIndex":0}}]}'
-  assetsParent: {fileID: 1281891917}
 --- !u!1 &1319378734
 GameObject:
   m_ObjectHideFlags: 0
@@ -4275,12 +4229,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1319378734}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.1, y: 0, z: 4.48}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 16.1, y: 0.06, z: 4.48}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1430014858}
+  m_Father: {fileID: 2034231893}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1323124927
@@ -4376,12 +4330,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1323124927}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.66, y: -0.049999997, z: 4.23}
+  m_LocalPosition: {x: 7.66, y: 0.010000002, z: 4.23}
   m_LocalScale: {x: 0.9604958, y: 0.9604958, z: 0.9604958}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1892784153}
-  m_Father: {fileID: 1430014858}
+  m_Father: {fileID: 2034231893}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1402454190
@@ -4729,7 +4683,7 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!1 &1430014857
+--- !u!1 &1454546120
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4737,34 +4691,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1430014858}
+  - component: {fileID: 1454546122}
+  - component: {fileID: 1454546121}
   m_Layer: 0
-  m_Name: Structure
+  m_Name: Assets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1430014858
+--- !u!114 &1454546121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454546120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd617247844f1b447a0320228ca36a12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldJson: '{"SceneObjects":[{"addressableKey":"RNA_Plants","name":"RNA_Plants","position":{"x":7.925060749053955,"y":0.5114457607269287,"z":0.4219549596309662},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":7.906625747680664,"y":0.5714457631111145,"z":5.233306884765625},"m_Extent":{"x":4.351780891418457,"y":0.49026429653167727,"z":6.899964332580566}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.10825491696596146,"y":0.10825491696596146,"z":0.15536192059516908,"w":0.2638263702392578}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RNA_Room01_Spolight","name":"RNA_Room01_Spolight","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":7.652120590209961,"y":2.65480375289917,"z":8.558557510375977},"m_Extent":{"x":3.7121782302856447,"y":0.1789475679397583,"z":3.285604953765869}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.16878825426101685,"y":0.16878825426101685,"z":0.6788089275360107,"w":-0.0018551286775618792}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RNA_Images_Frame","name":"RNA_Images_Frame","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":5.447741508483887,"y":1.3345658779144288,"z":4.249734878540039},"m_Extent":{"x":5.447741508483887,"y":1.2745659351348878,"z":7.100742340087891}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.1220703125,"y":0.1220703125,"z":0.8486117124557495,"w":0.0}},{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.1748046875,"y":0.1748046875,"z":0.50390625,"w":0.0}},{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.12109375,"y":0.12109375,"z":0.0,"w":0.42291757464408877}},{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.12109375,"y":0.12109375,"z":0.8486117124557495,"w":0.1240234375}},{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.12109375,"y":0.12109375,"z":0.0,"w":0.6690113544464111}},{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.12109375,"y":0.12109375,"z":0.0,"w":0.5459644794464111}},{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.1552734375,"y":0.1552734375,"z":0.0,"w":0.26569101214408877}},{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.0771484375,"y":0.0771484375,"z":0.50390625,"w":0.1767578125}},{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.1083984375,"y":0.1083984375,"z":0.0,"w":0.7920582294464111}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RNA_Door_stand","name":"RNA_Door_stand","position":{"x":11.405430793762207,"y":2.9554967880249025,"z":-1.9203611612319947},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":12.659003257751465,"y":3.0154967308044435,"z":0.8968240022659302},"m_Extent":{"x":1.1762442588806153,"y":3.039334297180176,"z":3.6727702617645265}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.2428499311208725,"y":0.2428499311208725,"z":0.26373299956321719,"w":-0.003845134750008583}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RNA_Place_holder","name":"RNA_Place_holder","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":6.126479148864746,"y":0.974458634853363,"z":6.080514907836914},"m_Extent":{"x":6.126479148864746,"y":0.9144586324691773,"z":6.080514907836914}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":false,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RNA_Ceiling_lamp","name":"RNA_Ceiling_lamp","position":{"x":8.727115631103516,"y":2.8134639263153078,"z":0.27648255228996279},"rotation":{"x":2.1855695919725805e-8,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":10.0,"y":10.0,"z":10.0},"objectBound":{"m_Center":{"x":8.727115631103516,"y":2.8734638690948488,"z":4.686184883117676},"m_Extent":{"x":3.950190782546997,"y":0.6632729172706604,"z":6.5721540451049809}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.07644341886043549,"y":0.07644341886043549,"z":0.5777804255485535,"w":0.17153041064739228}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RNA_Logo","name":"RNA_Logo","position":{"x":13.319999694824219,"y":4.789999961853027,"z":0.9115626215934753},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":13.319999694824219,"y":4.849999904632568,"z":0.9115627408027649},"m_Extent":{"x":0.26450926065444949,"y":1.1177380084991456,"z":2.538455009460449}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"subWorldComponent":false,"subWorldIndex":-1,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":0.27452731132507326,"y":0.27452731132507326,"z":-0.00379023514688015,"w":-0.00379023514688015}}],"summitDomeInfo":{"domeIndex":0}}]}'
+  assetsParent: {fileID: 1454546122}
+--- !u!4 &1454546122
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1430014857}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.06, z: 0}
+  m_GameObject: {fileID: 1454546120}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 543450652527331365}
-  - {fileID: 543450652480021397}
-  - {fileID: 600898116}
-  - {fileID: 1323124932}
-  - {fileID: 117053446}
-  - {fileID: 1319378735}
+  m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1457173590
 GameObject:
@@ -6124,6 +6087,43 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0.1
   m_ShadowAngle: 0
+--- !u!1 &2034231892
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2034231893}
+  m_Layer: 0
+  m_Name: Structure
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2034231893
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034231892}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 543450652527331365}
+  - {fileID: 543450652480021397}
+  - {fileID: 600898116}
+  - {fileID: 1323124932}
+  - {fileID: 117053446}
+  - {fileID: 1319378735}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2047555340
 GameObject:
   m_ObjectHideFlags: 0
@@ -6645,13 +6645,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148227045679}
-  m_LocalRotation: {x: 0.000000021855696, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.150615, y: 1.7941465, z: 0.7916348}
+  m_LocalRotation: {x: 0.000000021855696, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8.150615, y: 1.8541465, z: 0.7916348}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5827575066326718143}
-  m_Father: {fileID: 1430014858}
+  m_Father: {fileID: 2034231893}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &543450652527331365
@@ -6661,13 +6661,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148054151839}
-  m_LocalRotation: {x: 0.000000021855696, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.000000021855696, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.06, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1387171882411759138}
-  m_Father: {fileID: 1430014858}
+  m_Father: {fileID: 2034231893}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &919132148054151839

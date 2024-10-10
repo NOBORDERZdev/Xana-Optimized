@@ -8,11 +8,13 @@ public class XSummitBgChange : MonoBehaviour
     public Sprite XSummitBackgroung;
     public Sprite XanaSummitBackgroung;
     public GameObject BackGroundSprite;
+    public bool isStartingSplash;
 
     void Start()
     {
-        
-        ChangeSummitBG();
+        if (!isStartingSplash) {
+            ChangeSummitBG();
+        }
     }
     public void ChangeSummitBG()
     {
