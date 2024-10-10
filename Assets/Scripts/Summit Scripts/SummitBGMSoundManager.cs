@@ -13,16 +13,18 @@ public class SummitBGMSoundManager : MonoBehaviour
     private void OnEnable()
     {
         BuilderEventManager.AfterPlayerInstantiated += StartBGMSound;
-        GamePlayButtonEvents.OnExitButtonXANASummit += StopBGM;
+        //GamePlayButtonEvents.OnExitButtonXANASummit += StopBGM;
         BuilderEventManager.loadBGMDirectly += SetBGMDirectly;
         BuilderEventManager.StopBGM += StopBGM;
+        BuilderEventManager.ResetSummit += StopBGM;
     }
 
     private void OnDisable()
     {
         BuilderEventManager.AfterPlayerInstantiated -= StartBGMSound;
-        GamePlayButtonEvents.OnExitButtonXANASummit -= StopBGM;
+        //GamePlayButtonEvents.OnExitButtonXANASummit -= StopBGM;
         BuilderEventManager.StopBGM -= StopBGM;
+        BuilderEventManager.ResetSummit -= StopBGM;
     }
 
     void StartBGMSound()
@@ -66,6 +68,11 @@ public class SummitBGMSoundManager : MonoBehaviour
 
     void StopBGM()
     {
+        if (!audioSource)
+        {
+            Debug.Log("<color=red> Audio Source is null <color>");
+            return;
+        }
         audioSource.Stop();
         audioSource.clip = null;
         Destroy(clip); 

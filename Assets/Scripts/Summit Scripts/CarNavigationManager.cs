@@ -9,50 +9,52 @@ using UnityEngine.AI;
 
 public class CarNavigationManager : MonoBehaviour
 {
-
-    public static CarNavigationManager instance;
-    
-  
+    //Public Variables
+    public static CarNavigationManager CarNavigationInstance;
+    public Action OnExitpress;
+    public Action OnCancelPress;
     public Dictionary<int, PhotonView> Cars = new Dictionary<int, PhotonView>();
-    
+
+    //Private variables
     [SerializeField]
     private GameObject CarCanvas;
 
-    public Action onExitpress,onCancelPress;
-  
-
     private void Awake()
     {
-        instance = this;
+        CarNavigationInstance = this;
     }
 
     private void Start()
     {
-       
-       SummitEntityManager.instance.InstantiateCAR();
-      /*  yield return new WaitForSeconds(2f);
-        MutiplayerController.instance.ADDReference?.Invoke();*/
+
+        SummitEntityManager.instance.InstantiateCAR();
+        if (SummitCarUIHandler.SummitCarUIHandlerInstance)
+        {
+            CarCanvas = SummitCarUIHandler.SummitCarUIHandlerInstance.CarCanvas;
+            SummitCarUIHandler.SummitCarUIHandlerInstance.ExitButton.onClick.RemoveAllListeners();
+            SummitCarUIHandler.SummitCarUIHandlerInstance.ExitButton.onClick.AddListener(ExitCar);
+        }
     }
 
     public void StopCar(GameObject car)
     {
-       
+
         StartCoroutine(WaitAtCarStop(car));
 
-        
+
     }
-    public IEnumerator TPlayer(GameObject Car, GameObject Players ,CarStopTrigger triger)
+    public IEnumerator TPlayer(GameObject Car, GameObject Players, CarStopTrigger triger)
     {
-         
-            yield return new WaitForSeconds(1.5f);
+
+        yield return new WaitForSeconds(1.5f);
         var car = Car.GetComponent<SplineFollower>();
-       if(car.driverseatempty)
+        if (car.driverseatempty)
         {
             Players.GetComponent<SummitPlayerRPC>().EnterCar(car.view.ViewID, true);
             triger.Pop();
             yield break;
         }
-       if(car.pasengerseatemty )
+        if (car.pasengerseatemty)
         {
             Players.GetComponent<SummitPlayerRPC>().EnterCar(car.view.ViewID, false);
             triger.Pop();
@@ -87,12 +89,12 @@ public class CarNavigationManager : MonoBehaviour
 
     public void ExitCar()
     {
-       onExitpress?.Invoke();
+        OnExitpress?.Invoke();
 
     }
     public void CancelExitCar()
     {
-        onCancelPress?.Invoke();
+        OnCancelPress?.Invoke();
 
     }
 
@@ -100,9 +102,9 @@ public class CarNavigationManager : MonoBehaviour
     {
         StartCoroutine(WaitAtCarStop(Cars[carID].gameObject));
     }
- 
+
     public void EnterCar(int id, bool isDriver)
     {
-      
+
     }
 }

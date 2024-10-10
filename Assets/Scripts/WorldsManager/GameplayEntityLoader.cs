@@ -21,6 +21,7 @@ using PhysicsCharacterController;
 
 public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
+    public StayTimeTrackerForSummit StayTimeTrackerForSummit;
     public bool isAlreadySpawned;
     public Camera MiniMapCamera; 
     [Header("singleton object")]
@@ -79,6 +80,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     [SerializeField] PenguinLookPointTracker penguinLook;
     [SerializeField] ReferenceForPenguinAvatar referenceForPenguin;
     [SerializeField] RaffleTicketHandler _raffleTickets;
+
+    [Header("XANA Summit Performer AI")]
+    public GameObject[] AIAvatarPrefab;
 
     private void Awake()
     {
@@ -502,6 +506,17 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         // Firebase Event for Join World
         GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
+        if(ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
+        {
+            ReferencesForGamePlay.instance.m_34player.AddComponent<SummitAnalyticsTrigger>();
+            if (StayTimeTrackerForSummit != null)
+            {
+                string eventName = "XS_TV_" + StayTimeTrackerForSummit.SummitAreaName;
+                GlobalConstants.SendFirebaseEventForSummit(eventName);
+                StayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = true;
+                StayTimeTrackerForSummit.StartTrackingTime();
+            }
+        }
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
         yield return null;
         /// <summary>

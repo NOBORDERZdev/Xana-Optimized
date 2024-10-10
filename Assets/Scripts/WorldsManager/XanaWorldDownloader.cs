@@ -444,6 +444,11 @@ public class XanaWorldDownloader : MonoBehaviour
 
     void ResetDisplayDownloadText()
     {
+        if (!assetDownloadingText)
+        {
+            Debug.LogError("<color=red> Textmesh is Destroyed </color>");
+            return;
+        }
         assetDownloadingText.text = string.Empty;
         assetDownloadingTextPotrait.text = string.Empty;
         assetDownloadingText.transform.parent.gameObject.SetActive(false);
@@ -498,7 +503,7 @@ public class XanaWorldDownloader : MonoBehaviour
         newObj.SetActive(_itemData.isActive);
         ApplyLightmapData(_itemData.lightmapData, newObj);
         AddObjectInPool(downloadKey, newObj);
-        //AssignDomeId(newObj, _itemData);
+        AssignDomeId(newObj, _itemData);
 
        
 
@@ -534,8 +539,8 @@ public class XanaWorldDownloader : MonoBehaviour
     {
         if (_itemData.summitDomeInfo.domeIndex != 0)
         {
-            DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().domeId = _itemData.summitDomeInfo.domeIndex;
-            DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().textMeshPro.text = _itemData.summitDomeInfo.domeIndex.ToString();
+            DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().DomeId = _itemData.summitDomeInfo.domeIndex;
+            //DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().textMeshPro.text = _itemData.summitDomeInfo.domeIndex.ToString();
 
         }
 

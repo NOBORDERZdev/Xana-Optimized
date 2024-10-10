@@ -12,14 +12,12 @@ public class XANASummitDataContainer : ScriptableObject
     public GameObject maleAIAvatar;
     public GameObject femaleAIAvatar;
     public string[] avatarJson;
+    public DomeData summitData=new DomeData();
+    public AIData aiData=new AIData();
+    public static string FixedAvatarJson;
+    public static Stack<StackInfoWorld> LoadedScenesInfo = new Stack<StackInfoWorld>();
 
     string[] s ={ "ZONE-X", "ZONE X Musuem", "Xana Lobby", "XANA Festival Stage", "Xana Festival", "THE RHETORIC STAR", "ROCK’N ROLL CIRCUS", "MASAMI TANAKA", "Koto-ku Virtual Exhibition", "JJ MUSEUM", "HOKUSAI KATSUSHIKA", "Green Screen Studio", "GOZANIMATOR HARUNA GOUZU GALLERY 2021", "Genesis ART Metaverse Museum", "FIVE ELEMENTS", "DEEMO THE MOVIE Metaverse Museum", "D_Infinity_Labo", "BreakingDown Arena", "Astroboy x Tottori Metaverse Museum" };
-
-    public DomeData summitData=new DomeData();
-
-    public AIData aiData=new AIData();
-
-    public static string fixedAvatarJson;
 
     //private void OnEnable()
     //{
@@ -120,6 +118,45 @@ public class XANASummitDataContainer : ScriptableObject
         public int AvatarIndex;
         public string Avatarjson;
         public int maxPlayer;
+        public List<SubWorldInfo> SubWorlds;
+        public bool isSubWorld;
+    }
+
+    [System.Serializable]
+    public class SubWorldInfo
+    {
+        public bool builderWorld;
+        public bool officialWorld;
+        public OfficialWorldDetails selectWorld;
+        public string builderSubWorldId;
+    }
+
+    [System.Serializable]
+    public class OfficialWorldDetails
+    {
+        public int id;
+        public string label;
+        public string icon;
+        public int userLimit;
+    }
+
+
+    [System.Serializable]
+    public class StackInfoWorld
+    {
+        public string id;
+        public string name;
+        public int user_limit;
+        public string thumbnail;
+        public string banner;
+        public string thumbnail_new;
+        public string description;
+        public string creator;
+        public bool isBuilderWorld;
+        public int domeId;
+        public bool haveSubWorlds;
+        public bool isFromSummitWorld;
+        public Vector3[] playerTrasnform;
     }
     #endregion
 

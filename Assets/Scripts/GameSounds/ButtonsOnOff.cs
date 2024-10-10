@@ -9,8 +9,8 @@ public class ButtonsOnOff : MonoBehaviour
     public GameObject otherButton;
     public void ClickHidebtnOn()
     {
-       otherButton.SetActive(true);
-       this.gameObject.SetActive(false);
+        otherButton.SetActive(true);
+        this.gameObject.SetActive(false);
         ReferencesForGamePlay.instance.hiddenButtonDisable();
         BuilderEventManager.UIToggle?.Invoke(true);
     }
@@ -20,14 +20,15 @@ public class ButtonsOnOff : MonoBehaviour
         otherButton.SetActive(false);
         ReferencesForGamePlay.instance.hiddenButtonEnable();
         BuilderEventManager.UIToggle?.Invoke(false);
+
     }
 
-    
+
 
     public void HideButtonsForFreeCam(bool b)
     {
         otherButton.GetComponent<Button>().interactable = !b;
-        if(GetComponent<Button>())
+        if (GetComponent<Button>())
             GetComponent<Button>().interactable = !b;
 
         BuilderEventManager.UIToggle?.Invoke(b);
@@ -40,7 +41,7 @@ public class ButtonsOnOff : MonoBehaviour
             else
                 ReferencesForGamePlay.instance.isHidebtn = false;
 
-           
+
             //ClickHidebtnOn();
             ReferencesForGamePlay.instance.hiddenButtonDisable();
             ReferencesForGamePlay.instance.JoyStick.SetActive(true);
@@ -48,11 +49,20 @@ public class ButtonsOnOff : MonoBehaviour
         }
         else
         {
-            if (ReferencesForGamePlay.instance.isHidebtn) {
+            if (ReferencesForGamePlay.instance.isHidebtn)
+            {
                 //ClickHidebtnOff();
                 ReferencesForGamePlay.instance.hiddenButtonEnable();
                 ReferencesForGamePlay.instance.JoyStick.GetComponent<CanvasGroup>().alpha = 1f;
             }
         }
+    }
+    public void EnableSelfieButton()
+    {
+        ReferencesForGamePlay.instance.hiddenBtnObjects[3].SetActive(false);
+    }
+    public void DisableSelfieButton()
+    {
+        ReferencesForGamePlay.instance.hiddenBtnObjects[3].SetActive(true);
     }
 }

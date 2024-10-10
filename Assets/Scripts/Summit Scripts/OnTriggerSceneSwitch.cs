@@ -1,42 +1,52 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
+
 
 public class OnTriggerSceneSwitch : MonoBehaviour
 {
-    public int domeId;
+    public int DomeId;
     [Tooltip("This only require when dome id is set to -1")]
-    public string sceneName;
+    public string WorldId;
+    public TMPro.TextMeshPro DomeIndexText;
 
-    public TMPro.TextMeshPro textMeshPro;
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (PhotonNetwork.InRoom)
-    //    {
-    //        if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
-    //        {
-    //            if (ConstantsHolder.MultiSectionPhoton)
-    //            {
-    //                ConstantsHolder.DiasableMultiPartPhoton = true;
-    //            }
-    //            if (domeId == -1 && !string.IsNullOrEmpty(sceneName))
-    //                TriggerSceneLoading(sceneName);
-    //            else
-    //                TriggerSceneLoading();
-    //        }
-    //    }
-    //}
 
-    //void TriggerSceneLoading()
-    //{
-    //    GameplayEntityLoader.instance.AssignRaffleTickets(domeId);
-    //    ConstantsHolder.domeId = domeId;
-    //    BuilderEventManager.LoadNewScene?.Invoke(domeId, transform.GetChild(0).transform.position);
-    //}
+    private bool alreadyTriggered;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine && !alreadyTriggered)
+            {
+                alreadyTriggered = true;
+                if (ConstantsHolder.MultiSectionPhoton)
+                {
+                    ConstantsHolder.DiasableMultiPartPhoton = true;
+                }
+                if (DomeId == -1 && !string.IsNullOrEmpty(WorldId))
+                    TriggerSceneLoading(WorldId);
+                else
+                    TriggerSceneLoading();
 
-    //void TriggerSceneLoading(string sceneName)
-    //{
-    //    BuilderEventManager.LoadSceneByName?.Invoke(sceneName, transform.GetChild(0).transform.position);
-    //}
+                DisableCollider();
+            }
+        }
+    }
+
+    void TriggerSceneLoading()
+    {
+        GameplayEntityLoader.instance.AssignRaffleTickets(DomeId);
+        BuilderEventManager.LoadNewScene?.Invoke(DomeId, transform.GetChild(0).transform.position);
+    }
+
+    void TriggerSceneLoading(string worldId)
+    {
+        BuilderEventManager.LoadSceneByName?.Invoke(worldId, transform.GetChild(0).transform.position);
+    }
+
+    async void DisableCollider()
+    {
+        await Task.Delay(2000);
+        alreadyTriggered = false;
+    }
 }

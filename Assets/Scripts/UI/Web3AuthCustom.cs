@@ -41,7 +41,6 @@ public class Web3AuthCustom : MonoBehaviour
 
     private void Awake()
     {
-
         Instance = this;
         //if(Instance==null)
         //{

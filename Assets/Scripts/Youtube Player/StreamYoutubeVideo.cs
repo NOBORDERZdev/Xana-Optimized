@@ -85,7 +85,7 @@ public class StreamYoutubeVideo : MonoBehaviour
         mediaPlayer.OpenMedia(MediaPathType.AbsolutePathOrURL, streamAbleUrl, true);
         mediaPlayer.Play();
         liveVideoPlay.Invoke();
-        BuilderEventManager.YoutubeVideoLoadedCallback?.Invoke(id);
+        //BuilderEventManager.YoutubeVideoLoadedCallback?.Invoke(id);
     }
 
     private void PlayPrerecordedVideo()

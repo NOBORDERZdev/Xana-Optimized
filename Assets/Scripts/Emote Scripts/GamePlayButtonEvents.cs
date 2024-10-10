@@ -92,7 +92,7 @@ public class GamePlayButtonEvents : MonoBehaviour
 
     public void OnExitButtonClick()
     {
-        if (ConstantsHolder.isFromXANASummit || ConstantsHolder.loadedScenes.Count>0)
+        if (ConstantsHolder.isFromXANASummit || XANASummitDataContainer.LoadedScenesInfo.Count>0)
             OnExitButtonXANASummit?.Invoke();
         else
             OnExitButton?.Invoke();

@@ -46,7 +46,7 @@ public class BuilderMapDownload : MonoBehaviour
     internal LevelData levelData;
     private AISkyboxItem aiSkyboxItem;
     #endregion
-    internal string response;
+    //internal string response;
 
     #region UNITY_METHOD
     private void OnEnable()
@@ -102,11 +102,11 @@ public class BuilderMapDownload : MonoBehaviour
             }
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
-                response = www.downloadHandler.text;
+                //response = www.downloadHandler.text;
             }
             else
             {
-                response = www.downloadHandler.text;
+                //response = www.downloadHandler.text;
                 serverData = JsonUtility.FromJson<ServerData>(www.downloadHandler.text);
                 BuilderData.mapData = serverData;
                 StartCoroutine(PopulateLevel());
@@ -160,7 +160,7 @@ public class BuilderMapDownload : MonoBehaviour
                 //Debug.Log("Failed to load json....");
             }));
         }
-
+        
         GamificationComponentData.instance.previousSkyID = levelData.skyProperties.skyId;
         if (levelData.skyProperties.skyId != -1)
         {
@@ -196,7 +196,6 @@ public class BuilderMapDownload : MonoBehaviour
         //Debug.LogError("Map is downloaed");
         if (BuilderAssetDownloader.isPostLoading)
         {
-            //Debug.LogError("Map is downloaed start post loading");
             BuilderEventManager.AfterMapDataDownloaded?.Invoke();
         }
         else
@@ -836,7 +835,10 @@ public class BuilderMapDownload : MonoBehaviour
     void LoadAddressableSceneAfterDownload()
     {
         if (SceneManager.sceneCount > 1 || ConstantsHolder.isFromXANASummit)
+        {
+            Photon.Pun.Demo.PunBasics.MutiplayerController.instance.Connect(ConstantsHolder.xanaConstants.EnviornmentName);
             return;
+        }
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
         //if (ConstantsHolder.xanaConstants.isFromXanaLobby)
         //{

@@ -149,7 +149,6 @@ Transform:
   - {fileID: 4144859876037383123}
   - {fileID: 1886550283320572105}
   - {fileID: 4392181494799869767}
-  - {fileID: 5925535674172974098}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -419,6 +418,18 @@ PrefabInstance:
       value: SummitVideoPlayerHandler
       objectReference: {fileID: 0}
     - target: {fileID: 2099397830385648845, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2099397830385648845, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_SkipOnDrop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2099397830385648845, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2099397830385648845, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: m_TargetMaterialRenderer
       value: 
       objectReference: {fileID: 2774705122971356199}
@@ -550,7 +561,7 @@ MonoBehaviour:
   PreRecVideoScreen: {fileID: 4462663705397575996}
   LiveVideoPlayerScreen: {fileID: 4043619279739366116}
   AndroidLiveVideoMesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
-  IOSLiveVideoMesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  IOSLiveVideoMesh: {fileID: 1300163662221801957, guid: 2b917a4e13a20ed43909646162a29795, type: 3}
 --- !u!114 &2904817340921780865 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2609470930501225634, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
@@ -676,73 +687,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b073d5ec65346a640ac928e9f88b7cd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &6174718971367998457
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 3446975444006253509}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: e847c7234fe71bb4d9028dd3afb4aa9b, type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e847c7234fe71bb4d9028dd3afb4aa9b, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 7.928103
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e847c7234fe71bb4d9028dd3afb4aa9b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 150.65263
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e847c7234fe71bb4d9028dd3afb4aa9b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.0547
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e847c7234fe71bb4d9028dd3afb4aa9b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -82.03862
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e847c7234fe71bb4d9028dd3afb4aa9b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9135455
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e847c7234fe71bb4d9028dd3afb4aa9b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e847c7234fe71bb4d9028dd3afb4aa9b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.40673664
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e847c7234fe71bb4d9028dd3afb4aa9b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e847c7234fe71bb4d9028dd3afb4aa9b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e847c7234fe71bb4d9028dd3afb4aa9b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 48
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e847c7234fe71bb4d9028dd3afb4aa9b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: e847c7234fe71bb4d9028dd3afb4aa9b, type: 3}
-      propertyPath: m_Name
-      value: Screen_IOS_Live
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: e847c7234fe71bb4d9028dd3afb4aa9b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e847c7234fe71bb4d9028dd3afb4aa9b, type: 3}
---- !u!4 &5925535674172974098 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e847c7234fe71bb4d9028dd3afb4aa9b, type: 3}
-  m_PrefabInstance: {fileID: 6174718971367998457}
-  m_PrefabAsset: {fileID: 0}

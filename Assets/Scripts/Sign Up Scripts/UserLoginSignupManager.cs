@@ -214,25 +214,10 @@ public class UserLoginSignupManager : MonoBehaviour
     }
     void AutoLogin()
     {
-        //if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
-        //{
-        //    //Debug.LogError("Email login .... ");
-        //    //MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
-        //    //LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
-        //    //StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), (isSucess) =>
-        //    //{
-        //    //    //write if you want something on sucessfull login
-        //    //}));
-        //}
-        //else if (PlayerPrefs.GetInt("WalletLogin") == 1)
-        //{
-            ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
-            ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
-            ConstantsHolder.isWalletLogin = true;
-            LoggedInAsGuest = false;
-            WalletAutoLogin();
-            //GetUserCoinsAfterLogin();
-        //}
+        ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
+        ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
+        ConstantsHolder.isWalletLogin = true;
+        WalletAutoLogin();
     }
     #region SignUp Functions 
 
@@ -409,7 +394,7 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
 
-        if(ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
         {
             GetUserClothData();
             return;
@@ -593,7 +578,10 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
         SubmitSetDeviceToken();
-
+        if (signUpOrloginSelectionPanel.activeInHierarchy)
+        {
+            signUpOrloginSelectionPanel.SetActive(false);
+        }
         if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
         {
             GetUserClothData();
@@ -997,6 +985,7 @@ public class UserLoginSignupManager : MonoBehaviour
             VR_UImanager.instance.EnableUIElements();
             //DynamicEventManager.deepLink?.Invoke("come from Guest Registration");
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, displayrname);
+            ConstantsHolder.userName= displayrname;
             NameScreenNextButton.interactable = true;
             NameScreenLoader.SetActive(false);
             enterNamePanel.SetActive(false);
@@ -1342,7 +1331,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
         request.Dispose();
     }
-   
+
     void CheckCameraMan(string email)
     {
         if (email.Contains("xanacameraman@yopmail.com"))
@@ -1712,6 +1701,7 @@ public class UserLoginSignupManager : MonoBehaviour
                         ConstantsHolder.userId = myObject1.data.user.id.ToString();
                         UserPassManager.Instance.GetGroupDetailsForComingSoon();
                         PlayerPrefs.SetInt("FirstTime", 1);
+                        ConstantsHolder.userName= PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
                         PlayerPrefs.Save();
                         LoadSummit();
 
@@ -2308,6 +2298,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void RequestUpdateUserProfilePic(string user_avatar, string callingFrom)
     {
+        if(UserLoginSignupManager.instance!=null)
         StartCoroutine(IERequestUpdateUserProfilePic(user_avatar, callingFrom));
     }
 

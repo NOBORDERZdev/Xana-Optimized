@@ -488,7 +488,7 @@ namespace Photon.Pun.Demo.PunBasics
                 playerobjectRoom = new List<GameObject>(playerobjects);
                 playerobjects.Clear();
                 JoinLobby(CurrLobbyName);
-                CarNavigationManager.instance.Cars.Clear();
+                CarNavigationManager.CarNavigationInstance.Cars.Clear();
             }
         }
 

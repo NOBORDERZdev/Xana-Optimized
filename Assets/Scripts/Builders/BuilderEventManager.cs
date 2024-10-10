@@ -141,5 +141,6 @@ public static class BuilderEventManager
     public static Action<VideoClip,Vector3> spaceXActivated;
     public static Action<string> loadBGMDirectly;
     public static Action StopBGM;
+    public static Action ResetSummit;
 
 }

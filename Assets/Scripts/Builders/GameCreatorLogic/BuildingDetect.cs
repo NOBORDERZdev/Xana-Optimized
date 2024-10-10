@@ -437,7 +437,7 @@ public class BuildingDetect : MonoBehaviour
     {
         print("Calling Routine" + _timer);
         yield return new WaitForSeconds(0.2f);
-        BuilderEventManager.SpecialItemPlayerPropertiesUpdate?.Invoke(powerProviderHeight, powerProviderSpeed);
+        BuilderEventManager.SpecialItemPlayerPropertiesUpdate?.Invoke(powerProviderHeight / 4, powerProviderSpeed / 6);
         //_specialEffects.gameObject.SetActive(true);
         ApplySuperMarioEffect(true);
         powerUpCurTime = 0;

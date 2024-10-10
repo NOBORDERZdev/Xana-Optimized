@@ -45,11 +45,11 @@ public class DomeMinimapDataHolder : MonoBehaviour
     }
     void UpdateDomeList(OnTriggerSceneSwitch domeObj)
     {
-        if (!_allInitDomes.ContainsKey(domeObj.domeId))
-            _allInitDomes.Add(domeObj.domeId, domeObj.transform);
+        if (!_allInitDomes.ContainsKey(domeObj.DomeId))
+            _allInitDomes.Add(domeObj.DomeId, domeObj.transform);
         else
         {
-            _allInitDomes[domeObj.domeId]= domeObj.transform;
+            _allInitDomes[domeObj.DomeId]= domeObj.transform;
         }
     }
     public async Task GetVisitedDomeData()

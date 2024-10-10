@@ -432,8 +432,8 @@ public class AvatarController : MonoBehaviour
                 return;
             else if(ConstantsHolder.isFixedHumanoid)
             {
-                _CharacterData = _CharacterData.CreateFromJSON(XANASummitDataContainer.fixedAvatarJson);
-                clothJson = XANASummitDataContainer.fixedAvatarJson;
+                _CharacterData = _CharacterData.CreateFromJSON(XANASummitDataContainer.FixedAvatarJson);
+                clothJson = XANASummitDataContainer.FixedAvatarJson;
             }
             else if (_data != null)
                 _CharacterData = _data;
@@ -470,7 +470,7 @@ public class AvatarController : MonoBehaviour
                             if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName) && 
                                 !item.ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
                             {
-
+                               
                                 HashSet<string> itemTypes = new HashSet<string> { "Legs", "Chest", "Feet", "Hair", "EyeWearable", "Glove", "Chain" };
                                 if (itemTypes.Any(item => type.Contains(item)))
                                 {
