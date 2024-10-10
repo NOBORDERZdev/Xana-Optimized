@@ -50,7 +50,7 @@ public class PartyTimerManager : MonoBehaviourPunCallbacks
         {
             double elapsedTime = PhotonNetwork.Time - startTime;
             float currentTime = (float)(timerDuration - elapsedTime);
-            if (currentTime <= 0 && !ReferencesForGamePlay.instance.isMatchingTimerFinished)
+            if (currentTime <= 0 && !ReferencesForGamePlay.instance.isMatchingTimerFinished || PhotonNetwork.CurrentRoom.MaxPlayers==1)
             {
                
                 currentTime = 0;
