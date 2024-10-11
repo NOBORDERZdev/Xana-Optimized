@@ -92,6 +92,7 @@ public class GamePlayButtonEvents : MonoBehaviour
 
     public void OnExitButtonClick()
     {
+        EmoteReactionUIHandler.lastEmotePlayed = null;
         if (ConstantsHolder.isFromXANASummit || XANASummitDataContainer.LoadedScenesInfo.Count>0)
             OnExitButtonXANASummit?.Invoke();
         else
