@@ -51,6 +51,7 @@ public class EmoteSelectionBtn : MonoBehaviour
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.AnimationDataUpdated += LoadAnimData;
 
         //LoadAnimData(transform.GetSiblingIndex());
+        resetBtn.gameObject.SetActive(true);
     }
     public void OnDisable()
     {
