@@ -790,6 +790,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void InstantiatePlayerAvatar(Vector3 pos)
     {
+        if (ScreenOrientationManager._instance != null && ScreenOrientationManager._instance.isPotrait)
+        {
+            ScreenOrientationManager._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
+        }
         if (ConstantsHolder.isPenguin || ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
             DashButton.SetActive(false);
