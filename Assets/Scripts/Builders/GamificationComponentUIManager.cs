@@ -86,15 +86,14 @@ public class GamificationComponentUIManager : MonoBehaviour
     }
 
     public bool isPotrait;
+
     private void PositionUpdateOnOrientationChange()
     {
-        return;
         float screenWidth = Screen.width;
-        float screenHeight = Screen.height;
 
-        NinjaMotionUIButtonPanel2.transform.position = new Vector3(screenWidth, 0, 0);
+        //NinjaMotionUIButtonPanel2.transform.position = new Vector3(screenWidth, 0, 0);
         ThowThingsUIButtonPanel2.transform.position = new Vector3(screenWidth, 0, 0);
-        NinjaMotionUIButtonPanel.transform.position = new Vector3(screenWidth, 0, 0);
+        //NinjaMotionUIButtonPanel.transform.position = new Vector3(screenWidth, 0, 0);
         ThowThingsUIButtonPanel.transform.position = new Vector3(screenWidth, 0, 0);
 
         if (isPotrait)
@@ -1133,7 +1132,6 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     void ChangeNinja_ThrowUIPosition(float value, bool state)
     {
-        return;
         NinjaMotionUIButtonPanel.transform.DOKill();
         ThowThingsUIButtonPanel.transform.DOKill();
         NinjaMotionUIButtonPanel2.transform.DOKill();
