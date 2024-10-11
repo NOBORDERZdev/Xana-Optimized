@@ -526,6 +526,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                     else
                     {
                         // Valid spawn point found
+
+                        // Some assets are not yet loaded at this time.
+                        // The ray fails to detect those objects and the player spawns inside them.
+                        // https://www.notion.so/noborderz/SUGIZO-world-spawn-and-collider-missing-issue-e9538161b2d94f298c7b9bfa5b288cf4?pvs=4
                         spawnPoint = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
                         validSpawnPointFound = true;
                     }
@@ -1664,6 +1668,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(false);
         ReferencesForGamePlay.instance.XANAPartyWaitingPanel.SetActive(false);
+        IsJoinSummitWorld = false;
 
         ConstantsHolder.isFixedHumanoid = false;
         ConstantsHolder.isPenguin = false;

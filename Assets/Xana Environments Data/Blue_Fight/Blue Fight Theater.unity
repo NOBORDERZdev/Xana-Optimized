@@ -2290,7 +2290,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1133872085}
   - component: {fileID: 1133872087}
-  - component: {fileID: 1133872086}
+  - component: {fileID: 1133872088}
   m_Layer: 9
   m_Name: 'Theater Spawn '
   m_TagString: Untagged
@@ -2315,29 +2315,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1133872086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1133872084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83db127d742d5d7458132c511b0de616, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DomeId: -1
-  WorldIdTestnet: 
-  WorldIdMainnet: 6906
-  textMeshPro: {fileID: 0}
-  LoadDirectly: 1
-  LoadingFromSummitWorld: 0
-  HaveSubworlds: 0
-  isPenpenzMiniGame: 0
-  WorldId: 
-  _domeType: 0
-  _domeCategory: 0
 --- !u!65 &1133872087
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2351,6 +2328,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.7091722, y: 1.0357326, z: 1.462095}
   m_Center: {x: 0.014252186, y: 0.55616707, z: 0.030029655}
+--- !u!114 &1133872088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133872084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f661dc709949441b83b0e00128cf55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1143431368
 GameObject:
   m_ObjectHideFlags: 0
