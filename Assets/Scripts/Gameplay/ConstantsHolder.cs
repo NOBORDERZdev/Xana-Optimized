@@ -110,6 +110,7 @@ public class ConstantsHolder : MonoBehaviour
     public String MuseumID;
     public string domeCreatorName;
     public bool isSoftBankGame;
+    public bool isSummitBtnPressed = false;
 
     //For Metabuzz Environments
     public enum ComingFrom

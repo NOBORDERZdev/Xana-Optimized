@@ -92,7 +92,10 @@ public class ServerSideUserDataHandler : MonoBehaviour
                         yield break;
                     }
 
-                    Screen.orientation = ScreenOrientation.Portrait;
+                    if (!ConstantsHolder.xanaConstants.isSummitBtnPressed)
+                    {
+                        Screen.orientation = ScreenOrientation.Portrait;
+                    }
                     loadprevious();
 
                     GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();
