@@ -92,8 +92,12 @@ public class NinjaComponent : ItemComponent
     }
     private void OnDestroy()
     {
-        pc.isNinjaMotion = false;
-        pc.animator.SetBool("isNinjaMotion", false);
+        if (pc.isNinjaMotion)
+        {
+            pc.isNinjaMotion = false;
+            pc.NinjaComponentTimerStart(0);
+            GameplayEntityLoader.instance.DashButton.SetActive(true);
+        }
     }
 
     #endregion
