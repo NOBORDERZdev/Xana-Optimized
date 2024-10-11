@@ -110,6 +110,7 @@ public class ActionManager : MonoBehaviour
     public void StopAnimation()
     {
         IsAnimRunning = false;
+        EmoteReactionUIHandler.lastEmotePlayed = null;
         this.transform.GetComponent<ActionAnimationApplyToPlayer>().StopAnimation();
 
         //Remove emote highlighter when animation stop

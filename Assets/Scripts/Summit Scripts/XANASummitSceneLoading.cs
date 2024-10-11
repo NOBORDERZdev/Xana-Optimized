@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using static XANASummitDataContainer;
 
 public class XANASummitSceneLoading : MonoBehaviour
 {
@@ -249,7 +250,22 @@ public class XANASummitSceneLoading : MonoBehaviour
             GlobalConstants.SendFirebaseEventForSummit(eventName);
             _stayTimeTrackerForSummit.StartTrackingTime();
         }
-
+        // For Single Dome
+        string World = "";
+        if (domeGeneralData.worldType)
+            World = "USER";
+        else if (ConstantsHolder.xanaConstants.IsMuseum)
+            World = "MUSEUM";
+        else
+            World = "ENVIRONMENT";
+        if (domeGeneralData.worldType)
+        {
+            UserAnalyticsHandler.onGetWorldId?.Invoke(domeGeneralData.builderWorldId, World);
+        }
+        else
+        {
+            UserAnalyticsHandler.onGetWorldId?.Invoke(domeGeneralData.worldId, World);
+        }
         if (ReferencesForGamePlay.instance.playerControllerNew.isFirstPerson)
         {
             GamePlayUIHandler.inst.OnSwitchCameraClick();
@@ -366,7 +382,16 @@ public class XANASummitSceneLoading : MonoBehaviour
             SubWorldsHandlerInstance.IsEnteringInSubWorld = false;
             SubWorldsHandlerInstance.CallAnalyticsForSubWorlds();
         }
+        //For Subworlds
+        string World = "";
+        if (ConstantsHolder.xanaConstants.isBuilderScene)
+            World = "USER";
+        else if (ConstantsHolder.xanaConstants.IsMuseum)
+            World = "MUSEUM";
+        else
+            World = "ENVIRONMENT";
 
+        UserAnalyticsHandler.onGetWorldId?.Invoke(int.Parse(worldInfo.data.id), World);
         //GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
         if (ActionManager.IsAnimRunning)
         {
@@ -491,6 +516,14 @@ public class XANASummitSceneLoading : MonoBehaviour
             GamePlayUIHandler.inst.OnSwitchCameraClick();
         }
         //GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
+        string World = "";
+        if (ConstantsHolder.xanaConstants.isBuilderScene)
+            World = "USER";
+        else if (ConstantsHolder.xanaConstants.IsMuseum)
+            World = "MUSEUM";
+        else
+            World = "ENVIRONMENT";
+        UserAnalyticsHandler.onGetWorldId?.Invoke(int.Parse(subWorldInfo.id), World);
         if (ActionManager.IsAnimRunning)
         {
             ActionManager.StopActionAnimation?.Invoke();

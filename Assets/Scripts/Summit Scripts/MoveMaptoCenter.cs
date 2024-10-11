@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
+using static XANASummitDataContainer;
+using SuperStar.Helpers;
 
 public class MoveMaptoCenter : MonoBehaviour
 {
@@ -44,7 +46,7 @@ public class MoveMaptoCenter : MonoBehaviour
             if (index >= 173)
                 index += 3;
 
-            MapHighlightObjs[i].GetComponent<Button>().onClick.AddListener(() => ItemClicked(index));
+            MapHighlightObjs[i].GetComponent<Button>().onClick.AddListener(() => ItemClicked_Icon(index));
         }
 
         InitializeSubBtns();
@@ -79,20 +81,26 @@ public class MoveMaptoCenter : MonoBehaviour
         }
     }
 
-
-    public void ItemClicked(int ind)
+    public void ItemClicked_Icon(int ind) // This is the function that is called when the Map Icon button is clicked
     {
-        Debug.Log("Item Clicked: " + ind);
+        Debug.Log("Icon Clicked: " + ind);
 
         int arratInd = ind;
 
-        if (ind == 176) // This is ninga DAO 
+        if (ind == 176) // This is Penpenz
         {
             arratInd = 170;
+            ind = 173;
         }
-        else if (ind == 177) // This is SMBC 
+        else if (ind == 177) // This is Ninga Dao
         {
             arratInd = 171;
+            ind -= 1;
+        }
+        else if (ind == 178) // This is SMBC
+        {
+            arratInd = 172;
+            ind -= 1;
         }
         else if (ind > 166) // 3 Index are skipped and used for Internal
         {
@@ -100,6 +108,32 @@ public class MoveMaptoCenter : MonoBehaviour
             Debug.Log("Modify Item Clicked: " + arratInd);
         }
 
+        NextStep(ind, arratInd);
+    }
+    public void ItemClicked(int ind) // This is the function that is called when the Name button is clicked
+    {
+        Debug.Log("Name 2 Clicked: " + ind);
+
+        int arratInd = ind;
+
+        if (ind == 176) // This is ninga DAO 
+        {
+            arratInd = 171;
+        }
+        else if (ind == 177) // This is SMBC 
+        {
+            arratInd = 172;
+        }
+        else if (ind > 166) // 3 Index are skipped and used for Internal
+        {
+            arratInd -= 3;
+            Debug.Log("Modify Item Clicked: " + arratInd);
+        }
+
+        NextStep(ind, arratInd);
+    }
+    void NextStep(int ind, int arratInd)
+    {
         grandChildPing = MapHighlightObjs[arratInd];
         string areaName = grandChildPing.name;
         StartCoroutine(MoveChildToCenterOfMainScreen());
@@ -111,7 +145,7 @@ public class MoveMaptoCenter : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(dome.world360Image))
             {
-                string ThumbnailUrl = dome.world360Image+"?width=512?height=256";
+                string ThumbnailUrl = dome.world360Image + "?width=" + ConstantsHolder.DomeImageCompression;
                 StartCoroutine(DownloadTexture(ThumbnailUrl));
                 selectedWorldBannerImage.transform.parent.gameObject.SetActive(true);
             }
@@ -119,6 +153,8 @@ public class MoveMaptoCenter : MonoBehaviour
             {
                 selectedWorldBannerImage.transform.parent.gameObject.SetActive(false);
             }
+            int worldId = dome.worldType == true ? dome.builderWorldId : dome.worldId;
+            StartCoroutine(GetVisitorCount(worldId.ToString()));
         }
         else
         {
@@ -127,13 +163,16 @@ public class MoveMaptoCenter : MonoBehaviour
 
         goBtn.SetActive(true);
 
-        if(ind == 176) // Ninga DAO
+        if (ind == 176) // Ninga DAO
             DomeMinimapDataHolder.OnSetDomeId?.Invoke(168, areaName);
         if (ind == 177) // SMBC
             DomeMinimapDataHolder.OnSetDomeId?.Invoke(178, areaName);
-        else 
+        else
             DomeMinimapDataHolder.OnSetDomeId?.Invoke(ind + 1, areaName);
     }
+
+
+
     IEnumerator MoveChildToCenterOfMainScreen()
     {
         Debug.Log("Moving Child to Center of Main Screen");
@@ -163,14 +202,47 @@ public class MoveMaptoCenter : MonoBehaviour
     }
     IEnumerator DownloadTexture(string ThumbnailUrl)
     {
-        UnityWebRequest request = UnityWebRequestTexture.GetTexture(ThumbnailUrl);
-        request.SendWebRequest();
-        while (!request.isDone)
+        if (AssetCache.Instance.HasFile(ThumbnailUrl))
         {
-            yield return null;
+            AssetCache.Instance.LoadSpriteIntoImage(selectedWorldBannerImage, ThumbnailUrl, changeAspectRatio: true);
+
         }
-        Texture2D texture2D = DownloadHandlerTexture.GetContent(request);
-        selectedWorldBannerImage.sprite = ConvertToSprite(texture2D);
+        else
+        {
+            AssetCache.Instance.EnqueueOneResAndWait(ThumbnailUrl, ThumbnailUrl, (success) =>
+            {
+                if (success)
+                {
+                    AssetCache.Instance.LoadSpriteIntoImage(selectedWorldBannerImage, ThumbnailUrl, changeAspectRatio: true);
+
+                }
+            });
+        }
+        yield return null;
+        //UnityWebRequest request = UnityWebRequestTexture.GetTexture(ThumbnailUrl);
+        //request.SendWebRequest();
+        //while (!request.isDone)
+        //{
+        //    yield return null;
+        //}
+        //Texture2D texture2D = DownloadHandlerTexture.GetContent(request);
+        //selectedWorldBannerImage.sprite = ConvertToSprite(texture2D);
+        //request.Dispose();
+    }
+    IEnumerator GetVisitorCount(string worldId)
+    {
+        string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.VISITORCOUNT + worldId;
+        UnityWebRequest www = UnityWebRequest.Get(apiUrl);
+        www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+        www.SendWebRequest();
+        while (!www.isDone)
+            yield return null;
+        string str = www.downloadHandler.text;
+        VisitorInfo visitorInfo = JsonUtility.FromJson<VisitorInfo>(str);
+        if (visitorInfo.success)
+            totalVisitCount.text = "" + visitorInfo.data.total_visit;
+        else
+            totalVisitCount.text = "" + 100;
     }
     Sprite ConvertToSprite(Texture2D texture)
     {
