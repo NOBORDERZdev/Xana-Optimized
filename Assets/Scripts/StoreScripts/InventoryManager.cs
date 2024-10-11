@@ -204,8 +204,6 @@ public class InventoryManager : MonoBehaviour
             if (AvatarSaved)
                 AvatarSaved.SetActive(false);
             SetPresetValue();
-           
-            StartPanel_PresetParentPanel.SetActive(false);
         }
 
         if (ConstantsHolder.xanaConstants.screenType == ConstantsHolder.ScreenType.TabScreen)

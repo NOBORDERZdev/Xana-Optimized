@@ -32,11 +32,6 @@ public class THA_Flow_Controller : MonoBehaviour
                 Web3AuthCustom.Instance.onLoginAction += AfterLogin;
             DeleteAcc_Screen.SetActive(true);
         }
-        if (PlayerPrefs.GetInt("WalletLogin") == 0)
-        {
-            DeleteAcc_Screen.SetActive(false);
-            InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-        }
         LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
 
     }
