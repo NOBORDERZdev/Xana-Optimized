@@ -81,7 +81,7 @@ public class SummitDomeShaderApply : MonoBehaviour
 
     void DownloadDomeTexture(string url)
     {
-        Debug.LogError(url);
+        //Debug.LogError(url);
         if (!string.IsNullOrEmpty(url))
         {
             if (AssetCache.Instance.HasFile(url))

@@ -157,8 +157,14 @@ namespace Photon.Pun.Demo.PunBasics
         /// - if not yet connected, Connect this application instance to Photon Cloud Network
         /// </summary>
         /// 
-        public void Connect(string lobbyN)
+        public async void Connect(string lobbyN)
         {
+            while(isShifting)
+            {
+                Debug.LogError("herere");
+                await Task.Delay(1000);
+            }
+            
             CurrLobbyName = APIBasepointManager.instance.IsXanaLive ? ("Live" + lobbyN) : ("Test" + lobbyN);
 
             working = ScenesList.AddressableScene;

@@ -98,6 +98,7 @@ public class XANASummitSceneLoading : MonoBehaviour
 
     async void LoadingFromDome(int domeId, Vector3 playerPos)
     {
+        Debug.LogError("Here comes 2 times ......");
         XANASummitDataContainer.DomeGeneralData domeGeneralData = new XANASummitDataContainer.DomeGeneralData();
         domeGeneralData = GetDomeData(domeId);
         int worldId = domeGeneralData.worldType == true ? domeGeneralData.builderWorldId : domeGeneralData.worldId;
@@ -204,6 +205,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         BuilderEventManager.ResetSummit?.Invoke();
         while(MutiplayerController.instance.isShifting||!PhotonNetwork.InRoom)
         {
+            Debug.LogError("here waiting....");
             await Task.Delay(1000);
         }
         multiplayerController.Disconnect();
@@ -598,7 +600,7 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         setPlayerPositionDelegate?.Invoke();
 
-
+        Debug.LogError("Disable loading screen ....");
         //StartCoroutine(LoadingHandler.Instance.FadeOut());
         LoadingHandler.Instance.DisableVideoLoading();
         LoadingHandler.Instance.DisableDomeLoading();
