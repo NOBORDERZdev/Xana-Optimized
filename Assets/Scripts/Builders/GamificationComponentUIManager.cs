@@ -83,12 +83,12 @@ public class GamificationComponentUIManager : MonoBehaviour
 
 
         BuilderEventManager.ResetComponentUI -= DisableAllComponentUIObject;
-
     }
 
     public bool isPotrait;
     private void PositionUpdateOnOrientationChange()
     {
+        return;
         float screenWidth = Screen.width;
         float screenHeight = Screen.height;
 
@@ -1058,6 +1058,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         DisableAllComponentUIObject(Constants.ItemComponentType.NinjaComponent, true);
         DisableThrowThingUI();
         NinjaMotionUIParent.SetActive(true);
+        GameplayEntityLoader.instance.DashButton.SetActive(false);
 
         if (NinjaMotionCoroutine == null)
         {
@@ -1132,6 +1133,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     void ChangeNinja_ThrowUIPosition(float value, bool state)
     {
+        return;
         NinjaMotionUIButtonPanel.transform.DOKill();
         ThowThingsUIButtonPanel.transform.DOKill();
         NinjaMotionUIButtonPanel2.transform.DOKill();
