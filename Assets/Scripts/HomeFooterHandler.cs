@@ -54,6 +54,7 @@ public class HomeFooterHandler : MonoBehaviour
     }
     void Start()
     {
+        ConstantsHolder.xanaConstants.isSummitBtnPressed = false;
         if (gameManager.UiManager != null)
         {
             gameManager.defaultSelection = 0;
@@ -300,6 +301,7 @@ public class HomeFooterHandler : MonoBehaviour
     {
         if (ConstantsHolder.IsXSummitApp)
         {
+            ConstantsHolder.xanaConstants.isSummitBtnPressed = true;
             if (ConstantsHolder.xanaConstants.isFromTottoriWorld)
                 return;
             MainSceneEventHandler.OpenLandingScene?.Invoke();
