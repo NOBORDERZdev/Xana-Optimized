@@ -161,7 +161,6 @@ namespace Photon.Pun.Demo.PunBasics
         {
             while(isShifting)
             {
-                Debug.LogError("herere");
                 await Task.Delay(1000);
             }
             

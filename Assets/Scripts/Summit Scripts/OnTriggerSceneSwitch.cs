@@ -46,8 +46,7 @@ public class OnTriggerSceneSwitch : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<PlayerPhotonInfo>() && other.CompareTag("PhotonLocalPlayer") &&
-            other.GetComponent<PlayerPhotonInfo>().IsMine && !alreadyTriggered)
+        if (other.GetComponent<PlayerPhotonInfo>() && other.GetComponent<PlayerPhotonInfo>().IsMine)
         {
             alreadyTriggered = false;
         }
