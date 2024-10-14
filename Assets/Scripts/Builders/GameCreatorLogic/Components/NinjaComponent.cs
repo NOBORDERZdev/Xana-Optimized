@@ -90,6 +90,15 @@ public class NinjaComponent : ItemComponent
     {
         //CollisionEnter();
     }
+    private void OnDestroy()
+    {
+        if (pc.isNinjaMotion)
+        {
+            pc.isNinjaMotion = false;
+            pc.NinjaComponentTimerStart(0);
+            GameplayEntityLoader.instance.DashButton.SetActive(true);
+        }
+    }
 
     #endregion
 }

@@ -26,7 +26,10 @@ public class GamePlayUIHandler : MonoBehaviour
     public GameObject actionsContainer;
     public Transform actionToggleImg;
     public ActionSelectionPanelHandler ActionSelectionPanel;
+    public GameObject EmoteReactionPanelMainScreen;
+    public GameObject FavoriteSelectionPanel;
     public GameObject AnimationBtnClose;
+    public GameObject ReactionBtnClose;
     public Button rotateOrientationLand;
 
     [Header("FPS Button Reference")]
@@ -186,6 +189,22 @@ public class GamePlayUIHandler : MonoBehaviour
         Debug.Log("call hua times 3===" + GamePlayButtonEvents.inst.selectionPanelOpen);
         GamePlayButtonEvents.inst.selectionPanelOpen = true;
         GamePlayButtonEvents.inst.OpenAllAnims();
+    }
+    public void CloseAnimationButtonClick()
+    {
+        if(!ActionManager.IsAnimRunning)
+            AnimationBtnClose.SetActive(false);
+        EmoteReactionPanelMainScreen.SetActive(false);
+        FavoriteSelectionPanel.SetActive(false);
+    }
+
+    public void CloseReactionButtonClick()
+    {
+        if (ActionManager.IsAnimRunning)
+            AnimationBtnClose.SetActive(true);
+        ReactionBtnClose.SetActive(false);
+        EmoteReactionPanelMainScreen.SetActive(false);
+        FavoriteSelectionPanel.SetActive(false);
     }
 
     public void CloseEmoteSelectionPanel()

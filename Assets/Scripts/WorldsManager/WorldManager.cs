@@ -166,8 +166,7 @@ public class WorldManager : MonoBehaviour
         {
             WorldId = 6239;
         }
-        
-
+        UserAnalyticsHandler.onGetWorldId?.Invoke(WorldId, "ENVIRONMENT");
         string url = ConstantsGod.API_BASEURL + ConstantsGod.SINGLEWORLDINFO + WorldId;
         StartCoroutine(GetSingleWorldData(url, (check) =>
         {
@@ -200,7 +199,7 @@ public class WorldManager : MonoBehaviour
 
     async void AddingDeleyToLoadScene()
     {
-        while (!ConstantsHolder.isAddressableCatalogDownload)
+        while (!ConstantsHolder.isAddressableCatalogDownload || (PlayerPrefs.GetString("PlayerName").IsNullOrEmpty() && !ConstantsHolder.xanaConstants.LoggedInAsGuest))
             await Task.Delay(500);
         LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
         XANAPartyManager xANAPartyManager = XANAPartyManager.Instance;

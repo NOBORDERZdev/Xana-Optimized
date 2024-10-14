@@ -326,7 +326,8 @@ public class BuilderMapDownload : MonoBehaviour
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
                 GetObject(_async, levelData.otherItems[i]);
-                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, prefabPrefix + levelData.otherItems[i].ItemID + "_XANA");
+                //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, prefabPrefix + levelData.otherItems[i].ItemID + "_XANA");
+                AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
             }
             //if (ConstantsHolder.xanaConstants.isFromXanaLobby)
             //{
@@ -541,7 +542,8 @@ public class BuilderMapDownload : MonoBehaviour
             }
             else if (loadRealisticMaterial.Status == AsyncOperationStatus.Succeeded)
             {
-                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadRealisticMaterial, loadRealisticMatKey);
+                //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadRealisticMaterial, loadRealisticMatKey);
+                AddressableDownloader.bundleAsyncOperationHandle.Add(loadRealisticMaterial);
                 Material _mat = loadRealisticMaterial.Result as Material;
                 ////Debug.LogError(realisticMaterialData.shaderName);
                 _mat.shader = Shader.Find(realisticMaterialData.shaderName);

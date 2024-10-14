@@ -812,6 +812,5 @@ public class JjAsset
     public string youtubeUrl;
     public DateTime createdAt;
     public DateTime updatedAt;
-    public string event_env_class;
-    public int width;
+    public string event_env_class;   
 }
