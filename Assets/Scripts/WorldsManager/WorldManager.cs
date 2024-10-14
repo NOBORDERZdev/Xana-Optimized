@@ -7,6 +7,7 @@ using System.IO;
 using UnityEditor;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 
 public class WorldManager : MonoBehaviour
@@ -137,14 +138,18 @@ public class WorldManager : MonoBehaviour
             ConstantsHolder.xanaConstants.isFromHomeTab = true;
             ConstantsHolder.xanaConstants.MuseumID = singleWorldInfo.data.id;
             WorldItemView.m_EnvName = singleWorldInfo.data.name;
+            ConstantsHolder.Thumbnail = singleWorldInfo.data.thumbnail;
             ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+            ConstantsHolder.xanaConstants.UserMicEnable = singleWorldInfo.data.userMicEnable;
             LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
             LoadingHandler.Instance.ShowLoading();
-            LoadingHandler.Instance.UpdateLoadingSlider(0);
+            LoadingHandler.StopLoader = true;
+            //LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-            Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
+            //Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
 
             Invoke(nameof(AddingDeleyToLoadScene), .5f);
         }));
@@ -153,7 +158,9 @@ public class WorldManager : MonoBehaviour
 
     void AddingDeleyToLoadScene()
     {
-        LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+         LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+        //PhotonNetwork.LoadLevel("GamePlayScene");
+
     }
 
     IEnumerator GetSingleWorldData(string apiURL, Action<bool> callback)
@@ -498,6 +505,7 @@ public class WorldManager : MonoBehaviour
             _event.CreatedAt = _WorldInfo.data.rows[i].createdAt;
             //_event.WorldVisitCount = _WorldInfo.data.rows[i].totalVisits; // TotalVisit Variable Used for Web
             _event.WorldVisitCount = _WorldInfo.data.rows[i].xanaAppVisitCount;
+            _event.UserMicEnable = _WorldInfo.data.rows[i].userMicEnable;
             _event.isFavourite = _WorldInfo.data.rows[i].isFavourite;
             if (_WorldInfo.data.rows[i].tags != null)
                 _event.WorldTags = _WorldInfo.data.rows[i].tags;
@@ -524,7 +532,7 @@ public class WorldManager : MonoBehaviour
                 _event.Creator_Name = _WorldInfo.data.rows[i].user.name;
                 _event.CreatorDescription = _WorldInfo.data.rows[i].user.userProfile.bio;
                 _event.UserAvatarURL = _WorldInfo.data.rows[i].user.avatar;
-                _event.UserLimit = "15";
+                _event.UserLimit = "10";
             }
             else
             {
@@ -635,6 +643,7 @@ public class WorldManager : MonoBehaviour
         _event.UpdatedAt = _worldInfo.updatedAt;
         _event.CreatedAt = _worldInfo.createdAt;
         _event.WorldVisitCount = _worldInfo.totalVisits;
+        _event.UserMicEnable = _worldInfo.userMicEnable;
         _event.isFavourite = _worldInfo.isFavourite;
         if (_worldInfo.tags != null)
             _event.WorldTags = _worldInfo.tags;
@@ -652,7 +661,7 @@ public class WorldManager : MonoBehaviour
                 //_event.CreatorDescription = _WorldInfo.data.rows[i].creatorDetails.description; // due to wrong API response commited this
                 _event.CreatorDescription = _worldInfo.user.userProfile.bio;
                 _event.UserAvatarURL = _worldInfo.user.avatar;
-                _event.UserLimit = "15";
+                _event.UserLimit = "10";
             }
             else
             {
@@ -852,8 +861,9 @@ public class WorldManager : MonoBehaviour
         LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
         await Task.Delay(500);
         //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-        Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
-        LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+        //Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
+         LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+        //PhotonNetwork.LoadLevel("GamePlayScene");
         // }
         if (WorldItemView.m_EnvName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());
@@ -918,8 +928,10 @@ public class WorldManager : MonoBehaviour
         LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
         await Task.Delay(500);
         //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-        Photon.Pun.PhotonHandler.levelName = "Builder";
+        //Photon.Pun.PhotonHandler.levelName = "Builder";
         LoadingHandler.Instance.LoadSceneByIndex("Builder");
+        //PhotonNetwork.LoadLevel("Builder");
+
         // }
     }
 
@@ -990,16 +1002,20 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-            Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
-            LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+            // Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
+             LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+           // PhotonNetwork.LoadLevel("GamePlayScene");
+
         }
     }
 
     IEnumerator JoinWorldDelay()
     {
         yield return new WaitForSeconds(2f);
-        Photon.Pun.PhotonHandler.levelName = "Builder";
-        LoadingHandler.Instance.LoadSceneByIndex("Builder");
+        //Photon.Pun.PhotonHandler.levelName = "Builder";
+         LoadingHandler.Instance.LoadSceneByIndex("Builder");
+       // PhotonNetwork.LoadLevel("Builder");
+
     }
 
     public void LoadJjworld()
@@ -1012,7 +1028,7 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.presetCharacterLoading.SetActive(false);
             LoadingHandler.Instance.characterLoading.SetActive(false);
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-            LoadingHandler.Instance.loadingPanel.SetActive(false);
+          //  LoadingHandler.Instance.loadingPanel.SetActive(false);
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
             ConstantsHolder.xanaConstants.EnviornmentName = ConstantsHolder.xanaConstants.JjWorldTeleportSceneName;
@@ -1021,7 +1037,7 @@ public class WorldManager : MonoBehaviour
             {
                 ConstantsHolder.userLimit = 16;
             }
-            if (ConstantsHolder.xanaConstants.JjWorldTeleportSceneName == "XANA_DUNE" /*|| ConstantsHolder.xanaConstants.JjWorldTeleportSceneName == "XANA_KANZAKI"*/)
+            if (ConstantsHolder.xanaConstants.JjWorldTeleportSceneName == "XANA_DUNE")
             {
                 ConstantsHolder.userLimit = 1;
             }
@@ -1029,7 +1045,7 @@ public class WorldManager : MonoBehaviour
             {
                 if (ConstantsHolder.xanaConstants.isBuilderScene)
                 {
-                    ConstantsHolder.userLimit = 15;
+                    ConstantsHolder.userLimit = 10;
                 }
                 else
                 {
@@ -1101,6 +1117,7 @@ public class RowList
     public string[] tags;
     public string totalVisits;
     public string xanaAppVisitCount;
+    public bool userMicEnable;
 
     public bool isFavourite;
     public UserInfo user;
@@ -1152,6 +1169,7 @@ public class WorldItemDetail
     public string CreatorAvatarURL;
     public string CreatorDescription;
     public string WorldVisitCount;
+    public bool UserMicEnable;
     public bool isFavourite;
 }
 

@@ -29,6 +29,7 @@ public class ServerSideUserDataHandler : MonoBehaviour
 
     IEnumerator GetUserData(string token)   // check if  data Exist
     {
+       
         UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.OCCUPIDEASSETS + "1/1");
         www.SetRequestHeader("Authorization", token);
         www.SendWebRequest();
@@ -52,7 +53,14 @@ public class ServerSideUserDataHandler : MonoBehaviour
                     File.WriteAllText(GameManager.Instance.GetStringFolderPath(), jbody);
                     //if user does not have data then open preset panel
                     ConstantsHolder.xanaConstants.isFirstPanel = true;
-                    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                    if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                    {
+                        LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                    }
+                    else
+                    {
+                        LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+                    }
                     MainSceneEventHandler.OpenPresetPanel?.Invoke();
                 }
                 else
@@ -64,7 +72,14 @@ public class ServerSideUserDataHandler : MonoBehaviour
                     ConstantsHolder.userId = getdata.data.rows[0].createdBy.ToString();
                     File.WriteAllText(GetStringFolderPath(), jsonbody);
                     yield return new WaitForSeconds(0.1f);
-
+                    if (!ConstantsHolder.xanaConstants.openLandingSceneDirectly && ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                    {
+                        if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                        {
+                            Screen.orientation = ScreenOrientation.Portrait;
+                            LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+                        }
+                    }
                     if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
                     {
                         // assign gender to save character properties
@@ -73,7 +88,7 @@ public class ServerSideUserDataHandler : MonoBehaviour
                         MainSceneEventHandler.OpenLandingScene?.Invoke();
                         yield break;
                     }
-
+                   
                     loadprevious();
 
                     GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();

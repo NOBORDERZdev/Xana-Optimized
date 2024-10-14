@@ -50,7 +50,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
     public bool tagsInstantiated;
     public Transform PreviewLogo;
     public GameObject backButton;
-
+    public bool UserMicEnable;
     public static Action<bool> OndescriptionPanelSwipUp;
     private void OnEnable()
     {
@@ -116,7 +116,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
 
     public void Init(GameObject thumbnailObjRef, Sprite worldImg, string worldName, string worldDescription, string creatorName,
         string createdAt, string updatedAt, bool isBuilderSceneF, string userAvatarURL, string ThumbnailDownloadURLHigh, string[] worldTags,
-        string entityType, string creator_Name, string creator_Description, string creatorAvatar, bool isFavourite, string _worldId)
+        string entityType, string creator_Name, string creator_Description, string creatorAvatar, bool userMicEnable, bool isFavourite, string _worldId)
     {
         WorldDetailContentrRef.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         worldId = _worldId;
@@ -208,7 +208,8 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         {
             creatorPanel.SetActive(false);
         }*/
-
+        UserMicEnable = userMicEnable;
+        ConstantsHolder.xanaConstants.UserMicEnable = UserMicEnable;
         CheckWorldFav(isFavourite);
         WorldDescriptionTxt.transform.parent.GetComponent<ParentHeightAdjuster>().SetParentHeight();
         //CreatorDescriptionTxt.transform.parent.GetComponent<ParentHeightAdjuster>().SetParentHeight();

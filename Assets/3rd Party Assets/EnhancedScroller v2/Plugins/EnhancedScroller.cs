@@ -72,6 +72,8 @@ namespace EnhancedUI.EnhancedScroller
     {
         #region Public
 
+        public bool IsContentSizeFitterRequired = false;
+
         /// <summary>
         /// The direction this scroller is handling
         /// </summary>
@@ -1956,6 +1958,11 @@ namespace EnhancedUI.EnhancedScroller
             _lastScrollRectSize = ScrollRectSize;
             _lastLoop = loop;
             _lastScrollbarVisibility = scrollbarVisibility;
+            if (IsContentSizeFitterRequired)
+            {
+                ContentSizeFitter _containerCSF = _container.gameObject.AddComponent<ContentSizeFitter>();
+                _containerCSF.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            }
 
             _initialized = true;
         }

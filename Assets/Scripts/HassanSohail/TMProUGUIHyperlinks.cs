@@ -14,7 +14,7 @@ using Toyota;
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public enum LinkType { JJ_Link, Other_Link }
+    public enum LinkType {JJ_Link, Other_Link, None }
     public LinkType linkType;
     [Space(5)]
     [SerializeField]

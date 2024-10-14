@@ -19,6 +19,7 @@ public class Enable_DisableObjects : MonoBehaviour
     public GameObject ActionPanel;
     public GameObject EmotePanel;
     [SerializeField] private GameObject _jump;
+    [SerializeField] private GameObject _dash;
     [SerializeField] private GameObject _micOnButton;
     [SerializeField] private GameObject _micOffButton;
     [SerializeField] private GameObject _animationcloseButton;
@@ -96,11 +97,17 @@ public class Enable_DisableObjects : MonoBehaviour
         }
         ChatInputField.gameObject.SetActive(setActive);
         _jump.SetActive(setActive);
+        _dash.SetActive(setActive);
         ReactionPanel.SetActive(false);
         ActionPanel.SetActive(false);
         EmotePanel.SetActive(false);
         _animationcloseButton.SetActive(false);
         EnableDisableMicButton(setActive);
+    }
+
+    public void DisableDashButton(bool isActive)
+    {
+        _dash.SetActive(isActive);
     }
 
     private void EnableDisableMicButton(bool setActive)

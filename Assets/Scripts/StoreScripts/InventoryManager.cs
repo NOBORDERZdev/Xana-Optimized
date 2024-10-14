@@ -153,6 +153,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject Defaultreset, LastSavedreset, PanelResetDefault;
     // public GameObject ButtonFor_Preset;
     public GameObject StartPanel_PresetParentPanel, PresetArrayContent, selfiePanel, loaderPanel;
+    public GameObject StartPanel_PresetParentPanelSummit;
     // public GameObject backbutton_preset;
     public Transform contentList;
 
@@ -5158,7 +5159,16 @@ public class InventoryManager : MonoBehaviour
         }
 
     }
-    public void BackToMain()
+    public void BackToLoginSelectionPanel()
+    {
+        if (ConstantsHolder.xanaConstants.LoggedInAsGuest && ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        {
+            UserLoginSignupManager.instance.signUpOrloginSelectionPanel.SetActive(true);
+            StartPanel_PresetParentPanelSummit.SetActive(false);
+        }
+    
+    }
+        public void BackToMain()
     {
         GameManager.Instance.HomeCameraInputHandler(true);
         GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();

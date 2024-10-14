@@ -1,4 +1,4 @@
-using CSCore;
+//using CSCore;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -75,9 +75,10 @@ public class SummitBGMSoundManager : MonoBehaviour
             Debug.Log("<color=red> Audio Source is null <color>");
             return;
         }
-        audioSource.Stop();
+        audioSource.volume= 0;
+        audioSource.Pause();
         audioSource.clip = null;
-        Destroy(clip); 
+        Destroy(clip);
     }
     
 }

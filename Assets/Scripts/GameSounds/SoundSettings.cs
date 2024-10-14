@@ -291,6 +291,10 @@ public class SoundSettings : MonoBehaviour
             {
                 SetAudioSourceSliderValLive(liveVideoSource, Vol);
             }
+            if (videoSource)
+            {
+                videoSource.volume = Vol;
+            }
         }
 
         BuilderEventManager.BGMVolume?.Invoke(Vol);
@@ -368,7 +372,7 @@ public class SoundSettings : MonoBehaviour
 
         foreach (var gameobject in MutiplayerController.instance.playerobjects)
         {
-            if (!gameobject.GetComponent<PhotonView>().IsMine) 
+            if (gameobject != null && !gameobject.GetComponent<PhotonView>().IsMine) 
             {
                 gameobject.GetComponent<SpeakerRefrence>().RangeVolSpeaker.volume = UserSlider.value;
             }

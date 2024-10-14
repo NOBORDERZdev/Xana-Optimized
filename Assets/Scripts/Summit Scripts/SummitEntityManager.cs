@@ -37,7 +37,7 @@ public class SummitEntityManager : MonoBehaviour, IMatchmakingCallbacks
 
     public async Task InstantiateCAR()
     {
-        if(!PhotonNetwork.IsMasterClient) { return; }
+        if(!PhotonNetwork.IsMasterClient || CarNavigationManager.CarNavigationInstance.Cars.Count>0) { return; }
             CarSpline = SplineDone.Instance;
         var length = CarSpline.GetSplineLength(.0005f);
        var distancebetweencar = length / 12;
@@ -46,7 +46,7 @@ public class SummitEntityManager : MonoBehaviour, IMatchmakingCallbacks
         
         for (int i = 0; i < 12; i++) {
 
-        var obje =   PhotonNetwork.InstantiateRoomObject("Historic_Mickey_Car", CarSpawnpoint.position, Quaternion.identity);
+        var obje =   PhotonNetwork.InstantiateRoomObject("Historic_Mickey_Car", CarSpawnpoint.position + new Vector3(0f, 2f, 0f), Quaternion.identity);
             var splineFollow = obje.GetComponent<SplineFollower>();
             
             splineFollow.MoveAmount = firstSpawn;

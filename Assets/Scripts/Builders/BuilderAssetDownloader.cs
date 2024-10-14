@@ -35,6 +35,8 @@ public class BuilderAssetDownloader : MonoBehaviour
     public static Transform assetParentStatic;
     private static int totalAssetCount;
     public static int downloadedTillNow = 0;
+    private static HashSet<string> uniqueDownloadKeys = new HashSet<string>();
+    
 
     [Header("Short Interval sorting element count")]
     public static int shortSortingCount = 100;
@@ -106,6 +108,12 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             DownloadQueueData temp = new DownloadQueueData();
             temp.ItemID = BuilderData.mapData.data.json.otherItems[i].ItemID;
+            string downloadKey=prefabPrefix + BuilderData.mapData.data.json.otherItems[i].ItemID + prefabSuffix;
+            if (!uniqueDownloadKeys.Contains(downloadKey) && !XanaWorldDownloader.CheckForVisitedWorlds(ConstantsHolder.xanaConstants.builderMapID.ToString()))
+            {
+                uniqueDownloadKeys.Add(downloadKey);
+                XanaWorldDownloader.downloadSize += Addressables.GetDownloadSizeAsync(downloadKey).WaitForCompletion();
+            }
             temp.DcitionaryKey = i.ToString();
             temp.Position = BuilderData.mapData.data.json.otherItems[i].Position;
             temp.Rotation = BuilderData.mapData.data.json.otherItems[i].Rotation;
@@ -179,6 +187,15 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     async void StartDownloadingAssets()
     {
+        if(DownloadPopupHandler.DownloadPopupHandlerInstance!=null && !DownloadPopupHandler.AlwaysAllowDownload && !XanaWorldDownloader.CheckForVisitedWorlds(ConstantsHolder.xanaConstants.builderMapID.ToString()))
+        {
+            if (!XanaWorldDownloader.DownloadedWorldNames.Contains(ConstantsHolder.xanaConstants.builderMapID.ToString()))
+                XanaWorldDownloader.DownloadedWorldNames.Add(ConstantsHolder.xanaConstants.builderMapID.ToString());
+            bool permission = await DownloadPopupHandler.DownloadPopupHandlerInstance.ShowDialogAsync();
+            if (!permission)
+                return;
+
+        }
         if (ConstantsHolder.xanaConstants.isBuilderScene)
             BuilderEventManager.ApplySkyoxSettings?.Invoke();
         SortingQueueData(initialPlayerPos);

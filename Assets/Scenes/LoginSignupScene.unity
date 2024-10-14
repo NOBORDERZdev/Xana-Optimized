@@ -315,6 +315,7 @@ MonoBehaviour:
   EditProfilePanel: {fileID: 6969618249815161044}
   displayrNameField: {fileID: 1650873783533469581}
   userUsernameField: {fileID: 6175814034152713497}
+  UserNameFieldObj: {fileID: 1358653155}
   SelectedPresetImage: {fileID: 6175814034152713496}
   SelectPresetImageforEditProfil: {fileID: 7865548680169950416}
   AiPresetImage: {fileID: 6175814034152713495}
@@ -328,6 +329,7 @@ MonoBehaviour:
   SetProfileAvatarTempFilename: 
   PermissionCheck: 
   PickImageOptionScreen: {fileID: 4054904675507621100}
+  permissionPopup: {fileID: 0}
   errorHandler: {fileID: 1458762913}
   validationPopupPanel: {fileID: 1151006359}
   errorTextMsg: {fileID: 6526982720957554883}
@@ -625,6 +627,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1479205145}
     m_Modifications:
+    - target: {fileID: 201435355, guid: 8b37dc46314a54c3bb911c0e9fca890c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -4.877014
+      objectReference: {fileID: 0}
     - target: {fileID: 547893926400575309, guid: 8b37dc46314a54c3bb911c0e9fca890c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1598,6 +1604,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1358653155 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6102004006733166135, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
+  m_PrefabInstance: {fileID: 6175814034152713492}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1397947318
 GameObject:
   m_ObjectHideFlags: 0
@@ -1710,6 +1721,7 @@ MonoBehaviour:
   LoginOptionWalletBtn: {fileID: 3381984247756147455}
   LoginOptionAppleBtn: {fileID: 3381984247756147451}
   LoginOptionGoogleBtn: {fileID: 3381984247756147452}
+  WebViewBool: 0
 --- !u!4 &1418857910
 Transform:
   m_ObjectHideFlags: 0
@@ -3231,6 +3243,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1616935383662480131, guid: 068a1fe6ccf02104c80a0e06d12145e5, type: 3}
+      propertyPath: redirectURIiOS
+      value: web3auth://com.wujie.xsummit/auth
+      objectReference: {fileID: 0}
+    - target: {fileID: 1616935383662480131, guid: 068a1fe6ccf02104c80a0e06d12145e5, type: 3}
+      propertyPath: redirectURIAndroid
+      value: web3auth://com.nbi.xana/auth
+      objectReference: {fileID: 0}
+    - target: {fileID: 1616935383662480131, guid: 068a1fe6ccf02104c80a0e06d12145e5, type: 3}
       propertyPath: myButtons.Array.data[0]
       value: 
       objectReference: {fileID: 5849845729003225189}
@@ -4387,12 +4407,48 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 219101427}
     - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 219101427}
+    - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnPickImageFromGellery
+      objectReference: {fileID: 0}
+    - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: CheckPermissionStatus
+      objectReference: {fileID: 0}
+    - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UserLoginSignupManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_IntArgument
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 5633932916793685414, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9aac92cc1b4d064e896caf12aba27a3, type: 3}
@@ -5045,7 +5101,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4673320596819581168, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
   m_PrefabInstance: {fileID: 6175814034152713492}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1358653155}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab25112ac4e182644964306dd56760cc, type: 3}

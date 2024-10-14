@@ -10,10 +10,10 @@ namespace ZeelKheni.YoutubePlayer.Api
 {
     public class YoutubeApi
     {
-        public static async Task<VideoInfo> GetVideoInfo(string YoutubeUrl, string videoId, CancellationToken cancellationToken = default, List<Models.YoutubeVideoInfo> urls = null)
+        public static async Task<VideoInfo> GetVideoInfo(string YoutubeUrl, string videoId, CancellationToken cancellationToken = default, List<Models.YoutubeVideoInfo> urls = null,bool skipPrevious = false)
         {
             var requestUrl = $"{YoutubeUrl}/api/v1/videos/{videoId}";
-            var videoInfo = await WebRequest.GetAsync<VideoInfo>(requestUrl, cancellationToken, urls, videoId);
+            var videoInfo = await WebRequest.GetAsync<VideoInfo>(requestUrl, cancellationToken, urls, videoId,skipPrevious);
             if (videoInfo?.VideoThumbnails != null)
             {
                 foreach (var thumbnail in videoInfo.VideoThumbnails)

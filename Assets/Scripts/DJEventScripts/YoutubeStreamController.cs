@@ -65,10 +65,10 @@ public class YoutubeStreamController : MonoBehaviour
             //}
             //else
             //{
-                //SoundController.Instance.videoPlayerSource = videoPlayerAudioSource;
-                //SoundSettings.soundManagerSettings.videoSource = videoPlayerAudioSource;
+            //SoundController.Instance.videoPlayerSource = videoPlayerAudioSource;
+            //SoundSettings.soundManagerSettings.videoSource = videoPlayerAudioSource;
             //}
-            
+
             //SoundController.Instance.livePlayerSource = LiveStreamPlayer.GetComponent<MediaPlayer>();
             SoundSettings.soundManagerSettings.setNewSliderValues();
         }
@@ -86,40 +86,40 @@ public class YoutubeStreamController : MonoBehaviour
         //    NormalPlayer.GetComponent<YoutubeSimplified>().videoPlayer.targetMaterialRenderer.material.color = new Color32(57, 57, 57, 255);
         //if (NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer != null)
         //    NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = new Color32(57, 57, 57, 255);
-//#if UNITY_EDITOR && !UNITY_IOS
-//        if (!WorldItemView.m_EnvName.Contains("BreakingDown Arena") && !WorldItemView.m_EnvName.Contains("XANA FESTIVAL STAGE in Dubai.") && !WorldItemView.m_EnvName.Contains("DJ Event"))
-//        {
-//            Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
-//            scale.y *= -1;
-//            NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
-//        }
-//#endif
-//#if UNITY_IOS
-//        if (WorldItemView.m_EnvName.Contains("DJ Event"))
-//        {
-//            Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
-//            scale.y *= -1;
-//            NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
-//        }
-//        if (WorldItemView.m_EnvName.Contains("Xana Festival"))
-//        {
-//            Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
-//            scale.y *= -1;
-//            NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
-//        }
-//        if (WorldItemView.m_EnvName.Contains("XANA Festival Stage"))
-//        {
-//            Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
-//            scale.y *= -1;
-//            NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
-//        }
-//        if (WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("XANA Lobby"))
-//        {
-//            Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
-//            scale.y *= -1;
-//            NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
-//        }
-//#endif
+        //#if UNITY_EDITOR && !UNITY_IOS
+        //        if (!WorldItemView.m_EnvName.Contains("BreakingDown Arena") && !WorldItemView.m_EnvName.Contains("XANA FESTIVAL STAGE in Dubai.") && !WorldItemView.m_EnvName.Contains("DJ Event"))
+        //        {
+        //            Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
+        //            scale.y *= -1;
+        //            NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
+        //        }
+        //#endif
+        //#if UNITY_IOS
+        //        if (WorldItemView.m_EnvName.Contains("DJ Event"))
+        //        {
+        //            Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
+        //            scale.y *= -1;
+        //            NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
+        //        }
+        //        if (WorldItemView.m_EnvName.Contains("Xana Festival"))
+        //        {
+        //            Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
+        //            scale.y *= -1;
+        //            NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
+        //        }
+        //        if (WorldItemView.m_EnvName.Contains("XANA Festival Stage"))
+        //        {
+        //            Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
+        //            scale.y *= -1;
+        //            NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
+        //        }
+        //        if (WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("XANA Lobby"))
+        //        {
+        //            Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
+        //            scale.y *= -1;
+        //            NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
+        //        }
+        //#endif
     }
 
     private IEnumerator SetStream()
@@ -171,6 +171,17 @@ public class YoutubeStreamController : MonoBehaviour
         }
         else
         {
+            if (APIHandler.Data.IsLive && LiveStreamPlayer.activeInHierarchy)
+            {
+                if (streamYoutubeVideo.AVProVideoPlayer.Control != null && !streamYoutubeVideo.AVProVideoPlayer.Control.IsPlaying())
+                {
+                    if (!streamYoutubeVideo.IsInternetDisconnected && APIHandler.Data.isPlaying.Equals(true))
+                    {
+                        //Debug.Log("Extra video play call worked for live video");
+                        SetUpStream();
+                    }
+                }
+            }
             //LiveStreamPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = new Color32(255, 255, 255, 255);
             //if (NormalPlayer.GetComponent<YoutubeSimplified>().videoPlayer != null)
             //    NormalPlayer.GetComponent<YoutubeSimplified>().videoPlayer.targetMaterialRenderer.material.color = new Color32(255, 255, 255, 255);
@@ -193,7 +204,10 @@ public class YoutubeStreamController : MonoBehaviour
             //{
             //    gameObject.GetComponent<AvProDirectionalSound>().ActivateDirectionalSoundIfNotYet();
             //}
-            if (gameObject.GetComponent<AvProLiveVideoSoundEnabler>() && 
+
+
+
+            if (gameObject.GetComponent<AvProLiveVideoSoundEnabler>() && gameObject.GetComponent<AvProDirectionalSound>().PlayerTriggerCheck != null &&
                 gameObject.GetComponent<AvProDirectionalSound>().PlayerTriggerCheck.IsPlayerTriggered)
             {
                 gameObject.GetComponent<AvProLiveVideoSoundEnabler>().EnableLiveVideoSound(true);
