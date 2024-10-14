@@ -21,7 +21,7 @@ public class SummitAIChatHandler : MonoBehaviour
     public List<GameObject> aiNPC = new List<GameObject>();
 
     private string npcName;
-    private string npcURL;
+    public string npcURL;
     private bool _NPCInstantiated;
     private bool SummitNPC;
     private bool ChatActivated;
@@ -34,7 +34,7 @@ public class SummitAIChatHandler : MonoBehaviour
         _CommonChatRef = LandscapeChatRef;
         BuilderEventManager.AINPCActivated += LoadAIChat;
         BuilderEventManager.AINPCDeactivated += RemoveAIChat;
-        BuilderEventManager.AfterPlayerInstantiated += LoadNPC;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated += LoadNPC;
         BuilderEventManager.ResetSummit += ResetOnExit;
         ScreenOrientationManager.switchOrientation += UpdateChatInstance;
     }
@@ -42,7 +42,7 @@ public class SummitAIChatHandler : MonoBehaviour
     {
         BuilderEventManager.AINPCActivated -= LoadAIChat;
         BuilderEventManager.AINPCDeactivated -= RemoveAIChat;
-        BuilderEventManager.AfterPlayerInstantiated -= LoadNPC;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= LoadNPC;
         BuilderEventManager.ResetSummit -= ResetOnExit;
         ScreenOrientationManager.switchOrientation -= UpdateChatInstance;
     }
@@ -104,7 +104,7 @@ public class SummitAIChatHandler : MonoBehaviour
 
             aiNPC.Add(AINPCAvatar);
             AINPCAvatar.transform.position = new Vector3(XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[0], XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[1], XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[2]);
-            if (XANASummitDataContainer.aiData.npcData[i].rotationPositionArray != null)
+            if (XANASummitDataContainer.aiData.npcData[i].rotationPositionArray != null && XANASummitDataContainer.aiData.npcData[i].rotationPositionArray.Length > 0)
                 AINPCAvatar.transform.rotation = Quaternion.Euler(XANASummitDataContainer.aiData.npcData[i].rotationPositionArray[0], XANASummitDataContainer.aiData.npcData[i].rotationPositionArray[1], XANASummitDataContainer.aiData.npcData[i].rotationPositionArray[2]);
             AINPCAvatar.name = XANASummitDataContainer.aiData.npcData[i].name;
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().npcName.text = XANASummitDataContainer.aiData.npcData[i].name;
@@ -113,6 +113,7 @@ public class SummitAIChatHandler : MonoBehaviour
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().json = XANASummitDataContainer.aiData.npcData[i].avatarCategory;
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().Init();
             AINPCAvatar.GetComponent<AINPCTrigger>().npcID = XANASummitDataContainer.aiData.npcData[i].id;
+            AINPCAvatar.GetComponent<AINPCTrigger>().NPCPosition = AINPCAvatar.transform.position;
             NPCCount++;
         }
 
@@ -155,6 +156,7 @@ public class SummitAIChatHandler : MonoBehaviour
             AINPCAvatar.GetComponent<SetPenguinAIName>().NameText.text = XANASummitDataContainer.aiData.npcData[i].name;
             int avatarPresetId = XANASummitDataContainer.aiData.npcData[i].avatarId;
             AINPCAvatar.GetComponent<AINPCTrigger>().npcID = XANASummitDataContainer.aiData.npcData[i].id;
+            AINPCAvatar.GetComponent<AINPCTrigger>().NPCPosition = AINPCAvatar.transform.position;
             NPCCount++;
         }
 
@@ -267,6 +269,7 @@ public class SummitAIChatHandler : MonoBehaviour
 
         if (ChatActivated)
         {
+            Debug.LogError("AI Response  ==  " + response);
             string res = JsonUtility.FromJson<AIResponse>(response).data;
 
             //_CommonChatRef.DisplayMsg_FromSocket(npcName, res);
@@ -311,6 +314,8 @@ public class SummitAIChatHandler : MonoBehaviour
         {
             if (aiNPC[i] != null)
                 Destroy(aiNPC[i]);
+
+            NPCCount--;
         }
 
         aiNPC.Clear();

@@ -69,6 +69,8 @@ public class XanaChatSystem : MonoBehaviour
     public GameObject XanaChatPotrait; // set in inspector
     public RectTransform outline;
 
+   
+    
     public ScrollRect ChatScrollRect;
 
     public Action<string> npcAlert;
@@ -89,7 +91,8 @@ public class XanaChatSystem : MonoBehaviour
 
     #endregion
 
-
+    [HideInInspector]
+    public bool isAiChat = false;
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -104,6 +107,9 @@ public class XanaChatSystem : MonoBehaviour
         {
             this.InputFieldChat.onSubmit.AddListener(OnEnterSend);
         }
+
+        BuilderEventManager.AINPCActivated += (ind, value) => { isAiChat = true; };
+        BuilderEventManager.AINPCDeactivated += (ind) => { isAiChat = false; };
     }
     private void OnDisable()
     {
@@ -141,9 +147,17 @@ public class XanaChatSystem : MonoBehaviour
             this.UserName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
         }
 
+#if UNITY_EDITOR
+        InputFieldChat.onValueChanged.AddListener(delegate { DisableMovement(false); });
+        InputFieldChat.onEndEdit.AddListener(delegate { DisableMovement(true); });
+#endif
         Connect();
     }
 
+    private void DisableMovement(bool isActive)
+    {
+        ReferencesForGamePlay.instance.playerControllerNew.enabled = isActive;
+    }
 
     public void DisplayMsg_FromSocket(string _userName, string _msg)
     {

@@ -901,6 +901,7 @@ public class PlayerController : MonoBehaviour
             {
                 isNinjaMotion = false;
                 NinjaComponentTimerStart(0);
+                GameplayEntityLoader.instance.DashButton.SetActive(true);
             }
             else if (isThrowModeActive)
             {
@@ -1213,6 +1214,8 @@ public class PlayerController : MonoBehaviour
     public void Jump()
     {
         _IsGrounded = characterController.isGrounded;
+        EmoteReactionUIHandler.lastEmotePlayed = null;
+
         if (!_IsGrounded && specialItem && !canDoubleJump)
         {
             canDoubleJump = true;

@@ -8,6 +8,7 @@ using System.Linq;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
+using UnityEngine.UIElements;
 
 public class SPAAIEmoteController : MonoBehaviour
 {
@@ -16,10 +17,16 @@ public class SPAAIEmoteController : MonoBehaviour
     public List<string> AnimPlayList = new List<string>();
     public List<float> AnimPlayTimer = new List<float>();
     public bool KeepLoopingEmotes = true;
+    public GameObject Instrument;
+    public Transform rightHand,LeftHand;
+
 
     [SerializeField] SPAAIBehvrController spaAIBhvrController;
     [SerializeField] NpcMovementController npcMC;
     [SerializeField] Animator animationController;
+    [SerializeField] bool isInstrument,isRightHand;
+
+    
 
     Coroutine emotCoroutine;
     public int _inValidAnimCount;
@@ -28,6 +35,22 @@ public class SPAAIEmoteController : MonoBehaviour
     string emoteName;
     string emoteBundleUrl;
     string emoteBundlePath;
+
+    private void SetUpInstrument()
+    {
+        if(isInstrument)
+        {
+            if(isRightHand)
+            {
+                Instantiate(Instrument, rightHand);
+            }
+            else
+            {
+                Instantiate(Instrument, LeftHand);
+            }
+        }
+
+    }
 
     public IEnumerator PlayEmote()
     {
@@ -44,6 +67,15 @@ public class SPAAIEmoteController : MonoBehaviour
                         break;
                     }
                     emotCoroutine = StartCoroutine(DownloadAddressableActionAnimation(AnimPlayList[i]));
+               
+                    ///TODO Zeel : its temp solution need to set through api Later.....
+                    if (AnimPlayList[i].Contains("Playing Guitar"))
+                    {
+                        isInstrument = true;
+                        isRightHand = true;
+                        SetUpInstrument();
+                    }
+
                     yield return emotCoroutine;
                     if (skipCurrentIteration)
                     {

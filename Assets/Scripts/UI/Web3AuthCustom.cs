@@ -13,11 +13,11 @@ using Unity.VisualScripting;
 
 public class Web3AuthCustom : MonoBehaviour
 {
-  
+
     [Header("Web3Auth Project settings")]
     public string redirectURIAndroid = "web3auth://com.nbi.xana/auth";
     public string redirectURIiOS = "web3auth://com.nbmetaverse.xana/auth";
-    private string clientIdEmail,clientIdGoole,clientIdApple,clientIdLine,ClientId ;
+    private string clientIdEmail, clientIdGoole, clientIdApple, clientIdLine, ClientId;
     private string loginVerifier;
     private string loginSubVerifierEmail, loginSubVerifierGoole, loginSubVerifierApple, loginSubVerifierLine;
     private Web3Auth.Network network;
@@ -29,17 +29,17 @@ public class Web3AuthCustom : MonoBehaviour
     string console;
     String ExternalApitoCall;
     internal string Userresponsce;
-    internal string mysignature1 , mysignature2;
+    internal string mysignature1, mysignature2;
     private string privateKey;
     private Web3UserInfo userInfo;
     bool isNewReg;
     internal string publicAdress;
-    internal string msg1 ,msg2,currentLan;
+    internal string msg1, msg2, currentLan;
     public List<Button> myButtons;
     public float cooldownTime;
     public static Web3AuthCustom Instance;
     public Action<string> onLoginAction;
-   
+
 
     private void Awake()
     {
@@ -57,7 +57,8 @@ public class Web3AuthCustom : MonoBehaviour
 
     private void Start()
     {
-       if (APIBasepointManager.instance.IsXanaLive) {
+        if (APIBasepointManager.instance.IsXanaLive)
+        {
             //For Mainnet
             ClientId = "BPnWnv68o43X4uLNUNrBEWgu6GgletwK5bOU4SLpHFrKrkATivj36lOX3B1DE7u3qeFTksKqK30arrFLYAzAgGY";
             network = Web3Auth.Network.SAPPHIRE_MAINNET;
@@ -66,7 +67,7 @@ public class Web3AuthCustom : MonoBehaviour
             loginSubVerifierEmail = "ppp-passwordless-login";
             loginSubVerifierGoole = "ppp-google-login";
             loginSubVerifierApple = "ppp-apple-login";
-           // loginSubVerifierLine = "ppp-line-login";
+            // loginSubVerifierLine = "ppp-line-login";
             //...
             clientIdEmail = "fr46GR3TzfOJFNvgEcIcQKLtLi48cm3c";
             clientIdGoole = "1041808867611-576ma9t6bva7b94irmvbt88n02tvoujn.apps.googleusercontent.com";
@@ -77,14 +78,15 @@ public class Web3AuthCustom : MonoBehaviour
             // domainsLine = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com";
             ExternalApitoCall = ConstantsGod.xanaliaProductionAPI;
         }
-        else {
+        else
+        {
             //For Testnet
             ClientId = "BMwTnf6I4qw7qwOWP1J1BsgHKEZDGG0peo-DpCMBmurc1RUSY16Ag8LdC4on55hLiStTQxm0FJ2wOuIZU2m9gr0";
             network = Web3Auth.Network.TESTNET;
             loginVerifier = "ppp-social-login-2";
             //...verifierSubIdentifier for testnet
             loginSubVerifierEmail = "ppp-passwordless-login";
-            loginSubVerifierGoole= "ppp-google-login";
+            loginSubVerifierGoole = "ppp-google-login";
             loginSubVerifierApple = "ppp-apple-login";
             clientIdEmail = "kV31v4CokK8xEHgNcHki1nAVDCh3Friu";
             clientIdGoole = "792163717588-h9t0is3ng39opqmt1meflma087ov18k3.apps.googleusercontent.com";
@@ -125,7 +127,7 @@ public class Web3AuthCustom : MonoBehaviour
             redirectUrl = new Uri(redirectURIiOS),
 #endif
 #if UNITY_ANDROID
-   redirectUrl = new Uri(redirectURIAndroid),
+            redirectUrl = new Uri(redirectURIAndroid),
 #endif
 
             network = network,
@@ -151,13 +153,13 @@ public class Web3AuthCustom : MonoBehaviour
         {
             mfaLevel = MFALevel.NONE,
             loginProvider = selectedProvider,
-            
+
             extraLoginOptions = new ExtraLoginOptions()
             {
                 domain = domains,
                 verifierIdField = "email",
                 isVerifierIdCaseSensitive = false,
-                ui_locales=currentLan,
+                ui_locales = currentLan,
                 prompt = Prompt.LOGIN,
             }
 
@@ -170,8 +172,8 @@ public class Web3AuthCustom : MonoBehaviour
 
         web3Auth.login(options);
     }
-   
-    
+
+
     public void GoogleLogin(bool isnewreg)
     {
         WebViewManager.Instance.WebViewBool = false;
@@ -182,7 +184,7 @@ public class Web3AuthCustom : MonoBehaviour
         {
             mfaLevel = MFALevel.NONE,
             loginProvider = selectedProvider,
-           
+
 
         };
         foreach (Button button in myButtons)
@@ -202,7 +204,7 @@ public class Web3AuthCustom : MonoBehaviour
         var options = new LoginParams()
         {
             loginProvider = selectedProvider,
-            mfaLevel=MFALevel.NONE,
+            mfaLevel = MFALevel.NONE,
             extraLoginOptions = new ExtraLoginOptions()
             {
                 domain = domains,
@@ -221,21 +223,43 @@ public class Web3AuthCustom : MonoBehaviour
         web3Auth.login(options);
     }
 
-    private void onLogin(Web3AuthResponse response)
+
+    public void TelegramLogin()
     {
-#if UNITY_IOS
+        if (XanaliaSocketHandler.Instance.socketConnected)
+        {
 
-        if (PlayerPrefs.GetInt("PlayerLoginFlag") == 1)
-            PlayerPrefs.SetInt("FirstTimeappOpen", 1);
-
-        if (PlayerPrefs.GetInt("PlayerLoginFlag") == 0)
-            return;
-
+            string loginHash = Guid.NewGuid().ToString();
+            string deviceID = SystemInfo.deviceUniqueIdentifier;
+            string loginURL = ConstantsGod.TELEGRAM_LOGIN_URL + loginHash + "&deviceId=" + deviceID + "&type=XANA&comingFor=telegram";
+            Debug.Log("Telegram URL: " + loginURL);
+#if UNITY_EDITOR
+            Application.OpenURL(loginURL);
+#else
+        Application.OpenURL(loginURL);
+        return;
+        if (WebViewManager.Instance != null)
+        {
+            WebViewManager.Instance.StartwebView(loginURL);
+        }
 #endif
+        }
+    }
+
+    public void OnTelegramLogin(TelegramRoot telegramData)
+    {
+//#if UNITY_IOS
+//        Debug.LogError("IOS");
+//        if (PlayerPrefs.GetInt("PlayerLoginFlag") == 1)
+//            PlayerPrefs.SetInt("FirstTimeappOpen", 1);
+
+//        if (PlayerPrefs.GetInt("PlayerLoginFlag") == 0)
+//            return;
+//#endif
         GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
         //UserLoginSignupManager.instance.StartCoroutine(UserLoginSignupManager.instance.LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
         ConstantsHolder.xanaConstants.LoggedInAsGuest = false;
-        Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
+
         if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
         {
             if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
@@ -255,9 +279,94 @@ public class Web3AuthCustom : MonoBehaviour
 
             }
         }
+        ConstantsHolder.isWalletLogin = true;
+        PlayerPrefs.SetString("publicID", telegramData.data.user.walletAddress);
+        Web3AuthSociallogin type = Web3AuthSociallogin.None;
+        try
+        {
+            if (isNewReg)
+            {
+                type = Web3AuthSociallogin.NewRegistration;
+            }
+            else
+            {
+                type = Web3AuthSociallogin.Login;
+            }
+
+            switch (type)
+            {
+                case Web3AuthSociallogin.Login:
+                    UserLoginSignupManager.instance.emailOrWalletLoginPanel.SetActive(false);
+                    UserLoginSignupManager.instance.signUpPanel.SetActive(false);
+                    break;
+
+                case Web3AuthSociallogin.NewRegistration:
+                    UserLoginSignupManager.instance.signUpPanel.SetActive(false);
+                    UserLoginSignupManager.instance.emailOrWalletLoginPanel.SetActive(false);
+                    break;
+
+                default:
+                    break;
+            }
+            PlayerPrefs.Save();
+        }
+        catch (Exception ex)
+        {
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+            }
+            UserLoginSignupManager.instance.emailOrWalletLoginPanel.SetActive(true);
+        }
+
+        ConstantsHolder.xanaToken = ConstantsGod.AUTH_TOKEN = telegramData.data.xanaToken;
+        PlayerPrefs.SetInt("WalletConnect", 1);
+        PlayerPrefs.SetString("LoginTokenxanalia", telegramData.data.access_token);
+        PlayerPrefs.SetString("LoginToken", telegramData.data.xanaToken);
+        PlayerPrefs.SetString("UserId", telegramData.data.user.id.ToString());
+        ConstantsGod.WALLET_ADDRESS = telegramData.data.user.walletAddress;
+        ConstantsHolder.userId = telegramData.data.user.id.ToString();
+        PlayerPrefs.SetString("UserName", telegramData.data.user.username.ToString());
+        ConstantsHolder.userName = telegramData.data.user.username.ToString();
+        PlayerPrefs.Save();
+        ConnectWallet.instance.GetNFTList();
+        UserLoginSignupManager.instance.LoginWithWallet();
+        MainSceneEventHandler.OnSucessFullLogin?.Invoke();
+    }
+    private void onLogin(Web3AuthResponse response)
+    {
+#if UNITY_IOS
+
+        if (PlayerPrefs.GetInt("PlayerLoginFlag") == 1)
+            PlayerPrefs.SetInt("FirstTimeappOpen", 1);
+
+        if (PlayerPrefs.GetInt("PlayerLoginFlag") == 0)
+            return;
+
+#endif
+        GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
+        //UserLoginSignupManager.instance.StartCoroutine(UserLoginSignupManager.instance.LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
+        ConstantsHolder.xanaConstants.LoggedInAsGuest = false;
+        Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
+
+        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly && !ConstantsHolder.xanaConstants.isBackFromWorld)
+        {
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+            {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            }
+            else
+            {
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+            }
+        }
 
 
-            userInfo = response.userInfo;
+        userInfo = response.userInfo;
         privateKey = response.privKey;
         PlayerPrefs.SetString("LoggedInMail", response.userInfo.email);
         onLoginAction?.Invoke(userInfo.email);
@@ -328,14 +437,14 @@ public class Web3AuthCustom : MonoBehaviour
     public void logout()
     {
         web3Auth.logout();
-        
+
     }
 
     private void onLogout()
     {
         privateKey = null;
         userInfo = null;
-        
+
         Debug.Log("Logged out!");
         updateConsole("Logged out!");
     }
@@ -359,7 +468,7 @@ public class Web3AuthCustom : MonoBehaviour
         var signer = new EthereumMessageSigner();
         var signature1 = signer.EncodeUTF8AndSign(msg1, new EthECKey(privateKey));
         var signature2 = signer.EncodeUTF8AndSign(msg2, new EthECKey(privateKey));
-        mysignature1= signature1;
+        mysignature1 = signature1;
         mysignature2 = signature2;
         updateConsole("Signature 1" + signature1.ToString());
         updateConsole("Signature 2" + signature2.ToString());
@@ -370,19 +479,20 @@ public class Web3AuthCustom : MonoBehaviour
     {
         console = $"{console}\n{message}";
     }
-    public void detectsystemLanguage() {
+    public void detectsystemLanguage()
+    {
         string newLanguage = Application.systemLanguage.ToString();
         if (newLanguage == "English")
         {
-            currentLan= "en";
+            currentLan = "en";
         }
         else if (newLanguage == "Japanese")
         {
-            currentLan= "ja";
+            currentLan = "ja";
         }
 
     }
-   
+
     public enum Web3AuthSociallogin
     {
         None,
@@ -398,7 +508,7 @@ public class Web3AuthCustom : MonoBehaviour
         dataToSend.email = userInfo.email;
         dataToSend.is_web3_auth = 1;
         dataToSend.deviceId = SystemInfo.deviceUniqueIdentifier.ToLower();
-        
+
         string jsonData = JsonUtility.ToJson(dataToSend);
 
         using (UnityWebRequest www = UnityWebRequest.Post(ExternalApitoCall + ConstantsGod.loginExternalWalletURL, "POST"))
@@ -406,7 +516,7 @@ public class Web3AuthCustom : MonoBehaviour
             www.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(jsonData));
             www.downloadHandler = new DownloadHandlerBuffer();
             www.SetRequestHeader("Content-Type", "application/json");
-             yield return www.SendWebRequest();
+            yield return www.SendWebRequest();
 
             Debug.Log("My LoginExternalWallet response: " + www.downloadHandler.text);
             if (www.isNetworkError || www.isHttpError)

@@ -58,6 +58,12 @@ public class ActionFavouritSelectionHandler : MonoBehaviour
             item.GetComponent<ActionFavouriteDialogBtn>().CancelSelectedAction();
         }
         EmoteReactionUIHandlerLandscape.ResetActionFavouritBtn?.Invoke();
+
+        if (ActionManager.IsAnimRunning)
+        {
+            ActionManager.StopActionAnimation?.Invoke();
+        }
+        GamePlayUIHandler.inst.AnimationBtnClose.SetActive(false);
     }
 
     public void SaveActionBtnCall()

@@ -8,13 +8,15 @@ public class XSummitBgChange : MonoBehaviour
     public Sprite XSummitBackgroung;
     public Sprite XanaSummitBackgroung;
     public GameObject BackGroundSprite;
+    public bool isStartingSplash;
 
     void Start()
     {
-        
-        ChangeBG();
+        if (!isStartingSplash) {
+            ChangeSummitBG();
+        }
     }
-    public void ChangeBG()
+    public void ChangeSummitBG()
     {
         if (ConstantsHolder.xanaConstants.XSummitBg)
         {

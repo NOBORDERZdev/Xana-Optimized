@@ -145,7 +145,8 @@ public class AskForJoining : MonoBehaviour
             TurnCameras(true);
             _panel.SetActive(false);
 
-            
+
+            ScreenOrientationManager._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
 
             if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame
             && XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().isLeaderboardShown)

@@ -423,9 +423,15 @@ public class ChatSocketManager : MonoBehaviour
         ChatMsgDataHolder _dataHolder = _newMsg.GetComponent<ChatMsgDataHolder>();
         RectTransform rectTransform = _dataHolder.MsgText.GetComponent<RectTransform>();
 #if UNITY_IOS
-        rectTransform.sizeDelta = new Vector2(204.6f, rectTransform.sizeDelta.y);
+        if (!ConstantsHolder.xanaConstants.chatFlagBtnStatus)
+            rectTransform.sizeDelta = new Vector2(250f, rectTransform.sizeDelta.y);
+        else 
+            rectTransform.sizeDelta = new Vector2(204.6f, rectTransform.sizeDelta.y);
 #elif UNITY_ANDROID
-        rectTransform.sizeDelta = new Vector2(250.6f, rectTransform.sizeDelta.y);
+        if (!ConstantsHolder.xanaConstants.chatFlagBtnStatus)
+            rectTransform.sizeDelta = new Vector2(296f, rectTransform.sizeDelta.y);
+        else
+            rectTransform.sizeDelta = new Vector2(250.6f, rectTransform.sizeDelta.y);
 #endif
         _dataHolder.SetRequireData(msg, msgId, userId, blockMessage);
 
@@ -434,10 +440,13 @@ public class ChatSocketManager : MonoBehaviour
             // That My msg, and i cannot flag or block it
             _dataHolder.DotedBtn.SetActive(false);
         }
+
+
         MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = false;
         Invoke("DelayAdded", 0.05f);
 
         //StartCoroutine(nameof(Delay));
+        if(!XanaChatSystem.instance.isAiChat || msgId == "NPC")
         XanaChatSystem.instance.DisplayMsg_FromSocket(userName, msg, _dataHolder.MsgText);
 
         // Add to List
