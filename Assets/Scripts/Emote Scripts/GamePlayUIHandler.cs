@@ -41,6 +41,8 @@ public class GamePlayUIHandler : MonoBehaviour
 
     [HideInInspector]
     public bool isHideButton = false;
+    [HideInInspector]
+    public bool isFreeCam = false;
     public GameObject portraitJoystick;
     public GameObject jumpBtn;
     public GameObject JumpUI;

@@ -511,6 +511,11 @@ public class XANASummitSceneLoading : MonoBehaviour
         {
             ReferencesForGamePlay.instance.hiddenButtonDisable();
         }
+        if (GamePlayUIHandler.inst.isFreeCam)
+        {
+            ReferencesForGamePlay.instance.playerControllerNew.FreeFloatToggleButton(false);
+            ReferencesForGamePlay.instance.hiddenButtonEnable();
+        }
 
         // Map Working
         _domeMiniMap.SummitSceneReloaded();

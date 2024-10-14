@@ -29,16 +29,16 @@ public class ButtonsOnOff : MonoBehaviour
     private void Start()
     {
         button = GetComponent<Button>();
-        otherbutton = otherbutton?.GetComponent<Button>();
+        otherbutton = otherButton?.GetComponent<Button>();
     }
  
 
 
     public void HideButtonsForFreeCam(bool b)
     {
-        otherbutton.interactable = !b;
-        if (button)
-            button.interactable = !b;
+        //otherbutton.interactable = b;
+        //if (button)
+        //    button.interactable = !b;
 
         BuilderEventManager.UIToggle?.Invoke(b);
 
