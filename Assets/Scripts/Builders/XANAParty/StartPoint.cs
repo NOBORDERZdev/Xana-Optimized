@@ -12,6 +12,8 @@ public class StartPoint : MonoBehaviour
     public Animator OpenGateAnimator;
     public bool IsRaceStarted = false;
     public GameObject[] ObjectsToEnable;
+    GameObject tempDoorColider;
+    Animator tempDoorAnimator;
 
     private void OnEnable()
     {
@@ -22,7 +24,7 @@ public class StartPoint : MonoBehaviour
                 obj.SetActive(true);
             }
         }
-        if ( BuilderData.mapData != null && BuilderData.mapData.data.worldType != 1)
+        if (BuilderData.mapData != null && BuilderData.mapData.data.worldType != 1)
         {
             DisableCollider();
             return;
@@ -30,7 +32,15 @@ public class StartPoint : MonoBehaviour
         BuilderEventManager.XANAPartyRaceStart += DisableCollider;
         BuilderEventManager.XANAPartyWiatingForPlayer += EnableCollider;
         NetworkSyncManager.Instance.startGame += StartG;
-        BuilderEventManager.AfterWorldInstantiated += StartBuilderGame;
+        BuilderEventManager.AfterWorldInstantiated+= StartBuilderGame;
+
+        tempDoorColider = triggerCollider;
+        tempDoorAnimator = OpenGateAnimator;
+        //if (ConstantsHolder.xanaConstants.isBuilderGame)
+        //{
+        //    StartBuilderGame();
+        //}
+
     }
 
     private void OnDisable()
@@ -43,17 +53,18 @@ public class StartPoint : MonoBehaviour
         BuilderEventManager.XANAPartyRaceStart -= DisableCollider;
         BuilderEventManager.XANAPartyWiatingForPlayer -= EnableCollider;
         NetworkSyncManager.Instance.startGame -= StartG;
-        BuilderEventManager.AfterPlayerInstantiated -= StartBuilderGame;
+        BuilderEventManager.AfterWorldInstantiated -= StartBuilderGame;
+
     }
 
     void DisableCollider()
     {
-         print("DisableCollider Call");
+        print("DisableCollider Call");
         //triggerCollider.SetActive(false);
-         if (PhotonNetwork.IsMasterClient)
-          {
-              NetworkSyncManager.Instance.SyncPhotonView.RPC("StartGameMainRPC", RpcTarget.All);
-          }
+        if (PhotonNetwork.IsMasterClient)
+        {
+            NetworkSyncManager.Instance.SyncPhotonView.RPC("StartGameMainRPC", RpcTarget.All);
+        }
         //StartCoroutine(StartGame());
     }
 
@@ -67,14 +78,14 @@ public class StartPoint : MonoBehaviour
         triggerCollider.SetActive(true);
     }
 
-    
+
 
     IEnumerator StartGame()
     {
-        if(IsRaceStarted)
+        if (IsRaceStarted)
             yield break;
         IsRaceStarted = true;
-        if(LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
+        if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
             BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("レディー！", 1, true);
         else
             BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("READY!", 1, true);
@@ -86,32 +97,53 @@ public class StartPoint : MonoBehaviour
         yield return new WaitForSeconds(1);
         ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(true);
 
-        if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja"){ 
-            ReferencesForGamePlay.instance.XANAPartyCounterText.fontSize=50;
+        if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja") {
+            ReferencesForGamePlay.instance.XANAPartyCounterText.fontSize = 50;
             ReferencesForGamePlay.instance.XANAPartyCounterText.text = "ゴー！".ToString();
         }
-        else{ 
+        else {
             ReferencesForGamePlay.instance.XANAPartyCounterText.text = "GO!".ToString();
         }
 
         yield return new WaitForSeconds(1);
         ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(false);
         triggerCollider.SetActive(false);
-       GameplayEntityLoader.instance.PositionResetButton.SetActive(true);
+        GameplayEntityLoader.instance.PositionResetButton.SetActive(true);
 
         if (OpenGateAnimator != null)
             OpenGateAnimator.SetTrigger("OpenGate");
     }
 
+    //void InvokeBuilderGame() {
+    //    if (triggerCollider == null)
+    //        triggerCollider = GameObject.Find("Triggerwall").gameObject;
+    //    Invoke(nameof(StartBuilderGame),2f);    
+    //}
+
     void StartBuilderGame() {
         if (ConstantsHolder.xanaConstants.isBuilderGame)
         {
             IsRaceStarted = true;
-            triggerCollider.SetActive(false);
-            if (OpenGateAnimator != null)
-                OpenGateAnimator.SetTrigger("OpenGate");
+            if (triggerCollider != null)
+            {
+                triggerCollider.SetActive(false);
+            }
+            else
+            {
+                tempDoorColider.SetActive(false);
+            }
 
+            if (OpenGateAnimator != null)
+            {
+                OpenGateAnimator.SetTrigger("OpenGate");
+            }
+            else
+            {
+                tempDoorAnimator.SetTrigger("OpenGate");
+            }
         }
     }
+
+
 
 }
