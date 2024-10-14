@@ -8,13 +8,13 @@ public class XSummitBgChange : MonoBehaviour
     public Sprite XSummitBackgroung;
     public Sprite XanaSummitBackgroung;
     public GameObject BackGroundSprite;
+    public bool isStartingSplash;
 
     void Start()
     {
-        
-            Invoke("ChangeSummitBG", 0.4f); // Call ChangeBackground after 2 seconds
-        
-       
+        if (!isStartingSplash) {
+            ChangeSummitBG();
+        }
     }
     public void ChangeSummitBG()
     {

@@ -314,6 +314,8 @@ public class SummitAIChatHandler : MonoBehaviour
         {
             if (aiNPC[i] != null)
                 Destroy(aiNPC[i]);
+
+            NPCCount--;
         }
 
         aiNPC.Clear();
