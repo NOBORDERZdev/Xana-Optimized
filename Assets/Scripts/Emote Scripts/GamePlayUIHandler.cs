@@ -39,6 +39,8 @@ public class GamePlayUIHandler : MonoBehaviour
 
     public LoadEmoteAnimations ref_LoadEmoteAnimations;
 
+    [HideInInspector]
+    public bool isHideButton = false;
     public GameObject portraitJoystick;
     public GameObject jumpBtn;
     public GameObject JumpUI;

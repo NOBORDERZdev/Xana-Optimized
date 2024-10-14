@@ -11,6 +11,7 @@ public class ButtonsOnOff : MonoBehaviour
     Button otherbutton;
     public void ClickHidebtnOn()
     {
+        GamePlayUIHandler.inst.isHideButton = true;
         otherButton.SetActive(true);
         this.gameObject.SetActive(false);
         ReferencesForGamePlay.instance.hiddenButtonDisable();
@@ -18,6 +19,7 @@ public class ButtonsOnOff : MonoBehaviour
     }
     public void ClickHidebtnOff()
     {
+        GamePlayUIHandler.inst.isHideButton = false;
         this.gameObject.SetActive(true);
         otherButton.SetActive(false);
         ReferencesForGamePlay.instance.hiddenButtonEnable();
