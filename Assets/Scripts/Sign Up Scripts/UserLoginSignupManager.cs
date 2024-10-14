@@ -94,11 +94,27 @@ public class UserLoginSignupManager : MonoBehaviour
     EyesBlinking ref_EyesBlinking;
     [Header("Bools Fields")]
     private bool _isUserClothDataFetched = false;
+
+    public float DisplayNameFieldMoveUpValue = 500f; // Distance to move the input field up
+    Vector2 _originalPosition;
+    AdvancedInputField _displayNameInputField;
     //public bool LoggedInAsGuest = false;
+
+    #region XANA PARTY WORLD
+    public GameObject DownloadPermissionPopup;
+    #endregion
 
     private void OnEnable()
     {
         instance = this;
+
+        if (ConstantsHolder.xanaConstants.EnableSignInPanelByDefault)
+        {
+            emailOrWalletLoginPanel.SetActive(true);
+            ClearInputFieldsData();
+        }
+
+
         if (!File.Exists(GameManager.Instance.GetStringFolderPath()))
         {
             SaveCharacterProperties.instance.CreateFileFortheFirstTime();
@@ -120,6 +136,17 @@ public class UserLoginSignupManager : MonoBehaviour
         {
             Directory.CreateDirectory(saveDir);
         }
+
+        _displayNameInputField = displayrNameField.GetComponent<AdvancedInputField>();
+
+        _originalPosition = _displayNameInputField.GetComponent<RectTransform>().anchoredPosition;
+
+        
+        if (_displayNameInputField != null)
+        {
+            _displayNameInputField.OnBeginEdit.AddListener(MoveInputFieldUp);
+            _displayNameInputField.OnEndEdit.AddListener(MoveInputFieldDown);
+        }
     }
 
     private void OnDisable()
@@ -129,12 +156,32 @@ public class UserLoginSignupManager : MonoBehaviour
     }
 
 
+    private void MoveInputFieldUp(BeginEditReason reason)
+    {
+        // Move the input field up by a certain distance
+        _displayNameInputField.GetComponent<RectTransform>().anchoredPosition = new Vector2(
+            _originalPosition.x,
+            _originalPosition.y + DisplayNameFieldMoveUpValue
+        );
+    }
+
+    private void MoveInputFieldDown(string text, EndEditReason reason)
+    {
+        // Move the input field back to its original position
+        _displayNameInputField.GetComponent<RectTransform>().anchoredPosition = _originalPosition;
+    }
+
+
     void CheckForAutoLogin()
     {
         // If already logged in than Return
         if (ConstantsHolder.loggedIn)
         {
             InventoryManager.instance.SetDefaultValues();
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            {
+                WorldManager.instance.StartCoroutine(WorldManager.instance.xanaParty());
+            }
             return;
         }
 
@@ -237,7 +284,37 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
         ConstantsHolder.isWalletLogin = true;
         WalletAutoLogin();
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            WorldManager.instance.StartCoroutine(WorldManager.instance.xanaParty());
+        }
     }
+
+    #region XANA PARTY WORLD
+
+    public IEnumerator CreateUserForPenpenzLeaderboard(string userId, string userName)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("user_id", userId);
+        form.AddField("user_name", userName);
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Post(ConstantsGod.API_BASEURL_Penpenz + ConstantsGod.CreateUser_Penpenz, form))
+        {
+            webRequest.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.Log("Error: " + webRequest.error);
+            }
+            else
+            {
+                Debug.Log("Response: " + webRequest.downloadHandler.text);
+            }
+        }
+    }
+
+    #endregion
     #region SignUp Functions 
 
     public void ShowWelcomeScreen()
@@ -262,10 +339,18 @@ public class UserLoginSignupManager : MonoBehaviour
                 DefaultClothDatabase.instance.GetComponent<SaveCharacterProperties>().SavePlayerProperties();
                 InventoryManager.instance.OnSaveBtnClicked();  // reg complete go home
             }
+            if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit && !ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+            {
+                if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                {
+                    Screen.orientation = ScreenOrientation.Portrait;
+                    signUpOrloginSelectionPanel.SetActive(false);
+                }
+
+            }
         }
         else
         {
-
             signUpOrloginSelectionPanel.SetActive(false);
 
             if (!PlayerPrefs.HasKey("shownWelcome"))
@@ -278,8 +363,6 @@ public class UserLoginSignupManager : MonoBehaviour
                 {
                     InventoryManager.instance.StartPanel_PresetParentPanelSummit.SetActive(true);
                 }
-               
-               
             }
         }
 
@@ -340,7 +423,12 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void BackFromLoginSelection()
     {
-       
+        if (ConstantsHolder.xanaConstants.EnableSignInPanelByDefault)
+        {
+            emailOrWalletLoginPanel.SetActive(false);
+            return;
+        }
+
         if (!ConstantsHolder.xanaConstants.openLandingSceneDirectly && ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
         {
 
@@ -349,7 +437,9 @@ public class UserLoginSignupManager : MonoBehaviour
         else {
             
             signUpOrloginSelectionPanel.SetActive(true);
+
         }
+        emailOrWalletLoginPanel.SetActive(false);
     }
 
     public void OnClickLoginWithEmail()
@@ -418,7 +508,7 @@ public class UserLoginSignupManager : MonoBehaviour
     //wallet login functions 
     public void WalletAutoLogin()
     {
-        if (!ConstantsHolder.loggedIn)
+        if (!ConstantsHolder.loggedIn && !ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
             //Debug.Log("Firebase: Wallet Login Event");
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Login_Wallet_Success.ToString());
@@ -644,7 +734,10 @@ public class UserLoginSignupManager : MonoBehaviour
         GetOwnedNFTsFromAPI();
         UserPassManager.Instance.GetGroupDetails("freeuser");
         UserPassManager.Instance.GetGroupDetailsForComingSoon();
-        StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
+        }
         CharacterHandler.instance.playerPostCanvas.GetComponent<LookAtCamera>().GetLatestPost();
         if (GameManager.Instance.UiManager != null)//rik
         {
@@ -1104,7 +1197,17 @@ public class UserLoginSignupManager : MonoBehaviour
             PlayerPrefs.SetInt("IsProcessComplete", 1);// user is registered as guest/register.
             GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
             if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
-            LoadSummit();
+            {
+                LoadSummit();
+            }
+            else {
+                if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                    if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                {
+                    Screen.orientation = ScreenOrientation.Portrait;
+                }
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+            }
             return;
         }
         ConstantsHolder.uniqueUserName = userUsername;
@@ -1116,44 +1219,64 @@ public class UserLoginSignupManager : MonoBehaviour
         MyClassOfRegisterWithEmail myobjectOfEmail = new MyClassOfRegisterWithEmail();
         string _bodyJson = JsonUtility.ToJson(myobjectOfEmail.GetdataFromClass(emailForSignup, passwordForSignup));
 
-
-
-        if (ConstantsHolder.isWalletLogin)
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
-
-
-            StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, displayrname, (isSucess) =>
+            StartCoroutine(CreateUserForPenpenzLeaderboard(ConstantsHolder.userId, userUsername));
+            if (PlayerPrefs.GetString("DownloadPermission", "false") == "false")
             {
-
-                Debug.Log("Wallet Signup");
-
-                GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
-
-            }));
-           
-            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
-            {
-               // LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
-                RequestSubmitUsername(userUsername);
+                DownloadPermissionPopup.SetActive(true);
             }
-            else
-            {
-                GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
-                LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
-                if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
-                {
-                    MainSceneEventHandler.OpenLandingScene?.Invoke();
-                    return;
-                }
-                else {
-                    Screen.orientation = ScreenOrientation.Portrait;
-                    LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
-                    enterNamePanel.SetActive(false);
-                }
-            }
-           
+
+            PlayerPrefs.SetInt("IsLoggedIn", 1);
+            PlayerPrefs.SetString("PlayerName", userUsername);
+            ConstantsHolder.userName = userUsername;
+            GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(userUsername);
+            OpenUIPanel(16);
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
         }
-        
+        if (XANAPartyManager.Instance.EnableXANAPartyGuest)
+        {
+            return;
+        }
+        else
+        {
+            if (ConstantsHolder.isWalletLogin)
+            {
+
+
+                StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, displayrname, (isSucess) =>
+                {
+
+                    Debug.Log("Wallet Signup");
+
+                    GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
+
+                }));
+
+                if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+                {
+                    // LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+                    RequestSubmitUsername(userUsername);
+                }
+                else
+                {
+                    GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
+                    LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
+                    if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+                    {
+                        MainSceneEventHandler.OpenLandingScene?.Invoke();
+                        return;
+                    }
+                    else
+                    {
+                        Screen.orientation = ScreenOrientation.Portrait;
+                        LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+                        enterNamePanel.SetActive(false);
+                    }
+                }
+
+            }
+        }
     }
     public void UserDisplayNameErrors(string errorMSg)
     {

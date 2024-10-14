@@ -78,13 +78,14 @@ public class SpaceXHandler : MonoBehaviour
     {
         string SceneId;
         //StartCoroutine(LoadingHandler.Instance.FadeIn());
-        LoadingHandler.Instance.ShowVideoLoading();
+        //LoadingHandler.Instance.ShowVideoLoading();
         if (APIBasepointManager.instance.IsXanaLive)
             SceneId = PlanetWorldId_Mainnet[x];
         else
             SceneId = PlanetWorldId_Testnet[x];
 
         ConstantsHolder.isFromXANASummit = true;
+        ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
         SummitSceneLoading.LoadingSceneByIDOrName(SceneId, _ReturnPlayerPos);
         Destroy(VideoPlayer.clip);
         DisableVideoPlayer();

@@ -85,27 +85,35 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         {
             if (ConstantsHolder.xanaConstants.isBuilderScene)
                 GamificationComponentData.instance.nameCanvas = PhotonUserName.GetComponentInParent<Canvas>();
+            if(SMBCManager.Instance)
+                SMBCManager.Instance.NameCanvas= PhotonUserName.GetComponentInParent<Canvas>();
             if (AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer == null)
             {
-                AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = this.gameObject;
+                if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+                {
+                    AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = this.gameObject;
+                }
                 PhotonUserName.text = PhotonNetwork.NickName;
 
-                if(!ConstantsHolder.isPenguin)
+                if(!ConstantsHolder.isPenguin || !ConstantsHolder.xanaConstants.isXanaPartyWorld)
                 {
                     AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().animator = this.GetComponent<Animator>();
                     AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().playerRig = GetComponent<FirstPersonJump>().jumpRig;
                 }
             }
         }
-        StartCoroutine(WaitForArrowIntanstiate(this.transform, !this.GetComponent<PhotonView>().IsMine));
-        try
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
-            if(AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer)
-                AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
-        }
-        catch (Exception e)
-        {
-            print(e.Message);
+            StartCoroutine(WaitForArrowIntanstiate(this.transform, !this.GetComponent<PhotonView>().IsMine));
+            try
+            {
+                if (AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer)
+                    AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
+            }
+            catch (Exception e)
+            {
+                print(e.Message);
+            }
         }
         VoiceView = GetComponent<PhotonVoiceView>();
     }
@@ -143,7 +151,10 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     private void OnEnable()
     {
-        ReactionDelegateButtonClickEvent += OnChangeReactionIcon;
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            ReactionDelegateButtonClickEvent += OnChangeReactionIcon;
+        }
         CommentDelegateButtonClickEvent += OnChangeText;
         userNameToggleDelegate += OnChangeUsernameToggle;
 
@@ -151,7 +162,10 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     private void OnDisable()
     {
-        ReactionDelegateButtonClickEvent -= OnChangeReactionIcon;
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            ReactionDelegateButtonClickEvent -= OnChangeReactionIcon;
+        }
         CommentDelegateButtonClickEvent -= OnChangeText;
         userNameToggleDelegate -= OnChangeUsernameToggle;
 

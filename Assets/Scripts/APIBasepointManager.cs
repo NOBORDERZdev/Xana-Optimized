@@ -54,8 +54,9 @@ public class APIBasepointManager : MonoBehaviour
         if (IsXanaLive)
         {
             ConstantsGod.API_BASEURL = "https://app-api.xana.net";
-            ConstantsGod.API_BASEURL_XANALIA = "https://api.xanalia.com";    
+            ConstantsGod.API_BASEURL_XANALIA = "https://api.xanalia.com";
 
+            ConstantsGod.API_BASEURL_Penpenz = "https://penpenz-prod.xana.net/"; // For Penpenz
             //_moralisServerSettings.DappIconUrl = MainDappURL;
             //_moralisServerSettings.DappId = MainAppID;
         }
@@ -64,6 +65,7 @@ public class APIBasepointManager : MonoBehaviour
             ConstantsGod.API_BASEURL = "https://api-test.xana.net";
             ConstantsGod.API_BASEURL_XANALIA = "https://testapi.xanalia.com";
 
+            ConstantsGod.API_BASEURL_Penpenz = "https://penpenz-dev.xana.net/"; // For Penpenz
             //_moralisServerSettings.DappIconUrl = testDappURL;
             //_moralisServerSettings.DappId = TestAppID;
         }

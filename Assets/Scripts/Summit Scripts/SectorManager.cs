@@ -9,8 +9,9 @@ public class SectorManager : MonoBehaviour
  
     public static SectorManager Instance;
 
-    public Coroutine routine;
+    public IEnumerator routine;
 
+    string prevSector = "Default";
     private void Awake()
     {
 
@@ -45,25 +46,31 @@ public class SectorManager : MonoBehaviour
 
     public void TriggeredExit(string Name)
     {
+        if (prevSector != Name) { prevSector = Name; } else { return; }
         if (routine != null)
         {
             StopCoroutine(routine);
         }
-        
-       routine = StartCoroutine(WaitBeforeHandover(Name));
+        if (MutiplayerController.instance.getSector() == name) { Debug.Log("Discard Sector "); return; }
+        routine = WaitBeforeHandover(Name);
+        StartCoroutine(routine);
 
 
     }
 
     public IEnumerator WaitBeforeHandover(string Name)
     {
+      
         if(ConstantsHolder.DiasableMultiPartPhoton) {   yield break;    }
-        Debug.Log("Sectror trigger status  " + ConstantsHolder.TempDiasableMultiPartPhoton + "  shifting " + MutiplayerController.instance.isShifting);
-        yield return new WaitUntil(() => (!ConstantsHolder.TempDiasableMultiPartPhoton && !MutiplayerController.instance.isShifting));
+       
        
 
 
+        yield return new WaitForSeconds(1);
+        Debug.Log("Sectror trigger status  " + ConstantsHolder.TempDiasableMultiPartPhoton + "  shifting " + MutiplayerController.instance.isShifting);
+        yield return new WaitUntil(() => (!ConstantsHolder.TempDiasableMultiPartPhoton && !MutiplayerController.instance.isShifting));
         MutiplayerController.instance.Ontriggered(Name);
+        routine = null;
     }
 
 

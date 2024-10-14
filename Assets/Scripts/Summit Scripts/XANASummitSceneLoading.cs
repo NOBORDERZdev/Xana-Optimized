@@ -94,12 +94,17 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (string.IsNullOrEmpty(domeGeneralData.world))
             return;
 
-     
+        if (domeGeneralData.is_penpenz && ConstantsHolder.xanaConstants.LoggedInAsGuest)
+        {
+            GamePlayUIHandler.inst.SignInPopupForGuestUser.SetActive(true);
+            return;
+        }
 
         if (domeGeneralData.isSubWorld)
         {
             ConstantsHolder.domeId = domeId;
             ConstantsHolder.isFromXANASummit = true;
+            ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
             LoadingHandler.Instance.DisableDomeLoading();
             bool Success = await SubWorldsHandlerInstance.CreateSubWorldList(domeGeneralData, playerPos);
             if (Success)
@@ -136,7 +141,6 @@ public class XANASummitSceneLoading : MonoBehaviour
         string sceneTobeUnload = WorldItemView.m_EnvName;
 
         XANASummitDataContainer.StackInfoWorld subWorldInfo = new XANASummitDataContainer.StackInfoWorld();
-       
         subWorldInfo.id = ConstantsHolder.xanaConstants.MuseumID;
         subWorldInfo.name = sceneTobeUnload;
         subWorldInfo.isBuilderWorld = ConstantsHolder.xanaConstants.isBuilderScene;
@@ -157,6 +161,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         gameplayEntityLoader.addressableSceneName = domeGeneralData.world;
         ConstantsHolder.userLimit = domeGeneralData.maxPlayer;
         ConstantsHolder.isPenguin = domeGeneralData.IsPenguin;
+        ConstantsHolder.xanaConstants.isXanaPartyWorld = domeGeneralData.is_penpenz;
         ConstantsHolder.isFixedHumanoid = domeGeneralData.Ishumanoid;
         ConstantsHolder.Thumbnail = domeGeneralData.world360Image;
         ConstantsHolder.AvatarIndex = domeGeneralData.AvatarIndex;
@@ -172,8 +177,9 @@ public class XANASummitSceneLoading : MonoBehaviour
         multiplayerController.isConnecting = false;
         gameplayEntityLoader.isEnvLoaded = false;
         gameplayEntityLoader.isAlreadySpawned = true;
+        ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
         ConstantsHolder.isFromXANASummit = true;
-
+       if(!domeGeneralData.isSubWorld) LoadingHandler.Instance.startLoading();
         XanaWorldDownloader.ResetAll();
         BuilderEventManager.ResetSummit?.Invoke();
 
@@ -197,29 +203,31 @@ public class XANASummitSceneLoading : MonoBehaviour
             if (_stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea)
             {
                 _stayTimeTrackerForSummit.StopTrackingTime();
-                _stayTimeTrackerForSummit.CalculateAndLogStayTime();
+                //_stayTimeTrackerForSummit.CalculateAndLogStayTime();
                 _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = false;
             }
             _stayTimeTrackerForSummit.DomeId = domeId;
-            if (domeGeneralData.worldType)
-                _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.builderWorldId;
-            else
-                _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.worldId;
             _stayTimeTrackerForSummit.IsBuilderWorld = domeGeneralData.worldType;
+            string eventName;
+            if (domeGeneralData.worldType)
+            {
+                _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.builderWorldId;
+                eventName = "TV_Dome_" + domeId + "_BW_" + domeGeneralData.builderWorldId;
+            }
+            else
+            {
+                _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.worldId;
+                eventName = "TV_Dome_" + domeId + "_XW_" + domeGeneralData.worldId;
+            }
+            GlobalConstants.SendFirebaseEventForSummit(eventName);
             _stayTimeTrackerForSummit.StartTrackingTime();
         }
-        string eventName;
-        if (domeGeneralData.worldType)
-            eventName = "TV_Dome_" + domeId + "_BW_" + domeGeneralData.builderWorldId;
-        else
-            eventName = "TV_Dome_" + domeId + "_XW_" + domeGeneralData.worldId;
-
 
         if (ReferencesForGamePlay.instance.playerControllerNew.isFirstPerson)
         {
             GamePlayUIHandler.inst.OnSwitchCameraClick();
         }
-        GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
+        //GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
 
         if (ActionManager.IsAnimRunning)
         {
@@ -229,10 +237,6 @@ public class XANASummitSceneLoading : MonoBehaviour
             //  EmoteAnimationHandler.Instance.StopAllCoroutines();
         }
         GameplayEntityLoader.instance.AssignRaffleTickets(domeId);
-
-       
-        GlobalConstants.SendFirebaseEventForSummit(eventName);
-    
     }
 
 
@@ -278,6 +282,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         subWorldInfo.domeId = ConstantsHolder.domeId;
         subWorldInfo.haveSubWorlds = ConstantsHolder.HaveSubWorlds;
         subWorldInfo.isFromSummitWorld = ConstantsHolder.isFromXANASummit;
+        subWorldInfo.thumbnail = ConstantsHolder.Thumbnail;
         subWorldInfo.playerTrasnform = currentPlayerPos;
         XANASummitDataContainer.LoadedScenesInfo.Push(subWorldInfo);
 
@@ -286,14 +291,14 @@ public class XANASummitSceneLoading : MonoBehaviour
         gameplayEntityLoader.addressableSceneName = worldInfo.data.name;
         ConstantsHolder.userLimit = worldInfo.data.user_limit;
         ConstantsHolder.xanaConstants.MuseumID = worldInfo.data.id;
-        ConstantsHolder.HaveSubWorlds = false;
+        //ConstantsHolder.HaveSubWorlds = false;
         ConstantsHolder.Thumbnail = worldInfo.data.thumbnail;
         ConstantsHolder.xanaConstants.isBuilderScene = worldInfo.data.entityType == "USER_WORLD" ? true : false;
         gameplayEntityLoader.currentEnvironment = null;
         multiplayerController.isConnecting = false;
         gameplayEntityLoader.isEnvLoaded = false;
         gameplayEntityLoader.isAlreadySpawned = true;
-
+        LoadingHandler.Instance.startLoading();
         ReferencesForGamePlay.instance.m_34player.transform.localScale = new Vector3(0, 0, 0);
 
         multiplayerController.Disconnect();
@@ -317,7 +322,13 @@ public class XANASummitSceneLoading : MonoBehaviour
         {
             GamePlayUIHandler.inst.OnSwitchCameraClick();
         }
-        GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
+        if (SubWorldsHandlerInstance.IsEnteringInSubWorld)
+        {
+            SubWorldsHandlerInstance.IsEnteringInSubWorld = false;
+            SubWorldsHandlerInstance.CallAnalyticsForSubWorlds();
+        }
+
+        //GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
         if (ActionManager.IsAnimRunning)
         {
             ActionManager.StopActionAnimation?.Invoke();
@@ -368,7 +379,7 @@ public class XANASummitSceneLoading : MonoBehaviour
             if (_stayTimeTrackerForSummit.IsTrackingTime)
             {
                 _stayTimeTrackerForSummit.StopTrackingTime();
-                _stayTimeTrackerForSummit.CalculateAndLogStayTime();
+                //_stayTimeTrackerForSummit.CalculateAndLogStayTime();
                 _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = true;
             }
         }
@@ -393,6 +404,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         ConstantsHolder.xanaConstants.isBuilderScene = subWorldInfo.isBuilderWorld;
         ConstantsHolder.xanaConstants.MuseumID = subWorldInfo.id;
         ConstantsHolder.isFromXANASummit = subWorldInfo.isFromSummitWorld;
+        Debug.LogError("Back loading..."+ subWorldInfo.haveSubWorlds);
         ConstantsHolder.HaveSubWorlds = subWorldInfo.haveSubWorlds;
         ConstantsHolder.Thumbnail = subWorldInfo.thumbnail;
         ConstantsHolder.isPenguin = false;
@@ -422,14 +434,14 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         // Map Working
         _domeMiniMap.SummitSceneReloaded();
-        SummitMiniMapStatusOnSceneChange(true);
+        //SummitMiniMapStatusOnSceneChange(true);
 
         ConstantsHolder.xanaConstants.comingFrom = ConstantsHolder.ComingFrom.None;
         if (ReferencesForGamePlay.instance.playerControllerNew.isFirstPerson)
         {
             GamePlayUIHandler.inst.OnSwitchCameraClick();
         }
-        GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
+        //GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
         if (ActionManager.IsAnimRunning)
         {
             ActionManager.StopActionAnimation?.Invoke();
@@ -447,6 +459,12 @@ public class XANASummitSceneLoading : MonoBehaviour
             if (dataContainer.summitData.domes[i].id == domeId)
             {
                 domeGeneralData.id = dataContainer.summitData.domes[i].id;
+
+                if (dataContainer.summitData.domes[i].world.Contains("D + Infinity Labo") || dataContainer.summitData.domes[i].world.Contains("D +  Infinity Labo"))
+                {
+                    dataContainer.summitData.domes[i].world = "D_Infinity_Labo";
+                }
+
                 domeGeneralData.world = dataContainer.summitData.domes[i].world;
                 domeGeneralData.worldType = dataContainer.summitData.domes[i].worldType;
                 domeGeneralData.experienceType = dataContainer.summitData.domes[i].experienceType;
@@ -462,6 +480,7 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.world360Image = dataContainer.summitData.domes[i].world360Image;
                 domeGeneralData.companyLogo = dataContainer.summitData.domes[i].companyLogo;
                 domeGeneralData.SubWorlds = dataContainer.summitData.domes[i].SubWorlds;
+                domeGeneralData.is_penpenz = dataContainer.summitData.domes[i].is_penpenz;
                 //if (dataContainer.summitData1.domes[i].worldType)
                 //    return new Tuple<string[],string>(new[] { dataContainer.summitData1.domes[i].world, "1", dataContainer.summitData1.domes[i].builderWorldId }, dataContainer.summitData1.domes[i].experienceType);
                 //else
@@ -503,6 +522,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (WorldItemView.m_EnvName == "XANA Summit")
         {
             ConstantsHolder.isFromXANASummit = false;
+            ReferencesForGamePlay.instance.ChangeExitBtnImage(true);
         }
         setPlayerPositionDelegate = null;
     }

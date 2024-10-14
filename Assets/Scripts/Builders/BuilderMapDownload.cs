@@ -15,6 +15,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using Photon.Pun;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class BuilderMapDownload : MonoBehaviour
 {
@@ -46,6 +47,13 @@ public class BuilderMapDownload : MonoBehaviour
     internal LevelData levelData;
     private AISkyboxItem aiSkyboxItem;
     #endregion
+
+    #region XANA PARTY WORLD
+    [Header("Dynamic Object Prefab")]
+    public GameObject MultiplayerComponent;
+
+    public GameObject XANAPartyLoading;
+    #endregion
     //internal string response;
 
     #region UNITY_METHOD
@@ -55,6 +63,9 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.ApplySkyoxSettings += SetSkyProperties;
         BuilderEventManager.AfterPlayerInstantiated += SetPlayerProperties;
         BuilderEventManager.AfterWorldInstantiated += XanaSetItemData;
+
+        if (ConstantsHolder.XanaPartyMaxPlayers == 1)
+            GamificationComponentData.instance.SinglePlayer = true;
     }
 
     private void OnDisable()
@@ -64,6 +75,7 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.AfterPlayerInstantiated -= SetPlayerProperties;
         BuilderEventManager.AfterWorldInstantiated -= XanaSetItemData;
         BuilderData.spawnPoint.Clear();
+        BuilderData.StartFinishPoints.Clear();
 
         if (GamificationComponentData.instance.aiSkyMaterial != null)
             Destroy(GamificationComponentData.instance.aiSkyMaterial.mainTexture); // AR changes
@@ -74,6 +86,11 @@ public class BuilderMapDownload : MonoBehaviour
     {
         BuilderEventManager.OnBuilderDataFetch?.Invoke(ConstantsHolder.xanaConstants.builderMapID, ConstantsGod.AUTH_TOKEN);
         GamificationComponentData.instance.isSkyLoaded = false;
+
+        if(ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            XANAPartyLoading.SetActive(true);
+        }
     }
 
 
@@ -174,6 +191,11 @@ public class BuilderMapDownload : MonoBehaviour
             }));
         }
 
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            XANAPartyLoading.SetActive(false);
+        }
+
         GamificationComponentData.instance.previousSkyID = levelData.skyProperties.skyId;
         if (levelData.skyProperties.skyId != -1)
         {
@@ -200,6 +222,12 @@ public class BuilderMapDownload : MonoBehaviour
         if (levelData.audioPropertiesBGM != null)
             BuilderEventManager.BGMDownloader?.Invoke(levelData.audioPropertiesBGM);
 
+        if (serverData.data.worldType == 1)
+        {
+            GamificationComponentData.instance.withMultiplayer = true;
+            ConstantsHolder.xanaConstants.isXanaPartyWorld = true;
+        }
+
         if (GamificationComponentData.instance.withMultiplayer && levelData.otherItems.Count > 0)
         {
             yield return StartCoroutine(DownloadAddressableGamificationObject());
@@ -207,7 +235,7 @@ public class BuilderMapDownload : MonoBehaviour
         }
 
         //Debug.LogError("Map is downloaed");
-        
+
     }
 
     public IEnumerator GemificationObjectLoadWait(float waitTime)
@@ -239,10 +267,10 @@ public class BuilderMapDownload : MonoBehaviour
                 //AsyncOperationHandle loadOp = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key, ref flag);
                 //if (!flag)
                 //{
-                    if (key != "Hiragino-Sans")
-                        loadOp = Addressables.LoadAssetAsync<GameObject>(key);
-                    else
-                        loadOp = Addressables.LoadAssetAsync<TMPro.TMP_FontAsset>(key);
+                if (key != "Hiragino-Sans")
+                    loadOp = Addressables.LoadAssetAsync<GameObject>(key);
+                else
+                    loadOp = Addressables.LoadAssetAsync<TMPro.TMP_FontAsset>(key);
                 //}
                 while (!loadOp.IsDone)
                     yield return null;
@@ -274,6 +302,7 @@ public class BuilderMapDownload : MonoBehaviour
     public IEnumerator DownloadAssetsData(Action CallBack)
     {
         GamificationComponentData.instance.xanaItems.Clear();
+        GamificationComponentData.instance.MultiplayerComponentstoSet.Clear();
         int count = levelData.otherItems.Count;
         progressPlusValue = 0.6f / count;
         LoadingHandler.Instance.UpdateLoadingStatusText("Downloading Assets...");
@@ -507,7 +536,7 @@ public class BuilderMapDownload : MonoBehaviour
                 //bool flag = false;
                 //loadSkyBox = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(skyboxMatKey, ref flag);
                 //if (!flag)
-                    loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
+                loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
                 while (!loadSkyBox.IsDone)
                 {
                     yield return null;
@@ -527,7 +556,7 @@ public class BuilderMapDownload : MonoBehaviour
                     AddressableDownloader.bundleAsyncOperationHandle.Add(loadSkyBox);
                     Material _mat = loadSkyBox.Result as Material;
                     _mat.shader = Shader.Find(skyBoxItem.shaderName);
-                    if (_mat.GetTexture("_Tex") == null && skyProperties.skyId == 32)
+                    if (skyProperties.skyId == 32 && _mat.GetTexture("_Tex") == null)
                     {
                         //Set texture when getting null from addressable
                         _mat.SetTexture("_Tex", GamificationComponentData.instance.defaultSkyTex);
@@ -552,7 +581,7 @@ public class BuilderMapDownload : MonoBehaviour
                     //Remove texture downloading code
                     yield return StartCoroutine(AISkyTextureDownload());
                 }
-                GamificationComponentData.instance.aiSkyMaterial.mainTexture =skyBoxItem.texture;
+                GamificationComponentData.instance.aiSkyMaterial.mainTexture = skyBoxItem.texture;
                 RenderSettings.skybox = GamificationComponentData.instance.aiSkyMaterial;
                 directionalLight.intensity = skyBoxItem.lightPPData.directionalLightData.lightIntensity;
                 characterLight.intensity = skyBoxItem.lightPPData.directionalLightData.character_directionLightIntensity;
@@ -597,7 +626,8 @@ public class BuilderMapDownload : MonoBehaviour
             SetLensFlareData(null, 1, 1);
         GamificationComponentData.instance.isSkyLoaded = true;
         directionalLight.gameObject.SetActive(true);
-        RenderSettings.ambientLight = TimeStats.playerCanvas.oldAmbientColorBlind;
+        if (TimeStats.playerCanvas)
+            RenderSettings.ambientLight = TimeStats.playerCanvas.oldAmbientColorBlind;
         DynamicGI.UpdateEnvironment();
     }
 
@@ -680,6 +710,10 @@ public class BuilderMapDownload : MonoBehaviour
                 yield return StartCoroutine(GemificationObjectLoadWait(1f));
             }
 
+            while (GamificationComponentData.instance.MultiplayerComponentstoSet.Count != GamificationComponentData.instance.MultiplayerComponentData.Count)
+            {
+                yield return new WaitForSeconds(5f);
+            }
             foreach (XanaItem xanaItem in GamificationComponentData.instance.xanaItems)
             {
                 xanaItem.SetData(xanaItem.itemData);
@@ -693,6 +727,12 @@ public class BuilderMapDownload : MonoBehaviour
         }
 
         //PlayerSetup();
+
+        Hashtable _hash = new Hashtable();
+        _hash.Add("IsReady", true);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(_hash);
+
+        PlayerSetup();
 
         //call for Execute all rpcs of this room
         BuilderEventManager.RPCcallwhenPlayerJoin?.Invoke();
@@ -743,7 +783,7 @@ public class BuilderMapDownload : MonoBehaviour
         Vignette vignette;
         postProcessVol.profile.TryGet(out vignette);
 
-        if (vignette)
+        if (vignette && GamificationComponentData.instance.buildingDetect)
         {
             GamificationComponentData.instance.buildingDetect.defaultIntensityvalue = (float)vignette.intensity;
             GamificationComponentData.instance.buildingDetect.defaultSmootnesshvalue = (float)vignette.smoothness;
@@ -777,12 +817,34 @@ public class BuilderMapDownload : MonoBehaviour
         XanaItem xanaItem = newObj.GetComponent<XanaItem>();
         xanaItem.itemData = _itemData;
         newObj.transform.localScale = _itemData.Scale;
-        if (_itemData.ItemID.Contains("SPW") || _itemData.spawnComponent)
+        if (_itemData.ItemID.Contains("SFP") && serverData.data.worldType == 1)
+        {
+            StartFinishPointData startFinishPlatform = new StartFinishPointData();
+            startFinishPlatform.ItemID = _itemData.ItemID;
+            startFinishPlatform.SpawnObject = newObj;
+            startFinishPlatform.IsStartPoint = startFinishPlatform.SpawnObject.GetComponent<StartPoint>() != null ? true : false;
+            BuilderData.StartFinishPoints.Add(startFinishPlatform);
+        }
+        else if (_itemData.ItemID.Contains("SPW") || _itemData.spawnComponent)
         {
             SpawnPointData spawnPointData = new SpawnPointData();
             spawnPointData.spawnObject = newObj;
             spawnPointData.IsActive = _itemData.spawnerComponentData.IsActive;
             BuilderData.spawnPoint.Add(spawnPointData);
+        }
+
+        if (IsMultiplayerComponent(_itemData) && GamificationComponentData.instance.withMultiplayer)
+        {
+            newObj.SetActive(false);
+
+            GamificationComponentData.instance.MultiplayerComponentData.Add(_itemData);
+            var multiplayerObject = Instantiate(MultiplayerComponent, _itemData.Position, _itemData.Rotation);
+            MultiplayerComponentData multiplayerComponentData = new();
+            multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
+            multiplayerComponentData.viewID = 0;
+            GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
+
+            return;
         }
 
         //meshCombinerRef.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
@@ -857,7 +919,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     void LoadAddressableSceneAfterDownload()
     {
-        if (SceneManager.sceneCount > 1 || ConstantsHolder.isFromXANASummit)
+        if ((SceneManager.sceneCount > 1 || ConstantsHolder.isFromXANASummit) && !ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
             Photon.Pun.Demo.PunBasics.MutiplayerController.instance.Connect(ConstantsHolder.xanaConstants.EnviornmentName);
             return;
@@ -905,6 +967,7 @@ public class Data
     public string map_json_link;
     public User user;
 
+    public int worldType;
     // Count Variable Added by WaqasAhmad
     // Same Class used in Analytics Script
     public string count;

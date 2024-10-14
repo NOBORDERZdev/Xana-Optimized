@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 881201332891670451}
   - component: {fileID: 4293474591937189910}
   - component: {fileID: 2049572331533380828}
+  - component: {fileID: 260517301714699616}
   m_Layer: 0
   m_Name: RFM Outer Wall
   m_TagString: Untagged
@@ -25,14 +26,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 536341072422079753}
-  m_LocalRotation: {x: -0, y: -0.9148502, z: -0, w: 0.4037935}
-  m_LocalPosition: {x: -52.399975, y: 5.1, z: -33.79999}
-  m_LocalScale: {x: 0.0566094, y: 0.05660941, z: 0.0566094}
+  m_LocalRotation: {x: -0, y: -0.91603816, z: -0, w: 0.4010912}
+  m_LocalPosition: {x: -52.8566, y: 5.1358, z: -34.5698}
+  m_LocalScale: {x: 0.055303115, y: 0.055608556, z: 0.055103444}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2515955745831508611}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -132.369, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -132.707, z: 0}
 --- !u!33 &4293474591937189910
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -61,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 6703233875995733670, guid: b30534a7fb8e3724f833f4e416288317, type: 3}
+  - {fileID: 2100000, guid: a5901e9f09aed8c48963e7905378ccad, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,6 +84,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &260517301714699616
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536341072422079753}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4113055994055303405, guid: c1bdae3bde65aee4a903b48d791bc087, type: 3}
 --- !u!1 &1269876120287306411
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,5 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DomeId: 0
+  WorldIdTestnet: 
+  WorldIdMainnet: 
+  textMeshPro: {fileID: 0}
   WorldId: 
-  DomeIndexText: {fileID: 0}

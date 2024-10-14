@@ -11,6 +11,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Realtime;
+using System.Collections;
+
 #if PHOTON_UNITY_NETWORKING
 using Photon.Pun;
 using TMPro;
@@ -163,11 +165,39 @@ public class XanaChatSystem : MonoBehaviour
             chatNotificationIcon.SetActive(true);
         }
 
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            return;
+        }
         StartCoroutine(Delay());
 
         //this.CurrentChannelText.text = _userName + " : " + _msg + "\n" + this.CurrentChannelText.text;
     }
+    public void DisplayMsg_FromSocket(string _userName, string _msg, TextMeshProUGUI MsgTextBox)
+    {
+        //Debug.Log("<color=red> XanaOldChat: " + _userName + " : " + _userName.Length + " : " + _msg +"</color>");
 
+        if (_userName.Length > 12)
+        {
+            MsgTextBox.text = "<b>" + _userName.Substring(0, 12) + "...</b>" + " : " + _msg;
+        }
+        else
+        {
+            MsgTextBox.text = "<b>" + _userName + "</b>" + " : " + _msg;
+        }
+
+        if (!chatDialogBox.activeSelf && _userName != UserName)
+        {
+            chatNotificationIcon.SetActive(true);
+        }
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            return;
+        }
+        StartCoroutine(Delay());
+
+        //this.CurrentChannelText.text = _userName + " : " + _msg + "\n" + this.CurrentChannelText.text;
+    }
     public void ClearChatTxtForMeeting()
     {
         this.CurrentChannelText.text = "";
@@ -239,7 +269,7 @@ public class XanaChatSystem : MonoBehaviour
         ChatScrollRect.verticalNormalizedPosition = 1f;
     }
 
-    protected bool isChatOpen;
+    public bool isChatOpen;
 
     public void OpenCloseChatDialog()
     {
@@ -256,6 +286,12 @@ public class XanaChatSystem : MonoBehaviour
             ReferencesForGamePlay.instance.minimap.SetActive(false);
             ReferencesForGamePlay.instance.SumitMapStatus(false);
 
+            if (!oneTime)
+            {
+                oneTime = true;
+                StartCoroutine(ChatOpenDelay());
+            }
+            
             // Confirmation Panel Not Require
             //if (!isPanelConfirmationRequire)
             //{
@@ -286,9 +322,15 @@ public class XanaChatSystem : MonoBehaviour
                 ReferencesForGamePlay.instance.SumitMapStatus(true);
             }
         }
-
-
-
+        Debug.Log("ChatOpenDelay");
+        
+    }
+    bool oneTime = false;
+    IEnumerator ChatOpenDelay()
+    {
+        ChatSocketManager.instance.MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = false;   
+        yield return new WaitForSeconds(0.1f);
+        ChatSocketManager.instance.MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = true;
     }
     public void OpenCloseChatDialog(bool _state)
     {

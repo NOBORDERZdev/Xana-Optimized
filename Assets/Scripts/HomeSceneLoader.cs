@@ -9,6 +9,7 @@ using UnityEngine.Scripting;
 using System.Threading.Tasks;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using Photon.Realtime;
 
 public class HomeSceneLoader : MonoBehaviourPunCallbacks
 {
@@ -103,7 +104,30 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
                 else
                     ConstantsHolder.xanaConstants.needToClearMemory = true;
 
-                LeaveRoom();
+                if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+                {
+                    ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
+                    ConstantsHolder.xanaConstants.XanaPartyGameId = 0;
+                    ConstantsHolder.xanaConstants.XanaPartyGameName = "";
+                    ConstantsHolder.xanaConstants.isBuilderScene = false;
+                    ConstantsHolder.xanaConstants.builderMapID = 0;
+                    // Load the main scene
+                    Screen.orientation = ScreenOrientation.LandscapeLeft;
+                    LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.PenpenzLoading(FadeAction.In));
+
+                    MutiplayerController.instance.working = ScenesList.AddressableScene;
+                    if (PhotonNetwork.Server == ServerConnection.GameServer)
+                    {
+                        PhotonNetwork.LeaveRoom();
+                    }
+                    PhotonNetwork.LeaveLobby();
+                    PhotonNetwork.DestroyAll(true);
+                    StartSceneLoading();
+                }
+                else
+                {
+                    LeaveRoom();
+                }
             }
 
         }
@@ -114,6 +138,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
         if (!ConstantsHolder.xanaConstants.JjWorldSceneChange && !ConstantsHolder.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;
         ConstantsHolder.xanaConstants.isBuilderScene = false;
+        ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
         ConstantsHolder.xanaConstants.JjWorldSceneChange = true;
         ConstantsHolder.xanaConstants.JjWorldTeleportSceneName = "XANA Lobby";
 

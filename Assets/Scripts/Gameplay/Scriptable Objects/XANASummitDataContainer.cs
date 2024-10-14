@@ -11,12 +11,14 @@ public class XANASummitDataContainer : ScriptableObject
 
     public GameObject maleAIAvatar;
     public GameObject femaleAIAvatar;
+    public GameObject penguinAvatar;
     public string[] avatarJson;
     public DomeData summitData=new DomeData();
     public AIData aiData=new AIData();
     public static string FixedAvatarJson;
     public static Stack<StackInfoWorld> LoadedScenesInfo = new Stack<StackInfoWorld>();
     public static List<GameObject> SceneTeleportingObjects = new List<GameObject>();
+    public static bool Penpenz=false;
     string[] s ={ "ZONE-X", "ZONE X Musuem", "Xana Lobby", "XANA Festival Stage", "Xana Festival", "THE RHETORIC STAR", "ROCK?N ROLL CIRCUS", "MASAMI TANAKA", "Koto-ku Virtual Exhibition", "JJ MUSEUM", "HOKUSAI KATSUSHIKA", "Green Screen Studio", "GOZANIMATOR HARUNA GOUZU GALLERY 2021", "Genesis ART Metaverse Museum", "FIVE ELEMENTS", "DEEMO THE MOVIE Metaverse Museum", "D_Infinity_Labo", "BreakingDown Arena", "Astroboy x Tottori Metaverse Museum" };
 
     //private void OnEnable()
@@ -41,7 +43,7 @@ public class XANASummitDataContainer : ScriptableObject
         summitData=JsonUtility.FromJson<DomeData>(result);
 
         // Activate Map
-        ReferencesForGamePlay.instance.FullScreenMapStatus(true);
+        //ReferencesForGamePlay.instance.FullScreenMapStatus(true);
     }
 
     public async Task<bool> GetAIData(int domeId)
@@ -107,6 +109,18 @@ public class XANASummitDataContainer : ScriptableObject
         return new[] { string.Empty, string.Empty,string.Empty };
     }
 
+    public DomeGeneralData GetDomeData(int DomeId)
+    {
+        for (int i = 0; i < summitData.domes.Count; i++)
+        {
+            if (DomeId == summitData.domes[i].id)
+            {
+                return summitData.domes[i];
+            }
+        }
+        return null;
+    }
+
     #region DomeInfo
 
     [System.Serializable]
@@ -136,9 +150,18 @@ public class XANASummitDataContainer : ScriptableObject
         public string world360Image;
         public string companyLogo;
         public int maxPlayer;
+        public bool is_penpenz;
         public List<SubWorldInfo> SubWorlds;
         public bool isSubWorld;
+        public string domeType ;
+        public string domeCategory ;
+        public string mediaType ;
+        public string proportionType ;
+        public bool isYoutubeUrl ;
+        public string videoType ;
+        public string mediaUpload ;
     }
+
 
     [System.Serializable]
     public class SubWorldInfo
