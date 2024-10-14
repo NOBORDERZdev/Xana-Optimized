@@ -126,7 +126,7 @@ namespace PMY
                 else
                     PMY_RoomId = PMY_RoomId_test;
             }
-                Int_PMY_Nft_Manager();
+                //Int_PMY_Nft_Manager();
         }
 
         /// <summary>
