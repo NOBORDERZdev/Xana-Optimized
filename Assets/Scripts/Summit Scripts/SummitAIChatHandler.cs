@@ -14,6 +14,7 @@ public class SummitAIChatHandler : MonoBehaviour
     public XanaChatSystem LandscapeChatRef;
     public XanaChatSystem PortraitChatRef;
     private XanaChatSystem _CommonChatRef;
+    public VerticalLayoutGroup verticalLayoutGroup;
     public ChatSocketManager ChatSocketManagerInstance;
     [Header("This Class variables")]
     public XANASummitDataContainer XANASummitDataContainer;
@@ -251,6 +252,7 @@ public class SummitAIChatHandler : MonoBehaviour
     async void SendMessageFromAI(string s)
     {
         //_CommonChatRef.DisplayMsg_FromSocket(ConstantsHolder.userName, _CommonChatRef.InputFieldChat.text);
+        verticalLayoutGroup.spacing = -10;
         string url = string.Empty;
         if (!GetFirstNPCMessage)
         {
