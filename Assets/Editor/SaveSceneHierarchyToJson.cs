@@ -66,6 +66,7 @@ public class SaveParentObjectsToJson : EditorWindow
             data.subWorldIndex = GetSubworldIndex(rootObject.gameObject);
             data.priority = GetObjectPriority(rootObject.gameObject);
             data.isActive = rootObject.gameObject.activeSelf;
+            data.isStatic = rootObject.gameObject.isStatic;
             data.lightmapData = GetLightmapData(rootObject.gameObject);
             data.summitDomeInfo=GetDomeId(rootObject.gameObject);
             sceneObjectsData.SceneObjects.Add(data);

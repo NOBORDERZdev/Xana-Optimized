@@ -1,42 +1,64 @@
 fileFormatVersion: 2
 guid: a446eb84e87b27e4989b36aeb43d4c16
 SpeedTreeImporter:
-  serializedVersion: 3
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Billboard
+    second: {fileID: 2100000, guid: c6d7f8002b7161e478cc4a057d931c33, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Leaves_0_LOD0
+    second: {fileID: 2100000, guid: 5bc9e2376e55b2f4e98f75f1091840e7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Leaves_0_LOD1
+    second: {fileID: 2100000, guid: 097cfee7a6ba3d64f8ef6e4399531180, type: 2}
+  serializedVersion: 6
   mainColor: {r: 1, g: 1, b: 1, a: 1}
-  specColor: {r: .5, g: .5, b: .5, a: 0}
-  hueVariation: {r: 1, g: .5, b: 0, a: .100000001}
-  shininess: .125
-  alphaTestRef: .330000013
+  hueVariation: {r: 1, g: 0.5, b: 0, a: 0.1}
+  alphaTestRef: 0.33
   bestWindQuality: 5
   hasBillboard: 1
   lODSettings:
-  - height: .5
-    castShadows: 1
+  - height: 0.49973613
+    castShadows: 0
+    receiveShadows: 1
+    useLightProbes: 0
+    reflectionProbeUsage: 1
+    enableBump: 1
+    enableHue: 0
+    enableSubsurface: 0
+    windQuality: 5
+  - height: 0.25
+    castShadows: 0
     receiveShadows: 1
     useLightProbes: 1
     reflectionProbeUsage: 1
-    enableBump: 1
+    enableBump: 0
     enableHue: 1
+    enableSubsurface: 0
     windQuality: 5
-  - height: .25
-    castShadows: 1
-    receiveShadows: 1
-    useLightProbes: 1
-    reflectionProbeUsage: 1
-    enableBump: 1
-    enableHue: 1
-    windQuality: 5
-  - height: .00999999978
+  - height: 0.01
     castShadows: 0
     receiveShadows: 0
     useLightProbes: 0
     reflectionProbeUsage: 0
     enableBump: 1
-    enableHue: 1
+    enableHue: 0
+    enableSubsurface: 0
     windQuality: 1
   enableSmoothLODTransition: 1
-  billboardTransitionCrossFadeWidth: .25
-  fadeOutWidth: .25
-  scaleFactor: .304800004
+  animateCrossFading: 1
+  billboardTransitionCrossFadeWidth: 0.25
+  fadeOutWidth: 0.25
+  scaleFactor: 0.3048
+  materialVersion: 3
+  materialLocation: 0
+  fileIDType: 0
   userData: 
   assetBundleName: 
+  assetBundleVariant: 

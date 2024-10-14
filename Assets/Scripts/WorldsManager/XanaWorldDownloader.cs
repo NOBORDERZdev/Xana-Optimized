@@ -590,6 +590,7 @@ public class XanaWorldDownloader : MonoBehaviour
         GameObject newObj = Instantiate(objectTobeInstantiate, _itemData.position, _itemData.rotation, assetParentStatic);
         newObj.transform.localScale = _itemData.scale;
         newObj.name = _itemData.name;
+        newObj.isStatic = _itemData.isStatic;
         newObj.SetActive(_itemData.isActive);
         ApplyLightmapData(_itemData.lightmapData, newObj);
         //AddObjectInPool(downloadKey, newObj);
@@ -612,6 +613,7 @@ public class XanaWorldDownloader : MonoBehaviour
         ObjectFromPool.transform.localScale = _itemData.scale;
         ObjectFromPool.name = _itemData.name;
         ObjectFromPool.SetActive(_itemData.isActive);
+        ObjectFromPool.isStatic = _itemData.isStatic;
         ApplyLightmapData(_itemData.lightmapData, ObjectFromPool);
     }
 
@@ -870,6 +872,7 @@ public class ObjectsInfo
     public int subWorldIndex;
     public LightmapData[] lightmapData;
     public SummitDomeInfo summitDomeInfo;
+    public bool isStatic = true;
 }
 [System.Serializable]
 public class LightmapData

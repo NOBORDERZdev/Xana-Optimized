@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &1042590610466228613
 RectTransform:
@@ -158,12 +158,14 @@ GameObject:
   - component: {fileID: 3786250337657036320}
   - component: {fileID: 3786250337657036321}
   - component: {fileID: 2547618067172787701}
+  - component: {fileID: 2136266706}
+  - component: {fileID: 2136266708}
   m_Layer: 0
   m_Name: DomeSmall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3786250337657036320
 Transform:
@@ -233,6 +235,33 @@ MonoBehaviour:
   smallDome: 1
   TextValueSmall: 0.7
   TextValueMid: 0
+--- !u!114 &2136266706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4593854361052923034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: DomeSmall
+  objectPriority: 0
+--- !u!114 &2136266708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4593854361052923034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22bd20bb0264cf74eb1d09cefeae6d60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  domeId: 34
 --- !u!1 &5005054697580370172
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,7 +279,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2314185068216567382
 Transform:
@@ -301,7 +330,10 @@ MonoBehaviour:
   LoadDirectly: 0
   LoadingFromSummitWorld: 0
   HaveSubworlds: 0
+  isPenpenzMiniGame: 0
   WorldId: 
+  _domeType: 0
+  _domeCategory: 0
 --- !u!65 &1120404645068306274
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -419,7 +451,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1946764895857957918
 Transform:
@@ -452,7 +484,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5816718297907691368}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -503,7 +535,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!4 &2122083785119858627
 Transform:
@@ -666,7 +698,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!224 &3470104962492725021
 RectTransform:
@@ -703,7 +735,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2778339779218245129
 Transform:
