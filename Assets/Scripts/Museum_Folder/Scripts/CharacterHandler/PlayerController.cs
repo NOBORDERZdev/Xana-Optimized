@@ -893,6 +893,7 @@ public class PlayerController : MonoBehaviour
             {
                 isNinjaMotion = false;
                 NinjaComponentTimerStart(0);
+                GameplayEntityLoader.instance.DashButton.SetActive(true);
             }
             else if (isThrowModeActive)
             {
