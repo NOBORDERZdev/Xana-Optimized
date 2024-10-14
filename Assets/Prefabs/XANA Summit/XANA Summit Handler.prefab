@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1339195408}
   - component: {fileID: 1339195409}
   - component: {fileID: 6086991889007243275}
+  - component: {fileID: 2106566887166677135}
   m_Layer: 0
   m_Name: XANA Summit Handler
   m_TagString: Untagged
@@ -59,6 +60,7 @@ MonoBehaviour:
   SubWorldsHandlerInstance: {fileID: 0}
   dataContainer: {fileID: 11400000, guid: 167db53466831ca41b397940080656f9, type: 2}
   _domeMiniMap: {fileID: 5177054737458545910}
+  DomePerformerAvatarHandler: {fileID: 2106566887166677135}
 --- !u!114 &2363225616550771673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,6 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38b411adb4757f04a98b54d87ed75545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stayTimeTrackerForSummit: {fileID: 0}
   HighlightedSprite: {fileID: 21300000, guid: 42f99a9a05aa324489944291dd7d671a, type: 3}
   MapDomes:
   - {fileID: 0}
@@ -454,6 +457,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac790bbec2a18214ebb824e102e8b0c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stayTimeTrackerForSummit: {fileID: 0}
+  IsEnteringInSubWorld: 0
   SubworldListParent: {fileID: 0}
   ContentParent: {fileID: 0}
   SubworldPrefab: {fileID: 0}
@@ -506,8 +511,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   inviteBtnPortait: {fileID: 0}
   peopleRect: {fileID: 0}
 --- !u!114 &6086991889007243275
@@ -526,6 +529,20 @@ MonoBehaviour:
   DometextFont: {fileID: 11400000, guid: 1bcf942b3b9a541468a328f38c9fc106, type: 2}
   DomeTextMaterial: {fileID: 2100000, guid: bdba2e3899e1ad24789fdbef388a4b30, type: 2}
   CommonScreen: {fileID: 8658618697370315449}
+--- !u!114 &2106566887166677135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2363225616550771674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0e66ad3c410e2a408e56c3f984767dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PerformerAvatarAIIndex: 
+  InstPerformerAvatarAIObjects: []
 --- !u!1001 &3109659970308366651
 PrefabInstance:
   m_ObjectHideFlags: 0

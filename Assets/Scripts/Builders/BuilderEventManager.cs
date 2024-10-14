@@ -139,6 +139,7 @@ public static class BuilderEventManager
     public static Action<int> AINPCDeactivated;
 
     public static Action<VideoClip, Vector3> spaceXActivated;
+    public static Action spaceXDeactivated;
     public static Action<string> loadBGMDirectly;
     public static Action StopBGM;
     public static Action ResetSummit;
@@ -156,4 +157,6 @@ public static class BuilderEventManager
     public static Action XANAPartyRaceResult;
     #endregion
 
+
+    public static Action<string, string> OpenRedirectionPopup; 
 }

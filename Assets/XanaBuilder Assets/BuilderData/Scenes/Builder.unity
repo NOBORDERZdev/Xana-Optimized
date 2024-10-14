@@ -755,14 +755,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1864747888935569920}
     m_Modifications:
-    - target: {fileID: 3967500187513155177, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
-      propertyPath: XANAPartyMessageText
-      value: 
-      objectReference: {fileID: 938320015}
-    - target: {fileID: 3967500187513155177, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
-      propertyPath: XANAPartyMessageParentUI
-      value: 
-      objectReference: {fileID: 938320016}
     - target: {fileID: 8047981441076865330, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
       propertyPath: m_Name
       value: ComponentUILandscape
@@ -861,22 +853,6 @@ RectTransform:
 --- !u!1 &938320014 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8815723775319809462, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
-  m_PrefabInstance: {fileID: 938320012}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &938320015 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1190544584371057078, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
-  m_PrefabInstance: {fileID: 938320012}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &938320016 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1303467080698546568, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
   m_PrefabInstance: {fileID: 938320012}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &943296291
@@ -2836,7 +2812,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.45

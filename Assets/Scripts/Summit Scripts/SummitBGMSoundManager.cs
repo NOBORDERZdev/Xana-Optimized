@@ -29,18 +29,36 @@ public class SummitBGMSoundManager : MonoBehaviour
 
     }
 
-    void StartBGMSound()
+    async void StartBGMSound()
     {
         if (ConstantsHolder.isFromXANASummit)
         {
-            string audioUrl=summitDataContainer.GetAudioFile(ConstantsHolder.domeId);
-            StartCoroutine(SetAudioFromUrl(audioUrl));
+            string audioUrl = await summitDataContainer.GetAudioFile(ConstantsHolder.domeId);
+            if (!string.IsNullOrEmpty(audioUrl))
+                StartCoroutine(SetAudioFromUrl(audioUrl));
+        }
+
+        if (WorldItemView.m_EnvName == "XANA Summit")
+        {
+            string audioUrl = await summitDataContainer.GetAudioFile(170);
+            if (!string.IsNullOrEmpty(audioUrl))
+            {
+                StartCoroutine(SetAudioFromUrl(audioUrl));
+            }
+            else
+            {
+                Invoke(nameof(RecursizeCall), 0.5f);
+            }
+
         }
     }
-
-    IEnumerator SetAudioFromUrl(string file_name)
+    void RecursizeCall()
     {
-        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(file_name,AudioType.MPEG))
+        StartBGMSound();
+    }
+        IEnumerator SetAudioFromUrl(string file_name)
+    {
+        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(file_name, AudioType.MPEG))
         {
             www.SendWebRequest();
             while (!www.isDone)
@@ -57,7 +75,7 @@ public class SummitBGMSoundManager : MonoBehaviour
                 audioSource.clip = clip;
                 audioSource.loop = true;
                 audioSource.Play();
-
+                SoundSettings.soundManagerSettings.SetBgmVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
             }
         }
     }
@@ -75,10 +93,10 @@ public class SummitBGMSoundManager : MonoBehaviour
             Debug.Log("<color=red> Audio Source is null <color>");
             return;
         }
-        audioSource.volume= 0;
+        audioSource.volume = 0;
         audioSource.Pause();
         audioSource.clip = null;
         Destroy(clip);
     }
-    
+
 }

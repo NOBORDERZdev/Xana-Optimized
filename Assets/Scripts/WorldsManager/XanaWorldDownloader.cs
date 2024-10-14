@@ -57,7 +57,7 @@ public class XanaWorldDownloader : MonoBehaviour
 
     private float unloadDistance = 50;
 
-    private static XanaWorldDownloader xanaWorldDownloader;
+    public static XanaWorldDownloader xanaWorldDownloader;
     public DownloadPopupHandler DownloadPopupHandlerInstance;
 
     private static CancellationTokenSource cts;
@@ -107,7 +107,7 @@ public class XanaWorldDownloader : MonoBehaviour
     {
         if (assetParent)
             assetParentStatic = assetParent;
-        if (!ConstantsHolder.xanaConstants.isBuilderScene)
+        if (!ConstantsHolder.xanaConstants.isBuilderScene || ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
             BuilderEventManager.XanaMapDataDownloaded += PostLoadingBuilderAssets;
             ScreenOrientationManager.switchOrientation += OnOrientationChange;
@@ -300,7 +300,8 @@ public class XanaWorldDownloader : MonoBehaviour
             //    yield break;
             //}
             //else
-            LoadAssetAgain:
+            int _assetDownloadTryCount = 0;
+        LoadAssetAgain:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
@@ -314,12 +315,16 @@ public class XanaWorldDownloader : MonoBehaviour
             {
                 Addressables.ClearDependencyCacheAsync(downloadKey);
                 Addressables.ReleaseInstance(_async);
-                Addressables.Release(_async);
-                yield return new WaitForSeconds(1);
-                goto LoadAssetAgain;
+                Addressables.Release(_async); 
+                _assetDownloadTryCount++;
+                if (_assetDownloadTryCount < 5)
+                {
+                    yield return new WaitForSeconds(1);
+                    goto LoadAssetAgain;
+                }
             }
 
-            if (_async.Status == AsyncOperationStatus.Succeeded)
+            if (_async.Status == AsyncOperationStatus.Succeeded && _async.Result != null)
             {
                 AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, xanaWorldDataDictionary[dicKey], dicKey);
@@ -330,7 +335,7 @@ public class XanaWorldDownloader : MonoBehaviour
             }
             yield return new WaitForEndOfFrame();
             yield return new WaitForSeconds(0.05f);
-            if (_async.Status == AsyncOperationStatus.Succeeded)
+            if (_async.Status == AsyncOperationStatus.Succeeded && _async.Result != null)
             {
                 downloadDataQueue.RemoveAt(0);
                 DisplayDownloadedAssetText();
@@ -364,7 +369,8 @@ public class XanaWorldDownloader : MonoBehaviour
             //    yield break;
             //}
             //else
-            LoadAssetAgain:
+            int _assetDownloadTryCount = 0;
+        LoadAssetAgain:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
@@ -379,10 +385,14 @@ public class XanaWorldDownloader : MonoBehaviour
                 Addressables.ClearDependencyCacheAsync(downloadKey);
                 Addressables.ReleaseInstance(_async);
                 Addressables.Release(_async);
-                yield return new WaitForSeconds(1);
-                goto LoadAssetAgain;
+                _assetDownloadTryCount++;
+                if (_assetDownloadTryCount < 5)
+                {
+                    yield return new WaitForSeconds(1);
+                    goto LoadAssetAgain;
+                }
             }
-            if (_async.Status == AsyncOperationStatus.Succeeded)
+            if (_async.Status == AsyncOperationStatus.Succeeded && _async.Result != null)
             {
                 AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, xanaWorldDataDictionary[dicKey], dicKey);
@@ -420,7 +430,8 @@ public class XanaWorldDownloader : MonoBehaviour
             //    yield break;
             //}
             //else
-            LoadAssetAgain:
+            int _assetDownloadTryCount = 0;
+        LoadAssetAgain:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
@@ -435,10 +446,14 @@ public class XanaWorldDownloader : MonoBehaviour
                 Addressables.ClearDependencyCacheAsync(downloadKey);
                 Addressables.ReleaseInstance(_async);
                 Addressables.Release(_async);
-                yield return new WaitForSeconds(1);
-                goto LoadAssetAgain;
+                _assetDownloadTryCount++;
+                if (_assetDownloadTryCount < 5)
+                {
+                    yield return new WaitForSeconds(1);
+                    goto LoadAssetAgain;
+                }
             }
-            if (_async.Status == AsyncOperationStatus.Succeeded)
+            if (_async.Status == AsyncOperationStatus.Succeeded && _async.Result != null)
             {
                 AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, xanaWorldDataDictionary[dicKey], dicKey);
@@ -521,7 +536,7 @@ public class XanaWorldDownloader : MonoBehaviour
     {
         if (!assetDownloadingText)
         {
-            Debug.LogError("<color=red> Textmesh is Destroyed </color>");
+            Debug.Log("<color=red> Textmesh is Destroyed </color>");
             return;
         }
         assetDownloadingText.text = string.Empty;
@@ -578,8 +593,11 @@ public class XanaWorldDownloader : MonoBehaviour
         newObj.SetActive(_itemData.isActive);
         ApplyLightmapData(_itemData.lightmapData, newObj);
         //AddObjectInPool(downloadKey, newObj);
-        AssignDomeId(newObj, _itemData);
-        SetSubworldIndex(newObj, _itemData);
+        if(ConstantsHolder.DomeHeaderInfo)
+        {
+            AssignDomeId(newObj, _itemData);
+            SetSubworldIndex(newObj, _itemData);
+        }
         //if (ConstantsHolder.HaveSubWorlds)
         //{
         //    if (_itemData.addressableKey.Contains("TLP"))
@@ -801,7 +819,8 @@ public class XanaWorldDownloader : MonoBehaviour
         preLoadObjects.Clear();
         postLoadObjects.Clear();
         downloadFailed.Clear();
-        xanaSceneData.SceneObjects.Clear();
+        if(xanaSceneData != null && xanaSceneData.SceneObjects != null)
+            xanaSceneData.SceneObjects.Clear();
         BuilderData.mapData = null;
         BuilderData.spawnPoint.Clear();
         AllDomes.Clear();
@@ -815,10 +834,11 @@ public class XanaWorldDownloader : MonoBehaviour
         isfailedObjectsDownloaded = false;
         isSpawnDownloaded = false;
 
-        cts.Cancel();
+        if (cts != null)
+            cts.Cancel();
         xanaWorldDownloader.ResetDisplayDownloadText();
         xanaWorldDownloader.StopAllCoroutines();
-
+        LoadingHandler.Instance.HideLoading();
         //AssetBundle.UnloadAllAssetBundles(false);
         //Caching.ClearCache();
         //Addressables.CleanBundleCache();

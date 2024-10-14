@@ -63,6 +63,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     public async void LoadMain(bool changeOritentationChange)
     {
         BuilderEventManager.StopBGM?.Invoke();
+        LoadingHandler.Instance.DisableDomeLoading();
         LoadingHandler.Instance.DisableVideoLoading();
         //GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
         disableSoundXanalobby();
@@ -139,6 +140,8 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
             Screen.orientation = ScreenOrientation.LandscapeLeft;
         ConstantsHolder.xanaConstants.isBuilderScene = false;
         ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
+        ConstantsHolder.xanaConstants.isSoftBankGame = false;
+
         ConstantsHolder.xanaConstants.JjWorldSceneChange = true;
         ConstantsHolder.xanaConstants.JjWorldTeleportSceneName = "XANA Lobby";
 

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using System.Drawing;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.Networking.Types;
+using static SummitAIChatHandler;
+using UnityEditor;
 
 [CreateAssetMenu(menuName = "ScriptableObjects/SummitDataContainer", fileName = "ScriptableObjects/SummitDataContainer")]
 public class XANASummitDataContainer : ScriptableObject
@@ -13,34 +13,33 @@ public class XANASummitDataContainer : ScriptableObject
     public GameObject femaleAIAvatar;
     public GameObject penguinAvatar;
     public string[] avatarJson;
-    public DomeData summitData=new DomeData();
-    public AIData aiData=new AIData();
+    public DomeData summitData = new DomeData();
+    public AIData aiData = new AIData();
     public static string FixedAvatarJson;
     public static Stack<StackInfoWorld> LoadedScenesInfo = new Stack<StackInfoWorld>();
     public static List<GameObject> SceneTeleportingObjects = new List<GameObject>();
     public static bool Penpenz=false;
-    string[] s ={ "ZONE-X", "ZONE X Musuem", "Xana Lobby", "XANA Festival Stage", "Xana Festival", "THE RHETORIC STAR", "ROCK?N ROLL CIRCUS", "MASAMI TANAKA", "Koto-ku Virtual Exhibition", "JJ MUSEUM", "HOKUSAI KATSUSHIKA", "Green Screen Studio", "GOZANIMATOR HARUNA GOUZU GALLERY 2021", "Genesis ART Metaverse Museum", "FIVE ELEMENTS", "DEEMO THE MOVIE Metaverse Museum", "D_Infinity_Labo", "BreakingDown Arena", "Astroboy x Tottori Metaverse Museum" };
+    string[] s = { "ZONE-X", "ZONE X Musuem", "Xana Lobby", "XANA Festival Stage", "Xana Festival", "THE RHETORIC STAR", "ROCK?N ROLL CIRCUS", "MASAMI TANAKA", "Koto-ku Virtual Exhibition", "JJ MUSEUM", "HOKUSAI KATSUSHIKA", "Green Screen Studio", "GOZANIMATOR HARUNA GOUZU GALLERY 2021", "Genesis ART Metaverse Museum", "FIVE ELEMENTS", "DEEMO THE MOVIE Metaverse Museum", "D_Infinity_Labo", "BreakingDown Arena", "Astroboy x Tottori Metaverse Museum" };
 
-    //private void OnEnable()
-    //{
-    //    for (int i = 0; i < 128; i++)
-    //    {
-    //        DomeGeneralData domeData = new DomeGeneralData();
-    //        domeData.id = i;
-    //        string sceneName= s[Random.Range(0, s.Length)];
-    //        domeData.name = sceneName;
-    //        domeData.world = sceneName;
-    //        summitData.domes.Add(domeData);
-    //        //summitData.root[i].world = summitData.root[i].name;
-    //    }
+    private void OnEnable()
+    {
+#if UNITY_EDITOR
+        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+#endif
+    }
 
-    //}
+    private void OnDisable()
+    {
+#if UNITY_EDITOR
+        EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+#endif
+    }
 
     public async void GetAllDomesData()
     {
         string url = ConstantsGod.API_BASEURL + ConstantsGod.GETALLDOMES;
         string result = await GetAsyncRequest(url);
-        summitData=JsonUtility.FromJson<DomeData>(result);
+        summitData = JsonUtility.FromJson<DomeData>(result);
 
         // Activate Map
         //ReferencesForGamePlay.instance.FullScreenMapStatus(true);
@@ -49,7 +48,7 @@ public class XANASummitDataContainer : ScriptableObject
     public async Task<bool> GetAIData(int domeId)
     {
         string url = ConstantsGod.API_BASEURL + ConstantsGod.GETDOMENPCINFO + domeId + "/" + 1;
-        string result=await GetAsyncRequest(url);
+        string result = await GetAsyncRequest(url);
         aiData = JsonUtility.FromJson<AIData>(result);
 
         return aiData.npcData.Count > 0;
@@ -70,7 +69,24 @@ public class XANASummitDataContainer : ScriptableObject
     {
         UnityWebRequest www = UnityWebRequest.Get(url);
         await www.SendWebRequest();
-        while(!www.isDone)
+        while (!www.isDone)
+            await System.Threading.Tasks.Task.Yield();
+
+        if (www.result == UnityWebRequest.Result.ConnectionError)
+        {
+            return www.error;
+        }
+        else
+            return www.downloadHandler.text;
+
+    }
+
+    async Task<string> GetTokenBasedAsyncRequest(string url)
+    {
+        UnityWebRequest www = UnityWebRequest.Get(url);
+        www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+        await www.SendWebRequest();
+        while (!www.isDone)
             await System.Threading.Tasks.Task.Yield();
 
         if (www.result == UnityWebRequest.Result.ConnectionError)
@@ -83,9 +99,13 @@ public class XANASummitDataContainer : ScriptableObject
     }
 
 
-    public string GetAudioFile(int domeId)
+    public async Task<string> GetAudioFile(int domeId)
     {
-        for (int i = 0;i<summitData.domes.Count;i++)
+        while (summitData.domes.Count==0)
+        {
+            await Task.Delay(1000);
+        }
+        for (int i = 0; i < summitData.domes.Count; i++)
         {
             if (domeId == summitData.domes[i].id)
             {
@@ -102,11 +122,11 @@ public class XANASummitDataContainer : ScriptableObject
         {
             if (DomeId == summitData.domes[i].id)
             {
-                return new[] { summitData.domes[i].world360Image, summitData.domes[i].name ,summitData.domes[i].companyLogo};
+                return new[] { summitData.domes[i].world360Image, summitData.domes[i].name, summitData.domes[i].companyLogo };
             }
         }
 
-        return new[] { string.Empty, string.Empty,string.Empty };
+        return new[] { string.Empty, string.Empty, string.Empty };
     }
 
     public DomeGeneralData GetDomeData(int DomeId)
@@ -121,6 +141,32 @@ public class XANASummitDataContainer : ScriptableObject
         return null;
     }
 
+    public async Task<int> GetVisitorCount(string worldId)
+    {
+        string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.VISITORCOUNT + worldId;
+        string reponse = await GetTokenBasedAsyncRequest(apiUrl);
+        VisitorInfo visitorInfo = JsonUtility.FromJson<VisitorInfo>(reponse);
+        if (visitorInfo.success)
+            return visitorInfo.data.total_visit;
+        else
+            return 100;
+    }
+
+#if UNITY_EDITOR
+    private void OnPlayModeStateChanged(PlayModeStateChange obj)
+    {
+        switch (obj)
+        {
+            case PlayModeStateChange.EnteredPlayMode:
+                summitData.domes.Clear();
+                break;
+
+            case PlayModeStateChange.ExitingPlayMode:
+                summitData.domes.Clear();
+                break;
+        }
+    }
+#endif
     #region DomeInfo
 
     [System.Serializable]
@@ -153,13 +199,13 @@ public class XANASummitDataContainer : ScriptableObject
         public bool is_penpenz;
         public List<SubWorldInfo> SubWorlds;
         public bool isSubWorld;
-        public string domeType ;
-        public string domeCategory ;
-        public string mediaType ;
-        public string proportionType ;
-        public bool isYoutubeUrl ;
-        public string videoType ;
-        public string mediaUpload ;
+        public string domeType;
+        public string domeCategory;
+        public string mediaType;
+        public string proportionType;
+        public bool isYoutubeUrl;
+        public string videoType;
+        public string mediaUpload;
     }
 
 
@@ -211,7 +257,7 @@ public class XANASummitDataContainer : ScriptableObject
     [System.Serializable]
     public class AIData
     {
-        public List<AINPCInfo> npcData; 
+        public List<AINPCInfo> npcData;
     }
 
     [System.Serializable]
@@ -222,8 +268,33 @@ public class XANASummitDataContainer : ScriptableObject
         public string language;
         public string name;
         public int avatarId;
+        public string avatarCategory;
         public string personalityURL;
-        public int[] spawnPositionArray;
+        public float[] rotationPositionArray;
+        public float[] spawnPositionArray;
+        public bool isAvatarPerformer;
+        public AnimationData[] animations;
+    }
+    [System.Serializable]
+    public class AnimationData
+    {
+        public string name;
+        public float playTime;
+    }
+    #endregion
+
+    #region Visitor Count
+    [System.Serializable]
+    public class VisitorInfo
+    {
+        public bool success;
+        public VisitorData data;
+    }
+
+    [System.Serializable]
+    public class VisitorData
+    {
+        public int total_visit;
     }
     #endregion
 

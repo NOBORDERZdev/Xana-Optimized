@@ -11,12 +11,13 @@ GameObject:
   - component: {fileID: 3842853255843125129}
   - component: {fileID: 3842853255843125238}
   - component: {fileID: 3842853255843125239}
+  - component: {fileID: 7250564756808801746}
   m_Layer: 0
   m_Name: EMG_Cardano_logo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &3842853255843125129
 Transform:
@@ -25,8 +26,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3842853255843125236}
-  m_LocalRotation: {x: -0.0000014329948, y: -0.0000014224543, z: -0.0000015497205, w: 1}
-  m_LocalPosition: {x: 7.644, y: 3.013, z: -2.851}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.873, y: 1.798, z: 10.022}
   m_LocalScale: {x: 9.450816, y: 1.3888862, z: 1.5395257}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -40,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3842853255843125236}
-  m_Mesh: {fileID: 2783131832183395012, guid: 877ce5bc400a8894b89a44fd7c7d138a, type: 3}
+  m_Mesh: {fileID: 6112734050868223944, guid: 877ce5bc400a8894b89a44fd7c7d138a, type: 3}
 --- !u!23 &3842853255843125239
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -83,3 +84,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7250564756808801746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3842853255843125236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: EMG_Cardano_logo
+  objectPriority: 0

@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Realtime;
-
+using Photon.Pun.Demo.PunBasics;
 
 /// <summary> this script is Handling Build in avatar models data and spawning  avatar buttons on  Ui.</summary>/// 
 public class AvatarSpawnerOnDisconnect : MonoBehaviourPunCallbacks
@@ -104,14 +104,14 @@ public class AvatarSpawnerOnDisconnect : MonoBehaviourPunCallbacks
         }
         else
         {
-            PhotonNetwork.AutomaticallySyncScene = true;
+           /* PhotonNetwork.AutomaticallySyncScene = true;                      //Zeel Removed this cusing sector issue
             roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = 20;
             roomOptions.IsOpen = true;
             roomOptions.IsVisible = true;
             roomOptions.PublishUserId = true;
-            roomOptions.CleanupCacheOnLeave = true;
-            PhotonNetwork.JoinOrCreateRoom(lastRoomName, roomOptions, new TypedLobby(Photon.Pun.Demo.PunBasics.MutiplayerController.CurrLobbyName, LobbyType.Default), null);
+            roomOptions.CleanupCacheOnLeave = true;*/
+            PhotonNetwork.JoinOrCreateRoom(lastRoomName,MutiplayerController.instance.roomOptions, new TypedLobby(Photon.Pun.Demo.PunBasics.MutiplayerController.CurrLobbyName, LobbyType.Default), null);
         }
 
     }

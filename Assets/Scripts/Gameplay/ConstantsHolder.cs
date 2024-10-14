@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
@@ -9,12 +11,18 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class ConstantsHolder : MonoBehaviour
 {
     public static ConstantsHolder xanaConstants;
-
+    public delegate void UserNameToggleDeligate(int userNameToggleConstant);
+    public static event UserNameToggleDeligate userNameToggleDelegate;
+    public static Action<GameObject> ontriggteredplayerEntered;
+    public static Action<GameObject> ontriggteredplayerExit;
     public bool pushToTalk;
     public bool openLandingSceneDirectly;
-    public bool SwitchXanaToXSummit = false;
+    public bool XSummitBg = false;
+    public static bool DomeHeaderInfo=true;
+    public bool SwitchXanaToXSummit=true;
     public static bool IsXSummitApp;
     public bool OpenSpaceScreen_fromSummit = false;
+    public bool chatFlagBtnStatus = false;
 
     //Login Info
     public static bool isAdmin;
@@ -99,26 +107,32 @@ public class ConstantsHolder : MonoBehaviour
 
     public bool isBackFromWorld = false;
     public String MuseumID;
+    public string domeCreatorName;
+    public bool isSoftBankGame;
 
     //For Metabuzz Environments
-    public enum ComingFrom{
+    public enum ComingFrom
+    {
         None,
         Dune,
         Daisen
     }
     public ComingFrom comingFrom = ComingFrom.None;
 
-    public bool IsMetabuzzEnvironment{
+    public bool IsMetabuzzEnvironment
+    {
         get
         {
-            if (EnviornmentName.Contains("DUNE") || EnviornmentName == "TOTTORI METAVERSE" || EnviornmentName.Contains("Daisen"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (!string.IsNullOrEmpty(EnviornmentName))
+                if (EnviornmentName.Contains("DUNE") || EnviornmentName == "TOTTORI METAVERSE" || EnviornmentName.Contains("Daisen"))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            return false;
         }
     }
 
@@ -172,17 +186,25 @@ public class ConstantsHolder : MonoBehaviour
     public bool IsChatUseByOther = false;
 
     //XANA Summit 
-    public static bool isFromXANASummit=false;
+    public static bool isFromXANASummit = false;
+    public static bool IsSummitDomeWorld = false;
     public static bool MultiSectionPhoton = false;
     public static bool TempDiasableMultiPartPhoton = false;
     public static bool DiasableMultiPartPhoton = false;
     public static bool DisableFppRotation = false;
     public static int domeId;
+    public static int visitorCount;
+    public static string DomeType;
+    public static string DomeCategory;
     public static bool isPenguin;
     public static bool isFixedHumanoid;
     public static int AvatarIndex;
     public static bool HaveSubWorlds;
     public static string Thumbnail;
+    public static string description;
+    public static bool isTeleporting = false;
+
+    public List<string> presetClothsJsonList =new List<string>();
 
     //Daily reward
     public bool isGoingForHomeScene = false;
@@ -199,6 +221,7 @@ public class ConstantsHolder : MonoBehaviour
     public static int XanaPartyMaxPlayers = 25;
     public bool EnableSignInPanelByDefault = false;
     public bool GameIsFinished = false;
+    public string LastLobbyName;
     #endregion
 
 
@@ -214,6 +237,8 @@ public class ConstantsHolder : MonoBehaviour
     public UnityEvent<float> ProgressEvent;
     public UnityEvent<bool> CompletionEvent;
     private AsyncOperationHandle downloadHandle;
+
+
 
     public bool IsProfileVisit = false; // bool to check is player in profile section.
     public int SnsProfileID = 0; // Id of user profile when the user visit the profile section.
@@ -300,6 +325,45 @@ public class ConstantsHolder : MonoBehaviour
         //  StartCoroutine(LoadAddressableDependenceies());
     }
 
+    public void SetPlayerProperties(string cloths = "")
+    {
+        Debug.Log("SetPlayerProperties");
+        PhotonNetwork.LocalPlayer.CustomProperties.Clear();
+        ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
+        if (string.IsNullOrEmpty(cloths))
+        {
+            playerProperties.Add("ClothJson", GetJsonFolderData());
+        }
+        else
+        {
+            playerProperties.Add("ClothJson", cloths);
+        }
+        playerProperties.Add("NFTEquiped", isNFTEquiped);
+        PhotonNetwork.LocalPlayer.CustomProperties = playerProperties;
+    }
+
+    public string GetRandomPresetClothJson()
+    {
+        return presetClothsJsonList[UnityEngine.Random.Range(0, presetClothsJsonList.Count)];
+    }
+    public string GetJsonFolderData()
+    {
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 1)  // loged from account)
+        {
+            if (ConstantsHolder.xanaConstants.isNFTEquiped)
+            {
+                return File.ReadAllText(Application.persistentDataPath + ConstantsHolder.xanaConstants.NFTBoxerJson);
+            }
+            else
+            {
+                return File.ReadAllText(Application.persistentDataPath + "/logIn.json");
+            }
+        }
+        else
+        {
+            return File.ReadAllText(Application.persistentDataPath + "/loginAsGuestClass.json");
+        }
+    }
     public void StopMic()
     {
         PlayerPrefs.SetInt("micSound", 0);
@@ -344,4 +408,8 @@ public class ConstantsHolder : MonoBehaviour
 
     //////constant string variables 
     public const string collectibleMsg = "Item Collected...";
+    public static void OnInvokeUsername(int userNameToggle)
+    {
+        userNameToggleDelegate?.Invoke(userNameToggle);
+    }
 }

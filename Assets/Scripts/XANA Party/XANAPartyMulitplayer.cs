@@ -5,7 +5,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
-
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
 {
     //[SerializeField] Animator animator;
@@ -19,6 +19,10 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
     private void Start()
     {
         photonView = GetComponent<PhotonView>();
+        if (ConstantsHolder.xanaConstants.isSoftBankGame)
+        {
+            GameplayEntityLoader.instance.PositionResetButton.SetActive(true);
+        }
         Invoke(nameof(DisbleAnimatedController),0.1f);
     }
     public void OnPhotonInstantiate(PhotonMessageInfo info)
@@ -58,11 +62,22 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
     {
         if (GetComponent<PhotonView>().IsMine && PhotonNetwork.IsMasterClient)
         {
+
+            MutiplayerController.instance.MakeRoomPrivate();
+            // Loop until the room visibility is set to true
+            //while (PhotonNetwork.CurrentRoom.IsVisible)
+            //{
+            //    MutiplayerController.instance.MakeRoomPrivate();
+            //    //PhotonNetwork.CurrentRoom.IsVisible = false;
+            //    yield return new WaitForSeconds(0.1f); // Adjust the delay as needed
+            //}
+            yield return new WaitForSeconds(1f); 
             ReferencesForGamePlay.instance.isCounterStarted = true;
             if (!ReferencesForGamePlay.instance.isMatchingTimerFinished)
-                yield return new WaitForSeconds(10f);                     // wait to show that other player spwan and then lobby full
+                yield return new WaitForSeconds(10f); // wait to show that other player spawns and then lobby full
             else
                 yield return new WaitForSeconds(0f);
+
             GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC(nameof(StartLobbyCounter), RpcTarget.AllBuffered);
         }
     }
@@ -70,6 +85,9 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
     [PunRPC]
     public void StartLobbyCounter()
     {
+        Hashtable _hash = new Hashtable();
+        _hash.Add("IsReady", false);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(_hash);
         StartCoroutine(ReferencesForGamePlay.instance.ShowLobbyCounterAndMovePlayer());
     }
 
@@ -77,12 +95,7 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
     [PunRPC]
     void MovePlayersToRoom(int gameId, string gameName)
     {
-        MutiplayerController.instance.Disconnect();
-        MutiplayerController.instance.Connect("XANA SummitPenpenz-" + ConstantsHolder.domeId + "-" /*+ worldInfo.data.name*/);
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.CurrentRoom.IsVisible = false;
-        }
+        
         XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().isLeaderboardShown = false;
         // Set the game details in the constants holder
         _XanaConstants.isJoinigXanaPartyGame = true;

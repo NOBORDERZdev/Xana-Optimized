@@ -1,7 +1,11 @@
+using SuperStar.Helpers;
+using System;
 using System.Collections;
+using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class SummitDomeShaderApply : MonoBehaviour
 {
@@ -18,26 +22,29 @@ public class SummitDomeShaderApply : MonoBehaviour
     public MeshRenderer LogoMeshRenderer;
     public SpriteRenderer LogoSpriteRenderer;
     public DomeBannerClick clickListener;
+    public bool smallDome;
+    public float TextValueSmall;
+    public float TextValueMid;
     public async void Init()
     {
         DomeBannerParent.SetActive(true);
         clickListener.DomeId = DomeId;
         if (!string.IsNullOrEmpty(ImageUrl))
         {
-            Texture2D texture=await DownloadDomeTexture(ImageUrl);
-            DomeMeshRenderer.material.mainTexture = texture;
-            DomeMeshRenderer.gameObject.SetActive(true);
-            Frame.SetActive(true);
+            ImageUrl = ImageUrl + "?width=512?height=256";
+            DownloadDomeTexture(ImageUrl);  
+        }
+        else
+        {
+            if (smallDome)
+                DomeText.GetComponent<Transform>().localPosition = new Vector3(0, TextValueSmall, DomeText.GetComponent<Transform>().localPosition.z);
+            else
+                DomeText.GetComponent<Transform>().localPosition = new Vector3(0, TextValueMid, DomeText.GetComponent<Transform>().localPosition.z);
         }
         if (!string.IsNullOrEmpty(LogoUrl))
         {
-            Texture2D texture = await DownloadDomeTexture(LogoUrl);
-            LogoSpriteRenderer.sprite = ConvertToSprite(texture);
-            ScaleSpriteToTargetSize();
-            //texture.wrapMode = TextureWrapMode.Clamp;
-            //AdjustUVs(LogoMeshRenderer, texture);
-            //LogoMeshRenderer.material.mainTexture = texture;
-            //LogoMeshRenderer.gameObject.SetActive(true);
+            ImageUrl = ImageUrl + "?width=256";
+            DownloadLogoTexture(LogoUrl);
         }
     }
 
@@ -45,9 +52,12 @@ public class SummitDomeShaderApply : MonoBehaviour
     {
         return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
     }
-    private float targetWidth = 2f;
+    private float targetWidth = 1.8f;
     private void ScaleSpriteToTargetSize()
     {
+        if (smallDome)
+            targetWidth = 1.5f;
+
         if (LogoSpriteRenderer == null || LogoSpriteRenderer.sprite == null) return;
 
         // Get the native size of the sprite
@@ -69,19 +79,62 @@ public class SummitDomeShaderApply : MonoBehaviour
         LogoSpriteRenderer.transform.localScale = scale;
     }
 
-    async Task<Texture2D> DownloadDomeTexture(string url)
+    void DownloadDomeTexture(string url)
     {
-        UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
-        await request.SendWebRequest();
-        if ((request.result == UnityWebRequest.Result.ConnectionError) || (request.result == UnityWebRequest.Result.ProtocolError))
-            Debug.Log(request.error);
-        else
+        if (!string.IsNullOrEmpty(url))
         {
-            return DownloadHandlerTexture.GetContent(request);
+            if (AssetCache.Instance.HasFile(url))
+            {
+                SetDomeTexture(url);
+            }
+            else
+            {
+                AssetCache.Instance.EnqueueOneResAndWait(url, url, (success) =>
+                {
+                    if (success)
+                    {
+                        SetDomeTexture(url);
+                    }
+                });
+            }
         }
-        request.Dispose();
-        return null;
     }
 
- 
+    void SetDomeTexture(string url)
+    {
+        Texture2D texture=AssetCache.Instance.LoadImage(url);
+        DomeMeshRenderer.material.mainTexture = texture;
+        DomeMeshRenderer.gameObject.SetActive(true);
+        Frame.SetActive(true);
+    }
+
+    void DownloadLogoTexture(string url)
+    {
+        if (!string.IsNullOrEmpty(url))
+        {
+            if (AssetCache.Instance.HasFile(url))
+            {
+                SetLogoTexture(url);
+            }
+            else
+            {
+                AssetCache.Instance.EnqueueOneResAndWait(url, url, (success) =>
+                {
+                    if (success)
+                    {
+                        SetLogoTexture(url);
+                    }
+                });
+            }
+        }
+    }
+
+
+    void SetLogoTexture(string url)
+    {
+        Texture2D texture = AssetCache.Instance.LoadImage(url);
+        LogoSpriteRenderer.sprite = ConvertToSprite(texture);
+        LogoSpriteRenderer.material.shader = Shader.Find("Sprites/Default");
+        ScaleSpriteToTargetSize();
+    }
 }

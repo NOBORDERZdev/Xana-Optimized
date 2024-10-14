@@ -1,5 +1,6 @@
 using Paroxe.PdfRenderer;
 using Photon.Pun;
+using System;
 using System.Collections.Generic;
 using Toyota;
 using UnityEngine;
@@ -40,6 +41,8 @@ public class NFT_Holder_Manager : MonoBehaviour
     public bool IsSummit;
     public SummitDomeImageHandler handler;
     private XanaChatSystem _chatSystem;
+
+    public GameObject[] RationRefs;
     
     private void Awake()
     {
@@ -48,24 +51,25 @@ public class NFT_Holder_Manager : MonoBehaviour
         else
             Destroy(this.gameObject);
     }
-   
-    private void Start()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            GameObject meetingObj = Resources.Load("ThaMeetingObj") as GameObject;
-            meetingObj = PhotonNetwork.InstantiateRoomObject(meetingObj.name, new Vector3(0f, 0f, 0f), Quaternion.identity);
-            meetingStatus = meetingObj.GetComponent<ThaMeetingStatusUpdate>();
-            //Debug.LogError("Instantiate Meeting Object");
-        }
-        else if (meetingStatus == null)
-            meetingStatus = FindObjectOfType<ThaMeetingStatusUpdate>();
+    
 
-        SetChatRefrence();
+    //private void Start()
+    //{
+    //    if (PhotonNetwork.IsMasterClient)
+    //    {
+    //        GameObject meetingObj = Resources.Load("ThaMeetingObj") as GameObject;
+    //        meetingObj = PhotonNetwork.InstantiateRoomObject(meetingObj.name, new Vector3(0f, 0f, 0f), Quaternion.identity);
+    //        meetingStatus = meetingObj.GetComponent<ThaMeetingStatusUpdate>();
+    //        //Debug.LogError("Instantiate Meeting Object");
+    //    }
+    //    else if (meetingStatus == null)
+    //        meetingStatus = FindObjectOfType<ThaMeetingStatusUpdate>();
 
-        // send Space_Entry_UniqueUsers_Mobile_App
-        GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.SE_UU_Mobile_App_THA.ToString());
-    }
+    //    SetChatRefrence();
+
+    //    // send Space_Entry_UniqueUsers_Mobile_App
+    //    GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.SE_UU_Mobile_App_THA.ToString());
+    //}
     //private void OnApplicationFocus(bool hasFocus)
     //{
     //    if (!hasFocus)
@@ -122,6 +126,12 @@ public class NFT_Holder_Manager : MonoBehaviour
         }
     }
 
+    public void CloseAllRatioRefs()
+    {
+        if (RationRefs.Length != 0)
+            RationRefs.SetActive(false);
+    }
+
 
     public void PdfClosed()
     {
@@ -139,4 +149,14 @@ public class NFT_Holder_Manager : MonoBehaviour
         }
     }
 
+    public void videoReady()
+    {
+        if(IsSummit)
+        {
+            ratioReferences[RatioID].l_obj.SetActive(false);
+            ratioReferences[RatioID].p_obj.SetActive(false);
+            ratioReferences[RatioID].p_Loader.SetActive(false);
+            ratioReferences[RatioID].l_Loader.SetActive(false);
+        }
+    }
 }

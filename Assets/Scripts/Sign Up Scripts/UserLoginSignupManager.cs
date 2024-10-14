@@ -94,7 +94,7 @@ public class UserLoginSignupManager : MonoBehaviour
     EyesBlinking ref_EyesBlinking;
     [Header("Bools Fields")]
     private bool _isUserClothDataFetched = false;
-
+    public XSummitBgChange XSummitBgChange;
     public float DisplayNameFieldMoveUpValue = 500f; // Distance to move the input field up
     Vector2 _originalPosition;
     AdvancedInputField _displayNameInputField;
@@ -104,6 +104,7 @@ public class UserLoginSignupManager : MonoBehaviour
     public GameObject DownloadPermissionPopup;
     #endregion
 
+
     private void OnEnable()
     {
         instance = this;
@@ -111,6 +112,7 @@ public class UserLoginSignupManager : MonoBehaviour
         if (ConstantsHolder.xanaConstants.EnableSignInPanelByDefault)
         {
             emailOrWalletLoginPanel.SetActive(true);
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
             ClearInputFieldsData();
         }
 
@@ -425,6 +427,7 @@ public class UserLoginSignupManager : MonoBehaviour
     {
         if (ConstantsHolder.xanaConstants.EnableSignInPanelByDefault)
         {
+            Screen.orientation = ScreenOrientation.Portrait;
             emailOrWalletLoginPanel.SetActive(false);
             return;
         }
@@ -714,6 +717,7 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.Save();
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
+        ConstantsHolder.xanaConstants.LoggedInAsGuest = false;
         SubmitSetDeviceToken();
         WebViewManager.Instance.CloseWebView();
         if (signUpOrloginSelectionPanel.activeInHierarchy)
@@ -1932,9 +1936,10 @@ public class UserLoginSignupManager : MonoBehaviour
                 {
                     if (myObject1.success)
                     {
-
+                        
                         ConstantsGod.AUTH_TOKEN = myObject1.data.token;
 
+                        Debug.Log(ConstantsGod.AUTH_TOKEN);
                         if (PlayerPrefs.GetInt("shownWelcome") == 1)
                         {
                             //DynamicEventManager.deepLink?.Invoke("Guest login");
@@ -2065,17 +2070,16 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.xanaConstants.isCameraMan = false;
         ConstantsHolder.xanaConstants.IsDeemoNFT = false;
         InventoryManager.instance.CheckWhenUserLogin();
+        GameManager.Instance.bottomTabManagerInstance.CheckLoginOrNotForFooterButton();
         if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
         {
             Screen.orientation = ScreenOrientation.LandscapeLeft;
-            LoginRegisterScreen.SetActive(true);
-           // signUpOrloginSelectionPanel.SetActive(true);
+            signUpOrloginSelectionPanel.SetActive(true);
         }
         else
         {
             signUpOrloginSelectionPanel.SetActive(true);
         }
-        //signUpOrloginSelectionPanel.SetActive(true);
         if (_web3APIforWeb2._OwnedNFTDataObj != null)
         {
             _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();

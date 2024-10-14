@@ -38,6 +38,8 @@ public class AddForceComponent : ItemComponent
 
     public void ApplyAddForce()
     {
+        if (GamificationComponentData.instance == null || _addForceComponentData == null || _rigidBodyPlayer == null)
+            return;
 
         if (!_addForceComponentData.forceApplyOnAvatar)
         {
@@ -98,8 +100,8 @@ public class AddForceComponent : ItemComponent
         {
             yield return new WaitForFixedUpdate();
         }
-        _rigidBody.isKinematic = true;
-        if (_rigidBodyPlayer)
+        //_rigidBody.isKinematic = true;
+        if (_rigidBodyPlayer && !ConstantsHolder.xanaConstants.isSoftBankGame)
             _rigidBodyPlayer.isKinematic = true;
         if (_characterControllerNew)
             _characterControllerNew.enabled = true;
@@ -127,7 +129,7 @@ public class AddForceComponent : ItemComponent
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             _rigidBodyPlayer = _other.gameObject.GetComponent<Rigidbody>();
-            if (!ConstantsHolder.xanaConstants.isXanaPartyWorld && _characterControllerNew == null)
+            if (!ConstantsHolder.xanaConstants.isXanaPartyWorld && _characterControllerNew == null || !ConstantsHolder.xanaConstants.isSoftBankGame)
                 _characterControllerNew = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<CharacterController>();
             ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.AddForce);
             if (GamificationComponentData.instance.withMultiplayer && !_addForceComponentData.forceApplyOnAvatar)

@@ -120,8 +120,8 @@ public class ConstantsGod
     public static string GetAllReactions = "/item/get-all-reactions";
     public static string GetVersion = "/item/get-version";
     public static string MaintenanceAPI = "/item/get-version/";
-
-
+    public static string YtSetStreamUrl = "/users/set-youtube-url";
+    public static string YtStreamUrl = "/users/get-youtube-url/";
 
     // Xana Lobby WOrlds
     public static string GetXanaLobbyWorlds = "/item/get-xana-lobby-worlds";
@@ -285,7 +285,7 @@ public class ConstantsGod
     public static string GetUserAllTextPosts = "/item/get-user-text-post/";
     #endregion
     #region Get App Features List Api's
-    public static string FeaturesListApi = "/admin/get-features-list";
+    public static string FeaturesListApi = "/admin/v2/get-features-list";
     #endregion
 
 
@@ -325,6 +325,7 @@ public class ConstantsGod
     public static string GETVISITDOMES = "/domes/getvisitedomes";
     public static string SETVISITDOMEWITHID = "/domes/domesvisits/";
     public static string GETUSERDETAIL = "/users/get-custom-intro";
+    public static string VISITORCOUNT = "/world/get-total-visit/";  //:world_id
     #endregion
     #region Toyota Email Api's
     public static string toyotaEmailApi = "/toyotaAichiWorlds/get-all-space-email-public/";
@@ -348,6 +349,10 @@ public class ConstantsGod
     public static string UpdateUserRaffleTickets = "/domes/updatetickets";
     public static string GetUserRaffleTickets = "/domes/getusertickets";
     public static string GetUserVisitedDomes = "/domes/getvisitedomes";
+    #endregion
+
+    #region Bundle Update Api
+    public static string BUNDLEUPDATEAPI = "/app-bundles/get";
     #endregion
 
     #region XANA PARTY WORLD Api's

@@ -24,7 +24,7 @@ public class CarStopTrigger : MonoBehaviour
             var summitrpc = other.gameObject.GetComponent<SummitPlayerRPC>();
             if (summitrpc.isInsideCAr)
             {
-                summitrpc.checkforExit();
+               
                 return;
             }
             
@@ -45,7 +45,7 @@ public class CarStopTrigger : MonoBehaviour
                     if (player != null)
                     {
                         StartCoroutine(CarNavigationManager.CarNavigationInstance.TPlayer(other.gameObject, player, this));
-                        break;
+                       
                     }
                     
                 }

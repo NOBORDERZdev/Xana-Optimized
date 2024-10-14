@@ -86,9 +86,10 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
             // Already Called For Landscape no need to call again.
             if (Application.isEditor)
             {
-                PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
-                PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
-                PermissionPopusSystem.Instance.OpenPermissionScreen();
+                SetMicByBtn();
+                //PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
+                //PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
+                //PermissionPopusSystem.Instance.OpenPermissionScreen();
             }
             else
             {
@@ -104,7 +105,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
                     StartCoroutine(SetMic());
                 }
 #elif UNITY_IOS
-                if(!Application.HasUserAuthorization(UserAuthorization.Microphone)){
+                if(!Application.HasUserAuthorization(UserAuthorization.Microphone) && PlayerPrefs.GetInt("MicPermission", 0) == 0){
                       PermissionPopusSystem.Instance.onCloseAction += SetMicByBtn;
                     PermissionPopusSystem.Instance.textType = PermissionPopusSystem.TextType.Mic;
                     PermissionPopusSystem.Instance.OpenPermissionScreen();
@@ -128,7 +129,14 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
 #if UNITY_IOS
     Application.RequestUserAuthorization(UserAuthorization.Microphone);
 #endif
-        StartCoroutine(SetMic());
+        if (this != null)
+        {
+            StartCoroutine(SetMic());
+        }
+        else
+        {
+            Debug.LogWarning("XanaVoiceChat instance has been destroyed, cannot start SetMic coroutine.");
+        }
     }
 
     private IEnumerator SetMic()
@@ -138,7 +146,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
 #endif
 
         //Adding delay because of loading screen stuck issue in rotation by getting permission popup. // Sohaib
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         Debug.Log("Xana VoiceChat Start");
         recorder = GameObject.FindObjectOfType<Recorder>();
@@ -155,7 +163,10 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
                 Permission.RequestUserPermission(Permission.Microphone);
             }
         }
-
+        while (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+        {
+            yield return new WaitForSeconds(1f);
+        }
 
         if (recorder != null)
         {

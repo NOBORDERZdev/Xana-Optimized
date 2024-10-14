@@ -383,6 +383,8 @@ public class WorldItemView : EnhancedScrollerCellView
         else
         {
             ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
+            ConstantsHolder.xanaConstants.isSoftBankGame = false;
+
         }
         //if (m_EnvironmentName.Contains("XANA Lobby"))
         //{

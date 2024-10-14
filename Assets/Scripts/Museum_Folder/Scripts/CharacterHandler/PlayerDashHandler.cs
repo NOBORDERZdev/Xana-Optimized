@@ -81,7 +81,7 @@ public class PlayerDashHandler : MonoBehaviour
 
     public void DashButton()
     {
-        if (_playerController == null || !_canDash || IsPlayerInOtherState)
+        if (_playerController == null || !_canDash || IsPlayerInOtherState || _playerController.animator.GetFloat("Blend") == 0)
             return;
 
         StartCoroutine(DashRoutine());
@@ -93,6 +93,7 @@ public class PlayerDashHandler : MonoBehaviour
 
         float startTime = Time.time;
         float endTime = startTime + _dashTime;
+        _actualSpringSpeed = _playerController.sprintSpeed;
 
         if (_dashEffect)
             _dashEffect.SetActive(true);  // Enable speed lines effect on Camera
@@ -110,7 +111,7 @@ public class PlayerDashHandler : MonoBehaviour
         if (_playerController.animator)
             _playerController.animator.SetBool("IsDashing", false);
 
-        if (_playerController.desiredMoveDirection != Vector3.zero)
+        if (_playerController.desiredMoveDirection != Vector3.zero || _playerController.desiredMoveDirectionFPP != Vector3.zero)
         {
             StartCoroutine(DashEndRoutine());
         }
@@ -122,7 +123,6 @@ public class PlayerDashHandler : MonoBehaviour
 
     private IEnumerator DashEndRoutine()
     {
-
         _playerController.sprintSpeed = 16f;
         while (_playerController.cinemachineFreeLook.m_Lens.FieldOfView >= 60f)
         {

@@ -19,6 +19,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
     [HideInInspector]
     public AssetBundle bundle;
     public AssetBundleRequest newRequest;
+    public string clothData;
     private string OtherPlayerId;
     public static List<string> bundle_Name = new List<string>();
     private bool ItemAlreadyExists = false;
@@ -67,7 +68,8 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
 
             return;
         }
-
+        GetPlayerInfo();
+        return;
         if (this.GetComponent<PhotonView>().IsMine)
         {
             _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
@@ -80,10 +82,55 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
 
     void CallRpcInvoke()
     {
-        this.GetComponent<PhotonView>().RPC(nameof(CheckRpc), RpcTarget.AllBuffered, _mydatatosend as object);
+        GetPlayerInfo();
+        return;
+        //this.GetComponent<PhotonView>().RPC(nameof(CheckRpc), RpcTarget.AllBuffered, _mydatatosend as object);
 
     }
 
+    public void GetPlayerInfo()
+    {
+        SyncPlayer();
+    }
+
+    public void SyncPlayer()
+    {
+        ExitGames.Client.Photon.Hashtable properties = this.GetComponent<PhotonView>().Owner.CustomProperties;
+        string ClothJson = "";
+        bool NFTEquiped = false;
+        // Get specific properties
+        if (properties.ContainsKey("ClothJson"))
+        {
+            ClothJson = (string)properties["ClothJson"];
+            if (string.IsNullOrEmpty(ClothJson))
+            {
+                ClothJson = ConstantsHolder.xanaConstants.GetRandomPresetClothJson();
+            }
+            Debug.Log("ClothJson: " + ClothJson);
+        }
+        else
+        {
+            ClothJson = ConstantsHolder.xanaConstants.GetRandomPresetClothJson();
+            Debug.Log("Random ClothJson: " + ClothJson);
+        }
+        if (properties.ContainsKey("NFTEquiped"))
+        {
+            NFTEquiped = (bool)properties["NFTEquiped"];
+            Debug.Log("NFTEquiped: " + NFTEquiped);
+        }
+        Debug.Log("Rik: " + GetComponent<PhotonView>().Owner.NickName + "  " + ClothJson);
+        clothData = ClothJson;
+        AvatarController otherPlayer;
+        otherPlayer = gameObject.GetComponent<AvatarController>();
+        otherPlayer.isLoadStaticClothFromJson = true;
+        otherPlayer.staticClothJson = ClothJson;
+        otherPlayer.BuildCharacterFromLocalJson();
+        if (otherPlayer.GetComponent<EyesBlinking>())                      // Added by Ali Hamza
+        {
+            otherPlayer.GetComponent<EyesBlinking>().StoreBlendShapeValues();
+            StartCoroutine(otherPlayer.GetComponent<EyesBlinking>().BlinkingStartRoutine());
+        }
+    }
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         MutiplayerController.instance.playerobjects.Add(info.photonView.gameObject);
@@ -126,6 +173,13 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
 
             }
 
+            if (!otherPlayer.GetComponent<PhotonView>().IsMine)
+            {
+                otherPlayer.isLoadStaticClothFromJson = true;
+                otherPlayer.staticClothJson = Datasend[1].ToString();
+                otherPlayer.BuildCharacterFromLocalJson();
+                return;
+            }
             if (_CharacterData.myItemObj.Count != 0)
             {
                 for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
@@ -133,7 +187,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
 
                     if (!otherPlayer.GetComponent<PhotonView>().IsMine)
                     {
-                        otherPlayer.GetComponent<AvatarController>().SetAvatarClothDefault(otherPlayer.gameObject, _CharacterData.gender);
+                        //otherPlayer.GetComponent<AvatarController>().SetAvatarClothDefault(otherPlayer.gameObject, _CharacterData.gender);
                         //CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);
                         //bodyparts.SetAvatarByGender(_CharacterData.gender);
 
@@ -505,12 +559,15 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             }
             else
             {
-                if (itemtype.Contains("Hair"))
-                {
-                    applyOn.GetComponent<AvatarController>().WearDefaultHair(applyOn, hairColor);
-                }
-                else
-                    applyOn.GetComponent<AvatarController>().WearDefaultItem(itemtype, applyOn, _gender);
+                // Old Implementation
+                // {
+                //if (itemtype.Contains("Hair"))
+                //{
+                //    applyOn.GetComponent<AvatarController>().WearDefaultHair(applyOn, hairColor);
+                //}
+                //else
+                //}
+                applyOn.GetComponent<AvatarController>().WearDefaultItem(itemtype, applyOn, _gender);
             }
         }
     }

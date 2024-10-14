@@ -235,7 +235,8 @@ public class BuilderAssetDownloader : MonoBehaviour
             //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
             //if (!flag)
             AsyncOperationHandle<GameObject> _async;
-            LoadAssetAgain:
+            int _assetDownloadTryCount = 0;
+        LoadAssetAgain:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
@@ -250,14 +251,18 @@ public class BuilderAssetDownloader : MonoBehaviour
                 Addressables.ClearDependencyCacheAsync(downloadKey);
                 Addressables.ReleaseInstance(_async);
                 Addressables.Release(_async);
-                yield return new WaitForSeconds(1);
-                goto LoadAssetAgain;
+                _assetDownloadTryCount++;
+                if (_assetDownloadTryCount < 5)
+                {
+                    yield return new WaitForSeconds(1);
+                    goto LoadAssetAgain;
+                }
             }
             while (!_async.IsDone)
             {
                 yield return null;
             }
-            if (_async.Status == AsyncOperationStatus.Succeeded)
+            if (_async.Status == AsyncOperationStatus.Succeeded && _async.Result != null)
             {
                 AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
@@ -269,7 +274,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             }
             yield return new WaitForEndOfFrame();
             yield return new WaitForSeconds(.01f);
-            if (_async.Status == AsyncOperationStatus.Succeeded)
+            if (_async.Status == AsyncOperationStatus.Succeeded && _async.Result != null)
             {
                 downloadDataQueue.RemoveAt(0);
                 DisplayDownloadedAssetText();
@@ -301,7 +306,8 @@ public class BuilderAssetDownloader : MonoBehaviour
             //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
             //if (!flag)
             AsyncOperationHandle<GameObject> _async;
-            LoadAssetAgain:
+            int _assetDownloadTryCount = 0;
+        LoadAssetAgain:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
@@ -316,14 +322,18 @@ public class BuilderAssetDownloader : MonoBehaviour
                 Addressables.ClearDependencyCacheAsync(downloadKey);
                 Addressables.ReleaseInstance(_async);
                 Addressables.Release(_async);
-                yield return new WaitForSeconds(1);
-                goto LoadAssetAgain;
+                _assetDownloadTryCount++;
+                if (_assetDownloadTryCount < 5)
+                {
+                    yield return new WaitForSeconds(1);
+                    goto LoadAssetAgain;
+                }
             }
             while (!_async.IsDone)
             {
                 yield return null;
             }
-            if (_async.Status == AsyncOperationStatus.Succeeded)
+            if (_async.Status == AsyncOperationStatus.Succeeded && _async.Result != null)
             {
                 AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
@@ -334,7 +344,7 @@ public class BuilderAssetDownloader : MonoBehaviour
                 Debug.LogError("Download Failed......");
             }
             yield return new WaitForEndOfFrame();
-            if (_async.Status == AsyncOperationStatus.Succeeded)
+            if (_async.Status == AsyncOperationStatus.Succeeded && _async.Result != null)
             {
                 downloadFailed.RemoveAt(0);
                 DisplayDownloadedAssetText();
@@ -350,19 +360,15 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     public IEnumerator DownloadSpawnPointsPreload()
     {
+        // First loop for preLoadStartFinishPoints
         for (int i = 0; i < BuilderData.preLoadStartFinishPoints.Count; i++)
         {
             string downloadKey = prefabPrefix + BuilderData.preLoadStartFinishPoints[i].ItemID + prefabSuffix;
             string dicKey = BuilderData.preLoadStartFinishPoints[i].DcitionaryKey;
 
-
-
-            //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-            //bool flag = false;
-            //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
-            //if (!flag)
             AsyncOperationHandle<GameObject> _async;
-            LoadAssetAgain:
+            int _assetDownloadTryCount = 0;
+        LoadAssetAgainStartFinish:
             _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
@@ -370,21 +376,22 @@ public class BuilderAssetDownloader : MonoBehaviour
             }
             if (_async.IsValid() && _async.Result != null)
             {
-
+                // Asset loaded successfully
             }
             else
             {
+                // If the asset failed to load, retry after clearing cache
                 Addressables.ClearDependencyCacheAsync(downloadKey);
                 Addressables.ReleaseInstance(_async);
                 Addressables.Release(_async);
-                yield return new WaitForSeconds(1);
-                goto LoadAssetAgain;
+                _assetDownloadTryCount++;
+                if (_assetDownloadTryCount < 5)
+                {
+                    yield return new WaitForSeconds(1);
+                    goto LoadAssetAgainStartFinish;
+                }
             }
-            while (!_async.IsDone)
-            {
-                yield return null;
-            }
-            if (_async.Status == AsyncOperationStatus.Succeeded)
+            if (_async.Status == AsyncOperationStatus.Succeeded && _async.Result != null)
             {
                 InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
@@ -396,25 +403,38 @@ public class BuilderAssetDownloader : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-
+        // Second loop for preLoadspawnPoint (updated with retry mechanism)
         for (int i = 0; i < BuilderData.preLoadspawnPoint.Count; i++)
         {
             string downloadKey = prefabPrefix + BuilderData.preLoadspawnPoint[i].ItemID + prefabSuffix;
             string dicKey = BuilderData.preLoadspawnPoint[i].DcitionaryKey;
 
-
-
-            //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-            //bool flag = false;
-            //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
-            //if (!flag)
-
-            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            AsyncOperationHandle<GameObject> _async;
+            int _assetDownloadTryCount = 0;
+        LoadAssetAgainSpawnPoint:
+            _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
                 yield return null;
             }
-            if (_async.Status == AsyncOperationStatus.Succeeded)
+            if (_async.IsValid() && _async.Result != null)
+            {
+                // Asset loaded successfully
+            }
+            else
+            {
+                // If the asset failed to load, retry after clearing cache
+                Addressables.ClearDependencyCacheAsync(downloadKey);
+                Addressables.ReleaseInstance(_async);
+                Addressables.Release(_async);
+                _assetDownloadTryCount++;
+                if (_assetDownloadTryCount < 5)
+                {
+                    yield return new WaitForSeconds(1);
+                    goto LoadAssetAgainSpawnPoint;
+                }
+            }
+            if (_async.Status == AsyncOperationStatus.Succeeded && _async.Result != null)
             {
                 InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
@@ -520,20 +540,20 @@ public class BuilderAssetDownloader : MonoBehaviour
         }
 
 
-        if (IsMultiplayerComponent(_itemData) && GamificationComponentData.instance.withMultiplayer)
-        {
-            newObj.SetActive(false);
+        /*  if (IsMultiplayerComponent(_itemData) && GamificationComponentData.instance.withMultiplayer)
+          {
+              newObj.SetActive(false);
 
-            GamificationComponentData.instance.MultiplayerComponentData.Add(_itemData);
-            var multiplayerObject = Instantiate(GamificationComponentData.instance.MultiplayerComponente, _itemData.Position, _itemData.Rotation);
-            MultiplayerComponentData multiplayerComponentData = new();
-            multiplayerObject.GetComponent<MultiplayerComponent>().RunTimeItemID = _itemData.RuntimeItemID;
-            multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
-            //  multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
-            GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
+              GamificationComponentData.instance.MultiplayerComponentData.Add(_itemData);
+              var multiplayerObject = Instantiate(GamificationComponentData.instance.MultiplayerComponente, _itemData.Position, _itemData.Rotation);
+              MultiplayerComponentData multiplayerComponentData = new();
+              multiplayerObject.GetComponent<MultiplayerComponent>().RunTimeItemID = _itemData.RuntimeItemID;
+              multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
+              //  multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
+              GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
 
-            return;
-        }
+              return;
+          }*/
         //meshCombinerRef.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
         //foreach (Transform childTransform in newObj.GetComponentsInChildren<Transform>())
         //{
@@ -684,6 +704,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         }
         
 
+        isSpawnDownloaded = false;//Failed due to spawn points not being downloaded upon re-entry.
         downloadDataQueue.Clear();
         builderDataDictionary.Clear();
         BuilderData.mapData = null;

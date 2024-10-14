@@ -476,7 +476,8 @@ public class PlayerSelfieController : MonoBehaviour
     IEnumerator InputDelay()
     {
         yield return new WaitForSeconds(0.05f);
-        m_PlayerController.GetComponent<PlayerController>().vertical = 0;
+        if(m_PlayerController!=null)
+            m_PlayerController.GetComponent<PlayerController>().vertical = 0;
 
     }
 
@@ -566,7 +567,8 @@ public class PlayerSelfieController : MonoBehaviour
             }
 
            
-            newRenderTexture.Release();
+            if (newRenderTexture) newRenderTexture.Release(); // caused a null-ref when user was falling and touching the screen.
+                                                              // unneccessary, as the render texture is being destroyed below.
 
 
             StartCoroutine(SetMuseumRaycasterBoolean());

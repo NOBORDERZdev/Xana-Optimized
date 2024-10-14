@@ -13,7 +13,7 @@ public class FinishPoint : MonoBehaviour
     public Collider FinishRaceCollider;
     private void OnEnable()
     {
-        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld || ConstantsHolder.xanaConstants.isSoftBankGame)
         {
             FinishRaceCollider.gameObject.SetActive(true);
         }
@@ -53,6 +53,7 @@ public class FinishPoint : MonoBehaviour
         GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<AnimatedController>().enabled = false;
         Animator penguinAnimator = GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<Animator>();
         penguinAnimator.SetBool("isGrounded", true);
+        penguinAnimator.SetFloat("velocity", 0);
         penguinAnimator.SetBool("isJump", false);
         //penguinAnimator.SetBool("Win", true);
         StartCoroutine(DelayedWinAnimation(penguinAnimator, 0.01f));
@@ -63,6 +64,10 @@ public class FinishPoint : MonoBehaviour
             BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("YOU WON THE RACE", 3, true);
         triggerCollider.SetActive(true);
         GamificationComponentData gamificationTemp = GamificationComponentData.instance;
+        if (ConstantsHolder.xanaConstants.isSoftBankGame)
+        {
+            GamePlayUIHandler.inst.OnExitButtonClick();
+        }
         gamificationTemp.TriggerRaceStatusUpdate();
         Hashtable _hash = new Hashtable();
         _hash.Add("IsReady", false);

@@ -3,6 +3,7 @@ using Photon.Pun;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -116,6 +117,11 @@ public class PlayerController : MonoBehaviour
     }
 
     internal Vector3 desiredMoveDirection;
+    internal Vector3 desiredMoveDirectionFPP;
+    //Store Player Speed & Jump height data
+    float _defaultJumpHeight = default;
+    float _defaultSprintSpeed = default;
+    float _defaultMoveSpeed = default;
 
     private void OnEnable()
     {
@@ -129,6 +135,12 @@ public class PlayerController : MonoBehaviour
         BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
         BuilderEventManager.AfterPlayerInstantiated += RemoveLayerFromCameraCollider;
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate += SpecialItemPlayerPropertiesUpdate;
+
+        SceneManager.sceneLoaded += SetDefaultPlayerSpeedJumpData;
+
+        _defaultJumpHeight = JumpVelocity;
+        _defaultSprintSpeed = sprintSpeed;
+        _defaultMoveSpeed = movementSpeed;
     }
     private void OnDisable()
     {
@@ -143,6 +155,7 @@ public class PlayerController : MonoBehaviour
         BuilderEventManager.AfterPlayerInstantiated -= RemoveLayerFromCameraCollider;
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate -= SpecialItemPlayerPropertiesUpdate;
 
+        SceneManager.sceneLoaded -= SetDefaultPlayerSpeedJumpData;
     }
 
     void Start()
@@ -182,7 +195,6 @@ public class PlayerController : MonoBehaviour
         //BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
 
         RemoveLayerFromCameraCollider();
-
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -225,6 +237,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        ConstantsHolder.ontriggteredplayerEntered?.Invoke(other.gameObject);
         if (other.tag == "LiveStream")
         {
             Gamemanager._InstanceGM.m_youtubeAudio.volume = 1f;
@@ -262,6 +275,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        ConstantsHolder.ontriggteredplayerExit?.Invoke(other.gameObject);
         if (other.tag == "LiveStream")
         {
             //Gamemanager._InstanceGM.mediaPlayer.AudioVolume = 0;
@@ -551,6 +565,7 @@ public class PlayerController : MonoBehaviour
         Vector2 movementInput = new Vector2(horizontal, vertical);
 
         Vector3 move = transform.right * movementInput.x + transform.forward * movementInput.y;
+        desiredMoveDirectionFPP = move;
         _IsGrounded = characterController.isGrounded;
         animator.SetBool("IsGrounded", _IsGrounded);
         if (characterController.velocity.y < 0)
@@ -944,7 +959,7 @@ public class PlayerController : MonoBehaviour
         }
 
         animator.SetBool("IsGrounded", _IsGrounded);
-        if (characterController.velocity.y < 0)
+        if (characterController.velocity.y <= 0)
         {
             animator.SetBool("standJump", false);
         }
@@ -1078,6 +1093,12 @@ public class PlayerController : MonoBehaviour
                 // UpdateSefieBtn(false);
                 if ((Mathf.Abs(horizontal) <= .85f || Mathf.Abs(vertical) <= .85f)) // walk
                 {
+                    //Avoid player sliding on very low speed
+                    if (currentSpeed <= 1.40)
+                    {
+                        currentSpeed = 1.4f;
+                    }
+
                     if (animator != null)
                     {
                         float walkSpeed = 0.2f * currentSpeed; // Smoothing animator.
@@ -1099,36 +1120,6 @@ public class PlayerController : MonoBehaviour
 
                     characterController.Move(gravityVector * Time.deltaTime);
                 }
-                else if ((Mathf.Abs(horizontal) <= .001f || Mathf.Abs(vertical) <= .001f))
-                {
-                    if (animator != null)
-                    {
-                        animator.SetFloat("Blend", 0.23f * 0, speedSmoothTime, Time.deltaTime);
-                        animator.SetFloat("BlendY", 3f, speedSmoothTime, Time.deltaTime);
-                    }
-                    if (!_IsGrounded) // is in jump
-                    {
-                        //checking moving platform
-                        if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
-                        {
-                            characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
-                        }
-                        characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
-                        gravityVector.y += gravityValue * Time.deltaTime;
-                        characterController.Move(gravityVector * Time.deltaTime);
-                    }
-                    else // walk start state
-                    {
-                        //checking moving platform
-                        if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
-                        {
-                            characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
-                        }
-                        characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
-                        gravityVector.y += gravityValue * Time.deltaTime;
-                        characterController.Move(gravityVector * Time.deltaTime);
-                    }
-                }
             }
         }
         else // Reseating animator to idel when joystick is not moving-----
@@ -1144,7 +1135,7 @@ public class PlayerController : MonoBehaviour
             {
                 characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
             }
-            characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
+            characterController.Move(Vector3.zero);
             gravityVector.y += gravityValue * Time.deltaTime;
             characterController.Move(gravityVector * Time.deltaTime);
 
@@ -1239,7 +1230,7 @@ public class PlayerController : MonoBehaviour
         if (EmoteAnimationHandler.Instance.animatorremote != null && ReferencesForGamePlay.instance.m_34player.GetComponent<Animator>().GetBool("EtcAnimStart"))    //Added by Ali Hamza
             ReferencesForGamePlay.instance.m_34player.GetComponent<RpcManager>().BackToIdleAnimBeforeJump();
 
-        if (ReferencesForGamePlay.instance.m_34player)
+        if (ReferencesForGamePlay.instance.m_34player && IsJumpButtonPress)
         {
             ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.JumpSound);
         }
@@ -2148,5 +2139,32 @@ public class PlayerController : MonoBehaviour
 
         movedPosition = movingPlatform.position - lastMovePlatformPosition;
         lastMovePlatformPosition = movingPlatform.position;
+    }
+
+    void SetDefaultPlayerSpeedJumpData(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        if (scene.name != "Builder")
+        {
+            JumpVelocity = _defaultJumpHeight;
+            sprintSpeed = _defaultSprintSpeed;
+            movementSpeed = _defaultMoveSpeed;
+        }
+    }
+
+
+    public void RemoveCharacterLayer(bool flag) {
+        CinemachineCollider cinemachineCollider = GameplayEntityLoader.instance.PlayerCamera.GetComponent<CinemachineCollider>();
+        if (cinemachineCollider != null )
+        {
+
+            int characterLayerIndex = LayerMask.NameToLayer("Character");
+            // Remove the layer from the collide against mask
+            if(flag)
+            cinemachineCollider.m_CollideAgainst &= ~(1 << characterLayerIndex);
+            else
+                cinemachineCollider.m_CollideAgainst |= (1 << characterLayerIndex);
+        }
+
+
     }
 }

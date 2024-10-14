@@ -221,15 +221,20 @@ public class AvProDirectionalSound : MonoBehaviour
 
     public IEnumerator EnableVideoSound()
     {
+        
         if (!LoadingHandler.Instance.isLoadingComplete)
         {
             // Wait for a end of frame
             yield return null;
         }
+        Debug.Log("Called This");
         SoundController.Instance.EffectsSource.mute = false;
         SoundController.Instance.EffectsSource.volume = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME);
         yield return new WaitForSeconds(0.5f);
-        audioSource.mute = false;
+        if (!ConstantsHolder.isTeleporting) 
+            audioSource.mute = false;
+        else 
+            audioSource.mute = true;
         if (volumeCoroutine == null)
         {
             volumeCoroutine = StartCoroutine(AdjustScreenVolume());

@@ -21,8 +21,9 @@ public class PartyTimerManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+        if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame || ConstantsHolder.xanaConstants.isSoftBankGame)
         {
+            ReferencesForGamePlay.instance.XANAPartyWaitingPanel.SetActive(false);
             return;
         }
         if(LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
@@ -30,8 +31,11 @@ public class PartyTimerManager : MonoBehaviourPunCallbacks
         else
             ReferencesForGamePlay.instance.XANAPartyWaitingPanel.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Waiting for other players... " + "60s";
 
+        XANAPartyManager.Instance.GameIndex = 0;
+
         if (PhotonNetwork.IsMasterClient && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
         {
+            XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().RaceID = 0;
             if (startTime <= -1)
             {
                 startTime = PhotonNetwork.Time;
@@ -48,6 +52,7 @@ public class PartyTimerManager : MonoBehaviourPunCallbacks
             float currentTime = (float)(timerDuration - elapsedTime);
             if (currentTime <= 0 && !ReferencesForGamePlay.instance.isMatchingTimerFinished)
             {
+               
                 currentTime = 0;
                 isTimerRunning = false;
                 ReferencesForGamePlay.instance.isMatchingTimerFinished = true;

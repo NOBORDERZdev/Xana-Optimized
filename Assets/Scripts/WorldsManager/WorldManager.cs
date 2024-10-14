@@ -153,6 +153,7 @@ public class WorldManager : MonoBehaviour
 
     void OpenLandingScene()
     {
+        ConstantsHolder.xanaConstants.SetPlayerProperties();
         int WorldId;
         try
         {
@@ -179,6 +180,7 @@ public class WorldManager : MonoBehaviour
             ConstantsHolder.xanaConstants.MuseumID = singleWorldInfo.data.id;
             WorldItemView.m_EnvName = singleWorldInfo.data.name;
             ConstantsHolder.Thumbnail = singleWorldInfo.data.thumbnail;
+            ConstantsHolder.description = singleWorldInfo.data.description;
             ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             ConstantsHolder.xanaConstants.UserMicEnable = singleWorldInfo.data.userMicEnable;
             LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
@@ -196,8 +198,10 @@ public class WorldManager : MonoBehaviour
 
     }
 
-    void AddingDeleyToLoadScene()
+    async void AddingDeleyToLoadScene()
     {
+        while (!ConstantsHolder.isAddressableCatalogDownload)
+            await Task.Delay(500);
         LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
         XANAPartyManager xANAPartyManager = XANAPartyManager.Instance;
         xANAPartyManager.StartCoroutine(xANAPartyManager.FetchXanaPartyGames());
@@ -815,6 +819,7 @@ public class WorldManager : MonoBehaviour
 
     public async void JoinEvent()
     {
+        ConstantsHolder.xanaConstants.SetPlayerProperties();
         MainSceneEventHandler.MakeScreenSpaceAdditive?.Invoke();
 
         //MainSceneEventHandler.MemoryRelaseAfterLoading?.Invoke();
@@ -911,6 +916,7 @@ public class WorldManager : MonoBehaviour
 
     public async void JoinBuilderWorld()
     {
+        ConstantsHolder.xanaConstants.SetPlayerProperties();
         MainSceneEventHandler.MakeScreenSpaceAdditive?.Invoke();
 
         //MainSceneEventHandler.MemoryRelaseAfterLoading?.Invoke();

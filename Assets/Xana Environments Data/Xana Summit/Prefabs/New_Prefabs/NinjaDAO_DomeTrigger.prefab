@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 108025031125949682}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 4.63}
+  m_LocalPosition: {x: -0.09, y: 0.5, z: 11.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -57,7 +57,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 108025031233800436}
   m_LocalRotation: {x: 0, y: 0.9285506, z: 0, w: 0.37120587}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -4.09, y: 0, z: 3.95}
   m_LocalScale: {x: 20, y: 10, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -77,8 +77,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0134641, y: 1.0672109, z: 1}
-  m_Center: {x: 0.006731987, y: 0.2663374, z: -4.470575e-10}
+  m_Size: {x: 1.0134641, y: 1.067211, z: 0.634356}
+  m_Center: {x: 0.006731987, y: 0.2663374, z: 1.2233646}
 --- !u!114 &108025031233800433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83db127d742d5d7458132c511b0de616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DomeId: 168
+  DomeId: 177
   WorldIdTestnet: 
   WorldIdMainnet: 6528
   textMeshPro: {fileID: 3646619022425621611}
@@ -99,6 +99,8 @@ MonoBehaviour:
   LoadingFromSummitWorld: 1
   HaveSubworlds: 1
   WorldId: 
+  _domeType: 2
+  _domeCategory: 12
 --- !u!1 &3646619022425621611
 GameObject:
   m_ObjectHideFlags: 0

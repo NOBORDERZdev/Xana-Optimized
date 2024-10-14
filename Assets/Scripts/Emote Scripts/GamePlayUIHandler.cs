@@ -103,6 +103,11 @@ public class GamePlayUIHandler : MonoBehaviour
 
     public void OnExitButtonClick()
     {
+        ConstantsHolder.xanaConstants.LastLobbyName = "";
+        if (ConstantsHolder.isFromXANASummit)
+        {
+            ConstantsHolder.IsSummitDomeWorld = false;
+        }
         GamePlayButtonEvents.inst.OnExitButtonClick();
     }
 
@@ -259,13 +264,20 @@ public class GamePlayUIHandler : MonoBehaviour
         XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().RaceFinishTime.Clear();
         XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().isLeaderboardShown = false;
         XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().ResetGame();
-        StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().MoveToLobby());
-        LeaderboardPanel.SetActive(false);
+        ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
+        ConstantsHolder.xanaConstants.isSoftBankGame = false;
+        ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
+        ConstantsHolder.xanaConstants.LastLobbyName = "";
+        //StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().MoveToLobby());
+        //LeaderboardPanel.SetActive(false);
+        //ReferencesForGamePlay.instance.SetGameplayForPenpenz(true);
+        GamePlayButtonEvents.inst.OnExitButtonClick();
     }
 
     public void OnSignInBtnClick()
     {
-        LoadingHandler.Instance.ShowLoading();
+        LoadingHandler.Instance.ShowLoading(); 
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
         ConstantsHolder.xanaConstants.EnableSignInPanelByDefault = true;
         GameplayEntityLoader.instance._uiReferences.LoadMain(false);
         SignInPopupForGuestUser.SetActive(false);

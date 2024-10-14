@@ -288,7 +288,7 @@ public class XanaChatSystem : MonoBehaviour
 
             if (!oneTime)
             {
-                oneTime = true;
+                //oneTime = true;
                 StartCoroutine(ChatOpenDelay());
             }
             
@@ -316,21 +316,32 @@ public class XanaChatSystem : MonoBehaviour
 
             if (PlayerPrefs.GetInt("minimap") == 1)
             {
-                if (ConstantsHolder.xanaConstants.IsMetabuzzEnvironment)
+                if (ConstantsHolder.xanaConstants.IsMetabuzzEnvironment || ConstantsHolder.xanaConstants.isXanaPartyWorld)
                     return;
-                ReferencesForGamePlay.instance.minimap.SetActive(true);
-                ReferencesForGamePlay.instance.SumitMapStatus(true);
+
+                if (!LoadingHandler.Instance.DomeLoading.activeInHierarchy &&
+                    XanaWorldDownloader.xanaWorldDownloader != null && !XanaWorldDownloader.xanaWorldDownloader.assetDownloadingText.gameObject.activeInHierarchy)
+                {
+                    ReferencesForGamePlay.instance.minimap.SetActive(true);
+                    ReferencesForGamePlay.instance.SumitMapStatus(true);
+                }
             }
         }
         Debug.Log("ChatOpenDelay");
         
     }
     bool oneTime = false;
+    VerticalLayoutGroup verticalLayoutGroup;
     IEnumerator ChatOpenDelay()
     {
-        ChatSocketManager.instance.MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = false;   
-        yield return new WaitForSeconds(0.1f);
-        ChatSocketManager.instance.MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = true;
+        if (verticalLayoutGroup == null)
+            verticalLayoutGroup = ChatSocketManager.instance.MsgParentObj.GetComponent<VerticalLayoutGroup>();
+        verticalLayoutGroup.enabled = false;
+        yield return new WaitForSeconds(0.05f);
+        verticalLayoutGroup.enabled = true;
+        if (ChatSocketManager.instance.MsgParentObjScrollRect)
+            ChatSocketManager.instance.MsgParentObjScrollRect.verticalNormalizedPosition = 1;
+
     }
     public void OpenCloseChatDialog(bool _state)
     {
