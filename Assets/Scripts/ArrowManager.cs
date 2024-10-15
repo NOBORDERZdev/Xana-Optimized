@@ -96,17 +96,18 @@ public class ArrowManager : MonoBehaviourPunCallbacks
                 }
                 PhotonUserName.text = PhotonNetwork.NickName;
 
-                if(!ConstantsHolder.isPenguin || !ConstantsHolder.xanaConstants.isXanaPartyWorld || !ConstantsHolder.xanaConstants.isSoftBankGame)
+                if(!ConstantsHolder.isPenguin || !ConstantsHolder.xanaConstants.isXanaPartyWorld || !ConstantsHolder.xanaConstants.isBuilderGame)
                 {
                     AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().animator = this.GetComponent<Animator>();
                     if (this.GetComponent<Animator>())
                     ActionAnimationApplyToPlayer.PlayerAnimatorInitializer?.Invoke(this.GetComponent<Animator>().runtimeAnimatorController);
+                    if(AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>() && GetComponent<FirstPersonJump>())
                     AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().playerRig = GetComponent<FirstPersonJump>().jumpRig;
                 }
             }
         }
            StartCoroutine(WaitForArrowIntanstiate(this.transform, !this.GetComponent<PhotonView>().IsMine));
-        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld || !ConstantsHolder.xanaConstants.isSoftBankGame)
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld || !ConstantsHolder.xanaConstants.isBuilderGame)
         {
             try
             {
@@ -164,7 +165,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     public override void OnDisable ()
     {
-        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld || !ConstantsHolder.xanaConstants.isSoftBankGame)
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld || !ConstantsHolder.xanaConstants.isBuilderGame)
         {
             ReactionDelegateButtonClickEvent -= OnChangeReactionIcon;
         }
