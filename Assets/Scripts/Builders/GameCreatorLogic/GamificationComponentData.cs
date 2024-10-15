@@ -101,7 +101,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     internal List<ItemData> MultiplayerComponentData = new List<ItemData>();
     public MultiplayerComponent MultiplayerComponent;
-    internal bool IsMultiplayerComponentLoaded = false;
+
     bool isPotrait = false;
 
     #region XANA PARTY WORLD

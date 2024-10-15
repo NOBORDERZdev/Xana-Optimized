@@ -31,12 +31,7 @@ public class DoorKeySyncing : MonoBehaviourPun
 
     private IEnumerator SyncingCoroutin()
     {
-        //Wait for MultiplayerComponent downloadfrom addressables
-        do
-        {
-            yield return new WaitForSeconds(0.5f);
-        }
-        while (!GamificationComponentData.instance.IsMultiplayerComponentLoaded);
+        yield return new WaitForSeconds(0.5f);
         _playerObj = FindPlayerusingPhotonView(photonView);
         if (_playerObj != null)
         {
