@@ -105,8 +105,10 @@ public class SummitDomeShaderApply : MonoBehaviour
     void SetDomeTexture(string url)
     {
         Texture2D texture=AssetCache.Instance.LoadImage(url);
-        if(DomeMeshRenderer != null && DomeMeshRenderer.materials.Count() > 0)
+        if (DomeMeshRenderer != null && DomeMeshRenderer.materials.Count() > 0)
+        {
             DomeMeshRenderer.material.mainTexture = texture;
+        }
         DomeMeshRenderer.gameObject.SetActive(true);
         Frame.SetActive(true);
     }
