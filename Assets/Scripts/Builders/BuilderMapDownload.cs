@@ -100,6 +100,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     void OnBuilderDataFetch(int id, string token)
     {
+        GamificationComponentData.instance.IsMultiplayerComponentLoaded = false;
         StartCoroutine(FetchUserMapFromServer(id, token));
     }
 
@@ -233,6 +234,7 @@ public class BuilderMapDownload : MonoBehaviour
         {
             yield return StartCoroutine(DownloadAddressableGamificationObject());
             yield return StartCoroutine(GemificationObjectLoadWait(1f));
+            GamificationComponentData.instance.IsMultiplayerComponentLoaded = true;
         }
 
         //Debug.LogError("Map is downloaed");

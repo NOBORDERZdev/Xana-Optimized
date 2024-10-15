@@ -41,7 +41,12 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
 
     private IEnumerator SyncingCoroutin()
     {
-        yield return new WaitForSeconds(0.5f);
+        //Wait for MultiplayerComponent downloadfrom addressables
+        do
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
+        while (!GamificationComponentData.instance.IsMultiplayerComponentLoaded);
         playerObj = FindPlayerusingPhotonView(photonView);
         if (playerObj != null)
         {

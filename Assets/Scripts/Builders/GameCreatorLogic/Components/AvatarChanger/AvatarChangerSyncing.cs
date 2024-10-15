@@ -58,7 +58,13 @@ public class AvatarChangerSyncing : MonoBehaviourPun
 
     private IEnumerator SyncingCoroutine()
     {
-        yield return new WaitForSeconds(0.1f);
+        //Wait for MultiplayerComponent downloadfrom addressables
+        do
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+        while (!GamificationComponentData.instance.IsMultiplayerComponentLoaded);
+
         string avatarChangeData = photonView.Owner.CustomProperties["avatarChanger"].ToString();
         string[] parts = avatarChangeData.Split(',');
         int avatarIndex = int.Parse(parts[0]);
