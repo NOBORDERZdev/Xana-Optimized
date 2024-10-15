@@ -60,7 +60,7 @@ public class VersionChecker : MonoBehaviour
             {
                 // Delete the directory and all its contents
                 Directory.Delete(cachePath, true);
-                Debug.Log("Addressables cache directory deleted.");
+                Debug.LogError("Addressables cache directory deleted.");
             }
             catch (IOException e)
             {
@@ -69,7 +69,7 @@ public class VersionChecker : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Addressables cache directory not found.");
+            Debug.LogError("Addressables cache directory not found.");
         }
 
         // Clear Addressables cache using API
@@ -87,8 +87,10 @@ public class VersionChecker : MonoBehaviour
         if (initHandle.Status == AsyncOperationStatus.Succeeded)
         {
             // Clear the cache for all keys (assuming "allAssets" is a valid label)
-            string label = "PMY ACADEMY";
-            AsyncOperationHandle handle = Addressables.ClearDependencyCacheAsync(label, true);
+            //string label = "PMY ACADEMY";
+            //AsyncOperationHandle handle = Addressables.ClearDependencyCacheAsync(label, true);
+            AsyncOperationHandle handle = Addressables.CleanBundleCache();
+            Caching.ClearCache();
             handle.Completed += OnCacheCleared;
         }
         else
