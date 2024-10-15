@@ -97,13 +97,6 @@ public class BuilderAssetDownloader : MonoBehaviour
             return;
         }
             SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
-
-        //if(!AddressableDownloader.Instance.IsSceneLoaded(1))
-        //    SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
-        //else
-        //{
-        //    AddressableDownloader.Instance.UnloadLoadScene(1, 1);
-        //}
     }
 
 

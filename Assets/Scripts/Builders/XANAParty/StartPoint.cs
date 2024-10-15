@@ -32,14 +32,14 @@ public class StartPoint : MonoBehaviour
         BuilderEventManager.XANAPartyRaceStart += DisableCollider;
         BuilderEventManager.XANAPartyWiatingForPlayer += EnableCollider;
         NetworkSyncManager.Instance.startGame += StartG;
-        BuilderEventManager.AfterWorldInstantiated+= StartBuilderGame;
+        //BuilderEventManager.AfterWorldInstantiated+= StartBuilderGame;
 
         tempDoorColider = triggerCollider;
         tempDoorAnimator = OpenGateAnimator;
-        //if (ConstantsHolder.xanaConstants.isBuilderGame) // calling from Event on world Instantiated
-        //{
-        //    StartBuilderGame();
-        //}
+        if (ConstantsHolder.xanaConstants.isBuilderGame) // calling from Event on world Instantiated
+        {
+            StartBuilderGame();
+        }
 
     }
 
@@ -53,7 +53,7 @@ public class StartPoint : MonoBehaviour
         BuilderEventManager.XANAPartyRaceStart -= DisableCollider;
         BuilderEventManager.XANAPartyWiatingForPlayer -= EnableCollider;
         NetworkSyncManager.Instance.startGame -= StartG;
-        BuilderEventManager.AfterWorldInstantiated -= StartBuilderGame;
+        //BuilderEventManager.AfterWorldInstantiated -= StartBuilderGame;
 
     }
 
