@@ -12,8 +12,8 @@ public class StartPoint : MonoBehaviour
     public Animator OpenGateAnimator;
     public bool IsRaceStarted = false;
     public GameObject[] ObjectsToEnable;
-    GameObject tempDoorColider;
-    Animator tempDoorAnimator;
+    GameObject tempDoorColider; // refernce copy if reference is miss. its occuring randomly
+    Animator tempDoorAnimator;// refernce copy if reference is miss. its occuring randomly
 
     private void OnEnable()
     {
@@ -36,7 +36,7 @@ public class StartPoint : MonoBehaviour
 
         tempDoorColider = triggerCollider;
         tempDoorAnimator = OpenGateAnimator;
-        //if (ConstantsHolder.xanaConstants.isBuilderGame)
+        //if (ConstantsHolder.xanaConstants.isBuilderGame) // calling from Event on world Instantiated
         //{
         //    StartBuilderGame();
         //}
@@ -59,13 +59,10 @@ public class StartPoint : MonoBehaviour
 
     void DisableCollider()
     {
-        print("DisableCollider Call");
-        //triggerCollider.SetActive(false);
         if (PhotonNetwork.IsMasterClient)
         {
             NetworkSyncManager.Instance.SyncPhotonView.RPC("StartGameMainRPC", RpcTarget.All);
         }
-        //StartCoroutine(StartGame());
     }
 
     private void StartG()
@@ -114,11 +111,6 @@ public class StartPoint : MonoBehaviour
             OpenGateAnimator.SetTrigger("OpenGate");
     }
 
-    //void InvokeBuilderGame() {
-    //    if (triggerCollider == null)
-    //        triggerCollider = GameObject.Find("Triggerwall").gameObject;
-    //    Invoke(nameof(StartBuilderGame),2f);    
-    //}
 
     void StartBuilderGame() {
         if (ConstantsHolder.xanaConstants.isBuilderGame)
