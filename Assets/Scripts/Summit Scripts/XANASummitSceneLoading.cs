@@ -506,6 +506,17 @@ public class XANASummitSceneLoading : MonoBehaviour
         ReferenceForPenguinAvatar referenceForPenguin = GameplayEntityLoader.instance.referenceForPenguin;
         referenceForPenguin.ActiveXanaUIData(true);
 
+
+        if (GamePlayUIHandler.inst.isHideButton)
+        {
+            ReferencesForGamePlay.instance.hiddenButtonDisable();
+        }
+        if (GamePlayUIHandler.inst.isFreeCam)
+        {
+            ReferencesForGamePlay.instance.playerControllerNew.FreeFloatToggleButton(false);
+            ReferencesForGamePlay.instance.hiddenButtonEnable();
+        }
+
         // Map Working
         _domeMiniMap.SummitSceneReloaded();
         //SummitMiniMapStatusOnSceneChange(true);
