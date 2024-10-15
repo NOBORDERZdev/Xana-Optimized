@@ -981,7 +981,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             yield return new WaitForSeconds(0.1f);
         }
 
-        if (ConstantsHolder.xanaConstants.isBuilderScene && !ConstantsHolder.xanaConstants.isXanaPartyWorld && !ConstantsHolder.xanaConstants.isSoftBankGame )
+        if (ConstantsHolder.xanaConstants.isBuilderScene && !ConstantsHolder.xanaConstants.isXanaPartyWorld && !ConstantsHolder.xanaConstants.isBuilderGame )
         {
             player.transform.localScale = Vector3.one * 1.153f;
             Rigidbody playerRB = player.AddComponent<Rigidbody>();
@@ -1438,7 +1438,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void ResetPlayerAfterInstantiation()
     {
-        if (ConstantsHolder.xanaConstants.isSoftBankGame)
+        if (ConstantsHolder.xanaConstants.isBuilderGame)
         {
             return;
         }
@@ -1677,7 +1677,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         ConstantsHolder.isFixedHumanoid = false;
         ConstantsHolder.isPenguin = false;
         ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
-        ConstantsHolder.xanaConstants.isSoftBankGame = false;
+        ConstantsHolder.xanaConstants.isBuilderGame = false;
         ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
     }
 
