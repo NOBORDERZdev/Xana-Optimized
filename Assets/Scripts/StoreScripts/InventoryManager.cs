@@ -972,7 +972,7 @@ public class InventoryManager : MonoBehaviour
             return;
 
         Debug.Log("Scrol GameoBJECT = " + myScroller.gameObject.name + "   content count" + myScroller.content.childCount + "Current Pannel " + GetActivePanelPageIndex());
-        if (myScroller.verticalNormalizedPosition <= 0.1f && myScroller.content.childCount == GetActivePanelPageIndex() * 40)
+        if (myScroller.verticalNormalizedPosition <= 0.1f && (myScroller.content.childCount == GetActivePanelPageIndex() * 40 || myScroller.content.childCount == ((GetActivePanelPageIndex() * 40 ) + 1 ))) // Color Object is also added in the list
         {
             loadingItems = true;
             int pageIndex = UpdateActivePanelPageIndex();
