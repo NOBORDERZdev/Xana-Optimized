@@ -2,6 +2,7 @@ using SuperStar.Helpers;
 using System;
 using System.Collections;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -81,7 +82,7 @@ public class SummitDomeShaderApply : MonoBehaviour
 
     void DownloadDomeTexture(string url)
     {
-        Debug.LogError(url);
+        //Debug.Log(url);
         if (!string.IsNullOrEmpty(url))
         {
             if (AssetCache.Instance.HasFile(url))
@@ -104,7 +105,10 @@ public class SummitDomeShaderApply : MonoBehaviour
     void SetDomeTexture(string url)
     {
         Texture2D texture=AssetCache.Instance.LoadImage(url);
-        DomeMeshRenderer.material.mainTexture = texture;
+        if (DomeMeshRenderer != null && DomeMeshRenderer.materials.Count() > 0)
+        {
+            DomeMeshRenderer.material.mainTexture = texture;
+        }
         DomeMeshRenderer.gameObject.SetActive(true);
         Frame.SetActive(true);
     }
@@ -134,9 +138,11 @@ public class SummitDomeShaderApply : MonoBehaviour
     void SetLogoTexture(string url)
     {
         Texture2D texture = AssetCache.Instance.LoadImage(url);
-        if(texture != null)
-        LogoSpriteRenderer.sprite = ConvertToSprite(texture);
-        LogoSpriteRenderer.material.shader = Shader.Find("Sprites/Default");
-        ScaleSpriteToTargetSize();
+        if (texture != null && LogoSpriteRenderer != null)
+        {
+            LogoSpriteRenderer.sprite = ConvertToSprite(texture);
+            LogoSpriteRenderer.material.shader = Shader.Find("Sprites/Default");
+            ScaleSpriteToTargetSize();
+        }
     }
 }

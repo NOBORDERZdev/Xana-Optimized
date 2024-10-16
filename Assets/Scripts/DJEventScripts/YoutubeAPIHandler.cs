@@ -368,7 +368,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                 }
             }
         }
-        else if (WorldItemView.m_EnvName.Contains("BreakingDown Arena"))
+        else if (WorldItemView.m_EnvName.Contains("BreakingDown Arena") && !ConstantsHolder.isFromXANASummit)
         {
             //if (GameObject.FindGameObjectWithTag("MainCamera") != null)
             //{

@@ -535,7 +535,7 @@ public class FeedEventPrefab : MonoBehaviour
         else
         {
             ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
-            ConstantsHolder.xanaConstants.isSoftBankGame = false;
+            ConstantsHolder.xanaConstants.isBuilderGame = false;
 
         }
         ScrollController.verticalNormalizedPosition = 1f;
