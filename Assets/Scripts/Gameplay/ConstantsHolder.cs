@@ -109,7 +109,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool isBackFromWorld = false;
     public String MuseumID;
     public string domeCreatorName;
-    public bool isSoftBankGame;
+    public bool isBuilderGame = false;
     public bool isSummitBtnPressed = false;
 
     //For Metabuzz Environments
@@ -224,7 +224,8 @@ public class ConstantsHolder : MonoBehaviour
     public bool EnableSignInPanelByDefault = false;
     public bool GameIsFinished = false;
     public string LastLobbyName;
-    #endregion
+  //  public bool isBuilderGame = false;
+# endregion
 
 
     public string r_EmoteStoragePersistentPath

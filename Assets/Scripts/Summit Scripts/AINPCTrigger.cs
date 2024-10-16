@@ -42,8 +42,18 @@ public class AINPCTrigger : MonoBehaviour
     async void NPCRigidBodySetup()
     {
         gameObject.transform.position = NPCPosition;
-        GetComponent<Rigidbody>().useGravity = true;
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.useGravity = true;
+        }
+
         await Task.Delay(1000);
-        GetComponent<Rigidbody>().useGravity = false;
+
+        // Check if the object is still valid before accessing its components
+        if (this != null && rb != null)
+        {
+            rb.useGravity = false;
+        }
     }
 }
