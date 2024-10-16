@@ -860,7 +860,7 @@ public class LoadingHandler : MonoBehaviour
         if (info.domeId > 128)
         {
             DomeCategory.text = "Entertainmnent";
-            DomeID.text = "MD   -" + info.domeId;
+            DomeID.text = "MD-" + info.domeId;
         }
         DomeVisitedCount.text = ConstantsHolder.visitorCount.ToString();
         ApprovalUI.SetActive(false);
