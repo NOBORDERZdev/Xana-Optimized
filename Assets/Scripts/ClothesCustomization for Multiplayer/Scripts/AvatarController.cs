@@ -1222,6 +1222,7 @@ public class AvatarController : MonoBehaviour
     /// <param name="applyOn">Player that are going to wear the dress</param>
     public void StichItem(int itemId, GameObject item, string type, GameObject applyOn, bool applyHairColor = true)
     {
+        if (item == null) return;  //AR Changes
         CharcterBodyParts tempBodyParts = applyOn.gameObject.GetComponent<CharcterBodyParts>();
         UnStichItem(type);
         if (item.GetComponent<EffectedParts>() && item.GetComponent<EffectedParts>().texture != null)

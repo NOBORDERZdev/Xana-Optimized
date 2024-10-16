@@ -1,13 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
-using UnityEngine.UI.Extensions;
-using WaheedDynamicScrollRect;
 
-using static StoreManager;
 public class PresetData_Jsons : MonoBehaviour
 {
 
@@ -40,7 +35,7 @@ public class PresetData_Jsons : MonoBehaviour
                 AR_UndoRedo.obj.addToList = true;
             else
             {
-                AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ChangecharacterOnCLickFromserver", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Presets);
+                AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ChangecharacterOnCLickFromserver", AR_UndoRedo.ActionType.ChangeItem, Color.white, StoreManager.EnumClass.CategoryEnum.Presets);
                 //Debug.Log("<color=red> Set Default Preset</color>");
             }
         }
@@ -49,7 +44,7 @@ public class PresetData_Jsons : MonoBehaviour
 
     void Start()
     {
-        if (gameObject.GetComponent<Button>() != null) 
+        if (gameObject.GetComponent<Button>() != null)
         {
             gameObject.GetComponent<Button>().onClick.AddListener(ChangecharacterOnCLickFromserver);
         }
@@ -58,7 +53,7 @@ public class PresetData_Jsons : MonoBehaviour
         callScripts();
     }
 
-    public void callScripts() 
+    public void callScripts()
     {
         avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
         charcterBodyParts = CharcterBodyParts.instance;
@@ -69,21 +64,22 @@ public class PresetData_Jsons : MonoBehaviour
     {
         clickname = "";
     }
-   public void ChangecharacterOnCLickFromserver()
+    public void ChangecharacterOnCLickFromserver()
     {
         callScripts();
         if (StoreManager.instance.StartPanel_PresetParentPanel.activeInHierarchy)
         {
             //if (IsStartUp_Canvas && WaheedDynamicScrollRect.ScrollContent.instance != null)
             //{
-               // JsonDataPreset = WaheedDynamicScrollRect.ScrollContent.instance.nameData;
-                StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+            // JsonDataPreset = WaheedDynamicScrollRect.ScrollContent.instance.nameData;
+            StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
             //}
         }
         XanaConstants.xanaConstants.registerFirstTime = true;
         if (GameManager.Instance.isStoreAssetDownloading)
+        {
             return;
-
+        }
         if (!IsStartUp_Canvas)   //for presets in avatar panel 
         {
             if (clickname != gameObject.name)
@@ -98,12 +94,10 @@ public class PresetData_Jsons : MonoBehaviour
 
         if (!IsStartUp_Canvas && !PremiumUsersDetails.Instance.CheckSpecificItem(PresetNameinServer))
         {
-           // print("Please Upgrade to Premium account");
             return;
         }
         else
         {
-            //print("Horayyy you have Access");
             XanaConstants.xanaConstants.avatarStoreSelection[XanaConstants.xanaConstants.currentButtonIndex] = this.gameObject;
             XanaConstants.xanaConstants._curretClickedBtn = this.gameObject;
 
@@ -111,64 +105,50 @@ public class PresetData_Jsons : MonoBehaviour
                 AR_UndoRedo.obj.addToList = true;
             else
             {
-                AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ChangecharacterOnCLickFromserver", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Presets);
-                Debug.Log("<color=red> Set Default Preset</color>");
+                AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ChangecharacterOnCLickFromserver", AR_UndoRedo.ActionType.ChangeItem, Color.white, StoreManager.EnumClass.CategoryEnum.Presets);
             }
 
             if (XanaConstants.xanaConstants._lastClickedBtn && XanaConstants.xanaConstants._curretClickedBtn == XanaConstants.xanaConstants._lastClickedBtn
                 && !IsStartUp_Canvas)
                 return;
 
-            GameManager.Instance.isStoreAssetDownloading = true;
+            //GameManager.Instance.isStoreAssetDownloading = true;
             StoreManager.instance.UndoSelection();
-           // if (!IsStartUp_Canvas)
-                XanaConstants.xanaConstants._curretClickedBtn.transform.GetChild(0).gameObject.SetActive(true);
+            // if (!IsStartUp_Canvas)
+            XanaConstants.xanaConstants._curretClickedBtn.transform.GetChild(0).gameObject.SetActive(true);
             if (XanaConstants.xanaConstants._lastClickedBtn && !IsStartUp_Canvas)
             {
                 if (XanaConstants.xanaConstants._lastClickedBtn.GetComponent<PresetData_Jsons>())
                     XanaConstants.xanaConstants._lastClickedBtn.transform.GetChild(0).gameObject.SetActive(false);
             }
-            
-               
+
+
             XanaConstants.xanaConstants._lastClickedBtn = this.gameObject;
             XanaConstants.xanaConstants._lastClickedBtn = this.gameObject;
             XanaConstants.xanaConstants.PresetValueString = gameObject.name;
             PlayerPrefs.SetInt("presetPanel", 1);
 
-            // Hack for latest update // keep all preset body fat to 0
-            //change lipsto default
-            SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-            _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(JsonDataPreset);  //(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+            //SavingCharacterDataClass _CharacterData2 = new SavingCharacterDataClass();
+            //_CharacterData2 = JsonUtility.FromJson<SavingCharacterDataClass>(JsonDataPreset);
+            //_CharacterData2.BodyFat = 0;
+            //_CharacterData2.PresetValue = gameObject.name;
+            //File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(_CharacterData2));
 
-            //print(_CharacterData.BodyFat);
-            _CharacterData.BodyFat = 0;
-            _CharacterData.PresetValue = gameObject.name;
+            SavaCharacterProperties.instance.SaveItemList = JsonUtility.FromJson<SavingCharacterDataClass>(JsonDataPreset);
+            SavaCharacterProperties.instance.SaveItemList.BodyFat = 0;
+            SavaCharacterProperties.instance.SaveItemList.PresetValue = gameObject.name;
+            File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(SavaCharacterProperties.instance.SaveItemList));
 
             XanaConstants.xanaConstants.bodyNumber = 0;
-            File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(_CharacterData));
 
             if (StoreManager.instance.StartPanel_PresetParentPanel.activeSelf)
             {
-                Invoke("abcd", 5f);
+                Invoke("abcd", 1f);
                 StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
                 UserRegisterationManager.instance.UsernameFieldAdvance.Clear();
                 UserRegisterationManager.instance.usernamePanal.SetActive(true);
-                if (PlayerPrefs.GetInt("iSignup") == 1)
+                if (PlayerPrefs.GetInt("iSignup") != 1) // if play as a guest
                 {
-                   
-                    // enable check so that it will know that index is comming from start of the game
-                   // UserRegisterationManager.instance.checkbool_preser_start = false;
-                    //UserRegisterationManager.instance.RegistrationCompletePanal.SetActive(true);
-                    //UserRegisterationManager.instance.BlackScreen.SetActive(true);
-                }
-                else                // as a guest
-                {
-                    //Invoke("abcd", 5f);
-
-                    //StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
-                    //UserRegisterationManager.instance.UsernameFieldAdvance.Clear();
-                    //UserRegisterationManager.instance.usernamePanal.SetActive(true);
-                    // enable check so that it will know that index is comming from start of the game
                     UserRegisterationManager.instance.checkbool_preser_start = false;
                 }
             }
@@ -180,7 +160,7 @@ public class PresetData_Jsons : MonoBehaviour
                     StoreManager.instance.GreyRibbonImage.SetActive(false);
                     StoreManager.instance.WhiteRibbonImage.SetActive(true);
                 }
-               
+
                 XanaConstants.xanaConstants._lastClickedBtn = this.gameObject;
             }
             if (avatarController.wornEyewearable != null)
@@ -188,26 +168,27 @@ public class PresetData_Jsons : MonoBehaviour
                 avatarController.UnStichItem("EyeWearable");
             }
 
-            if (_CharacterData.HairColor != null)
+            //if (_CharacterData.HairColor != null)
+            if (SavaCharacterProperties.instance.SaveItemList.HairColor != null)
                 XanaConstants.xanaConstants.isPresetHairColor = true;
 
-                avatarController.ApplyPreset(_CharacterData);
+            FetchPresetIds(SavaCharacterProperties.instance.SaveItemList);
 
-            GetSavedPreset();
-            if (!presetAlreadySaved)
-            {
-                StoreManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = true;
-                SavedButtonClickedBlue();
-            }
-
-            else
-            {
-                StoreManager.instance.SaveStoreBtn.SetActive(true);
-                StoreManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = false;
-                StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
-                StoreManager.instance.GreyRibbonImage.SetActive(true);
-                StoreManager.instance.WhiteRibbonImage.SetActive(false);
-            }
+            //avatarController.ApplyPreset(_CharacterData);
+        //    GetSavedPreset();
+        //    if (!presetAlreadySaved)
+        //    {
+        //        StoreManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = true;
+        //        SavedButtonClickedBlue();
+        //    }
+        //    else
+        //    {
+        //        StoreManager.instance.SaveStoreBtn.SetActive(true);
+        //        StoreManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = false;
+        //        StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
+        //        StoreManager.instance.GreyRibbonImage.SetActive(true);
+        //        StoreManager.instance.WhiteRibbonImage.SetActive(false);
+        //    }
         }
     }
     void SavedButtonClickedBlue()
@@ -242,15 +223,70 @@ public class PresetData_Jsons : MonoBehaviour
             }
         }
     }
-  public  void abcd()
-    {
-        //Debug.LogError("abcd Called");
-        //UserRegisterationManager.instance.SignUpCompletedPresetApplied();
-        //Debug.LogError("Coroutin Called " + PlayerPrefs.GetInt("presetPanel"));  
+    public void abcd()
+    {  
         if (PlayerPrefs.GetInt("presetPanel") == 1)   // preset panel is enable so saving preset to account 
             PlayerPrefs.SetInt("presetPanel", 0);
         ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
         avatarController.IntializeAvatar();
-       // Debug.LogError("IntializeAvatar after");
-    }  
+    }
+
+    private GameObject dummyPant = null;
+    private GameObject dummyShirt = null;
+    private GameObject dummyHair = null;
+    private GameObject dummyShoe = null;
+    private void FetchPresetIds(SavingCharacterDataClass _CharacterData)
+    {
+        if (_CharacterData.myItemObj.Count > 0)
+        {
+            for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
+            {
+                if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName))
+                {
+                    string type = _CharacterData.myItemObj[i].ItemType;
+                    if (type.Contains("Legs"))
+                    {
+                        if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            avatarController.wornPantId = _CharacterData.myItemObj[i].ItemID;
+                            if(dummyPant != null) Destroy(dummyPant);
+                            dummyPant = new GameObject(_CharacterData.myItemObj[i].ItemName);
+                            avatarController.wornPant = dummyPant;
+                        }
+                    }
+                    else if (type.Contains("Chest"))
+                    {
+                        if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            avatarController.wornShirtId = _CharacterData.myItemObj[i].ItemID;
+                            if (dummyShirt != null) Destroy(dummyShirt);
+                            dummyShirt = new GameObject(_CharacterData.myItemObj[i].ItemName);
+                            avatarController.wornShirt = dummyShirt;
+                        }
+                    }
+                    else if (type.Contains("Feet"))
+                    {
+                        if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            avatarController.wornShoesId = _CharacterData.myItemObj[i].ItemID;
+                            if (dummyShoe != null) Destroy(dummyShoe);
+                            dummyShoe = new GameObject(_CharacterData.myItemObj[i].ItemName);
+                            avatarController.wornShose = dummyShoe;
+                        }
+                    }
+                    else if (type.Contains("Hair"))
+                    {
+                        if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            avatarController.wornHairId = _CharacterData.myItemObj[i].ItemID;
+                            if (dummyHair != null) Destroy(dummyHair);
+                            dummyHair = new GameObject(_CharacterData.myItemObj[i].ItemName);
+                            avatarController.wornHair = dummyHair;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }

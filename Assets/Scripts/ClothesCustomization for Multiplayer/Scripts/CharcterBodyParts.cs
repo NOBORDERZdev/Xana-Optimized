@@ -1310,6 +1310,8 @@ public class CharcterBodyParts : MonoBehaviour
     }
     public Color GetHairColor()
     {
+        if (avatarController.wornHair.GetComponent<SkinnedMeshRenderer>() == null) return Color.black;
+
         if (avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("_Band"))
         {
             // For Band using Eye Shader so variable name is Changed 

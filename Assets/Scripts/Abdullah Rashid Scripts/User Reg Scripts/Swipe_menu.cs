@@ -1,11 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UI.Extensions;
-using UnityEngine.UI.Extensions.Tweens;
-using static ServerSIdeCharacterHandling;
 
 public class Swipe_menu : MonoBehaviour
 {
@@ -93,8 +88,6 @@ public class Swipe_menu : MonoBehaviour
             UserRegisterationManager.instance.LogoImage2.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
             UserRegisterationManager.instance.LogoImage3.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
             SelectedOBJ.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver();
-
-
         }
     }
 

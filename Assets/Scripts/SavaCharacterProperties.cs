@@ -164,10 +164,12 @@ public class SavaCharacterProperties : MonoBehaviour
         StoreManager.instance.GreyRibbonImage.SetActive(true);
         StoreManager.instance.WhiteRibbonImage.SetActive(false);
         StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
+
         SaveItemList.myItemObj.Add(new Item(characterController.wornPantId, characterController.wornPant.name, "Legs"));
         SaveItemList.myItemObj.Add(new Item(characterController.wornShirtId, characterController.wornShirt.name, "Chest"));
         SaveItemList.myItemObj.Add(new Item(characterController.wornHairId, characterController.wornHair.name, "Hair"));
         SaveItemList.myItemObj.Add(new Item(characterController.wornShoesId, characterController.wornShose.name, "Feet"));
+
         if (characterController.wornEyewearable != null)
         {
             SaveItemList.myItemObj.Add(new Item(characterController.wornEyewearableId, characterController.wornEyewearable.name, "EyeWearable"));
@@ -399,6 +401,7 @@ public class SavingCharacterDataClass
 
     public SavingCharacterDataClass CreateFromJSON(string jsonString)
     {
+        //Debug.LogError("Create&Return_Json::" + GameManager.Instance.GetStringFolderPath());
         return JsonUtility.FromJson<SavingCharacterDataClass>(jsonString);
     }
     public SavingCharacterDataClass()
