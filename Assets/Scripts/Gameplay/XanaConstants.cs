@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.SceneManagement;
 
 public class XanaConstants : MonoBehaviour
 {
@@ -279,7 +280,16 @@ public class XanaConstants : MonoBehaviour
     }
 
 
-
+    private void Update()
+    {
+        if (!SceneManager.GetActiveScene().name.Contains("Main"))
+        {
+            //while (!isAddressableCatalogDownload)
+            //{
+                Debug.LogError("Catalog Downloaded: " + isAddressableCatalogDownload);
+            //}
+        }
+    }
 
 
 
