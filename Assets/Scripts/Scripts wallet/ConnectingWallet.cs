@@ -63,7 +63,7 @@ public class ConnectingWallet : MonoBehaviour
         //websocket.OnMessage += (o, e) => {
         //    ExampleMainThreadCall(e.Data);
         //};
-      
+        if (XanaConstants.xanaConstants.metaverseType != XanaConstants.MetaverseType.PMY)
             StartCoroutine(WalletLoginCheck());
        // }
       
