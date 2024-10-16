@@ -1112,7 +1112,12 @@ public class UserLoginSignupManager : MonoBehaviour
                 UserDisplayNameErrors(keytoLocalize);
                 return;
             }
-
+            else if (displayrname.Length < 5 || displayrname.Length > 15)
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must be between 5 and 15 characters.");
+                UserDisplayNameErrors(keytoLocalize);
+                return;
+            }
             else if (displayrname.StartsWith(" "))
             {
                 UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
@@ -1132,7 +1137,12 @@ public class UserLoginSignupManager : MonoBehaviour
                 UserDisplayNameErrors(keytoLocalize);
                 return;
             }
-
+            else if (displayrname.Length < 5 || displayrname.Length > 15)
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must be between 5 and 15 characters.");
+                UserDisplayNameErrors(keytoLocalize);
+                return;
+            }
             else if (displayrname.StartsWith(" "))
             {
                 UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
