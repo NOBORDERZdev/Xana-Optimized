@@ -617,7 +617,6 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         setPlayerPositionDelegate?.Invoke();
 
-
         //StartCoroutine(LoadingHandler.Instance.FadeOut());
         LoadingHandler.Instance.DisableVideoLoading();
         LoadingHandler.Instance.DisableDomeLoading();
