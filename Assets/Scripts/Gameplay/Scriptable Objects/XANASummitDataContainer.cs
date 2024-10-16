@@ -206,6 +206,7 @@ public class XANASummitDataContainer : ScriptableObject
         public bool isYoutubeUrl;
         public string videoType;
         public string mediaUpload;
+        public bool isBuilderGame;
     }
 
 
