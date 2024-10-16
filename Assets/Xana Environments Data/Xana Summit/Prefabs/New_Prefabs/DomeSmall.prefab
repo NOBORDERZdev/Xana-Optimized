@@ -160,6 +160,8 @@ GameObject:
   - component: {fileID: 2547618067172787701}
   - component: {fileID: 2136266706}
   - component: {fileID: 2136266708}
+  - component: {fileID: 8274518521816572121}
+  - component: {fileID: 4156312939185803937}
   m_Layer: 0
   m_Name: DomeSmall
   m_TagString: Untagged
@@ -250,6 +252,33 @@ MonoBehaviour:
   downloadKey: DomeSmall
   objectPriority: 0
 --- !u!114 &2136266708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4593854361052923034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22bd20bb0264cf74eb1d09cefeae6d60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  domeId: 34
+--- !u!114 &8274518521816572121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4593854361052923034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: DomeSmall
+  objectPriority: 0
+--- !u!114 &4156312939185803937
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

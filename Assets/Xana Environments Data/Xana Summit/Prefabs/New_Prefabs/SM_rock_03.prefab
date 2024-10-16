@@ -11,12 +11,13 @@ GameObject:
   - component: {fileID: 5477231855446404896}
   - component: {fileID: 7490539879539749824}
   - component: {fileID: 5477231855464414080}
+  - component: {fileID: 1856232147}
   m_Layer: 0
   m_Name: SM_rock_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5477231855446404896
 Transform:
@@ -25,9 +26,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5477231855446110976}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3.9367115, y: 3.9367118, z: 3.9367125}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5477231855446404904}
@@ -74,6 +75,20 @@ LODGroup:
     renderers:
     - renderer: {fileID: 5477231855448305094}
   m_Enabled: 1
+--- !u!114 &1856232147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5477231855446110976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: SM_rock_03
+  objectPriority: 0
 --- !u!1 &5477231855446110984
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,7 +106,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5477231855446404904
 Transform:
