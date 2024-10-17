@@ -134,7 +134,7 @@ public class JjWorldChanger : MonoBehaviour
             else
             {
                 ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
-                ConstantsHolder.xanaConstants.isSoftBankGame = false;
+                ConstantsHolder.xanaConstants.isBuilderGame = false;
 
             }
             if (APIBasepointManager.instance.IsXanaLive)

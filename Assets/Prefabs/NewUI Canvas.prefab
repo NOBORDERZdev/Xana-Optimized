@@ -10986,7 +10986,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1112965297214942220}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -15626,8 +15626,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 613305895821578473}
   - {fileID: 1112965297841902523}
+  - {fileID: 613305895821578473}
   - {fileID: 1112965297583614578}
   m_Father: {fileID: 1112965299091237999}
   m_RootOrder: 0
@@ -19482,7 +19482,7 @@ RectTransform:
   - {fileID: 1793249687423880974}
   - {fileID: 1112965298477905696}
   m_Father: {fileID: 1112965297214942220}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -43009,6 +43009,8 @@ MonoBehaviour:
   fPSButton: {fileID: 700551829}
   stopCurrentPlayingAnim: 0
   ref_LoadEmoteAnimations: {fileID: 1954104836}
+  isHideButton: 0
+  isFreeCam: 0
   portraitJoystick: {fileID: 0}
   jumpBtn: {fileID: 0}
   JumpUI: {fileID: 1112965299091237995}
@@ -122722,6 +122724,10 @@ PrefabInstance:
     - target: {fileID: 1021395648040465733, guid: b3ec4ce73f995c04e949a9bbdcb9d2dc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1021395648954922643, guid: b3ec4ce73f995c04e949a9bbdcb9d2dc, type: 3}
+      propertyPath: m_Spacing
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 1021395648954922645, guid: b3ec4ce73f995c04e949a9bbdcb9d2dc, type: 3}
       propertyPath: m_SizeDelta.y
