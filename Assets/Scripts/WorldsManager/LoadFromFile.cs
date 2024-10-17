@@ -974,14 +974,17 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         {
             if (environmentLabel.Contains(" : "))
             {
+                Debug.LogError("Label Contaib : (LabelName=" + environmentLabel + ")");
                 string name = environmentLabel.Replace(" : ", string.Empty);
                 environmentLabel = name;
             }
             while (!XanaConstants.isAddressableCatalogDownload)
             {
+                Debug.LogError("Json not loaded Wait...");
                 yield return new WaitForSeconds(1f);
             }
             //yield return StartCoroutine(DownloadEnvoirnmentDependanceies(environmentLabel));
+            Debug.LogError("Label: " + environmentLabel);
             AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(environmentLabel, LoadSceneMode.Additive, false);
             //if (XanaConstants.xanaConstants.isFromXanaLobby)
             //{
@@ -1006,6 +1009,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             }
             else // error occur 
             {
+                Debug.LogError(handle.Status);
                 AssetBundle.UnloadAllAssetBundles(false);
                 Resources.UnloadUnusedAssets();
 

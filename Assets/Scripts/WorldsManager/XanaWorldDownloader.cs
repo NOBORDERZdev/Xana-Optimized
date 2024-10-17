@@ -369,7 +369,14 @@ public class XanaWorldDownloader : MonoBehaviour
             bool flag = false;
             AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
             if (!flag)
+            {
                 _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+                Debug.LogError(downloadKey + "Obj Not exist in Memory Release pool");
+            }
+            else
+            {
+                Debug.LogError(downloadKey + "Obj exist in Memory Release pool");
+            }
             while (!_async.IsDone)
             {
                 yield return null;
@@ -381,7 +388,7 @@ public class XanaWorldDownloader : MonoBehaviour
             }
             else
             {
-                Debug.LogError(_async.Status);
+                Debug.LogError("Failed_PL_" + _async.Status);
             }
             yield return new WaitForSeconds(0.01f);
         }
