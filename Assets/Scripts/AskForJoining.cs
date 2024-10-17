@@ -129,6 +129,8 @@ public class AskForJoining : MonoBehaviour
             }
 
             LoadingHandler.Instance.ShowLoading();
+            LoadingHandler.Instance.UpdateLoadingStatusText("Joining World...");
+
             float _rand = UnityEngine.Random.Range(6f, 10f);
             LoadingHandler.Instance.randCurrentValue = _rand;
             StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
