@@ -284,10 +284,7 @@ public class XanaWorldDownloader : MonoBehaviour
                 InstantiateAsset(_async.Result as GameObject, xanaWorldDataDictionary[dicKey]);
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
-            else
-            {
-                Debug.LogError("Download Failed......");
-            }
+
             yield return new WaitForSeconds(0.01f);
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
@@ -335,10 +332,7 @@ public class XanaWorldDownloader : MonoBehaviour
                 InstantiateAsset(_async.Result as GameObject, xanaWorldDataDictionary[dicKey]);
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
-            else
-            {
-                Debug.LogError("Download Failed......");
-            }
+
             yield return new WaitForSeconds(0.1f);
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
@@ -371,12 +365,8 @@ public class XanaWorldDownloader : MonoBehaviour
             if (!flag)
             {
                 _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-                Debug.LogError(downloadKey + "Obj Not exist in Memory Release pool");
             }
-            else
-            {
-                Debug.LogError(downloadKey + "Obj exist in Memory Release pool");
-            }
+
             while (!_async.IsDone)
             {
                 yield return null;
@@ -386,10 +376,7 @@ public class XanaWorldDownloader : MonoBehaviour
                 InstantiateAsset(_async.Result as GameObject, xanaWorldDataDictionary[dicKey]);
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
-            else
-            {
-                Debug.LogError("Failed_PL_" + _async.Status);
-            }
+
             yield return new WaitForSeconds(0.01f);
         }
         if (preLodaingObjects)

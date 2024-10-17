@@ -1,18 +1,13 @@
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using System.Collections;
 using Cinemachine;
-using UnityEditor;
-using WebSocketSharp;
 using UnityEngine.SceneManagement;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.AddressableAssets;
-using Photon.Realtime;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using System;
 using UnityEngine.UI;
-using System.IO;
 using UnityEngine.Rendering.Universal;
 
 public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
@@ -974,17 +969,14 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         {
             if (environmentLabel.Contains(" : "))
             {
-                Debug.LogError("Label Contaib : (LabelName=" + environmentLabel + ")");
                 string name = environmentLabel.Replace(" : ", string.Empty);
                 environmentLabel = name;
             }
             while (!XanaConstants.isAddressableCatalogDownload)
             {
-                Debug.LogError("Json not loaded Wait...");
                 yield return new WaitForSeconds(1f);
             }
             //yield return StartCoroutine(DownloadEnvoirnmentDependanceies(environmentLabel));
-            Debug.LogError("Label: " + environmentLabel);
             AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(environmentLabel, LoadSceneMode.Additive, false);
             //if (XanaConstants.xanaConstants.isFromXanaLobby)
             //{
@@ -1009,7 +1001,6 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             }
             else // error occur 
             {
-                Debug.LogError(handle.Status);
                 AssetBundle.UnloadAllAssetBundles(false);
                 Resources.UnloadUnusedAssets();
 
