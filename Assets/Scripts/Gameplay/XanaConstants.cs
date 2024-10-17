@@ -280,18 +280,6 @@ public class XanaConstants : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        if (!SceneManager.GetActiveScene().name.Contains("Main"))
-        {
-            //while (!isAddressableCatalogDownload)
-            //{
-                Debug.LogError("Catalog Downloaded: " + isAddressableCatalogDownload);
-            //}
-        }
-    }
-
-
 
     //////constant string variables 
     public const string collectibleMsg = "Item Collected...";
