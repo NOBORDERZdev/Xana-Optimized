@@ -123,6 +123,7 @@ public class LoadingHandler : MonoBehaviour
 
     public GameObject domeInfoObj;
     public GameObject domeInstObj;
+    public GameObject domeInstCloseBtn;
 
     #endregion
 
@@ -1135,6 +1136,19 @@ public class LoadingHandler : MonoBehaviour
             ConstantsHolder.IsSummitDomeWorld = true;
             ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
         }
+    }
+    public void InstructionIntoWorld(bool status)
+    {
+        Button closeBtn = domeInstCloseBtn.GetComponent<Button>();
+        if (closeBtn.onClick.GetPersistentEventCount() == 0)
+            closeBtn.onClick.AddListener(() => { InstructionIntoWorld(false); });
+
+        DomeLoading.SetActive(status);
+        domeInstObj.SetActive(status);
+        domeInstCloseBtn.SetActive(status);
+
+        DomeLodingUI.SetActive(!status);
+        domeInfoObj.SetActive(!status);
     }
 
     public void startLoading()

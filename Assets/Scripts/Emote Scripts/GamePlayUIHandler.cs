@@ -97,10 +97,19 @@ public class GamePlayUIHandler : MonoBehaviour
 
     public void OnHelpButtonClick(bool isOn)
     {
-        gamePlayUIParent.SetActive(!isOn);//rik.......
-        JumpUI.SetActive(!isOn);
-        ChatSystem.SetActive(!isOn);
-        GamePlayButtonEvents.inst.UpdateHelpObjects(isOn);
+        if (ConstantsHolder.IsSummitDomeWorld)
+        {
+            LoadingHandler.Instance.InstructionIntoWorld(isOn);
+        }
+        else
+        {
+            gamePlayUIParent.SetActive(!isOn);//rik.......
+            JumpUI.SetActive(!isOn);
+            ChatSystem.SetActive(!isOn);
+            GamePlayButtonEvents.inst.UpdateHelpObjects(isOn);
+        }
+
+       
     }
 
     public void OnSettingButtonClick()
