@@ -98,12 +98,12 @@ public class HomeFooterHandler : MonoBehaviour
             gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().OnSelectedClick(0);
         }
 
-        if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
-        {
-            Image buttonImage = allButtonIcon[2].transform.GetComponent<Image>();
-            buttonImage.color = new Color(0.8f, 0.8f, 0.8f, 1f);
-            allButtonIcon[3].transform.GetComponent<Image>().color = buttonImage.color;
-        }
+        //if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
+        //{
+        //    Image buttonImage = allButtonIcon[2].transform.GetComponent<Image>();
+        //    buttonImage.color = new Color(0.8f, 0.8f, 0.8f, 1f);
+        //    allButtonIcon[3].transform.GetComponent<Image>().color = buttonImage.color;
+        //}
      }
 
 
@@ -200,10 +200,10 @@ public class HomeFooterHandler : MonoBehaviour
             if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
             {
                 allButtonIcon[i].color = new Color(intractableFalseColor.r, intractableFalseColor.g, intractableFalseColor.b, 0.5f);
-                if (i == 2)
-                {
-                    allButtonIcon[i].transform.GetChild(0).GetComponent<Image>().color = DisableButtonColor /*Color.gray*/;
-                }
+                //if (i == 2)
+                //{
+                //    allButtonIcon[i].transform.GetChild(0).GetComponent<Image>().color = DisableButtonColor /*Color.gray*/;
+                //}
                 AllTitleText[i].color = unSellectedColor;
 
                 allButtonIcon[i].transform.parent.GetComponent<Button>().interactable = false;
