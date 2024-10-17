@@ -929,7 +929,7 @@ public class LoadingHandler : MonoBehaviour
         if (info.domeId > 128)
         {
             DomeCategory.text = "Entertainmnent";
-            DomeID.text = "MD   -" + info.domeId;
+            DomeID.text = "MD-" + info.domeId;
         }
         DomeVisitedCount.text = ConstantsHolder.visitorCount.ToString();
         ApprovalUI.SetActive(false);
@@ -1005,7 +1005,7 @@ public class LoadingHandler : MonoBehaviour
         if (info.id > 128)
         {
             //DomeCategory.text = "Entertainmnent";
-            DomeID.text = "MD   -" + info.id;
+            DomeID.text = "MD-" + info.id;
         }
         DomeVisitedCount.text = ConstantsHolder.visitorCount.ToString();
         ApprovalUI.SetActive(true);
@@ -1090,7 +1090,7 @@ public class LoadingHandler : MonoBehaviour
         if (ConstantsHolder.domeId > 128)
         {
             //DomeCategory.text = "Entertainmnent";
-            DomeID.text = "MD   -" + ConstantsHolder.domeId;
+            DomeID.text = "MD-" + ConstantsHolder.domeId;
         }
         ApprovalUI.SetActive(true);
         DomeLodingUI.SetActive(false);
