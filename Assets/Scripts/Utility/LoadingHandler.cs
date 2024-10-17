@@ -116,6 +116,17 @@ public class LoadingHandler : MonoBehaviour
     public GameObject XANAPartyLandscape, XANAPartyPotraite;
     #endregion
 
+    #region 3 Step Instruction Variables
+    public List<GameObject> instructionParent;
+    public List<DomeInstructionObjects> domeInstructionObjects;
+    public Sprite domeInstDummySprite;
+
+    public GameObject domeInfoObj;
+    public GameObject domeInstObj;
+
+    #endregion
+
+
     bool Autostartslider = false;
     bool completed;
     private void Awake()
@@ -342,6 +353,9 @@ public class LoadingHandler : MonoBehaviour
         JJLoadingPercentageText.text = " 0%".ToString();
         LoadingStatus.anchorMax = new Vector2(0, LoadingStatus.anchorMax.y);
         DomeProgress.text = "00";
+
+        domeInfoObj.SetActive(true);
+        domeInstObj.SetActive(false);
     }
 
     public void HideLoading()
@@ -799,6 +813,61 @@ public class LoadingHandler : MonoBehaviour
         VideoLoading.SetActive(true);
     }
 
+
+    void ClearInstructionOldData()
+    {
+        for (int i = 0; i < domeInstructionObjects.Count; i++)
+        {
+            domeInstructionObjects[i].instDesc.text = "";
+            domeInstructionObjects[i].instHeading.text = "";
+            domeInstructionObjects[i].instIcon.sprite = domeInstDummySprite;
+        }
+    }
+    public void LoadInstructionData(XANASummitDataContainer.DomeGeneralData info)
+    {
+        ClearInstructionOldData();
+        for (int i = 0; i < info.instruction.Count; i++)
+        {
+            if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
+            {
+                domeInstructionObjects[i].instHeading.text = info.instruction[i].title_JP;
+                domeInstructionObjects[i].instDesc.text = info.instruction[i].Desc_JP;
+            }
+            else
+            {
+                domeInstructionObjects[i].instHeading.text = info.instruction[i].title_EN;
+                domeInstructionObjects[i].instDesc.text = info.instruction[i].Desc_EN;
+            }
+
+            // Download Image Section
+            // Set Dummy image it will remove the Old Image as well
+            domeInstructionObjects[i].instIcon.sprite = domeInstDummySprite;
+
+            Debug.Log("Downloading Instruction Image ");
+            string url_Image = info.instruction[i].ImageLink;
+            Image instructionImage = domeInstructionObjects[i].instIcon;
+
+            if (!string.IsNullOrEmpty(url_Image))
+            {
+                url_Image += "?width=" + ConstantsHolder.DomeImageCompression;
+                if (AssetCache.Instance.HasFile(url_Image))
+                {
+                    AssetCache.Instance.LoadSpriteIntoImage(instructionImage, url_Image, changeAspectRatio: true);
+                }
+                else
+                {
+                    AssetCache.Instance.EnqueueOneResAndWait(url_Image, url_Image, (success) =>
+                    {
+                        if (success)
+                        {
+                            AssetCache.Instance.LoadSpriteIntoImage(instructionImage, url_Image, changeAspectRatio: true);
+
+                        }
+                    });
+                }
+            }
+        }
+    }
     public void showDomeLoading(XANASummitDataContainer.StackInfoWorld info)
     {
         if (!string.IsNullOrEmpty(info.thumbnail))
@@ -1055,6 +1124,9 @@ public class LoadingHandler : MonoBehaviour
         WaitForInput = false;
         ApprovalUI.SetActive(false);
         DomeLodingUI.SetActive(true);
+        domeInfoObj.SetActive(false);
+        domeInstObj.SetActive(true);
+
         EnterWheel?.Invoke(true);
         BuilderEventManager.spaceXDeactivated?.Invoke();
         if (!iswheel)
@@ -1097,6 +1169,14 @@ public class LoadingHandler : MonoBehaviour
     }
 }
 
+
+[System.Serializable]
+public class DomeInstructionObjects
+{
+    public Image instIcon;
+    public TextMeshProUGUI instHeading;
+    public TextMeshProUGUI instDesc;
+}
 
 public enum FadeAction
 {
