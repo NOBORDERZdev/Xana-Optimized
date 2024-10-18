@@ -895,6 +895,8 @@ public class LoadingHandler : MonoBehaviour
                 }
             }
         }
+
+        domeInstObj.GetComponent<ScrollRect>().horizontalNormalizedPosition = 0f;
     }
     public void showDomeLoading(XANASummitDataContainer.StackInfoWorld info)
     {
