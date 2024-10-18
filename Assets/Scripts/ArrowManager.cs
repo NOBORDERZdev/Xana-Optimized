@@ -363,7 +363,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void sendDataChatMsg(string chat, int viewId)
     {
-        Debug.LogError("RPC chat :- "+chat+"--"+viewId);
+        Debug.Log("RPC chat :- "+chat+"--"+viewId);
         PlayerPrefs.SetString(ConstantsGod.ReactionThumb, "");
         reactionUi.SetActive(false);
         if (chatco != null)

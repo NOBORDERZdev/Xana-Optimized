@@ -932,6 +932,11 @@ public class LoadingHandler : MonoBehaviour
             DomeCategory.text = "Entertainmnent";
             DomeID.text = "MD-" + info.domeId;
         }
+
+        if(DomeName.text.Contains("XANA Summit"))
+        {
+            DomeID.text = "Summit";
+        }
         DomeVisitedCount.text = ConstantsHolder.visitorCount.ToString();
         ApprovalUI.SetActive(false);
         DomeLodingUI.SetActive(true);

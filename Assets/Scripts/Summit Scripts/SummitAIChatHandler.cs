@@ -316,11 +316,11 @@ public class SummitAIChatHandler : MonoBehaviour
         {
             if (aiNPC[i] != null)
                 Destroy(aiNPC[i]);
-
-            NPCCount--;
         }
 
         aiNPC.Clear();
+        NPCCount = 0;
+
         _NPCInstantiated = false;
     }
 
