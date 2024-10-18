@@ -1407,10 +1407,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     CheckAgain:
         Transform temp = null;
 
-        Debug.Log("not coming from else");
+        //Debug.Log("not coming from else");
         if (GameObject.FindGameObjectWithTag("SpawnPoint"))
         {
-            Debug.Log("not coming from else2");
+           // Debug.Log("not coming from else2");
 
             temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
         }

@@ -148,7 +148,7 @@ public class XanaVoiceChat : MonoBehaviourPunCallbacks
         //Adding delay because of loading screen stuck issue in rotation by getting permission popup. // Sohaib
         yield return new WaitForSeconds(2f);
 
-        Debug.Log("Xana VoiceChat Start");
+        //Debug.Log("Xana VoiceChat Start");
         recorder = GameObject.FindObjectOfType<Recorder>();
         _punVoiceClient = recorder.GetComponent<PunVoiceClient>();
         _punVoiceClient.Client.StateChanged += this.VoiceClientStateChanged;

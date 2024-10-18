@@ -39,7 +39,7 @@ public class HomeScoketHandler : MonoBehaviour
     }
     void OnError(CustomError args)
     {
-        Debug.Log("<color=blue> Post -- Connection Error  </color>" +args.message);
+        //Debug.Log("<color=blue> Post -- Connection Error  </color>" +args.message);
     }
     void OnConnected(ConnectResponse resp)
     {
@@ -59,13 +59,13 @@ public class HomeScoketHandler : MonoBehaviour
     void FriendJoinedSpace(string msg)
     {
         FriendOnlineStatus data = JsonConvert.DeserializeObject<FriendOnlineStatus>(msg);
-        Debug.Log("Friens is Online " + data.isOnline);
+        //Debug.Log("Friens is Online " + data.isOnline);
         spaceJoinedFriendStatus?.Invoke(data);
     }
     void FriendExitSpace(string msg)
     {
         FriendOnlineStatus data = JsonConvert.DeserializeObject<FriendOnlineStatus>(msg);
-        Debug.Log("Friens is Offline " + data.isOnline);
+       // Debug.Log("Friens is Offline " + data.isOnline);
         spaceExitFriendStatus?.Invoke(data);
     }
     void ReceivePost(string msg)
@@ -111,7 +111,7 @@ public class HomeScoketHandler : MonoBehaviour
         //    yield return new WaitForSeconds(0.5f);
         while (ConstantsHolder.userId == null)
             yield return new WaitForSeconds(0.5f);
-        Debug.Log(" ----> OnConnected --- User ---- >  " + ConstantsHolder.userId + " --- Socket Id :---- >  " + socketId);
+        //Debug.Log(" ----> OnConnected --- User ---- >  " + ConstantsHolder.userId + " --- Socket Id :---- >  " + socketId);
 
         string FinalUrl = PrepareApiURL("SocketFriendUpdate");
         // Debug.LogError("Prepared URL SendSocketIdOfUserForPost ----> " + FinalUrl);
@@ -123,7 +123,7 @@ public class HomeScoketHandler : MonoBehaviour
         }
         catch (FormatException e)
         {
-            Debug.Log("<color=red> Error parsing userId: " + e.Message + "</color>");
+            //Debug.Log("<color=red> Error parsing userId: " + e.Message + "</color>");
             yield break; // Exit the coroutine if parsing fails
         }
 

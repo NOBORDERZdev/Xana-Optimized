@@ -217,7 +217,7 @@ public class InventoryManager : MonoBehaviour
         //saveStoreBtnImage = SaveStoreBtn.GetComponent<Image>();
         //saveStoreBtnButton = SaveStoreBtn.GetComponent<Button>();
         CheckAPILoaded = false;
-        Debug.Log("##################################################%%%%%%%%%%%%%%%%%%%");
+       // Debug.Log("##################################################%%%%%%%%%%%%%%%%%%%");
         if (PlayerPrefs.GetInt("WalletLogin") != 1)
         {
             GetAllMainCategories();
@@ -370,7 +370,7 @@ public class InventoryManager : MonoBehaviour
         //if (PlayerPrefs.GetInt("IsLoggedIn") == 1) // As Guest Functionality Removed, No need for this check anymore 
         //{
 
-        Debug.Log("################################### Assigning ");
+        //Debug.Log("################################### Assigning ");
         if (MultipleSave)
         {
             if (AvatarSelfie.instance != null)
@@ -378,10 +378,10 @@ public class InventoryManager : MonoBehaviour
                 _storeSaveBtn.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData((IsSucess) => { }));
             }
 
-            Debug.Log("################################### Checking ");
+            //Debug.Log("################################### Checking ");
             if (LoadPlayerAvatar.instance_loadplayer != null)
             {
-                Debug.Log("################################### Found ");
+                //Debug.Log("################################### Found ");
                 _storeSaveBtn.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
             }
 
@@ -410,7 +410,7 @@ public class InventoryManager : MonoBehaviour
     {
         Button _storeSaveBtn = SaveStoreBtn.GetComponent<Button>();
         _storeSaveBtn.onClick.RemoveAllListeners();
-        Debug.Log("################################### Removed ");
+        //Debug.Log("################################### Removed ");
         saveButton.GetComponent<Button>().onClick.RemoveAllListeners();
         yield return new WaitForSeconds(.1f);
         //SaveStoreBtn.GetComponent<Button>().onClick.AddListener(OnSaveBtnClicked);
@@ -423,7 +423,7 @@ public class InventoryManager : MonoBehaviour
 
             if (LoadPlayerAvatar.instance_loadplayer != null)
             {
-                Debug.Log("################################### Added ");
+                //Debug.Log("################################### Added ");
                 _storeSaveBtn.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
             }
             saveButton.GetComponent<Button>().onClick.AddListener(OnSaveBtnClicked);
@@ -742,7 +742,7 @@ public class InventoryManager : MonoBehaviour
         //AssetBundle.UnloadAllAssetBundles(false);
         //Resources.UnloadUnusedAssets();
 
-        Debug.LogError("##############Save Btn CLicked");
+       // Debug.LogError("##############Save Btn CLicked");
         if (DefaultClothDatabase.instance.gameObject != null)
         {
             //  print("ppp+");
@@ -785,11 +785,11 @@ public class InventoryManager : MonoBehaviour
     /// <New APIS>
     IEnumerator WaitForAPICallCompleted(int m_GetIndex)
     {
-        print("wait Until");
+        //print("wait Until");
         yield return new WaitUntil(() => CheckAPILoaded == true);
         if (CheckAPILoaded)
         {
-            print("wait Until completed");
+            //print("wait Until completed");
             if (SubCategoriesList.Count > 0)
             {
                 SubmitAllItemswithSpecificSubCategory(SubCategoriesList[m_GetIndex].id, false);
@@ -856,7 +856,7 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("<color=red> Same Button Clicking </color>");
+            //Debug.Log("<color=red> Same Button Clicking </color>");
         }
         if (Once || loadingItems)
         {
@@ -889,7 +889,7 @@ public class InventoryManager : MonoBehaviour
             CheckAPILoaded = true; // Already Have the response not calling the API -- Resetting the value
             yield break;
         }
-        Debug.Log("<color=red> HitALLItemsAPI </color>");
+        //Debug.Log("<color=red> HitALLItemsAPI </color>");
         if (LoadingHandler.Instance)
             LoadingHandler.Instance.storeLoadingScreen.SetActive(true);
         var request = new UnityWebRequest(url, "POST");
@@ -953,7 +953,7 @@ public class InventoryManager : MonoBehaviour
                 {
                     if (JsonDataObj.success == false)
                     {
-                        print("Hey success false " + JsonDataObj.msg);
+                        //print("Hey success false " + JsonDataObj.msg);
                     }
                 }
             }
@@ -971,7 +971,7 @@ public class InventoryManager : MonoBehaviour
         if (loadingItems)
             return;
 
-        Debug.Log("Scrol GameoBJECT = " + myScroller.gameObject.name + "   content count" + myScroller.content.childCount + "Current Pannel " + GetActivePanelPageIndex());
+        //Debug.Log("Scrol GameoBJECT = " + myScroller.gameObject.name + "   content count" + myScroller.content.childCount + "Current Pannel " + GetActivePanelPageIndex());
         if (myScroller.verticalNormalizedPosition <= 0.1f && myScroller.content.childCount == GetActivePanelPageIndex() * 40)
         {
             loadingItems = true;
@@ -983,7 +983,7 @@ public class InventoryManager : MonoBehaviour
             // This check is write to avoid multiple call to API while loading previous once
             if (_downloadedAssetCount % 40 != 0)
             {
-                Debug.Log("<color=red>Items Are Downloading</color>");
+                //Debug.Log("<color=red>Items Are Downloading</color>");
                 return;
             }
 
@@ -1042,7 +1042,7 @@ public class InventoryManager : MonoBehaviour
     private int GetActivePanelPageIndex()
     {
         int _selectedPanel = ConstantsHolder.xanaConstants.currentButtonIndex;
-        Debug.Log("Cloths Bool " + Clothdatabool + _selectedPanel);
+        //Debug.Log("Cloths Bool " + Clothdatabool + _selectedPanel);
         if (Clothdatabool)
         {
             if (_selectedPanel == 3) return _OuterApiPagaCount;  // Outer
@@ -1061,7 +1061,7 @@ public class InventoryManager : MonoBehaviour
         int _selectedPanel = ConstantsHolder.xanaConstants.currentButtonIndex;
 
 
-        Debug.LogError("Selected Panel Index: " + _selectedPanel);
+        //Debug.LogError("Selected Panel Index: " + _selectedPanel);
 
         if (downloadCount)
         {
@@ -1125,7 +1125,7 @@ public class InventoryManager : MonoBehaviour
     }
     private void ResetPageIndex()
     {
-        print("Reset Index....");
+        //print("Reset Index....");
         _BottomApiPagaCount = 1;
         _OuterApiPagaCount = 1;
         _ShoesApiPagaCount = 1;
@@ -1233,7 +1233,7 @@ public class InventoryManager : MonoBehaviour
                     {
                         if (ObjofMainCategory.success == false)
                         {
-                            print("Hey success false " + ObjofMainCategory.msg);
+                            //print("Hey success false " + ObjofMainCategory.msg);
                         }
                     }
                 }
@@ -1306,7 +1306,7 @@ public class InventoryManager : MonoBehaviour
 
         if (result.IsNullOrEmpty())
         {
-            Debug.Log("<color=red> ArrayofMainCategories is null or empty </color>");
+            //Debug.Log("<color=red> ArrayofMainCategories is null or empty </color>");
             return;
         }
         ConvertMainCat_Index_ToJson MainCatString = new ConvertMainCat_Index_ToJson();

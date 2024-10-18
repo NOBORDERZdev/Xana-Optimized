@@ -43,8 +43,8 @@ public class XanaliaSocketHandler : MonoBehaviour
 
     private void OnTelegramLogin(string data)
     {
-        Debug.Log("OnTelegramLogin");
-        Debug.Log("Telegramdata: " + data);
+       // Debug.Log("OnTelegramLogin");
+        //Debug.Log("Telegramdata: " + data);
         telegramdataRoot = JsonUtility.FromJson<TelegramRoot>(data);
         if (WebViewManager.Instance != null)
         {
@@ -72,17 +72,17 @@ public class XanaliaSocketHandler : MonoBehaviour
     public IEnumerator IESaveDeviceFromXanalia()
     {
         string url = ConstantsGod.API_BASEURL + ConstantsGod.SAVE_DEVICE_XANALIA;
-        Debug.Log("SaveDeviceFromXanalia URL:" + url);
+       // Debug.Log("SaveDeviceFromXanalia URL:" + url);
         WWWForm form = new WWWForm();
         form.AddField("deviceId", UniqueID());
         form.AddField("forced", "false");
-        Debug.Log("Device ID:" + UniqueID());
+        //Debug.Log("Device ID:" + UniqueID());
 
         using (UnityWebRequest www = UnityWebRequest.Post(url, form))
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             yield return www.SendWebRequest();
-            Debug.Log("SaveDeviceFromXanalia API Logs: " + www.downloadHandler.text);
+          //  Debug.Log("SaveDeviceFromXanalia API Logs: " + www.downloadHandler.text);
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.LogError("Errorin Validate User API: " + www.error);
@@ -90,7 +90,7 @@ public class XanaliaSocketHandler : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.Log("SaveDeviceFromXanalia User data: " + data);
+            //    Debug.Log("SaveDeviceFromXanalia User data: " + data);
                 SaveDeviceRoot saveDevice = new SaveDeviceRoot();
                 saveDevice = JsonConvert.DeserializeObject<SaveDeviceRoot>(data);
                 if (saveDevice.success)
@@ -124,19 +124,19 @@ public class XanaliaSocketHandler : MonoBehaviour
         {
             Manager.Close();
         }
-        Debug.Log("OnDestroy called ");
+        //Debug.Log("OnDestroy called ");
     }
 
     void OnConnected(ConnectResponse resp)
     {
         socketConnected = true;
-        Debug.Log("XanaliaSocketHandler OnConnected:");
+        //Debug.Log("XanaliaSocketHandler OnConnected:");
     }
 
     void OnError(CustomError args)
     {
         socketConnected = false;
-        Debug.LogError(string.Format("Error: {0}", args.ToString()));
+        //Debug.LogError(string.Format("Error: {0}", args.ToString()));
     }
     
     [System.Serializable]
