@@ -124,6 +124,7 @@ public class LoadingHandler : MonoBehaviour
     public GameObject domeInfoObj;
     public GameObject domeInstObj;
     public GameObject domeInstCloseBtn;
+    bool isInstructionAvailable = false;
 
     #endregion
 
@@ -822,13 +823,23 @@ public class LoadingHandler : MonoBehaviour
             domeInstructionObjects[i].instDesc.text = "";
             domeInstructionObjects[i].instHeading.text = "";
             domeInstructionObjects[i].instIcon.sprite = domeInstDummySprite;
+
+            instructionParent[i].SetActive(false);
         }
     }
     public void LoadInstructionData(XANASummitDataContainer.DomeGeneralData info)
     {
         ClearInstructionOldData();
+        if (info.instruction.Count > 0)
+            isInstructionAvailable = true;
+        else
+            isInstructionAvailable = false;
+
         for (int i = 0; i < info.instruction.Count; i++)
         {
+            if (i >= domeInstructionObjects.Count)
+                break;
+
             if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
             {
                 domeInstructionObjects[i].instHeading.text = info.instruction[i].title_JP;
@@ -867,6 +878,8 @@ public class LoadingHandler : MonoBehaviour
                     });
                 }
             }
+
+            instructionParent[i].SetActive(true);
         }
     }
     public void showDomeLoading(XANASummitDataContainer.StackInfoWorld info)
@@ -1130,8 +1143,12 @@ public class LoadingHandler : MonoBehaviour
         WaitForInput = false;
         ApprovalUI.SetActive(false);
         DomeLodingUI.SetActive(true);
-        domeInfoObj.SetActive(false);
-        domeInstObj.SetActive(true);
+
+        if (isInstructionAvailable)
+        {
+            domeInfoObj.SetActive(false);
+            domeInstObj.SetActive(true);
+        }
 
         EnterWheel?.Invoke(true);
         BuilderEventManager.spaceXDeactivated?.Invoke();
@@ -1148,12 +1165,19 @@ public class LoadingHandler : MonoBehaviour
         if (closeBtn.onClick.GetPersistentEventCount() == 0)
             closeBtn.onClick.AddListener(() => { InstructionIntoWorld(false); });
 
-        DomeLoading.SetActive(status);
-        domeInstObj.SetActive(status);
-        domeInstCloseBtn.SetActive(status);
+        if (isInstructionAvailable)
+        {
+            DomeLoading.SetActive(status);
+            domeInstObj.SetActive(status);
+            domeInstCloseBtn.SetActive(status);
 
-        DomeLodingUI.SetActive(!status);
-        domeInfoObj.SetActive(!status);
+            DomeLodingUI.SetActive(!status);
+            domeInfoObj.SetActive(!status);
+        }
+        else
+        {
+            GamePlayUIHandler.inst.HelpScreen(status);
+        }
     }
 
     public void startLoading()

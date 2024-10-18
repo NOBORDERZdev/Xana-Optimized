@@ -108,9 +108,16 @@ public class GamePlayUIHandler : MonoBehaviour
             ChatSystem.SetActive(!isOn);
             GamePlayButtonEvents.inst.UpdateHelpObjects(isOn);
         }
-
-       
     }
+
+    public void HelpScreen(bool isOn) // Display help screen if no instruction is available
+    {
+        gamePlayUIParent.SetActive(!isOn);
+        JumpUI.SetActive(!isOn);
+        ChatSystem.SetActive(!isOn);
+        GamePlayButtonEvents.inst.UpdateHelpObjects(isOn);
+    }
+    
 
     public void OnSettingButtonClick()
     {
