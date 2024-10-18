@@ -117,8 +117,8 @@ public class LoadingHandler : MonoBehaviour
     #endregion
 
     #region 3 Step Instruction Variables
-    public List<GameObject> instructionParent;
-    public List<DomeInstructionObjects> domeInstructionObjects;
+    public InstructionDataHolder instPrefab;
+    public Transform domeInstructionParent;
     public Sprite domeInstDummySprite;
 
     public GameObject domeInfoObj;
@@ -818,15 +818,21 @@ public class LoadingHandler : MonoBehaviour
 
     void ClearInstructionOldData()
     {
-        for (int i = 0; i < domeInstructionObjects.Count; i++)
+        for (int i = 0; i < domeInstructionParent.childCount; i++)
         {
-            domeInstructionObjects[i].instDesc.text = "";
-            domeInstructionObjects[i].instHeading.text = "";
-            domeInstructionObjects[i].instIcon.sprite = domeInstDummySprite;
-
-            instructionParent[i].SetActive(false);
+            ClearData(domeInstructionParent.transform.GetChild(i).GetComponent<InstructionDataHolder>());
         }
     }
+    void ClearData(InstructionDataHolder obj)
+    {
+        obj.instNumber.text = "";
+        obj.instHeading.text = "";
+        obj.instDesc.text = "";
+        obj.instIcon.sprite = domeInstDummySprite;
+
+        obj.gameObject.SetActive(false);
+    }
+
     public void LoadInstructionData(XANASummitDataContainer.DomeGeneralData info)
     {
         ClearInstructionOldData();
@@ -837,27 +843,38 @@ public class LoadingHandler : MonoBehaviour
 
         for (int i = 0; i < info.instruction.Count; i++)
         {
-            if (i >= domeInstructionObjects.Count)
-                break;
-
-            if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
+            InstructionDataHolder instructionObj;
+            if (i >= domeInstructionParent.childCount)
             {
-                domeInstructionObjects[i].instHeading.text = info.instruction[i].title_JP;
-                domeInstructionObjects[i].instDesc.text = info.instruction[i].Desc_JP;
+                instructionObj = Instantiate(instPrefab, domeInstructionParent);
             }
             else
             {
-                domeInstructionObjects[i].instHeading.text = info.instruction[i].title_EN;
-                domeInstructionObjects[i].instDesc.text = info.instruction[i].Desc_EN;
+                instructionObj = domeInstructionParent.GetChild(i).GetComponent<InstructionDataHolder>();
+                instructionObj.gameObject.SetActive(true);
+            }
+
+            instructionObj.gameObject.name = "Instruction_" + ( i + 1);
+            instructionObj.instNumber.text = "" + (i + 1);
+            
+            if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
+            {
+                instructionObj.instHeading.text = info.instruction[i].title_JP;
+                instructionObj.instDesc.text = info.instruction[i].Desc_JP;
+            }
+            else
+            {
+                instructionObj.instHeading.text = info.instruction[i].title_EN;
+                instructionObj.instDesc.text = info.instruction[i].Desc_EN;
             }
 
             // Download Image Section
             // Set Dummy image it will remove the Old Image as well
-            domeInstructionObjects[i].instIcon.sprite = domeInstDummySprite;
+            instructionObj.instIcon.sprite = domeInstDummySprite;
 
             Debug.Log("Downloading Instruction Image ");
             string url_Image = info.instruction[i].ImageLink;
-            Image instructionImage = domeInstructionObjects[i].instIcon;
+            Image instructionImage = instructionObj.instIcon;
 
             if (!string.IsNullOrEmpty(url_Image))
             {
@@ -873,13 +890,10 @@ public class LoadingHandler : MonoBehaviour
                         if (success)
                         {
                             AssetCache.Instance.LoadSpriteIntoImage(instructionImage, url_Image, changeAspectRatio: true);
-
                         }
                     });
                 }
             }
-
-            instructionParent[i].SetActive(true);
         }
     }
     public void showDomeLoading(XANASummitDataContainer.StackInfoWorld info)
@@ -1210,15 +1224,6 @@ public class LoadingHandler : MonoBehaviour
         DomeProgress.text = ((int)progress).ToString("D2");
 
     }
-}
-
-
-[System.Serializable]
-public class DomeInstructionObjects
-{
-    public Image instIcon;
-    public TextMeshProUGUI instHeading;
-    public TextMeshProUGUI instDesc;
 }
 
 public enum FadeAction
