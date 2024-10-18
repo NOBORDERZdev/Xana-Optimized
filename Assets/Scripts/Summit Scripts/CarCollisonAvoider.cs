@@ -18,7 +18,7 @@ public class CarCollisonAvoider : MonoBehaviour
         if (other.tag == "CAR")
         {
             var follower = other.GetComponent<SplineFollower>();
-            Debug.Log("cARS IN COLLIDER  " + cars.Count);
+            //Debug.Log("cARS IN COLLIDER  " + cars.Count);
             if (cars.Count > 0)
             {
               

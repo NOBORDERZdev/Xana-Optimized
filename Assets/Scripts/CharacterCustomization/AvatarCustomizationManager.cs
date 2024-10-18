@@ -218,7 +218,7 @@ public class AvatarCustomizationManager : MonoBehaviour
         //_equipScript.wornChest.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, value);
         //_equipScript.wornLegs.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, value);
 
-        Debug.Log("Body Shape Resizing : " + value);
+       // Debug.Log("Body Shape Resizing : " + value);
     }
 
 

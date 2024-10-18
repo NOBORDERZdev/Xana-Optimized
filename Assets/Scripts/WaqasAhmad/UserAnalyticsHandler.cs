@@ -156,10 +156,10 @@ public class UserAnalyticsHandler : MonoBehaviour
         {
             response = JsonUtility.FromJson<APIResponse>(str);
             ConstantsHolder.xanaConstants.worldIdFromApi = response.data;
-            Debug.Log("<color=green> Analytics -- Record ID : " + response.data + "</color>");
+            //Debug.Log("<color=green> Analytics -- Record ID : " + response.data + "</color>");
         }
-        else
-            Debug.Log("<color=red> Analytics -- NetWorkissue </color>");
+        //else
+           // Debug.Log("<color=red> Analytics -- NetWorkissue </color>");
 
         www.Dispose();
     }
@@ -184,7 +184,7 @@ public class UserAnalyticsHandler : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("<color=green> Analytics -- WorldVisit : " + www.downloadHandler.text + "</color>");
+        //Debug.Log("<color=green> Analytics -- WorldVisit : " + www.downloadHandler.text + "</color>");
         string str = www.downloadHandler.text;
         APIResponse2 response2 = new APIResponse2();
 
@@ -196,7 +196,7 @@ public class UserAnalyticsHandler : MonoBehaviour
             else
                 visitCountText.text = "" + 0;
             
-            Debug.Log("<color=green> Analytics -- Api Responce Success </color>");
+           // Debug.Log("<color=green> Analytics -- Api Responce Success </color>");
         }
         else
            Debug.Log("NetWorkissue");
@@ -232,7 +232,7 @@ public class UserAnalyticsHandler : MonoBehaviour
         if (isExit)
             form.AddField("is_exit", "" + isExit.ToString());
 
-        Debug.Log("####### " + ConstantsHolder.xanaConstants.worldIdFromApi + "   -  " + isJoined + "   -  " + nftClicked + "   -  " + urlClicked + "   -  " + isExit);
+        //Debug.Log("####### " + ConstantsHolder.xanaConstants.worldIdFromApi + "   -  " + isJoined + "   -  " + nftClicked + "   -  " + urlClicked + "   -  " + isExit);
 
         UnityWebRequest www;
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
@@ -252,8 +252,8 @@ public class UserAnalyticsHandler : MonoBehaviour
             if (isJoined)
                 Manager.Socket.Emit("enter_world");
         }
-        else
-           Debug.Log("API NetWorkissue");
+        //else
+           //Debug.Log("API NetWorkissue");
         www.Dispose();
     }
     
@@ -276,7 +276,7 @@ public class UserAnalyticsHandler : MonoBehaviour
         //}
 
 
-        Debug.Log("####### " + ConstantsHolder.xanaConstants.worldIdFromApi + "   -  " + isJoined + "   -  " + isExit);
+        //Debug.Log("####### " + ConstantsHolder.xanaConstants.worldIdFromApi + "   -  " + isJoined + "   -  " + isExit);
 
         UnityWebRequest www;
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)

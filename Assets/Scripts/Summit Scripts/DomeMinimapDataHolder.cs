@@ -66,10 +66,10 @@ public class DomeMinimapDataHolder : MonoBehaviour
         string url = ConstantsGod.API_BASEURL + ConstantsGod.GETVISITDOMES;
         string result = await GetAsyncRequest(url);
         
-        Debug.Log("VisitedWorld: Result: " + result);
+        //Debug.Log("VisitedWorld: Result: " + result);
         if (string.IsNullOrEmpty(result))
         {
-            Debug.Log("<color=red>Error fetching dome data. Might be the user is Guest</color>");
+            //Debug.Log("<color=red>Error fetching dome data. Might be the user is Guest</color>");
             return;
         }
         var jsonNode = JSON.Parse(result);
@@ -99,7 +99,7 @@ public class DomeMinimapDataHolder : MonoBehaviour
 
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
-                Debug.Log("Get Dome Visit : "+ www.error);
+                //Debug.Log("Get Dome Visit : "+ www.error);
                 return null;
             }
             else

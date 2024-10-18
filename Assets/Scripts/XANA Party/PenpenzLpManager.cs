@@ -53,14 +53,14 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
 
             if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
             {
-                Debug.LogError($"Error: {webRequest.error}, HTTP Status Code: {webRequest.responseCode}");
-                Debug.LogError("Response: " + webRequest.downloadHandler.text);
+                //Debug.LogError($"Error: {webRequest.error}, HTTP Status Code: {webRequest.responseCode}");
+                //Debug.LogError("Response: " + webRequest.downloadHandler.text);
 
             }
             else
             {
                 string response = webRequest.downloadHandler.text;
-                Debug.Log("Response: " + response);
+                //Debug.Log("Response: " + response);
 
                 GetPointsAPIResponse getPointsAPIResponse = JsonUtility.FromJson<GetPointsAPIResponse>(response);
 
@@ -70,7 +70,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
                 }
                 else
                 {
-                    Debug.Log("<color=red>Error: " + getPointsAPIResponse.msg + "</color>");
+                    //Debug.Log("<color=red>Error: " + getPointsAPIResponse.msg + "</color>");
                 }
             }
         }

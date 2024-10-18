@@ -217,7 +217,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// </summary>
         public override void OnConnectedToMaster()
         {
-            Debug.Log("Connected to Master");
+            //Debug.Log("Connected to Master");
             connectionState = ServerConnectionStates.ConnectedToServer;
             if (working == ScenesList.MainMenu)
                 return;
@@ -234,14 +234,14 @@ namespace Photon.Pun.Demo.PunBasics
             while (!PhotonNetwork.IsConnectedAndReady)
                 await Task.Delay(1);
 
-            Debug.Log("Joining lobby: " + lobbyName);
+           // Debug.Log("Joining lobby: " + lobbyName);
             PhotonNetwork.JoinLobby(new TypedLobby(lobbyName, LobbyType.Default));
         }
 
         public override void OnJoinedLobby()
         {
 
-            Debug.Log("<color=red>On Joined lobby :- " + PhotonNetwork.CurrentLobby.Name + "--" + Time.time + " Shifting " + isShifting + "</color>");
+            //Debug.Log("<color=red>On Joined lobby :- " + PhotonNetwork.CurrentLobby.Name + "--" + Time.time + " Shifting " + isShifting + "</color>");
             if (SectorManager.Instance)
             {
                 SectorManager.Instance.UpdateMultisector();
@@ -271,16 +271,16 @@ namespace Photon.Pun.Demo.PunBasics
         bool roomListUpdated = false;
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
         {
-            Debug.Log("OnRoomListUpdate called. Number of rooms: " + roomList.Count);
+            //Debug.Log("OnRoomListUpdate called. Number of rooms: " + roomList.Count);
 
             availableRoomList.Clear();
             availableRoomList = roomList;
             roomListUpdated = true;
 
-            foreach (var room in roomList)
-            {
-                Debug.Log($"Room: {room.Name}, Players: {room.PlayerCount}/{room.MaxPlayers}, IsVisible: {room.IsVisible}");
-            }
+            //foreach (var room in roomList)
+            //{
+            //    Debug.Log($"Room: {room.Name}, Players: {room.PlayerCount}/{room.MaxPlayers}, IsVisible: {room.IsVisible}");
+            //}
         }
 
         async Task WaitUntilRoomListUpdated()
@@ -331,31 +331,31 @@ namespace Photon.Pun.Demo.PunBasics
 
         private void JoinRoomCustom()
         {
-            print(" ~~~~~~~ Join Room Custom call");
+            
             bool joinedRoom = false;
             if (availableRoomList.Count > 0)
                 foreach (RoomInfo info in availableRoomList)
                 {
                     roomNames.Add(info.Name);
-                    print(" ~~~~~~~roomNames : " + info.Name);
+            
 
                     if (info.PlayerCount < info.MaxPlayers)
                     {
-                        print(" ~~~~~~~less then max player");
+            
                         if (info.Name.Contains(PhotonNetwork.CurrentLobby.Name))
                         {
-                            print(" ~~~~~~~same room found : " + PhotonNetwork.CurrentLobby.Name);
-                            print(" ~~~~~~~ConstantsHolder.MultiSectionPhoton : " + ConstantsHolder.MultiSectionPhoton);
+                            //print(" ~~~~~~~same room found : " + PhotonNetwork.CurrentLobby.Name);
+                            //print(" ~~~~~~~ConstantsHolder.MultiSectionPhoton : " + ConstantsHolder.MultiSectionPhoton);
 
                             if (ConstantsHolder.MultiSectionPhoton && !ConstantsHolder.xanaConstants.isXanaPartyWorld)
                             {
-                                print(" ~~~~~~~multi selection is true");
+            
                                
                               
                                 object sector;
                                 if (info.CustomProperties.TryGetValue("Sector", out sector))
                                 {
-                                    print("~~~~~~~Sector" + sector);
+            
                                     if (((string)sector) != SectorName) { continue; }
                                 }
                                 else { continue; }
@@ -363,20 +363,20 @@ namespace Photon.Pun.Demo.PunBasics
                             object IsVisible;
                             if (info.CustomProperties.TryGetValue("IsVisible", out IsVisible))
                             {
-                                print("~~~~~~~IsVisible" + IsVisible);
+                               
                                 if (((bool)IsVisible) != true)
                                 {
-                                    print("~~~~~~~  found IsVisible : false");
+                               
                                     continue; }
 
 
                             }
                             else {
-                                print("~~~~~~~ no found IsVisible");
+                               
                                 continue; 
                                 }
                             CurrRoomName = info.Name;
-                            Debug.Log("<color=red> ~~~~~~~ Joining room   " + " Shifting " + isShifting + "  " + SectorName + "</color>");
+                            
                             joinedRoom = PhotonNetwork.JoinRoom(CurrRoomName);
                             return;
                         }
@@ -384,7 +384,7 @@ namespace Photon.Pun.Demo.PunBasics
                 }
             if (joinedRoom == false)
             {
-                print(" ~~~~~~~ Join Room Custom call 2"+ joinedRoom);
+                
                 int x = 1;
                 string roomName;
                 do
@@ -403,13 +403,13 @@ namespace Photon.Pun.Demo.PunBasics
 
                 if (!isWheel)
                 {
-                    print(" ~~~~~~~ is not on wheel so createing or joinging world" );
+                    
 
                     PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(ConstantsHolder.userLimit, ConstantsHolder.MultiSectionPhoton), new TypedLobby(CurrLobbyName, LobbyType.Default));
                 }
                 else
                 {
-                    Debug.Log("<color=red>Joining room   Shifting " + isShifting + " " + SectorName + "</color>");
+                    
                     PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(4, ConstantsHolder.MultiSectionPhoton), new TypedLobby(CurrLobbyName, LobbyType.Default));
                 }
                 //   PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(CurrLobbyName, LobbyType.Default));
@@ -418,7 +418,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         private void JoinRoomSeperateSingleRoom()
         {
-            Debug.Log("<color=red>Joining Seprateroom Lobby  " + PhotonNetwork.CurrentLobby.Name + "</color>");
+            
             string roomName;
             do
             {
@@ -446,12 +446,12 @@ namespace Photon.Pun.Demo.PunBasics
             if (MultiSectionPhoton)
             {
                 roomOptions.CustomRoomPropertiesForLobby = new string[] { "Sector", "IsVisible" };
-                Debug.Log("Joining Sector  " + SectorName);
+                
                 customProperties.Add("Sector", SectorName);
             }
             else
             {
-                print("~~~ IsVisible add in room properties");
+                
                 roomOptions.CustomRoomPropertiesForLobby = new string[] { "IsVisible" };
             }
 
@@ -464,12 +464,12 @@ namespace Photon.Pun.Demo.PunBasics
         public override void OnCreatedRoom()
         {
 
-            print("OnCreatedRoom called");
+            //print("OnCreatedRoom called");
         }
 
         public override void OnJoinedRoom()
         {
-            Debug.Log("Joined room   " + PhotonNetwork.CurrentRoom.Name + " Shifting " + isShifting);
+            
             CurrRoomName = PhotonNetwork.CurrentRoom.Name;
             if (!isShifting)
             {
@@ -497,7 +497,7 @@ namespace Photon.Pun.Demo.PunBasics
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
             bool raceFinishStatus = false;
-            Debug.Log("OnPlayerLeft  ..... " + otherPlayer.NickName);
+           
             if (otherPlayer.NickName == "XANA_XANA")
             {
                 ConstantsHolder.xanaConstants.isCameraManInRoom = false;
@@ -548,14 +548,14 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
-            Debug.Log("<color=red>Failed to join</color>");
+            
             OnJoinedLobby();
             //GameplayEntityLoader.instance._uiReferences.LoadMain(true);
         }
 
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
-            print("OnJoinRandomFailed called" + message);
+            
         }
         public override void OnDisconnected(DisconnectCause cause)
         {
@@ -594,7 +594,7 @@ namespace Photon.Pun.Demo.PunBasics
                 DestroyImmediate(item);
             }
             await new WaitForEndOfFrame();
-            Debug.Log("Updated Is Shifting..." + isShifting);
+           
             isShifting = false;
         }
 
@@ -613,9 +613,9 @@ namespace Photon.Pun.Demo.PunBasics
 
             isShifting = true;
             var player = ReferencesForGamePlay.instance.m_34player;
-            Debug.Log("Triggering...." + SectorName);
+            
             this.SectorName = SectorName;
-            Debug.Log("Triggered...." + this.SectorName);
+            
             this.isWheel = isWheel;
             SummitPlayerRPC summitplayer = player.GetComponent<SummitPlayerRPC>();
             if (summitplayer)
@@ -648,7 +648,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnLeftRoom()
         {
-            Debug.Log("OnLeftRoom  ..... " + PhotonNetwork.IsConnectedAndReady + "Is Shifting" + isShifting);
+            
 
 
             // PhotonNetwork.ConnectUsingSettings();
@@ -684,7 +684,7 @@ namespace Photon.Pun.Demo.PunBasics
 
             if (PhotonNetwork.IsMasterClient)
             {
-                print("~~~~~~ converting the bool ");
+                
                 PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "IsVisible", false } });
             }
         }

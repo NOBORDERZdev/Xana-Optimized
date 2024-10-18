@@ -100,7 +100,7 @@ public class RaffleTicketHandler : MonoBehaviour
         if (www.result != UnityWebRequest.Result.ConnectionError && www.result != UnityWebRequest.Result.ProtocolError)
             Debug.Log("Sucessfully update Domes Visit");
         else
-            Debug.Log("Error update Domes Visit" + www.error);
+            Debug.Log("Error update Domes Visit");
 
         www.Dispose();
     }
@@ -124,7 +124,7 @@ public class RaffleTicketHandler : MonoBehaviour
         if (www.result != UnityWebRequest.Result.ConnectionError && www.result != UnityWebRequest.Result.ProtocolError)
             Debug.Log("Sucessfully update Tickets");
         else
-            Debug.Log("Error update Tickets" + " " + www.error + " " + www.result);
+            Debug.Log("Error update Tickets");
 
         www.Dispose();
     }

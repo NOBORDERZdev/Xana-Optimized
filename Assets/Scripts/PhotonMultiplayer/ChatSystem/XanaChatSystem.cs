@@ -341,7 +341,7 @@ public class XanaChatSystem : MonoBehaviour
                 }
             }
         }
-        Debug.Log("ChatOpenDelay");
+        //Debug.Log("ChatOpenDelay");
         
     }
     bool oneTime = false;
