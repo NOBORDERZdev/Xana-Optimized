@@ -673,9 +673,15 @@ public class AvatarController : MonoBehaviour
                 //{
                 //    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeBrowPoints));
                 //}
-                if (_CharacterData.eyebrrowTexture != "" && _CharacterData.eyebrrowTexture != null)
+                if (!string.IsNullOrEmpty(_CharacterData.eyebrrowTexture) && !_CharacterData.eyebrrowTexture.Contains("default"))
                 {
                     StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyebrrowTexture, this.gameObject, CurrentTextureType.EyeBrows));
+                }
+                else
+                {
+                    //characterBodyParts.SetTextureDefault(CurrentTextureType.EyeBrows, this.gameObject);
+                    characterBodyParts.SetTextureDefault(CurrentTextureType.EyeBrows, this.gameObject);
+                    characterBodyParts.ChangeEyebrowColor(characterBodyParts.DefaultEyebrowColor);
                 }
 
                 //if (_CharacterData.makeupName != "" && _CharacterData.makeupName != null)
