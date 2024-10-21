@@ -35,18 +35,26 @@ public class OnTriggerSceneSwitch : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (!PhotonNetwork.InRoom) return;
+        //if (!PhotonNetwork.InRoom) return;
 
-        if (other.GetComponent<PhotonView>() && other.CompareTag("PhotonLocalPlayer") && 
-            other.GetComponent<PhotonView>().IsMine && !alreadyTriggered)
+        if (other.GetComponent<PlayerPhotonInfo>() && other.CompareTag("PhotonLocalPlayer") && 
+            other.GetComponent<PlayerPhotonInfo>().IsMine && !alreadyTriggered)
         {
             StartCoroutine(WaitForShift());
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<PlayerPhotonInfo>() && other.GetComponent<PlayerPhotonInfo>().IsMine)
+        {
+            alreadyTriggered = false;
+        }
+    }
+
     System.Collections.IEnumerator WaitForShift()
     {
-        yield return new WaitUntil(() => !MutiplayerController.instance.isShifting);
+        //yield return new WaitUntil(() => !MutiplayerController.instance.isShifting);
 
         alreadyTriggered = true;
 
@@ -57,7 +65,8 @@ public class OnTriggerSceneSwitch : MonoBehaviour
         else
             TriggerSceneLoading();
 
-        DisableCollider();
+        //DisableCollider();
+        yield return null;
     }
 
     void TriggerSceneLoading()
@@ -69,18 +78,18 @@ public class OnTriggerSceneSwitch : MonoBehaviour
 
     void TriggerSceneLoading(string WorldId)
     {
-        ConstantsHolder.xanaConstants.isSoftBankGame = isPenpenzMiniGame;
+        ConstantsHolder.xanaConstants.isBuilderGame = isPenpenzMiniGame;
         if (isPenpenzMiniGame)
             ConstantsHolder.isPenguin = true;
         CheckSceneParemeter();
         BuilderEventManager.LoadSceneByName?.Invoke(WorldId, transform.GetChild(0).transform.position);
     }
 
-    async void DisableCollider()
-    {
-        await Task.Delay(2000);
-        alreadyTriggered = false;
-    }
+    //async void DisableCollider()
+    //{
+    //    await Task.Delay(2000);
+    //    alreadyTriggered = false;
+    //}
 
 
     void CheckSceneParemeter()

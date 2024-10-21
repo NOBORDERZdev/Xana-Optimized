@@ -76,22 +76,22 @@ public class UserDailyRewardHandler : MonoBehaviour
 
     private void OnSocketConnected(ConnectResponse resp)
     {
-        Debug.Log("<color=green>Daily Reward Socket Connected : " + resp + "</color>");
+       // Debug.Log("<color=green>Daily Reward Socket Connected : " + resp + "</color>");
         _socketManager.Socket.On<string>("xeny-rewarded", DailyRewardResponse);
     }
 
     private void OnSocketError(CustomError args)
     {
-        Debug.Log("<color=red>Daily Reward Socket Error : " + args + "</color>");
+        //Debug.Log("<color=red>Daily Reward Socket Error : " + args + "</color>");
     }
 
     private void OnSocketDisconnect(CustomError args)
     {
-        Debug.Log("<color=yellow>Daily Reward Socket Disconnected : " + args + "</color>");
+        //Debug.Log("<color=yellow>Daily Reward Socket Disconnected : " + args + "</color>");
     }
     private void DailyRewardResponse(string resp)
     {
-        Debug.Log("Daily Reward Daily Reward Response : " + resp);
+        //Debug.Log("Daily Reward Daily Reward Response : " + resp);
         //Debug.Log("<color=green>Daily Reward ConstantsHolder.userId received : " + ConstantsHolder.userId + "</color>");
 
         if (ConstantsHolder.xanaConstants.LoginasGustprofile)
@@ -101,7 +101,7 @@ public class UserDailyRewardHandler : MonoBehaviour
 
         if (data.userId == int.Parse(ConstantsHolder.userId))
         {
-            Debug.Log("Daily Reward Daily Reward Response Id matched : " + resp);
+            //Debug.Log("Daily Reward Daily Reward Response Id matched : " + resp);
             _rewardedAmountText.text = data.coin.ToString();
             ConstantsHolder.xanaConstants.hasToShowDailyPopup = true;
             //if (SceneManager.GetActiveScene().name == "Home")
