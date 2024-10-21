@@ -659,6 +659,7 @@ public class AvatarController : MonoBehaviour
                     {
                         ApplyAIData(_CharacterData, this.gameObject);
                     }
+
                     characterBodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
                 }
 
@@ -672,10 +673,10 @@ public class AvatarController : MonoBehaviour
                 //{
                 //    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeBrowPoints));
                 //}
-                //if (_CharacterData.eyebrrowTexture != "" && _CharacterData.eyebrrowTexture != null)
-                //{
-                //    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyebrrowTexture, this.gameObject, CurrentTextureType.EyeBrows));
-                //}
+                if (_CharacterData.eyebrrowTexture != "" && _CharacterData.eyebrrowTexture != null)
+                {
+                    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyebrrowTexture, this.gameObject, CurrentTextureType.EyeBrows));
+                }
 
                 //if (_CharacterData.makeupName != "" && _CharacterData.makeupName != null)
                 //{
