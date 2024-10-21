@@ -68,9 +68,19 @@ public class ActionFavouritSelectionHandler : MonoBehaviour
 
     public void SaveActionBtnCall()
     {
+        bool isEmptyAnimations = true;
         foreach (Transform item in ActionFavouritBtn)
         {
+            if(isEmptyAnimations && !string.IsNullOrEmpty(item.GetComponent<ActionFavouriteDialogBtn>().AnimationName))
+                isEmptyAnimations = false;
             item.GetComponent<ActionFavouriteDialogBtn>().SaveActionSelected();
+        }
+        if(isEmptyAnimations)
+        {
+            if (ActionManager.IsAnimRunning)
+            {
+                ActionManager.StopActionAnimation?.Invoke();
+            }
         }
         EmoteReactionUIHandlerLandscape.CloseDisplayDialogScrollView?.Invoke();
         ActionManager.OpenActionFavouritPanel.Invoke(false);

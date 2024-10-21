@@ -91,7 +91,7 @@ public class AvatarController : MonoBehaviour
         BoxerNFTEventManager.OnNFTequip += EquipNFT;
         BoxerNFTEventManager.OnNFTUnequip += UnequipNFT;
 
-        Debug.Log("enabled  " + IsInit);
+        //Debug.Log("enabled  " + IsInit);
         //if (IsInit) // init avatar according to the Avatar Type (Friend/Self player). 
         //{
 
@@ -491,11 +491,11 @@ public class AvatarController : MonoBehaviour
       //  await Task.Delay(100);
         if (isLoadStaticClothFromJson)
         {
-            Debug.Log("Buildding character from local json... ");
+          //  Debug.Log("Buildding character from local json... ");
             BuildCharacterFromLocalJson();
             return;
         }
-        Debug.Log("Buildding character from Saved Path ... ");
+        //Debug.Log("Buildding character from Saved Path ... ");
         string folderPath = GameManager.Instance.GetStringFolderPath();
         if (File.Exists(folderPath) && File.ReadAllText(folderPath) != "") //Check if data exist
         {

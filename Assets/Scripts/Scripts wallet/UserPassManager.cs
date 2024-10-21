@@ -329,7 +329,7 @@ public class UserPassManager : MonoBehaviour
                 //if (myObject1.success == "true")
                 if (mainClassObj.success)
                 {
-                    print("Success in getting Group Data ");
+                    //print("Success in getting Group Data ");
                 }
             }
         }
@@ -337,7 +337,7 @@ public class UserPassManager : MonoBehaviour
         {
             if (request.result==UnityWebRequest.Result.ConnectionError)
             {
-                print("Error in getting Group Details");
+               // print("Error in getting Group Details");
             }
             else
             {

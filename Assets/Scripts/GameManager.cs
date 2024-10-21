@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
     internal string selectedPresetData="";
     private void Awake()
     {
-        Debug.Log("GameManager Awake");
+        //Debug.Log("GameManager Awake");
         if (Instance == null)
             Instance = this;
         PlayerPrefs.SetInt("presetPanel", 0);  // was loggedin as account 
@@ -142,11 +142,11 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(.01f);
         SceneManager.UnloadSceneAsync("LoginSignupScene");
-        print("Unload");
+        //print("Unload");
         SceneManager.LoadScene("LoginSignupScene", LoadSceneMode.Additive);
          yield return new WaitForSeconds(1f);
-        print("wait");
-        print("Loaded");
+       // print("wait");
+       // print("Loaded");
     }  
     void Start()
     {

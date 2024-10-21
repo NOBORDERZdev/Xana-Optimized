@@ -425,7 +425,7 @@ public class XANASummitSceneLoading : MonoBehaviour
 
     async void LoadBuilderSceneLoading(int builderMapId)
     {
-        Debug.Log("Loading builder Scene...");
+        //Debug.Log("Loading builder Scene...");
         ConstantsHolder.xanaConstants.builderMapID = builderMapId;
         ConstantsHolder.xanaConstants.isBuilderScene = true;
         gameplayEntityLoader.addressableSceneName = null;
