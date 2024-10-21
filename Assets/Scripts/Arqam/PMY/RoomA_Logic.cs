@@ -12,7 +12,14 @@ namespace PMY {
 
         private void Awake()
         {
-            BuilderEventManager.AfterWorldOffcialWorldsInatantiated += HookEvent;          
+            if (XanaConstants.xanaConstants.assetLoadType.Equals(XanaConstants.AssetLoadType.ByAddressable))
+            {
+                BuilderEventManager.AfterWorldOffcialWorldsInatantiated += HookEvent;
+            }
+            else if (XanaConstants.xanaConstants.assetLoadType.Equals(XanaConstants.AssetLoadType.ByBuild))
+            {
+                HookEvent();
+            }
         }
 
         private void HookEvent()

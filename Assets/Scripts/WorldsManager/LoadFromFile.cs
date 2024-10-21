@@ -897,10 +897,43 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     public void LoadEnvironment(string label)
     {
         environmentLabel = label;
-        StartCoroutine(DownloadAssets());
+        if (XanaConstants.xanaConstants.assetLoadType.Equals(XanaConstants.AssetLoadType.ByAddressable))
+        {
+            StartCoroutine(DownloadAssets());
+        }
+        else if (XanaConstants.xanaConstants.assetLoadType.Equals(XanaConstants.AssetLoadType.ByBuild))
+        {
+            StartCoroutine(LoadSceneAsync(environmentLabel));
+        }
     }
 
+    private IEnumerator LoadSceneAsync(string sceneName)
+    {
+        if (!isEnvLoaded)
+        {
+            // Start loading the scene
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
+            // Optional: If you want the scene to load in the background without affecting gameplay, you can set this to false
+            asyncLoad.allowSceneActivation = true;
+
+            // While the scene is loading, you can show a loading UI, etc.
+            while (!asyncLoad.isDone)
+            {
+                // Optionally, display loading progress
+                Debug.Log("Loading progress: " + (asyncLoad.progress * 100) + "%");
+
+                // Wait for the next frame
+                yield return null;
+            }
+            Debug.Log("Scene loaded successfully.");
+            DownloadCompleted();
+        }
+        else
+        {
+            RespawnPlayer();
+        }
+    }
 
     void SetupEnvirnmentForBuidlerScene()
     {

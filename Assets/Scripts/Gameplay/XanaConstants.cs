@@ -114,6 +114,9 @@ public class XanaConstants : MonoBehaviour
     public bool isBackFromPMY = false;
     public enum MetaverseType { PMY, XANA }
     public MetaverseType metaverseType;
+    public enum AssetLoadType { ByBuild, ByAddressable }
+    public AssetLoadType assetLoadType;
+
     public GameObject xanaData;
     [HideInInspector]
     public bool isScreenSoundOn = true;
