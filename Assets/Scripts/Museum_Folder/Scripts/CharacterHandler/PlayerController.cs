@@ -920,6 +920,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnSelectMain_Button()
+    {
+        this.gameObject.SetActive(true);
+    }
+
     void Move()
     {
         if (isNinjaMotion)

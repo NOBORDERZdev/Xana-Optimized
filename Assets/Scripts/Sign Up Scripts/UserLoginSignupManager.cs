@@ -1185,7 +1185,7 @@ public class UserLoginSignupManager : MonoBehaviour
             {
                 userUsername = userUsername.TrimEnd(' ');
             }
-        }
+        
         }
         if (PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetInt("IsProcessComplete") == 0 && PlayerPrefs.GetInt("iSignup") == 0)
         {

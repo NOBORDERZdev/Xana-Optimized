@@ -830,7 +830,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         if (SaveCharacterProperties.instance?.SaveItemList.gender == AvatarGender.Male.ToString())
         {
             player = PhotonNetwork.Instantiate("XanaAvatar2.0_Male", spawnPoint, Quaternion.identity, 0);    // Instantiate Male Avatar
-            SetPosition.instance.transform.position = spawnPoint;
+           // SetPosition.instance.transform.position = spawnPoint;
             player.transform.parent = mainController.transform;
             player.transform.localPosition = Vector3.zero;
             player.transform.localRotation = Quaternion.identity;
@@ -839,7 +839,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         else
         {
             player = PhotonNetwork.Instantiate("XanaAvatar2.0_Female", spawnPoint, Quaternion.identity, 0);  // Instantiate Female Avatar
-            SetPosition.instance.transform.position = spawnPoint;
+          //  SetPosition.instance.transform.position = spawnPoint;
             player.transform.parent = mainController.transform;
             player.transform.localPosition = Vector3.zero;
             player.transform.localRotation = Quaternion.identity;
