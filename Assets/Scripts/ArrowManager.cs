@@ -96,17 +96,18 @@ public class ArrowManager : MonoBehaviourPunCallbacks
                 }
                 PhotonUserName.text = PhotonNetwork.NickName;
 
-                if(!ConstantsHolder.isPenguin || !ConstantsHolder.xanaConstants.isXanaPartyWorld || !ConstantsHolder.xanaConstants.isSoftBankGame)
+                if(!ConstantsHolder.isPenguin || !ConstantsHolder.xanaConstants.isXanaPartyWorld || !ConstantsHolder.xanaConstants.isBuilderGame)
                 {
                     AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().animator = this.GetComponent<Animator>();
                     if (this.GetComponent<Animator>())
                     ActionAnimationApplyToPlayer.PlayerAnimatorInitializer?.Invoke(this.GetComponent<Animator>().runtimeAnimatorController);
+                    if(AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>() && GetComponent<FirstPersonJump>())
                     AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().playerRig = GetComponent<FirstPersonJump>().jumpRig;
                 }
             }
         }
            StartCoroutine(WaitForArrowIntanstiate(this.transform, !this.GetComponent<PhotonView>().IsMine));
-        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld || !ConstantsHolder.xanaConstants.isSoftBankGame)
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld || !ConstantsHolder.xanaConstants.isBuilderGame)
         {
             try
             {
@@ -164,7 +165,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     public override void OnDisable ()
     {
-        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld || !ConstantsHolder.xanaConstants.isSoftBankGame)
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld || !ConstantsHolder.xanaConstants.isBuilderGame)
         {
             ReactionDelegateButtonClickEvent -= OnChangeReactionIcon;
         }
@@ -186,13 +187,13 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     {
         if (userNameToggleConstant == 1)
         {
-            Debug.Log("Onbtn:" + ReferencesForGamePlay.instance.onBtnUsername);
+           // Debug.Log("Onbtn:" + ReferencesForGamePlay.instance.onBtnUsername);
             PhotonUserName.enabled = true;
 
         }
         else
         {
-            Debug.Log("Offbtn:" + ReferencesForGamePlay.instance.onBtnUsername);
+            //Debug.Log("Offbtn:" + ReferencesForGamePlay.instance.onBtnUsername);
             PhotonUserName.enabled = false;
         }
 
@@ -332,8 +333,8 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void sendDataUserNAmeToggle(int UserNameContantToggle, int viewId)
     {
-        Debug.Log("ThisidToggle:" + UserNameContantToggle);
-        Debug.Log("ThisitOGGLEid:" + viewId);
+       // Debug.Log("ThisidToggle:" + UserNameContantToggle);
+        //Debug.Log("ThisitOGGLEid:" + viewId);
         NameToggle(UserNameContantToggle, viewId);
 
 
@@ -345,13 +346,13 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             //Debug.Log("USERNAME VALUE:" + ConstantsHolder.xanaConstants.userName);
             if (ToggleConstant == 1)
             {
-                Debug.Log("Onbtn:" + ReferencesForGamePlay.instance.onBtnUsername);
+                //Debug.Log("Onbtn:" + ReferencesForGamePlay.instance.onBtnUsername);
                 PhotonUserName.enabled = true;
 
             }
             else
             {
-                Debug.Log("Offbtn:" + ReferencesForGamePlay.instance.onBtnUsername);
+               // Debug.Log("Offbtn:" + ReferencesForGamePlay.instance.onBtnUsername);
                 PhotonUserName.enabled = false;
             }
         }
@@ -362,7 +363,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void sendDataChatMsg(string chat, int viewId)
     {
-        Debug.LogError("RPC chat :- "+chat+"--"+viewId);
+        //Debug.Log("RPC chat :- "+chat+"--"+viewId);
         PlayerPrefs.SetString(ConstantsGod.ReactionThumb, "");
         reactionUi.SetActive(false);
         if (chatco != null)
@@ -418,7 +419,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         if (isOtherPlayer)
         {
             PhotonUserName.text = gameObject.GetComponent<PhotonView>().Owner.NickName;
-            Debug.Log("nick name 4==" + gameObject.GetComponent<PhotonView>().Owner.NickName);
+            //Debug.Log("nick name 4==" + gameObject.GetComponent<PhotonView>().Owner.NickName);
             if ((!string.IsNullOrEmpty(PlayerPrefs.GetString(ConstantsGod.ReactionThumb)))
                    && !PlayerPrefs.GetString(ConstantsGod.ReactionThumb).Equals(ConstantsGod.ReactionThumb))
             {

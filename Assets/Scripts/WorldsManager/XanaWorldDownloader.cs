@@ -174,7 +174,7 @@ public class XanaWorldDownloader : MonoBehaviour
                 temp.ItemID = xanaSceneData.SceneObjects[i].addressableKey;
                 if (!uniqueDownloadKeys.Contains(xanaSceneData.SceneObjects[i].addressableKey) && !XanaWorldDownloader.CheckForVisitedWorlds(ConstantsHolder.xanaConstants.EnviornmentName))
                 {
-                    Debug.Log("<color=red>Calculate Download Size</color>");
+                    //Debug.Log("<color=red>Calculate Download Size</color>");
                     uniqueDownloadKeys.Add(xanaSceneData.SceneObjects[i].addressableKey);
                     downloadSize += Addressables.GetDownloadSizeAsync(xanaSceneData.SceneObjects[i].addressableKey).WaitForCompletion();
                 }
@@ -319,7 +319,7 @@ public class XanaWorldDownloader : MonoBehaviour
                 _assetDownloadTryCount++;
                 if (_assetDownloadTryCount < 5)
                 {
-                    yield return new WaitForSeconds(1);
+                    yield return new WaitForSeconds(.1f);
                     goto LoadAssetAgain;
                 }
             }
@@ -388,7 +388,7 @@ public class XanaWorldDownloader : MonoBehaviour
                 _assetDownloadTryCount++;
                 if (_assetDownloadTryCount < 5)
                 {
-                    yield return new WaitForSeconds(1);
+                    yield return new WaitForSeconds(.1f);
                     goto LoadAssetAgain;
                 }
             }
@@ -449,7 +449,7 @@ public class XanaWorldDownloader : MonoBehaviour
                 _assetDownloadTryCount++;
                 if (_assetDownloadTryCount < 5)
                 {
-                    yield return new WaitForSeconds(1);
+                    yield return new WaitForSeconds(.1f);
                     goto LoadAssetAgain;
                 }
             }

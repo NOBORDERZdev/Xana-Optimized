@@ -144,7 +144,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         // Call StartXANAPartyRace here
         if (scene.name == "Builder")
         {
-            print("!!! call from Scene Loaded");
+            //print("!!! call from Scene Loaded");
             if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && !isRaceStarted)
                 StartXANAPartyRace();
         }

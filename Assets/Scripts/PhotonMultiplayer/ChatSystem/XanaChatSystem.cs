@@ -147,9 +147,17 @@ public class XanaChatSystem : MonoBehaviour
             this.UserName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
         }
 
+#if UNITY_EDITOR
+        InputFieldChat.onValueChanged.AddListener(delegate { DisableMovement(false); });
+        InputFieldChat.onEndEdit.AddListener(delegate { DisableMovement(true); });
+#endif
         Connect();
     }
 
+    private void DisableMovement(bool isActive)
+    {
+        ReferencesForGamePlay.instance.playerControllerNew.enabled = isActive;
+    }
 
     public void DisplayMsg_FromSocket(string _userName, string _msg)
     {
@@ -333,7 +341,7 @@ public class XanaChatSystem : MonoBehaviour
                 }
             }
         }
-        Debug.Log("ChatOpenDelay");
+        //Debug.Log("ChatOpenDelay");
         
     }
     bool oneTime = false;

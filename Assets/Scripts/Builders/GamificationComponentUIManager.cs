@@ -13,7 +13,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     private void OnEnable()
     {
         //subscribe Narration event
-        Debug.Log("Subscribe Event");
+        //Debug.Log("Subscribe Event");
         BuilderEventManager.OnNarrationCollisionEnter += EnableNarrationUI;
         BuilderEventManager.OnNarrationCollisionExit += DisableNarrationUI;
         BuilderEventManager.OnRandomCollisionEnter += EnableRandomNumberUI;
@@ -52,7 +52,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     private void OnDisable()
     {
         //unsubscribe Narration event
-        Debug.Log("UnSubscribe Event");
+        //Debug.Log("UnSubscribe Event");
         BuilderEventManager.OnNarrationCollisionEnter -= EnableNarrationUI;
         BuilderEventManager.OnNarrationCollisionExit -= DisableNarrationUI;
         BuilderEventManager.OnRandomCollisionEnter -= EnableRandomNumberUI;
@@ -83,18 +83,17 @@ public class GamificationComponentUIManager : MonoBehaviour
 
 
         BuilderEventManager.ResetComponentUI -= DisableAllComponentUIObject;
-
     }
 
     public bool isPotrait;
+
     private void PositionUpdateOnOrientationChange()
     {
         float screenWidth = Screen.width;
-        float screenHeight = Screen.height;
 
-        NinjaMotionUIButtonPanel2.transform.position = new Vector3(screenWidth, 0, 0);
+        //NinjaMotionUIButtonPanel2.transform.position = new Vector3(screenWidth, 0, 0);
         ThowThingsUIButtonPanel2.transform.position = new Vector3(screenWidth, 0, 0);
-        NinjaMotionUIButtonPanel.transform.position = new Vector3(screenWidth, 0, 0);
+        //NinjaMotionUIButtonPanel.transform.position = new Vector3(screenWidth, 0, 0);
         ThowThingsUIButtonPanel.transform.position = new Vector3(screenWidth, 0, 0);
 
         if (isPotrait)
@@ -1058,6 +1057,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         DisableAllComponentUIObject(Constants.ItemComponentType.NinjaComponent, true);
         DisableThrowThingUI();
         NinjaMotionUIParent.SetActive(true);
+        GameplayEntityLoader.instance.DashButton.SetActive(false);
 
         if (NinjaMotionCoroutine == null)
         {

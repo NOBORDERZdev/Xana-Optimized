@@ -497,7 +497,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         //code by hardik 9aug2024
         if (!(SceneManager.GetActiveScene().name.Contains("Museum")))
         {
-            spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + .5f, spawnPoint.z);
+            // Add a small random offset to the initial spawn point to reduce chances of collision
+            spawnPoint = new Vector3( spawnPoint.x + UnityEngine.Random.Range(-0.5f, 0.5f), spawnPoint.y + 0.5f, spawnPoint.z + UnityEngine.Random.Range(-0.5f, 0.5f));
+            
+            //spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + .5f, spawnPoint.z);
             RaycastHit hit;
 
             // Loop to check for valid spawn point
@@ -513,8 +516,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
                 {
                     // Check if the hit object is a player or other non-walkable surface
-                    if (hit.collider.gameObject.CompareTag("PhotonLocalPlayer") ||
-                        hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
+                    if (hit.collider.gameObject.CompareTag("PhotonLocalPlayer") || hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
                     {
                         // Adjust spawn point slightly if occupied
                         spawnPoint = new Vector3(
@@ -526,6 +528,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                     else
                     {
                         // Valid spawn point found
+
+                        // Some assets are not yet loaded at this time.
+                        // The ray fails to detect those objects and the player spawns inside them.
+                        // https://www.notion.so/noborderz/SUGIZO-world-spawn-and-collider-missing-issue-e9538161b2d94f298c7b9bfa5b288cf4?pvs=4
                         spawnPoint = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
                         validSpawnPointFound = true;
                     }
@@ -786,6 +792,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void InstantiatePlayerAvatar(Vector3 pos)
     {
+        if (ScreenOrientationManager._instance != null && ScreenOrientationManager._instance.isPotrait)
+        {
+            ScreenOrientationManager._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
+        }
         if (ConstantsHolder.isPenguin || ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
             DashButton.SetActive(false);
@@ -973,7 +983,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             yield return new WaitForSeconds(0.1f);
         }
 
-        if (ConstantsHolder.xanaConstants.isBuilderScene && !ConstantsHolder.xanaConstants.isXanaPartyWorld && !ConstantsHolder.xanaConstants.isSoftBankGame )
+        if (ConstantsHolder.xanaConstants.isBuilderScene && !ConstantsHolder.xanaConstants.isXanaPartyWorld && !ConstantsHolder.xanaConstants.isBuilderGame )
         {
             player.transform.localScale = Vector3.one * 1.153f;
             Rigidbody playerRB = player.AddComponent<Rigidbody>();
@@ -1397,10 +1407,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     CheckAgain:
         Transform temp = null;
 
-        Debug.Log("not coming from else");
+        //Debug.Log("not coming from else");
         if (GameObject.FindGameObjectWithTag("SpawnPoint"))
         {
-            Debug.Log("not coming from else2");
+           // Debug.Log("not coming from else2");
 
             temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
         }
@@ -1430,7 +1440,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void ResetPlayerAfterInstantiation()
     {
-        if (ConstantsHolder.xanaConstants.isSoftBankGame)
+        if (ConstantsHolder.xanaConstants.isBuilderGame)
         {
             return;
         }
@@ -1664,11 +1674,12 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(false);
         ReferencesForGamePlay.instance.XANAPartyWaitingPanel.SetActive(false);
+        IsJoinSummitWorld = false;
 
         ConstantsHolder.isFixedHumanoid = false;
         ConstantsHolder.isPenguin = false;
         ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
-        ConstantsHolder.xanaConstants.isSoftBankGame = false;
+        ConstantsHolder.xanaConstants.isBuilderGame = false;
         ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
     }
 

@@ -2,6 +2,7 @@ using SuperStar.Helpers;
 using System;
 using System.Collections;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -31,7 +32,7 @@ public class SummitDomeShaderApply : MonoBehaviour
         clickListener.DomeId = DomeId;
         if (!string.IsNullOrEmpty(ImageUrl))
         {
-            ImageUrl = ImageUrl + "?width=512?height=256";
+            ImageUrl = ImageUrl + "?width="+ConstantsHolder.DomeImageCompression;
             DownloadDomeTexture(ImageUrl);  
         }
         else
@@ -43,7 +44,7 @@ public class SummitDomeShaderApply : MonoBehaviour
         }
         if (!string.IsNullOrEmpty(LogoUrl))
         {
-            ImageUrl = ImageUrl + "?width=256";
+            ImageUrl = ImageUrl + "?width="+ConstantsHolder.DomeImageCompression;
             DownloadLogoTexture(LogoUrl);
         }
     }
@@ -103,7 +104,10 @@ public class SummitDomeShaderApply : MonoBehaviour
     void SetDomeTexture(string url)
     {
         Texture2D texture=AssetCache.Instance.LoadImage(url);
-        DomeMeshRenderer.material.mainTexture = texture;
+        if (DomeMeshRenderer != null && DomeMeshRenderer.materials.Count() > 0)
+        {
+            DomeMeshRenderer.material.mainTexture = texture;
+        }
         DomeMeshRenderer.gameObject.SetActive(true);
         Frame.SetActive(true);
     }
@@ -133,9 +137,11 @@ public class SummitDomeShaderApply : MonoBehaviour
     void SetLogoTexture(string url)
     {
         Texture2D texture = AssetCache.Instance.LoadImage(url);
-        if(texture != null)
-        LogoSpriteRenderer.sprite = ConvertToSprite(texture);
-        LogoSpriteRenderer.material.shader = Shader.Find("Sprites/Default");
-        ScaleSpriteToTargetSize();
+        if (texture != null && LogoSpriteRenderer != null)
+        {
+            LogoSpriteRenderer.sprite = ConvertToSprite(texture);
+            LogoSpriteRenderer.material.shader = Shader.Find("Sprites/Default");
+            ScaleSpriteToTargetSize();
+        }
     }
 }

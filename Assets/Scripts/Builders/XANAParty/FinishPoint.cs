@@ -13,7 +13,7 @@ public class FinishPoint : MonoBehaviour
     public Collider FinishRaceCollider;
     private void OnEnable()
     {
-        if (ConstantsHolder.xanaConstants.isXanaPartyWorld || ConstantsHolder.xanaConstants.isSoftBankGame)
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld || ConstantsHolder.xanaConstants.isBuilderGame)
         {
             FinishRaceCollider.gameObject.SetActive(true);
         }
@@ -46,7 +46,7 @@ public class FinishPoint : MonoBehaviour
     {
         if (GameplayEntityLoader.instance)
         {
-            if(!ConstantsHolder.xanaConstants.isSoftBankGame)
+            if(!ConstantsHolder.xanaConstants.isBuilderGame)
                 GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC("RPC_AddWinnerId", RpcTarget.AllBuffered, int.Parse(ConstantsHolder.userId));
             GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC("UpdateStatusOnRaceFinish", RpcTarget.AllBuffered, PhotonNetwork.LocalPlayer.ActorNumber, true);
         }
@@ -65,7 +65,7 @@ public class FinishPoint : MonoBehaviour
             BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("YOU WON THE RACE", 3, true);
         triggerCollider.SetActive(true);
         GamificationComponentData gamificationTemp = GamificationComponentData.instance;
-        if (ConstantsHolder.xanaConstants.isSoftBankGame)
+        if (ConstantsHolder.xanaConstants.isBuilderGame)
         {
             GamePlayUIHandler.inst.OnExitButtonClick();
         }

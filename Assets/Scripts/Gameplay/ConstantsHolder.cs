@@ -23,6 +23,7 @@ public class ConstantsHolder : MonoBehaviour
     public static bool IsXSummitApp;
     public bool OpenSpaceScreen_fromSummit = false;
     public bool chatFlagBtnStatus = false;
+    public static int DomeImageCompression = 350;
 
     //Login Info
     public static bool isAdmin;
@@ -108,7 +109,8 @@ public class ConstantsHolder : MonoBehaviour
     public bool isBackFromWorld = false;
     public String MuseumID;
     public string domeCreatorName;
-    public bool isSoftBankGame;
+    public bool isBuilderGame = false;
+    public bool isSummitBtnPressed = false;
 
     //For Metabuzz Environments
     public enum ComingFrom
@@ -222,7 +224,8 @@ public class ConstantsHolder : MonoBehaviour
     public bool EnableSignInPanelByDefault = false;
     public bool GameIsFinished = false;
     public string LastLobbyName;
-    #endregion
+  //  public bool isBuilderGame = false;
+# endregion
 
 
     public string r_EmoteStoragePersistentPath
@@ -327,7 +330,7 @@ public class ConstantsHolder : MonoBehaviour
 
     public void SetPlayerProperties(string cloths = "")
     {
-        Debug.Log("SetPlayerProperties");
+       // Debug.Log("SetPlayerProperties");
         PhotonNetwork.LocalPlayer.CustomProperties.Clear();
         ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
         if (string.IsNullOrEmpty(cloths))

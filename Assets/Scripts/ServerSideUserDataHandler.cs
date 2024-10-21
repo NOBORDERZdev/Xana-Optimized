@@ -46,7 +46,7 @@ public class ServerSideUserDataHandler : MonoBehaviour
             {
                 if (getdata.data.count == 0)
                 {
-                    print("!!Not Data Found, New User");
+                    //print("!!Not Data Found, New User");
                     SavingCharacterDataClass SubCatString = new SavingCharacterDataClass();
                     SubCatString.FaceBlendsShapes = new float[GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount];
                     string jbody = GameManager.Instance.selectedPresetData != "" ? GameManager.Instance.selectedPresetData : JsonUtility.ToJson(SubCatString);
@@ -68,6 +68,7 @@ public class ServerSideUserDataHandler : MonoBehaviour
                     string jsonbody = JsonUtility.ToJson(getdata.data.rows[0].json);
                     LoadPlayerAvatar.avatarId = getdata.data.rows[0].id.ToString();
                     LoadPlayerAvatar.avatarName = getdata.data.rows[0].name;
+                    //Debug.Log("avatarName: " + jsonbody);
                     LoadPlayerAvatar.avatarThumbnailUrl = getdata.data.rows[0].thumbnail;
                     ConstantsHolder.userId = getdata.data.rows[0].createdBy.ToString();
                     File.WriteAllText(GetStringFolderPath(), jsonbody);
@@ -85,6 +86,7 @@ public class ServerSideUserDataHandler : MonoBehaviour
                     }
                     if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
                     {
+                        GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
                         // assign gender to save character properties
                         // This gander is use for character initialization 
                         SaveCharacterProperties.instance.SaveItemList.gender = getdata.data.rows[0].json.gender;
@@ -92,7 +94,10 @@ public class ServerSideUserDataHandler : MonoBehaviour
                         yield break;
                     }
 
-                    Screen.orientation = ScreenOrientation.Portrait;
+                    if (!ConstantsHolder.xanaConstants.isSummitBtnPressed)
+                    {
+                        Screen.orientation = ScreenOrientation.Portrait;
+                    }
                     loadprevious();
 
                     GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();

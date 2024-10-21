@@ -199,7 +199,8 @@ public class WorldManager : MonoBehaviour
 
     async void AddingDeleyToLoadScene()
     {
-        while (!ConstantsHolder.isAddressableCatalogDownload)
+        while (!ConstantsHolder.isAddressableCatalogDownload) 
+            //|| (PlayerPrefs.GetString("PlayerName").IsNullOrEmpty() && !ConstantsHolder.xanaConstants.LoggedInAsGuest))
             await Task.Delay(500);
         LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
         XANAPartyManager xANAPartyManager = XANAPartyManager.Instance;
