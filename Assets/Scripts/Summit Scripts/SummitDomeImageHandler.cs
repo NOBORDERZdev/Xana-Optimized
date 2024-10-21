@@ -1,3 +1,4 @@
+using SuperStar.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -35,6 +36,11 @@ public class SummitDomeImageHandler : MonoBehaviour
         BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= ApplyDomeShader;
         ShowNftData -= SetInfo;
         CloseLoaderObject -= CloseLoader;
+    }
+
+    public void GetImageNumber()
+    {
+        AssetCache.Instance.GetSpriteCount();
     }
 
     void ApplyDomeShader()

@@ -15,6 +15,12 @@ public class DisplayImage : MonoBehaviour
     public GameObject bufferPanel;
 
     private bool _SetframeRatio = true;
+    private string ImageUrl;
+    private void OnDisable()
+    {
+        if (!string.IsNullOrEmpty(ImageUrl))
+            AssetCache.Instance.RemoveFromMemory(ImageUrl,true);
+    }
 
     public async Task<string> DownloadImageFromURL(string url)
     {
@@ -122,9 +128,10 @@ public class DisplayImage : MonoBehaviour
             //    url += "?width=400&height=400";
             //}
             //print("AFTER :: " + url);
-
+            ImageUrl = url;
             if (AssetCache.Instance.HasFile(url))
             {
+                Debug.LogError("File found kurime :- "+url);
                 await Task.Delay(Random.Range(100, 500));
                 AssetCache.Instance.LoadSpriteIntoImage(imageComponent, url, changeAspectRatio: false);
                 ResizeImage();

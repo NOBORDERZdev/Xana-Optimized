@@ -86,6 +86,7 @@ public class SummitDomeShaderApply : MonoBehaviour
         {
             if (AssetCache.Instance.HasFile(url))
             {
+                Debug.LogError("File found :- " + url);
                 SetDomeTexture(url);
             }
             else

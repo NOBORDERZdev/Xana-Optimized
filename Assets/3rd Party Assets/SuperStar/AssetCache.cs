@@ -149,6 +149,17 @@ namespace SuperStar.Helpers
             itemsDictFilePath = BASE_PATH + "cached_files";
         }
 
+        public void GetSpriteCount()
+        {
+            Debug.LogError(sprites.Count);
+            int x = 0;
+            while (sprites.Count > x)
+            {
+                Debug.LogError("--" + sprites.ElementAt(x).Key);
+                x++;
+            }
+        }
+
         // retrieved cached sprite object!
         public Sprite LoadSprite(string key, Sprite placeholder = null)
         {
@@ -252,6 +263,7 @@ namespace SuperStar.Helpers
             {
                 if (la.isAsStreamingAsset)
                 {
+                    Debug.LogError("Streaming assets :- ");
                     Texture2D texture = null;
                     try
                     {
@@ -268,6 +280,7 @@ namespace SuperStar.Helpers
                 }
                 else
                 {
+                    Debug.LogError("local file assets :- ");
                     string imageUrl = GetValue(key).fileName;
                     var fileName = GetLocalPathForFile(imageUrl);
                     if (File.Exists(fileName))
