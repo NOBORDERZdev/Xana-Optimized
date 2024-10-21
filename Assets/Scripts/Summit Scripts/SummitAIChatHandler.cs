@@ -36,6 +36,7 @@ public class SummitAIChatHandler : MonoBehaviour
         BuilderEventManager.AINPCActivated += LoadAIChat;
         BuilderEventManager.AINPCDeactivated += RemoveAIChat;
         BuilderEventManager.AfterWorldInstantiated += LoadNPC;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated += LoadNPC;
         BuilderEventManager.ResetSummit += ResetOnExit;
         ScreenOrientationManager.switchOrientation += UpdateChatInstance;
     }
@@ -44,6 +45,7 @@ public class SummitAIChatHandler : MonoBehaviour
         BuilderEventManager.AINPCActivated -= LoadAIChat;
         BuilderEventManager.AINPCDeactivated -= RemoveAIChat;
         BuilderEventManager.AfterWorldInstantiated -= LoadNPC;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= LoadNPC;
         BuilderEventManager.ResetSummit -= ResetOnExit;
         ScreenOrientationManager.switchOrientation -= UpdateChatInstance;
     }
