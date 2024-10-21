@@ -181,7 +181,7 @@ public class ChatSocketManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         while (!isConnected && currentRetry < maxRetries)
         {
-            Debug.Log($"Attempting to connect, try {currentRetry + 1}/{maxRetries}...");
+            //Debug.Log($"Attempting to connect, try {currentRetry + 1}/{maxRetries}...");
 
             // Re-initialize the socket manager to reconnect
             Manager.Socket.Off(); // Remove existing event handlers to avoid duplicates
@@ -194,18 +194,18 @@ public class ChatSocketManager : MonoBehaviour
 
         if (isConnected)
         {
-            Debug.Log("Successfully connected after retries.");
+            //Debug.Log("Successfully connected after retries.");
         }
         else
         {
-            Debug.LogError($"Failed to connect after {maxRetries} attempts.");
+            //Debug.LogError($"Failed to connect after {maxRetries} attempts.");
         }
     }
 
     void OnConnected(ConnectResponse resp)
     {
 
-        Debug.Log("Socket Connected");
+        //Debug.Log("Socket Connected");
         isConnected = true;
         currentRetry = 0; // Reset retry count on successful connection
 
@@ -221,7 +221,7 @@ public class ChatSocketManager : MonoBehaviour
     }
     void OnError(CustomError args)
     {
-        Debug.LogError("Socket Error: " + args.message);
+        //Debug.LogError("Socket Error: " + args.message);
         isConnected = false;
     }
     void Onresult(CustomError args)
@@ -230,7 +230,7 @@ public class ChatSocketManager : MonoBehaviour
     }
     void OnSocketDisconnect(CustomError args)
     {
-        Debug.Log("Socket Disconnected: " + args.message);
+        //Debug.Log("Socket Disconnected: " + args.message);
         isConnected = false;
     }
 
@@ -240,13 +240,13 @@ public class ChatSocketManager : MonoBehaviour
         if (pauseStatus)
         {
             wasPaused = true;
-            Debug.Log("App is paused, preparing to reconnect.");
+            //Debug.Log("App is paused, preparing to reconnect.");
         }
         else
         {
             if (wasPaused)
             {
-                Debug.Log("App has resumed, attempting reconnection.");
+               // Debug.Log("App has resumed, attempting reconnection.");
 
                 // Attempt reconnection when resuming
                 if (!isConnected)
@@ -365,7 +365,7 @@ public class ChatSocketManager : MonoBehaviour
         WWWForm form = new WWWForm();
 
         string api = fetchAllMsgApi + ConstantsHolder.xanaConstants.MuseumID + "/" + eventId + "/" + socketId + "/" + pageNumber + "/" + dataLimit + "/" + ConstantsHolder.userId;
-        Debug.Log("<color=red> XanaChat -- API : " + api + "</color>");
+        //Debug.Log("<color=red> XanaChat -- API : " + api + "</color>");
 
         UnityWebRequest www;
         www = UnityWebRequest.Get(api);
@@ -389,8 +389,8 @@ public class ChatSocketManager : MonoBehaviour
             oldChatResponse = www.downloadHandler.text;
             DisplayOldChat(www.downloadHandler.text);
         }
-        else
-            Debug.Log("<color=red> XanaChat -- NetWorkissue </color>");
+        //else
+           // Debug.Log("<color=red> XanaChat -- NetWorkissue </color>");
 
         www.Dispose();
     }
@@ -457,7 +457,7 @@ public class ChatSocketManager : MonoBehaviour
     }
 
     public void AddLocalMsg(string userName, string msg, string msgId, string userId, int blockMessage) { 
-    Debug.Log($"AddNewMsg called with userName: {userName}, msg: {msg}, msgId: {msgId}, userId: {userId}, blockMessage: {blockMessage}");
+    //Debug.Log($"AddNewMsg called with userName: {userName}, msg: {msg}, msgId: {msgId}, userId: {userId}, blockMessage: {blockMessage}");
         GameObject _newMsg = Instantiate(MsgPrefab, MsgParentObj);
         ChatMsgDataHolder _dataHolder = _newMsg.GetComponent<ChatMsgDataHolder>();
         RectTransform rectTransform = _dataHolder.MsgText.GetComponent<RectTransform>();
@@ -551,7 +551,7 @@ public class ChatSocketManager : MonoBehaviour
 
         if (!www.isHttpError && !www.isNetworkError)
         {
-            Debug.Log("<color=green> XanaChat -- FlagMsg : " + www.downloadHandler.text + "</color>");
+            //Debug.Log("<color=green> XanaChat -- FlagMsg : " + www.downloadHandler.text + "</color>");
             JObject jsonObject = JObject.Parse(www.downloadHandler.text);
             string dataValue = "";
 
@@ -568,7 +568,7 @@ public class ChatSocketManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("<color=red> XanaChat -- FlagMsg -- NetWorkissue </color>");
+            //Debug.Log("<color=red> XanaChat -- FlagMsg -- NetWorkissue </color>");
             callback(false);
         }
 
@@ -600,12 +600,12 @@ public class ChatSocketManager : MonoBehaviour
         if (!www.isHttpError && !www.isNetworkError)
         {
             //oldMsgRec.text = www.downloadHandler.text;
-            Debug.Log("<color=green> XanaChat -- BlockUser : " + www.downloadHandler.text + "</color>");
+            //Debug.Log("<color=green> XanaChat -- BlockUser : " + www.downloadHandler.text + "</color>");
             callback(true);
         }
         else
         {
-            Debug.Log("<color=red> XanaChat -- BlockUser -- NetWorkissue </color>");
+            //Debug.Log("<color=red> XanaChat -- BlockUser -- NetWorkissue </color>");
             callback(false);
         }
 

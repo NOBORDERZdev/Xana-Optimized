@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4204510369272898341}
   - component: {fileID: 2026098956353745898}
   - component: {fileID: 7833560712373182286}
+  - component: {fileID: 8359976183754846168}
   m_Layer: 0
   m_Name: RNA_Logo
   m_TagString: Untagged
@@ -25,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2852956541678346341}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 12.773511, y: 4.6298237, z: 0.9115626}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -40,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2852956541678346341}
-  m_Mesh: {fileID: -7822804124435574998, guid: 43730141f5f93624aab7db69fa27410c, type: 3}
+  m_Mesh: {fileID: -7822804124435574998, guid: 47de440e147e9394f9da9601669b9ab8, type: 3}
 --- !u!23 &7833560712373182286
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -85,3 +86,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8359976183754846168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2852956541678346341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: RNA_Logo
+  objectPriority: 0

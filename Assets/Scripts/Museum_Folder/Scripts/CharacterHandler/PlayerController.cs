@@ -155,7 +155,7 @@ public class PlayerController : MonoBehaviour
         originalSprintSpeed = sprintSpeed;
         originalJumpSpeed = JumpVelocity;
 
-        Debug.Log("Player Controller New Start");
+        //Debug.Log("Player Controller New Start");
         gyroButton.SetActive(false);
         gyroButton_Portait.SetActive(false);
 
