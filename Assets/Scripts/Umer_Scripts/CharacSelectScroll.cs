@@ -21,10 +21,6 @@ public class CharacSelectScroll : MonoBehaviour
             instance = this;
         }
         hssRef = this.GetComponent<HorizontalScrollSnap>();
-        foreach (GameObject item in items)
-        {
-            GameObject itemGameObject = Instantiate(item, contentParent);
-        }
     }
 
     private void OnEnable()
