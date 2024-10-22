@@ -14,7 +14,7 @@ public class QualityManager : MonoBehaviour
     private RenderPipelineAsset[] _qualityLevels;
     void Start()
     {
-        if (PlayerPrefs.GetInt("DefaultQuality") == 0 && PlayerPrefs.GetInt("QualitySettings") == 0)
+        if (PlayerPrefs.GetInt("QualitySettings") == 0)
         {
             AdjustQualityBasedOnDevice();
            // SetQualitySettings(1); // Medium
@@ -64,10 +64,10 @@ public class QualityManager : MonoBehaviour
         {
             AdjustQualityForIOS(systemMemory);
         }
-        else
-        {
-            SetQualitySettings(1); // High
-        }
+        //else
+        //{
+        //    SetQualitySettings(1); // Standard
+        //}
     }
     void AdjustQualityForIOS(int systemMemory)
     {
