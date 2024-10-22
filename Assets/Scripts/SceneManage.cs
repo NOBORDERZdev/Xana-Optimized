@@ -99,7 +99,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
                 LoadingHandler.Instance.ShowLoading();
                 //LoadingHandler.Instance.ShowLoading(ScreenOrientation.LandscapeLeft);
 
-                if (XanaConstants.xanaConstants.needToClearMemory)
+                if (XanaConstants.xanaConstants.needToClearMemory && AddressableDownloader.Instance)
                     AddressableDownloader.Instance.MemoryManager.RemoveAllAddressables();
                 else
                     XanaConstants.xanaConstants.needToClearMemory = true;
