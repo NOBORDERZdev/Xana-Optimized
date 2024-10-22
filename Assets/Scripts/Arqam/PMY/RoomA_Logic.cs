@@ -10,7 +10,7 @@ namespace PMY {
         public int nftIndex;
         public UnityEvent onExitAction;
 
-        private void Awake()
+        private void Start()
         {
             if (XanaConstants.xanaConstants.assetLoadType.Equals(XanaConstants.AssetLoadType.ByAddressable))
             {
