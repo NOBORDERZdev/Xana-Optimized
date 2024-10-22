@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PresetData_Jsons : MonoBehaviour
 {
-
+    public int avatarIndex = 0;
     public string JsonDataPreset;
     private string PresetNameinServer = "Presets";
     // Start is called before the first frame update
@@ -66,6 +66,7 @@ public class PresetData_Jsons : MonoBehaviour
     }
     public void ChangecharacterOnCLickFromserver()
     {
+        XanaConstants.xanaConstants.selectedAvatarNum = avatarIndex;
         callScripts();
         if (StoreManager.instance.StartPanel_PresetParentPanel.activeInHierarchy)
         {

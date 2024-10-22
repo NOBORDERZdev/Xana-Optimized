@@ -67,6 +67,7 @@ public class XanaConstants : MonoBehaviour
     public GameObject[] colorSelection;
     public bool setIdolVillaPosition = true;
     public GameObject lastSelectedButton;
+    public int selectedAvatarNum = 0;
 
     public bool orientationchanged = false;
     public bool SelfiMovement = true;
