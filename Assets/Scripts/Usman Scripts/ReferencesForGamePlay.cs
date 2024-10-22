@@ -50,8 +50,9 @@ public class ReferencesForGamePlay : MonoBehaviour, IInRoomCallbacks, IMatchmaki
     public Image ExitBtnGameplay;
     public Sprite backBtnSprite, HomeBtnSprite;
 
-
-
+    [SerializeField] GameObject bigMapCam;
+    [SerializeField] RawImage bigMapRawImg;
+    [SerializeField] RenderTexture bigMapRenderTexture;
 
     #region XANA PARTY WORLD
     public GameObject XANAPartyWaitingPanel;
@@ -229,6 +230,7 @@ public class ReferencesForGamePlay : MonoBehaviour, IInRoomCallbacks, IMatchmaki
         }
 
         isMatchingTimerFinished = false;
+        UnloadRenderedTexture();
     }
 
     public void ChangeExitBtnImage(bool _Status)
@@ -543,13 +545,58 @@ public class ReferencesForGamePlay : MonoBehaviour, IInRoomCallbacks, IMatchmaki
         if (_enable)
         {
             Input.multiTouchEnabled = false;
+            //bigMapCam.SetActive(false);
+            LoadRenderedTexture();
         }
         else
         {
             Input.multiTouchEnabled = true;
+            UnloadRenderedTexture();
         }
 
         FullscreenMapSummit.SetActive(_enable);
+    }
+
+    public void LoadRenderedTexture()
+    {
+        if (bigMapCam != null && bigMapRawImg != null)
+        {
+            bigMapRawImg.texture = bigMapRenderTexture;
+            // Enable the camera to start rendering
+            bigMapCam.SetActive(true);
+
+            // Assign the camera's render texture to the RawImage
+            bigMapRawImg.texture = bigMapCam.GetComponent<Camera>().targetTexture;
+        }
+      
+    }
+
+    // Method to unload the rendered texture
+    public void UnloadRenderedTexture()
+    {
+        if (bigMapRawImg != null)
+        {
+            // Set the texture reference to null
+            bigMapRawImg.texture = null;
+
+            // Disable the camera to stop rendering
+            if (bigMapCam != null)
+            {
+                bigMapCam.SetActive(false);
+            }
+
+            // Unload unused assets to free up memory
+            StartCoroutine(UnloadUnusedAssetsCoroutine());
+        }
+        
+    }
+
+    private IEnumerator UnloadUnusedAssetsCoroutine()
+    {
+        // Wait for the end of the frame to ensure all references are cleared
+        yield return new WaitForEndOfFrame();
+        // Unload unused assets
+        Resources.UnloadUnusedAssets();
     }
 
     public void OnPlayerEnteredRoom(Player newPlayer)
