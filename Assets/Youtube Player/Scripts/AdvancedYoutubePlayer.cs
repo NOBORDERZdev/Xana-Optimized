@@ -18,6 +18,8 @@ using UnityEngine.SceneManagement;
 using YoutubeExplode;
 using YoutubeExplode.Videos.Streams;
 using Newtonsoft.Json;
+using System.Net;
+using static System.Net.WebRequestMethods;
 
 public class AdvancedYoutubePlayer : MonoBehaviour
 {
@@ -241,8 +243,16 @@ public class AdvancedYoutubePlayer : MonoBehaviour
 
             if (videoInfo == null)
             {
+                   List<Cookie> cookies = new List<Cookie>();
+                cookies.Add(new Cookie("VISITOR_INFO1_LIVE", "kp6Y7jQp-4M")
+                {
+                    Domain = "https://www.youtube.com",
+                    Path = "/",
+                });
 
-                var youtube = new YoutubeClient();
+
+
+                var youtube = new YoutubeClient(cookies);
                 var videdo = await youtube.Videos.GetAsync("https://www.youtube.com/watch?v=" + VideoId);
                 var streamManifest = await youtube.Videos.Streams.GetManifestAsync(videdo.Id);
                 var streamInfo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();

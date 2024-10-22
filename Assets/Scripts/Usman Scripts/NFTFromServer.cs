@@ -153,6 +153,7 @@ public class NFTFromServer : MonoBehaviour
                         {
                             if(i>=spawnPoints.Count)
                             break;
+                            Debug.Log("sUCESS");
                             metaData.Add(d.tokenDetails.metaData);
                             //print(d.tokenDetails.metaData.thumbnft);
                             //print(d.tokenDetails.metaData.thumbnft.EndsWith(".mp4"));
@@ -172,6 +173,7 @@ public class NFTFromServer : MonoBehaviour
                         }
                     }
                 }
+                else { Debug.Log("eRROR HERE"); }
             }
             else
             {

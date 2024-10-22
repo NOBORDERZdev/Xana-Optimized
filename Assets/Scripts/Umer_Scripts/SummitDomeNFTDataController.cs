@@ -114,6 +114,7 @@ public class SummitDomeNFTDataController : MonoBehaviour
 
     public IEnumerator InitData(DomeNFTDataArray data, List<GameObject> NftPlaceholderList)
     {
+        Debug.LogError("REashed Heree   GOod......"+ data.getcontentbyDomeId.Count);
         int nftPlaceHolder = data.getcontentbyDomeId.Count;
         List<JjAsset> worldData = new List<JjAsset>(new JjAsset[data.getcontentbyDomeId.Count]);
         for (int i = 0; i < nftPlaceHolder; i++)
@@ -121,6 +122,7 @@ public class SummitDomeNFTDataController : MonoBehaviour
             isNFTUploaded = false;
             // if(worldData.Count > i ){
             // int tempIndex = worldData[i].index-1;
+            Debug.LogError("REashed Heree   GOod Wild......" + worldData.Count);
             for (int j = 0; j < worldData.Count; j++)
             {
                 worldData[j] = new JjAsset();
@@ -140,6 +142,7 @@ public class SummitDomeNFTDataController : MonoBehaviour
                     {
                         compersionPrfex = "?width=" + WidthParam;  //"?width=500&height=600";
                     }
+                    Debug.LogError("REashed Heree   GOod2......");
                     switch (worldData[j].ratio)
                     {
                         case "1:1":
@@ -185,6 +188,7 @@ public class SummitDomeNFTDataController : MonoBehaviour
                             //compersionPrfex = "?width=512&height=512";
                             break;
                     }
+                    Debug.LogError("REashed Heree   GOod3......");
                     NftPlaceholderList[i].SetActive(true);
                     if (worldData[j].media_type == "IMAGE")
                     {
@@ -290,6 +294,7 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
                 }
                 else
                 {
+                    Debug.LogError("REashed Heree   GOod Should Not Called......");
                     if (j == worldData.Count - 1)
                     {
                         NftPlaceholderList[i].gameObject.SetActive(false);
@@ -663,7 +668,7 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
 
                     if (DoomNFTData.getcontentbyDomeId.Count == 0)
                     {
-                        Debug.Log(" NO DATA GET FROM API ");
+                        Debug.LogError(" NO DATA GET FROM API ");
                     }
                     else
                     {
