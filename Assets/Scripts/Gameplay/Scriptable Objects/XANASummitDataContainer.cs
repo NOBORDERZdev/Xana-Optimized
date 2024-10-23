@@ -207,6 +207,7 @@ public class XANASummitDataContainer : ScriptableObject
         public string videoType;
         public string mediaUpload;
         public bool isBuilderGame;
+        public List<InstructionData> instruction;
     }
 
 
@@ -218,6 +219,17 @@ public class XANASummitDataContainer : ScriptableObject
         public OfficialWorldDetails selectWorld;
         public string builderSubWorldId;
     }
+
+    [System.Serializable]
+    public class InstructionData
+    {
+        public string title_EN;
+        public string title_JP;
+        public string ImageLink;
+        public string Desc_JP;
+        public string Desc_EN;
+    }
+
 
     [System.Serializable]
     public class OfficialWorldDetails
