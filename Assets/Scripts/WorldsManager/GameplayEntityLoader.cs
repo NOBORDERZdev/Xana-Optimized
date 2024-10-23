@@ -121,6 +121,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         GC.Collect(0);
     }
 
+    public void LoadEmptyScene()
+    {
+        SceneManager.LoadScene("EmptyScene",LoadSceneMode.Single);
+    }
+
     private void Start()
     {
         if (XanaEventDetails.eventDetails.DataIsInitialized)

@@ -243,6 +243,8 @@ public class MoveMaptoCenter : MonoBehaviour
             totalVisitCount.text = "" + visitorInfo.data.total_visit;
         else
             totalVisitCount.text = "" + 100;
+
+        www.Dispose();
     }
     Sprite ConvertToSprite(Texture2D texture)
     {

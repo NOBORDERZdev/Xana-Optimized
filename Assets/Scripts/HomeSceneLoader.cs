@@ -185,14 +185,21 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
         SceneManager.LoadSceneAsync(mainScene);
     }
 
+    public void ClearMemory()
+    {
+        ReleaseUnsedMemory();
+    }
+
     public static async Task ReleaseUnsedMemory()
     {
         //print("memory released here.. Start");
-        GC.Collect();
+        //GC.Collect();
         foreach(AsyncOperationHandle async in AddressableDownloader.bundleAsyncOperationHandle)
         { 
             if(async.IsValid())
-            Addressables.Release(async);
+            {
+                Addressables.ReleaseInstance(async);
+            }
         }
         AddressableDownloader.bundleAsyncOperationHandle.Clear();
         //Caching.ClearCache();

@@ -131,7 +131,6 @@ public class DisplayImage : MonoBehaviour
             ImageUrl = url;
             if (AssetCache.Instance.HasFile(url))
             {
-                Debug.LogError("File found kurime :- "+url);
                 await Task.Delay(Random.Range(100, 500));
                 AssetCache.Instance.LoadSpriteIntoImage(imageComponent, url, changeAspectRatio: false);
                 ResizeImage();

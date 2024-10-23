@@ -26,7 +26,7 @@ public class UploadPropertyManager : MonoBehaviour
     private void Start()
     {
         _mediaParent = this.transform;
-        InitializeObjectPool();
+        //InitializeObjectPool();
     }
 
     private void InitializeObjectPool()

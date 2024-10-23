@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Toyota;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
@@ -36,11 +37,6 @@ public class SummitDomeImageHandler : MonoBehaviour
         BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= ApplyDomeShader;
         ShowNftData -= SetInfo;
         CloseLoaderObject -= CloseLoader;
-    }
-
-    public void GetImageNumber()
-    {
-        AssetCache.Instance.GetSpriteCount();
     }
 
     void ApplyDomeShader()

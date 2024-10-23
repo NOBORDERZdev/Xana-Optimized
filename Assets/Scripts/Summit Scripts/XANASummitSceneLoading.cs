@@ -219,9 +219,9 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         ReferencesForGamePlay.instance.m_34player.transform.localScale = new Vector3(0, 0, 0);
 
-        await UnloadScene(sceneTobeUnload);
-
         await HomeSceneLoader.ReleaseUnsedMemory();
+
+        await UnloadScene(sceneTobeUnload);
 
         if (domeGeneralData.worldType)
             LoadBuilderSceneLoading(domeGeneralData.builderWorldId);
@@ -369,9 +369,9 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         multiplayerController.playerobjects.Clear();
 
-        await UnloadScene(sceneToBeUnload);
-
         await HomeSceneLoader.ReleaseUnsedMemory();
+
+        await UnloadScene(sceneToBeUnload);
 
         if (ConstantsHolder.xanaConstants.isBuilderScene)
             LoadBuilderSceneLoading(int.Parse(worldInfo.data.id));
@@ -498,9 +498,9 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         multiplayerController.playerobjects.Clear();
 
-        await UnloadScene(sceneToBeUnload);
-
         await HomeSceneLoader.ReleaseUnsedMemory();
+
+        await UnloadScene(sceneToBeUnload);
 
         if (subWorldInfo.isBuilderWorld)
             LoadBuilderSceneLoading(int.Parse(subWorldInfo.id));
