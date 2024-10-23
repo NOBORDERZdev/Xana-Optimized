@@ -254,7 +254,7 @@ public class SummitAIChatHandler : MonoBehaviour
     async void SendMessageFromAI(string s)
     {
         //_CommonChatRef.DisplayMsg_FromSocket(ConstantsHolder.userName, _CommonChatRef.InputFieldChat.text);
-        verticalLayoutGroup.spacing = -10;
+        //verticalLayoutGroup.spacing = -10;
         string url = string.Empty;
         if (!GetFirstNPCMessage)
         {
