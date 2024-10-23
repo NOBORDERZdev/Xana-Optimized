@@ -187,7 +187,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
 
     public static async Task ReleaseUnsedMemory()
     {
-        print("memory released here.. Start");
+        //print("memory released here.. Start");
         GC.Collect();
         foreach(AsyncOperationHandle async in AddressableDownloader.bundleAsyncOperationHandle)
         { 

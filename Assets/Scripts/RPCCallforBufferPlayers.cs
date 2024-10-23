@@ -106,19 +106,19 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             {
                 ClothJson = ConstantsHolder.xanaConstants.GetRandomPresetClothJson();
             }
-            Debug.Log("ClothJson: " + ClothJson);
+            //Debug.Log("ClothJson: " + ClothJson);
         }
         else
         {
             ClothJson = ConstantsHolder.xanaConstants.GetRandomPresetClothJson();
-            Debug.Log("Random ClothJson: " + ClothJson);
+            //Debug.Log("Random ClothJson: " + ClothJson);
         }
         if (properties.ContainsKey("NFTEquiped"))
         {
             NFTEquiped = (bool)properties["NFTEquiped"];
-            Debug.Log("NFTEquiped: " + NFTEquiped);
+            //Debug.Log("NFTEquiped: " + NFTEquiped);
         }
-        Debug.Log("Rik: " + GetComponent<PhotonView>().Owner.NickName + "  " + ClothJson);
+        //Debug.Log("Rik: " + GetComponent<PhotonView>().Owner.NickName + "  " + ClothJson);
         clothData = ClothJson;
         AvatarController otherPlayer;
         otherPlayer = gameObject.GetComponent<AvatarController>();

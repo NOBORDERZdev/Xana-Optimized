@@ -104,7 +104,7 @@ public class PresetData_Jsons : MonoBehaviour
             else
             {
                 StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ChangecharacterOnCLickFromserver", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Presets);
-                Debug.Log("<color=red> Set Default Preset</color>");
+                //Debug.Log("<color=red> Set Default Preset</color>");
             }
 
             if (ConstantsHolder.xanaConstants._lastClickedBtn && ConstantsHolder.xanaConstants._curretClickedBtn == ConstantsHolder.xanaConstants._lastClickedBtn

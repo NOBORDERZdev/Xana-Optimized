@@ -116,6 +116,19 @@ public class LoadingHandler : MonoBehaviour
     public GameObject XANAPartyLandscape, XANAPartyPotraite;
     #endregion
 
+    #region 3 Step Instruction Variables
+    public InstructionDataHolder instPrefab;
+    public Transform domeInstructionParent;
+    public Sprite domeInstDummySprite;
+
+    public GameObject domeInfoObj;
+    public GameObject domeInstObj;
+    public GameObject domeInstCloseBtn;
+    bool isInstructionAvailable = false;
+
+    #endregion
+
+
     bool Autostartslider = false;
     bool completed;
     private void Awake()
@@ -148,7 +161,7 @@ public class LoadingHandler : MonoBehaviour
     {
         CompleteSlider += () =>
         {
-            Debug.Log("Complete   ");
+            //Debug.Log("Complete   ");
             completed = true;
             loadingSlider.DOFillAmount(1, 0.15f);
             JJLoadingSlider.DOFillAmount(1, 0.15f);
@@ -342,11 +355,14 @@ public class LoadingHandler : MonoBehaviour
         JJLoadingPercentageText.text = " 0%".ToString();
         LoadingStatus.anchorMax = new Vector2(0, LoadingStatus.anchorMax.y);
         DomeProgress.text = "00";
+
+        domeInfoObj.SetActive(true);
+        domeInstObj.SetActive(false);
     }
 
     public void HideLoading()
     {
-        Debug.Log("Hide");
+        //Debug.Log("Hide");
         if (isFirstTime || teleportFeader.gameObject.activeInHierarchy)
         {
             isFirstTime = false;
@@ -799,6 +815,89 @@ public class LoadingHandler : MonoBehaviour
         VideoLoading.SetActive(true);
     }
 
+
+    void ClearInstructionOldData()
+    {
+        for (int i = 0; i < domeInstructionParent.childCount; i++)
+        {
+            ClearData(domeInstructionParent.transform.GetChild(i).GetComponent<InstructionDataHolder>());
+        }
+    }
+    void ClearData(InstructionDataHolder obj)
+    {
+        obj.instNumber.text = "";
+        obj.instHeading.text = "";
+        obj.instDesc.text = "";
+        obj.instIcon.sprite = domeInstDummySprite;
+
+        obj.gameObject.SetActive(false);
+    }
+
+    public void LoadInstructionData(XANASummitDataContainer.DomeGeneralData info)
+    {
+        ClearInstructionOldData();
+        if (info.instruction.Count > 0)
+            isInstructionAvailable = true;
+        else
+            isInstructionAvailable = false;
+
+        for (int i = 0; i < info.instruction.Count; i++)
+        {
+            InstructionDataHolder instructionObj;
+            if (i >= domeInstructionParent.childCount)
+            {
+                instructionObj = Instantiate(instPrefab, domeInstructionParent);
+            }
+            else
+            {
+                instructionObj = domeInstructionParent.GetChild(i).GetComponent<InstructionDataHolder>();
+                instructionObj.gameObject.SetActive(true);
+            }
+
+            instructionObj.gameObject.name = "Instruction_" + ( i + 1);
+            instructionObj.instNumber.text = "" + (i + 1);
+            
+            if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
+            {
+                instructionObj.instHeading.text = info.instruction[i].title_JP;
+                instructionObj.instDesc.text = info.instruction[i].Desc_JP;
+            }
+            else
+            {
+                instructionObj.instHeading.text = info.instruction[i].title_EN;
+                instructionObj.instDesc.text = info.instruction[i].Desc_EN;
+            }
+
+            // Download Image Section
+            // Set Dummy image it will remove the Old Image as well
+            instructionObj.instIcon.sprite = domeInstDummySprite;
+
+            Debug.Log("Downloading Instruction Image ");
+            string url_Image = info.instruction[i].ImageLink;
+            Image instructionImage = instructionObj.instIcon;
+
+            if (!string.IsNullOrEmpty(url_Image))
+            {
+                url_Image += "?width=" + ConstantsHolder.DomeImageCompression;
+                if (AssetCache.Instance.HasFile(url_Image))
+                {
+                    AssetCache.Instance.LoadSpriteIntoImage(instructionImage, url_Image, changeAspectRatio: true);
+                }
+                else
+                {
+                    AssetCache.Instance.EnqueueOneResAndWait(url_Image, url_Image, (success) =>
+                    {
+                        if (success)
+                        {
+                            AssetCache.Instance.LoadSpriteIntoImage(instructionImage, url_Image, changeAspectRatio: true);
+                        }
+                    });
+                }
+            }
+        }
+
+        domeInstObj.GetComponent<ScrollRect>().horizontalNormalizedPosition = 0f;
+    }
     public void showDomeLoading(XANASummitDataContainer.StackInfoWorld info)
     {
         if (!string.IsNullOrEmpty(info.thumbnail))
@@ -860,7 +959,12 @@ public class LoadingHandler : MonoBehaviour
         if (info.domeId > 128)
         {
             DomeCategory.text = "Entertainmnent";
-            DomeID.text = "MD   -" + info.domeId;
+            DomeID.text = "MD-" + info.domeId;
+        }
+
+        if(DomeName.text.Contains("XANA Summit"))
+        {
+            DomeID.text = "Summit";
         }
         DomeVisitedCount.text = ConstantsHolder.visitorCount.ToString();
         ApprovalUI.SetActive(false);
@@ -903,7 +1007,7 @@ public class LoadingHandler : MonoBehaviour
         DomeType.text = info.domeType;
         DomeCategory.text = info.domeCategory;
         iswheel = false;
-        Debug.Log("Dome id " + info.id);
+       // Debug.Log("Dome id " + info.id);
 
         if (info.id > 0 && info.id < 9)
         {
@@ -936,7 +1040,7 @@ public class LoadingHandler : MonoBehaviour
         if (info.id > 128)
         {
             //DomeCategory.text = "Entertainmnent";
-            DomeID.text = "MD   -" + info.id;
+            DomeID.text = "MD-" + info.id;
         }
         DomeVisitedCount.text = ConstantsHolder.visitorCount.ToString();
         ApprovalUI.SetActive(true);
@@ -1021,7 +1125,7 @@ public class LoadingHandler : MonoBehaviour
         if (ConstantsHolder.domeId > 128)
         {
             //DomeCategory.text = "Entertainmnent";
-            DomeID.text = "MD   -" + ConstantsHolder.domeId;
+            DomeID.text = "MD-" + ConstantsHolder.domeId;
         }
         ApprovalUI.SetActive(true);
         DomeLodingUI.SetActive(false);
@@ -1055,6 +1159,13 @@ public class LoadingHandler : MonoBehaviour
         WaitForInput = false;
         ApprovalUI.SetActive(false);
         DomeLodingUI.SetActive(true);
+
+        if (isInstructionAvailable)
+        {
+            domeInfoObj.SetActive(false);
+            domeInstObj.SetActive(true);
+        }
+
         EnterWheel?.Invoke(true);
         BuilderEventManager.spaceXDeactivated?.Invoke();
         if (!iswheel)
@@ -1062,6 +1173,26 @@ public class LoadingHandler : MonoBehaviour
             ConstantsHolder.isFromXANASummit = true;
             ConstantsHolder.IsSummitDomeWorld = true;
             ReferencesForGamePlay.instance.ChangeExitBtnImage(false);
+        }
+    }
+    public void InstructionIntoWorld(bool status)
+    {
+        Button closeBtn = domeInstCloseBtn.GetComponent<Button>();
+        if (closeBtn.onClick.GetPersistentEventCount() == 0)
+            closeBtn.onClick.AddListener(() => { InstructionIntoWorld(false); });
+
+        if (isInstructionAvailable)
+        {
+            DomeLoading.SetActive(status);
+            domeInstObj.SetActive(status);
+            domeInstCloseBtn.SetActive(status);
+
+            DomeLodingUI.SetActive(!status);
+            domeInfoObj.SetActive(!status);
+        }
+        else
+        {
+            GamePlayUIHandler.inst.HelpScreen(status);
         }
     }
 
@@ -1096,7 +1227,6 @@ public class LoadingHandler : MonoBehaviour
 
     }
 }
-
 
 public enum FadeAction
 {

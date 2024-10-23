@@ -40,7 +40,7 @@ public class SPAAIBehvrController : MonoBehaviour
     {
         if (!isPerformingAction)
         {
-            Debug.Log("============Perform Action Call");
+            //Debug.Log("============Perform Action Call");
             isPerformingAction = true;
             //int rand;
             //if (isNewlySpwaned)

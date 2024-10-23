@@ -51,7 +51,7 @@ public class Web3Web2Handler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("web3apiforweb2: " + gameObject.name);
+        //Debug.Log("web3apiforweb2: " + gameObject.name);
 
     }
 
@@ -59,7 +59,7 @@ public class Web3Web2Handler : MonoBehaviour
 
     public void GetWeb2UserData(string _publicID, Action callback = null)
     {
-        print("Functionweb2");
+        //print("Functionweb2");
         if (TestSpecificCase)
         {
             publicID = TestSpecificAdrress;
@@ -121,18 +121,18 @@ public class Web3Web2Handler : MonoBehaviour
             }
         }
         UnityWebRequest request;
-        Debug.Log("localAPI for Getting Owned NFT: " + localAPI);
+        //Debug.Log("localAPI for Getting Owned NFT: " + localAPI);
         request = await GettingOwnedNFTS(localAPI);
         //    NFTlistdata = new UserNFTlistClass.Root();
         _OwnedNFTDataObj.NewRootInstance();
         if (request.downloadHandler.text.Contains("Invalid key"))
         {
-            Debug.Log("<color = red> hey Invalid NFT list </color>");
+            //Debug.Log("<color = red> hey Invalid NFT list </color>");
         }
         else
         {
             //   NFTlistdata = UserNFTlistClass.Root.CreateFromJSON(request.downloadHandler.text);
-            Debug.Log("NFT DATA from API: " + request.downloadHandler.text);
+          //  Debug.Log("NFT DATA from API: " + request.downloadHandler.text);
             _OwnedNFTDataObj.CreateJsonFromRoot(request.downloadHandler.text);
 
             /*for (int i = 0; i < NFTlistdata.list.Count; i++)
@@ -143,7 +143,7 @@ public class Web3Web2Handler : MonoBehaviour
                 }
             }*/
             callback?.Invoke();
-            Debug.Log("Total Number of NFTs are : " + _OwnedNFTDataObj.NFTlistdata.count);
+            //Debug.Log("Total Number of NFTs are : " + _OwnedNFTDataObj.NFTlistdata.count);
             if (_OwnedNFTDataObj.NFTlistdata.count > 0)
             {
                 for (int i = 0; i < _OwnedNFTDataObj.NFTlistdata.list.Count; i++)
@@ -171,7 +171,7 @@ public class Web3Web2Handler : MonoBehaviour
             }
         }
         await Task.Delay(500);
-        Debug.Log("AllDataFetchedfromServer web2");
+        //Debug.Log("AllDataFetchedfromServer web2");
         AllDataFetchedfromServer?.Invoke("Web2");
     }
 
@@ -186,7 +186,7 @@ public class Web3Web2Handler : MonoBehaviour
         // Serialize the data object into a JSON string
         string jsonData = JsonConvert.SerializeObject(requestData);
         // Convert the JSON data to a byte array
-        Debug.Log("jsonData: " + jsonData);
+       // Debug.Log("jsonData: " + jsonData);
         byte[] postData = System.Text.Encoding.UTF8.GetBytes(jsonData);
 
         // Set up the UnityWebRequest
@@ -218,20 +218,20 @@ public class Web3Web2Handler : MonoBehaviour
 
     public async Task<bool> CheckSpecificNFTAndReturnAsync(string _nftid)
     {
-        print("NFT22 " + _nftid);
+        //print("NFT22 " + _nftid);
         string localAPI = "";
         if (APIBasepointManager.instance.IsXanaLive)
         {
             //  localAPI = "https://prod-backend.xanalia.com/nfts/user-nft-status?userAddress=0x43Dc54e78EA2F1A038e84c0e003871a87D4D80C1&nftId=118868";
             if (TestSpecificCase)
             {
-                print("NFT33 " + _nftid);
+               // print("NFT33 " + _nftid);
 
                 localAPI = PrefixMainNetOneNFTOwnerShip + TestSpecificAdrress + PostfixOneNFTOwnerShip + _nftid;
             }
             else
             {
-                print("NFT44 " + _nftid);
+                //print("NFT44 " + _nftid);
 
                 localAPI = PrefixMainNetOneNFTOwnerShip + PlayerPrefs.GetString("publicID") + PostfixOneNFTOwnerShip + _nftid;
             }
@@ -242,7 +242,7 @@ public class Web3Web2Handler : MonoBehaviour
 
             if (TestSpecificCase)
             {
-                print("NFT55 " + _nftid);
+                //print("NFT55 " + _nftid);
                 if (useXanaliaMainnetApiOnTestnet)
                 {
                    localAPI = PrefixMainNetOneNFTOwnerShip + TestSpecificAdrress + PostfixOneNFTOwnerShip + _nftid;
@@ -262,10 +262,10 @@ public class Web3Web2Handler : MonoBehaviour
                 {
                     localAPI = PrefixTesnetOneNFTOwnerShip + PlayerPrefs.GetString("publicID") + PostfixOneNFTOwnerShip + _nftid;
                 }
-                print("NFT66 " + _nftid);
+               // print("NFT66 " + _nftid);
             }
         }
-        Debug.Log("localAPI: " + localAPI);
+        //Debug.Log("localAPI: " + localAPI);
         UnityWebRequest request;
         request = await GettingSpecificOwnedNFTS(localAPI);
         TestSpecificNFT myObject1 = new TestSpecificNFT();
@@ -285,7 +285,7 @@ public class Web3Web2Handler : MonoBehaviour
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
         await request.SendWebRequest();
-        print("return " + request.downloadHandler.text);
+        //print("return " + request.downloadHandler.text);
         return request;
     }
 

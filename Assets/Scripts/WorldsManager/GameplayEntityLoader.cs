@@ -497,7 +497,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         //code by hardik 9aug2024
         if (!(SceneManager.GetActiveScene().name.Contains("Museum")))
         {
-            spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + .5f, spawnPoint.z);
+            // Add a small random offset to the initial spawn point to reduce chances of collision
+            spawnPoint = new Vector3( spawnPoint.x + UnityEngine.Random.Range(-0.5f, 0.5f), spawnPoint.y + 0.5f, spawnPoint.z + UnityEngine.Random.Range(-0.5f, 0.5f));
+            
+            //spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + .5f, spawnPoint.z);
             RaycastHit hit;
 
             // Loop to check for valid spawn point
@@ -513,8 +516,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
                 {
                     // Check if the hit object is a player or other non-walkable surface
-                    if (hit.collider.gameObject.CompareTag("PhotonLocalPlayer") ||
-                        hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
+                    if (hit.collider.gameObject.CompareTag("PhotonLocalPlayer") || hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
                     {
                         // Adjust spawn point slightly if occupied
                         spawnPoint = new Vector3(
@@ -1405,10 +1407,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     CheckAgain:
         Transform temp = null;
 
-        Debug.Log("not coming from else");
+        //Debug.Log("not coming from else");
         if (GameObject.FindGameObjectWithTag("SpawnPoint"))
         {
-            Debug.Log("not coming from else2");
+           // Debug.Log("not coming from else2");
 
             temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
         }

@@ -330,7 +330,7 @@ public class ConstantsHolder : MonoBehaviour
 
     public void SetPlayerProperties(string cloths = "")
     {
-        Debug.Log("SetPlayerProperties");
+       // Debug.Log("SetPlayerProperties");
         PhotonNetwork.LocalPlayer.CustomProperties.Clear();
         ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
         if (string.IsNullOrEmpty(cloths))

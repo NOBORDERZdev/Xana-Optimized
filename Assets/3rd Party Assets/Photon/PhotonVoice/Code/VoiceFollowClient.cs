@@ -201,7 +201,7 @@ namespace Photon.Voice
         {
             if (string.IsNullOrEmpty(voiceRoomName))
             {
-                this.Logger.Log(LogLevel.Error, "Voice room name is null or empty.");
+                //this.Logger.Log(LogLevel.Error, "Voice room name is null or empty.");
                 return false;
             }
 
@@ -211,7 +211,7 @@ namespace Photon.Voice
                 RoomName = voiceRoomName
             };
 
-            Debug.Log($"Calling OpJoinOrCreateRoom for room name '{voiceRoomName}' region {this.Client.CloudRegion}.");  // TODO: remove when done debugging VoiceFollowClient
+            //Debug.Log($"Calling OpJoinOrCreateRoom for room name '{voiceRoomName}' region {this.Client.CloudRegion}.");  // TODO: remove when done debugging VoiceFollowClient
             return this.Client.OpJoinOrCreateRoom(roomParams);
         }
 
