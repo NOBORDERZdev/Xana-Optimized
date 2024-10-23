@@ -115,6 +115,10 @@ public class GamePlayUIHandler : MonoBehaviour
         {
             ConstantsHolder.IsSummitDomeWorld = false;
         }
+
+        if(ReferencesForGamePlay.instance != null && ReferencesForGamePlay.instance.XANAPartyCounterPanel.activeInHierarchy)
+            ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(false);
+
         GamePlayButtonEvents.inst.OnExitButtonClick();
     }
 
