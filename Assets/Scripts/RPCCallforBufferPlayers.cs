@@ -164,7 +164,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                     {
                         otherPlayer.gameObject.GetComponent<PresetController>().UpdatePresets(_CharacterData.presetNum);
                     }
-                    else if (XanaConstants.xanaConstants.assetLoadType.Equals(XanaConstants.AssetLoadType.ByBuild))
+                    else if (XanaConstants.xanaConstants.assetLoadType.Equals(XanaConstants.AssetLoadType.ByAddressable))
                     {
                         otherPlayer.WearDefaultItem("Legs", otherPlayer.gameObject);
                         otherPlayer.WearDefaultItem("Chest", otherPlayer.gameObject);
