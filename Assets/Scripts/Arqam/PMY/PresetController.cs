@@ -21,6 +21,7 @@ public class PresetController : MonoBehaviour
         public int ShoeId;
     }
     public PresetData[] presetData;
+    public int avatarIndex = 0; 
 
     private AvatarController avatarController;
 
@@ -28,18 +29,18 @@ public class PresetController : MonoBehaviour
     {
         if (XanaConstants.xanaConstants.assetLoadType.Equals(XanaConstants.AssetLoadType.ByBuild))
         {
-            UpdatePresets();
+            avatarIndex = XanaConstants.xanaConstants.selectedAvatarNum;
+            UpdatePresets(avatarIndex);
         }
     }
 
-    public void UpdatePresets()
+    public void UpdatePresets(int num)
     {
         avatarController = GetComponent<AvatarController>();
-        int avatarIndex = XanaConstants.xanaConstants.selectedAvatarNum;
-        avatarController.StichItem(presetData[avatarIndex].HairId, presetData[avatarIndex].Hair, "Hair", avatarController.gameObject);
-        avatarController.StichItem(presetData[avatarIndex].PantId, presetData[avatarIndex].Pant, "Legs", avatarController.gameObject);
-        avatarController.StichItem(presetData[avatarIndex].ShirtId, presetData[avatarIndex].Shirt, "Chest", avatarController.gameObject);
-        avatarController.StichItem(presetData[avatarIndex].ShoeId, presetData[avatarIndex].Shoe, "Feet", avatarController.gameObject);
+        avatarController.StichItem(presetData[num].HairId, presetData[num].Hair, "Hair", avatarController.gameObject);
+        avatarController.StichItem(presetData[num].PantId, presetData[num].Pant, "Legs", avatarController.gameObject);
+        avatarController.StichItem(presetData[num].ShirtId, presetData[num].Shirt, "Chest", avatarController.gameObject);
+        avatarController.StichItem(presetData[num].ShoeId, presetData[num].Shoe, "Feet", avatarController.gameObject);
     }
 
 
