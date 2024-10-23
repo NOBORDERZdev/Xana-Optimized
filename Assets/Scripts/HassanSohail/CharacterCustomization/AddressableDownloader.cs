@@ -45,7 +45,7 @@ public class AddressableDownloader : MonoBehaviour
 #if UNITY_EDITOR
             string catalogFilePath = UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "Remote.LoadPath");
             //Debug.LogError(catalogFilePath);
-            Debug.Log("<color=red>" + catalogFilePath + "</color>");
+            //Debug.Log("<color=red>" + catalogFilePath + "</color>");
             catalogFilePath = catalogFilePath.Replace("[BuildTarget]", UnityEditor.EditorUserBuildSettings.activeBuildTarget.ToString());
             catalogFilePath = catalogFilePath + "/XanaAddressableCatalog.json";
             AsyncOperationHandle DownloadingCatalog = Addressables.LoadContentCatalogAsync(catalogFilePath, true);
@@ -85,7 +85,7 @@ public class AddressableDownloader : MonoBehaviour
         int _counter = 0;
         while (!ConstantsHolder.isAddressableCatalogDownload)
         {
-            Debug.Log("<color=red> Waiting for Addressable Catalog to download </color>");
+            //Debug.Log("<color=red> Waiting for Addressable Catalog to download </color>");
 
             yield return new WaitForSeconds(1f);
         }
@@ -115,7 +115,7 @@ public class AddressableDownloader : MonoBehaviour
                 yield return loadOp;
                 if (loadOp.Status == AsyncOperationStatus.Failed)
                 {
-                    Debug.Log("rik Fail To load: " + key);
+                   // Debug.Log("rik Fail To load: " + key);
                     if (InventoryManager.instance && InventoryManager.instance.loaderForItems && InventoryManager.instance != null)
                         InventoryManager.instance.loaderForItems.SetActive(false);
                     if (GameManager.Instance != null)
@@ -129,7 +129,7 @@ public class AddressableDownloader : MonoBehaviour
                 {
                     if (loadOp.Result == null || loadOp.Result.Equals(null))  // Added by Ali Hamza to resolve avatar naked issue 
                     {
-                        Debug.Log("rik result is null: " + key);
+                       // Debug.Log("rik result is null: " + key);
                         //_counter++;
                         //if (_counter < 5)
                         //{

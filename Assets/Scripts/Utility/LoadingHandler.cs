@@ -148,7 +148,7 @@ public class LoadingHandler : MonoBehaviour
     {
         CompleteSlider += () =>
         {
-            Debug.Log("Complete   ");
+            //Debug.Log("Complete   ");
             completed = true;
             loadingSlider.DOFillAmount(1, 0.15f);
             JJLoadingSlider.DOFillAmount(1, 0.15f);
@@ -346,7 +346,7 @@ public class LoadingHandler : MonoBehaviour
 
     public void HideLoading()
     {
-        Debug.Log("Hide");
+        //Debug.Log("Hide");
         if (isFirstTime || teleportFeader.gameObject.activeInHierarchy)
         {
             isFirstTime = false;
@@ -860,7 +860,12 @@ public class LoadingHandler : MonoBehaviour
         if (info.domeId > 128)
         {
             DomeCategory.text = "Entertainmnent";
-            DomeID.text = "MD   -" + info.domeId;
+            DomeID.text = "MD-" + info.domeId;
+        }
+
+        if(DomeName.text.Contains("XANA Summit"))
+        {
+            DomeID.text = "Summit";
         }
         DomeVisitedCount.text = ConstantsHolder.visitorCount.ToString();
         ApprovalUI.SetActive(false);
@@ -903,7 +908,7 @@ public class LoadingHandler : MonoBehaviour
         DomeType.text = info.domeType;
         DomeCategory.text = info.domeCategory;
         iswheel = false;
-        Debug.Log("Dome id " + info.id);
+       // Debug.Log("Dome id " + info.id);
 
         if (info.id > 0 && info.id < 9)
         {
@@ -936,7 +941,7 @@ public class LoadingHandler : MonoBehaviour
         if (info.id > 128)
         {
             //DomeCategory.text = "Entertainmnent";
-            DomeID.text = "MD   -" + info.id;
+            DomeID.text = "MD-" + info.id;
         }
         DomeVisitedCount.text = ConstantsHolder.visitorCount.ToString();
         ApprovalUI.SetActive(true);
@@ -1021,7 +1026,7 @@ public class LoadingHandler : MonoBehaviour
         if (ConstantsHolder.domeId > 128)
         {
             //DomeCategory.text = "Entertainmnent";
-            DomeID.text = "MD   -" + ConstantsHolder.domeId;
+            DomeID.text = "MD-" + ConstantsHolder.domeId;
         }
         ApprovalUI.SetActive(true);
         DomeLodingUI.SetActive(false);

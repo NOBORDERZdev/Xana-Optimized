@@ -140,7 +140,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
             Screen.orientation = ScreenOrientation.LandscapeLeft;
         ConstantsHolder.xanaConstants.isBuilderScene = false;
         ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
-        ConstantsHolder.xanaConstants.isSoftBankGame = false;
+        ConstantsHolder.xanaConstants.isBuilderGame = false;
 
         ConstantsHolder.xanaConstants.JjWorldSceneChange = true;
         ConstantsHolder.xanaConstants.JjWorldTeleportSceneName = "XANA Lobby";
@@ -187,7 +187,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
 
     public static async Task ReleaseUnsedMemory()
     {
-        print("memory released here.. Start");
+        //print("memory released here.. Start");
         GC.Collect();
         foreach(AsyncOperationHandle async in AddressableDownloader.bundleAsyncOperationHandle)
         { 
