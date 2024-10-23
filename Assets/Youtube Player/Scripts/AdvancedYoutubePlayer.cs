@@ -247,7 +247,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
                 cookies.Add(new Cookie("VISITOR_INFO1_LIVE", "kp6Y7jQp-4M")
                 {
                     Domain = "https://www.youtube.com",
-                    Path = "/",
+                    Path = "/"
                 });
 
 

@@ -37,6 +37,10 @@ public class YoutubeDownloader : MonoBehaviour
 
         try
         {
+            
+            
+
+
             string[] playerID = data.Split('/');
             playerID = playerID[playerID.Length - 1].Split('-');
             return  playerURL;
@@ -45,6 +49,8 @@ public class YoutubeDownloader : MonoBehaviour
         {
             throw new Exception($"Failed to retrieve player script for video 2 id: {videoID}");
         }
+
+       
     }
 
     public static async Task<string> DownloadRawPlayerScript(string playerURL)
