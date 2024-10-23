@@ -339,6 +339,7 @@ public class SavaCharacterProperties : MonoBehaviour
 [System.Serializable]
 public class SavingCharacterDataClass
 {
+    public int presetNum;
     public string id;
     public string name;
     public string thumbnail;
