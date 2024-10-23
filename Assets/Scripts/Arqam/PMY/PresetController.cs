@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 using static StoreManager;
 
@@ -21,7 +22,6 @@ public class PresetController : MonoBehaviour
         public int ShoeId;
     }
     public PresetData[] presetData;
-    public int avatarIndex = 0; 
 
     private AvatarController avatarController;
 
@@ -29,18 +29,21 @@ public class PresetController : MonoBehaviour
     {
         if (XanaConstants.xanaConstants.assetLoadType.Equals(XanaConstants.AssetLoadType.ByBuild))
         {
-            avatarIndex = XanaConstants.xanaConstants.selectedAvatarNum;
-            UpdatePresets(avatarIndex);
+            if (GetComponent<PhotonView>() && GetComponent<PhotonView>().IsMine)
+            {
+                int avatarIndex = XanaConstants.xanaConstants.selectedAvatarNum;
+                UpdatePresets(avatarIndex);
+            }
         }
     }
 
     public void UpdatePresets(int num)
     {
-        avatarController = GetComponent<AvatarController>();
-        avatarController.StichItem(presetData[num].HairId, presetData[num].Hair, "Hair", avatarController.gameObject);
-        avatarController.StichItem(presetData[num].PantId, presetData[num].Pant, "Legs", avatarController.gameObject);
-        avatarController.StichItem(presetData[num].ShirtId, presetData[num].Shirt, "Chest", avatarController.gameObject);
-        avatarController.StichItem(presetData[num].ShoeId, presetData[num].Shoe, "Feet", avatarController.gameObject);
+            avatarController = GetComponent<AvatarController>();
+            avatarController.StichItem(presetData[num].HairId, presetData[num].Hair, "Hair", avatarController.gameObject);
+            avatarController.StichItem(presetData[num].PantId, presetData[num].Pant, "Legs", avatarController.gameObject);
+            avatarController.StichItem(presetData[num].ShirtId, presetData[num].Shirt, "Chest", avatarController.gameObject);
+            avatarController.StichItem(presetData[num].ShoeId, presetData[num].Shoe, "Feet", avatarController.gameObject);
     }
 
 
