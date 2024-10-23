@@ -31,7 +31,8 @@ public class PlayerController : MonoBehaviour
     
     public float YourDownhillThreshold = 30f; // Adjust slope Threshold 
     public float CurrentSlope = 0f;
-    private readonly float _rayOffsett = 0.5f;
+    [SerializeField]
+    private float _rayOffsett = 0.5f;
 
     //[SerializeField]
     public float jumpHeight = 1.0f;
