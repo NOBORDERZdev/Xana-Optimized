@@ -140,7 +140,11 @@ public class PresetData_Jsons : MonoBehaviour
             SavaCharacterProperties.instance.SaveItemList.PresetValue = gameObject.name;
 
             SavaCharacterProperties.instance.SaveItemList.presetNum = avatarIndex;
-            File.WriteAllText(GameManager.Instance.GetStringFolderPath(), JsonUtility.ToJson(SavaCharacterProperties.instance.SaveItemList));
+            if (PlayerPrefs.GetInt("IsLoggedIn") == 1)  // logged in from account
+                File.WriteAllText(Application.persistentDataPath + "/logIn.json", JsonUtility.ToJson(SavaCharacterProperties.instance.SaveItemList));
+            else // Guest User
+                File.WriteAllText(Application.persistentDataPath + "/loginAsGuestClass.json", JsonUtility.ToJson(SavaCharacterProperties.instance.SaveItemList));
+
             //SavingCharacterDataClass _CharacterData1 = new SavingCharacterDataClass();
             //_CharacterData1.presetNum = avatarIndex;
             //File.WriteAllText(GameManager.Instance.GetStringFolderPath(), JsonUtility.ToJson(_CharacterData1));

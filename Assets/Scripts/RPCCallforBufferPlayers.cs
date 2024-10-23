@@ -54,7 +54,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
             _mydatatosend[1] = GetJsonFolderData() as object;
             _mydatatosend[2] = XanaConstants.xanaConstants.isNFTEquiped;
-           // Invoke(nameof(CallRpcInvoke), /*1.2f*/1);
+            Invoke(nameof(CallRpcInvoke), /*1.2f*/1);
            // CallRpcInvoke();
         }
         if (!this.GetComponent<PhotonView>().IsMine && !this.gameObject.GetComponent<Speaker>())
@@ -86,7 +86,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             IsNFTCharacter = (bool)Datasend[2];
         SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
         _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(Datasend[1].ToString());
-
+        Debug.LogError("_CharacterData: " + _CharacterData.presetNum);
         for (int j = 0; j < Launcher.instance.playerobjects.Count; j++)
         {
             if (Launcher.instance.playerobjects[j].GetComponent<PhotonView>().ViewID.ToString() == OtherPlayerId)
@@ -127,8 +127,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                                     }
                                     else if (XanaConstants.xanaConstants.assetLoadType.Equals(XanaConstants.AssetLoadType.ByBuild))
                                     {
-                                        Debug.LogError("Index: " + otherPlayer.gameObject.GetComponent<PresetController>().avatarIndex);
-                                        otherPlayer.gameObject.GetComponent<PresetController>().UpdatePresets(otherPlayer.gameObject.GetComponent<PresetController>().avatarIndex);
+                                        otherPlayer.gameObject.GetComponent<PresetController>().UpdatePresets(_CharacterData.presetNum);
                                     }
                                 }
                             }
