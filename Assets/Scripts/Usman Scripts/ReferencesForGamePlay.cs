@@ -53,6 +53,9 @@ public class ReferencesForGamePlay : MonoBehaviour, IInRoomCallbacks, IMatchmaki
     [SerializeField] GameObject bigMapCam;
     [SerializeField] RawImage bigMapRawImg;
     [SerializeField] RenderTexture bigMapRenderTexture;
+    [SerializeField] Texture miniMapTexture;
+    [SerializeField] Texture bigMapTexture;
+    [SerializeField] Material miniMapMaterial;
 
     #region XANA PARTY WORLD
     public GameObject XANAPartyWaitingPanel;
@@ -230,7 +233,7 @@ public class ReferencesForGamePlay : MonoBehaviour, IInRoomCallbacks, IMatchmaki
         }
 
         isMatchingTimerFinished = false;
-        UnloadRenderedTexture();
+       // UnloadRenderedTexture();
     }
 
     public void ChangeExitBtnImage(bool _Status)
@@ -561,6 +564,7 @@ public class ReferencesForGamePlay : MonoBehaviour, IInRoomCallbacks, IMatchmaki
     {
         if (bigMapCam != null && bigMapRawImg != null)
         {
+            miniMapMaterial.mainTexture = bigMapTexture;
             bigMapRawImg.texture = bigMapRenderTexture;
             // Enable the camera to start rendering
             bigMapCam.SetActive(true);
@@ -576,6 +580,8 @@ public class ReferencesForGamePlay : MonoBehaviour, IInRoomCallbacks, IMatchmaki
     {
         if (bigMapRawImg != null)
         {
+            miniMapMaterial.mainTexture = miniMapTexture;
+
             // Set the texture reference to null
             bigMapRawImg.texture = null;
 
