@@ -96,6 +96,9 @@ public class BlendShapeHolder : MonoBehaviour
     {
         // EyeBrowBlendIndex = 16 17 18 19 21 22
 
+        if (blendHolder == null)
+            return;
+
         blendHolder.SetBlendShapeWeight(16, 0);
         blendHolder.SetBlendShapeWeight(17, 0);
         blendHolder.SetBlendShapeWeight(18, 0);
