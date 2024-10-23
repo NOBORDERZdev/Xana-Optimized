@@ -11,7 +11,8 @@ public class FP_CamControllerMouseLook : MonoBehaviour
     public Transform playerBody;
 
     private float xRotation = 0f;
-
+    public float minHeight = 1.0f; // Minimum height
+    public float maxHeight = 15.0f; // Maximum height
     public PlayerController playerController;
     [Header("Gyro")]
     private float x;
@@ -141,6 +142,11 @@ public class FP_CamControllerMouseLook : MonoBehaviour
         // Rotate the camera vertically (around the x-axis)
         transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
 
+        // Restrict the camera's height
+        Vector3 position = transform.position;
+        position.y = Mathf.Clamp(position.y, minHeight, maxHeight); // Adjust minHeight and maxHeight as needed
+        transform.position = position;
+
 #endif
 
 
@@ -217,7 +223,10 @@ public class FP_CamControllerMouseLook : MonoBehaviour
                 }
             }
         }
-
+        // Restrict the camera's height
+        Vector3 position = transform.position;
+        position.y = Mathf.Clamp(position.y, minHeight, maxHeight); // Adjust minHeight and maxHeight as needed
+        transform.position = position;
 
 
     }
@@ -246,6 +255,12 @@ public class FP_CamControllerMouseLook : MonoBehaviour
             // Smooth the rotation
             Quaternion targetRotation = Quaternion.Euler(xRotation, yRotation, 0f);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * sensitivity);
+
+            // Restrict the camera's height
+            Vector3 position = transform.position;
+            position.y = Mathf.Clamp(position.y, minHeight, maxHeight); // Adjust minHeight and maxHeight as needed
+            transform.position = position;
+
         }
     }
     private void MoveCamera(Vector2 delta)
@@ -261,8 +276,12 @@ public class FP_CamControllerMouseLook : MonoBehaviour
         else
         {  yRotation+= delta.x * 10 * PlayerCameraController.instance.lookSpeedd * Time.deltaTime;
             transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
-           
-             //  transform.Rotate(new Vector3(xRotation ,1*(delta.x * 10 * PlayerCameraController.instance.lookSpeedd * Time.deltaTime),0f));
+
+            //  transform.Rotate(new Vector3(xRotation ,1*(delta.x * 10 * PlayerCameraController.instance.lookSpeedd * Time.deltaTime),0f));
+            // Restrict the camera's height
+            Vector3 position = transform.position;
+            position.y = Mathf.Clamp(position.y, minHeight, maxHeight); // Adjust minHeight and maxHeight as needed
+            transform.position = position;
         }
     }
 
