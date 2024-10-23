@@ -74,7 +74,7 @@ public class ConnectWallet : MonoBehaviour
         yield return new WaitForEndOfFrame();
         if (walletFunctionalitybool)
         {
-            print("IS true " + walletFunctionalitybool);
+           // print("IS true " + walletFunctionalitybool);
             foreach (GameObject go in WalletUIObj)
             {
                 go.SetActive(true);
@@ -82,7 +82,7 @@ public class ConnectWallet : MonoBehaviour
         }
         else
         {
-            print("IS false " + walletFunctionalitybool);
+            //print("IS false " + walletFunctionalitybool);
             foreach (GameObject go in WalletUIObj)
             {
                 go.SetActive(false);
@@ -98,7 +98,7 @@ public class ConnectWallet : MonoBehaviour
             // request.SetRequestHeader("Authorization", PlayerPrefs.GetString("Token"));
             //print("Sending Web Request");
             yield return request.SendWebRequest();
-            print("REsult is " + request.downloadHandler.text);
+            //print("REsult is " + request.downloadHandler.text);
             RootWalletLogin JsonDataObj = new RootWalletLogin();
             JsonDataObj = JsonUtility.FromJson<RootWalletLogin>(request.downloadHandler.text);
             walletFunctionalitybool = JsonDataObj.data.isWalletEnabled;
@@ -108,7 +108,7 @@ public class ConnectWallet : MonoBehaviour
 
     string uniqueID()
     {
-        print("Give unique key");
+        //print("Give unique key");
         //  DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         // int currentEpochTime = (int)(DateTime.UtcNow - epochStart).TotalSeconds;
         int z1 = UnityEngine.Random.Range(0, 1000);
@@ -353,7 +353,7 @@ public class ConnectWallet : MonoBehaviour
         else
             MsgGenObj = MsgGenObj.msgClassFtn(ServerNounceXanalia, AppID);
         var jsonObj = JsonUtility.ToJson(MsgGenObj);
-        print("Asking class " + jsonObj);
+        //print("Asking class " + jsonObj);
         //websocket.Send(jsonObj);          
     }
 
@@ -365,7 +365,7 @@ public class ConnectWallet : MonoBehaviour
 
     public void OpenXanaliaApp()
     {
-        print("Open Xanalia");
+        //print("Open Xanalia");
 #if UNITY_IOS && !UNITY_EDITOR
         UnityOnStart(int.Parse(AppID));   
        //    OpenXanaliaAppWithURL();
@@ -394,10 +394,10 @@ public class ConnectWallet : MonoBehaviour
         {
             CheckLunchingFail = true;
         }
-        print("app not found bool" + CheckLunchingFail);
+        //print("app not found bool" + CheckLunchingFail);
         if (CheckLunchingFail)
         {
-            print("app not found");
+            //print("app not found");
             AndroidJavaClass uriClass = new AndroidJavaClass("android.net.Uri");
             AndroidJavaObject uriObject = uriClass.CallStatic<AndroidJavaObject>("parse", "https://www.xanalia.com/");
 
@@ -825,7 +825,7 @@ public class ConnectWallet : MonoBehaviour
                 PlayerPrefs.SetString("UserId", VerifySignatureReadObj.data.user.id.ToString());
                 ConstantsGod.AUTH_TOKEN = VerifySignatureReadObj.data.token;
                 ConstantsHolder.xanaToken = VerifySignatureReadObj.data.token;
-                Debug.Log(VerifySignatureReadObj.data.token);
+                //Debug.Log(VerifySignatureReadObj.data.token);
                 ConstantsHolder.userId = VerifySignatureReadObj.data.user.id.ToString();
                 //ConstantsHolder.loggedIn = true; // Updating Value in LoginWithWallet();
                 PlayerPrefs.SetString("UserName", VerifySignatureReadObj.data.user.name.ToString());
@@ -855,7 +855,7 @@ public class ConnectWallet : MonoBehaviour
                     if (!VerifySignatureReadObj.success)
                     {
                         DisconnectRequestToServer();
-                        Debug.Log("Success false in  verify sig");
+                        //Debug.Log("Success false in  verify sig");
                     }
                 }
             }
@@ -1086,12 +1086,12 @@ public class ConnectWallet : MonoBehaviour
     {
         // print("JWT token of xanalia is   " + PlayerPrefs.GetString("LoginTokenxanalia"));
         //print("ID of Xanalia is  :  " + PlayerPrefs.GetString("Useridxanalia"));
-        print("Get list is ");
+       // print("Get list is ");
         WalletConnectDataClasses.NFTList NFTCreateJson = new WalletConnectDataClasses.NFTList();
         // NFTCreateJson = NFTCreateJson.AssignNFTList(30, PlayerPrefs.GetString("Useridxanalia") , "testnet", "mycollection", PlayerPrefs.GetString("Useridxanalia") , 1);
         NFTCreateJson = NFTCreateJson.AssignNFTList(2, PlayerPrefs.GetString("publicKey"), "testnet", "mycollection", PlayerPrefs.GetString("publicKey"), 1);
         var jsonObj = JsonUtility.ToJson(NFTCreateJson);
-        print("Json is  : " + jsonObj);
+       // print("Json is  : " + jsonObj);
         StartCoroutine(HitGetXanaliaNFTAPI(ConstantsGod.API_BASEURL_XANALIA + ConstantsGod.GetXanaliaNFTURL, jsonObj));
     }
 
@@ -1114,8 +1114,8 @@ public class ConnectWallet : MonoBehaviour
         {
             if (ReadObj.success)
             {
-                print("Success is " + ReadObj.success);
-                print("Counter is " + ReadObj.count);
+               // print("Success is " + ReadObj.success);
+               // print("Counter is " + ReadObj.count);
                 //  print("Event  is " + ReadObj.data[0].returnValues["0"]);    
             }
         }
@@ -1133,7 +1133,7 @@ public class ConnectWallet : MonoBehaviour
                     if (!ReadObj.success)
                     {
                         DisconnectRequestToServer();
-                        Debug.Log("Success false in  Getting NFT list of Xanalia");
+                        //Debug.Log("Success false in  Getting NFT list of Xanalia");
                     }
                 }
             }
@@ -1152,7 +1152,7 @@ public class ConnectWallet : MonoBehaviour
 
     IEnumerator HitNameAPIWithNewTechnique(string url, string Jsondata, string localUsername)
     {
-        print("Body " + Jsondata);
+        //print("Body " + Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -1172,7 +1172,7 @@ public class ConnectWallet : MonoBehaviour
                 Debug.Log(request.downloadHandler.text);
                 if (myObject1.success)
                 {
-                    print("Success in name  field ");
+                   // print("Success in name  field ");
                     PlayerPrefs.SetInt("IsLoggedIn", 1);
                     PlayerPrefs.SetInt("FristPresetSet", 1);
                     ServerSideUserDataHandler.Instance.GetDataFromServer();

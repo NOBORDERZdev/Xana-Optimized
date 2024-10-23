@@ -91,7 +91,7 @@ public class AvatarController : MonoBehaviour
         BoxerNFTEventManager.OnNFTequip += EquipNFT;
         BoxerNFTEventManager.OnNFTUnequip += UnequipNFT;
 
-        Debug.Log("enabled  " + IsInit);
+        //Debug.Log("enabled  " + IsInit);
         //if (IsInit) // init avatar according to the Avatar Type (Friend/Self player). 
         //{
 
@@ -491,11 +491,11 @@ public class AvatarController : MonoBehaviour
         await Task.Delay(200);
         if (isLoadStaticClothFromJson)
         {
-            Debug.Log("Buildding character from local json... ");
+          //  Debug.Log("Buildding character from local json... ");
             BuildCharacterFromLocalJson();
             return;
         }
-        Debug.Log("Buildding character from Saved Path ... ");
+        //Debug.Log("Buildding character from Saved Path ... ");
         string folderPath = GameManager.Instance.GetStringFolderPath();
         if (File.Exists(folderPath) && File.ReadAllText(folderPath) != "") //Check if data exist
         {
@@ -660,6 +660,7 @@ public class AvatarController : MonoBehaviour
                     {
                         ApplyAIData(_CharacterData, this.gameObject);
                     }
+
                     characterBodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
                 }
 
@@ -673,10 +674,16 @@ public class AvatarController : MonoBehaviour
                 //{
                 //    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeBrowPoints));
                 //}
-                //if (_CharacterData.eyebrrowTexture != "" && _CharacterData.eyebrrowTexture != null)
-                //{
-                //    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyebrrowTexture, this.gameObject, CurrentTextureType.EyeBrows));
-                //}
+                if (!string.IsNullOrEmpty(_CharacterData.eyebrrowTexture) && !_CharacterData.eyebrrowTexture.Contains("default"))
+                {
+                    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyebrrowTexture, this.gameObject, CurrentTextureType.EyeBrows));
+                }
+                else
+                {
+                    //characterBodyParts.SetTextureDefault(CurrentTextureType.EyeBrows, this.gameObject);
+                    characterBodyParts.SetTextureDefault(CurrentTextureType.EyeBrows, this.gameObject);
+                    characterBodyParts.ChangeEyebrowColor(characterBodyParts.DefaultEyebrowColor);
+                }
 
                 //if (_CharacterData.makeupName != "" && _CharacterData.makeupName != null)
                 //{

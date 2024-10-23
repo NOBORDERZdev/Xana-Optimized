@@ -13,7 +13,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     private void OnEnable()
     {
         //subscribe Narration event
-        Debug.Log("Subscribe Event");
+        //Debug.Log("Subscribe Event");
         BuilderEventManager.OnNarrationCollisionEnter += EnableNarrationUI;
         BuilderEventManager.OnNarrationCollisionExit += DisableNarrationUI;
         BuilderEventManager.OnRandomCollisionEnter += EnableRandomNumberUI;
@@ -52,7 +52,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     private void OnDisable()
     {
         //unsubscribe Narration event
-        Debug.Log("UnSubscribe Event");
+        //Debug.Log("UnSubscribe Event");
         BuilderEventManager.OnNarrationCollisionEnter -= EnableNarrationUI;
         BuilderEventManager.OnNarrationCollisionExit -= DisableNarrationUI;
         BuilderEventManager.OnRandomCollisionEnter -= EnableRandomNumberUI;

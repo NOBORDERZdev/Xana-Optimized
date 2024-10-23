@@ -351,7 +351,7 @@ public class Web3AuthCustom : MonoBehaviour
         GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
         //UserLoginSignupManager.instance.StartCoroutine(UserLoginSignupManager.instance.LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
         ConstantsHolder.xanaConstants.LoggedInAsGuest = false;
-        Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
+        //Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
 
         if (ConstantsHolder.xanaConstants.openLandingSceneDirectly && !ConstantsHolder.xanaConstants.isBackFromWorld)
         {
@@ -430,7 +430,7 @@ public class Web3AuthCustom : MonoBehaviour
     }
     private void OnDestroy()
     {
-        Debug.Log("Logged out!");
+        //Debug.Log("Logged out!");
         logout();
     }
 
@@ -518,14 +518,14 @@ public class Web3AuthCustom : MonoBehaviour
             www.SetRequestHeader("Content-Type", "application/json");
             yield return www.SendWebRequest();
 
-            Debug.Log("My LoginExternalWallet response: " + www.downloadHandler.text);
+            //Debug.Log("My LoginExternalWallet response: " + www.downloadHandler.text);
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
             }
             else
             {
-                Debug.Log("....Sucess Posted....");
+                //Debug.Log("....Sucess Posted....");
             }
         }
     }

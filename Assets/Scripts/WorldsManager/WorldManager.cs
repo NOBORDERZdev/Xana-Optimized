@@ -199,7 +199,8 @@ public class WorldManager : MonoBehaviour
 
     async void AddingDeleyToLoadScene()
     {
-        while (!ConstantsHolder.isAddressableCatalogDownload || (PlayerPrefs.GetString("PlayerName").IsNullOrEmpty() && !ConstantsHolder.xanaConstants.LoggedInAsGuest))
+        while (!ConstantsHolder.isAddressableCatalogDownload) 
+            //|| (PlayerPrefs.GetString("PlayerName").IsNullOrEmpty() && !ConstantsHolder.xanaConstants.LoggedInAsGuest))
             await Task.Delay(500);
         LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
         XANAPartyManager xANAPartyManager = XANAPartyManager.Instance;
@@ -899,6 +900,7 @@ public class WorldManager : MonoBehaviour
         //Resources.UnloadUnusedAssets();
         //GC.Collect();
         ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+        ConstantsHolder.xanaConstants.isFromHomeTab = false;
         //LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
         LoadingHandler.Instance.ShowLoading();
         LoadingHandler.Instance.UpdateLoadingSlider(0);
@@ -967,6 +969,7 @@ public class WorldManager : MonoBehaviour
             //}
         }
         ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+        ConstantsHolder.xanaConstants.isFromHomeTab = false;
         //LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
         LoadingHandler.Instance.ShowLoading();
         LoadingHandler.Instance.UpdateLoadingSlider(0);

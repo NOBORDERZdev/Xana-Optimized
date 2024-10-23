@@ -163,7 +163,7 @@ public class PlayerController : MonoBehaviour
         originalSprintSpeed = sprintSpeed;
         originalJumpSpeed = JumpVelocity;
 
-        Debug.Log("Player Controller New Start");
+        //Debug.Log("Player Controller New Start");
         gyroButton.SetActive(false);
         gyroButton_Portait.SetActive(false);
 
@@ -852,6 +852,7 @@ public class PlayerController : MonoBehaviour
 
     public void FreeFloatToggleButton(bool b)
     {
+        GamePlayUIHandler.inst.isFreeCam = b;
         ButtonsToggleOnOff(b);
     }
 
@@ -863,6 +864,8 @@ public class PlayerController : MonoBehaviour
         }
         m_FreeFloatCam = b;
         StopBuilderComponent();
+        GameplayEntityLoader.instance._uiReferences.Onfreecam.gameObject.SetActive(b);
+        GameplayEntityLoader.instance._uiReferences.OffFreecam.gameObject.SetActive(!b);
         FreeFloatCamCharacterController.gameObject.SetActive(b);
         animator.SetBool("freecam", b);
         animator.GetComponent<IKMuseum>().ConsoleObj.SetActive(isFirstPerson == true ? false : b);

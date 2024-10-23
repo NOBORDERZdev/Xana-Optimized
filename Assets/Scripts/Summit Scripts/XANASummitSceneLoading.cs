@@ -111,6 +111,8 @@ public class XANASummitSceneLoading : MonoBehaviour
             return;
         }
 
+        LoadingHandler.Instance.LoadInstructionData(domeGeneralData);
+
         if (domeGeneralData.isSubWorld)
         {
             ConstantsHolder.domeId = domeId;
@@ -173,7 +175,15 @@ public class XANASummitSceneLoading : MonoBehaviour
         gameplayEntityLoader.addressableSceneName = domeGeneralData.world;
         ConstantsHolder.userLimit = domeGeneralData.maxPlayer;
         ConstantsHolder.isPenguin = domeGeneralData.IsPenguin;
-        ConstantsHolder.xanaConstants.isXanaPartyWorld = domeGeneralData.is_penpenz;
+        if (domeGeneralData.isBuilderGame)
+        {
+            ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
+            ConstantsHolder.xanaConstants.isBuilderGame = true;
+            ConstantsHolder.XanaPartyMaxPlayers = 1; 
+        }
+        else
+            ConstantsHolder.xanaConstants.isXanaPartyWorld = domeGeneralData.is_penpenz;
+       // ConstantsHolder.xanaConstants.isXanaPartyWorld = domeGeneralData.is_penpenz;
         ConstantsHolder.isFixedHumanoid = domeGeneralData.Ishumanoid;
         ConstantsHolder.Thumbnail = domeGeneralData.world360Image;
         ConstantsHolder.description = domeGeneralData.description;
@@ -417,7 +427,7 @@ public class XANASummitSceneLoading : MonoBehaviour
 
     async void LoadBuilderSceneLoading(int builderMapId)
     {
-        Debug.Log("Loading builder Scene...");
+        //Debug.Log("Loading builder Scene...");
         ConstantsHolder.xanaConstants.builderMapID = builderMapId;
         ConstantsHolder.xanaConstants.isBuilderScene = true;
         gameplayEntityLoader.addressableSceneName = null;
@@ -506,6 +516,17 @@ public class XANASummitSceneLoading : MonoBehaviour
         ReferenceForPenguinAvatar referenceForPenguin = GameplayEntityLoader.instance.referenceForPenguin;
         referenceForPenguin.ActiveXanaUIData(true);
 
+
+        if (GamePlayUIHandler.inst.isHideButton)
+        {
+            ReferencesForGamePlay.instance.hiddenButtonDisable();
+        }
+        if (GamePlayUIHandler.inst.isFreeCam)
+        {
+            ReferencesForGamePlay.instance.playerControllerNew.FreeFloatToggleButton(false);
+            ReferencesForGamePlay.instance.hiddenButtonEnable();
+        }
+
         // Map Working
         _domeMiniMap.SummitSceneReloaded();
         //SummitMiniMapStatusOnSceneChange(true);
@@ -566,10 +587,11 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.SubWorlds = dataContainer.summitData.domes[i].SubWorlds;
                 domeGeneralData.domeCategory = dataContainer.summitData.domes[i].domeCategory;
                 domeGeneralData.domeType = dataContainer.summitData.domes[i].domeType;
-
+                domeGeneralData.isBuilderGame = dataContainer.summitData.domes[i].isBuilderGame;
                 domeGeneralData.is_penpenz = dataContainer.summitData.domes[i].is_penpenz;
                 domeGeneralData.description = dataContainer.summitData.domes[i].description;
                 domeGeneralData.creatorName = dataContainer.summitData.domes[i].creatorName;
+                domeGeneralData.instruction = dataContainer.summitData.domes[i].instruction;
 
 
                 //if (dataContainer.summitData1.domes[i].worldType)
@@ -597,7 +619,6 @@ public class XANASummitSceneLoading : MonoBehaviour
         //    return;
 
         setPlayerPositionDelegate?.Invoke();
-
 
         //StartCoroutine(LoadingHandler.Instance.FadeOut());
         LoadingHandler.Instance.DisableVideoLoading();

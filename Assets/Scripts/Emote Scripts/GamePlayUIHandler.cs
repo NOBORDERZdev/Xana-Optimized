@@ -39,6 +39,10 @@ public class GamePlayUIHandler : MonoBehaviour
 
     public LoadEmoteAnimations ref_LoadEmoteAnimations;
 
+    [HideInInspector]
+    public bool isHideButton = false;
+    [HideInInspector]
+    public bool isFreeCam = false;
     public GameObject portraitJoystick;
     public GameObject jumpBtn;
     public GameObject JumpUI;
@@ -93,11 +97,27 @@ public class GamePlayUIHandler : MonoBehaviour
 
     public void OnHelpButtonClick(bool isOn)
     {
-        gamePlayUIParent.SetActive(!isOn);//rik.......
+        if (ConstantsHolder.IsSummitDomeWorld)
+        {
+            LoadingHandler.Instance.InstructionIntoWorld(isOn);
+        }
+        else
+        {
+            gamePlayUIParent.SetActive(!isOn);//rik.......
+            JumpUI.SetActive(!isOn);
+            ChatSystem.SetActive(!isOn);
+            GamePlayButtonEvents.inst.UpdateHelpObjects(isOn);
+        }
+    }
+
+    public void HelpScreen(bool isOn) // Display help screen if no instruction is available
+    {
+        gamePlayUIParent.SetActive(!isOn);
         JumpUI.SetActive(!isOn);
         ChatSystem.SetActive(!isOn);
         GamePlayButtonEvents.inst.UpdateHelpObjects(isOn);
     }
+    
 
     public void OnSettingButtonClick()
     {
@@ -111,6 +131,10 @@ public class GamePlayUIHandler : MonoBehaviour
         {
             ConstantsHolder.IsSummitDomeWorld = false;
         }
+
+        if(ReferencesForGamePlay.instance != null && ReferencesForGamePlay.instance.XANAPartyCounterPanel.activeInHierarchy)
+            ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(false);
+
         GamePlayButtonEvents.inst.OnExitButtonClick();
     }
 
@@ -284,7 +308,7 @@ public class GamePlayUIHandler : MonoBehaviour
         XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().isLeaderboardShown = false;
         XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().ResetGame();
         ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
-        ConstantsHolder.xanaConstants.isSoftBankGame = false;
+        ConstantsHolder.xanaConstants.isBuilderGame = false;
         ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
         ConstantsHolder.xanaConstants.LastLobbyName = "";
         //StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().MoveToLobby());

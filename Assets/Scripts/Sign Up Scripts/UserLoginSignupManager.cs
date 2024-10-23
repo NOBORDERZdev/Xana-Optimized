@@ -1112,7 +1112,12 @@ public class UserLoginSignupManager : MonoBehaviour
                 UserDisplayNameErrors(keytoLocalize);
                 return;
             }
-
+            else if (displayrname.Length < 5 || displayrname.Length > 15)
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must be between 5 and 15 characters.");
+                UserDisplayNameErrors(keytoLocalize);
+                return;
+            }
             else if (displayrname.StartsWith(" "))
             {
                 UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
@@ -1132,7 +1137,12 @@ public class UserLoginSignupManager : MonoBehaviour
                 UserDisplayNameErrors(keytoLocalize);
                 return;
             }
-
+            else if (displayrname.Length < 5 || displayrname.Length > 15)
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must be between 5 and 15 characters.");
+                UserDisplayNameErrors(keytoLocalize);
+                return;
+            }
             else if (displayrname.StartsWith(" "))
             {
                 UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
@@ -1189,7 +1199,7 @@ public class UserLoginSignupManager : MonoBehaviour
         }
         if (PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetInt("IsProcessComplete") == 0 && PlayerPrefs.GetInt("iSignup") == 0)
         {
-            Debug.LogError("Set Name for Guest User");
+            //Debug.LogError("Set Name for Guest User");
             //DynamicEventManager.deepLink?.Invoke("come from Guest Registration");
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, displayrname);
             if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
@@ -1933,7 +1943,7 @@ public class UserLoginSignupManager : MonoBehaviour
     public IEnumerator LoginGuest(string url, bool ComesFromLogOut = false)
     {
         ConstantsHolder.userId = PlayerPrefs.GetString("UserId");
-        Debug.Log("Login Guest userId: " + ConstantsHolder.userId);
+       // Debug.Log("Login Guest userId: " + ConstantsHolder.userId);
         using (UnityWebRequest www = UnityWebRequest.Post(url, "POST"))
         {
             ConstantsHolder.xanaConstants.LoggedInAsGuest = true;
@@ -1954,7 +1964,7 @@ public class UserLoginSignupManager : MonoBehaviour
                         
                         ConstantsGod.AUTH_TOKEN = myObject1.data.token;
 
-                        Debug.Log(ConstantsGod.AUTH_TOKEN);
+                        //Debug.Log(ConstantsGod.AUTH_TOKEN);
                         if (PlayerPrefs.GetInt("shownWelcome") == 1)
                         {
                             //DynamicEventManager.deepLink?.Invoke("Guest login");
@@ -1994,10 +2004,10 @@ public class UserLoginSignupManager : MonoBehaviour
         if (ConstantsHolder.xanaConstants.openLandingSceneDirectly && PlayerPrefs.GetInt("IsProcessComplete") == 1)
         {
             
-            print("Initialize ---=======  LoggedInAsGuest " + ConstantsHolder.xanaConstants.LoggedInAsGuest);
+            //print("Initialize ---=======  LoggedInAsGuest " + ConstantsHolder.xanaConstants.LoggedInAsGuest);
             if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
             {
-                Debug.Log("Initialize Avatar with Guest");
+                //Debug.Log("Initialize Avatar with Guest");
                 MainSceneEventHandler.OpenLandingScene?.Invoke();
             }
 
