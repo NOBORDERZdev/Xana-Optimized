@@ -34,7 +34,7 @@ public class MaintenanceScreenManager : MonoBehaviour
 
     public IEnumerator CheckForMaintenanceScreen(string type, string platform, string version)
     {
-        Debug.Log("CheckForMaintenanceScreen  " + version);
+       // Debug.Log("CheckForMaintenanceScreen  " + version);
         UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.MaintenanceAPI + type + "/" + platform + "/" + version);
 
         uwr.SendWebRequest();
@@ -47,7 +47,7 @@ public class MaintenanceScreenManager : MonoBehaviour
 
         if (uwr.result==UnityWebRequest.Result.ConnectionError || uwr.result==UnityWebRequest.Result.ProtocolError)
         {
-            Debug.Log("Error While Sending: " + uwr.error);
+           // Debug.Log("Error While Sending: " + uwr.error);
         }
         else
         {

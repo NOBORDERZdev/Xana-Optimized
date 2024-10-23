@@ -46,7 +46,7 @@ public class ServerSideUserDataHandler : MonoBehaviour
             {
                 if (getdata.data.count == 0)
                 {
-                    print("!!Not Data Found, New User");
+                    //print("!!Not Data Found, New User");
                     SavingCharacterDataClass SubCatString = new SavingCharacterDataClass();
                     SubCatString.FaceBlendsShapes = new float[GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount];
                     string jbody = GameManager.Instance.selectedPresetData != "" ? GameManager.Instance.selectedPresetData : JsonUtility.ToJson(SubCatString);
@@ -68,7 +68,7 @@ public class ServerSideUserDataHandler : MonoBehaviour
                     string jsonbody = JsonUtility.ToJson(getdata.data.rows[0].json);
                     LoadPlayerAvatar.avatarId = getdata.data.rows[0].id.ToString();
                     LoadPlayerAvatar.avatarName = getdata.data.rows[0].name;
-                    Debug.Log("avatarName: " + jsonbody);
+                    //Debug.Log("avatarName: " + jsonbody);
                     LoadPlayerAvatar.avatarThumbnailUrl = getdata.data.rows[0].thumbnail;
                     ConstantsHolder.userId = getdata.data.rows[0].createdBy.ToString();
                     File.WriteAllText(GetStringFolderPath(), jsonbody);

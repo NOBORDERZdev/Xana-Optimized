@@ -39,7 +39,7 @@ public class RegisterAsCompanyEmails : MonoBehaviour
     {
         StringBuilder ApiURL = new StringBuilder();
         ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.toyotaEmailApi + _thaCompanyId + "/" + _thaPageNumber + "/" + _thaPageSize);
-        Debug.Log("API URL is : " + ApiURL.ToString());
+       // Debug.Log("API URL is : " + ApiURL.ToString());
         using (UnityWebRequest request = UnityWebRequest.Get(ApiURL.ToString()))
         {
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);

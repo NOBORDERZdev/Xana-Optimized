@@ -127,14 +127,14 @@ public class XANAPartyManager : MonoBehaviour
 
                 if (www.result != UnityWebRequest.Result.Success)
                 {
-                    Debug.Log($"Error on XANA PARTY WORLD FETCH : <color=red>{www.error}</color>");
+                    //Debug.Log($"Error on XANA PARTY WORLD FETCH : <color=red>{www.error}</color>");
                 }
                 else
                 {
                     try
                     {
                         var data = JObject.Parse(www.downloadHandler.text);
-                        print("DATA " + data.ToString());
+                        //print("DATA " + data.ToString());
                         var rows = data["data"]["rows"];
                         foreach (var row in rows)
                         {

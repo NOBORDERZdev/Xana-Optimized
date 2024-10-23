@@ -93,7 +93,7 @@ public class SplineFollower : MonoBehaviour, IPunObservable, IInRoomCallbacks
                 break;
             case MovementType.Units:
                 MaxMoveAmount = Spline.GetSplineLength(StepSize);
-                Debug.Log("Spline Length " + Spline.GetSplineLength(StepSize));
+                //Debug.Log("Spline Length " + Spline.GetSplineLength(StepSize));
                 break;
         }
         // syncdata(MoveAmount);
@@ -104,7 +104,7 @@ public class SplineFollower : MonoBehaviour, IPunObservable, IInRoomCallbacks
     [PunRPC]
     public void syncdata(float moveAmount, byte Room)
     {
-        Debug.Log("Buffered RPC");
+        //Debug.Log("Buffered RPC");
         this.MoveAmount = moveAmount;
 
         PrivateRoomName = Room;
