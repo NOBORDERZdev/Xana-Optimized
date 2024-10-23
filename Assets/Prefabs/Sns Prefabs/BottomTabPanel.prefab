@@ -372,7 +372,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 467da06db5971cc468304a677d8d57fb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 62f11b935ab9cc24483f8ab24b0421c2, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2301,7 +2301,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Feed
+  m_text: Space
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 65b688a162ac48d44b255114129c8c4f, type: 2}
   m_sharedMaterial: {fileID: -5506446132504035655, guid: 65b688a162ac48d44b255114129c8c4f, type: 2}
@@ -2704,7 +2704,7 @@ GameObject:
   - component: {fileID: 8957875775553727378}
   - component: {fileID: 8957875775553727377}
   m_Layer: 5
-  m_Name: Space
+  m_Name: Summit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2818,8 +2818,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8957875775585424746}
-        m_TargetAssemblyTypeName: BottomTabManager, Assembly-CSharp
-        m_MethodName: OnClickHomeWorldButton
+        m_TargetAssemblyTypeName: HomeFooterHandler, Assembly-CSharp
+        m_MethodName: OnClickSummitButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2842,7 +2842,7 @@ GameObject:
   - component: {fileID: 8957875775563425837}
   - component: {fileID: 5121501632026759643}
   m_Layer: 5
-  m_Name: Feeds
+  m_Name: Space
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2949,14 +2949,14 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 8957875775553727378}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8957875775585424746}
-        m_TargetAssemblyTypeName: BottomTabManager, Assembly-CSharp
-        m_MethodName: OnClickFeedButton
+        m_TargetAssemblyTypeName: HomeFooterHandler, Assembly-CSharp
+        m_MethodName: OnClickHomeWorldButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3066,13 +3066,13 @@ MonoBehaviour:
   allButtonUnSelected:
   - {fileID: 21300000, guid: 74a4bf7f75e6709469e2beb25135916f, type: 3}
   - {fileID: 21300000, guid: bc46980bcb2782c488b98342204dde4d, type: 3}
-  - {fileID: 21300000, guid: 467da06db5971cc468304a677d8d57fb, type: 3}
+  - {fileID: 21300000, guid: 62f11b935ab9cc24483f8ab24b0421c2, type: 3}
   - {fileID: 21300000, guid: 7a4616b387a888443992984ba4f901ae, type: 3}
   - {fileID: 21300000, guid: 806bf75aeea41594a84df928a12270f4, type: 3}
   allButtonSelected:
   - {fileID: 21300000, guid: e4f86ac84ae67ae4dbe9ce01e029693f, type: 3}
   - {fileID: 21300000, guid: bc46980bcb2782c488b98342204dde4d, type: 3}
-  - {fileID: 21300000, guid: a23f651b351c7fe4a9ff05f09724bc1f, type: 3}
+  - {fileID: 21300000, guid: 9485fa8c1f7e99b4fb1bf7f750b326d5, type: 3}
   - {fileID: 21300000, guid: 581a4df584fa32842b6adab29d1871b8, type: 3}
   - {fileID: 21300000, guid: 86a15a0e54729c046a1fc3449c1bdd14, type: 3}
   AllTitleText:
