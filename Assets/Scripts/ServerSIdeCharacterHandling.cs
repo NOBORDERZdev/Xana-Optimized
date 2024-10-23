@@ -220,6 +220,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
                 {
                     SavingCharacterDataClass SubCatString = new SavingCharacterDataClass();
                     SubCatString.FaceBlendsShapes = new float[GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount];
+                    SubCatString.presetNum = XanaConstants.xanaConstants.selectedAvatarNum;
                     string jbody = JsonUtility.ToJson(SubCatString);
                     File.WriteAllText(GameManager.Instance.GetStringFolderPath(), jbody);
                     //StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
@@ -227,6 +228,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
                 }
                 else
                 {
+                    print("IF Have Data");
                     // write latest json data to file
                     //if (File.Exists(GameManager.Instance.GetStringFolderPath()))
                     //{
@@ -239,7 +241,8 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
                     //}
                     //else
                     //{
-                        string jsonbody = JsonUtility.ToJson(getdata.data.rows[0].json);
+                    getdata.data.rows[0].json.presetNum = XanaConstants.xanaConstants.selectedAvatarNum;
+                    string jsonbody = JsonUtility.ToJson(getdata.data.rows[0].json);
                         LoadPlayerAvatar.avatarId = getdata.data.rows[0].id.ToString();
                         LoadPlayerAvatar.avatarName = getdata.data.rows[0].name;
                         LoadPlayerAvatar.avatarThumbnailUrl = getdata.data.rows[0].thumbnail;
@@ -519,7 +522,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         public Color HairColor;
         public Color EyebrowColor;
         public Color EyeColor;
-
+        public int presetNum = 0;
 
         public Json CreateFromJSON(string jsonString)
         {
