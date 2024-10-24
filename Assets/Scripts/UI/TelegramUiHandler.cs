@@ -35,31 +35,3 @@ public class TelegramUiHandler : MonoBehaviour
         }
     }
 }
-
-public class DatumFeature
-{
-    public int id;
-    public string app_name;
-    public string version;
-    public bool is_active;
-    public FeatureList feature_list;
-}
-
-public class FeatureList
-{
-    public bool SummitApp;
-    public bool WalletBtn;
-    public bool Xsummitbg;
-    public bool XanaChatFlag;
-    public bool TelegramLogin;
-    public bool DomeHeaderInfo;
-    public bool wall;
-    public bool Enter;
-}
-
-public class RootFeatureData
-{
-    public bool success;
-    public List<DatumFeature> data = new List<DatumFeature> ();
-    public string msg;
-}
