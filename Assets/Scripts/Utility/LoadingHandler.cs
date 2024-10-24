@@ -1206,6 +1206,12 @@ public class LoadingHandler : MonoBehaviour
         enter = false;
         WaitForInput = false;
         EnterWheel?.Invoke(false);
+        // DomeLoading.SetActive(false);
+        StartCoroutine(DomLodingHandler());
+    }
+    public IEnumerator DomLodingHandler()
+    {
+        yield return new WaitForSeconds(1.5f);
         DomeLoading.SetActive(false);
     }
 
@@ -1216,7 +1222,9 @@ public class LoadingHandler : MonoBehaviour
 
     internal void DisableDomeLoading()
     {
-        DomeLoading.SetActive(false);
+        // DomeLoading.SetActive(false);
+        StartCoroutine(DomLodingHandler());
+
     }
 
     public void DomeLoadingProgess(float progress)
