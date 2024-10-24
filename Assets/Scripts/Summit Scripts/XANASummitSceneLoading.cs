@@ -223,6 +223,8 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         await UnloadScene(sceneTobeUnload);
 
+        await Task.Delay(5000);
+
         if (domeGeneralData.worldType)
             LoadBuilderSceneLoading(domeGeneralData.builderWorldId);
         else
@@ -414,11 +416,11 @@ public class XANASummitSceneLoading : MonoBehaviour
     {
         if (SceneManager.GetSceneByName("Builder").isLoaded)
         {
-            await SceneManager.UnloadSceneAsync("Builder");
+            await SceneManager.UnloadSceneAsync("Builder",UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
         }
         else
         {
-            await SceneManager.UnloadSceneAsync(sceneName);
+            await SceneManager.UnloadSceneAsync(sceneName,UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
         }
     }
 
@@ -491,6 +493,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         multiplayerController.isConnecting = false;
         gameplayEntityLoader.isEnvLoaded = false;
         gameplayEntityLoader.isAlreadySpawned = true;
+
         multiplayerController.Disconnect();
 
         XanaWorldDownloader.ResetAll();
@@ -501,6 +504,8 @@ public class XANASummitSceneLoading : MonoBehaviour
         await HomeSceneLoader.ReleaseUnsedMemory();
 
         await UnloadScene(sceneToBeUnload);
+
+        await Task.Delay(5000);
 
         if (subWorldInfo.isBuilderWorld)
             LoadBuilderSceneLoading(int.Parse(subWorldInfo.id));
