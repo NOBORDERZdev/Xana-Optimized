@@ -111,6 +111,8 @@ public class XANASummitSceneLoading : MonoBehaviour
             return;
         }
 
+        LoadingHandler.Instance.LoadInstructionData(domeGeneralData);
+
         if (domeGeneralData.isSubWorld)
         {
             ConstantsHolder.domeId = domeId;
@@ -592,6 +594,8 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.jpCreatorName = dataContainer.summitData.domes[i].jpCreatorName;
                 domeGeneralData.jpDescription = dataContainer.summitData.domes[i].jpDescription;
                 domeGeneralData.jpWorldName = dataContainer.summitData.domes[i].jpWorldName;
+                domeGeneralData.instruction = dataContainer.summitData.domes[i].instruction;
+
 
                 //if (dataContainer.summitData1.domes[i].worldType)
                 //    return new Tuple<string[],string>(new[] { dataContainer.summitData1.domes[i].world, "1", dataContainer.summitData1.domes[i].builderWorldId }, dataContainer.summitData1.domes[i].experienceType);
