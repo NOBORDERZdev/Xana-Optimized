@@ -803,13 +803,13 @@ public class PlayerController : MonoBehaviour
     public CharacterController FreeFloatCamCharacterController;
     public bool m_FreeFloatCam;
     private float Default;
-    private float maxHeight;
-    public float MaxHeightOffSet = 4.0f;
+    //private float maxHeight;
+    //public float MaxHeightOffSet = 4.0f;
 
     public void GetPlayerTransform()
     {
         Default = FreeFloatCamCharacterController.transform.position.y;
-        maxHeight = Default + MaxHeightOffSet;
+        //maxHeight = Default + MaxHeightOffSet;
     }
 
     private void ResetCamPos()
@@ -827,17 +827,17 @@ public class PlayerController : MonoBehaviour
 
         FreeFloatCamCharacterController.Move(moveDirection * sprintSpeed * Time.deltaTime);
 
-        if (FreeFloatCamCharacterController.transform.position.y < maxHeight)
-        {
+        //if (FreeFloatCamCharacterController.transform.position.y < maxHeight)
+        //{
 
-            FreeFloatCamCharacterController.Move(moveDirection * sprintSpeed * Time.deltaTime);
-        }
-        else
-        {
-            FreeFloatCamCharacterController.transform.position = new Vector3(FreeFloatCamCharacterController.transform.position.x, FreeFloatCamCharacterController.transform.position.y - 0.1f, FreeFloatCamCharacterController.transform.position.z);
+        //    FreeFloatCamCharacterController.Move(moveDirection * sprintSpeed * Time.deltaTime);
+        //}
+        //else
+        //{
+        //    FreeFloatCamCharacterController.transform.position = new Vector3(FreeFloatCamCharacterController.transform.position.x, FreeFloatCamCharacterController.transform.position.y - 0.1f, FreeFloatCamCharacterController.transform.position.z);
 
 
-        }
+        //}
 
 
     }

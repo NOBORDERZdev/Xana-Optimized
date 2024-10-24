@@ -36,6 +36,7 @@ public class SummitAIChatHandler : MonoBehaviour
         BuilderEventManager.AINPCActivated += LoadAIChat;
         BuilderEventManager.AINPCDeactivated += RemoveAIChat;
         BuilderEventManager.AfterWorldInstantiated += LoadNPC;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated += LoadNPC;
         BuilderEventManager.ResetSummit += ResetOnExit;
         ScreenOrientationManager.switchOrientation += UpdateChatInstance;
     }
@@ -44,6 +45,7 @@ public class SummitAIChatHandler : MonoBehaviour
         BuilderEventManager.AINPCActivated -= LoadAIChat;
         BuilderEventManager.AINPCDeactivated -= RemoveAIChat;
         BuilderEventManager.AfterWorldInstantiated -= LoadNPC;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= LoadNPC;
         BuilderEventManager.ResetSummit -= ResetOnExit;
         ScreenOrientationManager.switchOrientation -= UpdateChatInstance;
     }
@@ -252,7 +254,7 @@ public class SummitAIChatHandler : MonoBehaviour
     async void SendMessageFromAI(string s)
     {
         //_CommonChatRef.DisplayMsg_FromSocket(ConstantsHolder.userName, _CommonChatRef.InputFieldChat.text);
-        verticalLayoutGroup.spacing = -10;
+        //verticalLayoutGroup.spacing = -10;
         string url = string.Empty;
         if (!GetFirstNPCMessage)
         {
