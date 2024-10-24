@@ -289,7 +289,6 @@ public class UIHandler : MonoBehaviour
             if (apiResponse.success && apiResponse.data != null)
                 for (int i = 0; i < apiResponse.data.Count; i++)
                 {
-
                     if (apiResponse.data[i].feature_list.TryGetValue("DomeHeaderInfo", out bool status))
                     {
                         ConstantsHolder.DomeHeaderInfo = status;
@@ -314,6 +313,11 @@ public class UIHandler : MonoBehaviour
                     if (apiResponse.data[i].feature_list.TryGetValue("XanaChatFlag", out bool status3))
                     {
                         ConstantsHolder.xanaConstants.chatFlagBtnStatus = status3;
+                    }
+
+                    if (apiResponse.data[i].feature_list.TryGetValue("TelegramLogin", out bool status4))
+                    {
+                        ConstantsHolder.xanaConstants.TelegramLoginBtnStatus = status4;
                     }
 
                     //if (apiResponse.data[i].feature_name == "SummitApp")
