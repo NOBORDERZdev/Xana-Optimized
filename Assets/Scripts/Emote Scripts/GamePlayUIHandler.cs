@@ -97,11 +97,27 @@ public class GamePlayUIHandler : MonoBehaviour
 
     public void OnHelpButtonClick(bool isOn)
     {
-        gamePlayUIParent.SetActive(!isOn);//rik.......
+        if (ConstantsHolder.IsSummitDomeWorld)
+        {
+            LoadingHandler.Instance.InstructionIntoWorld(isOn);
+        }
+        else
+        {
+            gamePlayUIParent.SetActive(!isOn);//rik.......
+            JumpUI.SetActive(!isOn);
+            ChatSystem.SetActive(!isOn);
+            GamePlayButtonEvents.inst.UpdateHelpObjects(isOn);
+        }
+    }
+
+    public void HelpScreen(bool isOn) // Display help screen if no instruction is available
+    {
+        gamePlayUIParent.SetActive(!isOn);
         JumpUI.SetActive(!isOn);
         ChatSystem.SetActive(!isOn);
         GamePlayButtonEvents.inst.UpdateHelpObjects(isOn);
     }
+    
 
     public void OnSettingButtonClick()
     {
@@ -115,6 +131,10 @@ public class GamePlayUIHandler : MonoBehaviour
         {
             ConstantsHolder.IsSummitDomeWorld = false;
         }
+
+        if(ReferencesForGamePlay.instance != null && ReferencesForGamePlay.instance.XANAPartyCounterPanel.activeInHierarchy)
+            ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(false);
+
         GamePlayButtonEvents.inst.OnExitButtonClick();
     }
 
