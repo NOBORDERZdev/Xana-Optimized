@@ -17,7 +17,7 @@ public class QualityManager : MonoBehaviour
         if (PlayerPrefs.GetInt("DefaultQuality") == 0 && PlayerPrefs.GetInt("QualitySettings") == 0)
         {
             //AdjustQualityBasedOnDevice();
-            SetQualitySettings(1); // Medium
+            SetQualitySettings(0); // Low
         }
         else
         {
