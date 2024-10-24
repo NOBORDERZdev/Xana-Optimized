@@ -30,7 +30,7 @@ public class MyBeachMute : MonoBehaviour
                 otherButtonPotrait.GetComponent<Button>().interactable = false;
             }
         }
-        else if (Application.platform == RuntimePlatform.IPhonePlayer && WorldItemView.m_EnvName.Contains("PMY ACADEMY"))
+        else if (WorldItemView.m_EnvName.Contains("PMY ACADEMY")) //Application.platform == RuntimePlatform.IPhonePlayer && 
         {
             XanaConstants.xanaConstants.StopMic();
             XanaVoiceChat.instance.TurnOffMic();
