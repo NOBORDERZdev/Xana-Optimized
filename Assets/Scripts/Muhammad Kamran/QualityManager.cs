@@ -14,19 +14,29 @@ public class QualityManager : MonoBehaviour
     private RenderPipelineAsset[] _qualityLevels;
     void Start()
     {
-        if (PlayerPrefs.GetInt("DefaultQuality") == 0 && PlayerPrefs.GetInt("QualitySettings") == 0)
+        BuilderEventManager.AfterPlayerInstantiated += SetQuality;
+       
+    }
+    private void OnDisable()
+    {
+        BuilderEventManager.AfterPlayerInstantiated -= SetQuality;
+    }
+    private void SetQuality()
+    {
+        if (PlayerPrefs.GetInt("QualitySettings", 0) == 0)
         {
             //AdjustQualityBasedOnDevice();
             SetQualitySettings(0); // Low
         }
         else
         {
-            SetQualitySettings(PlayerPrefs.GetInt("QualitySettings"));
+            int temp = PlayerPrefs.GetInt("QualitySettings", 0);
+            SetQualitySettings(temp);
         }
     }
+
     public void SetQualityToggles(int index)
     {
-     
             foreach (GameObject go in _portraitQualityToggles)
             {
                 go.SetActive(false);
@@ -42,59 +52,13 @@ public class QualityManager : MonoBehaviour
     }
     public void SetQualitySettings(int index)
     {
+        SetQualityToggles(index);
         if (QualitySettings.GetQualityLevel() != index)
         {
             PlayerPrefs.SetInt("QualitySettings", index);
             QualitySettings.SetQualityLevel(index);
             QualitySettings.renderPipeline = _qualityLevels[index];
-            SetQualityToggles(index);
-        }
+        } 
     }
-    //void AdjustQualityBasedOnDevice()
-    //{
-    //    int systemMemory = SystemInfo.systemMemorySize;
-    //    if (Application.platform == RuntimePlatform.Android)
-    //    {
-    //        AdjustQualityForAndroid(systemMemory);
-    //    }
-    //    else if (Application.platform == RuntimePlatform.IPhonePlayer)
-    //    {
-    //        AdjustQualityForIOS(systemMemory);
-    //    }
-    //    else
-    //    {
-    //        SetQualitySettings(2); // High
-    //    }
-    //}
-    //void AdjustQualityForIOS(int systemMemory)
-    //{
-    //    if (systemMemory < 2048)
-    //    {
-    //        SetQualitySettings(0); // Low
-    //    }
-    //    else if (systemMemory < 4096)
-    //    {
-    //        SetQualitySettings(1); // Medium
-    //    }
-    //    else //if (systemMemory <= 6144) //High
-    //    {
-    //        SetQualitySettings(2);
-    //    }
-    //}
 
-    //void AdjustQualityForAndroid(int systemMemory)
-    //{
-    //    if (systemMemory < 2048)
-    //    {
-    //        SetQualitySettings(0); // Low
-    //    }
-    //    else if (systemMemory < 4096)
-    //    {
-    //        SetQualitySettings(1); // Medium
-    //    }
-    //    else
-    //    {
-    //        SetQualitySettings(2); // High
-    //    }
-    //}
 }
