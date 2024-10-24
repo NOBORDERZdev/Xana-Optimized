@@ -901,10 +901,20 @@ public class LoadingHandler : MonoBehaviour
         else { DomeThumbnail.gameObject.SetActive(false); }
         ResetLoadingValues();
         DomeLoading.SetActive(true);
-        DomeName.text = info.name;
-        DomeDescription.text = info.description;
-        DomeCreator.text = info.creatorName;
-        ConstantsHolder.xanaConstants.domeCreatorName = info.creatorName;
+        if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
+        {
+            DomeName.text = info.jpWorldName;
+            DomeDescription.text = info.jpDescription;
+            DomeCreator.text = info.jpCreatorName;
+            ConstantsHolder.xanaConstants.domeCreatorName = info.jpCreatorName;
+        }
+        else
+        {
+            DomeName.text = info.name;
+            DomeDescription.text = info.description;
+            DomeCreator.text = info.creatorName;
+            ConstantsHolder.xanaConstants.domeCreatorName = info.creatorName;
+        }
         DomeType.text = info.domeType;
         DomeCategory.text = info.domeCategory;
         iswheel = false;
