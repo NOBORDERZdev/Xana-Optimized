@@ -12771,6 +12771,53 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7206205174223774450, guid: 5059dcc9482802d49b4dae2eafe6d961, type: 3}
   m_PrefabInstance: {fileID: 1731690909}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1745836365
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1745836367}
+  - component: {fileID: 1745836366}
+  m_Layer: 0
+  m_Name: Telegram Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1745836366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745836365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e03f5efa1a7435387ccadf03748230, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TelegramUIObj:
+  - {fileID: 1959873293}
+  - {fileID: 295294916}
+--- !u!4 &1745836367
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745836365}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1747874728
 GameObject:
   m_ObjectHideFlags: 0
@@ -14151,7 +14198,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5791274344979631117, guid: f3a48363bea67df498924368f8b6489d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -5.9994507
+      value: -5.9993896
       objectReference: {fileID: 0}
     - target: {fileID: 6660751818260139667, guid: f3a48363bea67df498924368f8b6489d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -25744,7 +25791,7 @@ PrefabInstance:
       objectReference: {fileID: 1938487462}
     - target: {fileID: 7808060320460354820, guid: c5e3bd11bcf90114caa7e3c76bb84ce0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000034332275
+      value: 0.000091552734
       objectReference: {fileID: 0}
     - target: {fileID: 7822875533531516774, guid: c5e3bd11bcf90114caa7e3c76bb84ce0, type: 3}
       propertyPath: m_Pivot.x
@@ -26622,7 +26669,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2400466248824086489, guid: 5572c3dae779e374491a8fdd18612be1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000030517578
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2643985827211855598, guid: 5572c3dae779e374491a8fdd18612be1, type: 3}
       propertyPath: m_Pivot.x
@@ -26770,7 +26817,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7123591818776408407, guid: 5572c3dae779e374491a8fdd18612be1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000030517578
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7123591818776408407, guid: 5572c3dae779e374491a8fdd18612be1, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 7502407206167177789, guid: 5572c3dae779e374491a8fdd18612be1, type: 3}
       propertyPath: m_Pivot.x
@@ -26898,7 +26949,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8333776253969565346, guid: 5572c3dae779e374491a8fdd18612be1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000091552734
+      value: 0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 8333776254479867460, guid: 5572c3dae779e374491a8fdd18612be1, type: 3}
       propertyPath: m_Pivot.x
