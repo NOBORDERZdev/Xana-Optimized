@@ -43,6 +43,10 @@ public class GlobalConstants
         StayTime_PMYLobby,
         StayTime_CRoom1,
         StayTime_CRoom2,
+        StayTime_CRoom3,
+        StayTime_CRoom4,
+        StayTime_CRoom5,
+        StayTime_CRoom6,
         StayTime_PMYGallery,
 
         Corporate_Room,
@@ -56,6 +60,10 @@ public class GlobalConstants
         URL_PMYLobby,
         URL_CRoom1,
         URL_CRoom2,
+        URL_CRoom3,
+        URL_CRoom4,
+        URL_CRoom5,
+        URL_CRoom6,
         URL_Gallery,
 
         SE_UU_Mobile_App_PMY
