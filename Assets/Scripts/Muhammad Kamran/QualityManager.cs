@@ -26,22 +26,19 @@ public class QualityManager : MonoBehaviour
     }
     public void SetQualityToggles(int index)
     {
-        if (ChangeOrientation_waqas._instance.isPotrait)
-        {
+     
             foreach (GameObject go in _portraitQualityToggles)
             {
                 go.SetActive(false);
             }
             _portraitQualityToggles[index].SetActive(true);
-        }
-        else
-        {
+        
             foreach (GameObject go in _landscapeQualityToggles)
             {
                 go.SetActive(false);
             }
             _landscapeQualityToggles[index].SetActive(true);
-        }
+        
     }
     public void SetQualitySettings(int index)
     {
