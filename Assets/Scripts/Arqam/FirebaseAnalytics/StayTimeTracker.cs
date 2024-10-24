@@ -65,6 +65,18 @@ public class StayTimeTracker : MonoBehaviour
             case 9:
                 worldName = FirebaseTrigger.StayTime_CRoom2.ToString();
                 break;
+            case 10:
+                worldName = FirebaseTrigger.StayTime_CRoom3.ToString();
+                break;
+            case 11:
+                worldName = FirebaseTrigger.StayTime_CRoom4.ToString();
+                break;
+            case 12:
+                worldName = FirebaseTrigger.StayTime_CRoom5.ToString();
+                break;
+            case 13:
+                worldName = FirebaseTrigger.StayTime_CRoom6.ToString();
+                break;
         }
     }
 

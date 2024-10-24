@@ -142,6 +142,18 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
                             case 9:
                                 eventName = FirebaseTrigger.URL_CRoom2.ToString() + "_" + (PMY_Nft_Manager.Instance.clickedNftInd + 1);
                                 break;
+                            case 10:
+                                eventName = FirebaseTrigger.URL_CRoom3.ToString() + "_" + (PMY_Nft_Manager.Instance.clickedNftInd + 1);
+                                break;
+                            case 11:
+                                eventName = FirebaseTrigger.URL_CRoom4.ToString() + "_" + (PMY_Nft_Manager.Instance.clickedNftInd + 1);
+                                break;
+                            case 12:
+                                eventName = FirebaseTrigger.URL_CRoom5.ToString() + "_" + (PMY_Nft_Manager.Instance.clickedNftInd + 1);
+                                break;
+                            case 13:
+                                eventName = FirebaseTrigger.URL_CRoom6.ToString() + "_" + (PMY_Nft_Manager.Instance.clickedNftInd + 1);
+                                break;
                         }
                         break;
                     }
