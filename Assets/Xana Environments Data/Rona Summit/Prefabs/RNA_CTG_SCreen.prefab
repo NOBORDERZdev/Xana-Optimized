@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 5003036646706819841}
   - component: {fileID: 8465234644561037406}
   - component: {fileID: 8360729814308269491}
+  - component: {fileID: 2256240570357921624}
   m_Layer: 0
   m_Name: Screen
   m_TagString: Untagged
@@ -145,6 +146,23 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2256240570357921624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421916592537138747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shader: {fileID: 0}
+  _IsSpriteRenderer: 0
+  isMeshRendrer: 1
+  shaderName: Sprites/Default
+  isTerrain: 0
 --- !u!1 &1586977800803363590
 GameObject:
   m_ObjectHideFlags: 0
