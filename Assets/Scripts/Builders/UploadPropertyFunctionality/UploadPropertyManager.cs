@@ -33,7 +33,7 @@ public class UploadPropertyManager : MonoBehaviour
     {
         for (int i = 0; i < _initialPoolSize; i++)
         {
-            var obj = Instantiate(UploadPlayerPrefab);
+            var obj = Instantiate(UploadPlayerPrefab, transform);
             obj.SetActive(false);
             _objectPool.Enqueue(obj);
         }
