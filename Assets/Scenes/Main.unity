@@ -7418,7 +7418,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1558925941328440567, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -58.297302
+      value: -58.297363
       objectReference: {fileID: 0}
     - target: {fileID: 1558925941422253136, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
       propertyPath: m_AnchorMax.x
@@ -8116,6 +8116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SaveItemList:
+    presetNum: 0
     id: 
     name: 
     thumbnail: 
@@ -50253,6 +50254,10 @@ PrefabInstance:
       propertyPath: IsXanaLive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 301358056408926721, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6812878254336208881, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: m_RootOrder
       value: 34
@@ -50301,7 +50306,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: ServerObject
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 301358056408926721, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
 --- !u!1 &2097319179
 GameObject:
@@ -51958,6 +51964,7 @@ MonoBehaviour:
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   isVisibleOnCam: 0
   _PCharacterData:
+    presetNum: 0
     id: 
     name: 
     thumbnail: 
