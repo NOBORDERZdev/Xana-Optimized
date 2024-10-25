@@ -69,7 +69,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "XanaSummit241008";  // YYYYMMDD
+        string gameVersion = "XanaSummit241025";  // YYYYMMDD
 
         #endregion
         #region Multtisection Fields
@@ -620,20 +620,28 @@ namespace Photon.Pun.Demo.PunBasics
             SummitPlayerRPC summitplayer = player.GetComponent<SummitPlayerRPC>();
             if (summitplayer)
             {
-                Destroy(summitplayer.AnimatorView);
-                Destroy(summitplayer.VoiceView);
-                Destroy(summitplayer.Transformview);
-                Destroy(summitplayer.view);
+                if (summitplayer.AnimatorView)
+                    Destroy(summitplayer.AnimatorView);
+                if (summitplayer.VoiceView)
+                    Destroy(summitplayer.VoiceView);
+                if (summitplayer.Transformview)
+                    Destroy(summitplayer.Transformview);
+                if (summitplayer.view)
+                    Destroy(summitplayer.view);
             }
 
             foreach (var p in playerobjects)
             {
                 if (p == player || !p) continue;
                 summitplayer = p.GetComponent<SummitPlayerRPC>();
-                Destroy(summitplayer.AnimatorView);
-                Destroy(summitplayer.VoiceView);
-                Destroy(summitplayer.Transformview);
-                Destroy(summitplayer.view);
+                if (summitplayer.AnimatorView)
+                    Destroy(summitplayer.AnimatorView);
+                if (summitplayer.VoiceView)
+                    Destroy(summitplayer.VoiceView);
+                if (summitplayer.Transformview)
+                    Destroy(summitplayer.Transformview);
+                if (summitplayer.view)
+                    Destroy(summitplayer.view); 
             }
             if (isWheel)
             {
