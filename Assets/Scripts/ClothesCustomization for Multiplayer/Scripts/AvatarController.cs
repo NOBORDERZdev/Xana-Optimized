@@ -133,7 +133,7 @@ public class AvatarController : MonoBehaviour
             }
             else
             {
-                Invoke(nameof(Deley_Custom_InitializeAvatar), 0.02f);
+                Invoke(nameof(Deley_Custom_InitializeAvatar), 0.0f);
                 //Custom_InitializeAvatar();
                 if (xanaConstants.isNFTEquiped)
                 {
@@ -488,7 +488,7 @@ public class AvatarController : MonoBehaviour
     /// </summary>
     async void Custom_InitializeAvatar(SavingCharacterDataClass _data = null)
     {
-        await Task.Delay(200);
+      //  await Task.Delay(100);
         if (isLoadStaticClothFromJson)
         {
           //  Debug.Log("Buildding character from local json... ");
@@ -795,7 +795,6 @@ public class AvatarController : MonoBehaviour
                                             {
                                                 ClothsToBeLoaded.Add(item);
                                                 StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, avatarController, _CharacterData.HairColor));
-
                                             }
                                         }
                                         else
