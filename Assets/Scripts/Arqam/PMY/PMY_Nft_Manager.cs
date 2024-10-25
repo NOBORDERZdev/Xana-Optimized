@@ -315,38 +315,6 @@ namespace PMY
             obj.GetComponent<PMY_VideoAndImage>().InitData(null, url, worldInfos[obj.GetComponent<PMY_VideoAndImage>().id].pmyRatio, PMY_DataType.Video, PMY_VideoTypeRes.islive);
         }
 
-        IEnumerator GetSprite(string path, int index, System.Action<Sprite, int> callback)
-        {
-            while (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                yield return new WaitForEndOfFrame();
-                print("Internet Not Reachable");
-            }
-
-            using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(path))
-            {
-                yield return www.SendWebRequest();
-
-                if (www.result != UnityWebRequest.Result.Success)
-                {
-                    Debug.Log("ERror in loading sprite" + www.error);
-                }
-                else
-                {
-                    if (www.isDone)
-                    {
-                        Texture2D loadedTexture = DownloadHandlerTexture.GetContent(www);
-                        var rect = new Rect(1, 1, 1, 1);
-                        var tempTex = ((DownloadHandlerTexture)www.downloadHandler).texture;
-                        Sprite sprite = Sprite.Create(loadedTexture, new Rect(0f, 0f, loadedTexture.width, loadedTexture.height), new Vector2(.5f, 0f));
-                        print("Texture is " + sprite);
-                        callback(sprite, index);
-                    }
-                }
-            }
-        }
-
-
         public void SetInfo(PMY_Ratio ratio, string title, string aurthur, string des, string url, Texture2D image, PMY_DataType type, string videoLink, PMY_VideoTypeRes videoType, string pdfURL, QuizData quizData, int nftId = 0, PMY_VideoAndImage.RoomType roomType = PMY_VideoAndImage.RoomType.Gallery)
         {
             nftTitle = title;
@@ -429,40 +397,19 @@ namespace PMY
                     {
                         ratioReferences[ratioId].l_Loader.SetActive(true);
                         ratioReferences[ratioId].p_Loader.SetActive(false);
-                        //ratioReferences[ratioId].l_videoPlayer.Play();
 
                         if (videoType == PMY_VideoTypeRes.islive)
                         {
-                            //ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<RawImage>().enabled = false;
-                            //ratioReferences[ratioId].l_videoPlayer.enabled = false;
-                            //ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
-                            //ratioReferences[ratioId].l_LivePlayer.SetActive(true);
-
-                            //ratioReferences[ratioId].l_LivePlayer.GetComponent<StreamYoutubeVideo>().StreamYtVideo(videoLink, true);
                             ratioReferences[ratioId].l_obj.GetComponent<AdvancedYoutubePlayer>().StreamYtVideo(videoLink, true);
-                            //ratioReferences[ratioId].l_LivePlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
-                            //ratioReferences[ratioId].l_LivePlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
                         }
                         else if (videoType == PMY_VideoTypeRes.prerecorded)
                         {
-                            //ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<RawImage>().enabled = true;
-                            //ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(true);
-                            //ratioReferences[ratioId].l_LivePlayer.SetActive(false);
-
-                            //ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<StreamYoutubeVideo>().StreamYtVideo(videoLink, false);
                             ratioReferences[ratioId].l_obj.GetComponent<AdvancedYoutubePlayer>().StreamYtVideo(videoLink, false);
                         }
                         else if (videoType == PMY_VideoTypeRes.aws)
                         {
-                            //if (ratioReferences[ratioId].l_PrerecordedPlayer)
-                            //    ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
-
-                            //if (ratioReferences[ratioId].l_LivePlayer)
-                            //    ratioReferences[ratioId].l_LivePlayer.SetActive(false);
-
-                            //ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<RawImage>().enabled = true;
                             ratioReferences[ratioId].l_PrerecordedPlayer.gameObject.SetActive(true);
-                            //ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<VideoPlayer>().enabled = true;
+
                             ratioReferences[ratioId].l_PrerecordedPlayer.url = videoLink;
                             ratioReferences[ratioId].l_PrerecordedPlayer.Play();
                             ratioReferences[ratioId].l_obj.GetComponent<VideoPlayerFeatures>().EnableVideoFeature();
@@ -481,40 +428,18 @@ namespace PMY
                     {
                         ratioReferences[ratioId].l_Loader.SetActive(false);
                         ratioReferences[ratioId].p_Loader.SetActive(true);
-                        //ratioReferences[ratioId].p_videoPlayer.Play();
 
                         if (videoType == PMY_VideoTypeRes.islive)
                         {
-                            //ratioReferences[ratioId].p_PrerecordedPlayer.GetComponent<RawImage>().enabled = false;
-                            //ratioReferences[ratioId].p_videoPlayer.enabled = false;
-                            //ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(false);
-                            //ratioReferences[ratioId].p_LivePlayer.SetActive(true);
-
-                            //ratioReferences[ratioId].p_LivePlayer.GetComponent<StreamYoutubeVideo>().StreamYtVideo(videoLink, true);
                             ratioReferences[ratioId].p_obj.GetComponent<AdvancedYoutubePlayer>().StreamYtVideo(videoLink, true);
-                            //ratioReferences[ratioId].p_LivePlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
-                            //ratioReferences[ratioId].p_LivePlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
                         }
                         else if (videoType == PMY_VideoTypeRes.prerecorded)
                         {
-                            //ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = true;
-                            //ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(true);
-                            //ratioReferences[ratioId].p_LivePlayer.SetActive(false);
-
-                            //ratioReferences[ratioId].p_obj.GetComponent<AdvancedYoutubePlayer>().StreamYtVideo(videoLink, false);
                             ratioReferences[ratioId].p_obj.GetComponent<AdvancedYoutubePlayer>().StreamYtVideo(videoLink, false);
-                            //ratioReferences[ratioId].p_PrerecordedPlayer.GetComponent<StreamYoutubeVideo>().StreamYtVideo(videoLink, false);
-                            //ratioReferences[ratioId].p_PrerecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
-                            //ratioReferences[ratioId].p_PrerecordedPlayer.GetComponent<YoutubeSimplified>().Play();
-                            //ratioReferences[ratioId].p_videoPlayer.playOnAwake = true;
-                            //ratioReferences[ratioId].p_videoPlayer.enabled = true;
                         }
                         else if (videoType == PMY_VideoTypeRes.aws)
                         {
                             ratioReferences[ratioId].p_PrerecordedPlayer.gameObject.SetActive(true);
-                            //ratioReferences[ratioId].p_LivePlayer.SetActive(false);
-                            //ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = true;
-                            //ratioReferences[ratioId].p_videoPlayer.enabled = true;
                             ratioReferences[ratioId].p_PrerecordedPlayer.url = videoLink;
                             ratioReferences[ratioId].p_PrerecordedPlayer.Play();
                             ratioReferences[ratioId].p_obj.GetComponent<VideoPlayerFeatures>().EnableVideoFeature();
