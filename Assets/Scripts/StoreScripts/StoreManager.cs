@@ -111,20 +111,6 @@ public class StoreManager : MonoBehaviour
 
     [Space(10f)]
     public GameObject colorCustomizationPrefabBtn;
-
-    //[Header("Buy Panel")]
-    //public GameObject BuyItemPrefab;
-    //public Transform BuyPanelParentOfBtns;
-    //public List<GameObject> TotalObjectsInBuyPanel;
-    //public List<GameObject> TotalSelectedInBuyPanel;
-    //public Text TotalPriceBuyPanelTxt;
-    //public Text TotalItemsBuyPanelTxt;
-    //public GameObject BuyBtnCheckOut;
-    //public string[] ArrayofBuyItems;
-    //private int TotalItemPriceCheckOut;
-
-
-
     [Header("Color Customizations")]
     public bool colorMode = false;
     public GameObject colorBtn;
@@ -162,7 +148,7 @@ public class StoreManager : MonoBehaviour
     public GameObject Defaultreset, LastSavedreset, PanelResetDefault;
     // public GameObject ButtonFor_Preset;
     public GameObject StartPanel_PresetParentPanel, PresetArrayContent;
-   // public GameObject backbutton_preset;
+    // public GameObject backbutton_preset;
     public Transform contentList;
 
     public GameObject faceTapButton;
@@ -199,24 +185,27 @@ public class StoreManager : MonoBehaviour
 
     private void Awake()
     {
-
-        instance = this;
-        checkforSavebutton = false;
-
+        if (instance == null)
+        {
+            instance = this;
+        }
         DisableColorPanels();
-
-        //for (int i = 0; i < 20; i++) { itemButtonsPool.Add( Instantiate(ItemsBtnPrefab)); }
+        checkforSavebutton = false;
     }
     [SerializeField]
     List<GridLayoutGroup> panelsLayoutGroups;
 
     void Start()
     {
-        load = LoadPlayerAvatar.instance_loadplayer.loader;
-        saveButton = LoadPlayerAvatar.instance_loadplayer.saveButton.gameObject;
-        saveStoreBtnImage = SaveStoreBtn.GetComponent<Image>();
-        saveStoreBtnButton = SaveStoreBtn.GetComponent<Button>();
-        CheckAPILoaded = false;
+        if (LoadPlayerAvatar.instance_loadplayer != null &&
+    LoadPlayerAvatar.instance_loadplayer.saveButton != null)
+        {
+            load = LoadPlayerAvatar.instance_loadplayer.loader;
+            saveButton = LoadPlayerAvatar.instance_loadplayer.saveButton.gameObject;
+            saveStoreBtnImage = SaveStoreBtn.GetComponent<Image>();
+            saveStoreBtnButton = SaveStoreBtn.GetComponent<Button>();
+            CheckAPILoaded = false;
+        }
         if (PlayerPrefs.GetInt("WalletLogin") != 1)
         {
             GetAllMainCategories();
@@ -228,12 +217,6 @@ public class StoreManager : MonoBehaviour
                 AvatarSaved.SetActive(false);
             SetPresetValue();
         }
-        //    if(UserRegisterationManager.instance.LoggedInAsGuest)
-        //  Invoke("Character_DefaultReset",2.0f);
-
-        //WaqasAhmad
-        //CharcterBodyParts.instance.BindSkinListner();
-
         if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
         {
             for (int i = 0; i < panelsLayoutGroups.Count; i++)
@@ -311,19 +294,11 @@ public class StoreManager : MonoBehaviour
         DynamicEventManager.deepLink?.Invoke("Come from store manager");
     }
 
-    //void ChangecharacterOnCLickFromserver()
-    //{
-    //    print("Calling cloths");
-    //    PlayerPrefs.SetInt("IsLoggedIn", 2);
-    //        DefaultEnteriesforManican.instance.DefaultReset();
-    //    GameManager.Instance.mainCharacter.GetComponent<Equipment>().Start();
-    //    SavaCharacterProperties.instance.LoadMorphsfromFile();
-    //}
     private void Update()
     {
 
         // Quick fix AKA ElFY
-        SaveBtn();
+        //SaveBtn();
 
     }
     public void SaveBtn()
@@ -413,7 +388,7 @@ public class StoreManager : MonoBehaviour
         //{
         //    LastSavedreset.GetComponent<Button>().onClick.AddListener(Character_ResettoLastSaved);
         //}
-       // backbutton_preset.GetComponent<Button>().onClick.AddListener(BackTrackPreset);
+        // backbutton_preset.GetComponent<Button>().onClick.AddListener(BackTrackPreset);
     }
     void BackTrackPreset()
     {
@@ -488,9 +463,9 @@ public class StoreManager : MonoBehaviour
         Default_LastSaved_PanelDisabler();
 
 
-        StoreManager.instance.GreyRibbonImage.SetActive(true);
-        StoreManager.instance.WhiteRibbonImage.SetActive(false);
-        StoreManager.instance.saveStoreBtnImage.color = Color.white;
+        GreyRibbonImage.SetActive(true);
+       WhiteRibbonImage.SetActive(false);
+        saveStoreBtnImage.color = Color.white;
         PresetData_Jsons test;
         if (FindObjectOfType<PresetData_Jsons>())
         {
@@ -639,7 +614,7 @@ public class StoreManager : MonoBehaviour
         eyeLashesDwonloadedCount = 0;
         eyesDwonloadedCount = 0;
         lipsDwonloadedCount = 0;
-        if(LoadingHandler.Instance)
+        if (LoadingHandler.Instance)
             LoadingHandler.Instance.storeLoadingScreen.SetActive(false);
 
     }
@@ -697,7 +672,7 @@ public class StoreManager : MonoBehaviour
             PlayerPrefs.SetInt("Loaded", 1);
             if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
             {
-                if (StoreManager.instance.MultipleSave)
+                if (MultipleSave)
                 {
                     AvatarSaved.SetActive(true);
                 }
@@ -924,7 +899,7 @@ public class StoreManager : MonoBehaviour
 
         if (apiResponseHolder.CheckResponse(url + Jsondata))
         {
-            string res= apiResponseHolder.GetResponse(url + Jsondata);
+            string res = apiResponseHolder.GetResponse(url + Jsondata);
             ObjofMainCategory = GetAllDataNewAPI(res);
             SaveAllMainCategoriesToArray();
             yield break;
@@ -1329,8 +1304,8 @@ public class StoreManager : MonoBehaviour
     public void OnClickBackButton()
     {
         //GameManager.Instance.mainCharacter.GetComponent<FaceIK>().ikActive= true;
-       // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
-      //  GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(true);
+        // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
+        //  GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(true);
 
         eyeBrowsColorButton.gameObject.SetActive(false);
         hairColorButton.gameObject.SetActive(false);
@@ -1344,7 +1319,7 @@ public class StoreManager : MonoBehaviour
 
     public void OnClickHomeButton()
     {
-      //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
+        //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
 
         isSaveFromreturnHomePopUp = false;
         ReturnHomePopUp.SetActive(false);
@@ -1424,9 +1399,9 @@ public class StoreManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("presetPanel", 0);  // was loggedin as account 
 
-            StoreManager.instance.GreyRibbonImage.SetActive(true);
-            StoreManager.instance.WhiteRibbonImage.SetActive(false);
-            StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
+            GreyRibbonImage.SetActive(true);
+            WhiteRibbonImage.SetActive(false);
+            SaveStoreBtn.GetComponent<Image>().color = Color.white;
 
             SavaCharacterProperties.instance.LoadMorphsfromFile();
         }
@@ -3683,260 +3658,6 @@ public class StoreManager : MonoBehaviour
 
         UpdateStoreSelection(0);
     }
-
-
-
-    //public void UndoFunc()
-    //{
-    //    //UndoSelection();
-    //    //RedoBtn.GetComponent<Button>().interactable = true;
-    //    //StoreManager.instance.SaveStoreBtn.SetActive(true);
-    //    //StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
-    //    //StoreManager.instance.GreyRibbonImage.SetActive(false);
-    //    //StoreManager.instance.WhiteRibbonImage.SetActive(true);
-
-    //    //if (CurrentIndex != 0)
-    //    //{
-    //    //    if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType != UndoRedoList[CurrentIndex - 1].ClothTex_Item.ItemType)
-    //    //        CurrentIndex--;
-    //    //    else
-    //    //        CurrentIndex--;
-    //    //}
-    //    //else
-    //    //{
-    //    //    CurrentIndex--;
-    //    //}
-
-    //    //if (CurrentIndex < 0)
-    //    //    CurrentIndex = 0;
-
-
-    //    //if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Lip" || UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Eyes" || UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Skin")
-    //    //{
-    //    //    _DownloadRigClothes.BindExistingClothes(UndoRedoList[CurrentIndex].ClothTex_Item.ItemType, UndoRedoList[CurrentIndex].ClothTex_Item.ItemName);
-
-    //    //    if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Lip")
-    //    //    {
-    //    //        XanaConstants.xanaConstants.lipColor = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID.ToString();
-    //    //    }
-
-    //    //    else if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Eyes")
-    //    //    {
-    //    //        XanaConstants.xanaConstants.eyeColor = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID.ToString();
-    //    //    }
-
-    //    //    else if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Skin")
-    //    //    {
-    //    //        XanaConstants.xanaConstants.skinColor = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID.ToString();
-    //    //    }
-    //    //}
-    //    //else if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "BodyFat")
-    //    //{
-
-    //    //    CharacterCustomizationManager.Instance.UpdateChBodyShape(UndoRedoList[CurrentIndex].ClothTex_Item.ItemID);
-    //    //    XanaConstants.xanaConstants.bodyNumber = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID;
-    //    //}
-    //    //else if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Preset")
-    //    //{
-    //    //    if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemName == "Zero")
-    //    //    {
-    //    //        GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(UndoRedoList[CurrentIndex].ClothTex_Item.ItemPrefab.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne, 0);
-    //    //    }
-    //    //    else if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemName == "One")
-    //    //    {
-    //    //        GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(UndoRedoList[CurrentIndex].ClothTex_Item.ItemID, 100);
-    //    //        GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(UndoRedoList[CurrentIndex].ClothTex_Item.ItemPrefab.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne, 0);
-    //    //    }
-    //    //    else
-    //    //    {
-    //    //        UndoRedoList[CurrentIndex].ClothTex_Item.ItemPrefab.GetComponent<BodyCustomizationTrigger>().CustomizationTriggerTwo();
-    //    //    }
-    //    //    GameObject tmp = UndoRedoList[CurrentIndex].ClothTex_Item.ItemPrefab;
-
-    //    //    if (tmp)
-    //    //    {
-    //    //        if (tmp.transform.IsChildOf(ParentOfBtnsAvatarFace))
-    //    //        {
-    //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstants.xanaConstants.faceIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
-    //    //            else
-    //    //                XanaConstants.xanaConstants.faceIndex = 0;
-    //    //        }
-
-    //    //        else if (tmp.transform.IsChildOf(ParentOfBtnsAvatarEyeBrows))
-    //    //        {
-    //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstants.xanaConstants.eyeBrowIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
-    //    //            else
-    //    //                XanaConstants.xanaConstants.eyeBrowIndex = 0;
-    //    //        }
-
-    //    //        else if (tmp.transform.IsChildOf(ParentOfBtnsAvatarEyes))
-    //    //        {
-    //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstants.xanaConstants.eyeIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
-    //    //            else
-    //    //                XanaConstants.xanaConstants.eyeIndex = 0;
-    //    //        }
-
-    //    //        else if (tmp.transform.IsChildOf(ParentOfBtnsAvatarNose))
-    //    //        {
-    //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstants.xanaConstants.noseIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
-    //    //            else
-    //    //                XanaConstants.xanaConstants.noseIndex = 0;
-    //    //        }
-
-    //    //        else if (tmp.transform.IsChildOf(ParentOfBtnsAvatarLips))
-    //    //        {
-    //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstants.xanaConstants.lipIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
-    //    //            else
-    //    //                XanaConstants.xanaConstants.lipIndex = 0;
-    //    //        }
-    //    //    }
-
-    //    //}
-    //    //else
-    //    //{
-    //    //    GameManager.Instance.EquipUiObj.ChangeCostume(UndoRedoList[CurrentIndex].ClothTex_Item.ItemName.ToLower());
-    //    //}
-
-    //    //if (CurrentIndex == 0)
-    //    //{
-    //    //    UndoBtn.GetComponent<Button>().interactable = false;
-    //    //}
-
-    //    //if (!ParentOfBtnsCustomEyes.gameObject.activeSelf && !ParentOfBtnsCustomLips.gameObject.activeSelf && !ParentOfBtnsCustomSkin.gameObject.activeSelf)
-    //    //    UpdateStoreSelection(XanaConstants.xanaConstants.currentButtonIndex);
-
-    //    //else
-    //    //    UpdateColor(XanaConstants.xanaConstants.currentButtonIndex);
-    //}
-    //public void RedoFunc()
-    //{
-    //    //UndoSelection();
-    //    //StoreManager.instance.SaveStoreBtn.SetActive(true);
-    //    //StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
-    //    //StoreManager.instance.GreyRibbonImage.SetActive(false);
-    //    //StoreManager.instance.WhiteRibbonImage.SetActive(true);
-
-    //    //if (CurrentIndex < UndoRedoList.Count - 1)
-    //    //{
-    //    //    if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType != UndoRedoList[CurrentIndex + 1].ClothTex_Item.ItemType)
-    //    //        CurrentIndex++;
-    //    //    else
-    //    //        CurrentIndex++;
-    //    //}
-
-    //    //else
-    //    //{
-    //    //    CurrentIndex++;
-    //    //}
-
-    //    //if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Lip" || UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Eyes" || UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Skin")
-    //    //{
-    //    //    _DownloadRigClothes.BindExistingClothes(UndoRedoList[CurrentIndex].ClothTex_Item.ItemType, UndoRedoList[CurrentIndex].ClothTex_Item.ItemName);
-
-    //    //    if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Lip")
-    //    //    {
-    //    //        XanaConstants.xanaConstants.lipColor = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID.ToString();
-    //    //    }
-
-    //    //    else if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Eyes")
-    //    //    {
-    //    //        XanaConstants.xanaConstants.eyeColor = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID.ToString();
-    //    //    }
-
-    //    //    else if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Skin")
-    //    //    {
-    //    //        XanaConstants.xanaConstants.skinColor = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID.ToString();
-    //    //    }
-    //    //}
-    //    //else if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "BodyFat")
-    //    //{
-    //    //    CharacterCustomizationManager.Instance.UpdateChBodyShape(UndoRedoList[CurrentIndex].ClothTex_Item.ItemID);
-    //    //    XanaConstants.xanaConstants.bodyNumber = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID;
-    //    //}
-    //    //else if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Preset")
-    //    //{
-    //    //    if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemName == "Zero")
-    //    //    {
-    //    //        GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(UndoRedoList[CurrentIndex].ClothTex_Item.ItemPrefab.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne, 0);
-    //    //    }
-    //    //    else if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemName == "One")
-    //    //    {
-    //    //        GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(UndoRedoList[CurrentIndex].ClothTex_Item.ItemID, 100);
-    //    //        GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(UndoRedoList[CurrentIndex].ClothTex_Item.ItemPrefab.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne, 0);
-    //    //    }
-    //    //    else
-    //    //    {
-    //    //        UndoRedoList[CurrentIndex].ClothTex_Item.ItemPrefab.GetComponent<BodyCustomizationTrigger>().CustomizationTriggerTwo();
-    //    //    }
-
-    //    //    GameObject tmp = UndoRedoList[CurrentIndex].ClothTex_Item.ItemPrefab;
-
-    //    //    if (tmp)
-    //    //    {
-    //    //        if (tmp.transform.IsChildOf(ParentOfBtnsAvatarFace))
-    //    //        {
-    //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstants.xanaConstants.faceIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
-    //    //            else
-    //    //                XanaConstants.xanaConstants.faceIndex = 0;
-    //    //        }
-
-    //    //        else if (tmp.transform.IsChildOf(ParentOfBtnsAvatarEyeBrows))
-    //    //        {
-    //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstants.xanaConstants.eyeBrowIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
-    //    //            else
-    //    //                XanaConstants.xanaConstants.eyeBrowIndex = 0;
-    //    //        }
-
-    //    //        else if (tmp.transform.IsChildOf(ParentOfBtnsAvatarEyes))
-    //    //        {
-    //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstants.xanaConstants.eyeIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
-    //    //            else
-    //    //                XanaConstants.xanaConstants.eyeIndex = 0;
-    //    //        }
-
-    //    //        else if (tmp.transform.IsChildOf(ParentOfBtnsAvatarNose))
-    //    //        {
-    //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstants.xanaConstants.noseIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
-    //    //            else
-    //    //                XanaConstants.xanaConstants.noseIndex = 0;
-    //    //        }
-
-    //    //        else if (tmp.transform.IsChildOf(ParentOfBtnsAvatarLips))
-    //    //        {
-    //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstants.xanaConstants.lipIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
-    //    //            else
-    //    //                XanaConstants.xanaConstants.lipIndex = 0;
-    //    //        }
-    //    //    }
-    //    //}
-    //    //else
-    //    //{
-    //    //    GameManager.Instance.EquipUiObj.ChangeCostume(UndoRedoList[CurrentIndex].ClothTex_Item.ItemName.ToLower());
-    //    //}
-
-    //    //if (CurrentIndex == UndoRedoList.Count - 1)
-    //    //{
-    //    //    RedoBtn.GetComponent<Button>().interactable = false;
-    //    //}
-
-    //    //UndoBtn.GetComponent<Button>().interactable = true;
-
-    //    //if (!ParentOfBtnsCustomEyes.gameObject.activeSelf && !ParentOfBtnsCustomLips.gameObject.activeSelf && !ParentOfBtnsCustomSkin.gameObject.activeSelf)
-    //    //    UpdateStoreSelection(XanaConstants.xanaConstants.currentButtonIndex);
-
-    //    //else
-    //    //    UpdateColor(XanaConstants.xanaConstants.currentButtonIndex);
-    //}
     private void OnApplicationQuit()
     {
         //PresetData_Jsons.lastSelectedPresetName = null;
@@ -4833,28 +4554,28 @@ public class StoreManager : MonoBehaviour
         //}
         //else
         //{
-            XanaConstants.xanaConstants.hair = SavaCharacterProperties.instance.SaveItemList.myItemObj[2].ItemID.ToString();
-            XanaConstants.xanaConstants.hairColoPalette = SavaCharacterProperties.instance.SaveItemList.HairColorPaletteValue.ToString();
-            XanaConstants.xanaConstants.shirt = SavaCharacterProperties.instance.SaveItemList.myItemObj[1].ItemID.ToString();
-            XanaConstants.xanaConstants.pants = SavaCharacterProperties.instance.SaveItemList.myItemObj[0].ItemID.ToString();
-            XanaConstants.xanaConstants.shoes = SavaCharacterProperties.instance.SaveItemList.myItemObj[3].ItemID.ToString();
-            XanaConstants.xanaConstants.eyeWearable = SavaCharacterProperties.instance.SaveItemList.EyeValue.ToString();
+        XanaConstants.xanaConstants.hair = SavaCharacterProperties.instance.SaveItemList.myItemObj[2].ItemID.ToString();
+        XanaConstants.xanaConstants.hairColoPalette = SavaCharacterProperties.instance.SaveItemList.HairColorPaletteValue.ToString();
+        XanaConstants.xanaConstants.shirt = SavaCharacterProperties.instance.SaveItemList.myItemObj[1].ItemID.ToString();
+        XanaConstants.xanaConstants.pants = SavaCharacterProperties.instance.SaveItemList.myItemObj[0].ItemID.ToString();
+        XanaConstants.xanaConstants.shoes = SavaCharacterProperties.instance.SaveItemList.myItemObj[3].ItemID.ToString();
+        XanaConstants.xanaConstants.eyeWearable = SavaCharacterProperties.instance.SaveItemList.EyeValue.ToString();
 
-            XanaConstants.xanaConstants.PresetValueString = SavaCharacterProperties.instance.SaveItemList.PresetValue;
-            XanaConstants.xanaConstants.skinColor = SavaCharacterProperties.instance.SaveItemList.SkinId.ToString();
-            XanaConstants.xanaConstants.faceIndex = SavaCharacterProperties.instance.SaveItemList.FaceValue;
-            XanaConstants.xanaConstants.eyeBrowIndex = SavaCharacterProperties.instance.SaveItemList.EyeBrowValue;
-            XanaConstants.xanaConstants.eyeBrowColorPaletteIndex = SavaCharacterProperties.instance.SaveItemList.EyeBrowColorPaletteValue;
-            XanaConstants.xanaConstants.eyeLashesIndex = SavaCharacterProperties.instance.SaveItemList.EyeLashesValue;
-            XanaConstants.xanaConstants.eyeIndex = SavaCharacterProperties.instance.SaveItemList.EyeValue;
-            XanaConstants.xanaConstants.eyeColor = SavaCharacterProperties.instance.SaveItemList.EyesColorValue.ToString();
-            XanaConstants.xanaConstants.eyeColorPalette = SavaCharacterProperties.instance.SaveItemList.EyesColorPaletteValue.ToString();
-            XanaConstants.xanaConstants.noseIndex = SavaCharacterProperties.instance.SaveItemList.NoseValue;
-            XanaConstants.xanaConstants.lipIndex = SavaCharacterProperties.instance.SaveItemList.LipsValue;
-            XanaConstants.xanaConstants.lipColor = SavaCharacterProperties.instance.SaveItemList.LipsColorValue.ToString();
-            XanaConstants.xanaConstants.lipColorPalette = SavaCharacterProperties.instance.SaveItemList.LipsColorPaletteValue.ToString();
-            XanaConstants.xanaConstants.bodyNumber = SavaCharacterProperties.instance.SaveItemList.BodyFat;
-            XanaConstants.xanaConstants.makeupIndex = SavaCharacterProperties.instance.SaveItemList.MakeupValue;
+        XanaConstants.xanaConstants.PresetValueString = SavaCharacterProperties.instance.SaveItemList.PresetValue;
+        XanaConstants.xanaConstants.skinColor = SavaCharacterProperties.instance.SaveItemList.SkinId.ToString();
+        XanaConstants.xanaConstants.faceIndex = SavaCharacterProperties.instance.SaveItemList.FaceValue;
+        XanaConstants.xanaConstants.eyeBrowIndex = SavaCharacterProperties.instance.SaveItemList.EyeBrowValue;
+        XanaConstants.xanaConstants.eyeBrowColorPaletteIndex = SavaCharacterProperties.instance.SaveItemList.EyeBrowColorPaletteValue;
+        XanaConstants.xanaConstants.eyeLashesIndex = SavaCharacterProperties.instance.SaveItemList.EyeLashesValue;
+        XanaConstants.xanaConstants.eyeIndex = SavaCharacterProperties.instance.SaveItemList.EyeValue;
+        XanaConstants.xanaConstants.eyeColor = SavaCharacterProperties.instance.SaveItemList.EyesColorValue.ToString();
+        XanaConstants.xanaConstants.eyeColorPalette = SavaCharacterProperties.instance.SaveItemList.EyesColorPaletteValue.ToString();
+        XanaConstants.xanaConstants.noseIndex = SavaCharacterProperties.instance.SaveItemList.NoseValue;
+        XanaConstants.xanaConstants.lipIndex = SavaCharacterProperties.instance.SaveItemList.LipsValue;
+        XanaConstants.xanaConstants.lipColor = SavaCharacterProperties.instance.SaveItemList.LipsColorValue.ToString();
+        XanaConstants.xanaConstants.lipColorPalette = SavaCharacterProperties.instance.SaveItemList.LipsColorPaletteValue.ToString();
+        XanaConstants.xanaConstants.bodyNumber = SavaCharacterProperties.instance.SaveItemList.BodyFat;
+        XanaConstants.xanaConstants.makeupIndex = SavaCharacterProperties.instance.SaveItemList.MakeupValue;
         //}
     }
 }
