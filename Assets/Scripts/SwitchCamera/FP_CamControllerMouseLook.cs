@@ -143,12 +143,12 @@ public class FP_CamControllerMouseLook : MonoBehaviour
 
         // Rotate the camera vertically (around the x-axis)
         transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
-        
-        // Restrict the camera's height
-        Vector3 position = transform.position;
-        position.y = Mathf.Clamp(position.y, minHeight, maxHeight); // Adjust minHeight and maxHeight as needed
-        transform.position = position;
 
+        // Restrict the camera's height
+            Vector3 position = transform.position;
+            SetMaxHeight();
+            position.y = Mathf.Clamp(position.y, minHeight, maxHeight); // Adjust minHeight and maxHeight as needed
+            transform.position = position;
 #endif
 
 
@@ -227,6 +227,7 @@ public class FP_CamControllerMouseLook : MonoBehaviour
         }
         // Restrict the camera's height
         Vector3 position = transform.position;
+        SetMaxHeight();
         position.y = Mathf.Clamp(position.y, minHeight, maxHeight); // Adjust minHeight and maxHeight as needed
         transform.position = position;
 
@@ -236,6 +237,11 @@ public class FP_CamControllerMouseLook : MonoBehaviour
     private float yRotation = 0f;
     public float touchSensitivity = 0.1f;
 
+    void SetMaxHeight()
+    {
+        Vector3 playerCurrentPos = playerBody.position;
+        maxHeight = playerCurrentPos.y + 15;
+    }
     private void MoveCameraFreeFloat()
     {
         // Get touch count
@@ -260,6 +266,7 @@ public class FP_CamControllerMouseLook : MonoBehaviour
 
             // Restrict the camera's height
             Vector3 position = transform.position;
+            SetMaxHeight();
             position.y = Mathf.Clamp(position.y, minHeight, maxHeight); // Adjust minHeight and maxHeight as needed
             transform.position = position;
         }
@@ -280,10 +287,10 @@ public class FP_CamControllerMouseLook : MonoBehaviour
 
             //  transform.Rotate(new Vector3(xRotation ,1*(delta.x * 10 * PlayerCameraController.instance.lookSpeedd * Time.deltaTime),0f));
 
-            // Restrict the camera's height
-            Vector3 position = transform.position;
-            position.y = Mathf.Clamp(position.y, minHeight, maxHeight); // Adjust minHeight and maxHeight as needed
-            transform.position = position;
+            //// Restrict the camera's height
+            //Vector3 position = transform.position;
+            //position.y = Mathf.Clamp(position.y, minHeight, maxHeight); // Adjust minHeight and maxHeight as needed
+            //transform.position = position;
         }
     }
 
