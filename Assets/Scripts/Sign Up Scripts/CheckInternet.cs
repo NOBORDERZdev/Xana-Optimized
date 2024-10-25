@@ -5,12 +5,12 @@ using UnityEngine.Events;
 public class CheckInternet : MonoBehaviour
 {
     public static CheckInternet instance;
-    public GameObject PopUp,loader;
+    public GameObject PopUp, loader;
     private bool once;
 
-    public UnityEvent onConnected ;
+    public UnityEvent onConnected;
     public UnityEvent onDisconnected;
-    private bool _hasInvokedConnection=true;
+    private bool _hasInvokedConnection = true;
 
     public bool ispopUpClose = true;
     private void Awake()
@@ -23,7 +23,7 @@ public class CheckInternet : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        if(onConnected == null)
+        if (onConnected == null)
             onConnected = new UnityEvent();
         // onConnected = GameManager.Instance.ReloadMainScene();
         onConnected.AddListener(test);
@@ -36,30 +36,34 @@ public class CheckInternet : MonoBehaviour
     }
     private void OnEnable()
     {
-       // once = true;
+        // once = true;
     }
-    
+
     // Start is called before the first frame update
     void Start()
     {
         once = true;
         InvokeRepeating("checkConection", 1.0f, 3);
-      //  Debug.Log(once + "i am still running");
+        //  Debug.Log(once + "i am still running");
     }
-     
+
     void checkConection()
     {
         if (Application.internetReachability == NetworkReachability.NotReachable && !LoadingHandler.Instance.gameObject.transform.GetChild(0).gameObject.activeInHierarchy)
         {
             Debug.Log(once + "Error.Not going on");
 
-            if (once == true) { 
+            if (once == true)
+            {
                 {
-                    if (PlayerPrefs.HasKey("TermsConditionAgreement") && PlayerPrefs.GetInt("shownWelcome") == 0)
-                        UserRegisterationManager.instance.OpenUIPanal(1);
-                    UserRegisterationManager.instance.FirstPanal.GetComponent<OnEnableDisable>().ClosePopUp();
+                    if (UserRegisterationManager.instance)
+                    {
+                        if (PlayerPrefs.HasKey("TermsConditionAgreement") && PlayerPrefs.GetInt("shownWelcome") == 0)
+                            UserRegisterationManager.instance.OpenUIPanal(1);
+                        UserRegisterationManager.instance.FirstPanal.GetComponent<OnEnableDisable>().ClosePopUp();
+                    }
                 }
-                once=false;
+                once = false;
             }
             //UserRegisterationManager.instance.OpenUIPanal(1);
             //UserRegisterationManager.instance.FirstPanal.GetComponent<OnEnableDisable>().ClosePopUp();
@@ -71,7 +75,7 @@ public class CheckInternet : MonoBehaviour
             once = true;
             if (!_hasInvokedConnection)
             {
-                onConnected.Invoke();
+                onConnected?.Invoke();
             }
             _hasInvokedConnection = true;
             //print("inertnet availble");
@@ -81,8 +85,9 @@ public class CheckInternet : MonoBehaviour
     void showPage()
     {
         ispopUpClose = false;
-        PopUp.SetActive(true);
-        onDisconnected.Invoke();
+        if (PopUp != null)
+            PopUp.SetActive(true);
+        onDisconnected?.Invoke();
     }
 
     public void cancel_PopUp()
