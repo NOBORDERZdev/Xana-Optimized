@@ -551,6 +551,18 @@ namespace PMY
                 case PMY_VideoAndImage.RoomType.RoomA_2:
                     eventName = FirebaseTrigger.CL_NFT_CRoom2.ToString() + "_" + (id + 1);
                     break;
+                case PMY_VideoAndImage.RoomType.RoomA_3:
+                    eventName = FirebaseTrigger.CL_NFT_CRoom3.ToString() + "_" + (id + 1);
+                    break;
+                case PMY_VideoAndImage.RoomType.RoomA_4:
+                    eventName = FirebaseTrigger.CL_NFT_CRoom4.ToString() + "_" + (id + 1);
+                    break;
+                case PMY_VideoAndImage.RoomType.RoomA_5:
+                    eventName = FirebaseTrigger.CL_NFT_CRoom5.ToString() + "_" + (id + 1);
+                    break;
+                case PMY_VideoAndImage.RoomType.RoomA_6:
+                    eventName = FirebaseTrigger.CL_NFT_CRoom6.ToString() + "_" + (id + 1);
+                    break;
                 case PMY_VideoAndImage.RoomType.Gallery:
                     eventName = FirebaseTrigger.CL_NFT_Gallery.ToString() + "_" + (id + 1);
                     break;
