@@ -70,7 +70,10 @@ public class XanaChatSystem : MonoBehaviour
     public ScrollRect ChatScrollRect;
 
     public Action<string> npcAlert;
+    public enum OldChatStatus { NotFetch, Inprogress, Fetched };
+    public OldChatStatus oldChatStatus;
 
+    private Coroutine oldChatCoroutine;
     #region Not Required
 
     //public bool helpChecked = false;
@@ -93,13 +96,23 @@ public class XanaChatSystem : MonoBehaviour
         {
             InputFieldChat.text = "";
         }
+
+        if (oldChatStatus.Equals(OldChatStatus.Inprogress) || oldChatStatus.Equals(OldChatStatus.NotFetch))
+            oldChatCoroutine = StartCoroutine(Delay());
     }
+
     private void Awake()
     {
         if (instance != null && instance != this)
             this.isPanelConfirmationRequire = instance.isPanelConfirmationRequire;
 
         instance = this;
+    }
+
+    private void OnDisable()
+    {
+        if (oldChatCoroutine != null && oldChatStatus.Equals(OldChatStatus.Inprogress))
+            StopCoroutine(oldChatCoroutine);
     }
 
     public void Start()
@@ -156,9 +169,8 @@ public class XanaChatSystem : MonoBehaviour
             chatNotificationIcon.SetActive(true);
         }
 
-        if (!this.gameObject.activeSelf) return;
-
-            StartCoroutine(Delay());
+        if (this.gameObject.activeInHierarchy)
+            oldChatCoroutine = StartCoroutine(Delay());
 
         //this.CurrentChannelText.text = _userName + " : " + _msg + "\n" + this.CurrentChannelText.text;
     }
@@ -223,8 +235,11 @@ public class XanaChatSystem : MonoBehaviour
 
     System.Collections.IEnumerator Delay()
     {
+        oldChatStatus = OldChatStatus.Inprogress;
         yield return new WaitForSeconds(.3f);
         ChatScrollRect.verticalNormalizedPosition = 1f;
+        oldChatStatus = OldChatStatus.Fetched;
+        oldChatCoroutine = null;
         //Debug.Log("================"+ ChatScrollRect.verticalNormalizedPosition);
     }
 
