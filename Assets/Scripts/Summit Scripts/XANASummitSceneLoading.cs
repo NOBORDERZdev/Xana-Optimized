@@ -111,6 +111,8 @@ public class XANASummitSceneLoading : MonoBehaviour
             return;
         }
 
+        LoadingHandler.Instance.LoadInstructionData(domeGeneralData);
+
         if (domeGeneralData.isSubWorld)
         {
             ConstantsHolder.domeId = domeId;
@@ -594,6 +596,7 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.is_penpenz = dataContainer.summitData.domes[i].is_penpenz;
                 domeGeneralData.description = dataContainer.summitData.domes[i].description;
                 domeGeneralData.creatorName = dataContainer.summitData.domes[i].creatorName;
+                domeGeneralData.instruction = dataContainer.summitData.domes[i].instruction;
 
 
                 //if (dataContainer.summitData1.domes[i].worldType)
