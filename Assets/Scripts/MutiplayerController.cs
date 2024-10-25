@@ -620,20 +620,28 @@ namespace Photon.Pun.Demo.PunBasics
             SummitPlayerRPC summitplayer = player.GetComponent<SummitPlayerRPC>();
             if (summitplayer)
             {
-                Destroy(summitplayer.AnimatorView);
-                Destroy(summitplayer.VoiceView);
-                Destroy(summitplayer.Transformview);
-                Destroy(summitplayer.view);
+                if (summitplayer.AnimatorView)
+                    Destroy(summitplayer.AnimatorView);
+                if (summitplayer.VoiceView)
+                    Destroy(summitplayer.VoiceView);
+                if (summitplayer.Transformview)
+                    Destroy(summitplayer.Transformview);
+                if (summitplayer.view)
+                    Destroy(summitplayer.view);
             }
 
             foreach (var p in playerobjects)
             {
                 if (p == player || !p) continue;
                 summitplayer = p.GetComponent<SummitPlayerRPC>();
-                Destroy(summitplayer.AnimatorView);
-                Destroy(summitplayer.VoiceView);
-                Destroy(summitplayer.Transformview);
-                Destroy(summitplayer.view);
+                if (summitplayer.AnimatorView)
+                    Destroy(summitplayer.AnimatorView);
+                if (summitplayer.VoiceView)
+                    Destroy(summitplayer.VoiceView);
+                if (summitplayer.Transformview)
+                    Destroy(summitplayer.Transformview);
+                if (summitplayer.view)
+                    Destroy(summitplayer.view); 
             }
             if (isWheel)
             {
