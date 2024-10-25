@@ -116,6 +116,12 @@ public class GamePlayUIHandler : MonoBehaviour
             _inst = this;
 
         ConstantsHolder.xanaConstants.EnableSignInPanelByDefault = false;
+        LoadingHandler.Instance.EnterWheel += ((bo) => { if(bo)CloseEmoteAndReactionPanelOnWheel(); });
+    }
+
+    private void OnDisable()
+    {
+        LoadingHandler.Instance.EnterWheel -= ((bo) => { CloseEmoteAndReactionPanelOnWheel(); });
     }
     void ChangeOrientation()
     {
@@ -253,6 +259,13 @@ public class GamePlayUIHandler : MonoBehaviour
         GamePlayButtonEvents.inst.selectionPanelOpen = true;
         GamePlayButtonEvents.inst.OpenAllAnims();
     }
+
+    public void CloseEmoteAndReactionPanelOnWheel()
+    {
+        CloseAnimationButtonClick();
+        CloseReactionButtonClick();
+    }
+
     public void CloseAnimationButtonClick()
     {
         if(!ActionManager.IsAnimRunning)
