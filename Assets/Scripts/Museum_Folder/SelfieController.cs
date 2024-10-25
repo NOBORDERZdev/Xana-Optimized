@@ -43,7 +43,7 @@ public class SelfieController : MonoBehaviour
 
     [Header("Disable camera movement")]
     public bool disablecamera;
-   
+
     public GameObject[] OnFeatures;
     public GameObject[] OffFeatures;
     public GameObject selfiePanel;
@@ -52,7 +52,7 @@ public class SelfieController : MonoBehaviour
     [HideInInspector]
     public bool isReconnecting;
 
-    
+
     public void SwitchFromSelfieControl()
     {
 
@@ -114,7 +114,7 @@ public class SelfieController : MonoBehaviour
 
     private void CustomeAwake()
     {
-        if(Instance != null && Instance != this)
+        if (Instance != null && Instance != this)
         {
             if (Instance.m_IKLookAt != null)
                 m_IKLookAt = Instance.m_IKLookAt;
@@ -279,14 +279,14 @@ public class SelfieController : MonoBehaviour
     }
 
 
-    public void InitializeCharacter(GameObject l_SelfieStick, GameObject l_Parent, GameObject l_IkTarget, GameObject l_IKReference,GameObject Lookatorder)
+    public void InitializeCharacter(GameObject l_SelfieStick, GameObject l_Parent, GameObject l_IkTarget, GameObject l_IKReference, GameObject Lookatorder)
     {
         m_SelfieStick = l_SelfieStick;
         m_CharacterParent = l_Parent;
         m_IKObject = l_IkTarget;
         m_IKComponenet = l_IKReference;
-        m_IKLookAt= Lookatorder;
-        
+        m_IKLookAt = Lookatorder;
+
         //UpdateSelfieFOV();
 
         int l_PlayerID = 0;
@@ -343,14 +343,14 @@ public class SelfieController : MonoBehaviour
         if (EmoteAnimationPlay.Instance)
             EmoteAnimationPlay.Instance.clearAnimation?.Invoke();
         StartCoroutine(EnableSelfieWithDelay());
-       
+
 
     }
 
     IEnumerator EnableSelfieWithDelay()
     {
         yield return new WaitForSeconds(.3f);
-        
+
         m_PlayerController.GetComponent<PlayerControllerNew>().SwitchToSelfieMode();
 #if UNITY_EDITOR
         m_IsSelfieFeatureActive = true;
@@ -416,7 +416,7 @@ public class SelfieController : MonoBehaviour
             screenShotCameraCapture = m_IKComponenet.GetComponent<IKMuseum>().selfieCamera.transform.GetChild(0).GetComponent<Camera>();    // my changes 
             //m_RenderTexture.width = 960;
             //m_RenderTexture.height = 540;
-            newRenderTexture = new RenderTexture(960, 540,0,UnityEngine.Experimental.Rendering.GraphicsFormat.R16G16B16A16_SFloat);
+            newRenderTexture = new RenderTexture(960, 540, 0, UnityEngine.Experimental.Rendering.GraphicsFormat.R16G16B16A16_SFloat);
             //Graphics.Blit(m_RenderTexture, newRenderTexture);
             screenShotCameraCapture.targetTexture = newRenderTexture;   // my changes
 
@@ -469,6 +469,7 @@ public class SelfieController : MonoBehaviour
 
     public void DisableSelfieFeature()
     {
+        if (m_PlayerController == null) return;
 
         m_PlayerController.GetComponent<PlayerControllerNew>().gyroButton.SetActive(false);
         m_PlayerController.GetComponent<PlayerControllerNew>().gyroButton_Portait.SetActive(false);
@@ -476,7 +477,7 @@ public class SelfieController : MonoBehaviour
 #if UNITY_EDITOR
 
         m_IsSelfieFeatureActive = false;
-        
+
         if (m_IKComponenet != null && m_IKComponenet.GetComponent<IKMuseum>())
             m_IKComponenet.GetComponent<IKMuseum>().DisableIK();
         ChangeCloseObjectsState(true);
@@ -518,13 +519,14 @@ public class SelfieController : MonoBehaviour
 
 
 
-#elif UNITY_ANDROID || UNITY_IOS
+#elif UNITY_ANDROID || UNITY_IOS || UNITY_EDITOR
 
        
         if (Input.touchCount != 0 && Input.touchCount <= 1 || isReconnecting)
         {
             isReconnecting=false;
             m_IsSelfieFeatureActive = false;
+            if (m_IKComponenet != null)
             m_IKComponenet.GetComponent<IKMuseum>().DisableIK();
             ChangeCloseObjectsState(true);
             m_SelfieStick.SetActive(false);
@@ -576,8 +578,8 @@ public class SelfieController : MonoBehaviour
             screenShotCameraCapture.targetTexture = null;
             screenShotCameraCapture.transform.GetChild(0).GetComponent<Camera>().targetTexture = null;
         }
-        if(newRenderTexture!=null)
-        newRenderTexture.Release();
+        if (newRenderTexture != null)
+            newRenderTexture.Release();
         Resources.UnloadUnusedAssets();
         GC.Collect();
     }
@@ -601,7 +603,8 @@ public class SelfieController : MonoBehaviour
     {
         for (int i = 0; i < m_ObjectsToClose.Length; i++)
         {
-            m_ObjectsToClose[i].SetActive(l_State);
+            if (m_ObjectsToClose[i] != null)
+                m_ObjectsToClose[i].SetActive(l_State);
         }
     }
 
