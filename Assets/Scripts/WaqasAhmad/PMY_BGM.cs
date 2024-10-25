@@ -19,6 +19,7 @@ public class PMY_BGM : MonoBehaviour
     {
         BuilderEventManager.AfterPlayerInstantiated += SetBgm;
     }
+
     private void OnDisable()
     {
         //SceneManage.onExitAction -= OnSceneExit;
@@ -64,7 +65,15 @@ public class PMY_BGM : MonoBehaviour
 
     private void Start()
     {
-        BuilderEventManager.AfterWorldOffcialWorldsInatantiated += HookEvent;
+        if (XanaConstants.xanaConstants.assetLoadType.Equals(XanaConstants.AssetLoadType.ByAddressable))
+        {
+            BuilderEventManager.AfterWorldOffcialWorldsInatantiated += HookEvent;
+
+        }
+        else if (XanaConstants.xanaConstants.assetLoadType.Equals(XanaConstants.AssetLoadType.ByBuild))
+        {
+            HookEvent();
+        }
         UpdateMusicVolume();
     }
 

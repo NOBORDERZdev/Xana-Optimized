@@ -445,7 +445,7 @@ namespace PMY
                             ratioReferences[ratioId].p_obj.GetComponent<VideoPlayerFeatures>().EnableVideoFeature();
                         }
 
-                        OnVideoEnlargeAction.Invoke();
+                        OnVideoEnlargeAction?.Invoke();
                     }
 
                 }
