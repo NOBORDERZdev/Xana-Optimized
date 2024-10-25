@@ -54,6 +54,10 @@ namespace PMY
             PMYLobby,
             RoomA_1,
             RoomA_2,
+            RoomA_3,
+            RoomA_4,
+            RoomA_5,
+            RoomA_6,
             Gallery
         }
         [Space(5)]
@@ -104,6 +108,18 @@ namespace PMY
                     break;
                 case 9:
                     roomType = RoomType.RoomA_2;
+                    break;
+                case 10:
+                    roomType = RoomType.RoomA_3;
+                    break;
+                case 11:
+                    roomType = RoomType.RoomA_4;
+                    break;
+                case 12:
+                    roomType = RoomType.RoomA_5;
+                    break;
+                case 13:
+                    roomType = RoomType.RoomA_6;
                     break;
             }
         }

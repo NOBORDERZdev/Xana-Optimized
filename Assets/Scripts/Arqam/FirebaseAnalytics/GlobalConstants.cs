@@ -55,6 +55,10 @@ public class GlobalConstants
         CL_NFT_PMYLobby,
         CL_NFT_CRoom1,
         CL_NFT_CRoom2,
+        CL_NFT_CRoom3,
+        CL_NFT_CRoom4,
+        CL_NFT_CRoom5,
+        CL_NFT_CRoom6,
         CL_NFT_Gallery,
 
         URL_PMYLobby,
