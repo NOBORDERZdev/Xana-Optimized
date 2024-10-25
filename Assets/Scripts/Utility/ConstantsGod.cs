@@ -87,6 +87,9 @@ public class ConstantsGod
     public static string YOUTUBEVIDEOBYSCENE = "/item/v2/shareLinks/"; //scene name 
     public static string SUMMITYOUTUBEVIDEOBYID = "/domes/getSummitVideoByAreaIdIndex/";//Add areaId and index
     public static string GetStreamableYoutubeUrl = "/item/get-yt-downloadable-url";
+    public static string SENDYTLIVEHLSURLDATA = "/item/save-hls-for-env";
+    public static string GETYTLIVEHLSURLDATA = "/item/get-hls-url-for-env";
+    public static string SENDYTLIVEHLSURLDATAAPIKEY = "CzjFgyveM6uPGTU1eaCz";
 
     public static string GetDefaultAPI = "/items/get-items-with-defaults";
     // public static string GetUserDetailsAPI = "users/single-user";
