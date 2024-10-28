@@ -133,7 +133,7 @@ public class AvatarController : MonoBehaviour
             }
             else
             {
-                Invoke(nameof(Deley_Custom_InitializeAvatar), 0.02f);
+                Invoke(nameof(Deley_Custom_InitializeAvatar), 0.0f);
                 //Custom_InitializeAvatar();
                 if (xanaConstants.isNFTEquiped)
                 {
@@ -488,7 +488,7 @@ public class AvatarController : MonoBehaviour
     /// </summary>
     async void Custom_InitializeAvatar(SavingCharacterDataClass _data = null)
     {
-        await Task.Delay(200);
+      //  await Task.Delay(100);
         if (isLoadStaticClothFromJson)
         {
           //  Debug.Log("Buildding character from local json... ");
@@ -659,6 +659,7 @@ public class AvatarController : MonoBehaviour
                     {
                         ApplyAIData(_CharacterData, this.gameObject);
                     }
+
                     characterBodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
                 }
 
@@ -672,10 +673,16 @@ public class AvatarController : MonoBehaviour
                 //{
                 //    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeBrowPoints));
                 //}
-                //if (_CharacterData.eyebrrowTexture != "" && _CharacterData.eyebrrowTexture != null)
-                //{
-                //    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyebrrowTexture, this.gameObject, CurrentTextureType.EyeBrows));
-                //}
+                if (!string.IsNullOrEmpty(_CharacterData.eyebrrowTexture) && !_CharacterData.eyebrrowTexture.Contains("default"))
+                {
+                    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyebrrowTexture, this.gameObject, CurrentTextureType.EyeBrows));
+                }
+                else
+                {
+                    //characterBodyParts.SetTextureDefault(CurrentTextureType.EyeBrows, this.gameObject);
+                    characterBodyParts.SetTextureDefault(CurrentTextureType.EyeBrows, this.gameObject);
+                    characterBodyParts.ChangeEyebrowColor(characterBodyParts.DefaultEyebrowColor);
+                }
 
                 //if (_CharacterData.makeupName != "" && _CharacterData.makeupName != null)
                 //{
@@ -788,7 +795,6 @@ public class AvatarController : MonoBehaviour
                                             {
                                                 ClothsToBeLoaded.Add(item);
                                                 StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, avatarController, _CharacterData.HairColor));
-
                                             }
                                         }
                                         else

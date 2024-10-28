@@ -89,7 +89,7 @@ public class TopMenuButtonController : MonoBehaviour
             ReferencesForGamePlay.instance.playerControllerNew.gyroButton.SetActive(true);
             ReferencesForGamePlay.instance.playerControllerNew.gyroButton_Portait.SetActive(true);
         }
-        ReferencesForGamePlay.instance.QualityManager.SetQualityToggles(PlayerPrefs.GetInt("QualitySettings"));
+        //ReferencesForGamePlay.instance.QualityManager.SetQualityToggles(PlayerPrefs.GetInt("QualitySettings"));
     }
     void OnInviteClick()
     {
