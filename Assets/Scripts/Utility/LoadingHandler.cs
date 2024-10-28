@@ -1211,8 +1211,8 @@ public class LoadingHandler : MonoBehaviour
     }
     public IEnumerator DomLodingHandler()
     {
-        yield return new WaitForSeconds(1.5f);
         DomeLoading.SetActive(false);
+        yield return null;
     }
 
     public void DisableVideoLoading()
