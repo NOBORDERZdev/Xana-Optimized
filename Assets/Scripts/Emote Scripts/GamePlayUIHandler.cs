@@ -54,6 +54,18 @@ public class GamePlayUIHandler : MonoBehaviour
     public GameObject currentPortalObject;
     public TextMeshProUGUI JJPortalPopupText;
     public string[] JJPortalPopupTextData;
+    public MainCharactorControllerValue mainCharactorControllerValue = new MainCharactorControllerValue();
+
+    public class MainCharactorControllerValue
+    {
+        public float slopeLimit;
+        public float stepOffcet;
+        public float skinWidth;
+        public float minMoveDistance;
+        public Vector3 center;
+        public float radius;
+        public float height;
+    }
 
     #region XANA PARTY WORLD
     [Header("Penpenz Leaderboard")]
@@ -71,6 +83,31 @@ public class GamePlayUIHandler : MonoBehaviour
         if (rotateOrientationLand)
             rotateOrientationLand.onClick.AddListener(ChangeOrientation);
         ref_PlayerControllerNew = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>();
+        GetMainCharactorControllerValueHandler();
+    }
+
+    public void GetMainCharactorControllerValueHandler()
+    {
+        //mainCharactorControllerValue.slopeLimit = ref_PlayerControllerNew.characterController.slopeLimit;
+        //mainCharactorControllerValue.stepOffcet = ref_PlayerControllerNew.characterController.stepOffset;
+        //mainCharactorControllerValue.skinWidth = ref_PlayerControllerNew.characterController.skinWidth;
+        //mainCharactorControllerValue.minMoveDistance = ref_PlayerControllerNew.characterController.minMoveDistance;
+       mainCharactorControllerValue.center = new Vector3(0,0.86f,0);
+       mainCharactorControllerValue.radius = 0.2f;
+        //mainCharactorControllerValue.height = ref_PlayerControllerNew.characterController.height;
+
+    }
+
+    public void SetMainCharactorControllerValueHandler()
+    {
+        //ref_PlayerControllerNew.characterController.slopeLimit = mainCharactorControllerValue.slopeLimit;
+        //ref_PlayerControllerNew.characterController.stepOffset = mainCharactorControllerValue.stepOffcet;
+        //ref_PlayerControllerNew.characterController.skinWidth = mainCharactorControllerValue.skinWidth;
+        //ref_PlayerControllerNew.characterController.minMoveDistance = mainCharactorControllerValue.minMoveDistance;
+        ref_PlayerControllerNew.characterController.center = mainCharactorControllerValue.center;
+        ref_PlayerControllerNew.GetComponent<CharacterController>().radius = mainCharactorControllerValue.radius;
+        //ref_PlayerControllerNew.characterController.height = mainCharactorControllerValue.height;
+
     }
 
     private void OnEnable()
@@ -79,6 +116,12 @@ public class GamePlayUIHandler : MonoBehaviour
             _inst = this;
 
         ConstantsHolder.xanaConstants.EnableSignInPanelByDefault = false;
+        LoadingHandler.Instance.EnterWheel += ((bo) => { if(bo)CloseEmoteAndReactionPanelOnWheel(); });
+    }
+
+    private void OnDisable()
+    {
+        LoadingHandler.Instance.EnterWheel -= ((bo) => { CloseEmoteAndReactionPanelOnWheel(); });
     }
     void ChangeOrientation()
     {
@@ -136,6 +179,8 @@ public class GamePlayUIHandler : MonoBehaviour
             ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(false);
 
         GamePlayButtonEvents.inst.OnExitButtonClick();
+        SetMainCharactorControllerValueHandler();
+
     }
 
     public void OnPeopeClick()
@@ -155,7 +200,7 @@ public class GamePlayUIHandler : MonoBehaviour
 
     public void EnableJJPortalPopup(GameObject obj, int indexForText)
     {
-        if(LoadingHandler.Instance != null)
+        if (LoadingHandler.Instance != null)
         {
             LoadingHandler.Instance.ResetLoadingValues();
         }
@@ -172,7 +217,7 @@ public class GamePlayUIHandler : MonoBehaviour
             currentPortalObject.GetComponent<PlayerPortal>().RedirectToWorld();
         else if (currentPortalObject.GetComponent<JjWorldChanger>())
             currentPortalObject.GetComponent<JjWorldChanger>().RedirectToWorld();
-        else if(currentPortalObject.GetComponent<MeetingRoomTeleport>())
+        else if (currentPortalObject.GetComponent<MeetingRoomTeleport>())
             currentPortalObject.GetComponent<MeetingRoomTeleport>().RedirectToWorld();
     }
 
@@ -214,6 +259,13 @@ public class GamePlayUIHandler : MonoBehaviour
         GamePlayButtonEvents.inst.selectionPanelOpen = true;
         GamePlayButtonEvents.inst.OpenAllAnims();
     }
+
+    public void CloseEmoteAndReactionPanelOnWheel()
+    {
+        CloseAnimationButtonClick();
+        CloseReactionButtonClick();
+    }
+
     public void CloseAnimationButtonClick()
     {
         if(!ActionManager.IsAnimRunning)
@@ -319,7 +371,7 @@ public class GamePlayUIHandler : MonoBehaviour
 
     public void OnSignInBtnClick()
     {
-        LoadingHandler.Instance.ShowLoading(); 
+        LoadingHandler.Instance.ShowLoading();
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         ConstantsHolder.xanaConstants.EnableSignInPanelByDefault = true;
         GameplayEntityLoader.instance._uiReferences.LoadMain(false);
