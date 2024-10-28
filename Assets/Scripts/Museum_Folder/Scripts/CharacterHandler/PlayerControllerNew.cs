@@ -27,7 +27,7 @@ public class PlayerControllerNew : MonoBehaviour
     private float speedSmoothTime = 0.1f;
     private float rotationSpeed = 0.25f;    // .4 previously
     private float gravityValue = -9.81f;
-
+    internal Vector3 desiredMoveDirection;
     public float JumpVelocity = 3;
     //[SerializeField]
     public float jumpHeight = 1.0f;
@@ -38,7 +38,7 @@ public class PlayerControllerNew : MonoBehaviour
 
     public bool sprint, _IsGrounded, jumpNow, sprint_Button, IsJumping;
 
-    private CharacterController characterController = null;
+    internal CharacterController characterController = null;
 
     public Animator animator = null;
 
@@ -100,7 +100,7 @@ public class PlayerControllerNew : MonoBehaviour
     float jumpMultiplier = 1;
     #endregion
     [SerializeField]
-    CinemachineFreeLook cinemachineFreeLook;
+   internal CinemachineFreeLook cinemachineFreeLook;
 
     internal float animationBlendValue = 0;
     private void OnEnable()
@@ -887,7 +887,7 @@ public class PlayerControllerNew : MonoBehaviour
         //    forward.Normalize();
         //    right.Normalize();
 
-        Vector3 desiredMoveDirection = (forward * movementInput.y + right * movementInput.x).normalized;
+        desiredMoveDirection = (forward * movementInput.y + right * movementInput.x).normalized;
         //Debug.Log("call hua for===="+ jumpNow + characterController.isGrounded + allowJump + Input.GetKeyDown(KeyCode.Space));
         //Debug.Log("MovmentInput:" + movementInput + "  :DesiredMoveDirection:" + desiredMoveDirection);
         if ((animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Animation")) && (((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && characterController.isGrounded && !animator.IsInTransition(0))/* || (characterController.isGrounded && jumpNow && allowJump)*/))
