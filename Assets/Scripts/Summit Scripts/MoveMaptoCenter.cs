@@ -56,7 +56,14 @@ public class MoveMaptoCenter : MonoBehaviour
         var domesDictionary = new Dictionary<int, string>();
         foreach (var dome in dataManager.summitData.domes)
         {
-            domesDictionary[dome.id] = dome.name;
+            if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
+            {
+                domesDictionary[dome.id] = dome.jpWorldName;
+            }
+            else
+            {
+                domesDictionary[dome.id] = dome.name;
+            }
         }
         for (int i = 0; i < CategoriesDomeInfos.Count; i++)
         {

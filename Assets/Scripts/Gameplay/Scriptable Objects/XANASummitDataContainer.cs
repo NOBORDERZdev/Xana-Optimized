@@ -283,6 +283,7 @@ public class XANASummitDataContainer : ScriptableObject
         public int domeId;
         public string language;
         public string name;
+        public string jpName;
         public int avatarId;
         public string avatarCategory;
         public string personalityURL;

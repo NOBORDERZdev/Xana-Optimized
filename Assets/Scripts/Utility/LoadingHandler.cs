@@ -923,10 +923,10 @@ public class LoadingHandler : MonoBehaviour
         }
         else { DomeThumbnail.gameObject.SetActive(false); }
         ResetLoadingValues();
-        DomeLoading.SetActive(true);
         DomeName.text = info.name;
         DomeDescription.text = info.description;
         DomeCreator.text = info.creator;
+        DomeLoading.SetActive(true);
 
         if (info.domeId > 0 && info.domeId < 9)
         {
@@ -999,7 +999,6 @@ public class LoadingHandler : MonoBehaviour
         }
         else { DomeThumbnail.gameObject.SetActive(false); }
         ResetLoadingValues();
-        DomeLoading.SetActive(true);
         if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
         {
             DomeName.text = info.jpWorldName;
@@ -1017,7 +1016,8 @@ public class LoadingHandler : MonoBehaviour
         DomeType.text = info.domeType;
         DomeCategory.text = info.domeCategory;
         iswheel = false;
-       // Debug.Log("Dome id " + info.id);
+        DomeLoading.SetActive(true);
+        // Debug.Log("Dome id " + info.id);
 
         if (info.id > 0 && info.id < 9)
         {
@@ -1059,6 +1059,10 @@ public class LoadingHandler : MonoBehaviour
     }
     public void showApprovaldomeloading(XANASummitSceneLoading.SingleWorldInfo info, XANASummitDataContainer.OfficialWorldDetails selectedWold)
     {
+        if(DomeLoading.activeInHierarchy)
+        {
+            return;
+        }
         ConstantsHolder.DiasableMultiPartPhoton = true;
         WaitForInput = true;
 
@@ -1086,7 +1090,6 @@ public class LoadingHandler : MonoBehaviour
         }
         else { DomeThumbnail.gameObject.SetActive(false); }
         ResetLoadingValues();
-        DomeLoading.SetActive(true);
         DomeName.text = info.data.name;
         DomeDescription.text = info.data.description;
         if (string.IsNullOrEmpty(info.data.creator))
@@ -1103,6 +1106,7 @@ public class LoadingHandler : MonoBehaviour
             DomeCategory.text = ConstantsHolder.DomeCategory;
         DomeVisitedCount.text = ConstantsHolder.visitorCount.ToString();
         iswheel = false;
+        DomeLoading.SetActive(true);
 
         if (ConstantsHolder.domeId > 0 && ConstantsHolder.domeId < 9)
         {
@@ -1148,7 +1152,6 @@ public class LoadingHandler : MonoBehaviour
         DomeThumbnail.sprite = Wheelsprite;
         ResetLoadingValues();
         iswheel = true;
-        DomeLoading.SetActive(true);
         DomeName.text = "Giant Wheel";
         DomeDescription.text = "Giant Wheel";
         DomeCreator.text = "XANA";
@@ -1156,6 +1159,7 @@ public class LoadingHandler : MonoBehaviour
         DomeID.text = "-";
         DomeVisitedCount.text = "-";
         DomeCategory.text = "Adventure";
+        DomeLoading.SetActive(true);
 
         ApprovalUI.SetActive(true);
         DomeLodingUI.SetActive(false);

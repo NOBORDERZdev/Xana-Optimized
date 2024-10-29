@@ -110,7 +110,7 @@ public class SummitVideoAndImageController : MonoBehaviour
             }
             else if (LocalizationManager.forceJapanese || GameManager.currentLanguage.Equals("ja"))
             {
-                SummitDomeNFTDataController.Instance.SetInfo(_imgVideoRatio, SummitDomeNFTDataController.Instance.worldInfos[id].Title[0], SummitDomeNFTDataController.Instance.worldInfos[id].Aurthor[0], SummitDomeNFTDataController.Instance.worldInfos[id].Des[0], SummitDomeNFTDataController.Instance.worldInfos[id].url, _texture, SummitDomeNFTDataController.Instance.worldInfos[id].Type, SummitDomeNFTDataController.Instance.worldInfos[id].VideoLink, SummitDomeNFTDataController.Instance.worldInfos[id].videoType, id, museumType, roomNumber);
+                SummitDomeNFTDataController.Instance.SetInfo(_imgVideoRatio, SummitDomeNFTDataController.Instance.worldInfos[id].Title[1], SummitDomeNFTDataController.Instance.worldInfos[id].Aurthor[0], SummitDomeNFTDataController.Instance.worldInfos[id].Des[1], SummitDomeNFTDataController.Instance.worldInfos[id].url, _texture, SummitDomeNFTDataController.Instance.worldInfos[id].Type, SummitDomeNFTDataController.Instance.worldInfos[id].VideoLink, SummitDomeNFTDataController.Instance.worldInfos[id].videoType, id, museumType, roomNumber);
 
             }
         }
