@@ -82,7 +82,11 @@ public class AddressableDownloader : MonoBehaviour
     /// <param name="name">tag or key of a addressable object</param>
     public IEnumerator DownloadAddressableObj(int itemId, string key, string type, string _gender, AvatarController applyOn, Color hairColor, bool applyHairColor = true, bool callFromMultiplayer = false)
     {
-        int _counter = 0;
+        if(IsDressAlreadyWear(type,key,applyOn))
+        {
+            yield break;
+        }
+
         while (!ConstantsHolder.isAddressableCatalogDownload)
         {
             //Debug.Log("<color=red> Waiting for Addressable Catalog to download </color>");
@@ -212,6 +216,92 @@ public class AddressableDownloader : MonoBehaviour
         }
     }
 
+    bool IsDressAlreadyWear(string type, string key, AvatarController applyOn)
+    {
+        //{ "Legs", "Chest", "Feet", "Hair", "EyeWearable", "Glove", "Chain" }
+        switch (type)
+        {
+            case "Legs":
+                if (applyOn.wornPant != null)
+                {
+                    if (applyOn.wornPant.name == key)
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                    return false;
+           
+            case "Chest":
+                if (applyOn.wornShirt != null)
+                {
+                    if (applyOn.wornShirt.name == key)
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                    return false;
+           
+            case "Feet":
+                if (applyOn.wornShoes != null)
+                {
+                    if (applyOn.wornShoes.name == key)
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                    return false;
+
+            case "Hair":
+                if (applyOn.wornHair != null)
+                {
+                    if (applyOn.wornHair.name == key)
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                    return false;
+
+            case "EyeWearable":
+                if (applyOn.wornEyeWearable != null)
+                {
+                    if (applyOn.wornEyeWearable.name == key)
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                    return false;
+
+            case "Glove":
+                if (applyOn.wornGloves != null)
+                {
+                    if (applyOn.wornGloves.name == key)
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                    return false;
+
+            case "Chain":
+                if (applyOn.wornChain != null)
+                {
+                    if (applyOn.wornChain.name == key)
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                    return false;
+
+            default:
+                return false;
+        }
+    }
     public Color GetHairDefaultColorFromDownloadedHair(GameObject downloadedHair)
     {
         string Hair_ColorName = "_BaseColor";
