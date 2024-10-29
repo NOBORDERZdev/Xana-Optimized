@@ -224,38 +224,41 @@ public class FeedData : MonoBehaviour
     }
 
     public string CalculateTimeDifference(DateTime postTime)
-   {
+    {
         if (isEnable && gameObject.activeInHierarchy)
         {
             DateTime currentTime = DateTime.Now;
             TimeSpan timeDifference = currentTime - postTime;
             StartCoroutine(ReCallingTimeDifference(postTime));
-            if (timeDifference.TotalMinutes <= 1){
-                timeUpdateInterval =1;
+
+            if (timeDifference.TotalSeconds < 60)
+            {
+                timeUpdateInterval = 1;
                 return $"{Math.Floor(timeDifference.TotalSeconds)}s";
             }
-            else if (timeDifference.TotalMinutes <= 60)
+            else if (timeDifference.TotalMinutes < 60)
             {
-                timeUpdateInterval =60;
+                timeUpdateInterval = 60;
                 return $"{Math.Floor(timeDifference.TotalMinutes)}m";
             }
-            else if (timeDifference.TotalHours <= 24)
+            else if (timeDifference.TotalHours < 24)
             {
-                timeUpdateInterval =3600;
+                timeUpdateInterval = 3600;
                 return $"{Math.Floor(timeDifference.TotalHours)}h";
             }
-            else if (timeDifference.TotalDays < 30){
-                timeUpdateInterval =86400;
-                return $"{Math.Floor(timeDifference.TotalDays)}d"; 
-             }
-            else if (timeDifference.TotalDays <= 365)
+            else if (timeDifference.TotalDays < 30)
             {
-                 timeUpdateInterval =86400;
+                timeUpdateInterval = 86400;
+                return $"{Math.Floor(timeDifference.TotalDays)}d";
+            }
+            else if (timeDifference.TotalDays < 365)
+            {
+                timeUpdateInterval = 86400;
                 return $"{Math.Floor(timeDifference.TotalDays / 30)}mo";
             }
             else
             {
-                timeUpdateInterval =86400;
+                timeUpdateInterval = 86400;
                 return $"{Math.Floor(timeDifference.TotalDays / 365)}y";
             }
         }

@@ -440,14 +440,16 @@ public class ChatSocketManager : MonoBehaviour
             // That My msg, and i cannot flag or block it
             _dataHolder.DotedBtn.SetActive(false);
         }
-
+        //added this condition to prevent ai chat merging issue due to empty messages
+        if (XanaChatSystem.instance.isAiChat && msgId != "NPC")
+            _newMsg.SetActive(false);
 
         MsgParentObj.GetComponent<VerticalLayoutGroup>().enabled = false;
         Invoke("DelayAdded", 0.05f);
 
         //StartCoroutine(nameof(Delay));
         if(!XanaChatSystem.instance.isAiChat || msgId == "NPC")
-        XanaChatSystem.instance.DisplayMsg_FromSocket(userName, msg, _dataHolder.MsgText);
+            XanaChatSystem.instance.DisplayMsg_FromSocket(userName, msg, _dataHolder.MsgText);
 
         // Add to List
         if (allMsgData == null)
@@ -456,8 +458,8 @@ public class ChatSocketManager : MonoBehaviour
         Refresh();
     }
 
-    public void AddLocalMsg(string userName, string msg, string msgId, string userId, int blockMessage) { 
-    //Debug.Log($"AddNewMsg called with userName: {userName}, msg: {msg}, msgId: {msgId}, userId: {userId}, blockMessage: {blockMessage}");
+    public void AddLocalMsg(string userName, string msg, string msgId, string userId, int blockMessage) {
+        //Debug.Log($"AddNewMsg called with userName: {userName}, msg: {msg}, msgId: {msgId}, userId: {userId}, blockMessage: {blockMessage}");
         GameObject _newMsg = Instantiate(MsgPrefab, MsgParentObj);
         ChatMsgDataHolder _dataHolder = _newMsg.GetComponent<ChatMsgDataHolder>();
         RectTransform rectTransform = _dataHolder.MsgText.GetComponent<RectTransform>();
