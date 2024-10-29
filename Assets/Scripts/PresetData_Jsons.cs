@@ -148,11 +148,14 @@ public class PresetData_Jsons : MonoBehaviour
                 UGCManager.isSelfieTaken = false;
             }
 
-            // Set the position, rotation of the character 
+            //Store selected preset data when signup
+            GameManager.Instance.selectedPresetData = JsonUtility.ToJson(_CharacterData);
+
+            // Set the position, rotation of the character and the Default Cloth
             {
                 string oldSelectedGender = CharacterHandler.instance.activePlayerGender.ToString();//== AvatarGender.Female ? "1" : "0";
 
-                // Check Old and new Selected are not same
+                // Check Old and new Selected  Avatar are not same
                 if (oldSelectedGender != _CharacterData.gender) // 
                 {
                     // Copy old avatar pos, rotation and implement to new avatar 
@@ -167,26 +170,23 @@ public class PresetData_Jsons : MonoBehaviour
                         CharacterHandler.instance.femaleAvatarData.avatar_parent.transform.localPosition = CharacterHandler.instance.maleAvatarData.avatar_parent.transform.localPosition;
                         CharacterHandler.instance.femaleAvatarData.avatar_parent.transform.localRotation = CharacterHandler.instance.maleAvatarData.avatar_parent.transform.localRotation;
                     }
+
                     if(ConstantsHolder.xanaConstants.isStoreActive)
                         InventoryManager.instance.DeletePreviousItems();
+
+                    // Activate Selected Avatatr Gender and set default cloth
+                    CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);
+                    if (_CharacterData.gender == "Male")
+                    {
+                        CharacterHandler.instance.maleAvatarData.avatar_parent.GetComponent<AvatarController>().SetAvatarClothDefault(CharacterHandler.instance.maleAvatarData.avatar_parent, _CharacterData.gender);
+                    }
+                    else if (_CharacterData.gender == "Female")
+                    {
+                        CharacterHandler.instance.femaleAvatarData.avatar_parent.GetComponent<AvatarController>().SetAvatarClothDefault(CharacterHandler.instance.femaleAvatarData.avatar_parent, _CharacterData.gender);
+                    }
+                    //GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>().SetAvatarByGender(_CharacterData.gender);
                 }
             }
-
-            //Store selected preset data when signup
-            GameManager.Instance.selectedPresetData = JsonUtility.ToJson(_CharacterData);
-
-            CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);
-            if (_CharacterData.gender=="Male")
-            {
-                CharacterHandler.instance.maleAvatarData.avatar_parent.GetComponent<AvatarController>().SetAvatarClothDefault(CharacterHandler.instance.maleAvatarData.avatar_parent, _CharacterData.gender);
-            }
-            else if (_CharacterData.gender=="Female")
-            {
-                CharacterHandler.instance.femaleAvatarData.avatar_parent.GetComponent<AvatarController>().SetAvatarClothDefault(CharacterHandler.instance.femaleAvatarData.avatar_parent, _CharacterData.gender);
-
-            }
-            //GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>().SetAvatarByGender(_CharacterData.gender);
-
 
             if (InventoryManager.instance.StartPanel_PresetParentPanel.activeSelf || InventoryManager.instance.selfiePanel.activeSelf|| 
                 InventoryManager.instance.StartPanel_PresetParentPanelSummit.activeSelf)

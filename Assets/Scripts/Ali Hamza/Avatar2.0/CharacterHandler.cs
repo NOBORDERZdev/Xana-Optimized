@@ -25,6 +25,12 @@ public class CharacterHandler : MonoBehaviour
 
     public void ActivateAvatarByGender(string gender)
     {
+        if (activePlayerGender.ToString() == gender)
+        {
+            // Same Gender is Active don't do anything
+            return;
+        }
+
         switch (gender)
         {
             case "Male":
