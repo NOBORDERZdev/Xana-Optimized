@@ -93,6 +93,7 @@ public class THA_AI_Conversation : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         string id = ConstantsHolder.userId;
+        string username= ConstantsHolder.userName;
 
         if (ConstantsHolder.xanaConstants.MuseumID == "2871")
         {
@@ -104,7 +105,7 @@ public class THA_AI_Conversation : MonoBehaviour
         {
             string worldId = "41424_srz5bkcbnk";
             _ip = "https://avatarchat-ai.xana.net/tha_chat?input_string=";
-            _url = _ip + _msg + "&usr_id=" + id + "&owner_id=" + worldId;
+            _url = _ip + _msg + "&usr_id=" + id + "&owner_id=" + worldId + "&user_name=" + username;
         }
 
         //Debug.LogError("<color=red> Communication URL(Airin): " + _url + "</color>");
