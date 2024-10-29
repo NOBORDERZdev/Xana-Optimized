@@ -18,8 +18,8 @@ public class PlayerDashHandler : MonoBehaviour
     private Image _dashBtnImageLandscape;
     [SerializeField]
     private Image _dashBtnImagePortrait;
-    //[SerializeField]
-    //private GameObject _dashEffect;
+    [SerializeField]
+    private GameObject _dashEffect;
     [SerializeField]
     private bool _canDash = true;
     [SerializeField]
@@ -43,8 +43,8 @@ public class PlayerDashHandler : MonoBehaviour
     }
     private void OnEnable()
     {
-        //_audioSource = _dashEffect.GetComponent<AudioSource>();
-        //_audioSource.volume = SoundSettings.soundManagerSettings.totalVolumeSlider.value;
+        _audioSource = _dashEffect.GetComponent<AudioSource>();
+        _audioSource.volume = SoundManagerSettings.soundManagerSettings.totalVolumeSlider.value;
         BuilderEventManager.BGMVolume += BGMVolume;
     }
 
@@ -97,11 +97,11 @@ public class PlayerDashHandler : MonoBehaviour
         float endTime = startTime + _dashTime;
         _actualSpringSpeed = _playerController.sprintSpeed;
 
-        //if (_dashEffect)
-        //    _dashEffect.SetActive(true);  // Enable speed lines effect on Camera
+        if (_dashEffect)
+            _dashEffect.SetActive(true);  // Enable speed lines effect on Camera
 
         if (_playerController.animator)
-           _playerController.animator.SetBool("IsDashing", true);
+            _playerController.animator.SetBool("IsDashing", true);
 
         while (Time.time < endTime)
         {
@@ -132,8 +132,8 @@ public class PlayerDashHandler : MonoBehaviour
             yield return null;
         }
         yield return new WaitForSeconds(0.32f);
-        //if (_dashEffect)
-        //    _dashEffect.SetActive(false);
+        if (_dashEffect)
+            _dashEffect.SetActive(false);
         yield return new WaitForSeconds(3f);
         _playerController.sprintSpeed = _actualSpringSpeed;
         EnableDashButton(true);
@@ -147,8 +147,8 @@ public class PlayerDashHandler : MonoBehaviour
             yield return null;
         }
         yield return new WaitForSeconds(0.32f);
-        //if (_dashEffect)
-        //    _dashEffect.SetActive(false);
+        if (_dashEffect)
+            _dashEffect.SetActive(false);
 
         EnableDashButton(true);
     }
