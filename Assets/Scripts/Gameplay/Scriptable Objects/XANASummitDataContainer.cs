@@ -182,6 +182,9 @@ public class XANASummitDataContainer : ScriptableObject
         public string name;
         public string description;
         public string creatorName;
+        public string jpWorldName;
+        public string jpDescription;
+        public string jpCreatorName;
         public string bgm;
         public string thumbnail;
         public bool worldType;
@@ -280,6 +283,7 @@ public class XANASummitDataContainer : ScriptableObject
         public int domeId;
         public string language;
         public string name;
+        public string jpName;
         public int avatarId;
         public string avatarCategory;
         public string personalityURL;
