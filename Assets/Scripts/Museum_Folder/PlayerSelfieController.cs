@@ -363,6 +363,11 @@ public class PlayerSelfieController : MonoBehaviour
         m_PlayerController.GetComponent<PlayerController>().SwitchToSelfieMode();
 #if UNITY_EDITOR
         // m_IsSelfieFeatureActive = true;
+        Debug.Log("m_IKComponenet :  " + m_IKComponenet);
+        if (m_IKComponenet == null)
+        {
+            AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
+        }
         m_IKComponenet.GetComponent<IKMuseum>().EnableIK();
 
         GetRenderTexture();
@@ -392,6 +397,10 @@ public class PlayerSelfieController : MonoBehaviour
         if (Input.touchCount <= 1)
         {
           //  m_IsSelfieFeatureActive = true;
+            if (m_IKComponenet == null)
+            {
+                AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
+            }
             m_IKComponenet.GetComponent<IKMuseum>().EnableIK();
             
             GetRenderTexture();
