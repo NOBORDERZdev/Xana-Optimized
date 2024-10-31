@@ -2023,30 +2023,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 179654842, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
-      propertyPath: m_fontSize
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 179654842, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 179654852, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 240.7441
-      objectReference: {fileID: 0}
-    - target: {fileID: 179654852, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 40.8597
-      objectReference: {fileID: 0}
-    - target: {fileID: 179654852, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 4.6386
-      objectReference: {fileID: 0}
-    - target: {fileID: 179654852, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -24.839788
-      objectReference: {fileID: 0}
     - target: {fileID: 1796991303705016583, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2131,25 +2107,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2660820682332917248, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.017333984
-      objectReference: {fileID: 0}
-    - target: {fileID: 2790886520961827346, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -8.006958
-      objectReference: {fileID: 0}
     - target: {fileID: 4343778718239381665, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
       propertyPath: m_Name
       value: LoadingHandler
-      objectReference: {fileID: 0}
-    - target: {fileID: 4667015458801594786, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6016069901723803143, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -9.739258
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
@@ -4457,6 +4417,7 @@ MonoBehaviour:
   SwitchXanaToXSummit: 1
   OpenSpaceScreen_fromSummit: 1
   chatFlagBtnStatus: 0
+  TelegramLoginBtnStatus: 0
   registerFirstTime: 0
   isHoldCharacterNFT: 0
   isNFTEquiped: 0
@@ -4524,7 +4485,8 @@ MonoBehaviour:
   isBackFromWorld: 0
   MuseumID: 
   domeCreatorName: 
-  isSoftBankGame: 0
+  isBuilderGame: 0
+  isSummitBtnPressed: 0
   comingFrom: 0
   hasWorldTransitionedInternally: 0
   isStoreActive: 0
@@ -29754,19 +29716,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1816034658490740518, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 59.1811
+      value: 63.3188
       objectReference: {fileID: 0}
     - target: {fileID: 1816034658490740518, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 67.9128
+      value: 70.1143
       objectReference: {fileID: 0}
     - target: {fileID: 1816034658490740518, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 9.3
+      value: 10.9612
       objectReference: {fileID: 0}
     - target: {fileID: 1816034658490740518, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 12.8
+      value: 12.965
       objectReference: {fileID: 0}
     - target: {fileID: 1885931981872539772, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: m_IsActive
@@ -29830,7 +29792,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4331738365610818878, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -4.5422974
+      value: -1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4331738365610818878, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -18.4
       objectReference: {fileID: 0}
     - target: {fileID: 4511637625633029239, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: m_IsActive
@@ -29895,7 +29861,7 @@ PrefabInstance:
     - target: {fileID: 8957875775585424746, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: allButtonSelected.Array.data[2]
       value: 
-      objectReference: {fileID: 21300000, guid: a23f651b351c7fe4a9ff05f09724bc1f, type: 3}
+      objectReference: {fileID: 21300000, guid: 9485fa8c1f7e99b4fb1bf7f750b326d5, type: 3}
     - target: {fileID: 8957875775585424746, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: allButtonSelected.Array.data[3]
       value: 
@@ -34839,7 +34805,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1744720613738001615, guid: 37c68f2674f61174b8abee4525c390ad, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -32.400024
+      value: -32.399902
       objectReference: {fileID: 0}
     - target: {fileID: 6970453455018773582, guid: 37c68f2674f61174b8abee4525c390ad, type: 3}
       propertyPath: m_AnchoredPosition.x

@@ -110,7 +110,7 @@ public class DomeMinimapDataHolder : MonoBehaviour
     }
     public void OnClickTeleportPlayerDomePosition(int domeId)
     {
-        if(_playerTransform == null)
+        if(_playerTransform == null && GameplayEntityLoader.instance && GameplayEntityLoader.instance.mainController)
             _playerTransform = GameplayEntityLoader.instance.mainController.transform;
         _clickedDomeID = domeId;
         ConfirmationPanelHandling(true);

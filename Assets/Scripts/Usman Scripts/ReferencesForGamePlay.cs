@@ -50,8 +50,12 @@ public class ReferencesForGamePlay : MonoBehaviour, IInRoomCallbacks, IMatchmaki
     public Image ExitBtnGameplay;
     public Sprite backBtnSprite, HomeBtnSprite;
 
-
-
+    [SerializeField] GameObject bigMapCam;
+    [SerializeField] RawImage bigMapRawImg;
+    [SerializeField] RenderTexture bigMapRenderTexture;
+    [SerializeField] Texture miniMapTexture;
+    [SerializeField] Texture bigMapTexture;
+    [SerializeField] Material miniMapMaterial;
 
     #region XANA PARTY WORLD
     public GameObject XANAPartyWaitingPanel;
@@ -229,6 +233,7 @@ public class ReferencesForGamePlay : MonoBehaviour, IInRoomCallbacks, IMatchmaki
         }
 
         isMatchingTimerFinished = false;
+       // UnloadRenderedTexture();
     }
 
     public void ChangeExitBtnImage(bool _Status)
@@ -273,7 +278,9 @@ public class ReferencesForGamePlay : MonoBehaviour, IInRoomCallbacks, IMatchmaki
                 go.AddComponent<CanvasGroup>();
             }
             go.GetComponent<CanvasGroup>().alpha = 0;
+            go.GetComponent<CanvasGroup>().interactable = false;
         }
+        JoyStick.GetComponent<CanvasGroup>().interactable = true;
         ActionManager.DisableCircleDialog?.Invoke();
         //To disable Buttons  
         foreach (GameObject go in disableBtnObjects)
@@ -300,6 +307,7 @@ public class ReferencesForGamePlay : MonoBehaviour, IInRoomCallbacks, IMatchmaki
 
                 }
                 go.GetComponent<CanvasGroup>().alpha = 1;
+                go.GetComponent<CanvasGroup>().interactable = true;
             }
         }
 
@@ -543,13 +551,61 @@ public class ReferencesForGamePlay : MonoBehaviour, IInRoomCallbacks, IMatchmaki
         if (_enable)
         {
             Input.multiTouchEnabled = false;
+            //bigMapCam.SetActive(false);
+            LoadRenderedTexture();
         }
         else
         {
             Input.multiTouchEnabled = true;
+            UnloadRenderedTexture();
         }
 
         FullscreenMapSummit.SetActive(_enable);
+    }
+
+    public void LoadRenderedTexture()
+    {
+        if (bigMapCam != null && bigMapRawImg != null)
+        {
+            miniMapMaterial.mainTexture = bigMapTexture;
+            bigMapRawImg.texture = bigMapRenderTexture;
+            // Enable the camera to start rendering
+            bigMapCam.SetActive(true);
+
+            // Assign the camera's render texture to the RawImage
+            bigMapRawImg.texture = bigMapCam.GetComponent<Camera>().targetTexture;
+        }
+      
+    }
+
+    // Method to unload the rendered texture
+    public void UnloadRenderedTexture()
+    {
+        if (bigMapRawImg != null)
+        {
+            miniMapMaterial.mainTexture = miniMapTexture;
+
+            // Set the texture reference to null
+            bigMapRawImg.texture = null;
+
+            // Disable the camera to stop rendering
+            if (bigMapCam != null)
+            {
+                bigMapCam.SetActive(false);
+            }
+
+            // Unload unused assets to free up memory
+            StartCoroutine(UnloadUnusedAssetsCoroutine());
+        }
+        
+    }
+
+    private IEnumerator UnloadUnusedAssetsCoroutine()
+    {
+        // Wait for the end of the frame to ensure all references are cleared
+        yield return new WaitForEndOfFrame();
+        // Unload unused assets
+        Resources.UnloadUnusedAssets();
     }
 
     public void OnPlayerEnteredRoom(Player newPlayer)

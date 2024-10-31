@@ -408,7 +408,28 @@ public class AdvancedYoutubePlayer : MonoBehaviour
             Debug.Log($"Setting video url to {url}");
             AVProVideoPlayer.OpenMedia(new MediaPath(url, MediaPathType.AbsolutePathOrURL), true);
             SummitDomeImageHandler.CloseLoaderObject?.Invoke();
+            SendHLSDataToServer(url);
+        }
+    }
 
+    async void SendHLSDataToServer(string hlsURL)
+    {
+        WWWForm hlsData = new WWWForm();
+        hlsData.AddField("envId", ConstantsHolder.xanaConstants.EnviornmentName);
+        hlsData.AddField("hlsUrl", hlsURL);
+
+        using UnityWebRequest request = UnityWebRequest.Post(ConstantsGod.API_BASEURL + ConstantsGod.SENDYTLIVEHLSURLDATA, hlsData);
+        {
+            request.SetRequestHeader("x-api-key", ConstantsGod.SENDYTLIVEHLSURLDATAAPIKEY);
+
+            await request.SendWebRequest();
+            while (!request.isDone)
+                await Task.Yield();
+
+            if (request.result == UnityWebRequest.Result.ConnectionError)
+                 Debug.Log(request.error);
+            else
+                Debug.Log(request.downloadHandler.text);
         }
     }
 

@@ -36,6 +36,7 @@ public class SummitAIChatHandler : MonoBehaviour
         BuilderEventManager.AINPCActivated += LoadAIChat;
         BuilderEventManager.AINPCDeactivated += RemoveAIChat;
         BuilderEventManager.AfterWorldInstantiated += LoadNPC;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated += LoadNPC;
         BuilderEventManager.ResetSummit += ResetOnExit;
         ScreenOrientationManager.switchOrientation += UpdateChatInstance;
     }
@@ -44,6 +45,7 @@ public class SummitAIChatHandler : MonoBehaviour
         BuilderEventManager.AINPCActivated -= LoadAIChat;
         BuilderEventManager.AINPCDeactivated -= RemoveAIChat;
         BuilderEventManager.AfterWorldInstantiated -= LoadNPC;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= LoadNPC;
         BuilderEventManager.ResetSummit -= ResetOnExit;
         ScreenOrientationManager.switchOrientation -= UpdateChatInstance;
     }
@@ -107,8 +109,16 @@ public class SummitAIChatHandler : MonoBehaviour
             AINPCAvatar.transform.position = new Vector3(XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[0], XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[1], XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[2]);
             if (XANASummitDataContainer.aiData.npcData[i].rotationPositionArray != null && XANASummitDataContainer.aiData.npcData[i].rotationPositionArray.Length > 0)
                 AINPCAvatar.transform.rotation = Quaternion.Euler(XANASummitDataContainer.aiData.npcData[i].rotationPositionArray[0], XANASummitDataContainer.aiData.npcData[i].rotationPositionArray[1], XANASummitDataContainer.aiData.npcData[i].rotationPositionArray[2]);
-            AINPCAvatar.name = XANASummitDataContainer.aiData.npcData[i].name;
-            AINPCAvatar.GetComponent<SummitNPCAssetLoader>().npcName.text = XANASummitDataContainer.aiData.npcData[i].name;
+            if (XANASummitDataContainer.aiData.npcData[i].language == "English")
+            {
+                AINPCAvatar.name = XANASummitDataContainer.aiData.npcData[i].name;
+                AINPCAvatar.GetComponent<SummitNPCAssetLoader>().npcName.text = XANASummitDataContainer.aiData.npcData[i].name;
+            }
+            else
+            {
+                AINPCAvatar.name = XANASummitDataContainer.aiData.npcData[i].jpName;
+                AINPCAvatar.GetComponent<SummitNPCAssetLoader>().npcName.text = XANASummitDataContainer.aiData.npcData[i].jpName;
+            }
             int avatarPresetId = XANASummitDataContainer.aiData.npcData[i].avatarId;
             //AINPCAvatar.GetComponent<SummitNPCAssetLoader>().json = XANASummitDataContainer.avatarJson[avatarPresetId - 1];
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().json = XANASummitDataContainer.aiData.npcData[i].avatarCategory;
@@ -153,8 +163,16 @@ public class SummitAIChatHandler : MonoBehaviour
             AINPCAvatar.transform.position = new Vector3(XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[0], XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[1], XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[2]);
             if (XANASummitDataContainer.aiData.npcData[i].rotationPositionArray!=null)
                 AINPCAvatar.transform.rotation = Quaternion.Euler(XANASummitDataContainer.aiData.npcData[i].rotationPositionArray[0], XANASummitDataContainer.aiData.npcData[i].rotationPositionArray[1], XANASummitDataContainer.aiData.npcData[i].rotationPositionArray[2]);
-            AINPCAvatar.name = XANASummitDataContainer.aiData.npcData[i].name;
-            AINPCAvatar.GetComponent<SetPenguinAIName>().NameText.text = XANASummitDataContainer.aiData.npcData[i].name;
+            if (XANASummitDataContainer.aiData.npcData[i].language == "English")
+            {
+                AINPCAvatar.name = XANASummitDataContainer.aiData.npcData[i].name;
+                AINPCAvatar.GetComponent<SetPenguinAIName>().NameText.text = XANASummitDataContainer.aiData.npcData[i].name;
+            }
+            else
+            {
+                AINPCAvatar.name = XANASummitDataContainer.aiData.npcData[i].jpName;
+                AINPCAvatar.GetComponent<SetPenguinAIName>().NameText.text = XANASummitDataContainer.aiData.npcData[i].jpName;
+            }
             int avatarPresetId = XANASummitDataContainer.aiData.npcData[i].avatarId;
             AINPCAvatar.GetComponent<AINPCTrigger>().npcID = XANASummitDataContainer.aiData.npcData[i].id;
             AINPCAvatar.GetComponent<AINPCTrigger>().NPCPosition = AINPCAvatar.transform.position;
@@ -177,7 +195,14 @@ public class SummitAIChatHandler : MonoBehaviour
         {
             if (XANASummitDataContainer.aiData.npcData[i].id == npcID)
             {
-                npcName = XANASummitDataContainer.aiData.npcData[i].name;
+                if (XANASummitDataContainer.aiData.npcData[i].language == "English")
+                {
+                    npcName = XANASummitDataContainer.aiData.npcData[i].name;
+                }
+                else
+                {
+                    npcName = XANASummitDataContainer.aiData.npcData[i].jpName;
+                }
                 npcURL = XANASummitDataContainer.aiData.npcData[i].personalityURL;
             }
         }
@@ -252,7 +277,7 @@ public class SummitAIChatHandler : MonoBehaviour
     async void SendMessageFromAI(string s)
     {
         //_CommonChatRef.DisplayMsg_FromSocket(ConstantsHolder.userName, _CommonChatRef.InputFieldChat.text);
-        verticalLayoutGroup.spacing = -10;
+        //verticalLayoutGroup.spacing = -10;
         string url = string.Empty;
         if (!GetFirstNPCMessage)
         {
