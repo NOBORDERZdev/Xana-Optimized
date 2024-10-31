@@ -65,7 +65,8 @@ public class PlayerCanvas : MonoBehaviour
         {
             if (!cameraMain.gameObject.activeInHierarchy)
             {
-                cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
+                //cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
+                cameraMain = ReferencesForGamePlay.instance.playerControllerNew.ActiveCamera.transform;
             }
             Quaternion targetRotation = Quaternion.Euler(0, cameraMain.eulerAngles.y, 0);
             this.transform.rotation = targetRotation;
