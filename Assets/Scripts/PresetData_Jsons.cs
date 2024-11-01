@@ -87,7 +87,7 @@ public class PresetData_Jsons : MonoBehaviour
         //{ 
         //ConstantsHolder.xanaConstants.isFirstPanel = true;
         //}
-        GameManager.Instance.characterBodyParts.DefaultTexture(false);
+        //GameManager.Instance.characterBodyParts.DefaultTexture(false);
 
         if (!IsStartUp_Canvas && !UserPassManager.Instance.CheckSpecificItem(PresetNameinServer))
         {
