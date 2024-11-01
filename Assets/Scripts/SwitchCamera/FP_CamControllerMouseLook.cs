@@ -145,10 +145,10 @@ public class FP_CamControllerMouseLook : MonoBehaviour
         transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
 
         // Restrict the camera's height
-            Vector3 position = transform.position;
-            SetMaxHeight();
-            position.y = Mathf.Clamp(position.y, minHeight, maxHeight); // Adjust minHeight and maxHeight as needed
-            transform.position = position;
+            //Vector3 position = transform.position;
+            //SetMaxHeight();
+            //position.y = Mathf.Clamp(position.y, minHeight, maxHeight); // Adjust minHeight and maxHeight as needed
+            //transform.position = position;
 #endif
 
 
@@ -226,10 +226,10 @@ public class FP_CamControllerMouseLook : MonoBehaviour
             }
         }
         // Restrict the camera's height
-        Vector3 position = transform.position;
-        SetMaxHeight();
-        position.y = Mathf.Clamp(position.y, minHeight, maxHeight); // Adjust minHeight and maxHeight as needed
-        transform.position = position;
+        //Vector3 position = transform.position;
+        //SetMaxHeight();
+        //position.y = Mathf.Clamp(position.y, minHeight, maxHeight); // Adjust minHeight and maxHeight as needed
+        //transform.position = position;
 
 
     }
