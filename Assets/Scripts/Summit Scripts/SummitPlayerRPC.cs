@@ -60,7 +60,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
     private void OnEnable()
     {
         PhotonNetwork.AddCallbackTarget(this);
-        if (view.IsMine)
+        if (view.IsMine && CarNavigationManager.CarNavigationInstance!=null )
         {
             CarNavigationManager.CarNavigationInstance.OnExitpress += Exit;
         }

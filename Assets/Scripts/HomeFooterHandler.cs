@@ -83,7 +83,7 @@ public class HomeFooterHandler : MonoBehaviour
                 //notLoadedAgain = true;
                 if (PlayerPrefs.GetInt("PlayerDeepLinkOpened") == 1)
                 {
-                    Debug.LogError("going here");
+                    //Debug.LogError("going here");
                     PlayerPrefs.SetInt("PlayerDeepLinkOpened", 0);
                 }
                 else if(!ConstantsHolder.xanaConstants.isFromHomeTab)

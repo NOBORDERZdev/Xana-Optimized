@@ -33,6 +33,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
     private void Start()
     {
+        Debug.Log("DynamicEventManager: Start called");
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
             var dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
@@ -50,6 +51,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                     {
                         Debug.Log("Detected ENV in URL");
                         ConstantsHolder.xanaConstants.isSummitDeepLink = true;
+                        ConstantsHolder.xanaConstants.isJoiningXANADeeplink = false;
                         //OpenEnvironmentDeeplink(Application.absoluteURL);
                     }
                     else if (validateURL.Contains("Join"))
@@ -67,13 +69,16 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             }
         });
 
-#if !UNITY_ANDROID && !UNITY_IOS
-        if (Debugging)
-        {
-          //  Debug.Log("Debugging is enabled, using DebugDeepLink");
-            XANADeeplink(DebugDeepLink);
-        }
-#endif
+//#if UNITY_EDITOR || (!UNITY_ANDROID && !UNITY_IOS)
+//        if (Debugging)
+//        {
+//            ConstantsHolder.xanaConstants.isSummitDeepLink = false;
+//            ConstantsHolder.xanaConstants.isJoiningXANADeeplink = true;
+//            Debug.Log("Debugging is enabled, using DebugDeepLink");
+
+//           // XANADeeplink(DebugDeepLink);
+//        }
+//#endif
     }
 
     public void XANADeeplink(string deeplinkUrl)
@@ -94,7 +99,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                     var intent = activity.Call<AndroidJavaObject>("getIntent");
                     intent.Call("removeExtra", "com.google.firebase.dynamiclinks.DYNAMIC_LINK_DATA");
                     intent.Call("removeExtra", "com.google.android.gms.appinvite.REFERRAL_BUNDLE");
-                    //Debug.Log("Removed extras from Android intent");
+                    Debug.Log("Removed extras from Android intent");
                 }
             }
         }
@@ -103,7 +108,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
         while ((!ConstantsHolder.loggedIn || !ConstantsHolder.xanaConstants.LoggedInAsGuest) &&
                (PlayerPrefs.GetString("PlayerName") == "" && PlayerPrefs.GetInt("FirstTimeappOpen") == 0))
         {
-            //Debug.Log("Waiting for login on iOS");
+            Debug.Log("Waiting for login on iOS");
             yield return new WaitForSeconds(0.5f);
         }
 #endif
@@ -112,7 +117,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
         while ((!ConstantsHolder.loggedIn || !ConstantsHolder.xanaConstants.LoggedInAsGuest) &&
                (PlayerPrefs.GetString("PlayerName") == ""))
         {
-            //Debug.Log("Waiting for login on Android");
+            Debug.Log("Waiting for login on Android");
             yield return new WaitForSeconds(0.5f);
         }
 #endif
@@ -121,23 +126,23 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
 #if UNITY_ANDROID
         string[] urlBreadDown = deeplinkUrl.Split("=");
-        //Debug.Log($"Split deeplinkUrl into {urlBreadDown.Length} parts");
+        Debug.Log($"Split deeplinkUrl into {urlBreadDown.Length} parts");
 
         foreach (string word in urlBreadDown)
         {
-           // Debug.Log($"Processing word: {word}");
+            Debug.Log($"Processing word: {word}");
             if (urlBreadDown[1] == word)
             {
                 Debug.Log($"Match found: {word}");
                 if (/*word.Contains("Join")*/ true)
                 {
-               //  Debug.Log($"Join found in word: {word}");
+                 Debug.Log($"Join found in word: {word}");
                     EventArguments = word.Replace("Join", "");
-                   // Debug.Log($"EventArguments set to: {EventArguments}");
+                   Debug.Log($"EventArguments set to: {EventArguments}");
                     if (FirstTimeopen)
                     {
                         FirstTimeopen = false;
-                       // Debug.Log($"Invoking deep link environment with arguments: {EventArguments}");
+                        Debug.Log($"Invoking deep link environment with arguments: {EventArguments}");
                         InvokeDeepLinkEnvironment(EventArguments);
                     }
                 }
@@ -158,7 +163,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                 {
                     EventArguments = envSubstring;
                     FirstTimeopen = false;
-                    //Debug.Log($"Invoking deep link environment with arguments: {EventArguments}");
+                    Debug.Log($"Invoking deep link environment with arguments: {EventArguments}");
                     InvokeDeepLinkEnvironment(EventArguments);
                 }
             }
@@ -189,7 +194,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             yield return request.SendWebRequest();
             EnvironmentDetails environmentDetails = JsonUtility.FromJson<EnvironmentDetails>(request.downloadHandler.text);
-           // Debug.Log("World Data : "+ request.downloadHandler.text);
+            Debug.Log("World Data : "+ request.downloadHandler.text);
             ConstantsHolder.xanaConstants.MuseumID = envId;
 
             if (!request.isHttpError && !request.isNetworkError)
@@ -198,7 +203,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                 {
                     if (environmentDetails.success == true)
                     {
-                        //Debug.Log("Environment details successfully retrieved");
+                        Debug.Log("Environment details successfully retrieved");
                         ConstantsHolder.xanaConstants.MuseumID = envId;
                         yield return new WaitForSeconds(4f);
                         Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -240,11 +245,11 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             }
             else
             {
-                //Debug.LogError($"Error retrieving environment details: {request.error}");
+                Debug.LogError($"Error retrieving environment details: {request.error}");
 
                 if (request.Equals(UnityWebRequest.Result.ConnectionError))
                 {
-                   // Debug.LogWarning("Connection error, retrying...");
+                    Debug.LogWarning("Connection error, retrying...");
                     yield return StartCoroutine(HitGetEnvironmentJson(url, envId));
                 }
                 else
@@ -253,7 +258,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                     {
                         if (environmentDetails.success == false)
                         {
-                           // Debug.LogWarning("Environment details retrieval failed, retrying...");
+                            Debug.LogWarning("Environment details retrieval failed, retrying...");
                             yield return StartCoroutine(HitGetEnvironmentJson(url, envId));
                         }
                     }
@@ -280,7 +285,9 @@ public class EditorTestDeeplinking : Editor
         {
             if (EnvironmentID > 0)
             {
-               // Debug.Log($"EditorTestDeeplinking: Enter World button clicked with EnvironmentID: {EnvironmentID}");
+                ConstantsHolder.xanaConstants.isSummitDeepLink = false;
+                ConstantsHolder.xanaConstants.isJoiningXANADeeplink = true;
+                Debug.Log($"EditorTestDeeplinking: Enter World button clicked with EnvironmentID: {EnvironmentID}");
                 DynamicEventManager.Instance.InvokeDeepLinkEnvironment("" + EnvironmentID);
             }
         }
