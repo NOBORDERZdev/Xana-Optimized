@@ -113,6 +113,9 @@ public class ConstantsHolder : MonoBehaviour
     public bool isBuilderGame = false;
     public bool isSummitBtnPressed = false;
 
+    public bool isSummitDeepLink = false;
+    public bool isJoiningXANADeeplink = false;
+    
     //For Metabuzz Environments
     public enum ComingFrom
     {

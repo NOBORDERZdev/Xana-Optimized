@@ -1224,7 +1224,7 @@ public class UserLoginSignupManager : MonoBehaviour
             ConstantsHolder.userName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
             PlayerPrefs.SetInt("IsProcessComplete", 1);// user is registered as guest/register.
             GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
-            if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+            if (ConstantsHolder.xanaConstants.openLandingSceneDirectly && !ConstantsHolder.xanaConstants.isJoiningXANADeeplink)
             {
                 LoadSummit();
             }
@@ -1290,8 +1290,10 @@ public class UserLoginSignupManager : MonoBehaviour
                 {
                     GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
                     LoadingHandler.Instance.LoadingScreenSummit.SetActive(true);
-                    if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+                    if (ConstantsHolder.xanaConstants.openLandingSceneDirectly && !ConstantsHolder.xanaConstants.isJoiningXANADeeplink )
                     {
+                        //Debug.Log("Open landing Call from EnterUserName 2 ");
+
                         MainSceneEventHandler.OpenLandingScene?.Invoke();
                         return;
                     }
@@ -1989,7 +1991,8 @@ public class UserLoginSignupManager : MonoBehaviour
                         }
                         ConstantsHolder.userName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
                         PlayerPrefs.Save();
-                        LoadSummit();
+                        if(!ConstantsHolder.xanaConstants.isJoiningXANADeeplink)
+                            LoadSummit();
                     }
                 }
             }
@@ -2000,13 +2003,15 @@ public class UserLoginSignupManager : MonoBehaviour
 
     void LoadSummit()
     {
-        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly && PlayerPrefs.GetInt("IsProcessComplete") == 1)
+        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly  && PlayerPrefs.GetInt("IsProcessComplete") == 1)
         {
             
             //print("Initialize ---=======  LoggedInAsGuest " + ConstantsHolder.xanaConstants.LoggedInAsGuest);
             if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
             {
                 //Debug.Log("Initialize Avatar with Guest");
+                //Debug.Log("Open landing Call from EnterUserName Load Summit ");
+
                 MainSceneEventHandler.OpenLandingScene?.Invoke();
             }
 
@@ -2182,8 +2187,11 @@ public class UserLoginSignupManager : MonoBehaviour
                     OpenUIPanel(16);
                     NameScreenLoader.SetActive(false);
                     NameScreenNextButton.interactable = true;
-                    if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+                    if (ConstantsHolder.xanaConstants.openLandingSceneDirectly && !ConstantsHolder.xanaConstants.isJoiningXANADeeplink)
+                    {
+                      //  Debug.Log("Open landing Call from IERequestSubmitUsername ");
                         MainSceneEventHandler.OpenLandingScene?.Invoke();
+                    }
                     
                 }
 
@@ -2630,8 +2638,11 @@ public class UserLoginSignupManager : MonoBehaviour
     {
         StartCoroutine(EditProfilePic());
 
-        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly && !ConstantsHolder.xanaConstants.isJoiningXANADeeplink)
+        {
+           // Debug.Log("Open landing Call from UpdateProfilePic ");
             MainSceneEventHandler.OpenLandingScene?.Invoke();
+        }
     }
 
     public void RequestUpdateUserProfilePic(string user_avatar, string callingFrom)
