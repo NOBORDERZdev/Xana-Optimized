@@ -1089,6 +1089,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
         {
             view.RPC("ExitWheelCar", RpcTarget.All, MyPlayerPos);
             CarNavigationManager.CarNavigationInstance.DisableExitCanvas();
+            LoadingHandler.Instance.ShowSimpleDomeloading(5f);
         }
         if (isInsideCAr)
         {
