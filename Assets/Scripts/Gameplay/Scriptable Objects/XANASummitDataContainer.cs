@@ -122,7 +122,14 @@ public class XANASummitDataContainer : ScriptableObject
         {
             if (DomeId == summitData.domes[i].id)
             {
-                return new[] { summitData.domes[i].world360Image, summitData.domes[i].name, summitData.domes[i].companyLogo };
+                if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
+                {
+                    return new[] { summitData.domes[i].world360Image, summitData.domes[i].jpWorldName, summitData.domes[i].companyLogo };
+                }
+                else
+                {
+                    return new[] { summitData.domes[i].world360Image, summitData.domes[i].name, summitData.domes[i].companyLogo };
+                }
             }
         }
 
