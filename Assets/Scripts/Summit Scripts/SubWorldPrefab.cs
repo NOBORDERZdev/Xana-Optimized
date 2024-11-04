@@ -23,7 +23,6 @@ public class SubWorldPrefab : MonoBehaviour
     public Vector3 PlayerReturnPosition;
     public OfficialWorldDetails subworlddata;
     public bool IsBuilderWorld;
-    public bool IsSubworld=true;
 
     public void Init()
     {
@@ -47,7 +46,7 @@ public class SubWorldPrefab : MonoBehaviour
         }
         Texture2D texture2D = DownloadHandlerTexture.GetContent(request);
         WorldImage = SubWorldPrefabButton.GetComponent<ProceduralImage>().sprite = ConvertToSprite(texture2D);
-        ConstantsHolder.xanaConstants.haveSubDomeEnabled = IsSubworld;
+        ConstantsHolder.xanaConstants.haveSubDomeEnabled = true;
         ConstantsHolder.xanaConstants.summitSubDomeCatagory = subworlddata.subWorldCategory;
         ConstantsHolder.xanaConstants.summitSubDomeType = subworlddata.subWorldType;
         SubWorldPrefabButton.interactable = true;
