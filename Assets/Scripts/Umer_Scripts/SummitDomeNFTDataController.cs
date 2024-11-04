@@ -327,9 +327,9 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
             creatorName = "XANA";
         }
         _jjAssetObj.authorName = new string[] { creatorName };
-        _jjAssetObj.description = new string[] { _domeNFTDataObj.description };
+        _jjAssetObj.description = new string[] { _domeNFTDataObj.description, _domeNFTDataObj.jpDescription };
         _jjAssetObj.descriptionHyperlink = "";
-        _jjAssetObj.title = new string[] { _domeNFTDataObj.name };
+        _jjAssetObj.title = new string[] { _domeNFTDataObj.name, _domeNFTDataObj.jpName };
         _jjAssetObj.ratio = _domeNFTDataObj.proportionType;
         _jjAssetObj.asset_link = _domeNFTDataObj.thumbnail;
         _jjAssetObj.PrercrdOrLiveURL = _domeNFTDataObj.videoType;

@@ -122,7 +122,14 @@ public class XANASummitDataContainer : ScriptableObject
         {
             if (DomeId == summitData.domes[i].id)
             {
-                return new[] { summitData.domes[i].world360Image, summitData.domes[i].name, summitData.domes[i].companyLogo };
+                if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
+                {
+                    return new[] { summitData.domes[i].world360Image, summitData.domes[i].jpWorldName, summitData.domes[i].companyLogo };
+                }
+                else
+                {
+                    return new[] { summitData.domes[i].world360Image, summitData.domes[i].name, summitData.domes[i].companyLogo };
+                }
             }
         }
 
@@ -182,6 +189,9 @@ public class XANASummitDataContainer : ScriptableObject
         public string name;
         public string description;
         public string creatorName;
+        public string jpWorldName;
+        public string jpDescription;
+        public string jpCreatorName;
         public string bgm;
         public string thumbnail;
         public bool worldType;
@@ -280,6 +290,7 @@ public class XANASummitDataContainer : ScriptableObject
         public int domeId;
         public string language;
         public string name;
+        public string jpName;
         public int avatarId;
         public string avatarCategory;
         public string personalityURL;

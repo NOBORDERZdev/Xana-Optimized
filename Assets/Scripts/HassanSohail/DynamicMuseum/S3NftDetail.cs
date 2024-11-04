@@ -60,7 +60,9 @@ public class DomeNFTData
     public int dome_id;
     public int index;
     public string name;
+    public string jpName;
     public string description;
+    public string jpDescription;
     public string thumbnail;
     public int type;
     public string videoType;

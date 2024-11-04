@@ -386,7 +386,18 @@ namespace Toyota
                 }
                 else if (_videoType == PMY_VideoTypeRes.aws)
                 {
-                    SetThumbail(imageLink);
+                    SoundController.Instance.videoPlayerSource = imgVideo16x9.GetComponent<AudioSource>();
+                    SoundSettings.soundManagerSettings.videoSource = imgVideo16x9.GetComponent<AudioSource>();
+                    SoundSettings.soundManagerSettings.setNewSliderValues();
+
+                    liveVideoPlayer.SetActive(false);
+                    imgVideo16x9.SetActive(true);
+                    RenderTexture renderTexture = new RenderTexture(NFT_Holder_Manager.instance.renderTexture_16x9);
+                    imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
+                    imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = renderTexture;
+                    imgVideo16x9.GetComponent<VideoPlayer>().url = videoLink;
+                    imgVideo16x9.GetComponent<VideoPlayer>().isLooping = true;
+                    imgVideo16x9.GetComponent<VideoPlayer>().Play();
                 }
             }
             else if (NFT.Equals(NFT_Type.TwoD_View))
