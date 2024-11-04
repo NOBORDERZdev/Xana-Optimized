@@ -23,6 +23,7 @@ public class SubWorldPrefab : MonoBehaviour
     public Vector3 PlayerReturnPosition;
     public OfficialWorldDetails subworlddata;
     public bool IsBuilderWorld;
+    public bool IsSubworld=true;
 
     public void Init()
     {
@@ -36,6 +37,7 @@ public class SubWorldPrefab : MonoBehaviour
 
     IEnumerator DownloadTexture()
     {
+        
         ThumbnailUrl = ThumbnailUrl + "?width="+ConstantsHolder.DomeImageCompression;
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(ThumbnailUrl);
         request.SendWebRequest();
@@ -44,12 +46,19 @@ public class SubWorldPrefab : MonoBehaviour
             yield return null;
         }
         Texture2D texture2D = DownloadHandlerTexture.GetContent(request);
-        WorldImage=SubWorldPrefabButton.GetComponent<ProceduralImage>().sprite = ConvertToSprite(texture2D);
+        WorldImage = SubWorldPrefabButton.GetComponent<ProceduralImage>().sprite = ConvertToSprite(texture2D);
+        ConstantsHolder.xanaConstants.haveSubDomeEnabled = IsSubworld;
+        ConstantsHolder.xanaConstants.summitSubDomeCatagory = subworlddata.subWorldCategory;
+        ConstantsHolder.xanaConstants.summitSubDomeType = subworlddata.subWorldType;
         SubWorldPrefabButton.interactable = true;
+
+
     }
 
     private Sprite ConvertToSprite(Texture2D texture)
     {
         return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
     }
+
+   
 }
