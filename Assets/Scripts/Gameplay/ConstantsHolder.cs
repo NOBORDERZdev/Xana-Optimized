@@ -28,7 +28,7 @@ public class ConstantsHolder : MonoBehaviour
 
     //Login Info
     public static bool isAdmin;
-    public static bool isGuestLogin;
+    //public static bool isGuestLogin;
     public static bool loggedIn;
     public static bool isWalletLogin;
     public static string xanaliaToken;

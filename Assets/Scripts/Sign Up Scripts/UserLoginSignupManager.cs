@@ -1127,7 +1127,8 @@ public class UserLoginSignupManager : MonoBehaviour
             {
                 displayrname = displayrname.TrimEnd(' ');
             }
-
+            PlayerPrefs.SetString("PlayerName", displayrNameField.Text);
+            PlayerPrefs.Save();
         }
         else if (ConstantsHolder.xanaConstants.SwitchXanaToXSummit) {
 
@@ -1525,7 +1526,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 ConstantsHolder.xanaliaToken = myObject1.data.xanaliaToken;
                 ConstantsHolder.xanaToken = myObject1.data.token;
                 ConstantsHolder.isAdmin = myObject1.data.isAdmin;
-                ConstantsHolder.isGuestLogin = false;
+                ConstantsHolder.xanaConstants.LoggedInAsGuest = false;
                 ConstantsHolder.xanaConstants.LoginasGustprofile = true;
                 ConstantsHolder.userId = myObject1.data.user.id.ToString();
                 ConstantsHolder.userName = myObject1.data.user.name;

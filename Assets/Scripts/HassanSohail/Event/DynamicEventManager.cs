@@ -105,8 +105,8 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
         }
 
 #if UNITY_IOS
-        while ((!ConstantsHolder.loggedIn || !ConstantsHolder.xanaConstants.LoggedInAsGuest) &&
-               (PlayerPrefs.GetString("PlayerName") == "" && PlayerPrefs.GetInt("FirstTimeappOpen") == 0))
+        while ( (( (!ConstantsHolder.loggedIn || (!ConstantsHolder.xanaConstants.LoggedInAsGuest) ) &&
+               (PlayerPrefs.GetString("PlayerName")  == "" ) ) && PlayerPrefs.GetInt("FirstTimeappOpen") == 0) )
         {
             Debug.Log("Waiting for login on iOS");
             yield return new WaitForSeconds(0.5f);
@@ -114,10 +114,11 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 #endif
 
 #if UNITY_ANDROID
-        while ((!ConstantsHolder.loggedIn || !ConstantsHolder.xanaConstants.LoggedInAsGuest) &&
-               (PlayerPrefs.GetString("PlayerName") == ""))
+        while ((((!ConstantsHolder.loggedIn || (!ConstantsHolder.xanaConstants.LoggedInAsGuest)) &&
+            (PlayerPrefs.GetString("PlayerName") == "")) ))
         {
-            Debug.Log("Waiting for login on Android");
+           // Debug.Log("Waiting for login on Android : loggedIn : " + ConstantsHolder.loggedIn +" :  LoggedInAsGuest " +
+           // ConstantsHolder.xanaConstants.LoggedInAsGuest + " : PlayerName  " + PlayerPrefs.GetString("PlayerName"));
             yield return new WaitForSeconds(0.5f);
         }
 #endif
@@ -235,6 +236,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                             ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
                         }
                         WorldItemView.m_EnvName = environmentDetails.data.name;
+                        SaveCharacterProperties.NeedToShowSplash = 2;
 
                         if (isBuilderScene)
                             WorldManager.instance.JoinBuilderWorld();
@@ -267,7 +269,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             request.Dispose();
         }
     }
-    #endregion
+#endregion
 }
 
 #if UNITY_EDITOR
