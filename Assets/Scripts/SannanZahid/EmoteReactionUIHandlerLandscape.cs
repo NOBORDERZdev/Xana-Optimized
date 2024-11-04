@@ -104,10 +104,12 @@ public class EmoteReactionUIHandlerLandscape : EmoteReactionUIHandler
         if(type== EmoteReactionItemBtnHandler.ItemType.Emote)
         {
             DuplicateMessage.GetComponent<TMP_Text>().text = "Duplicate Animation";
+            DuplicateMessage.GetComponent<TextLocalization>().LocalizeTextText(DuplicateMessage.GetComponent<TMP_Text>().text);
         }
         else
         {
             DuplicateMessage.GetComponent<TMP_Text>().text = "Duplicate Reaction";
+            DuplicateMessage.GetComponent<TextLocalization>().LocalizeTextText(DuplicateMessage.GetComponent<TMP_Text>().text);
         }
         DuplicateMessage.gameObject.SetActive(true);
         yield return new WaitForSeconds(3f);
