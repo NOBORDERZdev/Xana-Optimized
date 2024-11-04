@@ -1253,6 +1253,8 @@ public class LoadingHandler : MonoBehaviour
     public IEnumerator DomLodingHandler()
     {
         DomeLoading.SetActive(false);
+        if (ReferencesForGamePlay.instance != null && ReferencesForGamePlay.instance.XANAPartyCounterPanel.activeInHierarchy)
+            ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(false);
         yield return null;
     }
 
