@@ -24,7 +24,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     }
     override public void OnEnable()
     {
-        if (GameplayEntityLoader.instance)
+        if (GameplayEntityLoader.instance && GameplayEntityLoader.instance._uiReferences == null)
         {
             GameplayEntityLoader.instance._uiReferences = this;
         }
