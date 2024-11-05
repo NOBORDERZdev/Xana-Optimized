@@ -605,6 +605,9 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
 
     public void CloseInfoPop()
     {
+        renderTexture_16x9.Release();
+        renderTexture_9x16 .Release();
+        renderTexture_1x1.Release();
         ratioReferences[ratioId].l_obj.SetActive(false);
         ratioReferences[ratioId].p_obj.SetActive(false);
         ratioReferences[ratioId].p_Loader.SetActive(false);

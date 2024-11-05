@@ -330,8 +330,13 @@ public class XanaChatSystem : MonoBehaviour
 
             if (PlayerPrefs.GetInt("minimap") == 1)
             {
-                if (ConstantsHolder.xanaConstants.IsMetabuzzEnvironment || ConstantsHolder.xanaConstants.isXanaPartyWorld)
+                if (ConstantsHolder.xanaConstants.IsMetabuzzEnvironment ||
+                    ConstantsHolder.xanaConstants.isXanaPartyWorld ||
+                    ReferencesForGamePlay.instance.m_34player.GetComponent<SummitPlayerRPC>().isInsideWheel ||
+                    ReferencesForGamePlay.instance.m_34player.GetComponent<SummitPlayerRPC>().isInsideCAr)
+                {
                     return;
+                }
 
                 if (!LoadingHandler.Instance.DomeLoading.activeInHierarchy &&
                     XanaWorldDownloader.xanaWorldDownloader != null && !XanaWorldDownloader.xanaWorldDownloader.assetDownloadingText.gameObject.activeInHierarchy)
