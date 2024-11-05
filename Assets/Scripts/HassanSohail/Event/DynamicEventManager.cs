@@ -33,6 +33,8 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
     private void Start()
     {
+        PlayerPrefs.SetInt("FirstTimeappOpen", 0);
+
         Debug.Log("DynamicEventManager: Start called");
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
             var dependencyStatus = task.Result;
@@ -59,7 +61,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                         Debug.Log("Detected Join in URL");
                         ConstantsHolder.xanaConstants.isSummitDeepLink = false;
                         ConstantsHolder.xanaConstants.isJoiningXANADeeplink = true;
-                        PlayerPrefs.SetInt("FirstTimeappOpen", 0);
+                        
                         XANADeeplink(Application.absoluteURL);
                     }
                 }
@@ -90,7 +92,10 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
     IEnumerator ValidateLoginthenDeeplink(string deeplinkUrl)
     {
-        //Debug.Log($"ValidateLoginthenDeeplink started with URL: {deeplinkUrl}");
+        // Decode the URL to handle URL-encoded characters
+        string decodedUrl = UnityWebRequest.UnEscapeURL(deeplinkUrl);
+        Debug.Log($"Decoded URL: {decodedUrl}");
+
         if (Application.platform == RuntimePlatform.Android)
         {
             using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
@@ -106,21 +111,19 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
         }
 
 #if UNITY_IOS
-        while ( (( (!ConstantsHolder.loggedIn || (!ConstantsHolder.xanaConstants.LoggedInAsGuest) ) &&
-               (PlayerPrefs.GetString("PlayerName")  == "" ) ) && PlayerPrefs.GetInt("FirstTimeappOpen") == 0) )
-        {
-             Debug.Log("Waiting for login on IOS : loggedIn : " + ConstantsHolder.loggedIn +" :  LoggedInAsGuest " +
-            ConstantsHolder.xanaConstants.LoggedInAsGuest + " : PlayerName  " + PlayerPrefs.GetString("PlayerName")+ " : FirstTimeappOpen : "+PlayerPrefs.GetInt("FirstTimeappOpen") );
-            yield return new WaitForSeconds(0.5f);
-        }
+    while ((((!ConstantsHolder.loggedIn || (!ConstantsHolder.xanaConstants.LoggedInAsGuest)) &&
+           (PlayerPrefs.GetString("PlayerName") == "")) && PlayerPrefs.GetInt("FirstTimeappOpen") == 0))
+    {
+        Debug.Log("Waiting for login on IOS : loggedIn : " + ConstantsHolder.loggedIn + " :  LoggedInAsGuest " +
+        ConstantsHolder.xanaConstants.LoggedInAsGuest + " : PlayerName  " + PlayerPrefs.GetString("PlayerName") + " : FirstTimeappOpen : " + PlayerPrefs.GetInt("FirstTimeappOpen"));
+        yield return new WaitForSeconds(0.5f);
+    }
 #endif
 
 #if UNITY_ANDROID
         while ((((!ConstantsHolder.loggedIn || (!ConstantsHolder.xanaConstants.LoggedInAsGuest)) &&
-            (PlayerPrefs.GetString("PlayerName") == "")) ))
+            (PlayerPrefs.GetString("PlayerName") == ""))))
         {
-           // Debug.Log("Waiting for login on Android : loggedIn : " + ConstantsHolder.loggedIn +" :  LoggedInAsGuest " +
-           // ConstantsHolder.xanaConstants.LoggedInAsGuest + " : PlayerName  " + PlayerPrefs.GetString("PlayerName"));
             yield return new WaitForSeconds(0.5f);
         }
 #endif
@@ -128,8 +131,8 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
         yield return new WaitForSeconds(1.5f);
 
 #if UNITY_ANDROID
-        string[] urlBreadDown = deeplinkUrl.Split("=");
-        Debug.Log($"Split deeplinkUrl into {urlBreadDown.Length} parts");
+        string[] urlBreadDown = decodedUrl.Split('=');
+        Debug.Log($"Split decodedUrl into {urlBreadDown.Length} parts");
 
         foreach (string word in urlBreadDown)
         {
@@ -137,11 +140,11 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             if (urlBreadDown[1] == word)
             {
                 Debug.Log($"Match found: {word}");
-                if (/*word.Contains("Join")*/ true)
+                if (true)
                 {
-                 Debug.Log($"Join found in word: {word}");
+                    Debug.Log($"Join found in word: {word}");
                     EventArguments = word.Replace("Join", "");
-                   Debug.Log($"EventArguments set to: {EventArguments}");
+                    Debug.Log($"EventArguments set to: {EventArguments}");
                     if (FirstTimeopen)
                     {
                         FirstTimeopen = false;
@@ -154,23 +157,23 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 #endif
 
 #if UNITY_IOS
-        if (deeplinkUrl.Contains("Join"))
-        {
-            int envIndex = deeplinkUrl.IndexOf("Join");
-            int ampersandIndex = deeplinkUrl.IndexOf("&");
+    if (decodedUrl.Contains("Join"))
+    {
+        int envIndex = decodedUrl.IndexOf("Join");
+        int ampersandIndex = decodedUrl.IndexOf("&");
 
-            if (envIndex != -1 && ampersandIndex != -1)
+        if (envIndex != -1 && ampersandIndex != -1)
+        {
+            string envSubstring = decodedUrl.Substring(envIndex + 4, ampersandIndex - envIndex - 4);
+            if (FirstTimeopen)
             {
-                string envSubstring = deeplinkUrl.Substring(envIndex + 3, ampersandIndex - envIndex - 3);
-                if (FirstTimeopen)
-                {
-                    EventArguments = envSubstring;
-                    FirstTimeopen = false;
-                    Debug.Log($"Invoking deep link environment with arguments: {EventArguments}");
-                    InvokeDeepLinkEnvironment(EventArguments);
-                }
+                EventArguments = envSubstring;
+                FirstTimeopen = false;
+                Debug.Log($"Invoking deep link environment with arguments: {EventArguments}");
+                InvokeDeepLinkEnvironment(EventArguments);
             }
         }
+    }
 #endif
 
         yield return new WaitForSeconds(1f);
@@ -293,7 +296,7 @@ public class EditorTestDeeplinking : Editor
                 ConstantsHolder.xanaConstants.isSummitDeepLink = false;
                 ConstantsHolder.xanaConstants.isJoiningXANADeeplink = true;
                 Debug.Log($"EditorTestDeeplinking: {DeepLink}");
-                DynamicEventManager.Instance.XANADeeplink("" + DeepLink);
+                DynamicEventManager.Instance.XANADeeplink(DeepLink);
             }
         }
     }
