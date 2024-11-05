@@ -132,9 +132,18 @@ public class SummitDomeImageHandler : MonoBehaviour
             CommonScreen.ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(true);
             if (ratioId < 4)
             {
-                CommonScreen.ratioReferences[ratioId].l_Title.text = domedata.name;
-                CommonScreen.ratioReferences[ratioId].l_Aurthur.text = domedata.creatorName;
-                CommonScreen.ratioReferences[ratioId].l_Description.text = domedata.description;// + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
+                if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
+                {
+                    CommonScreen.ratioReferences[ratioId].l_Title.text = domedata.jpWorldName;
+                    CommonScreen.ratioReferences[ratioId].l_Aurthur.text = domedata.jpCreatorName;
+                    CommonScreen.ratioReferences[ratioId].l_Description.text = domedata.jpDescription;
+                }
+                else
+                {
+                    CommonScreen.ratioReferences[ratioId].l_Title.text = domedata.name;
+                    CommonScreen.ratioReferences[ratioId].l_Aurthur.text = domedata.creatorName;
+                    CommonScreen.ratioReferences[ratioId].l_Description.text = domedata.description;// + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
+                }
             }
             if (domedata.mediaType == "Image")
             {
@@ -151,9 +160,18 @@ public class SummitDomeImageHandler : MonoBehaviour
             // Setting Potraite Data
             if (ratioId < 4)
             {
-                CommonScreen.ratioReferences[ratioId].p_Title.text = domedata.name; ;
-                CommonScreen.ratioReferences[ratioId].p_Aurthur.text = domedata.creatorName;
-                CommonScreen.ratioReferences[ratioId].p_Description.text = domedata.description;// + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
+                if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
+                {
+                    CommonScreen.ratioReferences[ratioId].p_Title.text = domedata.jpWorldName; ;
+                    CommonScreen.ratioReferences[ratioId].p_Aurthur.text = domedata.jpCreatorName;
+                    CommonScreen.ratioReferences[ratioId].p_Description.text = domedata.jpDescription;
+                }
+                else
+                {
+                    CommonScreen.ratioReferences[ratioId].p_Title.text = domedata.name; ;
+                    CommonScreen.ratioReferences[ratioId].p_Aurthur.text = domedata.creatorName;
+                    CommonScreen.ratioReferences[ratioId].p_Description.text = domedata.description;// + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
+                }
             }
             CommonScreen.ratioReferences[ratioId].p_image.texture = images;
             if (domedata.mediaType == "Image")

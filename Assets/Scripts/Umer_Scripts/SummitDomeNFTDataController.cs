@@ -327,9 +327,9 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
             creatorName = "XANA";
         }
         _jjAssetObj.authorName = new string[] { creatorName };
-        _jjAssetObj.description = new string[] { _domeNFTDataObj.description };
+        _jjAssetObj.description = new string[] { _domeNFTDataObj.description, _domeNFTDataObj.jpDescription };
         _jjAssetObj.descriptionHyperlink = "";
-        _jjAssetObj.title = new string[] { _domeNFTDataObj.name };
+        _jjAssetObj.title = new string[] { _domeNFTDataObj.name, _domeNFTDataObj.jpName };
         _jjAssetObj.ratio = _domeNFTDataObj.proportionType;
         _jjAssetObj.asset_link = _domeNFTDataObj.thumbnail;
         _jjAssetObj.PrercrdOrLiveURL = _domeNFTDataObj.videoType;
@@ -605,6 +605,9 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
 
     public void CloseInfoPop()
     {
+        renderTexture_16x9.Release();
+        renderTexture_9x16 .Release();
+        renderTexture_1x1.Release();
         ratioReferences[ratioId].l_obj.SetActive(false);
         ratioReferences[ratioId].p_obj.SetActive(false);
         ratioReferences[ratioId].p_Loader.SetActive(false);

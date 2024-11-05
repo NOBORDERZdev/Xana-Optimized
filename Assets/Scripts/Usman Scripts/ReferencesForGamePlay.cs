@@ -278,7 +278,9 @@ public class ReferencesForGamePlay : MonoBehaviour, IInRoomCallbacks, IMatchmaki
                 go.AddComponent<CanvasGroup>();
             }
             go.GetComponent<CanvasGroup>().alpha = 0;
+            go.GetComponent<CanvasGroup>().interactable = false;
         }
+        JoyStick.GetComponent<CanvasGroup>().interactable = true;
         ActionManager.DisableCircleDialog?.Invoke();
         //To disable Buttons  
         foreach (GameObject go in disableBtnObjects)
@@ -305,6 +307,7 @@ public class ReferencesForGamePlay : MonoBehaviour, IInRoomCallbacks, IMatchmaki
 
                 }
                 go.GetComponent<CanvasGroup>().alpha = 1;
+                go.GetComponent<CanvasGroup>().interactable = true;
             }
         }
 
