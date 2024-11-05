@@ -173,6 +173,7 @@ public class SubWorldsHandler : MonoBehaviour
     public void CloseSubWorldList()
     {
         SubworldListParent.SetActive(false);
+        ConstantsHolder.xanaConstants.haveSubDomeEnabled = false;
     }
 
     public void EnterWorld()
