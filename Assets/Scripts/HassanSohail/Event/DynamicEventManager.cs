@@ -131,26 +131,22 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
         yield return new WaitForSeconds(1.5f);
 
 #if UNITY_ANDROID
-        string[] urlBreadDown = decodedUrl.Split('=');
+        string[] urlBreadDown = decodedUrl.Split(new char[] { '=', '&' });
         Debug.Log($"Split decodedUrl into {urlBreadDown.Length} parts");
 
         foreach (string word in urlBreadDown)
         {
             Debug.Log($"Processing word: {word}");
-            if (urlBreadDown[1] == word)
+            if (word.Contains("Join"))
             {
-                Debug.Log($"Match found: {word}");
-                if (true)
+                Debug.Log($"Join found in word: {word}");
+                EventArguments = word.Replace("Join", "").Replace("=", "");
+                Debug.Log($"EventArguments set to: {EventArguments}");
+                if (FirstTimeopen)
                 {
-                    Debug.Log($"Join found in word: {word}");
-                    EventArguments = word.Replace("Join", "").Replace("=", "");
-                    Debug.Log($"EventArguments set to: {EventArguments}");
-                    if (FirstTimeopen)
-                    {
-                        FirstTimeopen = false;
-                        Debug.Log($"Invoking deep link environment with arguments: {EventArguments}");
-                        InvokeDeepLinkEnvironment(EventArguments);
-                    }
+                    FirstTimeopen = false;
+                    Debug.Log($"Invoking deep link environment with arguments: {EventArguments}");
+                    InvokeDeepLinkEnvironment(EventArguments);
                 }
             }
         }
@@ -160,11 +156,20 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     if (decodedUrl.Contains("Join"))
     {
         int envIndex = decodedUrl.IndexOf("Join");
-        int ampersandIndex = decodedUrl.IndexOf("&");
+        int ampersandIndex = decodedUrl.IndexOf("&", envIndex);
 
-        if (envIndex != -1 && ampersandIndex != -1)
+        if (envIndex != -1)
         {
-            string envSubstring = decodedUrl.Substring(envIndex + 4, ampersandIndex - envIndex - 4).Replace("=", "");
+            string envSubstring;
+            if (ampersandIndex != -1)
+            {
+                envSubstring = decodedUrl.Substring(envIndex + 4, ampersandIndex - envIndex - 4);
+            }
+            else
+            {
+                envSubstring = decodedUrl.Substring(envIndex + 4);
+            }
+            envSubstring = envSubstring.Replace("=", "");
             if (FirstTimeopen)
             {
                 EventArguments = envSubstring;
