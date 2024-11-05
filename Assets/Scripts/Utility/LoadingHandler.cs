@@ -1093,17 +1093,31 @@ public class LoadingHandler : MonoBehaviour
         DomeName.text = info.data.name;
         DomeDescription.text = info.data.description;
         if (string.IsNullOrEmpty(info.data.creator))
+        {
             DomeCreator.text = info.data.user.name;
+        }
         else
+        {
             DomeCreator.text = info.data.creator;
-        if (ConstantsHolder.DomeType == "None")
-            DomeType.text = "-";
-        else
+        }
+        if (ConstantsHolder.xanaConstants.haveSubDomeEnabled)
+        {
+            ConstantsHolder.DomeType = ConstantsHolder.xanaConstants.summitSubDomeType;
             DomeType.text = ConstantsHolder.DomeType;
-        if (ConstantsHolder.DomeCategory == "None")
-            DomeCategory.text = "-";
-        else
+            ConstantsHolder.DomeCategory = ConstantsHolder.xanaConstants.summitSubDomeCatagory;
             DomeCategory.text = ConstantsHolder.DomeCategory;
+        }
+        else
+        {
+            if (ConstantsHolder.DomeType == "None")
+                DomeType.text = "-";
+            else
+                DomeType.text = ConstantsHolder.DomeType;
+            if (ConstantsHolder.DomeCategory == "None")
+                DomeCategory.text = "-";
+            else
+                DomeCategory.text = ConstantsHolder.DomeCategory;
+       }
         DomeVisitedCount.text = ConstantsHolder.visitorCount.ToString();
         iswheel = false;
         DomeLoading.SetActive(true);
@@ -1220,6 +1234,7 @@ public class LoadingHandler : MonoBehaviour
         enter = false;
         WaitForInput = false;
         EnterWheel?.Invoke(false);
+        ConstantsHolder.xanaConstants.haveSubDomeEnabled = false;
         // DomeLoading.SetActive(false);
         StartCoroutine(DomLodingHandler());
     }
