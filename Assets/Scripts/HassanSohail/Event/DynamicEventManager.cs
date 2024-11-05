@@ -292,7 +292,7 @@ public class EditorTestDeeplinking : Editor
             {
                 ConstantsHolder.xanaConstants.isSummitDeepLink = false;
                 ConstantsHolder.xanaConstants.isJoiningXANADeeplink = true;
-                Debug.Log($"EditorTestDeeplinking: Enter World button clicked with EnvironmentID: {EnvironmentID}");
+                Debug.Log($"EditorTestDeeplinking: {DeepLink}");
                 DynamicEventManager.Instance.XANADeeplink("" + DeepLink);
             }
         }
