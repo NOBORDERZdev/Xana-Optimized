@@ -33,7 +33,6 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
     private void Start()
     {
-        PlayerPrefs.SetInt("FirstTimeappOpen", 0);
 
         Debug.Log("DynamicEventManager: Start called");
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
@@ -61,7 +60,8 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                         Debug.Log("Detected Join in URL");
                         ConstantsHolder.xanaConstants.isSummitDeepLink = false;
                         ConstantsHolder.xanaConstants.isJoiningXANADeeplink = true;
-                        
+                        PlayerPrefs.SetInt("FirstTimeappOpen", 0);
+
                         XANADeeplink(Application.absoluteURL);
                     }
                 }
@@ -72,21 +72,11 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             }
         });
 
-//#if UNITY_EDITOR || (!UNITY_ANDROID && !UNITY_IOS)
-//        if (Debugging)
-//        {
-//            ConstantsHolder.xanaConstants.isSummitDeepLink = false;
-//            ConstantsHolder.xanaConstants.isJoiningXANADeeplink = true;
-//            Debug.Log("Debugging is enabled, using DebugDeepLink");
-
-//           // XANADeeplink(DebugDeepLink);
-//        }
-//#endif
     }
 
     public void XANADeeplink(string deeplinkUrl)
     {
-        //Debug.Log($"XANADeeplink called with URL: {deeplinkUrl}");
+        Debug.Log($"XANADeeplink called with URL: {deeplinkUrl}");
         StartCoroutine(ValidateLoginthenDeeplink(deeplinkUrl));
     }
 
