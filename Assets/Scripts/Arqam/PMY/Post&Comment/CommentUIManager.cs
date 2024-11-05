@@ -7,6 +7,8 @@ using static System.Net.Mime.MediaTypeNames;
 public class CommentUIManager : MonoBehaviour
 {
     [SerializeField]
+    private TextMeshProUGUI UserNameTxt;
+    [SerializeField]
     private TextMeshProUGUI commentText;
     [SerializeField]
     private Button seeMoreButton;
@@ -29,11 +31,12 @@ public class CommentUIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        commentText.text = likeText.text = dislikeText.text = "";
+        commentText.text = UserNameTxt.text = likeText.text = dislikeText.text = "";
     }
 
-    public void SetComment(string comment)
+    public void SetComment(string userName,string comment)
     {
+        UserNameTxt.text = userName;
         fullComment = comment;
         if (comment.Length > previewLength)
         {

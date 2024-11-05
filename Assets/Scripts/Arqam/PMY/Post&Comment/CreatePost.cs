@@ -21,7 +21,7 @@ public class CreatePost : MonoBehaviour
         {
             GameObject ui = Instantiate(CommentUI);
             ui.transform.SetParent(transform, false);
-            ui.GetComponent<CommentUIManager>().SetComment(inputField.text);
+            ui.GetComponent<CommentUIManager>().SetComment("Xana PMY", inputField.text);
             inputField.text = "";
         }
         else
