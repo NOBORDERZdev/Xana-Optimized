@@ -280,20 +280,20 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 [CustomEditor(typeof(DynamicEventManager))]
 public class EditorTestDeeplinking : Editor
 {
-    public int EnvironmentID = default;
+    public string DeepLink = "";
 
     public override void OnInspectorGUI()
     {
-        EnvironmentID = EditorGUILayout.IntField("EnvironmentID", EnvironmentID);
+        DeepLink = EditorGUILayout.TextField("DeepLink", DeepLink);
 
         if (GUILayout.Button("Enter World"))
         {
-            if (EnvironmentID > 0)
+            if (!DeepLink.IsNullOrEmpty())
             {
                 ConstantsHolder.xanaConstants.isSummitDeepLink = false;
                 ConstantsHolder.xanaConstants.isJoiningXANADeeplink = true;
                 Debug.Log($"EditorTestDeeplinking: Enter World button clicked with EnvironmentID: {EnvironmentID}");
-                DynamicEventManager.Instance.InvokeDeepLinkEnvironment("" + EnvironmentID);
+                DynamicEventManager.Instance.XANADeeplink("" + DeepLink);
             }
         }
     }
