@@ -110,7 +110,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                (PlayerPrefs.GetString("PlayerName")  == "" ) ) && PlayerPrefs.GetInt("FirstTimeappOpen") == 0) )
         {
              Debug.Log("Waiting for login on IOS : loggedIn : " + ConstantsHolder.loggedIn +" :  LoggedInAsGuest " +
-           // ConstantsHolder.xanaConstants.LoggedInAsGuest + " : PlayerName  " + PlayerPrefs.GetString("PlayerName")+ " : FirstTimeappOpen : "+PlayerPrefs.GetInt("FirstTimeappOpen") );
+            ConstantsHolder.xanaConstants.LoggedInAsGuest + " : PlayerName  " + PlayerPrefs.GetString("PlayerName")+ " : FirstTimeappOpen : "+PlayerPrefs.GetInt("FirstTimeappOpen") );
             yield return new WaitForSeconds(0.5f);
         }
 #endif
