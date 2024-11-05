@@ -131,23 +131,27 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
         yield return new WaitForSeconds(1.5f);
 
 #if UNITY_ANDROID
-        string[] urlBreadDown = decodedUrl.Split(new char[] { '=', '&' });
-        Debug.Log($"Split decodedUrl into {urlBreadDown.Length} parts");
+        // Extract the number after "Join=" and before "&"
+        string joinKey = "Join=";
+        int startIndex = decodedUrl.IndexOf(joinKey) + joinKey.Length;
+        int endIndex = decodedUrl.IndexOf("&", startIndex);
 
-        foreach (string word in urlBreadDown)
+        if (startIndex != -1)
         {
-            Debug.Log($"Processing word: {word}");
-            if (word.Contains("Join"))
+            if (endIndex != -1)
             {
-                Debug.Log($"Join found in word: {word}");
-                EventArguments = word.Replace("Join", "").Replace("=", "");
-                Debug.Log($"EventArguments set to: {EventArguments}");
-                if (FirstTimeopen)
-                {
-                    FirstTimeopen = false;
-                    Debug.Log($"Invoking deep link environment with arguments: {EventArguments}");
-                    InvokeDeepLinkEnvironment(EventArguments);
-                }
+                EventArguments = decodedUrl.Substring(startIndex, endIndex - startIndex);
+            }
+            else
+            {
+                EventArguments = decodedUrl.Substring(startIndex);
+            }
+            Debug.Log($"EventArguments set to: {EventArguments}");
+            if (FirstTimeopen)
+            {
+                FirstTimeopen = false;
+                Debug.Log($"Invoking deep link environment with arguments: {EventArguments}");
+                InvokeDeepLinkEnvironment(EventArguments);
             }
         }
 #endif
@@ -183,6 +187,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
         yield return new WaitForSeconds(1f);
     }
+
 
     public void InvokeDeepLinkEnvironment(string environmentIDf)
     {
