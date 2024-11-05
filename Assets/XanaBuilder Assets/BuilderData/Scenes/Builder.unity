@@ -356,7 +356,6 @@ MonoBehaviour:
   - Hiragino-Sans
   aiSkyMaterial: {fileID: 2100000, guid: f0c5a6aa83abe3845a7e3c14ec3fe62d, type: 2}
   aiPPVolumeProfile: {fileID: 11400000, guid: 313c192bc6b244e6f871ec28dc3ba0d6, type: 2}
-  lensFlareDataSRP: {fileID: 11400000, guid: b494e9a468844427286e3a234a05b65e, type: 2}
   withMultiplayer: 1
   orbitronFont: {fileID: 11400000, guid: 10b30e17fde3c449a94e3fea1bec4fc1, type: 2}
   playerCanvas: {fileID: 5863899272732676176, guid: 230541453524e456793384e55666fbee, type: 3}
@@ -1782,17 +1781,13 @@ MonoBehaviour:
       directionLightColor: {r: 0.7882353, g: 0.92941177, b: 1, a: 0}
       directionLightShadowStrength: 0.2
       character_directionLightIntensity: 0.15
-      lensFlareData:
-        falreData: {fileID: 0}
-        flareScale: 0.6
-        flareIntensity: 1
     ppVolumeProfile: {fileID: 0}
   skyBoxesData: {fileID: 11400000, guid: 2d6ce81d9c48081488a773bd4a1f1bee, type: 2}
   index: 20
   directionLight: {fileID: 1956891594}
   characterDirectionLight: {fileID: 23428824}
   ppVolume: {fileID: 1635598668}
-  sceneLensFlare: {fileID: 1956891596}
+  sceneLensFlare: {fileID: 0}
 --- !u!4 &1492146887
 Transform:
   m_ObjectHideFlags: 0
@@ -2766,7 +2761,6 @@ GameObject:
   - component: {fileID: 1956891595}
   - component: {fileID: 1956891594}
   - component: {fileID: 1956891593}
-  - component: {fileID: 1956891596}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -2871,101 +2865,6 @@ Transform:
   m_Father: {fileID: 1008670532}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!114 &1956891596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1956891592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc4d76f733087744991913c9d19d5274, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_LensFlareData: {fileID: 0}
-  intensity: 1
-  maxAttenuationDistance: 100
-  maxAttenuationScale: 100
-  distanceAttenuationCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  scaleByDistanceCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  attenuationByLightShape: 1
-  radialScreenAttenuationCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  useOcclusion: 1
-  occlusionRadius: 0.35
-  sampleCount: 32
-  occlusionOffset: 0.05
-  scale: 1
-  allowOffScreen: 0
 --- !u!1 &2054164622
 GameObject:
   m_ObjectHideFlags: 0

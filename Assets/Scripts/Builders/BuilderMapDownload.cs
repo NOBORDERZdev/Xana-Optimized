@@ -595,7 +595,7 @@ public class BuilderMapDownload : MonoBehaviour
         reflectionProbe.gameObject.SetActive(false);
         reflectionProbe.enabled = true;
         SkyProperties skyProperties = levelData.skyProperties;
-        LensFlareData lensFlareData = new LensFlareData();
+        //LensFlareData lensFlareData = new LensFlareData();
         Camera.main.clearFlags = CameraClearFlags.Skybox;
         if (skyProperties.skyId != -1)
         {
@@ -642,7 +642,7 @@ public class BuilderMapDownload : MonoBehaviour
                     directionalLight.shadowStrength = skyBoxItem.directionalLightData.directionLightShadowStrength;
                     directionalLight.color = skyBoxItem.directionalLightData.directionLightColor;
                     SetPostProcessProperties(skyBoxItem.ppVolumeProfile);
-                    lensFlareData = skyBoxItem.directionalLightData.lensFlareData;
+                   // lensFlareData = skyBoxItem.directionalLightData.lensFlareData;
                 }
             }
             else
@@ -667,8 +667,8 @@ public class BuilderMapDownload : MonoBehaviour
                 GamificationComponentData.instance.aiPPVolumeProfile.TryGet(out whiteBalance);
                 GamificationComponentData.instance.aiPPVolumeProfile.TryGet(out colorAdjustments);
                 UpdateDirectionLightAndPPData(skyBoxItem);
-                skyBoxItem.lightPPData.directionalLightData.lensFlareData.falreData = GamificationComponentData.instance.lensFlareDataSRP;
-                lensFlareData = skyBoxItem.lightPPData.directionalLightData.lensFlareData;
+               // skyBoxItem.lightPPData.directionalLightData.lensFlareData.falreData = GamificationComponentData.instance.lensFlareDataSRP;
+               // lensFlareData = skyBoxItem.lightPPData.directionalLightData.lensFlareData;
             }
         }
         else
@@ -690,14 +690,14 @@ public class BuilderMapDownload : MonoBehaviour
             directionalLight.intensity = SituationChangerSkyboxScript.instance.defaultSkyBoxData.directionalLightData.lightIntensity;
             directionalLight.shadowStrength = SituationChangerSkyboxScript.instance.defaultSkyBoxData.directionalLightData.directionLightShadowStrength;
             characterLight.intensity = SituationChangerSkyboxScript.instance.defaultSkyBoxData.directionalLightData.character_directionLightIntensity;
-            lensFlareData = SituationChangerSkyboxScript.instance.defaultSkyBoxData.directionalLightData.lensFlareData;
+            //lensFlareData = SituationChangerSkyboxScript.instance.defaultSkyBoxData.directionalLightData.lensFlareData;
         }
 
         reflectionProbe.gameObject.SetActive(true);
-        if (lensFlareData != null)
-            SetLensFlareData(lensFlareData.falreData, lensFlareData.flareScale, lensFlareData.flareIntensity);
-        else
-            SetLensFlareData(null, 1, 1);
+        //if (lensFlareData != null)
+        //    SetLensFlareData(lensFlareData.falreData, lensFlareData.flareScale, lensFlareData.flareIntensity);
+        //else
+        //    SetLensFlareData(null, 1, 1);
         GamificationComponentData.instance.isSkyLoaded = true;
         directionalLight.gameObject.SetActive(true);
         if (TimeStats.playerCanvas)

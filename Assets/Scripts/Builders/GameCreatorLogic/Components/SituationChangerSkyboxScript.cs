@@ -151,33 +151,33 @@ public class SituationChangerSkyboxScript : MonoBehaviour
 
     void DirectionLightColorChange(int skyID)
     {
-        LensFlareData lensFlareData = new LensFlareData();
+        //LensFlareData lensFlareData = new LensFlareData();
         if (skyID == -1)
         {
             directionLight.intensity = defaultSkyBoxData.directionalLightData.lightIntensity;
             directionLight.shadowStrength = defaultSkyBoxData.directionalLightData.directionLightShadowStrength;
-            lensFlareData = defaultSkyBoxData.directionalLightData.lensFlareData;
+           // lensFlareData = defaultSkyBoxData.directionalLightData.lensFlareData;
         }
         else
         {
             directionLight.intensity = skyBoxesData.skyBoxes[skyID].directionalLightData.lightIntensity;
             directionLight.shadowStrength = skyBoxesData.skyBoxes[skyID].directionalLightData.directionLightShadowStrength;
-            lensFlareData = skyBoxesData.skyBoxes[skyID].directionalLightData.lensFlareData;
+           // lensFlareData = skyBoxesData.skyBoxes[skyID].directionalLightData.lensFlareData;
         }
 
 
-        if (lensFlareData.falreData != null)
-        {
-            sceneLensFlare.lensFlareData = lensFlareData.falreData;
-            sceneLensFlare.scale = lensFlareData.flareScale;
-            sceneLensFlare.intensity = lensFlareData.flareIntensity;
-        }
-        else
-        {
-            sceneLensFlare.lensFlareData = null;
-            sceneLensFlare.scale = 1;
-            sceneLensFlare.intensity = 1;
-        }
+        //if (lensFlareData.falreData != null)
+        //{
+        //    sceneLensFlare.lensFlareData = lensFlareData.falreData;
+        //    sceneLensFlare.scale = lensFlareData.flareScale;
+        //    sceneLensFlare.intensity = lensFlareData.flareIntensity;
+        //}
+        //else
+        //{
+        //    sceneLensFlare.lensFlareData = null;
+        //    sceneLensFlare.scale = 1;
+        //    sceneLensFlare.intensity = 1;
+        //}
         builderMapDownload.reflectionProbe.gameObject.SetActive(true);
         DynamicGI.UpdateEnvironment();
     }

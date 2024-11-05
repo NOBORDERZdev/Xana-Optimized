@@ -37,14 +37,14 @@ public class DirectionalLightData
     public Color directionLightColor;
     public float directionLightShadowStrength;
     public float character_directionLightIntensity;
-    public LensFlareData lensFlareData;
+    //public LensFlareData lensFlareData;
     public DirectionalLightData()
     {
         directionLightRot = new Vector3(50, -30);
         lightIntensity = 1f;
         directionLightColor = new Color(0.7843137f, 0.9294118f, 1.0f);
         directionLightShadowStrength = .5f;
-        lensFlareData = new LensFlareData();
+        //lensFlareData = new LensFlareData();
     }
 }
 
