@@ -180,7 +180,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3143043628389810780}
-  - component: {fileID: 2961823202007605340}
+  - component: {fileID: 4704624898732355397}
   m_Layer: 9
   m_Name: Colliders
   m_TagString: Item
@@ -203,8 +203,8 @@ Transform:
   m_Father: {fileID: 5768422741842159229}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2961823202007605340
-BoxCollider:
+--- !u!64 &4704624898732355397
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -213,9 +213,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.3359861, y: 1.1268941, z: 1.3898813}
-  m_Center: {x: 0.013120323, y: 0.579297, z: -0.0047776103}
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2802089294022191857, guid: 092061a6ba289bf43a991193f3f4b7b3, type: 3}
 --- !u!1 &6577046866477268167
 GameObject:
   m_ObjectHideFlags: 0

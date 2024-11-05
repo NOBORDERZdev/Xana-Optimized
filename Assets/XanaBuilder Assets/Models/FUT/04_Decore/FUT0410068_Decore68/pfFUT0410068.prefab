@@ -123,7 +123,6 @@ MonoBehaviour:
   runtimeItemName: 
   itemType: 0
   itemCategory: 0
-  itemThemes: 
   componentsAttachedToItem: 
   bottomTransform: 0
   isValid: 0
@@ -161,6 +160,52 @@ MonoBehaviour:
   activeBehaviours: []
   activeOnlyIfEnabled: 0
   outlinable: {fileID: 1375561840247199954}
+--- !u!1 &4175198963435687225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8832077294438989181}
+  - component: {fileID: 6820316807790452104}
+  m_Layer: 9
+  m_Name: 01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8832077294438989181
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4175198963435687225}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8000284361641490317}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &6820316807790452104
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4175198963435687225}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6939290099271591603, guid: 215be3997a9a93646991bd26771c53c7, type: 3}
 --- !u!1 &4950571742988911675
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,7 +369,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8000284361641490317}
-  - component: {fileID: 6337302344489156466}
+  - component: {fileID: 6365785915960887537}
   m_Layer: 9
   m_Name: Colliders
   m_TagString: Item
@@ -343,12 +388,13 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8832077294438989181}
   m_Father: {fileID: 414868603871471171}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6337302344489156466
-BoxCollider:
+--- !u!136 &6365785915960887537
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -357,6 +403,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.431929, y: 0.028044343, z: 3.7881012}
-  m_Center: {x: -0.00000011920929, y: 0.0140221715, z: 0}
+  m_Radius: 1.0730947
+  m_Height: 2.1461895
+  m_Direction: 1
+  m_Center: {x: -0.013809562, y: 1.027273, z: 0}
