@@ -143,7 +143,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                 if (true)
                 {
                     Debug.Log($"Join found in word: {word}");
-                    EventArguments = word.Replace("Join", "");
+                    EventArguments = word.Replace("Join", "").Replace("=", "");
                     Debug.Log($"EventArguments set to: {EventArguments}");
                     if (FirstTimeopen)
                     {
@@ -164,7 +164,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
         if (envIndex != -1 && ampersandIndex != -1)
         {
-            string envSubstring = decodedUrl.Substring(envIndex + 4, ampersandIndex - envIndex - 4);
+            string envSubstring = decodedUrl.Substring(envIndex + 4, ampersandIndex - envIndex - 4).Replace("=", "");
             if (FirstTimeopen)
             {
                 EventArguments = envSubstring;
