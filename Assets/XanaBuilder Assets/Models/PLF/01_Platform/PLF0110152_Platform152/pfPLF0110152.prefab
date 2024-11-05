@@ -123,7 +123,6 @@ MonoBehaviour:
   runtimeItemName: 
   itemType: 0
   itemCategory: 0
-  itemThemes: 
   componentsAttachedToItem: 
   bottomTransform: 0
   isValid: 0
@@ -170,7 +169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3880242056825571750}
-  - component: {fileID: 1043650545771610220}
+  - component: {fileID: 6080974779912891853}
   m_Layer: 9
   m_Name: Colliders
   m_TagString: Item
@@ -193,8 +192,8 @@ Transform:
   m_Father: {fileID: 666115545481332693}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &1043650545771610220
-MeshCollider:
+--- !u!65 &6080974779912891853
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -203,10 +202,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2291644342605215710, guid: a9865d3ba6b171947a8f55d8d9edfad5, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 1.6327851, y: 0.18869105, z: 2.6924348}
+  m_Center: {x: -0.000021964312, y: 0.09790592, z: -0.0005457401}
 --- !u!1 &5445997459144590207
 GameObject:
   m_ObjectHideFlags: 0

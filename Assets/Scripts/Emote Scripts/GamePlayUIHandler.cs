@@ -180,7 +180,7 @@ public class GamePlayUIHandler : MonoBehaviour
 
         GamePlayButtonEvents.inst.OnExitButtonClick();
         SetMainCharactorControllerValueHandler();
-
+        ConstantsHolder.xanaConstants.haveSubDomeEnabled=false;
     }
 
     public void OnPeopeClick()
