@@ -59,6 +59,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                         Debug.Log("Detected Join in URL");
                         ConstantsHolder.xanaConstants.isSummitDeepLink = false;
                         ConstantsHolder.xanaConstants.isJoiningXANADeeplink = true;
+                        PlayerPrefs.SetInt("FirstTimeappOpen", 0);
                         XANADeeplink(Application.absoluteURL);
                     }
                 }
@@ -108,7 +109,8 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
         while ( (( (!ConstantsHolder.loggedIn || (!ConstantsHolder.xanaConstants.LoggedInAsGuest) ) &&
                (PlayerPrefs.GetString("PlayerName")  == "" ) ) && PlayerPrefs.GetInt("FirstTimeappOpen") == 0) )
         {
-            Debug.Log("Waiting for login on iOS");
+             Debug.Log("Waiting for login on IOS : loggedIn : " + ConstantsHolder.loggedIn +" :  LoggedInAsGuest " +
+           // ConstantsHolder.xanaConstants.LoggedInAsGuest + " : PlayerName  " + PlayerPrefs.GetString("PlayerName")+ " : FirstTimeappOpen : "+PlayerPrefs.GetInt("FirstTimeappOpen") );
             yield return new WaitForSeconds(0.5f);
         }
 #endif
@@ -237,6 +239,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                         }
                         WorldItemView.m_EnvName = environmentDetails.data.name;
                         SaveCharacterProperties.NeedToShowSplash = 2;
+                        PlayerPrefs.SetInt("FirstTimeappOpen", 1);
 
                         if (isBuilderScene)
                             WorldManager.instance.JoinBuilderWorld();
