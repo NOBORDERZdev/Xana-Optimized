@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using TMPro;
 using Newtonsoft.Json;
+using Unity.VisualScripting;
 
 public class RaffleTicketHandler : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class RaffleTicketHandler : MonoBehaviour
     [SerializeField] private int _totalNumberOfDomes;
     [SerializeField] private int _totalNumberOfTickets;
     private int _earnTicketsInOneCycle;
+    private int _tempTotalTickets;
 
     // Start is called before the first frame update
     void Awake()
@@ -122,9 +124,12 @@ public class RaffleTicketHandler : MonoBehaviour
             yield return null;
         }
         if (www.result != UnityWebRequest.Result.ConnectionError && www.result != UnityWebRequest.Result.ProtocolError)
+        {
             Debug.Log("Sucessfully update Tickets");
+            ShowPopupOnSuccessTicketGain();
+        }
         else
-            Debug.Log("Error update Tickets");
+            Debug.Log("Tickets-- Something went wrong -- "+ www.downloadHandler.text);
 
         www.Dispose();
     }
@@ -173,8 +178,9 @@ public class RaffleTicketHandler : MonoBehaviour
     private void UpdateTicketsData()
     {
         _earnTicketsInOneCycle = 1;
-        _totalNumberOfTickets += _earnTicketsInOneCycle;
-        CheckForAnyRaffleticketGifts(_totalNumberOfTickets);
+        _tempTotalTickets = _totalNumberOfTickets;
+        _tempTotalTickets += _earnTicketsInOneCycle;
+        CheckForAnyRaffleticketGifts(_tempTotalTickets);
     }
     private void CheckForAnyRaffleticketGifts(int RaffleTickets)
     {
@@ -182,14 +188,14 @@ public class RaffleTicketHandler : MonoBehaviour
         if (_totalNumberOfDomes == _allVisitedDomeIds.Count)
         {
             _earnTicketsInOneCycle += 50;
-            _totalNumberOfTickets += _earnTicketsInOneCycle;
+            _tempTotalTickets += _earnTicketsInOneCycle;
             StartCoroutine(RewardPopUp("You have received your gift!", "50", 8f));
             _earnTicketsInOneCycle = 0;
         }
         else if (RaffleTickets % 5 == 0)
         {
             _earnTicketsInOneCycle += 4;
-            _totalNumberOfTickets += _earnTicketsInOneCycle;
+            _tempTotalTickets += _earnTicketsInOneCycle;
             _earnTicketsInOneCycle = 0;
             StartCoroutine(RewardPopUp("You have received your gift!", "05", 5f));
         }
@@ -197,9 +203,9 @@ public class RaffleTicketHandler : MonoBehaviour
         {
             StartCoroutine(RewardPopUp("You have received your gift!", "01", 5f));
         }
-        UpdateUI();
+        //UpdateUI();
     }
-    IEnumerator RewardPopUp(string value, string number,float time)
+    IEnumerator RewardPopUp(string statement, string number,float time)
     {
         yield return new WaitForSeconds(time);
 
@@ -215,18 +221,26 @@ public class RaffleTicketHandler : MonoBehaviour
                 StartCoroutine(SaveUpdatedTicketsCount(50));
                 break;
         }
-        _giftTicketsPopUpDescriptionTextPotrait.text = value;
-        _giftTicketsPopUpDescriptionTextLandScape.text = value;
+
+        _giftTicketsPopUpDescriptionTextPotrait.text = statement;
+        _giftTicketsPopUpDescriptionTextLandScape.text = statement;
+
         _ticketCountTextLandScape.text = number;
         _ticketCountTextPotrait.text = number;
+    }
+
+    void ShowPopupOnSuccessTicketGain()
+    {
+        // Increase the Count When API Call is Successfull
+        _totalNumberOfTickets = _tempTotalTickets;
+        UpdateUI();
 
         if (ScreenOrientationManager._instance.isPotrait)
             _giftTicketsPopUpPotrait.SetActive(true);
         else
             _giftTicketsPopUpLandScape.SetActive(true);
+
     }
-
-
 
     #endregion
 }
