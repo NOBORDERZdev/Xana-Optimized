@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using TMPro;
 using Newtonsoft.Json;
-using Unity.VisualScripting;
 
 public class RaffleTicketHandler : MonoBehaviour
 {
