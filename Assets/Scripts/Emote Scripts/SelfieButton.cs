@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photon.Pun.Demo.PunBasics;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,7 +30,8 @@ public class SelfieButton : MonoBehaviour
     private void OnSelfieClick()
     {
         //added condition to prevent selfie open issue while jumping and falling from environment
-        if (!ReferencesForGamePlay.instance.playerControllerNew._IsGrounded)
+        //added condition to prevent selfie open issue while player is respawning or being shifted from one summit area to other summit area. 
+        if (!ReferencesForGamePlay.instance.playerControllerNew._IsGrounded || MutiplayerController.instance.isShifting)
             return;
         if (ActionManager.IsAnimRunning) //for stop dance animation
         {
