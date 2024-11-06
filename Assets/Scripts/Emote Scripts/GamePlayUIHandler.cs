@@ -268,19 +268,36 @@ public class GamePlayUIHandler : MonoBehaviour
 
     public void CloseAnimationButtonClick()
     {
-        if(!ActionManager.IsAnimRunning)
-            AnimationBtnClose.SetActive(false);
-        EmoteReactionPanelMainScreen.SetActive(false);
-        FavoriteSelectionPanel.SetActive(false);
+        try
+        {
+            if (!ActionManager.IsAnimRunning)
+                AnimationBtnClose.SetActive(false);
+            EmoteReactionPanelMainScreen.SetActive(false);
+            FavoriteSelectionPanel.SetActive(false);
+        }
+        catch (System.Exception)
+        {
+            print("Some error thrown here");
+        }
+
+
     }
 
     public void CloseReactionButtonClick()
     {
-        if (ActionManager.IsAnimRunning)
-            AnimationBtnClose.SetActive(true);
-        ReactionBtnClose.SetActive(false);
-        EmoteReactionPanelMainScreen.SetActive(false);
-        FavoriteSelectionPanel.SetActive(false);
+        try
+        {
+            if (ActionManager.IsAnimRunning)
+                AnimationBtnClose.SetActive(true);
+            ReactionBtnClose.SetActive(false);
+            EmoteReactionPanelMainScreen.SetActive(false);
+            FavoriteSelectionPanel.SetActive(false);
+        }
+        catch (System.Exception)
+        {
+            print("ReactionBtnClose is not null");
+        }
+
     }
 
     public void CloseEmoteSelectionPanel()
