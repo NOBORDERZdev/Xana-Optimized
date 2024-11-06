@@ -584,34 +584,6 @@ public class LoadingHandler : MonoBehaviour
         fader.gameObject.SetActive(false);
     }
 
-    public void ShowSimpleDomeloading(float duration)
-    {
-        Debug.Log("ShowSimpleDomeloading");
-        StartCoroutine(LoadingRoutine(duration));
-    }
-
-    IEnumerator LoadingRoutine(float duration)
-    {
-        float lerpedValue = 0f;
-        float startValue = 0f;
-        float endValue = 100f;
-        float elapsedTime = 0f;
-        DomeLoading.SetActive(true);
-
-        while (elapsedTime < duration)
-        {
-            lerpedValue = Mathf.Lerp(startValue, endValue, elapsedTime / duration);
-            elapsedTime += Time.deltaTime;
-            LoadingStatus.DOAnchorMax(new Vector2(lerpedValue/100, LoadingStatus.anchorMax.y), 0.15f);
-            DomeProgress.text = ((int)(lerpedValue)).ToString();
-
-            yield return null;
-        }
-        DomeProgress.text = "100";
-        yield return new WaitForSeconds(0.2f);
-        DomeLoading.SetActive(false);
-    }
-
     public AsyncOperation LoadSceneByIndex(string sceneName, bool isBuilder = false, LoadSceneMode mode = LoadSceneMode.Single)
     {
         //UpdateLoadingSlider(.2f);
