@@ -584,7 +584,6 @@ public class LoadingHandler : MonoBehaviour
         fader.gameObject.SetActive(false);
     }
 
-
     public AsyncOperation LoadSceneByIndex(string sceneName, bool isBuilder = false, LoadSceneMode mode = LoadSceneMode.Single)
     {
         //UpdateLoadingSlider(.2f);
@@ -854,9 +853,9 @@ public class LoadingHandler : MonoBehaviour
                 instructionObj.gameObject.SetActive(true);
             }
 
-            instructionObj.gameObject.name = "Instruction_" + ( i + 1);
+            instructionObj.gameObject.name = "Instruction_" + (i + 1);
             instructionObj.instNumber.text = "" + (i + 1);
-            
+
             if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
             {
                 instructionObj.instHeading.text = info.instruction[i].title_JP;
@@ -902,7 +901,7 @@ public class LoadingHandler : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(info.thumbnail))
         {
-            info.thumbnail += "?width="+ConstantsHolder.DomeImageCompression;
+            info.thumbnail += "?width=" + ConstantsHolder.DomeImageCompression;
             DomeThumbnail.gameObject.SetActive(true);
             if (AssetCache.Instance.HasFile(info.thumbnail))
             {
@@ -962,7 +961,7 @@ public class LoadingHandler : MonoBehaviour
             DomeID.text = "MD-" + info.domeId;
         }
 
-        if(DomeName.text.Contains("XANA Summit"))
+        if (DomeName.text.Contains("XANA Summit"))
         {
             DomeID.text = "Summit";
         }
@@ -1059,7 +1058,7 @@ public class LoadingHandler : MonoBehaviour
     }
     public void showApprovaldomeloading(XANASummitSceneLoading.SingleWorldInfo info, XANASummitDataContainer.OfficialWorldDetails selectedWold)
     {
-        if(DomeLoading.activeInHierarchy)
+        if (DomeLoading.activeInHierarchy)
         {
             return;
         }
