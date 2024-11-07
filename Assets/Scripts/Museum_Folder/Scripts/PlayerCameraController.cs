@@ -447,12 +447,12 @@ public class PlayerCameraController : MonoBehaviour
             //Set zoom in-out value for Asset Changer Avatar
             zoomInLimit = 15;
             zoomOutLimit = 100;
-            // SetOrbitRadius(5, 20, 5);
-            // SetOrbitHeight(20, 5, cinemachine.m_Orbits[2].m_Height);
-            GamePlayUIHandler.inst.ref_PlayerControllerNew.GetComponent<CharacterController>().radius = 1.4f;
-            GamePlayUIHandler.inst.ref_PlayerControllerNew.GetComponent<CharacterController>().center = new Vector3(0,2.3f,0);
-            SetOrbitRadius(1.4f, 1f, 1.3f);
-            SetOrbitHeight(1.5f, 3f, 1.9f);
+            SetOrbitRadius(5, 20, 5);
+            SetOrbitHeight(20, 5, cinemachine.m_Orbits[2].m_Height);
+            //GamePlayUIHandler.inst.ref_PlayerControllerNew.GetComponent<CharacterController>().radius = 1.4f;
+            //GamePlayUIHandler.inst.ref_PlayerControllerNew.GetComponent<CharacterController>().center = new Vector3(0, 2.3f, 0);
+            //SetOrbitRadius(1.4f, 1f, 1.3f);
+            //SetOrbitHeight(1.5f, 3f, 1.9f);
         }
         else
         {
