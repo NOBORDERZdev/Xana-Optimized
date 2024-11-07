@@ -8,7 +8,8 @@ public class SwimmingController : MonoBehaviour
 {
    PlayerController _playerController;
    private Coroutine swimCoroutine;
-
+   [SerializeField]
+   private GameObject[] objectsToEnableDisable;
 
     private void Start()
     {
@@ -25,6 +26,7 @@ public class SwimmingController : MonoBehaviour
     }
     public void StartSwimming() 
     {
+        UpdateUIelement(false);
         _playerController.animator.SetBool("IsSwimIdle", true);
         if (swimCoroutine == null)
         {
@@ -35,6 +37,7 @@ public class SwimmingController : MonoBehaviour
     {
         _playerController.animator.SetBool("IsSwimIdle", false);
         _playerController.animator.SetBool("IsSwimming", false);
+        UpdateUIelement(true);
         if (swimCoroutine != null)
         {
             StopCoroutine(swimCoroutine);
@@ -55,4 +58,9 @@ public class SwimmingController : MonoBehaviour
             yield return null;
         }
     }
+    public void UpdateUIelement(bool enable)
+    {
+        objectsToEnableDisable?.SetActive(enable);
+    }
+
 }
