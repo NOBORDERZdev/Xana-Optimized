@@ -392,6 +392,33 @@ public class XANASummitSceneLoading : MonoBehaviour
             SubWorldsHandlerInstance.IsEnteringInSubWorld = false;
             SubWorldsHandlerInstance.CallAnalyticsForSubWorlds();
         }
+        else
+        {
+            if (_stayTimeTrackerForSummit != null)
+            {
+                if (_stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea)
+                {
+                    _stayTimeTrackerForSummit.StopTrackingTime();
+                    //_stayTimeTrackerForSummit.CalculateAndLogStayTime();
+                    _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = false;
+                }
+                _stayTimeTrackerForSummit.DomeId = subWorldInfo.domeId;
+                _stayTimeTrackerForSummit.IsBuilderWorld = ConstantsHolder.xanaConstants.isBuilderScene;
+                string eventName;
+                if (ConstantsHolder.xanaConstants.isBuilderScene)
+                {
+                    _stayTimeTrackerForSummit.DomeWorldId = int.Parse(worldInfo.data.id);
+                    eventName = "TV_Dome_" + subWorldInfo.domeId + "_BW_" + worldInfo.data.id;
+                }
+                else
+                {
+                    _stayTimeTrackerForSummit.DomeWorldId = int.Parse(worldInfo.data.id);
+                    eventName = "TV_Dome_" + subWorldInfo.domeId + "_XW_" + worldInfo.data.id;
+                }
+                GlobalConstants.SendFirebaseEventForSummit(eventName);
+                _stayTimeTrackerForSummit.StartTrackingTime();
+            }
+        }
         //For Subworlds
         string World = "";
         if (ConstantsHolder.xanaConstants.isBuilderScene)
@@ -537,6 +564,25 @@ public class XANASummitSceneLoading : MonoBehaviour
             GamePlayUIHandler.inst.OnSwitchCameraClick();
         }
         //GameplayEntityLoader.instance.ForcedMapOpenForSummitScene();
+        if (subWorldInfo.name != "XANA Summit") 
+        {
+            _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = false;
+            _stayTimeTrackerForSummit.DomeId = ConstantsHolder.domeId;
+            _stayTimeTrackerForSummit.IsBuilderWorld = ConstantsHolder.xanaConstants.isBuilderScene;
+            string eventName;
+            if (ConstantsHolder.xanaConstants.isBuilderScene)
+            {
+                _stayTimeTrackerForSummit.DomeWorldId = int.Parse(subWorldInfo.id);
+                eventName = "TV_Dome_" + ConstantsHolder.domeId + "_BW_" + subWorldInfo.id;
+            }
+            else
+            {
+                _stayTimeTrackerForSummit.DomeWorldId = int.Parse(subWorldInfo.id);
+                eventName = "TV_Dome_" + ConstantsHolder.domeId + "_XW_" + subWorldInfo.id;
+            }
+            GlobalConstants.SendFirebaseEventForSummit(eventName);
+            _stayTimeTrackerForSummit.StartTrackingTime();
+        }
         string World = "";
         if (ConstantsHolder.xanaConstants.isBuilderScene)
             World = "USER";
