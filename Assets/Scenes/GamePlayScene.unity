@@ -13422,7 +13422,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.06806946, y: -0.0008904878, z: 0.000060757826, w: 0.99768025}
+  m_LocalRotation: {x: 0.06806946, y: -0.0008904674, z: 0.000060756436, w: 0.99768025}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13873,7 +13873,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010642428, y: -0.00089255633, z: 0.000009501369, w: 0.999943}
+  m_LocalRotation: {x: 0.010641528, y: -0.00089248887, z: 0.000009499849, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14628,6 +14628,7 @@ GameObject:
   - component: {fileID: 1808683680640967397}
   - component: {fileID: 4134801982122276582}
   - component: {fileID: 4134801982122276581}
+  - component: {fileID: 4134801982122276583}
   m_Layer: 22
   m_Name: Main Player_parent
   m_TagString: Player
@@ -14941,6 +14942,18 @@ MonoBehaviour:
   _canDash: 1
   _buttonDisableColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
   _audioSource: {fileID: 0}
+--- !u!114 &4134801982122276583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808683680640967398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5a6b3d95aa7beb4da634981e49de2e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4161355177358333909 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4161355176556536759, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
