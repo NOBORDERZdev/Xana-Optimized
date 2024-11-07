@@ -2,9 +2,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System;
 
 public class CommentUIManager : MonoBehaviour
 {
+    //[HideInInspector]
+    public int commentId;
     [SerializeField]
     private TextMeshProUGUI UserNameTxt;
     [SerializeField]
@@ -17,39 +20,31 @@ public class CommentUIManager : MonoBehaviour
     private TextMeshProUGUI likeText;
     [SerializeField]
     private TextMeshProUGUI dislikeText;
-    [Space(5)]
     [SerializeField]
-    private ContentSizeFitter txtSizeFitter;
-    [SerializeField]
-    private ContentSizeFitter bodySizeFitter;
-    [SerializeField]
-    private ContentSizeFitter uiSizeFitter;
-    [SerializeField]
-    private GameObject replySection;
-    [SerializeField]
-    private TMP_InputField replyInputField;
-    [SerializeField]
-    private GameObject bottomBar;
-    [SerializeField]
-    private GameObject viewMoreReplyBtn;
-    [Space(5)]
-    [SerializeField]
-    private GameObject childCommentUI;
-
+    private TextMeshProUGUI timeText;
+    //[Space(5)]
+    //[SerializeField]
+    //private ContentSizeFitter txtSizeFitter;
+    //[SerializeField]
+    //private ContentSizeFitter bodySizeFitter;
+    //[SerializeField]
+    //private ContentSizeFitter uiSizeFitter;
     private string fullComment;
     private int totalLike = 0;
     private int totalDislike = 0;
 
     private void OnEnable()
     {
-         commentText.text = UserNameTxt.text = likeText.text = dislikeText.text = "";
+         commentText.text = UserNameTxt.text = timeText.text = likeText.text = dislikeText.text = "";
     }
 
-    public void SetComment(string userName, string comment)
+    public void SetComment(string userName, string comment, string creatAt, int commentId)
     {
         UserNameTxt.text = userName;
         commentText.text = comment;
+        timeText.text = ExtractTime(creatAt);
         fullComment = comment;
+        this.commentId = commentId;
 
         commentText.textComponent.ForceMeshUpdate();
         int lineCount = commentText.textComponent.textInfo.lineCount;
@@ -90,41 +85,23 @@ public class CommentUIManager : MonoBehaviour
         dislikeText.text = totalDislike.ToString();
     }
 
-    public void ClickOnReply()
+    //private void SetSizeFitterComponent()
+    //{
+    //    txtSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+    //    bodySizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+    //    uiSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+    //}
+    private string ExtractTime(string createdTime)
     {
-        replySection.SetActive(true);
-        StartCoroutine(EnableDisableSizeFitter());
-    }
+        DateTime dateTime = DateTime.Parse(createdTime);
 
-    public void ClickOnCancel()
-    {
-        replySection.SetActive(false);
-        replyInputField.text = "";
-        StartCoroutine(EnableDisableSizeFitter());
-    }
+        // Extract date, add "at", and extract time in HH:mm:ss format
+        //string formattedDate = dateTime.ToString("yyyy-MM-dd");
+        //string formattedTime = dateTime.ToString("HH:mm:ss");
 
-    public void SendReply()
-    {
-        if (!replyInputField.text.IsNullOrEmpty())
-        {
-            replySection.SetActive(false);
-            GameObject child = Instantiate(childCommentUI);
-            child.transform.SetParent(transform, false);
-            child.GetComponent<CommentUIManager>().SetComment("Xana PMY", replyInputField.text);
-            replyInputField.text = "";
-        }
-        else
-        {
-            Debug.LogError("Please Enter something");
-        }
-    }
+        //return $"{formattedDate} at {formattedTime}";
 
-    private void SetSizeFitterComponent()
-    {
-        txtSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-        bodySizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-        uiSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        return dateTime.ToString("yyyy-MM-dd");
     }
-
 
 }

@@ -250,9 +250,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3819377411540919266}
-        m_TargetAssemblyTypeName: CommentUIManager, Assembly-CSharp
-        m_MethodName: SendReply
+      - m_Target: {fileID: 5745189985138833211}
+        m_TargetAssemblyTypeName: CommentReplyManager, Assembly-CSharp
+        m_MethodName: StartPostRequest
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1544,8 +1544,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3819377411540919266}
-        m_TargetAssemblyTypeName: CommentUIManager, Assembly-CSharp
+      - m_Target: {fileID: 5745189985138833211}
+        m_TargetAssemblyTypeName: CommentReplyManager, Assembly-CSharp
         m_MethodName: ClickOnCancel
         m_Mode: 1
         m_Arguments:
@@ -1897,6 +1897,7 @@ GameObject:
   - component: {fileID: 3819377411540919265}
   - component: {fileID: 3819377411540919267}
   - component: {fileID: 3819377411540919266}
+  - component: {fileID: 5745189985138833211}
   m_Layer: 5
   m_Name: PostUI
   m_TagString: Untagged
@@ -2018,20 +2019,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c737869b0b4614945af431dbb3c09b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commentId: 0
   UserNameTxt: {fileID: 8880842841026883771}
   commentText: {fileID: 7780253281128655727}
   seeMoreButton: {fileID: 8880842840549376768}
   previewLength: 90
   likeText: {fileID: 3819377412906021927}
   dislikeText: {fileID: 8880842841319974348}
-  txtSizeFitter: {fileID: 6759806555470758803}
-  bodySizeFitter: {fileID: 8880842839979976914}
-  uiSizeFitter: {fileID: 3819377411540919267}
+  timeText: {fileID: 585382148476677605}
+--- !u!114 &5745189985138833211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819377411540919288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5b01859c3e4ed4791f9c580475be16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  replyData:
+    success: 0
+    data:
+      id: 0
+      commentId: 0
+      replyText: 
+      deviceId: 
+      updatedAt: 
+      createdAt: 
+    msg: 
+  commentIdentifier: 0
+  parent: {fileID: 3819377411540919288}
   replySection: {fileID: 2380528399695518506}
   replyInputField: {fileID: 2380528401333035155}
   bottomBar: {fileID: 1751801559012200603}
   viewMoreReplyBtn: {fileID: 4600368445140093253}
-  childCommentUI: {fileID: 3609045728507174070, guid: 3269d7877ace26247ad11ee71f039a96, type: 3}
+  replyUI: {fileID: 3609045728507174070, guid: 3269d7877ace26247ad11ee71f039a96, type: 3}
 --- !u!1 &3819377412906021921
 GameObject:
   m_ObjectHideFlags: 0
@@ -2865,8 +2889,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3819377411540919266}
-        m_TargetAssemblyTypeName: CommentUIManager, Assembly-CSharp
+      - m_Target: {fileID: 5745189985138833211}
+        m_TargetAssemblyTypeName: CommentReplyManager, Assembly-CSharp
         m_MethodName: ClickOnReply
         m_Mode: 1
         m_Arguments:
