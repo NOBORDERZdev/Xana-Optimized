@@ -1843,6 +1843,8 @@ GameObject:
   - component: {fileID: 5044311471843439059}
   - component: {fileID: 8191807047279902326}
   - component: {fileID: 6218294961951476412}
+  - component: {fileID: 8191807047279902328}
+  - component: {fileID: 8191807047279902327}
   m_Layer: 0
   m_Name: Pool
   m_TagString: Untagged
@@ -1943,6 +1945,31 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5569596089299348329}
   m_Mesh: {fileID: 7235825894317113298, guid: 4578851862988984e8b066294e6c1a92, type: 3}
+--- !u!114 &8191807047279902327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5569596089299348329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9be49abba299c4d45a34fcdd00eb1772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &8191807047279902328
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5569596089299348329}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 27.000011, y: 2.5049803, z: 12.000015}
+  m_Center: {x: 13.500006, y: -1.2524902, z: -6.0000076}
 --- !u!1 &8563496417549136051
 GameObject:
   m_ObjectHideFlags: 0
