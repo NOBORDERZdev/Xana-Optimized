@@ -29,6 +29,11 @@ public class CommentUIManager : MonoBehaviour
     [SerializeField]
     private TMP_InputField replyInputField;
     [SerializeField]
+    private GameObject bottomBar;
+    [SerializeField]
+    private GameObject viewMoreReplyBtn;
+    [Space(5)]
+    [SerializeField]
     private GameObject childCommentUI;
 
     private string fullComment;
@@ -69,7 +74,7 @@ public class CommentUIManager : MonoBehaviour
     IEnumerator EnableDisableSizeFitter()
     {
         GetComponent<ContentSizeFitter>().enabled = false;
-        SetSizeFitter();
+        //SetSizeFitterComponent();
         yield return new WaitForSeconds(0.1f);
         GetComponent<ContentSizeFitter>().enabled = true;
     }
@@ -88,11 +93,14 @@ public class CommentUIManager : MonoBehaviour
     public void ClickOnReply()
     {
         replySection.SetActive(true);
+        StartCoroutine(EnableDisableSizeFitter());
     }
 
     public void ClickOnCancel()
     {
         replySection.SetActive(false);
+        replyInputField.text = "";
+        StartCoroutine(EnableDisableSizeFitter());
     }
 
     public void SendReply()
@@ -111,7 +119,7 @@ public class CommentUIManager : MonoBehaviour
         }
     }
 
-    private void SetSizeFitter()
+    private void SetSizeFitterComponent()
     {
         txtSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
         bodySizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
