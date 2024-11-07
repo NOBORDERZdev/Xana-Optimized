@@ -103,7 +103,7 @@ public class DeeplinkingDomeHandler : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
         }
-
+        SaveCharacterProperties.NeedToShowSplash = 2;
         BuilderEventManager.LoadNewScene?.Invoke(DomeId, transform.position);
         LoadingHandler.Instance.EnterDome();
         yield return new WaitForSeconds(1f);

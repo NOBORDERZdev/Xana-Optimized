@@ -12,23 +12,24 @@ public class XSummitBgChange : MonoBehaviour
 
     void Start()
     {
-        if (!isStartingSplash) {
+        if (!isStartingSplash && BackGroundSprite && XanaSummitBackgroung && XSummitBackgroung) {
             ChangeSummitBG();
         }
     }
     public void ChangeSummitBG()
     {
-        if (ConstantsHolder.xanaConstants.XSummitBg)
-        {
-            BackGroundSprite.GetComponent<Image>().sprite = XSummitBackgroung;
+        
+            if (ConstantsHolder.xanaConstants.XSummitBg)
+            {
 
-        }
-        else
-        {
+                BackGroundSprite.GetComponent<Image>().sprite = XSummitBackgroung;
 
-            BackGroundSprite.GetComponent<Image>().sprite = XanaSummitBackgroung;
-        }
-       
+            }
+            else
+            {
+
+                BackGroundSprite.GetComponent<Image>().sprite = XanaSummitBackgroung;
+            }
     }
 
 }

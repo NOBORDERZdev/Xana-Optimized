@@ -14,13 +14,27 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     private string EventArguments;
     bool FirstTimeopen = true;
     bool Debugging = true;
+    bool isOnAppLunached;
     string DebugDeepLink = "https://unitytesting.page.link/?link=https://www.xana.net/Join%3D3755&apn=com.nbi.xana&isi=6642649722&ibi=com.wujie.xsummit";
+    static DynamicEventManager Instance;
     #endregion
 
     #region Unity Functions
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        SaveCharacterProperties.NeedToShowSplash = 1;
+        print("Set need to show 1 in dynamic event manager");
         XanaEventDetails.eventDetails = new XanaEventDetails();
         XanaEventDetails.eventDetails.DataIsInitialized = false;
         // Application.deepLinkActivated += OpenEnvironmentDeeplink;
@@ -202,17 +216,21 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             EnvironmentDetails environmentDetails = JsonUtility.FromJson<EnvironmentDetails>(request.downloadHandler.text);
             Debug.Log("World Data : "+ request.downloadHandler.text);
             ConstantsHolder.xanaConstants.MuseumID = envId;
+            LoadingHandler.Instance.ShowLoading();
+            LoadingHandler.Instance.UpdateLoadingSlider(0);
+            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
 
             if (!request.isHttpError && !request.isNetworkError)
-            {
+            { 
                 if (request.error == null)
                 {
                     if (environmentDetails.success == true)
                     {
+                       
                         Debug.Log("Environment details successfully retrieved");
                         ConstantsHolder.xanaConstants.MuseumID = envId;
                         yield return new WaitForSeconds(4f);
-                        Screen.orientation = ScreenOrientation.LandscapeLeft;
                         PlayerPrefs.SetInt("PlayerDeepLinkOpened", 1);
                         bool isBuilderScene = false;
                         bool isMuseumScene = false;
@@ -240,14 +258,18 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                         {
                             ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
                         }
+                        LoadingHandler.Instance.ShowLoading();
+                        LoadingHandler.Instance.UpdateLoadingSlider(0);
+                        LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+                        Screen.orientation = ScreenOrientation.LandscapeLeft;
                         WorldItemView.m_EnvName = environmentDetails.data.name;
                         SaveCharacterProperties.NeedToShowSplash = 2;
                         PlayerPrefs.SetInt("FirstTimeappOpen", 1);
-
                         if (isBuilderScene)
                             WorldManager.instance.JoinBuilderWorld();
                         else
                             WorldManager.instance.JoinEvent();
+
                     }
                 }
             }

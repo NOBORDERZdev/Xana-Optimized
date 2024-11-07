@@ -56,8 +56,20 @@ public class UIHandler : MonoBehaviour
         _footerCan.GetComponent<CanvasGroup>().alpha = 0.0f;
         _footerCan.GetComponent<CanvasGroup>().interactable = false;
         _footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
-       //_SplashScreen.SetActive(false);
-        _SplashScreen.SetActive(true);
+        //_SplashScreen.SetActive(false);
+        if (SaveCharacterProperties.NeedToShowSplash == 1)
+        {
+            print("showing splash from Start UI Handler");
+            _SplashScreen.SetActive(true);
+        }
+        else
+        {
+            _SplashScreen.SetActive(false);
+            SplashMemoryFree();
+            _footerCan.GetComponent<CanvasGroup>().alpha = 1.0f;
+            _footerCan.GetComponent<CanvasGroup>().interactable = true;
+            _footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        }
     }
     bool a = false;
 
@@ -123,31 +135,48 @@ public class UIHandler : MonoBehaviour
     }
     private void Start()
     {
-        if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
+        if (SaveCharacterProperties.NeedToShowSplash == 1)
         {
-            SplashScreenXana.SetActive(true);
-            SplashScreenSummit.SetActive(false);
-            if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+            
+            if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
             {
-                Screen.orientation = ScreenOrientation.Portrait;
-            }
+                SplashScreenXana.SetActive(true);
+                SplashScreenSummit.SetActive(false);
+                if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                {
+                    Screen.orientation = ScreenOrientation.Portrait;
+                }
 
+            }
+            else
+            {
+                SplashScreenXana.SetActive(false);
+                if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+                {
+                    SplashScreenSummit.SetActive(true);
+                    Screen.orientation = ScreenOrientation.LandscapeLeft; // this shouldn't run if user is reconnecting
+                }
+            }
         }
         else
         {
-            SplashScreenXana.SetActive(false);
-            if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
-            {
-                SplashScreenSummit.SetActive(true);
-                Screen.orientation = ScreenOrientation.LandscapeLeft; // this shouldn't run if user is reconnecting
-            }
+            _SplashScreen.SetActive(false);
+            Screen.orientation = ScreenOrientation.Portrait;
+            _footerCan.GetComponent<CanvasGroup>().alpha = 1.0f;
+            _footerCan.GetComponent<CanvasGroup>().interactable = true;
+            _footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            //ReleaseSplashFromMemory();
+            //SplashScreenXana.SetActive(false);
+            //SplashScreenSummit.SetActive(false);
+            //StartCoroutine(IsSplashEnable(false, 0f));
         }
 
-        if (SaveCharacterProperties.NeedToShowSplash == 1)
+        if (SaveCharacterProperties.NeedToShowSplash == 1 && !ConstantsHolder.xanaConstants.isJoiningXANADeeplink)
         {
             if (PlayerPrefs.HasKey("TermsConditionAgreement"))
             {
                 IsSplashActive = false;
+                print("call from TermsConditionAgreement");
                 StartCoroutine(IsSplashEnable(false, 10f));
                 if (!ConstantsHolder.xanaConstants.SwitchXanaToXSummit)
                 {
@@ -165,7 +194,14 @@ public class UIHandler : MonoBehaviour
         }
         else
         {
-            StartCoroutine(IsSplashEnable(false, 0f));
+            print("call from else neet to show splash");
+            // StartCoroutine(IsSplashEnable(false, 0f));
+            _SplashScreen.SetActive(false);
+            Screen.orientation = ScreenOrientation.Portrait;
+            _footerCan.GetComponent<CanvasGroup>().alpha = 1.0f;
+            _footerCan.GetComponent<CanvasGroup>().interactable = true;
+            _footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            // ReleaseSplashFromMemory();
             //StartCoroutine(LoadingHandler.Instance.ShowLoadingForCharacterUpdation(5));
         }
     }
@@ -180,6 +216,7 @@ public class UIHandler : MonoBehaviour
         _footerCan.GetComponent<CanvasGroup>().interactable = false;
         _footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
         yield return new WaitForSeconds(_time);
+        print("IsSplashEnable call with  state : "+ _state);
         _SplashScreen.SetActive(_state);
         Canvas.GetComponent<CanvasGroup>().alpha = 1.0f;
         Canvas.GetComponent<CanvasGroup>().interactable = true;
