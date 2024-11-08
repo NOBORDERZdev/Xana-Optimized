@@ -66,6 +66,7 @@ public class SummitVideoAndImageController : MonoBehaviour
         if (this.GetComponent<StreamYoutubeVideo>() != null)
         {
             streamYoutubeVideo = this.GetComponent<StreamYoutubeVideo>();
+           
         }
         //_texture = new Texture2D(2, 2);
     }
@@ -253,7 +254,7 @@ public class SummitVideoAndImageController : MonoBehaviour
 
     void SetVideo()
     {
-        if (imgVideo16x9)
+        if (imgVideo16x9)  
             imgVideo16x9.SetActive(false);
         if (imgVideo9x16)
             imgVideo9x16.SetActive(false);
@@ -273,7 +274,12 @@ public class SummitVideoAndImageController : MonoBehaviour
                     liveVideoPlayer.SetActive(true);
 
                 if (streamYoutubeVideo != null)
+                {
+
+                    streamYoutubeVideo.mediaPlayer = liveVideoPlayer.GetComponent<MediaPlayer>();
+
                     streamYoutubeVideo.StreamYtVideo(videoLink, true);
+                }
                 SoundController.Instance.livePlayerSource = liveVideoPlayer.GetComponent<MediaPlayer>();
                 SoundSettings.soundManagerSettings.setNewSliderValues();
             }
@@ -314,7 +320,10 @@ public class SummitVideoAndImageController : MonoBehaviour
                 }
 
                 if (streamYoutubeVideo != null)
+                {
+                    streamYoutubeVideo.videoPlayer = tempVideoPlayer;
                     streamYoutubeVideo.StreamYtVideo(videoLink, false);
+                }
                 imgVideo16x9.GetComponent<VideoPlayer>().playOnAwake = true;
                 imgVideo16x9.SetActive(true);
                 if (imgVideoFrame16x9)
