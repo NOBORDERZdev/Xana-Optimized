@@ -10,35 +10,23 @@ public class PostUIManager : MonoBehaviour
     public int commentId;
     //[HideInInspector]
     public int replyId;
+    public CommentReplyManager replyManager;
+
     [SerializeField]
     private TextMeshProUGUI UserNameTxt;
     [SerializeField]
     private TMP_InputField commentText;
     [SerializeField]
     private Button seeMoreButton;
-    //[SerializeField]
-    //private int previewLength = 100; // Character limit for preview
     [SerializeField]
     private TextMeshProUGUI likeText;
     [SerializeField]
     private TextMeshProUGUI dislikeText;
     [SerializeField]
     private TextMeshProUGUI timeText;
-    //[Space(5)]
-    //[SerializeField]
-    //private ContentSizeFitter txtSizeFitter;
-    //[SerializeField]
-    //private ContentSizeFitter bodySizeFitter;
-    //[SerializeField]
-    //private ContentSizeFitter uiSizeFitter;
     private string fullComment;
     private int totalLike = 0;
     private int totalDislike = 0;
-
-    private void OnEnable()
-    {
-         commentText.text = UserNameTxt.text = timeText.text = likeText.text = dislikeText.text = "";
-    }
 
     public void SetComment(string userName, string comment, string creatAt, int commentNum)
     {
@@ -69,15 +57,10 @@ public class PostUIManager : MonoBehaviour
         dislikeText.text = totalDislike.ToString();
     }
 
-    //private void SetSizeFitterComponent()
-    //{
-    //    txtSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-    //    bodySizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-    //    uiSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-    //}
-
     private void UpdatePostData(string userName, string comment, string creatAt)
     {
+        UserNameTxt.text = commentText.text = timeText.text = "";
+
         UserNameTxt.text = userName;
         commentText.text = comment;
         timeText.text = ExtractTime(creatAt);
@@ -98,7 +81,6 @@ public class PostUIManager : MonoBehaviour
     IEnumerator EnableDisableSizeFitter()
     {
         GetComponent<ContentSizeFitter>().enabled = false;
-        //SetSizeFitterComponent();
         yield return new WaitForSeconds(0.1f);
         GetComponent<ContentSizeFitter>().enabled = true;
     }
@@ -114,6 +96,11 @@ public class PostUIManager : MonoBehaviour
         //return $"{formattedDate} at {formattedTime}";
 
         return dateTime.ToString("yyyy-MM-dd");
+    }
+
+    public void ViewMoreBtnPressed()
+    {
+        replyManager.ClickOnViewMore();
     }
 
 }

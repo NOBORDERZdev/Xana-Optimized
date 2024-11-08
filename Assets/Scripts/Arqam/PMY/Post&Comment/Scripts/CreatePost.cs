@@ -96,7 +96,6 @@ public class CreatePost : MonoBehaviour
         GameObject ui = Instantiate(CommentUI);
         ui.transform.SetParent(transform, false);
         ui.GetComponent<PostUIManager>().SetComment(userName, comment, timeSpan, id);
-        //commentManager.Add(ui.GetComponent<CommentManager>());
         replyManager.Add(ui.GetComponent<CommentReplyManager>());
     }
 

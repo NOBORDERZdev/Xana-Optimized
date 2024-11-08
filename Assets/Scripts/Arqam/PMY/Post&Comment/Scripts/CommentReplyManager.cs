@@ -5,9 +5,13 @@ using UnityEngine.Networking;
 using System.Text;
 using Newtonsoft.Json;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class CommentReplyManager : MonoBehaviour
 {
+    public CreatePost createPost;
+    public int replyCounter = 0;
     [System.Serializable]
     public class ReplyData
     {
@@ -27,8 +31,6 @@ public class CommentReplyManager : MonoBehaviour
     }
     public ReplyData replyData;
     [SerializeField]
-    private GameObject parent;
-    [SerializeField]
     private GameObject replySection;
     [SerializeField]
     private TMP_InputField replyInputField;
@@ -36,9 +38,13 @@ public class CommentReplyManager : MonoBehaviour
     private GameObject bottomBar;
     [SerializeField]
     private GameObject viewMoreReplyBtn;
+    [SerializeField]
+    private TextMeshProUGUI viewMoreReplyTxt;
     [Space(5)]
     [SerializeField]
     private GameObject replyUI;
+    [SerializeField]
+    private List<GameObject> allReplyObj;
 
     private string commentReplyApi = "https://api-test.xana.net/pmyWorlds/add-reply-on-comment";
     private class CommentInfo
@@ -48,11 +54,12 @@ public class CommentReplyManager : MonoBehaviour
         public string deviceId;
     }
     private CommentInfo commentInfo;
+    public bool isShowReply = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     public void StartPostRequest()
@@ -85,6 +92,8 @@ public class CommentReplyManager : MonoBehaviour
             SpawnReply("Xana PMY", replyData.data.replyText, replyData.data.createdAt, replyData.data.id);
             replySection.SetActive(false);
             replyInputField.text = "";
+            replyCounter++;
+            EnableViewMoreReplyBtn();
         }
         else
         {
@@ -95,9 +104,18 @@ public class CommentReplyManager : MonoBehaviour
     public void SpawnReply(string user, string replyData, string createdAt, int replyId)
     {
         GameObject replyPrefab = Instantiate(replyUI);
-        replyPrefab.transform.SetParent(parent.transform, false);
+        replyPrefab.transform.SetParent(this.transform, false);
         replyPrefab.GetComponent<PostUIManager>().SetCommentReply(user, replyData, createdAt, replyId);
-        StartCoroutine(EnableDisableSizeFitter());
+        replyPrefab.GetComponent<PostUIManager>().replyManager = this;
+        if (isShowReply)
+        {
+            replyPrefab.SetActive(true);
+        }
+        else
+        {
+            replyPrefab.SetActive(false);
+        }
+        allReplyObj.Add(replyPrefab);
     }
 
     public void ClickOnReply()
@@ -113,13 +131,37 @@ public class CommentReplyManager : MonoBehaviour
         StartCoroutine(EnableDisableSizeFitter());
     }
 
-    IEnumerator EnableDisableSizeFitter()
+    public void ClickOnViewMore()
     {
-        parent.GetComponent<ContentSizeFitter>().enabled = false;
-        //SetSizeFitterComponent();
-        yield return new WaitForSeconds(0.1f);
-        parent.GetComponent<ContentSizeFitter>().enabled = true;
+        isShowReply = isShowReply ? false : true;
+        foreach (GameObject items in allReplyObj)
+        {
+            items.SetActive(isShowReply);
+        }
+        StartCoroutine(EnableDisableSizeFitter());
+        StartCoroutine(AdjustUIPosition());
     }
 
+    public void EnableViewMoreReplyBtn()
+    {
+        bottomBar.SetActive(true);
+        viewMoreReplyBtn.SetActive(true);
+        viewMoreReplyTxt.text = "View " + replyCounter + " Reply";
+        StartCoroutine(EnableDisableSizeFitter());
+    }
+
+    IEnumerator EnableDisableSizeFitter()
+    {
+        this.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        yield return new WaitForSeconds(0.1f);
+        this.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+    }
+
+    IEnumerator AdjustUIPosition()
+    {
+        createPost.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        yield return new WaitForSeconds(0.15f);
+        createPost.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+    }
 
 }

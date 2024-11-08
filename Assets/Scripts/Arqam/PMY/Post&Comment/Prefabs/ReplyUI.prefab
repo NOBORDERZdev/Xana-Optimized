@@ -1195,18 +1195,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c737869b0b4614945af431dbb3c09b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commentId: 0
+  replyId: 0
   UserNameTxt: {fileID: 1459064420263747092}
   commentText: {fileID: 2825305737621629273}
   seeMoreButton: {fileID: 372359021580285878}
-  previewLength: 90
   likeText: {fileID: 4845466784540661163}
   dislikeText: {fileID: 5487315123861496298}
   timeText: {fileID: 4959362917691322323}
-  replySection: {fileID: 7909963950461442332}
-  replyInputField: {fileID: 7909963949965959845}
-  bottomBar: {fileID: 0}
-  viewMoreReplyBtn: {fileID: 0}
-  childCommentUI: {fileID: 3609045728507174070}
 --- !u!1 &5356494528711412635
 GameObject:
   m_ObjectHideFlags: 0
@@ -3623,9 +3619,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CommentUIManager, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 6746542283157465827}
+        m_TargetAssemblyTypeName: PostUIManager, Assembly-CSharp
+        m_MethodName: ViewMoreBtnPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

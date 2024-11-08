@@ -162,6 +162,12 @@ public class GetAllCommentAndReplies : MonoBehaviour
             replyData = new AllReply();
             replyData = JsonConvert.DeserializeObject<AllReply>(request.downloadHandler.text);
 
+            if (replyData.data.count > 0)
+            {
+                createPost.replyManager[counter].replyCounter += replyData.data.data.Length;
+                createPost.replyManager[counter].createPost = createPost;
+                createPost.replyManager[counter].EnableViewMoreReplyBtn();               
+            }
             for (int i = 0; i < replyData.data.count; i++)
             {
                 createPost.replyManager[counter].SpawnReply("XanaPMY", replyData.data.data[i].replyText, replyData.data.data[i].createdAt, replyData.data.data[i].id);
