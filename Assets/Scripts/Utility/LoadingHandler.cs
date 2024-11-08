@@ -18,6 +18,7 @@ public class LoadingHandler : MonoBehaviour
 
     [Header("Loading UI Elements")]
     public GameObject loadingPanel;
+    public CanvasGroup loadingCanvas; 
 
     public Image loadingSlider;
     public TextMeshProUGUI loadingText;
@@ -145,9 +146,9 @@ public class LoadingHandler : MonoBehaviour
         manualRoomController = gameObject.GetComponent<ManualRoomController>();
         //Debug.unityLogger.logEnabled = true;
 #if UNITY_EDITOR
-        Debug.unityLogger.logEnabled = true;
+                Debug.unityLogger.logEnabled = true;
 #else
-                        Debug.unityLogger.filterLogType = LogType.Error;
+        Debug.unityLogger.filterLogType = LogType.Error;
 #endif
 
         if (LoadingStatus != null)

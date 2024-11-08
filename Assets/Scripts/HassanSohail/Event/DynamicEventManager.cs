@@ -6,6 +6,7 @@ using Firebase.DynamicLinks;
 using Firebase.Crashlytics;
 using Photon.Pun.Demo.PunBasics;
 using UnityEditor;
+using nightowl.HoloShaderPack;
 
 public class DynamicEventManager : Singleton<DynamicEventManager>
 {
@@ -47,8 +48,17 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
     private void Start()
     {
-
+        ConstantsHolder.xanaConstants.isFirebaseInit = false;
         Debug.Log("DynamicEventManager: Start called");
+        StartCoroutine(InitializeFirebase());
+    }
+
+    private IEnumerator InitializeFirebase()
+    {
+        bool firebaseInitialized = false;
+        float timeout = 10f; // Timeout after 10 seconds
+        float startTime = Time.time;
+
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
             var dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
@@ -57,28 +67,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                 Firebase.FirebaseApp app = Firebase.FirebaseApp.DefaultInstance;
                 Crashlytics.ReportUncaughtExceptionsAsFatal = true;
                 Firebase.FirebaseApp.LogLevel = Firebase.LogLevel.Debug;
-                ConstantsHolder.xanaConstants.isFirebaseInit = true;
-                string validateURL = Application.absoluteURL;
-                if (PlayerPrefs.GetInt("PlayerDeepLinkOpened") == 0 && validateURL != "")
-                {
-                    Debug.Log("PlayerDeepLinkOpened is 0 and URL is not empty");
-                    if (validateURL.Contains("ENV"))
-                    {
-                        Debug.Log("Detected ENV in URL");
-                        ConstantsHolder.xanaConstants.isSummitDeepLink = true;
-                        ConstantsHolder.xanaConstants.isJoiningXANADeeplink = false;
-                        //OpenEnvironmentDeeplink(Application.absoluteURL);
-                    }
-                    else if (validateURL.Contains("Join"))
-                    {
-                        Debug.Log("Detected Join in URL");
-                        ConstantsHolder.xanaConstants.isSummitDeepLink = false;
-                        ConstantsHolder.xanaConstants.isJoiningXANADeeplink = true;
-                        PlayerPrefs.SetInt("FirstTimeappOpen", 0);
-
-                        XANADeeplink(Application.absoluteURL);
-                    }
-                }
+                firebaseInitialized = true;
             }
             else
             {
@@ -86,7 +75,46 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             }
         });
 
+        // Wait until Firebase is initialized or timeout
+        while (!firebaseInitialized && (Time.time - startTime) < timeout)
+        {
+            yield return null;
+        }
+
+        if (!firebaseInitialized)
+        {
+            Debug.LogError("Firebase initialization timed out.");
+            yield break;
+        }
+        yield return new WaitForSeconds(0.5f); // Adjust as necessary to ensure URL is processed
+        // Set the flag only after confirming Firebase initialization
+        ConstantsHolder.xanaConstants.isFirebaseInit = true;
+        Debug.LogError("Firebase initialization completed and isFirebaseInit set to true Link : "+ Application.absoluteURL);
+
+        string validateURL = Application.absoluteURL;
+        if ( validateURL != "")
+        {
+           
+            if (validateURL.Contains("ENV"))
+            {
+                Debug.LogError("Detected ENV in URL");
+                ConstantsHolder.xanaConstants.isSummitDeepLink = true;
+                ConstantsHolder.xanaConstants.isJoiningXANADeeplink = false;
+                //OpenEnvironmentDeeplink(Application.absoluteURL);
+            }
+            else if (validateURL.Contains("Join"))
+            {
+                Debug.Log("Detected Join in URL");
+                ConstantsHolder.xanaConstants.isSummitDeepLink = false;
+                ConstantsHolder.xanaConstants.isJoiningXANADeeplink = true;
+                Debug.LogError("isJoiningXANADeeplink set to true");
+                PlayerPrefs.SetInt("FirstTimeappOpen", 0);
+
+                XANADeeplink(Application.absoluteURL);
+            }
+        }
     }
+
 
     public void XANADeeplink(string deeplinkUrl)
     {
@@ -120,7 +148,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     {
         Debug.Log("Waiting for login on IOS : loggedIn : " + ConstantsHolder.loggedIn + " :  LoggedInAsGuest " +
         ConstantsHolder.xanaConstants.LoggedInAsGuest + " : PlayerName  " + PlayerPrefs.GetString("PlayerName") + " : FirstTimeappOpen : " + PlayerPrefs.GetInt("FirstTimeappOpen"));
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
     }
 #endif
 
@@ -128,11 +156,11 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
         while ((((!ConstantsHolder.loggedIn || (!ConstantsHolder.xanaConstants.LoggedInAsGuest)) &&
             (PlayerPrefs.GetString("PlayerName") == ""))))
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.2f);
         }
 #endif
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2f);
 
 #if UNITY_ANDROID
         // Extract the number after "Join=" and before "&"
@@ -189,7 +217,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     }
 #endif
 
-        yield return new WaitForSeconds(1f);
+        //yield return new WaitForSeconds(1f);
     }
 
 
@@ -216,6 +244,8 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             EnvironmentDetails environmentDetails = JsonUtility.FromJson<EnvironmentDetails>(request.downloadHandler.text);
             Debug.Log("World Data : "+ request.downloadHandler.text);
             ConstantsHolder.xanaConstants.MuseumID = envId;
+            LoadingHandler.Instance.loadingPanel.SetActive(true);
+            LoadingHandler.Instance.loadingCanvas.alpha = 1;
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
