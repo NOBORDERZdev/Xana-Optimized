@@ -124,7 +124,8 @@ public class GetAllCommentAndReplies : MonoBehaviour
 
             for (int i = 0; i < data.data.count; i++)
             {
-                createPost.SpawnComment("XanaPMY", data.data.data[i].commentText, data.data.data[i].createdAt, data.data.data[i].id);
+                createPost.SpawnComment("XanaPMY", data.data.data[i].commentText, data.data.data[i].createdAt, data.data.data[i].id,
+                    data.data.data[i].isLike, data.data.data[i].likecount);
             }
             GetAllReplies(); // Fetch all replies
         }

@@ -1898,6 +1898,7 @@ GameObject:
   - component: {fileID: 3819377411540919267}
   - component: {fileID: 3819377411540919266}
   - component: {fileID: 5745189985138833211}
+  - component: {fileID: 7152054319074104600}
   m_Layer: 5
   m_Name: PostUI
   m_TagString: Untagged
@@ -2025,8 +2026,6 @@ MonoBehaviour:
   UserNameTxt: {fileID: 8880842841026883771}
   commentText: {fileID: 7780253281128655727}
   seeMoreButton: {fileID: 8880842840549376768}
-  likeText: {fileID: 3819377412906021927}
-  dislikeText: {fileID: 8880842841319974348}
   timeText: {fileID: 585382148476677605}
 --- !u!114 &5745189985138833211
 MonoBehaviour:
@@ -2060,6 +2059,34 @@ MonoBehaviour:
   replyUI: {fileID: 3609045728507174070, guid: 3269d7877ace26247ad11ee71f039a96, type: 3}
   allReplyObj: []
   isShowReply: 0
+--- !u!114 &7152054319074104600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819377411540919288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47700569884cb9647a41c439a9ba88dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCommentLiked: 0
+  likeResponse:
+    success: 0
+    data:
+      id: 0
+      commentId: 0
+      deviceId: 
+      updatedAt: 
+      createdAt: 
+    msg: 
+  unLikeResponse:
+    success: 0
+    data: 0
+    msg: 
+  likeText: {fileID: 3819377412906021927}
+  dislikeText: {fileID: 8880842841319974348}
 --- !u!1 &3819377412906021921
 GameObject:
   m_ObjectHideFlags: 0
@@ -2317,9 +2344,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3819377411540919266}
-        m_TargetAssemblyTypeName: CommentUIManager, Assembly-CSharp
-        m_MethodName: OnClickLike
+      - m_Target: {fileID: 7152054319074104600}
+        m_TargetAssemblyTypeName: LikeUnlikeComment, Assembly-CSharp
+        m_MethodName: OnClickLikeUnlikeBtn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

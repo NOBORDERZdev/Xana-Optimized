@@ -19,10 +19,6 @@ public class PostUIManager : MonoBehaviour
     [SerializeField]
     private Button seeMoreButton;
     [SerializeField]
-    private TextMeshProUGUI likeText;
-    [SerializeField]
-    private TextMeshProUGUI dislikeText;
-    [SerializeField]
     private TextMeshProUGUI timeText;
     private string fullComment;
     private int totalLike = 0;
@@ -44,17 +40,6 @@ public class PostUIManager : MonoBehaviour
         commentText.text = fullComment;
         seeMoreButton.gameObject.SetActive(false);
         StartCoroutine(EnableDisableSizeFitter());
-    }
-
-    public void OnClickLike()
-    {
-        totalLike = totalLike + 1;
-        likeText.text = totalLike.ToString();
-    }
-    public void OnClickDislike()
-    {
-        totalDislike = totalDislike + 1;
-        dislikeText.text = totalDislike.ToString();
     }
 
     private void UpdatePostData(string userName, string comment, string creatAt)

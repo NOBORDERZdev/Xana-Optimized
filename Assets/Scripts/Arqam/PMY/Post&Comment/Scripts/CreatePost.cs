@@ -82,7 +82,7 @@ public class CreatePost : MonoBehaviour
             outPutData = new OutPutData();
             outPutData = JsonConvert.DeserializeObject<OutPutData>(request.downloadHandler.text);
 
-            SpawnComment("Xana PMY", outPutData.data.commentText, outPutData.data.createdAt, outPutData.data.id);
+            SpawnComment("Xana PMY", outPutData.data.commentText, outPutData.data.createdAt, outPutData.data.id, false, "0");
             inputField.text = "";
         }
         else
@@ -91,12 +91,13 @@ public class CreatePost : MonoBehaviour
         }
     }
 
-    public void SpawnComment(string userName, string comment, string timeSpan, int id)
+    public void SpawnComment(string userName, string comment, string timeSpan, int id, bool isLiked, string likeCounter)
     {
-        GameObject ui = Instantiate(CommentUI);
-        ui.transform.SetParent(transform, false);
-        ui.GetComponent<PostUIManager>().SetComment(userName, comment, timeSpan, id);
-        replyManager.Add(ui.GetComponent<CommentReplyManager>());
+        GameObject commentPrefab = Instantiate(CommentUI);
+        commentPrefab.transform.SetParent(transform, false);
+        commentPrefab.GetComponent<PostUIManager>().SetComment(userName, comment, timeSpan, id);
+        replyManager.Add(commentPrefab.GetComponent<CommentReplyManager>());
+        commentPrefab.GetComponent<LikeUnlikeComment>().UpdateLike(isLiked, likeCounter);
     }
 
 
