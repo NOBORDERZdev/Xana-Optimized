@@ -8,6 +8,7 @@ using UnityEditor;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using MD_Plugin;
 
 
 public class WorldManager : MonoBehaviour
@@ -153,48 +154,68 @@ public class WorldManager : MonoBehaviour
 
     void OpenLandingScene()
     {
-        ConstantsHolder.xanaConstants.SetPlayerProperties();
-        int WorldId;
-        try
-        {
-            if (APIBasepointManager.instance.IsXanaLive)
-                WorldId = 6239;    //Mainnet
-            else
-                WorldId = 2455;
-        }
-        catch(Exception e)
-        {
-            WorldId = 6239;
-        }
-        UserAnalyticsHandler.onGetWorldId?.Invoke(WorldId, "ENVIRONMENT");
-        string url = ConstantsGod.API_BASEURL + ConstantsGod.SINGLEWORLDINFO + WorldId;
-        StartCoroutine(GetSingleWorldData(url, (check) =>
-        {
-            ConstantsHolder.userLimit = int.Parse(singleWorldInfo.data.user_limit);
-            ConstantsHolder.isPenguin = false;
-            ConstantsHolder.xanaConstants.openLandingSceneDirectly = false;
-            ConstantsHolder.IsXSummitApp = true;
-            ConstantsHolder.xanaConstants.isBuilderScene = false;
-            ConstantsHolder.xanaConstants.isFromHomeTab = true;
-            ConstantsHolder.xanaConstants.MuseumID = singleWorldInfo.data.id;
-            WorldItemView.m_EnvName = singleWorldInfo.data.name;
-            ConstantsHolder.Thumbnail = singleWorldInfo.data.thumbnail;
-            ConstantsHolder.description = singleWorldInfo.data.description;
-            ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
-            ConstantsHolder.xanaConstants.UserMicEnable = singleWorldInfo.data.userMicEnable;
-            LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
-            LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
-            LoadingHandler.Instance.ShowLoading();
-            LoadingHandler.StopLoader = true;
-            //LoadingHandler.Instance.UpdateLoadingSlider(0);
-            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
-            //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-            //Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
+        StartCoroutine(WaitForFirebaseInit());
+    }
 
-            Invoke(nameof(AddingDeleyToLoadScene), .5f);
-        }));
+    IEnumerator WaitForFirebaseInit()
+    {
+        // Wait until Firebase is initialized
+        Debug.LogError("isFirebaseInit : "+ ConstantsHolder.xanaConstants.isFirebaseInit);
+        while (!ConstantsHolder.xanaConstants.isFirebaseInit)
+        {
+            Debug.LogError("in loop isFirebaseInit : " + ConstantsHolder.xanaConstants.isFirebaseInit);
+            yield return new WaitForSeconds(0.1f);
+        }
+        yield return new WaitForSeconds(2f);
+        if (ConstantsHolder.xanaConstants.isJoiningXANADeeplink)
+        {
+            yield return null;
+        }
+        else
+        {
+            ConstantsHolder.xanaConstants.SetPlayerProperties();
+            int WorldId;
+            try
+            {
+                if (APIBasepointManager.instance.IsXanaLive)
+                    WorldId = 6239;    //Mainnet
+                else
+                    WorldId = 2455;
+            }
+            catch (Exception e)
+            {
+                WorldId = 6239;
+            }
+            UserAnalyticsHandler.onGetWorldId?.Invoke(WorldId, "ENVIRONMENT");
+            string url = ConstantsGod.API_BASEURL + ConstantsGod.SINGLEWORLDINFO + WorldId;
+            StartCoroutine(GetSingleWorldData(url, (check) =>
+            {
+                ConstantsHolder.userLimit = int.Parse(singleWorldInfo.data.user_limit);
+                ConstantsHolder.isPenguin = false;
+                ConstantsHolder.xanaConstants.openLandingSceneDirectly = false;
+                ConstantsHolder.IsXSummitApp = true;
+                ConstantsHolder.xanaConstants.isBuilderScene = false;
+                ConstantsHolder.xanaConstants.isFromHomeTab = true;
+                ConstantsHolder.xanaConstants.MuseumID = singleWorldInfo.data.id;
+                WorldItemView.m_EnvName = singleWorldInfo.data.name;
+                ConstantsHolder.Thumbnail = singleWorldInfo.data.thumbnail;
+                ConstantsHolder.description = singleWorldInfo.data.description;
+                ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+                ConstantsHolder.xanaConstants.UserMicEnable = singleWorldInfo.data.userMicEnable;
+                LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                LoadingHandler.Instance.LoadingScreenSummit.SetActive(false);
+                LoadingHandler.Instance.ShowLoading();
+                LoadingHandler.StopLoader = true;
+                //LoadingHandler.Instance.UpdateLoadingSlider(0);
+                LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+                //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
+                //Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
 
+                Invoke(nameof(AddingDeleyToLoadScene), .5f);
+            }));
+        }
+       
     }
 
     async void AddingDeleyToLoadScene()

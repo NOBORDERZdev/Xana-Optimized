@@ -22,7 +22,7 @@ public class SaveCharacterProperties : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        NeedToShowSplash = 1;
+        //NeedToShowSplash = 1;
     }
     public void Start()
     {
