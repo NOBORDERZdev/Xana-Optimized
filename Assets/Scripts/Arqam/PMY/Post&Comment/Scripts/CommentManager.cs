@@ -4,7 +4,7 @@ using TMPro;
 using System.Collections;
 using System;
 
-public class CommentUIManager : MonoBehaviour
+public class CommentManager : MonoBehaviour
 {
     //[HideInInspector]
     public int commentId;
@@ -48,11 +48,11 @@ public class CommentUIManager : MonoBehaviour
 
         commentText.textComponent.ForceMeshUpdate();
         int lineCount = commentText.textComponent.textInfo.lineCount;
-        Debug.LogError("lineCount: " + lineCount);
+        //Debug.LogError("lineCount: " + lineCount);
         if (lineCount > 2)
         {
             int characterCount = commentText.textComponent.textInfo.lineInfo[0].characterCount + (commentText.textComponent.textInfo.lineInfo[1].characterCount - 15);
-            Debug.LogError("characterCount2: " + characterCount);
+            //Debug.LogError("characterCount2: " + characterCount);
             commentText.text = comment.Substring(0, characterCount) + "...";
             seeMoreButton.gameObject.SetActive(true);
         }

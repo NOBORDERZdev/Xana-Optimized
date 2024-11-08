@@ -4,7 +4,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class GetAllComment : MonoBehaviour
+public class GetAllCommentAndReplies : MonoBehaviour
 {
     [SerializeField]
     private CreatePost createPost;
@@ -62,6 +62,7 @@ public class GetAllComment : MonoBehaviour
         public int count;
         public ReplyContent[] data;
     }
+    [System.Serializable]
     public class ReplyContent
     {
         public int id;
@@ -142,8 +143,7 @@ public class GetAllComment : MonoBehaviour
                 pageSize = 100,
                 deviceId = "editor123"
             };
-
-            string jsonData = JsonUtility.ToJson(sendReplyData);
+        string jsonData = JsonUtility.ToJson(sendReplyData);
             StartCoroutine(PostReplyRequest(getCommentReplyApi, jsonData));
     }
 
@@ -162,10 +162,16 @@ public class GetAllComment : MonoBehaviour
             replyData = new AllReply();
             replyData = JsonConvert.DeserializeObject<AllReply>(request.downloadHandler.text);
 
-            createPost.replyManager[counter].SpawnReply("XanaPMY", replyData.data.data[counter].replyText, replyData.data.data[counter].createdAt, replyData.data.data[counter].id);
+            for (int i = 0; i < replyData.data.count; i++)
+            {
+                createPost.replyManager[counter].SpawnReply("XanaPMY", replyData.data.data[i].replyText, replyData.data.data[i].createdAt, replyData.data.data[i].id);
+            }
+
             counter++;
             if (counter >= createPost.replyManager.Count)
                 yield break;
+            else
+                GetAllReplies();
         }
         else
         {

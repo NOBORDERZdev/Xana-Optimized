@@ -59,7 +59,7 @@ public class CommentReplyManager : MonoBehaviour
     {
         commentInfo = new CommentInfo
         {
-            commentId = GetComponent<CommentUIManager>().commentId,
+            commentId = GetComponent<CommentManager>().commentId,
             replyText = replyInputField.text,
             deviceId = "editor123"
         };
@@ -96,7 +96,7 @@ public class CommentReplyManager : MonoBehaviour
     {
         GameObject replyPrefab = Instantiate(replyUI);
         replyPrefab.transform.SetParent(parent.transform, false);
-        replyPrefab.GetComponent<CommentUIManager>().SetComment(user, replyData, createdAt, replyId);
+        replyPrefab.GetComponent<CommentManager>().SetComment(user, replyData, createdAt, replyId);
         StartCoroutine(EnableDisableSizeFitter());
     }
 
