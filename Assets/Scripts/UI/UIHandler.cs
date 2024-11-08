@@ -69,6 +69,9 @@ public class UIHandler : MonoBehaviour
             _footerCan.GetComponent<CanvasGroup>().alpha = 1.0f;
             _footerCan.GetComponent<CanvasGroup>().interactable = true;
             _footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            Canvas.GetComponent<CanvasGroup>().alpha = 1.0f;
+            Canvas.GetComponent<CanvasGroup>().interactable = true;
+            Canvas.GetComponent<CanvasGroup>().blocksRaycasts = true;
         }
     }
     bool a = false;
@@ -165,6 +168,9 @@ public class UIHandler : MonoBehaviour
             _footerCan.GetComponent<CanvasGroup>().alpha = 1.0f;
             _footerCan.GetComponent<CanvasGroup>().interactable = true;
             _footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            Canvas.GetComponent<CanvasGroup>().alpha = 1.0f;
+            Canvas.GetComponent<CanvasGroup>().interactable = true;
+            Canvas.GetComponent<CanvasGroup>().blocksRaycasts = true;
             //ReleaseSplashFromMemory();
             //SplashScreenXana.SetActive(false);
             //SplashScreenSummit.SetActive(false);
@@ -201,6 +207,9 @@ public class UIHandler : MonoBehaviour
             _footerCan.GetComponent<CanvasGroup>().alpha = 1.0f;
             _footerCan.GetComponent<CanvasGroup>().interactable = true;
             _footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            Canvas.GetComponent<CanvasGroup>().alpha = 1.0f;
+            Canvas.GetComponent<CanvasGroup>().interactable = true;
+            Canvas.GetComponent<CanvasGroup>().blocksRaycasts = true;
             // ReleaseSplashFromMemory();
             //StartCoroutine(LoadingHandler.Instance.ShowLoadingForCharacterUpdation(5));
         }
@@ -381,14 +390,17 @@ public class UIHandler : MonoBehaviour
     }
     void ChangeBackground()
     {
-        if (PlayerPrefs.HasKey("TermsConditionAgreement"))
+        if (UserLoginSignupManager.instance)
         {
-            UserLoginSignupManager.instance.CheckForAutoLogin();
+            if (PlayerPrefs.HasKey("TermsConditionAgreement"))
+            {
+                UserLoginSignupManager.instance.CheckForAutoLogin();
 
-        }
-        else 
-        {
-            UserLoginSignupManager.instance.termsConditionPanel.SetActive(true);
+            }
+            else
+            {
+                UserLoginSignupManager.instance.termsConditionPanel.SetActive(true);
+            }
         }
     }
 }
