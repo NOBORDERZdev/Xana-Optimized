@@ -43,14 +43,17 @@ public class PlayerDashHandler : MonoBehaviour
     }
     private void OnEnable()
     {
-        _audioSource = _dashEffect.GetComponent<AudioSource>();
-        _audioSource.volume = SoundSettings.soundManagerSettings.totalVolumeSlider.value;
-        BuilderEventManager.BGMVolume += BGMVolume;
+        //Disabling Volume control with BGM slider, because its only for BG music.
+        //will be enabled when we have separate volume control for SFX
+
+        //_audioSource = _dashEffect.GetComponent<AudioSource>();
+        //_audioSource.volume = SoundSettings.soundManagerSettings.totalVolumeSlider.value;
+        //BuilderEventManager.BGMVolume += BGMVolume;
     }
 
     private void OnDisable()
     {
-        BuilderEventManager.BGMVolume -= BGMVolume;
+        //BuilderEventManager.BGMVolume -= BGMVolume;
     }
 
     void BGMVolume(float volume)

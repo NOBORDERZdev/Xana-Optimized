@@ -182,6 +182,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         catch (Exception ex)
         {
             Debug.LogError("Player not found");
+            return;
         }
 
 

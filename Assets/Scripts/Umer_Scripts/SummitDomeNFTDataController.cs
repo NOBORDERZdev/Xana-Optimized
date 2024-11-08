@@ -1,5 +1,6 @@
 using AIFLogger;
 using RenderHeads.Media.AVProVideo;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,6 +37,8 @@ public class SummitDomeNFTDataController : MonoBehaviour
     public int RoomCount;
     public System.Action VideoOpened;
     public System.Action NFTClosed;
+    public List<int>IndexForvideo = new List<int>();
+
 
     [SerializeField] bool worldPlayingVideos;
     [SerializeField] int RetryChances = 3;
@@ -223,8 +226,17 @@ public class SummitDomeNFTDataController : MonoBehaviour
                                 yield return new WaitForSeconds(1f);
                                 worldInfos[i].VideoLink = worldData[j].youtubeUrl;
                                 worldInfos[i].videoType = VideoTypeRes.islive;
-                                NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().InitData(worldData[j].thumbnail + compersionPrfex, worldData[j].youtubeUrl, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.islive);
-                                //NftPlaceholder[i].GetComponent<JjVideo>().isLiveVideo = true;
+
+                                if (IndexForvideo.Contains(j))
+                                {
+                                    NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().InitData("", worldData[j].youtubeUrl, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.islive);
+
+                                }
+                                else
+                                {
+                                    NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().InitData(worldData[j].thumbnail + compersionPrfex, worldData[j].youtubeUrl, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.islive);
+                                }
+                                    //NftPlaceholder[i].GetComponent<JjVideo>().isLiveVideo = true;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isPrerecoreded = false;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isFromAws = false;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().videoLink = worldData[i].youtubeUrl;
@@ -235,7 +247,15 @@ public class SummitDomeNFTDataController : MonoBehaviour
                                 yield return new WaitForSeconds(1f);
                                 worldInfos[i].VideoLink = worldData[j].youtubeUrl;
                                 worldInfos[i].videoType = VideoTypeRes.prerecorded;
-                                NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().InitData(worldData[j].thumbnail + compersionPrfex, worldData[j].youtubeUrl, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.prerecorded);
+                                if (IndexForvideo.Contains(j))
+                                {
+                                    NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().InitData("", worldData[j].youtubeUrl, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.prerecorded);
+
+                                }
+                                else
+                                    NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().InitData(worldData[j].thumbnail + compersionPrfex, worldData[j].youtubeUrl, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.prerecorded);
+                             
+                                
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isLiveVideo = false;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isPrerecoreded = true;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isFromAws = false;
@@ -246,8 +266,16 @@ public class SummitDomeNFTDataController : MonoBehaviour
                             {
                                 worldInfos[i].VideoLink = worldData[j].asset_link;
                                 worldInfos[i].videoType = VideoTypeRes.aws;
-                                NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().InitData(worldData[j].thumbnail + compersionPrfex, worldData[j].asset_link + compersionPrfex, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.aws);
-                                //NftPlaceholder[i].GetComponent<JjVideo>().isLiveVideo = false;
+                                if (IndexForvideo.Contains(j))
+                                {
+                                    NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().InitData("", worldData[j].asset_link, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.aws);
+
+                                }
+                                else
+                                {
+                                    NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().InitData(worldData[j].thumbnail + compersionPrfex, worldData[j].asset_link + compersionPrfex, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.aws);
+                                }
+                                    //NftPlaceholder[i].GetComponent<JjVideo>().isLiveVideo = false;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isPrerecoreded = false;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isFromAws = true;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().videoLink = worldData[i].asset_link;

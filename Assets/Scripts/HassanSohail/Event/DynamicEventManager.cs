@@ -6,168 +6,276 @@ using Firebase.DynamicLinks;
 using Firebase.Crashlytics;
 using Photon.Pun.Demo.PunBasics;
 using UnityEditor;
+using nightowl.HoloShaderPack;
 
 public class DynamicEventManager : Singleton<DynamicEventManager>
 {
-    /* #region Variables
-     private string EnvironmentURl = "/world/get-world-custom-data/";
-     private string EventArguments;
-     bool FirstTimeopen = true;
-     #endregion
+    #region Variables
+    private string EnvironmentURl = "/world/get-world-custom-data/";
+    private string EventArguments;
+    bool FirstTimeopen = true;
+    bool Debugging = true;
+    bool isOnAppLunached;
+    string DebugDeepLink = "https://unitytesting.page.link/?link=https://www.xana.net/Join%3D3755&apn=com.nbi.xana&isi=6642649722&ibi=com.wujie.xsummit";
+    static DynamicEventManager Instance;
+    #endregion
 
     #region Unity Functions
-    */
+
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        SaveCharacterProperties.NeedToShowSplash = 1;
+        print("Set need to show 1 in dynamic event manager");
         XanaEventDetails.eventDetails = new XanaEventDetails();
         XanaEventDetails.eventDetails.DataIsInitialized = false;
-       // Application.deepLinkActivated += OpenEnvironmentDeeplink;
+        // Application.deepLinkActivated += OpenEnvironmentDeeplink;
     }
+
     private void OnDestroy()
     {
-       // Application.deepLinkActivated -= OpenEnvironmentDeeplink;
+        // Application.deepLinkActivated -= OpenEnvironmentDeeplink;
     }
-  private void Start()
+
+    private void Start()
     {
+        ConstantsHolder.xanaConstants.isFirebaseInit = false;
+        Debug.Log("DynamicEventManager: Start called");
+        StartCoroutine(InitializeFirebase());
+    }
+
+    private IEnumerator InitializeFirebase()
+    {
+        bool firebaseInitialized = false;
+        float timeout = 10f; // Timeout after 10 seconds
+        float startTime = Time.time;
+
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
             var dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
             {
+                Debug.Log("Firebase dependencies are available");
                 Firebase.FirebaseApp app = Firebase.FirebaseApp.DefaultInstance;
                 Crashlytics.ReportUncaughtExceptionsAsFatal = true;
                 Firebase.FirebaseApp.LogLevel = Firebase.LogLevel.Debug;
-                ConstantsHolder.xanaConstants.isFirebaseInit = true;
-              /*  string validateURL = Application.absoluteURL;
-                if (PlayerPrefs.GetInt("PlayerDeepLinkOpened") == 0 && validateURL != "")
-                {
-                   if(validateURL.Contains("ENV"))
-                   {
-                        OpenEnvironmentDeeplink(Application.absoluteURL);
-                   }
-                }*/
-
+                firebaseInitialized = true;
             }
             else
             {
-                UnityEngine.Debug.Log(System.String.Format(
-                  "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
+                Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus}");
             }
         });
+
+        // Wait until Firebase is initialized or timeout
+        while (!firebaseInitialized && (Time.time - startTime) < timeout)
+        {
+            yield return null;
+        }
+
+        if (!firebaseInitialized)
+        {
+            Debug.LogError("Firebase initialization timed out.");
+            yield break;
+        }
+        yield return new WaitForSeconds(0.5f); // Adjust as necessary to ensure URL is processed
+        // Set the flag only after confirming Firebase initialization
+        ConstantsHolder.xanaConstants.isFirebaseInit = true;
+        Debug.LogError("Firebase initialization completed and isFirebaseInit set to true Link : "+ Application.absoluteURL);
+
+        string validateURL = Application.absoluteURL;
+        if ( validateURL != "")
+        {
+           
+            if (validateURL.Contains("ENV"))
+            {
+                Debug.LogError("Detected ENV in URL");
+                ConstantsHolder.xanaConstants.isSummitDeepLink = true;
+                ConstantsHolder.xanaConstants.isJoiningXANADeeplink = false;
+                //OpenEnvironmentDeeplink(Application.absoluteURL);
+            }
+            else if (validateURL.Contains("Join"))
+            {
+                Debug.Log("Detected Join in URL");
+                ConstantsHolder.xanaConstants.isSummitDeepLink = false;
+                ConstantsHolder.xanaConstants.isJoiningXANADeeplink = true;
+                Debug.LogError("isJoiningXANADeeplink set to true");
+                PlayerPrefs.SetInt("FirstTimeappOpen", 0);
+
+                XANADeeplink(Application.absoluteURL);
+            }
+        }
     }
-    /* public void OpenEnvironmentDeeplink(string deeplinkUrl)
-   {
-       StartCoroutine(ValidateLoginthenDeeplink(deeplinkUrl));
-   }
-   IEnumerator ValidateLoginthenDeeplink(string deeplinkUrl)
-   {
-       if (Application.platform == RuntimePlatform.Android)
-       {
-           using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
-           {
-               using (var activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
-               {
-                   var intent = activity.Call<AndroidJavaObject>("getIntent");
-                   intent.Call("removeExtra", "com.google.firebase.dynamiclinks.DYNAMIC_LINK_DATA");
-                   intent.Call("removeExtra", "com.google.android.gms.appinvite.REFERRAL_BUNDLE");
-               }
-           }
-       }
+
+
+    public void XANADeeplink(string deeplinkUrl)
+    {
+        Debug.Log($"XANADeeplink called with URL: {deeplinkUrl}");
+        StartCoroutine(ValidateLoginthenDeeplink(deeplinkUrl));
+    }
+
+    IEnumerator ValidateLoginthenDeeplink(string deeplinkUrl)
+    {
+        // Decode the URL to handle URL-encoded characters
+        string decodedUrl = UnityWebRequest.UnEscapeURL(deeplinkUrl);
+        Debug.Log($"Decoded URL: {decodedUrl}");
+
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+            {
+                using (var activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
+                {
+                    var intent = activity.Call<AndroidJavaObject>("getIntent");
+                    intent.Call("removeExtra", "com.google.firebase.dynamiclinks.DYNAMIC_LINK_DATA");
+                    intent.Call("removeExtra", "com.google.android.gms.appinvite.REFERRAL_BUNDLE");
+                    Debug.Log("Removed extras from Android intent");
+                }
+            }
+        }
+
 #if UNITY_IOS
-       while ((!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin) &&
-           (PlayerPrefs.GetString("PlayerName") == "" && PlayerPrefs.GetInt("FirstTimeappOpen") == 0))
-           yield return new WaitForSeconds(0.5f);
+    while ((((!ConstantsHolder.loggedIn || (!ConstantsHolder.xanaConstants.LoggedInAsGuest)) &&
+           (PlayerPrefs.GetString("PlayerName") == "")) && PlayerPrefs.GetInt("FirstTimeappOpen") == 0))
+    {
+        Debug.Log("Waiting for login on IOS : loggedIn : " + ConstantsHolder.loggedIn + " :  LoggedInAsGuest " +
+        ConstantsHolder.xanaConstants.LoggedInAsGuest + " : PlayerName  " + PlayerPrefs.GetString("PlayerName") + " : FirstTimeappOpen : " + PlayerPrefs.GetInt("FirstTimeappOpen"));
+        yield return new WaitForSeconds(0.2f);
+    }
 #endif
+
 #if UNITY_ANDROID
-       while ((!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin) &&
-         (PlayerPrefs.GetString("PlayerName") == ""))
-           yield return new WaitForSeconds(0.5f);
+        while ((((!ConstantsHolder.loggedIn || (!ConstantsHolder.xanaConstants.LoggedInAsGuest)) &&
+            (PlayerPrefs.GetString("PlayerName") == ""))))
+        {
+            yield return new WaitForSeconds(0.2f);
+        }
 #endif
 
+        yield return new WaitForSeconds(2f);
 
-       yield return new WaitForSeconds(1.5f);
 #if UNITY_ANDROID
+        // Extract the number after "Join=" and before "&"
+        string joinKey = "Join=";
+        int startIndex = decodedUrl.IndexOf(joinKey) + joinKey.Length;
+        int endIndex = decodedUrl.IndexOf("&", startIndex);
 
-       string[] urlBreadDown = deeplinkUrl.Split("=");
-       foreach (string word in urlBreadDown)
-       {
-           if (urlBreadDown[1] == word)
-           {
-               if (word.Contains("ENV"))
-               {
-                   EventArguments = word.Replace("ENV", "");
-                   if (FirstTimeopen)
-                   {
-                       FirstTimeopen = false;
-                       InvokeDeepLinkEnvironment(EventArguments);
-                   }
-               }
-           }
-       }
+        if (startIndex != -1)
+        {
+            if (endIndex != -1)
+            {
+                EventArguments = decodedUrl.Substring(startIndex, endIndex - startIndex);
+            }
+            else
+            {
+                EventArguments = decodedUrl.Substring(startIndex);
+            }
+            Debug.Log($"EventArguments set to: {EventArguments}");
+            if (FirstTimeopen)
+            {
+                FirstTimeopen = false;
+                Debug.Log($"Invoking deep link environment with arguments: {EventArguments}");
+                InvokeDeepLinkEnvironment(EventArguments);
+            }
+        }
 #endif
+
 #if UNITY_IOS
+    if (decodedUrl.Contains("Join"))
+    {
+        int envIndex = decodedUrl.IndexOf("Join");
+        int ampersandIndex = decodedUrl.IndexOf("&", envIndex);
 
-       if (deeplinkUrl.Contains("ENV"))
-       {
-           int envIndex = deeplinkUrl.IndexOf("ENV");
-           int ampersandIndex = deeplinkUrl.IndexOf("&");
-
-           if (envIndex != -1 && ampersandIndex != -1)
-           {
-               string envSubstring = deeplinkUrl.Substring(envIndex + 3, ampersandIndex - envIndex - 3);
-               if (FirstTimeopen)
-               {
-                   EventArguments = envSubstring;
-                   FirstTimeopen = false;
-                   InvokeDeepLinkEnvironment(EventArguments);
-               }
-           }
-       }
+        if (envIndex != -1)
+        {
+            string envSubstring;
+            if (ampersandIndex != -1)
+            {
+                envSubstring = decodedUrl.Substring(envIndex + 4, ampersandIndex - envIndex - 4);
+            }
+            else
+            {
+                envSubstring = decodedUrl.Substring(envIndex + 4);
+            }
+            envSubstring = envSubstring.Replace("=", "");
+            if (FirstTimeopen)
+            {
+                EventArguments = envSubstring;
+                FirstTimeopen = false;
+                Debug.Log($"Invoking deep link environment with arguments: {EventArguments}");
+                InvokeDeepLinkEnvironment(EventArguments);
+            }
+        }
+    }
 #endif
-       yield return new WaitForSeconds(1f);
-   }
-   public void InvokeDeepLinkEnvironment(string environmentIDf)
-   {
-       if (EventArguments == "")
-           return;
 
-       StartCoroutine(HitGetEnvironmentJson(ConstantsGod.API_BASEURL + EnvironmentURl + environmentIDf, environmentIDf));
-   }
+        //yield return new WaitForSeconds(1f);
+    }
 
-   IEnumerator HitGetEnvironmentJson(string url, string envId)
-   {
-       //Debug.LogError(url + " ----- Environment Jump ---- " + envId);
 
-       using (UnityWebRequest request = UnityWebRequest.Get(url))
-       {
-           request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-           yield return request.SendWebRequest();
-           EnvironmentDetails environmentDetails = JsonUtility.FromJson<EnvironmentDetails>(request.downloadHandler.text);
-           ConstantsHolder.xanaConstants.MuseumID = envId;
+    public void InvokeDeepLinkEnvironment(string environmentIDf)
+    {
+       // Debug.Log($"InvokeDeepLinkEnvironment called with ID: {environmentIDf}");
+        if (EventArguments == "")
+        {
+         //   Debug.LogWarning("EventArguments is empty, returning");
+            return;
+        }
 
-           if (!request.isHttpError && !request.isNetworkError)
-           {
-               if (request.error == null)
-               {
-                   if (environmentDetails.success == true)
-                   {
-                       ConstantsHolder.xanaConstants.MuseumID = envId;
-                       yield return new WaitForSeconds(4f);
-                       Screen.orientation = ScreenOrientation.LandscapeLeft;
-                       PlayerPrefs.SetInt("PlayerDeepLinkOpened", 1);
-                       bool isBuilderScene = false;
-                       bool isMuseumScene = false;
+        StartCoroutine(HitGetEnvironmentJson(ConstantsGod.API_BASEURL + EnvironmentURl + environmentIDf, environmentIDf));
+    }
 
-                       if (environmentDetails.data.entityType == WorldType.MUSEUM.ToString())
-                           isMuseumScene = true;
-                       else if (environmentDetails.data.entityType == WorldType.USER_WORLD.ToString())
-                       {
-                           isBuilderScene = true;
-                           isMuseumScene = true;
-                       }
-                       if (name == "Xana Festival")
-                           ConstantsHolder.userLimit = 10;
-                       else
-                           ConstantsHolder.userLimit = 10;
+    IEnumerator HitGetEnvironmentJson(string url, string envId)
+    {
+        //Debug.Log($"HitGetEnvironmentJson called with URL: {url} and envId: {envId}");
+
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
+        {
+            request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            yield return request.SendWebRequest();
+            EnvironmentDetails environmentDetails = JsonUtility.FromJson<EnvironmentDetails>(request.downloadHandler.text);
+            Debug.Log("World Data : "+ request.downloadHandler.text);
+            ConstantsHolder.xanaConstants.MuseumID = envId;
+            LoadingHandler.Instance.loadingPanel.SetActive(true);
+            LoadingHandler.Instance.loadingCanvas.alpha = 1;
+            LoadingHandler.Instance.ShowLoading();
+            LoadingHandler.Instance.UpdateLoadingSlider(0);
+            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+
+            if (!request.isHttpError && !request.isNetworkError)
+            { 
+                if (request.error == null)
+                {
+                    if (environmentDetails.success == true)
+                    {
+                       
+                        Debug.Log("Environment details successfully retrieved");
+                        ConstantsHolder.xanaConstants.MuseumID = envId;
+                        yield return new WaitForSeconds(4f);
+                        PlayerPrefs.SetInt("PlayerDeepLinkOpened", 1);
+                        bool isBuilderScene = false;
+                        bool isMuseumScene = false;
+
+                        if (environmentDetails.data.entityType == WorldType.MUSEUM.ToString())
+                            isMuseumScene = true;
+                        else if (environmentDetails.data.entityType == WorldType.USER_WORLD.ToString())
+                        {
+                            isBuilderScene = true;
+                            isMuseumScene = true;
+                        }
+                        if (name == "Xana Festival")
+                            ConstantsHolder.userLimit = 10;
+                        else
+                            ConstantsHolder.userLimit = 10;
 
                         ConstantsHolder.xanaConstants.builderMapID = int.Parse(envId);
                         ConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
@@ -180,61 +288,69 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                         {
                             ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
                         }
+                        LoadingHandler.Instance.ShowLoading();
+                        LoadingHandler.Instance.UpdateLoadingSlider(0);
+                        LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+                        Screen.orientation = ScreenOrientation.LandscapeLeft;
                         WorldItemView.m_EnvName = environmentDetails.data.name;
+                        SaveCharacterProperties.NeedToShowSplash = 2;
+                        PlayerPrefs.SetInt("FirstTimeappOpen", 1);
+                        if (isBuilderScene)
+                            WorldManager.instance.JoinBuilderWorld();
+                        else
+                            WorldManager.instance.JoinEvent();
 
-                       if (isBuilderScene)
-                           WorldManager.instance.JoinBuilderWorld();
-                       else
-                           WorldManager.instance.JoinEvent();
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogError($"Error retrieving environment details: {request.error}");
 
-                   }
-               }
-           }
-           else
-           {
-      // Debug.LogError(" ----- Environment Jump ---- " + request.error);
-
-               if (request.Equals(UnityWebRequest.Result.ConnectionError))
-               {
-                   yield return StartCoroutine(HitGetEnvironmentJson(url, envId));
-               }
-               else
-               {
-                   if (request.error != null)
-                   {
-                       if (environmentDetails.success == false)
-                       {
-                           yield return StartCoroutine(HitGetEnvironmentJson(url, envId));
-                       }
-                   }
-               }
-           }
-           request.Dispose();
-       }
-   }
-   #endregion*/
+                if (request.Equals(UnityWebRequest.Result.ConnectionError))
+                {
+                    Debug.LogWarning("Connection error, retrying...");
+                    yield return StartCoroutine(HitGetEnvironmentJson(url, envId));
+                }
+                else
+                {
+                    if (request.error != null)
+                    {
+                        if (environmentDetails.success == false)
+                        {
+                            Debug.LogWarning("Environment details retrieval failed, retrying...");
+                            yield return StartCoroutine(HitGetEnvironmentJson(url, envId));
+                        }
+                    }
+                }
+            }
+            request.Dispose();
+        }
+    }
+#endregion
 }
-/*
- * #if UNITY_EDITOR
+
+#if UNITY_EDITOR
 
 [CustomEditor(typeof(DynamicEventManager))]
 public class EditorTestDeeplinking : Editor
 {
-    public int EnvironmentID = default;
+    public string DeepLink = "";
 
     public override void OnInspectorGUI()
     {
-        EnvironmentID = EditorGUILayout.IntField("EnvironmentID", EnvironmentID);
+        DeepLink = EditorGUILayout.TextField("DeepLink", DeepLink);
 
         if (GUILayout.Button("Enter World"))
         {
-            if (EnvironmentID > 0)
+            if (!DeepLink.IsNullOrEmpty())
             {
-                Debug.LogError(" ----- Environment Jump ---- " + EnvironmentID);
-                DynamicEventManager.Instance.InvokeDeepLinkEnvironment("" + EnvironmentID);
+                ConstantsHolder.xanaConstants.isSummitDeepLink = false;
+                ConstantsHolder.xanaConstants.isJoiningXANADeeplink = true;
+                Debug.Log($"EditorTestDeeplinking: {DeepLink}");
+                DynamicEventManager.Instance.XANADeeplink(DeepLink);
             }
         }
     }
 }
 #endif
-*/

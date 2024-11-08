@@ -105,6 +105,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
                 else
                     ConstantsHolder.xanaConstants.needToClearMemory = true;
 
+                    ConstantsHolder.xanaConstants.isJoiningXANADeeplink = false;
                 if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
                 {
                     ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
@@ -139,6 +140,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
         if (!ConstantsHolder.xanaConstants.JjWorldSceneChange && !ConstantsHolder.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;
         ConstantsHolder.xanaConstants.isBuilderScene = false;
+        ConstantsHolder.xanaConstants.isJoiningXANADeeplink = false;
         ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
         ConstantsHolder.xanaConstants.isBuilderGame = false;
 

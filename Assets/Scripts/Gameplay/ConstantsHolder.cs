@@ -28,7 +28,7 @@ public class ConstantsHolder : MonoBehaviour
 
     //Login Info
     public static bool isAdmin;
-    public static bool isGuestLogin;
+    //public static bool isGuestLogin;
     public static bool loggedIn;
     public static bool isWalletLogin;
     public static string xanaliaToken;
@@ -116,6 +116,9 @@ public class ConstantsHolder : MonoBehaviour
     public bool isBuilderGame = false;
     public bool isSummitBtnPressed = false;
 
+    public bool isSummitDeepLink = false;
+    public bool isJoiningXANADeeplink = false;
+    
     //For Metabuzz Environments
     public enum ComingFrom
     {

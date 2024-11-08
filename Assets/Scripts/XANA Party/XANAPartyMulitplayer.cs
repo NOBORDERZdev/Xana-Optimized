@@ -127,6 +127,7 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
         _XanaConstants.XanaPartyGameId = 0;
         _XanaConstants.XanaPartyGameName = "";
         _XanaConstants.isBuilderScene = false;
+        _XanaConstants.isJoiningXANADeeplink = false;
         _XanaConstants.builderMapID = 0;
         _XanaConstants.GameIsFinished = true;
         // Load the main scene

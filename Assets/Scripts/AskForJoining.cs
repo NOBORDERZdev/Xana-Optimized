@@ -120,6 +120,7 @@ public class AskForJoining : MonoBehaviour
                 BuilderEventManager.ResetSummit?.Invoke();
                 ConstantsHolder.IsXSummitApp = true;
                 ConstantsHolder.xanaConstants.isBuilderScene = false;
+                ConstantsHolder.xanaConstants.isJoiningXANADeeplink = false;
                 ConstantsHolder.xanaConstants.isFromHomeTab = true;
                 LoadingHandler.Instance.ShowLoading();
                 LoadingHandler.Instance.UpdateLoadingSlider(0);
