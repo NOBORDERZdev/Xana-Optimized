@@ -27,7 +27,6 @@ public class CreatePost : MonoBehaviour
     }
     public OutPutData outPutData;
     [Space(5)]
-    public List<CommentManager> commentManager;
     public List<CommentReplyManager> replyManager;
     public GameObject CommentUI;
     [SerializeField]
@@ -96,8 +95,8 @@ public class CreatePost : MonoBehaviour
     {
         GameObject ui = Instantiate(CommentUI);
         ui.transform.SetParent(transform, false);
-        ui.GetComponent<CommentManager>().SetComment(userName, comment, timeSpan, id);
-        commentManager.Add(ui.GetComponent<CommentManager>());
+        ui.GetComponent<PostUIManager>().SetComment(userName, comment, timeSpan, id);
+        //commentManager.Add(ui.GetComponent<CommentManager>());
         replyManager.Add(ui.GetComponent<CommentReplyManager>());
     }
 

@@ -122,7 +122,7 @@ public class GetAllCommentAndReplies : MonoBehaviour
             data = new AllComments();
             data = JsonConvert.DeserializeObject<AllComments>(request.downloadHandler.text);
 
-            for(int i=0; i<data.data.count; i++)
+            for (int i = 0; i < data.data.count; i++)
             {
                 createPost.SpawnComment("XanaPMY", data.data.data[i].commentText, data.data.data[i].createdAt, data.data.data[i].id);
             }
@@ -136,15 +136,15 @@ public class GetAllCommentAndReplies : MonoBehaviour
 
     private void GetAllReplies()
     {
-            sendReplyData = new SendReplyData
-            {
-                commentId = createPost.commentManager[counter].commentId,
-                pageNumber = 1,
-                pageSize = 100,
-                deviceId = "editor123"
-            };
+        sendReplyData = new SendReplyData
+        {
+            commentId = data.data.data[counter].id,  //createPost.commentManager[counter].commentId,
+            pageNumber = 1,
+            pageSize = 100,
+            deviceId = "editor123"
+        };
         string jsonData = JsonUtility.ToJson(sendReplyData);
-            StartCoroutine(PostReplyRequest(getCommentReplyApi, jsonData));
+        StartCoroutine(PostReplyRequest(getCommentReplyApi, jsonData));
     }
 
     private IEnumerator PostReplyRequest(string url, string jsonData)
