@@ -6,11 +6,12 @@ using UnityEngine;
 
 public class SwimmingController : MonoBehaviour
 {
-   PlayerController _playerController;
+   public PlayerController _playerController;
    private Coroutine swimCoroutine;
    [SerializeField]
    private GameObject[] objectsToEnableDisable;
-
+   public GameObject swimJumpButtom;
+   private bool isInPool = false;
     private void Start()
     {
         if (gameObject.TryGetComponent(out PlayerController playerController))
@@ -27,6 +28,8 @@ public class SwimmingController : MonoBehaviour
     public void StartSwimming() 
     {
         UpdateUIelement(false);
+        isInPool = true;
+        swimJumpButtom.SetActive(true);
         _playerController.animator.SetBool("IsSwimIdle", true);
         if (swimCoroutine == null)
         {
@@ -35,9 +38,11 @@ public class SwimmingController : MonoBehaviour
     }
     public void StopSwimming()
     {
+        isInPool = false;
+        UpdateUIelement(true);
+        swimJumpButtom.SetActive(false);
         _playerController.animator.SetBool("IsSwimIdle", false);
         _playerController.animator.SetBool("IsSwimming", false);
-        UpdateUIelement(true);
         if (swimCoroutine != null)
         {
             StopCoroutine(swimCoroutine);
@@ -61,6 +66,35 @@ public class SwimmingController : MonoBehaviour
     public void UpdateUIelement(bool enable)
     {
         objectsToEnableDisable?.SetActive(enable);
+    }
+    public void Jump() {
+        if (_playerController.animator.GetBool("IsSwimming") || _playerController.animator.GetBool("IsSwimIdle"))
+        {
+            _playerController.animator.SetBool("IsSwimIdle", false);
+            _playerController.animator.SetBool("IsSwimming", false);
+            _playerController.Jump();
+           
+            StartCoroutine(CheckJumpAnimationComplete());
+        }
+    }
+    private IEnumerator CheckJumpAnimationComplete() 
+    {
+        AnimatorStateInfo stateInfo = _playerController.animator.GetCurrentAnimatorStateInfo(0);
+        while (stateInfo.IsName("Jump") && stateInfo.normalizedTime < 1.0f)
+        { 
+            yield return null;
+            stateInfo = _playerController.animator.GetCurrentAnimatorStateInfo(0);
+        }
+        Invoke("OnJumpAnimationComplete",2.0f); 
+    }
+    private void OnJumpAnimationComplete()
+    { // Perform actions after the jump animation is complete
+      
+        //Debug.Log("Jump animation completed!");
+        if (isInPool) 
+        {
+            _playerController.animator.SetBool("IsSwimIdle", true);
+        }
     }
 
 }
